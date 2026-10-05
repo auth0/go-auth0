@@ -67,6 +67,36 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
 //
 // **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+//
+// Example:
+//
+//	request := &management.ListConnectionsQueryParameters{
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    Strategy: []*management.ConnectionStrategyEnum{
+//	        management.ConnectionStrategyEnumAd.Ptr(),
+//	    },
+//	    Name: management.String(
+//	        "name",
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Connections.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListConnectionsQueryParameters,
@@ -122,7 +152,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -136,6 +166,17 @@ func (c *Client) List(
 // Creates a new connection according to the JSON object received in `body`.
 //
 // **Note:** If a connection with the same name was recently deleted and had a large number of associated users, the deletion may still be processing. Creating a new connection with that name before the deletion completes may fail or produce unexpected results.
+//
+// Example:
+//
+//	request := &management.CreateConnectionRequestContent{
+//	    Name: "name",
+//	    Strategy: management.ConnectionIdentityProviderEnumAd,
+//	}
+//	client.Connections.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateConnectionRequestContent,
@@ -153,6 +194,22 @@ func (c *Client) Create(
 }
 
 // Retrieve details for a specified [connection](https://auth0.com/docs/authenticate/identity-providers) along with options that can be used for identity provider configuration.
+//
+// Example:
+//
+//	request := &management.GetConnectionRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Connections.Get(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the connection to retrieve
@@ -175,6 +232,13 @@ func (c *Client) Get(
 // Removes a specific [connection](https://auth0.com/docs/authenticate/identity-providers) from your tenant. This action cannot be undone. Once removed, users can no longer use this connection to authenticate.
 //
 // **Note:** If your connection has a large amount of users associated with it, please be aware that this operation can be long running after the response is returned and may impact concurrent [create connection](https://auth0.com/docs/api/management/v2/connections/post-connections) requests, if they use an identical connection name.
+//
+// Example:
+//
+//	client.Connections.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The id of the connection to delete
@@ -195,6 +259,15 @@ func (c *Client) Delete(
 // Update details for a specific [connection](https://auth0.com/docs/authenticate/identity-providers), including option properties for identity provider configuration.
 //
 // **Note**: If you use the `options` parameter, the entire `options` object is overridden. To avoid partial data or other issues, ensure all parameters are present when using this option. If any options are unspecified, the default will be used, even if it differs from the existing value.
+//
+// Example:
+//
+//	request := &management.UpdateConnectionRequestContent{}
+//	client.Connections.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the connection to update
@@ -215,6 +288,13 @@ func (c *Client) Update(
 }
 
 // Retrieves the status of an ad/ldap connection referenced by its `ID`. `200 OK` http status code response is returned  when the connection is online, otherwise a `404` status code is returned along with an error message
+//
+// Example:
+//
+//	client.Connections.CheckStatus(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) CheckStatus(
 	ctx context.Context,
 	// ID of the connection to check

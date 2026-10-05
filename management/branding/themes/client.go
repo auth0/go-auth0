@@ -35,6 +35,85 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Create branding theme.
+//
+// Example:
+//
+//	request := &management.CreateBrandingThemeRequestContent{
+//	    Borders: &management.BrandingThemeBorders{
+//	        ButtonBorderRadius: 1.1,
+//	        ButtonBorderWeight: 1.1,
+//	        ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
+//	        InputBorderRadius: 1.1,
+//	        InputBorderWeight: 1.1,
+//	        InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
+//	        ShowWidgetShadow: true,
+//	        WidgetBorderWeight: 1.1,
+//	        WidgetCornerRadius: 1.1,
+//	    },
+//	    Colors: &management.BrandingThemeColors{
+//	        BodyText: "body_text",
+//	        Error: "error",
+//	        Header: "header",
+//	        Icons: "icons",
+//	        InputBackground: "input_background",
+//	        InputBorder: "input_border",
+//	        InputFilledText: "input_filled_text",
+//	        InputLabelsPlaceholders: "input_labels_placeholders",
+//	        LinksFocusedComponents: "links_focused_components",
+//	        PrimaryButton: "primary_button",
+//	        PrimaryButtonLabel: "primary_button_label",
+//	        SecondaryButtonBorder: "secondary_button_border",
+//	        SecondaryButtonLabel: "secondary_button_label",
+//	        Success: "success",
+//	        WidgetBackground: "widget_background",
+//	        WidgetBorder: "widget_border",
+//	    },
+//	    Fonts: &management.BrandingThemeFonts{
+//	        BodyText: &management.BrandingThemeFontBodyText{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        ButtonsText: &management.BrandingThemeFontButtonsText{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        FontURL: "font_url",
+//	        InputLabels: &management.BrandingThemeFontInputLabels{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        Links: &management.BrandingThemeFontLinks{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
+//	        ReferenceTextSize: 1.1,
+//	        Subtitle: &management.BrandingThemeFontSubtitle{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        Title: &management.BrandingThemeFontTitle{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	    },
+//	    PageBackground: &management.BrandingThemePageBackground{
+//	        BackgroundColor: "background_color",
+//	        BackgroundImageURL: "background_image_url",
+//	        PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
+//	    },
+//	    Widget: &management.BrandingThemeWidget{
+//	        HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+//	        LogoHeight: 1.1,
+//	        LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
+//	        LogoURL: "logo_url",
+//	        SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
+//	    },
+//	}
+//	client.Branding.Themes.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateBrandingThemeRequestContent,
@@ -52,6 +131,12 @@ func (c *Client) Create(
 }
 
 // Retrieve default branding theme.
+//
+// Example:
+//
+//	client.Branding.Themes.GetDefault(
+//	    context.TODO(),
+//	)
 func (c *Client) GetDefault(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -67,6 +152,13 @@ func (c *Client) GetDefault(
 }
 
 // Retrieve branding theme.
+//
+// Example:
+//
+//	client.Branding.Themes.Get(
+//	    context.TODO(),
+//	    "themeId",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the theme
@@ -85,6 +177,13 @@ func (c *Client) Get(
 }
 
 // Delete branding theme.
+//
+// Example:
+//
+//	client.Branding.Themes.Delete(
+//	    context.TODO(),
+//	    "themeId",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the theme
@@ -103,6 +202,86 @@ func (c *Client) Delete(
 }
 
 // Update branding theme.
+//
+// Example:
+//
+//	request := &management.UpdateBrandingThemeRequestContent{
+//	    Borders: &management.BrandingThemeBorders{
+//	        ButtonBorderRadius: 1.1,
+//	        ButtonBorderWeight: 1.1,
+//	        ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
+//	        InputBorderRadius: 1.1,
+//	        InputBorderWeight: 1.1,
+//	        InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
+//	        ShowWidgetShadow: true,
+//	        WidgetBorderWeight: 1.1,
+//	        WidgetCornerRadius: 1.1,
+//	    },
+//	    Colors: &management.BrandingThemeColors{
+//	        BodyText: "body_text",
+//	        Error: "error",
+//	        Header: "header",
+//	        Icons: "icons",
+//	        InputBackground: "input_background",
+//	        InputBorder: "input_border",
+//	        InputFilledText: "input_filled_text",
+//	        InputLabelsPlaceholders: "input_labels_placeholders",
+//	        LinksFocusedComponents: "links_focused_components",
+//	        PrimaryButton: "primary_button",
+//	        PrimaryButtonLabel: "primary_button_label",
+//	        SecondaryButtonBorder: "secondary_button_border",
+//	        SecondaryButtonLabel: "secondary_button_label",
+//	        Success: "success",
+//	        WidgetBackground: "widget_background",
+//	        WidgetBorder: "widget_border",
+//	    },
+//	    Fonts: &management.BrandingThemeFonts{
+//	        BodyText: &management.BrandingThemeFontBodyText{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        ButtonsText: &management.BrandingThemeFontButtonsText{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        FontURL: "font_url",
+//	        InputLabels: &management.BrandingThemeFontInputLabels{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        Links: &management.BrandingThemeFontLinks{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
+//	        ReferenceTextSize: 1.1,
+//	        Subtitle: &management.BrandingThemeFontSubtitle{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	        Title: &management.BrandingThemeFontTitle{
+//	            Bold: true,
+//	            Size: 1.1,
+//	        },
+//	    },
+//	    PageBackground: &management.BrandingThemePageBackground{
+//	        BackgroundColor: "background_color",
+//	        BackgroundImageURL: "background_image_url",
+//	        PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
+//	    },
+//	    Widget: &management.BrandingThemeWidget{
+//	        HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+//	        LogoHeight: 1.1,
+//	        LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
+//	        LogoURL: "logo_url",
+//	        SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
+//	    },
+//	}
+//	client.Branding.Themes.Update(
+//	    context.TODO(),
+//	    "themeId",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the theme

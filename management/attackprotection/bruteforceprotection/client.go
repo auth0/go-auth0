@@ -35,6 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of the Brute-force Protection configuration of your tenant.
+//
+// Example:
+//
+//	client.AttackProtection.BruteForceProtection.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -50,6 +56,14 @@ func (c *Client) Get(
 }
 
 // Update the Brute-force Protection configuration of your tenant.
+//
+// Example:
+//
+//	request := &management.UpdateBruteForceSettingsRequestContent{}
+//	client.AttackProtection.BruteForceProtection.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateBruteForceSettingsRequestContent,

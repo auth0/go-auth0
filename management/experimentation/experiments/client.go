@@ -36,6 +36,28 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a paginated list of experiments for the tenant, with optional filters.
+//
+// Example:
+//
+//	request := &management.ListExperimentsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    Status: management.ExperimentStatusEnumDraft.Ptr(),
+//	    AuthenticationFlow: management.String(
+//	        "authentication_flow",
+//	    ),
+//	    FeatureFlagID: management.String(
+//	        "feature_flag_id",
+//	    ),
+//	}
+//	client.Experimentation.Experiments.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListExperimentsRequestParameters,
@@ -90,7 +112,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -102,6 +124,18 @@ func (c *Client) List(
 }
 
 // Create a new experiment for A/B testing.
+//
+// Example:
+//
+//	request := &management.CreateExperimentRequestContent{
+//	    Name: "name",
+//	    FeatureFlagID: "feature_flag_id",
+//	    AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
+//	}
+//	client.Experimentation.Experiments.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateExperimentRequestContent,
@@ -119,6 +153,13 @@ func (c *Client) Create(
 }
 
 // Retrieve a single experiment with its allocations by ID.
+//
+// Example:
+//
+//	client.Experimentation.Experiments.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the experiment to retrieve.
@@ -137,6 +178,13 @@ func (c *Client) Get(
 }
 
 // Permanently delete an experiment and its allocations by ID. Active experiments cannot be deleted; pause or complete first. Idempotent: returns 204 even if the experiment does not exist.
+//
+// Example:
+//
+//	client.Experimentation.Experiments.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the experiment to delete.
@@ -155,6 +203,15 @@ func (c *Client) Delete(
 }
 
 // Partially update an experiment by ID. Only provided fields are updated. Providing allocations replaces the entire allocations set.
+//
+// Example:
+//
+//	request := &management.UpdateExperimentRequestParameters{}
+//	client.Experimentation.Experiments.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the experiment to update.
@@ -175,6 +232,17 @@ func (c *Client) Update(
 }
 
 // Increments the current ramp index to the requested target level. Up-only: the target must be the immediate next level in the schedule. Idempotent: calling with the current level returns success without writing anything.
+//
+// Example:
+//
+//	request := &management.AdvanceRampRequestContent{
+//	    TargetLevel: 1,
+//	}
+//	client.Experimentation.Experiments.AdvanceRamp(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) AdvanceRamp(
 	ctx context.Context,
 	// The ID of the experiment to advance.
@@ -195,6 +263,17 @@ func (c *Client) AdvanceRamp(
 }
 
 // Transitions an experiment through its lifecycle: draft → active, active → paused, paused → active, active/paused → completed. Activation runs full readiness validation.
+//
+// Example:
+//
+//	request := &management.UpdateExperimentStatusRequestContent{
+//	    Status: management.ExperimentTransitionStatusEnumActive,
+//	}
+//	client.Experimentation.Experiments.UpdateStatus(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) UpdateStatus(
 	ctx context.Context,
 	// The ID of the experiment to transition.
@@ -215,6 +294,13 @@ func (c *Client) UpdateStatus(
 }
 
 // Checks whether an experiment is ready to be activated. Returns is_valid boolean and an errors array describing any blockers. Read-only; no state is modified.
+//
+// Example:
+//
+//	client.Experimentation.Experiments.Validate(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Validate(
 	ctx context.Context,
 	// The ID of the experiment to validate.

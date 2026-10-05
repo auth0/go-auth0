@@ -36,6 +36,24 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Subscribe to events via Server-Sent Events (SSE)
+//
+// Example:
+//
+//	request := &management.SubscribeEventsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    FromTimestamp: management.String(
+//	        "from_timestamp",
+//	    ),
+//	    EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
+//	        management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
+//	    },
+//	}
+//	client.Events.Subscribe(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Subscribe(
 	ctx context.Context,
 	request *management.SubscribeEventsRequestParameters,

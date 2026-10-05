@@ -36,6 +36,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of User Attribute Profiles. This endpoint supports Checkpoint pagination.
+//
+// Example:
+//
+//	request := &management.ListUserAttributeProfileRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.UserAttributeProfiles.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListUserAttributeProfileRequestParameters,
@@ -90,7 +105,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -102,6 +117,24 @@ func (c *Client) List(
 }
 
 // Create a User Attribute Profile.
+//
+// Example:
+//
+//	request := &management.CreateUserAttributeProfileRequestContent{
+//	    Name: "name",
+//	    UserAttributes: map[string]*management.UserAttributeProfileUserAttributeAdditionalProperties{
+//	        "key": &management.UserAttributeProfileUserAttributeAdditionalProperties{
+//	            Description: "description",
+//	            Label: "label",
+//	            ProfileRequired: true,
+//	            Auth0Mapping: "auth0_mapping",
+//	        },
+//	    },
+//	}
+//	client.UserAttributeProfiles.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateUserAttributeProfileRequestContent,
@@ -119,6 +152,12 @@ func (c *Client) Create(
 }
 
 // Retrieve a list of User Attribute Profile Templates.
+//
+// Example:
+//
+//	client.UserAttributeProfiles.ListTemplates(
+//	    context.TODO(),
+//	)
 func (c *Client) ListTemplates(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -134,6 +173,13 @@ func (c *Client) ListTemplates(
 }
 
 // Retrieve a User Attribute Profile Template.
+//
+// Example:
+//
+//	client.UserAttributeProfiles.GetTemplate(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) GetTemplate(
 	ctx context.Context,
 	// ID of the user-attribute-profile-template to retrieve.
@@ -152,6 +198,13 @@ func (c *Client) GetTemplate(
 }
 
 // Retrieve details about a single User Attribute Profile specified by ID.
+//
+// Example:
+//
+//	client.UserAttributeProfiles.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the user-attribute-profile to retrieve.
@@ -170,6 +223,13 @@ func (c *Client) Get(
 }
 
 // Delete a single User Attribute Profile specified by ID.
+//
+// Example:
+//
+//	client.UserAttributeProfiles.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user-attribute-profile to delete.
@@ -188,6 +248,15 @@ func (c *Client) Delete(
 }
 
 // Update the details of a specific User attribute profile, such as name, user_id and user_attributes.
+//
+// Example:
+//
+//	request := &management.UpdateUserAttributeProfileRequestContent{}
+//	client.UserAttributeProfiles.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the user attribute profile to update.

@@ -7402,6 +7402,14 @@ func TestSettersCreateClientRequestContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetEnforceAnonSessionTransferNetworkBinding", func(t *testing.T) {
+		obj := &CreateClientRequestContent{}
+		var fernTestValueEnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum
+		obj.SetEnforceAnonSessionTransferNetworkBinding(fernTestValueEnforceAnonSessionTransferNetworkBinding)
+		assert.Equal(t, fernTestValueEnforceAnonSessionTransferNetworkBinding, obj.EnforceAnonSessionTransferNetworkBinding)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetThirdPartySecurityMode", func(t *testing.T) {
 		obj := &CreateClientRequestContent{}
 		var fernTestValueThirdPartySecurityMode *ClientThirdPartySecurityModeEnum
@@ -9050,6 +9058,37 @@ func TestSettersMarkExplicitCreateClientRequestContent(t *testing.T) {
 
 		// Act
 		obj.SetAnonymousSessions(fernTestValueAnonymousSessions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetEnforceAnonSessionTransferNetworkBinding_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientRequestContent{}
+		var fernTestValueEnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum
+
+		// Act
+		obj.SetEnforceAnonSessionTransferNetworkBinding(fernTestValueEnforceAnonSessionTransferNetworkBinding)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -36779,6 +36818,14 @@ func TestSettersUpdateTenantSettingsRequestContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetDpopStrictRefreshTokenBinding", func(t *testing.T) {
+		obj := &UpdateTenantSettingsRequestContent{}
+		var fernTestValueDpopStrictRefreshTokenBinding *bool
+		obj.SetDpopStrictRefreshTokenBinding(fernTestValueDpopStrictRefreshTokenBinding)
+		assert.Equal(t, fernTestValueDpopStrictRefreshTokenBinding, obj.DpopStrictRefreshTokenBinding)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSkipNonVerifiableCallbackURIConfirmationPrompt", func(t *testing.T) {
 		obj := &UpdateTenantSettingsRequestContent{}
 		var fernTestValueSkipNonVerifiableCallbackURIConfirmationPrompt *bool
@@ -37939,6 +37986,37 @@ func TestSettersMarkExplicitUpdateTenantSettingsRequestContent(t *testing.T) {
 
 		// Act
 		obj.SetAuthorizationResponseIssParameterSupported(fernTestValueAuthorizationResponseIssParameterSupported)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDpopStrictRefreshTokenBinding_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsRequestContent{}
+		var fernTestValueDpopStrictRefreshTokenBinding *bool
+
+		// Act
+		obj.SetDpopStrictRefreshTokenBinding(fernTestValueDpopStrictRefreshTokenBinding)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -40678,6 +40756,14 @@ func TestSettersUpdateClientRequestContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetEnforceAnonSessionTransferNetworkBinding", func(t *testing.T) {
+		obj := &UpdateClientRequestContent{}
+		var fernTestValueEnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum
+		obj.SetEnforceAnonSessionTransferNetworkBinding(fernTestValueEnforceAnonSessionTransferNetworkBinding)
+		assert.Equal(t, fernTestValueEnforceAnonSessionTransferNetworkBinding, obj.EnforceAnonSessionTransferNetworkBinding)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetFormTemplate", func(t *testing.T) {
 		obj := &UpdateClientRequestContent{}
 		var fernTestValueFormTemplate *string
@@ -40891,6 +40977,14 @@ func TestSettersUpdateClientRequestContent(t *testing.T) {
 		var fernTestValueRedirectionPolicy *ClientRedirectionPolicyEnum
 		obj.SetRedirectionPolicy(fernTestValueRedirectionPolicy)
 		assert.Equal(t, fernTestValueRedirectionPolicy, obj.RedirectionPolicy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &UpdateClientRequestContent{}
+		var fernTestValueOidcSupport *ClientOidcSupportPatch
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -41858,6 +41952,37 @@ func TestSettersMarkExplicitUpdateClientRequestContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetEnforceAnonSessionTransferNetworkBinding_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientRequestContent{}
+		var fernTestValueEnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum
+
+		// Act
+		obj.SetEnforceAnonSessionTransferNetworkBinding(fernTestValueEnforceAnonSessionTransferNetworkBinding)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetFormTemplate_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -42672,6 +42797,37 @@ func TestSettersMarkExplicitUpdateClientRequestContent(t *testing.T) {
 
 		// Act
 		obj.SetRedirectionPolicy(fernTestValueRedirectionPolicy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientRequestContent{}
+		var fernTestValueOidcSupport *ClientOidcSupportPatch
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -49,6 +49,31 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve detailed list of user roles created in your tenant.
 //
 // **Note**: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.
+//
+// Example:
+//
+//	request := &management.ListRolesRequestParameters{
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    NameFilter: management.String(
+//	        "name_filter",
+//	    ),
+//	    Type: management.RoleTypeEnumTenant.Ptr(),
+//	    OwnerID: management.String(
+//	        "owner_id",
+//	    ),
+//	}
+//	client.Roles.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListRolesRequestParameters,
@@ -125,6 +150,16 @@ func (c *Client) List(
 // Create a user role for [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
 //
 // **Note**: New roles are not associated with any permissions by default. To assign existing permissions to your role, review Associate Permissions with a Role. To create new permissions, review Add API Permissions.
+//
+// Example:
+//
+//	request := &management.CreateRoleRequestContent{
+//	    Name: "name",
+//	}
+//	client.Roles.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateRoleRequestContent,
@@ -142,6 +177,13 @@ func (c *Client) Create(
 }
 
 // Retrieve details about a specific [user role](https://auth0.com/docs/manage-users/access-control/rbac) specified by ID.
+//
+// Example:
+//
+//	client.Roles.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the role to retrieve.
@@ -160,6 +202,13 @@ func (c *Client) Get(
 }
 
 // Delete a specific [user role](https://auth0.com/docs/manage-users/access-control/rbac) from your tenant. Once deleted, it is removed from any user who was previously assigned that role. This action cannot be undone.
+//
+// Example:
+//
+//	client.Roles.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the role to delete.
@@ -178,6 +227,15 @@ func (c *Client) Delete(
 }
 
 // Modify the details of a specific [user role](https://auth0.com/docs/manage-users/access-control/rbac) specified by ID.
+//
+// Example:
+//
+//	request := &management.UpdateRoleRequestContent{}
+//	client.Roles.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the role to update.

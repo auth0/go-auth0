@@ -35,6 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve all keys used to verify HTTP Message Signatures on Network ACL rules, ordered by creation time descending.
+//
+// Example:
+//
+//	client.Keys.NetworkACLs.List(
+//	    context.TODO(),
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -50,6 +56,18 @@ func (c *Client) List(
 }
 
 // Create a new key used to verify HTTP Message Signatures on Network ACL rules.
+//
+// Example:
+//
+//	request := &management.CreateKeysNetworkACLsRequestContent{
+//	    Name: "name",
+//	    Alg: management.NetworkACLKeyAlgorithmEnumHmacSha256,
+//	    Value: "value",
+//	}
+//	client.Keys.NetworkACLs.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateKeysNetworkACLsRequestContent,
@@ -67,6 +85,13 @@ func (c *Client) Create(
 }
 
 // Retrieve a specific key used to verify HTTP Message Signatures on Network ACL rules.
+//
+// Example:
+//
+//	client.Keys.NetworkACLs.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the Network ACL Key to retrieve.
@@ -85,6 +110,13 @@ func (c *Client) Get(
 }
 
 // Delete a key used to verify HTTP Message Signatures on Network ACL rules
+//
+// Example:
+//
+//	client.Keys.NetworkACLs.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the Network ACL Key to delete.

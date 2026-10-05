@@ -44,6 +44,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // TODO: Link this endpoint to relevant documentation when available.
+//
+// Example:
+//
+//	client.Guardian.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -59,6 +65,19 @@ func (c *Client) Get(
 }
 
 // Update a tenant's guardian settings such as Remember Me
+//
+// Example:
+//
+//	request := &management.SetGuardianSettingsRequestContent{
+//	    DisplayRememberMeCheckbox: true,
+//	    RememberMeDefaultValue: true,
+//	    MfaSessionInactivityTimeout: 1,
+//	    MfaSessionOverallTimeout: 1,
+//	}
+//	client.Guardian.Set(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
 	request *management.SetGuardianSettingsRequestContent,

@@ -37,6 +37,12 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve rules config variable keys.
 //
 //	Note: For security, config variable values cannot be retrieved outside rule execution.
+//
+// Example:
+//
+//	client.RulesConfigs.List(
+//	    context.TODO(),
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -52,6 +58,17 @@ func (c *Client) List(
 }
 
 // Sets a rules config variable.
+//
+// Example:
+//
+//	request := &management.SetRulesConfigRequestContent{
+//	    Value: "value",
+//	}
+//	client.RulesConfigs.Set(
+//	    context.TODO(),
+//	    "key",
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// Key of the rules config variable to set (max length: 127 characters).
@@ -72,6 +89,13 @@ func (c *Client) Set(
 }
 
 // Delete a rules config variable identified by its key.
+//
+// Example:
+//
+//	client.RulesConfigs.Delete(
+//	    context.TODO(),
+//	    "key",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Key of the rules config variable to delete.

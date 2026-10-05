@@ -34,6 +34,14 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.CreateEventStreamRedeliveryRequestContent{}
+//	client.EventStreams.Redeliveries.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// Unique identifier for the event stream.
@@ -53,6 +61,13 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.EventStreams.Redeliveries.CreateByID(
+//	    context.TODO(),
+//	    "id",
+//	    "event_id",
+//	)
 func (c *Client) CreateByID(
 	ctx context.Context,
 	// Unique identifier for the event stream.

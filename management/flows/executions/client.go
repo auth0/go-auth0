@@ -35,6 +35,24 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.ListFlowExecutionsRequestParameters{
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Flows.Executions.List(
+//	    context.TODO(),
+//	    "flow_id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Flow id
@@ -95,7 +113,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -106,6 +124,19 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
+// Example:
+//
+//	request := &management.GetFlowExecutionRequestParameters{
+//	    Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
+//	        management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
+//	    },
+//	}
+//	client.Flows.Executions.Get(
+//	    context.TODO(),
+//	    "flow_id",
+//	    "execution_id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Flow id
@@ -128,6 +159,13 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Flows.Executions.Delete(
+//	    context.TODO(),
+//	    "flow_id",
+//	    "execution_id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Flows id

@@ -40,6 +40,25 @@ func NewClient(options *core.RequestOptions) *Client {
 // Retrieve all permissions associated with the user.
 //
 // **Note**: Returns only permissions from direct assignments and directly assigned roles. For permissions a user has via group-based role assignments, use `GET /api/v2/users/{id}/effective-permissions`.
+//
+// Example:
+//
+//	request := &management.ListUserPermissionsRequestParameters{
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Users.Permissions.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to retrieve the permissions for.
@@ -119,6 +138,22 @@ func (c *Client) List(
 }
 
 // Assign permissions to a user.
+//
+// Example:
+//
+//	request := &management.CreateUserPermissionsRequestContent{
+//	    Permissions: []*management.PermissionRequestPayload{
+//	        &management.PermissionRequestPayload{
+//	            ResourceServerIdentifier: "resource_server_identifier",
+//	            PermissionName: "permission_name",
+//	        },
+//	    },
+//	}
+//	client.Users.Permissions.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the user to assign permissions to.
@@ -139,6 +174,22 @@ func (c *Client) Create(
 }
 
 // Remove permissions from a user.
+//
+// Example:
+//
+//	request := &management.DeleteUserPermissionsRequestContent{
+//	    Permissions: []*management.PermissionRequestPayload{
+//	        &management.PermissionRequestPayload{
+//	            ResourceServerIdentifier: "resource_server_identifier",
+//	            PermissionName: "permission_name",
+//	        },
+//	    },
+//	}
+//	client.Users.Permissions.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user to remove permissions from.

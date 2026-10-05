@@ -31,12 +31,12 @@ func (e EventStreamCloudEventA0PurposeEnum) Ptr() *EventStreamCloudEventA0Purpos
 	return &e
 }
 
-// SSE message for connection.created.
 var (
 	eventStreamCloudEventConnectionCreatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for connection.created.
 type EventStreamCloudEventConnectionCreated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                            `json:"offset" url:"offset"`
@@ -71,10 +71,12 @@ func (e *EventStreamCloudEventConnectionCreated) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventConnectionCreated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -133,7 +135,6 @@ func (e *EventStreamCloudEventConnectionCreated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a connection is created.
 var (
 	eventStreamCloudEventConnectionCreatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -146,6 +147,7 @@ var (
 	eventStreamCloudEventConnectionCreatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a connection is created.
 type EventStreamCloudEventConnectionCreatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                     `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventConnectionCreatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -240,10 +242,12 @@ func (e *EventStreamCloudEventConnectionCreatedCloudEvent) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventConnectionCreatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -379,13 +383,13 @@ func (e EventStreamCloudEventConnectionCreatedCloudEventTypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventConnectionCreatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionCreatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventConnectionCreatedData struct {
 	Object         *EventStreamCloudEventConnectionCreatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventConnectionCreatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -427,10 +431,12 @@ func (e *EventStreamCloudEventConnectionCreatedData) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventConnectionCreatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -567,6 +573,134 @@ func (e *EventStreamCloudEventConnectionCreatedObject) GetEventStreamCloudEventC
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject0 := new(EventStreamCloudEventConnectionCreatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject0"
+			e.EventStreamCloudEventConnectionCreatedObject0 = valueEventStreamCloudEventConnectionCreatedObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject1 := new(EventStreamCloudEventConnectionCreatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject1"
+			e.EventStreamCloudEventConnectionCreatedObject1 = valueEventStreamCloudEventConnectionCreatedObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject2 := new(EventStreamCloudEventConnectionCreatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject2"
+			e.EventStreamCloudEventConnectionCreatedObject2 = valueEventStreamCloudEventConnectionCreatedObject2
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject3 := new(EventStreamCloudEventConnectionCreatedObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject3"
+			e.EventStreamCloudEventConnectionCreatedObject3 = valueEventStreamCloudEventConnectionCreatedObject3
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject4 := new(EventStreamCloudEventConnectionCreatedObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject4"
+			e.EventStreamCloudEventConnectionCreatedObject4 = valueEventStreamCloudEventConnectionCreatedObject4
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject5 := new(EventStreamCloudEventConnectionCreatedObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject5"
+			e.EventStreamCloudEventConnectionCreatedObject5 = valueEventStreamCloudEventConnectionCreatedObject5
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject6 := new(EventStreamCloudEventConnectionCreatedObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject6"
+			e.EventStreamCloudEventConnectionCreatedObject6 = valueEventStreamCloudEventConnectionCreatedObject6
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject7 := new(EventStreamCloudEventConnectionCreatedObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject7"
+			e.EventStreamCloudEventConnectionCreatedObject7 = valueEventStreamCloudEventConnectionCreatedObject7
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject0 := new(EventStreamCloudEventConnectionCreatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject0"
+			e.EventStreamCloudEventConnectionCreatedObject0 = valueEventStreamCloudEventConnectionCreatedObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject1 := new(EventStreamCloudEventConnectionCreatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject1"
+			e.EventStreamCloudEventConnectionCreatedObject1 = valueEventStreamCloudEventConnectionCreatedObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject2 := new(EventStreamCloudEventConnectionCreatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject2"
+			e.EventStreamCloudEventConnectionCreatedObject2 = valueEventStreamCloudEventConnectionCreatedObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject3 := new(EventStreamCloudEventConnectionCreatedObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject3"
+			e.EventStreamCloudEventConnectionCreatedObject3 = valueEventStreamCloudEventConnectionCreatedObject3
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject4 := new(EventStreamCloudEventConnectionCreatedObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject4"
+			e.EventStreamCloudEventConnectionCreatedObject4 = valueEventStreamCloudEventConnectionCreatedObject4
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject5 := new(EventStreamCloudEventConnectionCreatedObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject5"
+			e.EventStreamCloudEventConnectionCreatedObject5 = valueEventStreamCloudEventConnectionCreatedObject5
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject6 := new(EventStreamCloudEventConnectionCreatedObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject6"
+			e.EventStreamCloudEventConnectionCreatedObject6 = valueEventStreamCloudEventConnectionCreatedObject6
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedObject7 := new(EventStreamCloudEventConnectionCreatedObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedObject7"
+			e.EventStreamCloudEventConnectionCreatedObject7 = valueEventStreamCloudEventConnectionCreatedObject7
+			return nil
+		}
+	}
 	valueEventStreamCloudEventConnectionCreatedObject0 := new(EventStreamCloudEventConnectionCreatedObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedObject0); err == nil {
 		e.typ = "EventStreamCloudEventConnectionCreatedObject0"
@@ -820,10 +954,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -952,11 +1088,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject0AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject0Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -982,10 +1118,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -1037,12 +1175,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject0ConnectedAccountsFieldActive         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject0ConnectedAccountsFieldCrossAppAccess = big.NewInt(1 << 1)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject0ConnectedAccounts struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
@@ -1076,10 +1214,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -1156,10 +1296,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0Metadata) UnmarshalJSON(data []byte) error {
@@ -1204,7 +1346,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject0Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'oidc' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject0OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject0OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -1236,6 +1377,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject0OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'oidc' connection
 type EventStreamCloudEventConnectionCreatedObject0Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -1493,10 +1635,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -1737,13 +1881,13 @@ func (e *EventStreamCloudEventConnectionCreatedObject0Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 var (
 	eventStreamCloudEventConnectionCreatedObject0OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject0OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionCreatedObject0OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 type EventStreamCloudEventConnectionCreatedObject0OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionCreatedObject0OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -1786,10 +1930,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0OptionsAttributeMap) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -1881,11 +2027,11 @@ func (e EventStreamCloudEventConnectionCreatedObject0OptionsAttributeMapMappingM
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionCreatedObject0OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionCreatedObject0OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionCreatedObject0OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -1911,10 +2057,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0OptionsConnectionSettings)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -2024,11 +2172,11 @@ func (e EventStreamCloudEventConnectionCreatedObject0OptionsDpopSigningAlgEnum) 
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedObject0OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedObject0OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -2055,10 +2203,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -2148,7 +2298,6 @@ func (e EventStreamCloudEventConnectionCreatedObject0OptionsIDTokenSignedRespons
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionCreatedObject0OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject0OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -2190,6 +2339,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject0OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionCreatedObject0OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -2549,10 +2699,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject0OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject0OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -3177,10 +3329,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -3309,11 +3463,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject1AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject1Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -3339,10 +3493,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -3394,11 +3550,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject1Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject1ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject1ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -3424,10 +3580,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -3497,10 +3655,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1Metadata) UnmarshalJSON(data []byte) error {
@@ -3545,7 +3705,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject1Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'okta' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject1OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject1OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -3577,6 +3736,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject1OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'okta' connection
 type EventStreamCloudEventConnectionCreatedObject1Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -3834,10 +3994,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -4078,13 +4240,13 @@ func (e *EventStreamCloudEventConnectionCreatedObject1Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Mapping of claims received from the identity provider (IdP)
 var (
 	eventStreamCloudEventConnectionCreatedObject1OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject1OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionCreatedObject1OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Mapping of claims received from the identity provider (IdP)
 type EventStreamCloudEventConnectionCreatedObject1OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionCreatedObject1OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -4127,10 +4289,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1OptionsAttributeMap) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -4222,11 +4386,11 @@ func (e EventStreamCloudEventConnectionCreatedObject1OptionsAttributeMapMappingM
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionCreatedObject1OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionCreatedObject1OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionCreatedObject1OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -4252,10 +4416,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1OptionsConnectionSettings)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -4365,11 +4531,11 @@ func (e EventStreamCloudEventConnectionCreatedObject1OptionsDpopSigningAlgEnum) 
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedObject1OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedObject1OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -4396,10 +4562,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -4489,7 +4657,6 @@ func (e EventStreamCloudEventConnectionCreatedObject1OptionsIDTokenSignedRespons
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionCreatedObject1OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject1OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -4531,6 +4698,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject1OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionCreatedObject1OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -4890,10 +5058,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject1OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject1OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -5515,10 +5685,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -5647,11 +5819,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject2AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject2Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -5677,10 +5849,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -5732,11 +5906,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject2Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject2ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject2ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -5762,10 +5936,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -5835,10 +6011,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2Metadata) UnmarshalJSON(data []byte) error {
@@ -5883,7 +6061,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject2Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'samlp' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject2OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject2OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -5923,6 +6100,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject2OptionsFieldUserIDAttribute             = big.NewInt(1 << 35)
 )
 
+// Options for the 'samlp' connection
 type EventStreamCloudEventConnectionCreatedObject2Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionCreatedObject2OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -6254,10 +6432,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -6566,12 +6746,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionCreatedObject2OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject2OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionCreatedObject2OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                            `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -6606,10 +6786,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2OptionsAssertionDecryption
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -6714,7 +6896,6 @@ func (e EventStreamCloudEventConnectionCreatedObject2OptionsDigestAlgorithmEnum)
 // Maps SAML assertion attributes from the identity provider to Auth0 user profile attributes. Format: { 'auth0_field': 'saml_attribute' } or { 'auth0_field': ['saml_attr1', 'saml_attr2'] } for fallback options. Merged with default mappings for email, name, given_name, family_name, and groups.
 type EventStreamCloudEventConnectionCreatedObject2OptionsFieldsMap = map[string]any
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionCreatedObject2OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject2OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -6722,6 +6903,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject2OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionCreatedObject2OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -6774,10 +6956,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2OptionsIdpinitiated) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -6876,7 +7060,6 @@ func (e EventStreamCloudEventConnectionCreatedObject2OptionsIdpinitiatedClientPr
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 var (
 	eventStreamCloudEventConnectionCreatedObject2OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject2OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -6918,6 +7101,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject2OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 type EventStreamCloudEventConnectionCreatedObject2OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -7277,10 +7461,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -7681,10 +7867,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject2OptionsSubject) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject2OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -7887,10 +8075,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -8019,11 +8209,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject3) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject3AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject3Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -8049,10 +8239,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -8104,11 +8296,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject3Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject3ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject3ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -8134,10 +8326,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -8207,10 +8401,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3Metadata) UnmarshalJSON(data []byte) error {
@@ -8255,7 +8451,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject3Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'pingfederate' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject3OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject3OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -8280,6 +8475,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject3OptionsFieldPingFederateBaseURL         = big.NewInt(1 << 20)
 )
 
+// Options for the 'pingfederate' connection
 type EventStreamCloudEventConnectionCreatedObject3Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionCreatedObject3OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -8478,10 +8674,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -8685,12 +8883,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionCreatedObject3OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject3OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionCreatedObject3OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                            `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -8725,10 +8923,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3OptionsAssertionDecryption
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -8830,7 +9030,6 @@ func (e EventStreamCloudEventConnectionCreatedObject3OptionsDigestAlgorithmEnum)
 	return &e
 }
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionCreatedObject3OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject3OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -8838,6 +9037,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject3OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionCreatedObject3OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -8890,10 +9090,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3OptionsIdpinitiated) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -9082,10 +9284,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject3OptionsSubject) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject3OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -9288,10 +9492,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject4) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -9420,11 +9626,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject4) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject4AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject4Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -9450,10 +9656,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject4Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -9505,11 +9713,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject4Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject4ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject4ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -9535,10 +9743,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject4ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -9608,10 +9818,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject4Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4Metadata) UnmarshalJSON(data []byte) error {
@@ -9656,7 +9868,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject4Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'adfs' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject4OptionsFieldAdfsServer                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject4OptionsFieldCertRolloverNotification           = big.NewInt(1 << 1)
@@ -9675,6 +9886,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject4OptionsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
+// Options for the 'adfs' connection
 type EventStreamCloudEventConnectionCreatedObject4Options struct {
 	// ADFS federation metadata host or XML URL used to discover WS-Fed endpoints and certificates. Errors if adfs_server and fedMetadataXml are both absent.
 	AdfsServer *string `json:"adfs_server,omitempty" url:"adfs_server,omitempty"`
@@ -9824,10 +10036,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject4Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject4Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdfsServer sets the AdfsServer field and marks it as non-optional;
@@ -10182,10 +10396,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject5) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -10307,11 +10523,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject5) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject5AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject5Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -10337,10 +10553,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject5Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -10392,11 +10610,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject5Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject5ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject5ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -10422,10 +10640,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject5ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -10495,10 +10715,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject5Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5Metadata) UnmarshalJSON(data []byte) error {
@@ -10543,7 +10765,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject5Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'ad' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject5OptionsFieldAgentIP                          = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject5OptionsFieldAgentMode                        = big.NewInt(1 << 1)
@@ -10566,6 +10787,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject5OptionsFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
+// Options for the 'ad' connection
 type EventStreamCloudEventConnectionCreatedObject5Options struct {
 	// IP address of the AD connector agent used to validate that authentication requests originate from the corporate network for Kerberos authentication  (managed by the AD Connector agent).
 	AgentIP *string `json:"agentIP,omitempty" url:"agentIP,omitempty"`
@@ -10752,10 +10974,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject5Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject5Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAgentIP sets the AgentIP field and marks it as non-optional;
@@ -11117,10 +11341,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject6) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -11249,11 +11475,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject6) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject6AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject6Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -11279,10 +11505,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject6Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -11334,11 +11562,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject6Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject6ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject6ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -11364,10 +11592,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject6ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -11437,10 +11667,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject6Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6Metadata) UnmarshalJSON(data []byte) error {
@@ -11485,7 +11717,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject6Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'google-apps' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject6OptionsFieldAdminAccessTokenExpiresin        = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject6OptionsFieldAllowSettingLoginScopes          = big.NewInt(1 << 1)
@@ -11512,6 +11743,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject6OptionsFieldUpstreamParams                   = big.NewInt(1 << 22)
 )
 
+// Options for the 'google-apps' connection
 type EventStreamCloudEventConnectionCreatedObject6Options struct {
 	// Expiration timestamp for the `admin_access_token` in ISO 8601 format. Auth0 uses this value to determine when to refresh the token.
 	AdminAccessTokenExpiresin *time.Time `json:"admin_access_token_expiresin,omitempty" url:"admin_access_token_expiresin,omitempty"`
@@ -11733,10 +11965,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject6Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdminAccessTokenExpiresin sets the AdminAccessTokenExpiresin field and marks it as non-optional;
@@ -11950,11 +12184,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject6Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedObject6OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedObject6OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -11981,10 +12215,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject6OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject6OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -12220,10 +12456,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject7) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -12352,11 +12590,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject7) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedObject7AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedObject7Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -12382,10 +12620,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject7Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -12437,11 +12677,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject7Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedObject7ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedObject7ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -12467,10 +12707,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject7ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -12540,10 +12782,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject7Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7Metadata) UnmarshalJSON(data []byte) error {
@@ -12588,7 +12832,6 @@ func (e *EventStreamCloudEventConnectionCreatedObject7Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'waad' connection
 var (
 	eventStreamCloudEventConnectionCreatedObject7OptionsFieldAPIEnableUsers                     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedObject7OptionsFieldAppDomain                          = big.NewInt(1 << 1)
@@ -12620,6 +12863,7 @@ var (
 	eventStreamCloudEventConnectionCreatedObject7OptionsFieldWaadProtocol                       = big.NewInt(1 << 27)
 )
 
+// Options for the 'waad' connection
 type EventStreamCloudEventConnectionCreatedObject7Options struct {
 	// Enable users API
 	APIEnableUsers *bool `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
@@ -12881,10 +13125,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject7Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
@@ -13133,11 +13379,11 @@ func (e *EventStreamCloudEventConnectionCreatedObject7Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedObject7OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedObject7OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -13164,10 +13410,12 @@ func (e *EventStreamCloudEventConnectionCreatedObject7OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionCreatedObject7OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -13434,6 +13682,134 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject) GetEventStreamClo
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject0 := new(EventStreamCloudEventConnectionCreatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject0"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject0 = valueEventStreamCloudEventConnectionCreatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject1 := new(EventStreamCloudEventConnectionCreatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject1"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject1 = valueEventStreamCloudEventConnectionCreatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject2 := new(EventStreamCloudEventConnectionCreatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject2"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject2 = valueEventStreamCloudEventConnectionCreatedPreviousObject2
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject3 := new(EventStreamCloudEventConnectionCreatedPreviousObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject3"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject3 = valueEventStreamCloudEventConnectionCreatedPreviousObject3
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject4 := new(EventStreamCloudEventConnectionCreatedPreviousObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject4"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject4 = valueEventStreamCloudEventConnectionCreatedPreviousObject4
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject5 := new(EventStreamCloudEventConnectionCreatedPreviousObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject5"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject5 = valueEventStreamCloudEventConnectionCreatedPreviousObject5
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject6 := new(EventStreamCloudEventConnectionCreatedPreviousObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject6"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject6 = valueEventStreamCloudEventConnectionCreatedPreviousObject6
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject7 := new(EventStreamCloudEventConnectionCreatedPreviousObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject7"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject7 = valueEventStreamCloudEventConnectionCreatedPreviousObject7
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject0 := new(EventStreamCloudEventConnectionCreatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject0"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject0 = valueEventStreamCloudEventConnectionCreatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject1 := new(EventStreamCloudEventConnectionCreatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject1"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject1 = valueEventStreamCloudEventConnectionCreatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject2 := new(EventStreamCloudEventConnectionCreatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject2"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject2 = valueEventStreamCloudEventConnectionCreatedPreviousObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject3 := new(EventStreamCloudEventConnectionCreatedPreviousObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject3"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject3 = valueEventStreamCloudEventConnectionCreatedPreviousObject3
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject4 := new(EventStreamCloudEventConnectionCreatedPreviousObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject4"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject4 = valueEventStreamCloudEventConnectionCreatedPreviousObject4
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject5 := new(EventStreamCloudEventConnectionCreatedPreviousObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject5"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject5 = valueEventStreamCloudEventConnectionCreatedPreviousObject5
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject6 := new(EventStreamCloudEventConnectionCreatedPreviousObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject6"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject6 = valueEventStreamCloudEventConnectionCreatedPreviousObject6
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionCreatedPreviousObject7 := new(EventStreamCloudEventConnectionCreatedPreviousObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject7"
+			e.EventStreamCloudEventConnectionCreatedPreviousObject7 = valueEventStreamCloudEventConnectionCreatedPreviousObject7
+			return nil
+		}
+	}
 	valueEventStreamCloudEventConnectionCreatedPreviousObject0 := new(EventStreamCloudEventConnectionCreatedPreviousObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionCreatedPreviousObject0); err == nil {
 		e.typ = "EventStreamCloudEventConnectionCreatedPreviousObject0"
@@ -13687,10 +14063,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -13819,11 +14197,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject0Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -13849,10 +14227,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -13904,12 +14284,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0ConnectedAccountsFieldActive         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject0ConnectedAccountsFieldCrossAppAccess = big.NewInt(1 << 1)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject0ConnectedAccounts struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
@@ -13943,10 +14323,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -14023,10 +14405,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Metadata) UnmarshalJSON(data []byte) error {
@@ -14071,7 +14455,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'oidc' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -14103,6 +14486,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'oidc' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject0Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -14360,10 +14744,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -14604,13 +14990,13 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 type EventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -14653,10 +15039,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMa
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -14748,11 +15136,11 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject0OptionsAttributeMap
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionCreatedPreviousObject0OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -14778,10 +15166,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsConnectionS
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -14891,11 +15281,11 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject0OptionsDpopSigningA
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedPreviousObject0OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -14922,10 +15312,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -15015,7 +15407,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject0OptionsIDTokenSigne
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -15057,6 +15448,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject0OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionCreatedPreviousObject0OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -15416,10 +15808,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject0OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -16044,10 +16438,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -16176,11 +16572,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject1Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -16206,10 +16602,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -16261,11 +16659,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject1ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -16291,10 +16689,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -16364,10 +16764,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Metadata) UnmarshalJSON(data []byte) error {
@@ -16412,7 +16814,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'okta' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -16444,6 +16845,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'okta' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject1Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -16701,10 +17103,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -16945,13 +17349,13 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Mapping of claims received from the identity provider (IdP)
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Mapping of claims received from the identity provider (IdP)
 type EventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -16994,10 +17398,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMa
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -17089,11 +17495,11 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMap
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionCreatedPreviousObject1OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -17119,10 +17525,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsConnectionS
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -17232,11 +17640,11 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject1OptionsDpopSigningA
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedPreviousObject1OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -17263,10 +17671,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -17356,7 +17766,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject1OptionsIDTokenSigne
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -17398,6 +17807,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject1OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionCreatedPreviousObject1OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -17757,10 +18167,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject1OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -18382,10 +18794,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -18514,11 +18928,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject2Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -18544,10 +18958,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -18599,11 +19015,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject2ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -18629,10 +19045,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -18702,10 +19120,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Metadata) UnmarshalJSON(data []byte) error {
@@ -18750,7 +19170,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'samlp' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -18790,6 +19209,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsFieldUserIDAttribute             = big.NewInt(1 << 35)
 )
 
+// Options for the 'samlp' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject2Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -19121,10 +19541,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -19433,12 +19855,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionCreatedPreviousObject2OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                                    `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -19473,10 +19895,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsAssertionDe
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -19581,7 +20005,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject2OptionsDigestAlgori
 // Maps SAML assertion attributes from the identity provider to Auth0 user profile attributes. Format: { 'auth0_field': 'saml_attribute' } or { 'auth0_field': ['saml_attr1', 'saml_attr2'] } for fallback options. Merged with default mappings for email, name, given_name, family_name, and groups.
 type EventStreamCloudEventConnectionCreatedPreviousObject2OptionsFieldsMap = map[string]any
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -19589,6 +20012,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionCreatedPreviousObject2OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -19641,10 +20065,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsIdpinitiate
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -19743,7 +20169,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject2OptionsIdpinitiated
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -19785,6 +20210,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject2OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 type EventStreamCloudEventConnectionCreatedPreviousObject2OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -20144,10 +20570,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -20548,10 +20976,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsSubject) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject2OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -20754,10 +21184,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -20886,11 +21318,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject3Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -20916,10 +21348,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -20971,11 +21405,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject3ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -21001,10 +21435,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -21074,10 +21510,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Metadata) UnmarshalJSON(data []byte) error {
@@ -21122,7 +21560,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'pingfederate' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -21147,6 +21584,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsFieldPingFederateBaseURL         = big.NewInt(1 << 20)
 )
 
+// Options for the 'pingfederate' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject3Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -21345,10 +21783,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -21552,12 +21992,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionCreatedPreviousObject3OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                                    `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -21592,10 +22032,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsAssertionDe
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -21697,7 +22139,6 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject3OptionsDigestAlgori
 	return &e
 }
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -21705,6 +22146,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject3OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionCreatedPreviousObject3OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -21757,10 +22199,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsIdpinitiate
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -21949,10 +22393,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsSubject) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject3OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -22155,10 +22601,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -22287,11 +22735,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject4AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject4Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -22317,10 +22765,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -22372,11 +22822,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject4ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject4ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -22402,10 +22852,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -22475,10 +22927,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Metadata) UnmarshalJSON(data []byte) error {
@@ -22523,7 +22977,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'adfs' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject4OptionsFieldAdfsServer                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject4OptionsFieldCertRolloverNotification           = big.NewInt(1 << 1)
@@ -22542,6 +22995,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject4OptionsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
+// Options for the 'adfs' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject4Options struct {
 	// ADFS federation metadata host or XML URL used to discover WS-Fed endpoints and certificates. Errors if adfs_server and fedMetadataXml are both absent.
 	AdfsServer *string `json:"adfs_server,omitempty" url:"adfs_server,omitempty"`
@@ -22691,10 +23145,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject4Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdfsServer sets the AdfsServer field and marks it as non-optional;
@@ -23049,10 +23505,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -23174,11 +23632,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject5AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject5Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -23204,10 +23662,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -23259,11 +23719,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject5ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject5ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -23289,10 +23749,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -23362,10 +23824,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Metadata) UnmarshalJSON(data []byte) error {
@@ -23410,7 +23874,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'ad' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject5OptionsFieldAgentIP                          = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject5OptionsFieldAgentMode                        = big.NewInt(1 << 1)
@@ -23433,6 +23896,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject5OptionsFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
+// Options for the 'ad' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject5Options struct {
 	// IP address of the AD connector agent used to validate that authentication requests originate from the corporate network for Kerberos authentication  (managed by the AD Connector agent).
 	AgentIP *string `json:"agentIP,omitempty" url:"agentIP,omitempty"`
@@ -23619,10 +24083,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject5Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAgentIP sets the AgentIP field and marks it as non-optional;
@@ -23984,10 +24450,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -24116,11 +24584,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject6AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject6Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -24146,10 +24614,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -24201,11 +24671,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject6ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject6ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -24231,10 +24701,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -24304,10 +24776,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Metadata) UnmarshalJSON(data []byte) error {
@@ -24352,7 +24826,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'google-apps' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject6OptionsFieldAdminAccessTokenExpiresin        = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject6OptionsFieldAllowSettingLoginScopes          = big.NewInt(1 << 1)
@@ -24379,6 +24852,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject6OptionsFieldUpstreamParams                   = big.NewInt(1 << 22)
 )
 
+// Options for the 'google-apps' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject6Options struct {
 	// Expiration timestamp for the `admin_access_token` in ISO 8601 format. Auth0 uses this value to determine when to refresh the token.
 	AdminAccessTokenExpiresin *time.Time `json:"admin_access_token_expiresin,omitempty" url:"admin_access_token_expiresin,omitempty"`
@@ -24600,10 +25074,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdminAccessTokenExpiresin sets the AdminAccessTokenExpiresin field and marks it as non-optional;
@@ -24817,11 +25293,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject6OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedPreviousObject6OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -24848,10 +25324,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject6OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject6OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -25087,10 +25565,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -25219,11 +25699,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject7AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionCreatedPreviousObject7Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -25249,10 +25729,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -25304,11 +25786,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject7ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionCreatedPreviousObject7ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -25334,10 +25816,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -25407,10 +25891,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Metadata) UnmarshalJSON(data []byte) error {
@@ -25455,7 +25941,6 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'waad' connection
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject7OptionsFieldAPIEnableUsers                     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionCreatedPreviousObject7OptionsFieldAppDomain                          = big.NewInt(1 << 1)
@@ -25487,6 +25972,7 @@ var (
 	eventStreamCloudEventConnectionCreatedPreviousObject7OptionsFieldWaadProtocol                       = big.NewInt(1 << 27)
 )
 
+// Options for the 'waad' connection
 type EventStreamCloudEventConnectionCreatedPreviousObject7Options struct {
 	// Enable users API
 	APIEnableUsers *bool `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
@@ -25748,10 +26234,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
@@ -26000,11 +26488,11 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionCreatedPreviousObject7OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionCreatedPreviousObject7OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -26031,10 +26519,12 @@ func (e *EventStreamCloudEventConnectionCreatedPreviousObject7OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionCreatedPreviousObject7OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -26230,12 +26720,12 @@ func (e EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum) Ptr()
 	return &e
 }
 
-// SSE message for connection.deleted.
 var (
 	eventStreamCloudEventConnectionDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for connection.deleted.
 type EventStreamCloudEventConnectionDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                            `json:"offset" url:"offset"`
@@ -26270,10 +26760,12 @@ func (e *EventStreamCloudEventConnectionDeleted) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventConnectionDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -26332,7 +26824,6 @@ func (e *EventStreamCloudEventConnectionDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a connection is deleted.
 var (
 	eventStreamCloudEventConnectionDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -26345,6 +26836,7 @@ var (
 	eventStreamCloudEventConnectionDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a connection is deleted.
 type EventStreamCloudEventConnectionDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                     `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventConnectionDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -26439,10 +26931,12 @@ func (e *EventStreamCloudEventConnectionDeletedCloudEvent) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventConnectionDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -26578,13 +27072,13 @@ func (e EventStreamCloudEventConnectionDeletedCloudEventTypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventConnectionDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventConnectionDeletedData struct {
 	Object         *EventStreamCloudEventConnectionDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventConnectionDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -26626,10 +27120,12 @@ func (e *EventStreamCloudEventConnectionDeletedData) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventConnectionDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -26766,6 +27262,134 @@ func (e *EventStreamCloudEventConnectionDeletedObject) GetEventStreamCloudEventC
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject0 := new(EventStreamCloudEventConnectionDeletedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject0"
+			e.EventStreamCloudEventConnectionDeletedObject0 = valueEventStreamCloudEventConnectionDeletedObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject1 := new(EventStreamCloudEventConnectionDeletedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject1"
+			e.EventStreamCloudEventConnectionDeletedObject1 = valueEventStreamCloudEventConnectionDeletedObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject2 := new(EventStreamCloudEventConnectionDeletedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject2"
+			e.EventStreamCloudEventConnectionDeletedObject2 = valueEventStreamCloudEventConnectionDeletedObject2
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject3 := new(EventStreamCloudEventConnectionDeletedObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject3"
+			e.EventStreamCloudEventConnectionDeletedObject3 = valueEventStreamCloudEventConnectionDeletedObject3
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject4 := new(EventStreamCloudEventConnectionDeletedObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject4"
+			e.EventStreamCloudEventConnectionDeletedObject4 = valueEventStreamCloudEventConnectionDeletedObject4
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject5 := new(EventStreamCloudEventConnectionDeletedObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject5"
+			e.EventStreamCloudEventConnectionDeletedObject5 = valueEventStreamCloudEventConnectionDeletedObject5
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject6 := new(EventStreamCloudEventConnectionDeletedObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject6"
+			e.EventStreamCloudEventConnectionDeletedObject6 = valueEventStreamCloudEventConnectionDeletedObject6
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject7 := new(EventStreamCloudEventConnectionDeletedObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject7"
+			e.EventStreamCloudEventConnectionDeletedObject7 = valueEventStreamCloudEventConnectionDeletedObject7
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject0 := new(EventStreamCloudEventConnectionDeletedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject0"
+			e.EventStreamCloudEventConnectionDeletedObject0 = valueEventStreamCloudEventConnectionDeletedObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject1 := new(EventStreamCloudEventConnectionDeletedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject1"
+			e.EventStreamCloudEventConnectionDeletedObject1 = valueEventStreamCloudEventConnectionDeletedObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject2 := new(EventStreamCloudEventConnectionDeletedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject2"
+			e.EventStreamCloudEventConnectionDeletedObject2 = valueEventStreamCloudEventConnectionDeletedObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject3 := new(EventStreamCloudEventConnectionDeletedObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject3"
+			e.EventStreamCloudEventConnectionDeletedObject3 = valueEventStreamCloudEventConnectionDeletedObject3
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject4 := new(EventStreamCloudEventConnectionDeletedObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject4"
+			e.EventStreamCloudEventConnectionDeletedObject4 = valueEventStreamCloudEventConnectionDeletedObject4
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject5 := new(EventStreamCloudEventConnectionDeletedObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject5"
+			e.EventStreamCloudEventConnectionDeletedObject5 = valueEventStreamCloudEventConnectionDeletedObject5
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject6 := new(EventStreamCloudEventConnectionDeletedObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject6"
+			e.EventStreamCloudEventConnectionDeletedObject6 = valueEventStreamCloudEventConnectionDeletedObject6
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedObject7 := new(EventStreamCloudEventConnectionDeletedObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedObject7"
+			e.EventStreamCloudEventConnectionDeletedObject7 = valueEventStreamCloudEventConnectionDeletedObject7
+			return nil
+		}
+	}
 	valueEventStreamCloudEventConnectionDeletedObject0 := new(EventStreamCloudEventConnectionDeletedObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedObject0); err == nil {
 		e.typ = "EventStreamCloudEventConnectionDeletedObject0"
@@ -27019,10 +27643,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -27151,11 +27777,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject0AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject0Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -27181,10 +27807,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -27236,12 +27864,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject0ConnectedAccountsFieldActive         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject0ConnectedAccountsFieldCrossAppAccess = big.NewInt(1 << 1)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject0ConnectedAccounts struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
@@ -27275,10 +27903,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -27355,10 +27985,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0Metadata) UnmarshalJSON(data []byte) error {
@@ -27403,7 +28035,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject0Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'oidc' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject0OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject0OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -27435,6 +28066,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject0OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'oidc' connection
 type EventStreamCloudEventConnectionDeletedObject0Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -27692,10 +28324,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -27936,13 +28570,13 @@ func (e *EventStreamCloudEventConnectionDeletedObject0Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 var (
 	eventStreamCloudEventConnectionDeletedObject0OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject0OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionDeletedObject0OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 type EventStreamCloudEventConnectionDeletedObject0OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionDeletedObject0OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -27985,10 +28619,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0OptionsAttributeMap) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -28080,11 +28716,11 @@ func (e EventStreamCloudEventConnectionDeletedObject0OptionsAttributeMapMappingM
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionDeletedObject0OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionDeletedObject0OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionDeletedObject0OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -28110,10 +28746,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0OptionsConnectionSettings)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -28223,11 +28861,11 @@ func (e EventStreamCloudEventConnectionDeletedObject0OptionsDpopSigningAlgEnum) 
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedObject0OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedObject0OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -28254,10 +28892,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -28347,7 +28987,6 @@ func (e EventStreamCloudEventConnectionDeletedObject0OptionsIDTokenSignedRespons
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionDeletedObject0OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject0OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -28389,6 +29028,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject0OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionDeletedObject0OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -28748,10 +29388,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject0OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject0OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -29376,10 +30018,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -29508,11 +30152,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject1AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject1Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -29538,10 +30182,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -29593,11 +30239,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject1Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject1ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject1ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -29623,10 +30269,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -29696,10 +30344,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1Metadata) UnmarshalJSON(data []byte) error {
@@ -29744,7 +30394,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject1Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'okta' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject1OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject1OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -29776,6 +30425,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject1OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'okta' connection
 type EventStreamCloudEventConnectionDeletedObject1Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -30033,10 +30683,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -30277,13 +30929,13 @@ func (e *EventStreamCloudEventConnectionDeletedObject1Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Mapping of claims received from the identity provider (IdP)
 var (
 	eventStreamCloudEventConnectionDeletedObject1OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject1OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionDeletedObject1OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Mapping of claims received from the identity provider (IdP)
 type EventStreamCloudEventConnectionDeletedObject1OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionDeletedObject1OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -30326,10 +30978,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1OptionsAttributeMap) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -30421,11 +31075,11 @@ func (e EventStreamCloudEventConnectionDeletedObject1OptionsAttributeMapMappingM
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionDeletedObject1OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionDeletedObject1OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionDeletedObject1OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -30451,10 +31105,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1OptionsConnectionSettings)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -30564,11 +31220,11 @@ func (e EventStreamCloudEventConnectionDeletedObject1OptionsDpopSigningAlgEnum) 
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedObject1OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedObject1OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -30595,10 +31251,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -30688,7 +31346,6 @@ func (e EventStreamCloudEventConnectionDeletedObject1OptionsIDTokenSignedRespons
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionDeletedObject1OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject1OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -30730,6 +31387,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject1OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionDeletedObject1OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -31089,10 +31747,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject1OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject1OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -31714,10 +32374,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -31846,11 +32508,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject2AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject2Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -31876,10 +32538,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -31931,11 +32595,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject2Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject2ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject2ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -31961,10 +32625,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -32034,10 +32700,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2Metadata) UnmarshalJSON(data []byte) error {
@@ -32082,7 +32750,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject2Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'samlp' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject2OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject2OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -32122,6 +32789,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject2OptionsFieldUserIDAttribute             = big.NewInt(1 << 35)
 )
 
+// Options for the 'samlp' connection
 type EventStreamCloudEventConnectionDeletedObject2Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionDeletedObject2OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -32453,10 +33121,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -32765,12 +33435,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionDeletedObject2OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject2OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionDeletedObject2OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                            `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -32805,10 +33475,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2OptionsAssertionDecryption
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -32913,7 +33585,6 @@ func (e EventStreamCloudEventConnectionDeletedObject2OptionsDigestAlgorithmEnum)
 // Maps SAML assertion attributes from the identity provider to Auth0 user profile attributes. Format: { 'auth0_field': 'saml_attribute' } or { 'auth0_field': ['saml_attr1', 'saml_attr2'] } for fallback options. Merged with default mappings for email, name, given_name, family_name, and groups.
 type EventStreamCloudEventConnectionDeletedObject2OptionsFieldsMap = map[string]any
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionDeletedObject2OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject2OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -32921,6 +33592,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject2OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionDeletedObject2OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -32973,10 +33645,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2OptionsIdpinitiated) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -33075,7 +33749,6 @@ func (e EventStreamCloudEventConnectionDeletedObject2OptionsIdpinitiatedClientPr
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 var (
 	eventStreamCloudEventConnectionDeletedObject2OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject2OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -33117,6 +33790,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject2OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 type EventStreamCloudEventConnectionDeletedObject2OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -33476,10 +34150,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -33880,10 +34556,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject2OptionsSubject) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject2OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -34086,10 +34764,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -34218,11 +34898,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject3) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject3AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject3Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -34248,10 +34928,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -34303,11 +34985,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject3Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject3ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject3ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -34333,10 +35015,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -34406,10 +35090,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3Metadata) UnmarshalJSON(data []byte) error {
@@ -34454,7 +35140,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject3Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'pingfederate' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject3OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject3OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -34479,6 +35164,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject3OptionsFieldPingFederateBaseURL         = big.NewInt(1 << 20)
 )
 
+// Options for the 'pingfederate' connection
 type EventStreamCloudEventConnectionDeletedObject3Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionDeletedObject3OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -34677,10 +35363,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -34884,12 +35572,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionDeletedObject3OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject3OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionDeletedObject3OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                            `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -34924,10 +35612,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3OptionsAssertionDecryption
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -35029,7 +35719,6 @@ func (e EventStreamCloudEventConnectionDeletedObject3OptionsDigestAlgorithmEnum)
 	return &e
 }
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionDeletedObject3OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject3OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -35037,6 +35726,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject3OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionDeletedObject3OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -35089,10 +35779,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3OptionsIdpinitiated) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -35281,10 +35973,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject3OptionsSubject) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject3OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -35487,10 +36181,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject4) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -35619,11 +36315,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject4) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject4AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject4Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -35649,10 +36345,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject4Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -35704,11 +36402,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject4Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject4ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject4ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -35734,10 +36432,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject4ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -35807,10 +36507,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject4Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4Metadata) UnmarshalJSON(data []byte) error {
@@ -35855,7 +36557,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject4Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'adfs' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject4OptionsFieldAdfsServer                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject4OptionsFieldCertRolloverNotification           = big.NewInt(1 << 1)
@@ -35874,6 +36575,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject4OptionsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
+// Options for the 'adfs' connection
 type EventStreamCloudEventConnectionDeletedObject4Options struct {
 	// ADFS federation metadata host or XML URL used to discover WS-Fed endpoints and certificates. Errors if adfs_server and fedMetadataXml are both absent.
 	AdfsServer *string `json:"adfs_server,omitempty" url:"adfs_server,omitempty"`
@@ -36023,10 +36725,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject4Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject4Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdfsServer sets the AdfsServer field and marks it as non-optional;
@@ -36381,10 +37085,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject5) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -36506,11 +37212,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject5) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject5AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject5Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -36536,10 +37242,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject5Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -36591,11 +37299,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject5Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject5ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject5ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -36621,10 +37329,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject5ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -36694,10 +37404,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject5Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5Metadata) UnmarshalJSON(data []byte) error {
@@ -36742,7 +37454,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject5Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'ad' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject5OptionsFieldAgentIP                          = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject5OptionsFieldAgentMode                        = big.NewInt(1 << 1)
@@ -36765,6 +37476,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject5OptionsFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
+// Options for the 'ad' connection
 type EventStreamCloudEventConnectionDeletedObject5Options struct {
 	// IP address of the AD connector agent used to validate that authentication requests originate from the corporate network for Kerberos authentication  (managed by the AD Connector agent).
 	AgentIP *string `json:"agentIP,omitempty" url:"agentIP,omitempty"`
@@ -36951,10 +37663,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject5Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject5Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAgentIP sets the AgentIP field and marks it as non-optional;
@@ -37316,10 +38030,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject6) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -37448,11 +38164,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject6) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject6AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject6Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -37478,10 +38194,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject6Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -37533,11 +38251,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject6Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject6ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject6ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -37563,10 +38281,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject6ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -37636,10 +38356,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject6Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6Metadata) UnmarshalJSON(data []byte) error {
@@ -37684,7 +38406,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject6Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'google-apps' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject6OptionsFieldAdminAccessTokenExpiresin        = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject6OptionsFieldAllowSettingLoginScopes          = big.NewInt(1 << 1)
@@ -37711,6 +38432,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject6OptionsFieldUpstreamParams                   = big.NewInt(1 << 22)
 )
 
+// Options for the 'google-apps' connection
 type EventStreamCloudEventConnectionDeletedObject6Options struct {
 	// Expiration timestamp for the `admin_access_token` in ISO 8601 format. Auth0 uses this value to determine when to refresh the token.
 	AdminAccessTokenExpiresin *time.Time `json:"admin_access_token_expiresin,omitempty" url:"admin_access_token_expiresin,omitempty"`
@@ -37932,10 +38654,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject6Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdminAccessTokenExpiresin sets the AdminAccessTokenExpiresin field and marks it as non-optional;
@@ -38149,11 +38873,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject6Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedObject6OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedObject6OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -38180,10 +38904,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject6OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject6OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -38419,10 +39145,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject7) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -38551,11 +39279,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject7) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedObject7AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedObject7Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -38581,10 +39309,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject7Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -38636,11 +39366,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject7Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedObject7ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedObject7ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -38666,10 +39396,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject7ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -38739,10 +39471,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject7Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7Metadata) UnmarshalJSON(data []byte) error {
@@ -38787,7 +39521,6 @@ func (e *EventStreamCloudEventConnectionDeletedObject7Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'waad' connection
 var (
 	eventStreamCloudEventConnectionDeletedObject7OptionsFieldAPIEnableUsers                     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedObject7OptionsFieldAppDomain                          = big.NewInt(1 << 1)
@@ -38819,6 +39552,7 @@ var (
 	eventStreamCloudEventConnectionDeletedObject7OptionsFieldWaadProtocol                       = big.NewInt(1 << 27)
 )
 
+// Options for the 'waad' connection
 type EventStreamCloudEventConnectionDeletedObject7Options struct {
 	// Enable users API
 	APIEnableUsers *bool `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
@@ -39080,10 +39814,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject7Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
@@ -39332,11 +40068,11 @@ func (e *EventStreamCloudEventConnectionDeletedObject7Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedObject7OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedObject7OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -39363,10 +40099,12 @@ func (e *EventStreamCloudEventConnectionDeletedObject7OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionDeletedObject7OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -39633,6 +40371,134 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject) GetEventStreamClo
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject0 := new(EventStreamCloudEventConnectionDeletedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject0"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject0 = valueEventStreamCloudEventConnectionDeletedPreviousObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject1 := new(EventStreamCloudEventConnectionDeletedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject1"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject1 = valueEventStreamCloudEventConnectionDeletedPreviousObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject2 := new(EventStreamCloudEventConnectionDeletedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject2"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject2 = valueEventStreamCloudEventConnectionDeletedPreviousObject2
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject3 := new(EventStreamCloudEventConnectionDeletedPreviousObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject3"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject3 = valueEventStreamCloudEventConnectionDeletedPreviousObject3
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject4 := new(EventStreamCloudEventConnectionDeletedPreviousObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject4"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject4 = valueEventStreamCloudEventConnectionDeletedPreviousObject4
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject5 := new(EventStreamCloudEventConnectionDeletedPreviousObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject5"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject5 = valueEventStreamCloudEventConnectionDeletedPreviousObject5
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject6 := new(EventStreamCloudEventConnectionDeletedPreviousObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject6"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject6 = valueEventStreamCloudEventConnectionDeletedPreviousObject6
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject7 := new(EventStreamCloudEventConnectionDeletedPreviousObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject7"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject7 = valueEventStreamCloudEventConnectionDeletedPreviousObject7
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject0 := new(EventStreamCloudEventConnectionDeletedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject0"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject0 = valueEventStreamCloudEventConnectionDeletedPreviousObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject1 := new(EventStreamCloudEventConnectionDeletedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject1"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject1 = valueEventStreamCloudEventConnectionDeletedPreviousObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject2 := new(EventStreamCloudEventConnectionDeletedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject2"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject2 = valueEventStreamCloudEventConnectionDeletedPreviousObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject3 := new(EventStreamCloudEventConnectionDeletedPreviousObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject3"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject3 = valueEventStreamCloudEventConnectionDeletedPreviousObject3
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject4 := new(EventStreamCloudEventConnectionDeletedPreviousObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject4"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject4 = valueEventStreamCloudEventConnectionDeletedPreviousObject4
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject5 := new(EventStreamCloudEventConnectionDeletedPreviousObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject5"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject5 = valueEventStreamCloudEventConnectionDeletedPreviousObject5
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject6 := new(EventStreamCloudEventConnectionDeletedPreviousObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject6"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject6 = valueEventStreamCloudEventConnectionDeletedPreviousObject6
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionDeletedPreviousObject7 := new(EventStreamCloudEventConnectionDeletedPreviousObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject7"
+			e.EventStreamCloudEventConnectionDeletedPreviousObject7 = valueEventStreamCloudEventConnectionDeletedPreviousObject7
+			return nil
+		}
+	}
 	valueEventStreamCloudEventConnectionDeletedPreviousObject0 := new(EventStreamCloudEventConnectionDeletedPreviousObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionDeletedPreviousObject0); err == nil {
 		e.typ = "EventStreamCloudEventConnectionDeletedPreviousObject0"
@@ -39886,10 +40752,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -40018,11 +40886,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject0Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -40048,10 +40916,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -40103,12 +40973,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0ConnectedAccountsFieldActive         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject0ConnectedAccountsFieldCrossAppAccess = big.NewInt(1 << 1)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject0ConnectedAccounts struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
@@ -40142,10 +41012,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -40222,10 +41094,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Metadata) UnmarshalJSON(data []byte) error {
@@ -40270,7 +41144,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'oidc' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -40302,6 +41175,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'oidc' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject0Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -40559,10 +41433,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -40803,13 +41679,13 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 type EventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -40852,10 +41728,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMa
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -40947,11 +41825,11 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject0OptionsAttributeMap
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionDeletedPreviousObject0OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -40977,10 +41855,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsConnectionS
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -41090,11 +41970,11 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject0OptionsDpopSigningA
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedPreviousObject0OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -41121,10 +42001,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -41214,7 +42096,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject0OptionsIDTokenSigne
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -41256,6 +42137,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject0OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionDeletedPreviousObject0OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -41615,10 +42497,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject0OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -42243,10 +43127,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -42375,11 +43261,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject1Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -42405,10 +43291,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -42460,11 +43348,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject1ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -42490,10 +43378,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -42563,10 +43453,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Metadata) UnmarshalJSON(data []byte) error {
@@ -42611,7 +43503,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'okta' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -42643,6 +43534,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'okta' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject1Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -42900,10 +43792,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -43144,13 +44038,13 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Mapping of claims received from the identity provider (IdP)
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Mapping of claims received from the identity provider (IdP)
 type EventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -43193,10 +44087,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMa
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -43288,11 +44184,11 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMap
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionDeletedPreviousObject1OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -43318,10 +44214,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsConnectionS
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -43431,11 +44329,11 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject1OptionsDpopSigningA
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedPreviousObject1OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -43462,10 +44360,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -43555,7 +44455,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject1OptionsIDTokenSigne
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -43597,6 +44496,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject1OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionDeletedPreviousObject1OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -43956,10 +44856,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject1OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -44581,10 +45483,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -44713,11 +45617,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject2Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -44743,10 +45647,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -44798,11 +45704,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject2ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -44828,10 +45734,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -44901,10 +45809,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Metadata) UnmarshalJSON(data []byte) error {
@@ -44949,7 +45859,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'samlp' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -44989,6 +45898,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsFieldUserIDAttribute             = big.NewInt(1 << 35)
 )
 
+// Options for the 'samlp' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject2Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -45320,10 +46230,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -45632,12 +46544,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionDeletedPreviousObject2OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                                    `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -45672,10 +46584,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsAssertionDe
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -45780,7 +46694,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject2OptionsDigestAlgori
 // Maps SAML assertion attributes from the identity provider to Auth0 user profile attributes. Format: { 'auth0_field': 'saml_attribute' } or { 'auth0_field': ['saml_attr1', 'saml_attr2'] } for fallback options. Merged with default mappings for email, name, given_name, family_name, and groups.
 type EventStreamCloudEventConnectionDeletedPreviousObject2OptionsFieldsMap = map[string]any
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -45788,6 +46701,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionDeletedPreviousObject2OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -45840,10 +46754,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsIdpinitiate
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -45942,7 +46858,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject2OptionsIdpinitiated
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -45984,6 +46899,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject2OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 type EventStreamCloudEventConnectionDeletedPreviousObject2OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -46343,10 +47259,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -46747,10 +47665,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsSubject) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject2OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -46953,10 +47873,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -47085,11 +48007,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject3Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -47115,10 +48037,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -47170,11 +48094,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject3ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -47200,10 +48124,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -47273,10 +48199,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Metadata) UnmarshalJSON(data []byte) error {
@@ -47321,7 +48249,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'pingfederate' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -47346,6 +48273,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsFieldPingFederateBaseURL         = big.NewInt(1 << 20)
 )
 
+// Options for the 'pingfederate' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject3Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -47544,10 +48472,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -47751,12 +48681,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionDeletedPreviousObject3OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                                    `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -47791,10 +48721,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsAssertionDe
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -47896,7 +48828,6 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject3OptionsDigestAlgori
 	return &e
 }
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -47904,6 +48835,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject3OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionDeletedPreviousObject3OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -47956,10 +48888,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsIdpinitiate
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -48148,10 +49082,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsSubject) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject3OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -48354,10 +49290,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -48486,11 +49424,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject4AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject4Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -48516,10 +49454,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -48571,11 +49511,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject4ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject4ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -48601,10 +49541,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -48674,10 +49616,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Metadata) UnmarshalJSON(data []byte) error {
@@ -48722,7 +49666,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'adfs' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject4OptionsFieldAdfsServer                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject4OptionsFieldCertRolloverNotification           = big.NewInt(1 << 1)
@@ -48741,6 +49684,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject4OptionsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
+// Options for the 'adfs' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject4Options struct {
 	// ADFS federation metadata host or XML URL used to discover WS-Fed endpoints and certificates. Errors if adfs_server and fedMetadataXml are both absent.
 	AdfsServer *string `json:"adfs_server,omitempty" url:"adfs_server,omitempty"`
@@ -48890,10 +49834,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject4Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdfsServer sets the AdfsServer field and marks it as non-optional;
@@ -49248,10 +50194,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -49373,11 +50321,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject5AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject5Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -49403,10 +50351,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -49458,11 +50408,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject5ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject5ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -49488,10 +50438,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -49561,10 +50513,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Metadata) UnmarshalJSON(data []byte) error {
@@ -49609,7 +50563,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'ad' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject5OptionsFieldAgentIP                          = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject5OptionsFieldAgentMode                        = big.NewInt(1 << 1)
@@ -49632,6 +50585,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject5OptionsFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
+// Options for the 'ad' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject5Options struct {
 	// IP address of the AD connector agent used to validate that authentication requests originate from the corporate network for Kerberos authentication  (managed by the AD Connector agent).
 	AgentIP *string `json:"agentIP,omitempty" url:"agentIP,omitempty"`
@@ -49818,10 +50772,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject5Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAgentIP sets the AgentIP field and marks it as non-optional;
@@ -50183,10 +51139,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -50315,11 +51273,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject6AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject6Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -50345,10 +51303,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -50400,11 +51360,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject6ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject6ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -50430,10 +51390,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -50503,10 +51465,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Metadata) UnmarshalJSON(data []byte) error {
@@ -50551,7 +51515,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'google-apps' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject6OptionsFieldAdminAccessTokenExpiresin        = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject6OptionsFieldAllowSettingLoginScopes          = big.NewInt(1 << 1)
@@ -50578,6 +51541,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject6OptionsFieldUpstreamParams                   = big.NewInt(1 << 22)
 )
 
+// Options for the 'google-apps' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject6Options struct {
 	// Expiration timestamp for the `admin_access_token` in ISO 8601 format. Auth0 uses this value to determine when to refresh the token.
 	AdminAccessTokenExpiresin *time.Time `json:"admin_access_token_expiresin,omitempty" url:"admin_access_token_expiresin,omitempty"`
@@ -50799,10 +51763,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdminAccessTokenExpiresin sets the AdminAccessTokenExpiresin field and marks it as non-optional;
@@ -51016,11 +51982,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject6OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedPreviousObject6OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -51047,10 +52013,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject6OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject6OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -51286,10 +52254,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -51418,11 +52388,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject7AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionDeletedPreviousObject7Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -51448,10 +52418,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -51503,11 +52475,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject7ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionDeletedPreviousObject7ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -51533,10 +52505,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -51606,10 +52580,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Metadata) UnmarshalJSON(data []byte) error {
@@ -51654,7 +52630,6 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'waad' connection
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject7OptionsFieldAPIEnableUsers                     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionDeletedPreviousObject7OptionsFieldAppDomain                          = big.NewInt(1 << 1)
@@ -51686,6 +52661,7 @@ var (
 	eventStreamCloudEventConnectionDeletedPreviousObject7OptionsFieldWaadProtocol                       = big.NewInt(1 << 27)
 )
 
+// Options for the 'waad' connection
 type EventStreamCloudEventConnectionDeletedPreviousObject7Options struct {
 	// Enable users API
 	APIEnableUsers *bool `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
@@ -51947,10 +52923,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
@@ -52199,11 +53177,11 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionDeletedPreviousObject7OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionDeletedPreviousObject7OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -52230,10 +53208,12 @@ func (e *EventStreamCloudEventConnectionDeletedPreviousObject7OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionDeletedPreviousObject7OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -52429,12 +53409,12 @@ func (e EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum) Ptr()
 	return &e
 }
 
-// SSE message for connection.updated.
 var (
 	eventStreamCloudEventConnectionUpdatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for connection.updated.
 type EventStreamCloudEventConnectionUpdated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                            `json:"offset" url:"offset"`
@@ -52469,10 +53449,12 @@ func (e *EventStreamCloudEventConnectionUpdated) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventConnectionUpdated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -52531,7 +53513,6 @@ func (e *EventStreamCloudEventConnectionUpdated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a connection is updated.
 var (
 	eventStreamCloudEventConnectionUpdatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -52544,6 +53525,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a connection is updated.
 type EventStreamCloudEventConnectionUpdatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                     `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventConnectionUpdatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -52638,10 +53620,12 @@ func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -52777,13 +53761,13 @@ func (e EventStreamCloudEventConnectionUpdatedCloudEventTypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventConnectionUpdatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionUpdatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventConnectionUpdatedData struct {
 	Object         *EventStreamCloudEventConnectionUpdatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventConnectionUpdatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -52825,10 +53809,12 @@ func (e *EventStreamCloudEventConnectionUpdatedData) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -52965,6 +53951,134 @@ func (e *EventStreamCloudEventConnectionUpdatedObject) GetEventStreamCloudEventC
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject0 := new(EventStreamCloudEventConnectionUpdatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject0"
+			e.EventStreamCloudEventConnectionUpdatedObject0 = valueEventStreamCloudEventConnectionUpdatedObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject1 := new(EventStreamCloudEventConnectionUpdatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject1"
+			e.EventStreamCloudEventConnectionUpdatedObject1 = valueEventStreamCloudEventConnectionUpdatedObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject2 := new(EventStreamCloudEventConnectionUpdatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject2"
+			e.EventStreamCloudEventConnectionUpdatedObject2 = valueEventStreamCloudEventConnectionUpdatedObject2
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject3 := new(EventStreamCloudEventConnectionUpdatedObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject3"
+			e.EventStreamCloudEventConnectionUpdatedObject3 = valueEventStreamCloudEventConnectionUpdatedObject3
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject4 := new(EventStreamCloudEventConnectionUpdatedObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject4"
+			e.EventStreamCloudEventConnectionUpdatedObject4 = valueEventStreamCloudEventConnectionUpdatedObject4
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject5 := new(EventStreamCloudEventConnectionUpdatedObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject5"
+			e.EventStreamCloudEventConnectionUpdatedObject5 = valueEventStreamCloudEventConnectionUpdatedObject5
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject6 := new(EventStreamCloudEventConnectionUpdatedObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject6"
+			e.EventStreamCloudEventConnectionUpdatedObject6 = valueEventStreamCloudEventConnectionUpdatedObject6
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject7 := new(EventStreamCloudEventConnectionUpdatedObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject7"
+			e.EventStreamCloudEventConnectionUpdatedObject7 = valueEventStreamCloudEventConnectionUpdatedObject7
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject0 := new(EventStreamCloudEventConnectionUpdatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject0"
+			e.EventStreamCloudEventConnectionUpdatedObject0 = valueEventStreamCloudEventConnectionUpdatedObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject1 := new(EventStreamCloudEventConnectionUpdatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject1"
+			e.EventStreamCloudEventConnectionUpdatedObject1 = valueEventStreamCloudEventConnectionUpdatedObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject2 := new(EventStreamCloudEventConnectionUpdatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject2"
+			e.EventStreamCloudEventConnectionUpdatedObject2 = valueEventStreamCloudEventConnectionUpdatedObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject3 := new(EventStreamCloudEventConnectionUpdatedObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject3"
+			e.EventStreamCloudEventConnectionUpdatedObject3 = valueEventStreamCloudEventConnectionUpdatedObject3
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject4 := new(EventStreamCloudEventConnectionUpdatedObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject4"
+			e.EventStreamCloudEventConnectionUpdatedObject4 = valueEventStreamCloudEventConnectionUpdatedObject4
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject5 := new(EventStreamCloudEventConnectionUpdatedObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject5"
+			e.EventStreamCloudEventConnectionUpdatedObject5 = valueEventStreamCloudEventConnectionUpdatedObject5
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject6 := new(EventStreamCloudEventConnectionUpdatedObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject6"
+			e.EventStreamCloudEventConnectionUpdatedObject6 = valueEventStreamCloudEventConnectionUpdatedObject6
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedObject7 := new(EventStreamCloudEventConnectionUpdatedObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedObject7"
+			e.EventStreamCloudEventConnectionUpdatedObject7 = valueEventStreamCloudEventConnectionUpdatedObject7
+			return nil
+		}
+	}
 	valueEventStreamCloudEventConnectionUpdatedObject0 := new(EventStreamCloudEventConnectionUpdatedObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedObject0); err == nil {
 		e.typ = "EventStreamCloudEventConnectionUpdatedObject0"
@@ -53218,10 +54332,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -53350,11 +54466,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject0AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject0Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -53380,10 +54496,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -53435,12 +54553,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject0ConnectedAccountsFieldActive         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject0ConnectedAccountsFieldCrossAppAccess = big.NewInt(1 << 1)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject0ConnectedAccounts struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
@@ -53474,10 +54592,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -53554,10 +54674,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0Metadata) UnmarshalJSON(data []byte) error {
@@ -53602,7 +54724,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'oidc' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject0OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject0OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -53634,6 +54755,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject0OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'oidc' connection
 type EventStreamCloudEventConnectionUpdatedObject0Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -53891,10 +55013,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -54135,13 +55259,13 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 var (
 	eventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 type EventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -54184,10 +55308,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMap) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -54279,11 +55405,11 @@ func (e EventStreamCloudEventConnectionUpdatedObject0OptionsAttributeMapMappingM
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionUpdatedObject0OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionUpdatedObject0OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionUpdatedObject0OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -54309,10 +55435,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsConnectionSettings)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -54422,11 +55550,11 @@ func (e EventStreamCloudEventConnectionUpdatedObject0OptionsDpopSigningAlgEnum) 
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedObject0OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedObject0OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -54453,10 +55581,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -54546,7 +55676,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject0OptionsIDTokenSignedRespons
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionUpdatedObject0OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject0OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -54588,6 +55717,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject0OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionUpdatedObject0OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -54947,10 +56077,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject0OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -55575,10 +56707,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -55707,11 +56841,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject1AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject1Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -55737,10 +56871,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -55792,11 +56928,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject1ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject1ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -55822,10 +56958,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -55895,10 +57033,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1Metadata) UnmarshalJSON(data []byte) error {
@@ -55943,7 +57083,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'okta' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject1OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject1OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -55975,6 +57114,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject1OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'okta' connection
 type EventStreamCloudEventConnectionUpdatedObject1Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -56232,10 +57372,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -56476,13 +57618,13 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Mapping of claims received from the identity provider (IdP)
 var (
 	eventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Mapping of claims received from the identity provider (IdP)
 type EventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -56525,10 +57667,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMap) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -56620,11 +57764,11 @@ func (e EventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMapMappingM
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionUpdatedObject1OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionUpdatedObject1OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionUpdatedObject1OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -56650,10 +57794,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsConnectionSettings)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -56763,11 +57909,11 @@ func (e EventStreamCloudEventConnectionUpdatedObject1OptionsDpopSigningAlgEnum) 
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedObject1OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedObject1OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -56794,10 +57940,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -56887,7 +58035,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject1OptionsIDTokenSignedRespons
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionUpdatedObject1OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject1OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -56929,6 +58076,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject1OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionUpdatedObject1OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -57288,10 +58436,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject1OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -57913,10 +59063,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -58045,11 +59197,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject2AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject2Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -58075,10 +59227,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -58130,11 +59284,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject2ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject2ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -58160,10 +59314,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -58233,10 +59389,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2Metadata) UnmarshalJSON(data []byte) error {
@@ -58281,7 +59439,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'samlp' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject2OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject2OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -58321,6 +59478,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject2OptionsFieldUserIDAttribute             = big.NewInt(1 << 35)
 )
 
+// Options for the 'samlp' connection
 type EventStreamCloudEventConnectionUpdatedObject2Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionUpdatedObject2OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -58652,10 +59810,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -58964,12 +60124,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionUpdatedObject2OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject2OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionUpdatedObject2OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                            `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -59004,10 +60164,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsAssertionDecryption
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -59112,7 +60274,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject2OptionsDigestAlgorithmEnum)
 // Maps SAML assertion attributes from the identity provider to Auth0 user profile attributes. Format: { 'auth0_field': 'saml_attribute' } or { 'auth0_field': ['saml_attr1', 'saml_attr2'] } for fallback options. Merged with default mappings for email, name, given_name, family_name, and groups.
 type EventStreamCloudEventConnectionUpdatedObject2OptionsFieldsMap = map[string]any
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionUpdatedObject2OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject2OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -59120,6 +60281,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject2OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionUpdatedObject2OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -59172,10 +60334,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsIdpinitiated) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -59274,7 +60438,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject2OptionsIdpinitiatedClientPr
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 var (
 	eventStreamCloudEventConnectionUpdatedObject2OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject2OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -59316,6 +60479,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject2OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 type EventStreamCloudEventConnectionUpdatedObject2OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -59675,10 +60839,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsOidcMetadata) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -60079,10 +61245,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsSubject) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject2OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -60285,10 +61453,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -60417,11 +61587,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject3AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject3Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -60447,10 +61617,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -60502,11 +61674,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject3ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject3ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -60532,10 +61704,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -60605,10 +61779,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3Metadata) UnmarshalJSON(data []byte) error {
@@ -60653,7 +61829,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'pingfederate' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject3OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject3OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -60678,6 +61853,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject3OptionsFieldPingFederateBaseURL         = big.NewInt(1 << 20)
 )
 
+// Options for the 'pingfederate' connection
 type EventStreamCloudEventConnectionUpdatedObject3Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionUpdatedObject3OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -60876,10 +62052,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -61083,12 +62261,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionUpdatedObject3OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject3OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionUpdatedObject3OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                            `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -61123,10 +62301,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsAssertionDecryption
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -61228,7 +62408,6 @@ func (e EventStreamCloudEventConnectionUpdatedObject3OptionsDigestAlgorithmEnum)
 	return &e
 }
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionUpdatedObject3OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject3OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -61236,6 +62415,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject3OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionUpdatedObject3OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -61288,10 +62468,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsIdpinitiated) GetEx
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -61480,10 +62662,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsSubject) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject3OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -61686,10 +62870,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -61818,11 +63004,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject4AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject4Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -61848,10 +63034,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -61903,11 +63091,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject4ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject4ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -61933,10 +63121,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -62006,10 +63196,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4Metadata) UnmarshalJSON(data []byte) error {
@@ -62054,7 +63246,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'adfs' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject4OptionsFieldAdfsServer                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject4OptionsFieldCertRolloverNotification           = big.NewInt(1 << 1)
@@ -62073,6 +63264,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject4OptionsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
+// Options for the 'adfs' connection
 type EventStreamCloudEventConnectionUpdatedObject4Options struct {
 	// ADFS federation metadata host or XML URL used to discover WS-Fed endpoints and certificates. Errors if adfs_server and fedMetadataXml are both absent.
 	AdfsServer *string `json:"adfs_server,omitempty" url:"adfs_server,omitempty"`
@@ -62222,10 +63414,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject4Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject4Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdfsServer sets the AdfsServer field and marks it as non-optional;
@@ -62580,10 +63774,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -62705,11 +63901,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject5AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject5Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -62735,10 +63931,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -62790,11 +63988,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject5ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject5ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -62820,10 +64018,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -62893,10 +64093,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5Metadata) UnmarshalJSON(data []byte) error {
@@ -62941,7 +64143,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'ad' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject5OptionsFieldAgentIP                          = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject5OptionsFieldAgentMode                        = big.NewInt(1 << 1)
@@ -62964,6 +64165,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject5OptionsFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
+// Options for the 'ad' connection
 type EventStreamCloudEventConnectionUpdatedObject5Options struct {
 	// IP address of the AD connector agent used to validate that authentication requests originate from the corporate network for Kerberos authentication  (managed by the AD Connector agent).
 	AgentIP *string `json:"agentIP,omitempty" url:"agentIP,omitempty"`
@@ -63150,10 +64352,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject5Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject5Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAgentIP sets the AgentIP field and marks it as non-optional;
@@ -63515,10 +64719,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -63647,11 +64853,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject6AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject6Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -63677,10 +64883,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -63732,11 +64940,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject6ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject6ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -63762,10 +64970,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -63835,10 +65045,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6Metadata) UnmarshalJSON(data []byte) error {
@@ -63883,7 +65095,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'google-apps' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject6OptionsFieldAdminAccessTokenExpiresin        = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject6OptionsFieldAllowSettingLoginScopes          = big.NewInt(1 << 1)
@@ -63910,6 +65121,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject6OptionsFieldUpstreamParams                   = big.NewInt(1 << 22)
 )
 
+// Options for the 'google-apps' connection
 type EventStreamCloudEventConnectionUpdatedObject6Options struct {
 	// Expiration timestamp for the `admin_access_token` in ISO 8601 format. Auth0 uses this value to determine when to refresh the token.
 	AdminAccessTokenExpiresin *time.Time `json:"admin_access_token_expiresin,omitempty" url:"admin_access_token_expiresin,omitempty"`
@@ -64131,10 +65343,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdminAccessTokenExpiresin sets the AdminAccessTokenExpiresin field and marks it as non-optional;
@@ -64348,11 +65562,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedObject6OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedObject6OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -64379,10 +65593,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject6OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject6OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -64618,10 +65834,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -64750,11 +65968,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedObject7AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedObject7Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -64780,10 +65998,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7Authentication) GetExtraPr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -64835,11 +66055,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7Authentication) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedObject7ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedObject7ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -64865,10 +66085,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7ConnectedAccounts) GetExtr
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -64938,10 +66160,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7Metadata) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7Metadata) UnmarshalJSON(data []byte) error {
@@ -64986,7 +66210,6 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7Metadata) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'waad' connection
 var (
 	eventStreamCloudEventConnectionUpdatedObject7OptionsFieldAPIEnableUsers                     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedObject7OptionsFieldAppDomain                          = big.NewInt(1 << 1)
@@ -65018,6 +66241,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedObject7OptionsFieldWaadProtocol                       = big.NewInt(1 << 27)
 )
 
+// Options for the 'waad' connection
 type EventStreamCloudEventConnectionUpdatedObject7Options struct {
 	// Enable users API
 	APIEnableUsers *bool `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
@@ -65279,10 +66503,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7Options) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
@@ -65531,11 +66757,11 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7Options) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedObject7OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedObject7OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -65562,10 +66788,12 @@ func (e *EventStreamCloudEventConnectionUpdatedObject7OptionsFederatedConnection
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedObject7OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -65832,6 +67060,134 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) GetEventStreamClo
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"authentication", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "connected_accounts", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject0 := new(EventStreamCloudEventConnectionUpdatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject0"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject0 = valueEventStreamCloudEventConnectionUpdatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject1 := new(EventStreamCloudEventConnectionUpdatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject1"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject1 = valueEventStreamCloudEventConnectionUpdatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject2 := new(EventStreamCloudEventConnectionUpdatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject2"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject2 = valueEventStreamCloudEventConnectionUpdatedPreviousObject2
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject3 := new(EventStreamCloudEventConnectionUpdatedPreviousObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject3"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject3 = valueEventStreamCloudEventConnectionUpdatedPreviousObject3
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject4 := new(EventStreamCloudEventConnectionUpdatedPreviousObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject4"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject4 = valueEventStreamCloudEventConnectionUpdatedPreviousObject4
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject5 := new(EventStreamCloudEventConnectionUpdatedPreviousObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject5"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject5 = valueEventStreamCloudEventConnectionUpdatedPreviousObject5
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject6 := new(EventStreamCloudEventConnectionUpdatedPreviousObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject6"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject6 = valueEventStreamCloudEventConnectionUpdatedPreviousObject6
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"authentication", "connected_accounts", "display_name", "enabled_clients", "id", "is_domain_connection", "metadata", "name", "realms", "options", "show_as_button", "strategy"}, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject7 := new(EventStreamCloudEventConnectionUpdatedPreviousObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject7"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject7 = valueEventStreamCloudEventConnectionUpdatedPreviousObject7
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject0 := new(EventStreamCloudEventConnectionUpdatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject0"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject0 = valueEventStreamCloudEventConnectionUpdatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject1 := new(EventStreamCloudEventConnectionUpdatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject1"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject1 = valueEventStreamCloudEventConnectionUpdatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject2 := new(EventStreamCloudEventConnectionUpdatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject2"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject2 = valueEventStreamCloudEventConnectionUpdatedPreviousObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject3 := new(EventStreamCloudEventConnectionUpdatedPreviousObject3)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject3); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject3"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject3 = valueEventStreamCloudEventConnectionUpdatedPreviousObject3
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject4 := new(EventStreamCloudEventConnectionUpdatedPreviousObject4)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject4); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject4"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject4 = valueEventStreamCloudEventConnectionUpdatedPreviousObject4
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject5 := new(EventStreamCloudEventConnectionUpdatedPreviousObject5)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject5); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject5"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject5 = valueEventStreamCloudEventConnectionUpdatedPreviousObject5
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject6 := new(EventStreamCloudEventConnectionUpdatedPreviousObject6)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject6); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject6"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject6 = valueEventStreamCloudEventConnectionUpdatedPreviousObject6
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "strategy"}) {
+		valueEventStreamCloudEventConnectionUpdatedPreviousObject7 := new(EventStreamCloudEventConnectionUpdatedPreviousObject7)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject7); err == nil {
+			e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject7"
+			e.EventStreamCloudEventConnectionUpdatedPreviousObject7 = valueEventStreamCloudEventConnectionUpdatedPreviousObject7
+			return nil
+		}
+	}
 	valueEventStreamCloudEventConnectionUpdatedPreviousObject0 := new(EventStreamCloudEventConnectionUpdatedPreviousObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventConnectionUpdatedPreviousObject0); err == nil {
 		e.typ = "EventStreamCloudEventConnectionUpdatedPreviousObject0"
@@ -66085,10 +67441,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -66217,11 +67575,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject0Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -66247,10 +67605,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -66302,12 +67662,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0ConnectedAccountsFieldActive         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject0ConnectedAccountsFieldCrossAppAccess = big.NewInt(1 << 1)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject0ConnectedAccounts struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
@@ -66341,10 +67701,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -66421,10 +67783,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Metadata) UnmarshalJSON(data []byte) error {
@@ -66469,7 +67833,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'oidc' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -66501,6 +67864,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'oidc' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject0Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -66758,10 +68122,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -67002,13 +68368,13 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 type EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -67051,10 +68417,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMa
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -67146,11 +68514,11 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsAttributeMap
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -67176,10 +68544,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsConnectionS
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -67289,11 +68659,11 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsDpopSigningA
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -67320,10 +68690,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -67413,7 +68785,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsIDTokenSigne
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -67455,6 +68826,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject0OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -67814,10 +69186,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject0OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -68442,10 +69816,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -68574,11 +69950,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject1Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -68604,10 +69980,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -68659,11 +70037,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject1ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -68689,10 +70067,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -68762,10 +70142,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Metadata) UnmarshalJSON(data []byte) error {
@@ -68810,7 +70192,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'okta' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsFieldAuthorizationEndpoint            = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsFieldClientID                         = big.NewInt(1 << 1)
@@ -68842,6 +70223,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsFieldType                             = big.NewInt(1 << 27)
 )
 
+// Options for the 'okta' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject1Options struct {
 	// URL of the identity provider's OAuth 2.0 authorization endpoint where users are redirected for authentication. Must be a valid HTTPS URL. This endpoint initiates the OAuth 2.0 authorization code flow.
 	AuthorizationEndpoint *string `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -69099,10 +70481,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -69343,13 +70727,13 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Mapping of claims received from the identity provider (IdP)
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMapFieldAttributes    = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMapFieldUserinfoScope = big.NewInt(1 << 1)
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMapFieldMappingMode   = big.NewInt(1 << 2)
 )
 
+// Mapping of claims received from the identity provider (IdP)
 type EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMap struct {
 	Attributes *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMapAttributes `json:"attributes,omitempty" url:"attributes,omitempty"`
 	// Scopes to send to the IdP's Userinfo endpoint
@@ -69392,10 +70776,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMa
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMap) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -69487,11 +70873,11 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMap
 	return &e
 }
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsConnectionSettings struct {
 	Pkce *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -69517,10 +70903,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsConnectionS
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsConnectionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -69630,11 +71018,11 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsDpopSigningA
 	return &e
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -69661,10 +71049,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -69754,7 +71144,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsIDTokenSigne
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -69796,6 +71185,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject1OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -70155,10 +71545,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject1OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -70780,10 +72172,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -70912,11 +72306,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject2Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -70942,10 +72336,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -70997,11 +72393,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject2ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -71027,10 +72423,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -71100,10 +72498,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Metadata) UnmarshalJSON(data []byte) error {
@@ -71148,7 +72548,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'samlp' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -71188,6 +72587,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsFieldUserIDAttribute             = big.NewInt(1 << 35)
 )
 
+// Options for the 'samlp' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject2Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -71519,10 +72919,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -71831,12 +73233,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                                    `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -71871,10 +73273,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsAssertionDe
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -71979,7 +73383,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsDigestAlgori
 // Maps SAML assertion attributes from the identity provider to Auth0 user profile attributes. Format: { 'auth0_field': 'saml_attribute' } or { 'auth0_field': ['saml_attr1', 'saml_attr2'] } for fallback options. Merged with default mappings for email, name, given_name, family_name, and groups.
 type EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsFieldsMap = map[string]any
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -71987,6 +73390,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -72039,10 +73443,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsIdpinitiate
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -72141,7 +73547,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsIdpinitiated
 	return &e
 }
 
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -72183,6 +73588,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject2OptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 37)
 )
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata. Used with Cross App Access.
 type EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsOidcMetadata struct {
 	// A list of the Authentication Context Class References that this OP supports
 	AcrValuesSupported []string `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
@@ -72542,10 +73948,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsOidcMetadat
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsOidcMetadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -72946,10 +74354,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsSubject) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject2OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -73152,10 +74562,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -73284,11 +74696,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject3Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -73314,10 +74726,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -73369,11 +74783,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject3ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -73399,10 +74813,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -73472,10 +74888,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Metadata) UnmarshalJSON(data []byte) error {
@@ -73520,7 +74938,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'pingfederate' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsFieldCert                        = big.NewInt(1 << 1)
@@ -73545,6 +74962,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsFieldPingFederateBaseURL         = big.NewInt(1 << 20)
 )
 
+// Options for the 'pingfederate' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject3Options struct {
 	AssertionDecryptionSettings *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	// X.509 signing certificate from the identity provider in .der format. Used to validate signatures in SAML Responses and Assertions. This is an alternative to signingCert and is kept for backward compatibility. Prefer using signingCert instead.
@@ -73743,10 +75161,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -73950,12 +75370,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Settings for SAML assertion decryption.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsAssertionDecryptionSettings struct {
 	// A list of insecure algorithms to allow for SAML assertion decryption.
 	AlgorithmExceptions []string                                                                                                    `json:"algorithm_exceptions,omitempty" url:"algorithm_exceptions,omitempty"`
@@ -73990,10 +75410,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsAssertionDe
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsAssertionDecryptionSettings) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAlgorithmExceptions sets the AlgorithmExceptions field and marks it as non-optional;
@@ -74095,7 +75517,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsDigestAlgori
 	return &e
 }
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsIdpinitiatedFieldClientAuthorizequery = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsIdpinitiatedFieldClientID             = big.NewInt(1 << 1)
@@ -74103,6 +75524,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject3OptionsIdpinitiatedFieldEnabled              = big.NewInt(1 << 3)
 )
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsIdpinitiated struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -74155,10 +75577,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsIdpinitiate
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsIdpinitiated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -74347,10 +75771,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsSubject) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsSubject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject3OptionsSubject) UnmarshalJSON(data []byte) error {
@@ -74553,10 +75979,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -74685,11 +76113,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject4AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject4Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -74715,10 +76143,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -74770,11 +76200,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject4ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject4ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -74800,10 +76230,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -74873,10 +76305,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Metadata) UnmarshalJSON(data []byte) error {
@@ -74921,7 +76355,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'adfs' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject4OptionsFieldAdfsServer                         = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject4OptionsFieldCertRolloverNotification           = big.NewInt(1 << 1)
@@ -74940,6 +76373,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject4OptionsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
+// Options for the 'adfs' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject4Options struct {
 	// ADFS federation metadata host or XML URL used to discover WS-Fed endpoints and certificates. Errors if adfs_server and fedMetadataXml are both absent.
 	AdfsServer *string `json:"adfs_server,omitempty" url:"adfs_server,omitempty"`
@@ -75089,10 +76523,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject4Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdfsServer sets the AdfsServer field and marks it as non-optional;
@@ -75447,10 +76883,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -75572,11 +77010,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject5AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject5Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -75602,10 +77040,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -75657,11 +77097,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject5ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject5ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -75687,10 +77127,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -75760,10 +77202,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Metadata) UnmarshalJSON(data []byte) error {
@@ -75808,7 +77252,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'ad' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject5OptionsFieldAgentIP                          = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject5OptionsFieldAgentMode                        = big.NewInt(1 << 1)
@@ -75831,6 +77274,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject5OptionsFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
+// Options for the 'ad' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject5Options struct {
 	// IP address of the AD connector agent used to validate that authentication requests originate from the corporate network for Kerberos authentication  (managed by the AD Connector agent).
 	AgentIP *string `json:"agentIP,omitempty" url:"agentIP,omitempty"`
@@ -76017,10 +77461,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject5Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAgentIP sets the AgentIP field and marks it as non-optional;
@@ -76382,10 +77828,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -76514,11 +77962,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject6AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject6Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -76544,10 +77992,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -76599,11 +78049,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject6ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject6ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -76629,10 +78079,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -76702,10 +78154,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Metadata) UnmarshalJSON(data []byte) error {
@@ -76750,7 +78204,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'google-apps' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject6OptionsFieldAdminAccessTokenExpiresin        = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject6OptionsFieldAllowSettingLoginScopes          = big.NewInt(1 << 1)
@@ -76777,6 +78230,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject6OptionsFieldUpstreamParams                   = big.NewInt(1 << 22)
 )
 
+// Options for the 'google-apps' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject6Options struct {
 	// Expiration timestamp for the `admin_access_token` in ISO 8601 format. Auth0 uses this value to determine when to refresh the token.
 	AdminAccessTokenExpiresin *time.Time `json:"admin_access_token_expiresin,omitempty" url:"admin_access_token_expiresin,omitempty"`
@@ -76998,10 +78452,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAdminAccessTokenExpiresin sets the AdminAccessTokenExpiresin field and marks it as non-optional;
@@ -77215,11 +78671,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject6OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedPreviousObject6OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -77246,10 +78702,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject6OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -77485,10 +78943,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -77617,11 +79077,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for authentication during login.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject7AuthenticationFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for authentication during login.
 type EventStreamCloudEventConnectionUpdatedPreviousObject7Authentication struct {
 	Active bool `json:"active" url:"active"`
 
@@ -77647,10 +79107,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Authentication) Ge
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Authentication) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -77702,11 +79164,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Authentication) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject7ConnectedAccountsFieldActive = big.NewInt(1 << 0)
 )
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type EventStreamCloudEventConnectionUpdatedPreviousObject7ConnectedAccounts struct {
 	Active bool `json:"active" url:"active"`
 
@@ -77732,10 +79194,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7ConnectedAccounts)
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7ConnectedAccounts) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -77805,10 +79269,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Metadata) GetExtra
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Metadata) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Metadata) UnmarshalJSON(data []byte) error {
@@ -77853,7 +79319,6 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Metadata) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// Options for the 'waad' connection
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject7OptionsFieldAPIEnableUsers                     = big.NewInt(1 << 0)
 	eventStreamCloudEventConnectionUpdatedPreviousObject7OptionsFieldAppDomain                          = big.NewInt(1 << 1)
@@ -77885,6 +79350,7 @@ var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject7OptionsFieldWaadProtocol                       = big.NewInt(1 << 27)
 )
 
+// Options for the 'waad' connection
 type EventStreamCloudEventConnectionUpdatedPreviousObject7Options struct {
 	// Enable users API
 	APIEnableUsers *bool `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
@@ -78146,10 +79612,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Options) GetExtraP
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Options) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAPIEnableUsers sets the APIEnableUsers field and marks it as non-optional;
@@ -78398,11 +79866,11 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7Options) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 var (
 	eventStreamCloudEventConnectionUpdatedPreviousObject7OptionsFederatedConnectionsAccessTokensFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration for storing identity provider tokens in Auth0's Token Vault. When active, Auth0 securely stores access and refresh tokens from federated logins, enabling your application to make authenticated API calls on behalf of users.
 type EventStreamCloudEventConnectionUpdatedPreviousObject7OptionsFederatedConnectionsAccessTokens struct {
 	// Enables refresh tokens and access tokens collection for federated connections
 	Active bool `json:"active" url:"active"`
@@ -78429,10 +79897,12 @@ func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7OptionsFederatedCo
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedPreviousObject7OptionsFederatedConnectionsAccessTokens) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -78628,11 +80098,6 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum) Ptr()
 	return &e
 }
 
-// Information about the context in which the event was produced. This may include things like
-// HTTP request details, client information, connection information, etc.
-//
-// Note: This field may not be present on all events, depending on the event type and the
-// context in which it was generated.
 var (
 	eventStreamCloudEventContextFieldClient     = big.NewInt(1 << 0)
 	eventStreamCloudEventContextFieldConnection = big.NewInt(1 << 1)
@@ -78640,6 +80105,11 @@ var (
 	eventStreamCloudEventContextFieldTenant     = big.NewInt(1 << 3)
 )
 
+// Information about the context in which the event was produced. This may include things like
+// HTTP request details, client information, connection information, etc.
+//
+// Note: This field may not be present on all events, depending on the event type and the
+// context in which it was generated.
 type EventStreamCloudEventContext struct {
 	Client     *EventStreamCloudEventContextClient     `json:"client,omitempty" url:"client,omitempty"`
 	Connection *EventStreamCloudEventContextConnection `json:"connection,omitempty" url:"connection,omitempty"`
@@ -78689,10 +80159,12 @@ func (e *EventStreamCloudEventContext) GetExtraProperties() map[string]interface
 }
 
 func (e *EventStreamCloudEventContext) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetClient sets the Client field and marks it as non-optional;
@@ -78765,13 +80237,13 @@ func (e *EventStreamCloudEventContext) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The OAuth Client requesting or presenting an access token.
 var (
 	eventStreamCloudEventContextClientFieldID       = big.NewInt(1 << 0)
 	eventStreamCloudEventContextClientFieldName     = big.NewInt(1 << 1)
 	eventStreamCloudEventContextClientFieldMetadata = big.NewInt(1 << 2)
 )
 
+// The OAuth Client requesting or presenting an access token.
 type EventStreamCloudEventContextClient struct {
 	// The client identifier.
 	ID string `json:"id" url:"id"`
@@ -78815,10 +80287,12 @@ func (e *EventStreamCloudEventContextClient) GetExtraProperties() map[string]int
 }
 
 func (e *EventStreamCloudEventContextClient) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -78887,13 +80361,13 @@ func (e *EventStreamCloudEventContextClient) String() string {
 // Client metadata.
 type EventStreamCloudEventContextClientMetadata = map[string]any
 
-// The Auth0 Connection used for the authentication transaction that generated the event.
 var (
 	eventStreamCloudEventContextConnectionFieldID       = big.NewInt(1 << 0)
 	eventStreamCloudEventContextConnectionFieldName     = big.NewInt(1 << 1)
 	eventStreamCloudEventContextConnectionFieldStrategy = big.NewInt(1 << 2)
 )
 
+// The Auth0 Connection used for the authentication transaction that generated the event.
 type EventStreamCloudEventContextConnection struct {
 	// The ID of the connection.
 	ID string `json:"id" url:"id"`
@@ -78938,10 +80412,12 @@ func (e *EventStreamCloudEventContextConnection) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventContextConnection) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -79007,7 +80483,6 @@ func (e *EventStreamCloudEventContextConnection) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// An HTTP request.
 var (
 	eventStreamCloudEventContextRequestFieldGeo          = big.NewInt(1 << 0)
 	eventStreamCloudEventContextRequestFieldHostname     = big.NewInt(1 << 1)
@@ -79017,6 +80492,7 @@ var (
 	eventStreamCloudEventContextRequestFieldUserAgent    = big.NewInt(1 << 5)
 )
 
+// An HTTP request.
 type EventStreamCloudEventContextRequest struct {
 	Geo *EventStreamCloudEventContextRequestGeo `json:"geo" url:"geo"`
 	// The hostname the request is for.
@@ -79087,10 +80563,12 @@ func (e *EventStreamCloudEventContextRequest) GetExtraProperties() map[string]in
 }
 
 func (e *EventStreamCloudEventContextRequest) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGeo sets the Geo field and marks it as non-optional;
@@ -79177,7 +80655,6 @@ func (e *EventStreamCloudEventContextRequest) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Geographic information about the request origin.
 var (
 	eventStreamCloudEventContextRequestGeoFieldContinentCode   = big.NewInt(1 << 0)
 	eventStreamCloudEventContextRequestGeoFieldCountryCode     = big.NewInt(1 << 1)
@@ -79190,6 +80667,7 @@ var (
 	eventStreamCloudEventContextRequestGeoFieldTimeZone        = big.NewInt(1 << 8)
 )
 
+// Geographic information about the request origin.
 type EventStreamCloudEventContextRequestGeo struct {
 	// Continent code.
 	ContinentCode *string `json:"continent_code,omitempty" url:"continent_code,omitempty"`
@@ -79288,10 +80766,12 @@ func (e *EventStreamCloudEventContextRequestGeo) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventContextRequestGeo) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetContinentCode sets the ContinentCode field and marks it as non-optional;
@@ -79399,11 +80879,11 @@ func (e *EventStreamCloudEventContextRequestGeo) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Reference to a tenant in event context
 var (
 	eventStreamCloudEventContextTenantFieldID = big.NewInt(1 << 0)
 )
 
+// Reference to a tenant in event context
 type EventStreamCloudEventContextTenant struct {
 	// User-provided tenant identifier.
 	ID string `json:"id" url:"id"`
@@ -79430,10 +80910,12 @@ func (e *EventStreamCloudEventContextTenant) GetExtraProperties() map[string]int
 }
 
 func (e *EventStreamCloudEventContextTenant) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -79520,13 +81002,13 @@ func (e EventStreamCloudEventErrorCodeEnum) Ptr() *EventStreamCloudEventErrorCod
 	return &e
 }
 
-// Error details.
 var (
 	eventStreamCloudEventErrorDetailFieldCode    = big.NewInt(1 << 0)
 	eventStreamCloudEventErrorDetailFieldMessage = big.NewInt(1 << 1)
 	eventStreamCloudEventErrorDetailFieldOffset  = big.NewInt(1 << 2)
 )
 
+// Error details.
 type EventStreamCloudEventErrorDetail struct {
 	Code EventStreamCloudEventErrorCodeEnum `json:"code" url:"code"`
 	// Human-readable error message.
@@ -79570,10 +81052,12 @@ func (e *EventStreamCloudEventErrorDetail) GetExtraProperties() map[string]inter
 }
 
 func (e *EventStreamCloudEventErrorDetail) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -79639,11 +81123,11 @@ func (e *EventStreamCloudEventErrorDetail) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// An error message delivered via the SSE stream. The stream closes after this message.
 var (
 	eventStreamCloudEventErrorMessageFieldError = big.NewInt(1 << 0)
 )
 
+// An error message delivered via the SSE stream. The stream closes after this message.
 type EventStreamCloudEventErrorMessage struct {
 	Error *EventStreamCloudEventErrorDetail `json:"error" url:"error"`
 
@@ -79669,10 +81153,12 @@ func (e *EventStreamCloudEventErrorMessage) GetExtraProperties() map[string]inte
 }
 
 func (e *EventStreamCloudEventErrorMessage) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetError sets the Error field and marks it as non-optional;
@@ -79724,12 +81210,12 @@ func (e *EventStreamCloudEventErrorMessage) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for group.created.
 var (
 	eventStreamCloudEventGroupCreatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for group.created.
 type EventStreamCloudEventGroupCreated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                       `json:"offset" url:"offset"`
@@ -79764,10 +81250,12 @@ func (e *EventStreamCloudEventGroupCreated) GetExtraProperties() map[string]inte
 }
 
 func (e *EventStreamCloudEventGroupCreated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -79826,7 +81314,6 @@ func (e *EventStreamCloudEventGroupCreated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a group is created.
 var (
 	eventStreamCloudEventGroupCreatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -79839,6 +81326,7 @@ var (
 	eventStreamCloudEventGroupCreatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a group is created.
 type EventStreamCloudEventGroupCreatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventGroupCreatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -79933,10 +81421,12 @@ func (e *EventStreamCloudEventGroupCreatedCloudEvent) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventGroupCreatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -80072,13 +81562,13 @@ func (e EventStreamCloudEventGroupCreatedCloudEventTypeEnum) Ptr() *EventStreamC
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventGroupCreatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupCreatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventGroupCreatedData struct {
 	Object         *EventStreamCloudEventGroupCreatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventGroupCreatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -80120,10 +81610,12 @@ func (e *EventStreamCloudEventGroupCreatedData) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventGroupCreatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -80220,6 +81712,54 @@ func (e *EventStreamCloudEventGroupCreatedObject) GetEventStreamCloudEventGroupC
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id"}, []string{"id", "name", "created_at", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupCreatedObject0 := new(EventStreamCloudEventGroupCreatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedObject0"
+			e.EventStreamCloudEventGroupCreatedObject0 = valueEventStreamCloudEventGroupCreatedObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id"}, []string{"id", "name", "created_at", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupCreatedObject1 := new(EventStreamCloudEventGroupCreatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedObject1"
+			e.EventStreamCloudEventGroupCreatedObject1 = valueEventStreamCloudEventGroupCreatedObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type"}, []string{"id", "name", "created_at", "type"}) {
+		valueEventStreamCloudEventGroupCreatedObject2 := new(EventStreamCloudEventGroupCreatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedObject2"
+			e.EventStreamCloudEventGroupCreatedObject2 = valueEventStreamCloudEventGroupCreatedObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupCreatedObject0 := new(EventStreamCloudEventGroupCreatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedObject0"
+			e.EventStreamCloudEventGroupCreatedObject0 = valueEventStreamCloudEventGroupCreatedObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupCreatedObject1 := new(EventStreamCloudEventGroupCreatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedObject1"
+			e.EventStreamCloudEventGroupCreatedObject1 = valueEventStreamCloudEventGroupCreatedObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type"}) {
+		valueEventStreamCloudEventGroupCreatedObject2 := new(EventStreamCloudEventGroupCreatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedObject2"
+			e.EventStreamCloudEventGroupCreatedObject2 = valueEventStreamCloudEventGroupCreatedObject2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupCreatedObject0 := new(EventStreamCloudEventGroupCreatedObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedObject0); err == nil {
 		e.typ = "EventStreamCloudEventGroupCreatedObject0"
@@ -80273,7 +81813,6 @@ func (e *EventStreamCloudEventGroupCreatedObject) Accept(visitor EventStreamClou
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Represents a connection group entity.
 var (
 	eventStreamCloudEventGroupCreatedObject0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedObject0FieldName         = big.NewInt(1 << 1)
@@ -80283,6 +81822,7 @@ var (
 	eventStreamCloudEventGroupCreatedObject0FieldConnectionID = big.NewInt(1 << 5)
 )
 
+// Represents a connection group entity.
 type EventStreamCloudEventGroupCreatedObject0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -80353,10 +81893,12 @@ func (e *EventStreamCloudEventGroupCreatedObject0) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -80471,7 +82013,6 @@ func (e EventStreamCloudEventGroupCreatedObject0TypeEnum) Ptr() *EventStreamClou
 	return &e
 }
 
-// Represents an organization group entity.
 var (
 	eventStreamCloudEventGroupCreatedObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedObject1FieldName           = big.NewInt(1 << 1)
@@ -80481,6 +82022,7 @@ var (
 	eventStreamCloudEventGroupCreatedObject1FieldOrganizationID = big.NewInt(1 << 5)
 )
 
+// Represents an organization group entity.
 type EventStreamCloudEventGroupCreatedObject1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -80551,10 +82093,12 @@ func (e *EventStreamCloudEventGroupCreatedObject1) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -80669,7 +82213,6 @@ func (e EventStreamCloudEventGroupCreatedObject1TypeEnum) Ptr() *EventStreamClou
 	return &e
 }
 
-// Represents a tenant group entity.
 var (
 	eventStreamCloudEventGroupCreatedObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedObject2FieldName       = big.NewInt(1 << 1)
@@ -80678,6 +82221,7 @@ var (
 	eventStreamCloudEventGroupCreatedObject2FieldType       = big.NewInt(1 << 4)
 )
 
+// Represents a tenant group entity.
 type EventStreamCloudEventGroupCreatedObject2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -80739,10 +82283,12 @@ func (e *EventStreamCloudEventGroupCreatedObject2) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupCreatedObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -80881,6 +82427,54 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject) GetEventStreamCloudEve
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id"}, []string{"id", "name", "created_at", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupCreatedPreviousObject0 := new(EventStreamCloudEventGroupCreatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject0"
+			e.EventStreamCloudEventGroupCreatedPreviousObject0 = valueEventStreamCloudEventGroupCreatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id"}, []string{"id", "name", "created_at", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupCreatedPreviousObject1 := new(EventStreamCloudEventGroupCreatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject1"
+			e.EventStreamCloudEventGroupCreatedPreviousObject1 = valueEventStreamCloudEventGroupCreatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type"}, []string{"id", "name", "created_at", "type"}) {
+		valueEventStreamCloudEventGroupCreatedPreviousObject2 := new(EventStreamCloudEventGroupCreatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject2"
+			e.EventStreamCloudEventGroupCreatedPreviousObject2 = valueEventStreamCloudEventGroupCreatedPreviousObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupCreatedPreviousObject0 := new(EventStreamCloudEventGroupCreatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject0"
+			e.EventStreamCloudEventGroupCreatedPreviousObject0 = valueEventStreamCloudEventGroupCreatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupCreatedPreviousObject1 := new(EventStreamCloudEventGroupCreatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject1"
+			e.EventStreamCloudEventGroupCreatedPreviousObject1 = valueEventStreamCloudEventGroupCreatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type"}) {
+		valueEventStreamCloudEventGroupCreatedPreviousObject2 := new(EventStreamCloudEventGroupCreatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupCreatedPreviousObject2"
+			e.EventStreamCloudEventGroupCreatedPreviousObject2 = valueEventStreamCloudEventGroupCreatedPreviousObject2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupCreatedPreviousObject0 := new(EventStreamCloudEventGroupCreatedPreviousObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupCreatedPreviousObject0); err == nil {
 		e.typ = "EventStreamCloudEventGroupCreatedPreviousObject0"
@@ -80934,7 +82528,6 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject) Accept(visitor EventSt
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Represents a connection group entity.
 var (
 	eventStreamCloudEventGroupCreatedPreviousObject0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedPreviousObject0FieldName         = big.NewInt(1 << 1)
@@ -80944,6 +82537,7 @@ var (
 	eventStreamCloudEventGroupCreatedPreviousObject0FieldConnectionID = big.NewInt(1 << 5)
 )
 
+// Represents a connection group entity.
 type EventStreamCloudEventGroupCreatedPreviousObject0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -81014,10 +82608,12 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject0) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -81132,7 +82728,6 @@ func (e EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// Represents an organization group entity.
 var (
 	eventStreamCloudEventGroupCreatedPreviousObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedPreviousObject1FieldName           = big.NewInt(1 << 1)
@@ -81142,6 +82737,7 @@ var (
 	eventStreamCloudEventGroupCreatedPreviousObject1FieldOrganizationID = big.NewInt(1 << 5)
 )
 
+// Represents an organization group entity.
 type EventStreamCloudEventGroupCreatedPreviousObject1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -81212,10 +82808,12 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject1) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -81330,7 +82928,6 @@ func (e EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// Represents a tenant group entity.
 var (
 	eventStreamCloudEventGroupCreatedPreviousObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupCreatedPreviousObject2FieldName       = big.NewInt(1 << 1)
@@ -81339,6 +82936,7 @@ var (
 	eventStreamCloudEventGroupCreatedPreviousObject2FieldType       = big.NewInt(1 << 4)
 )
 
+// Represents a tenant group entity.
 type EventStreamCloudEventGroupCreatedPreviousObject2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -81400,10 +82998,12 @@ func (e *EventStreamCloudEventGroupCreatedPreviousObject2) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupCreatedPreviousObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -81511,12 +83111,12 @@ func (e EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// SSE message for group.deleted.
 var (
 	eventStreamCloudEventGroupDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for group.deleted.
 type EventStreamCloudEventGroupDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                       `json:"offset" url:"offset"`
@@ -81551,10 +83151,12 @@ func (e *EventStreamCloudEventGroupDeleted) GetExtraProperties() map[string]inte
 }
 
 func (e *EventStreamCloudEventGroupDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -81613,7 +83215,6 @@ func (e *EventStreamCloudEventGroupDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a group is deleted.
 var (
 	eventStreamCloudEventGroupDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -81626,6 +83227,7 @@ var (
 	eventStreamCloudEventGroupDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a group is deleted.
 type EventStreamCloudEventGroupDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventGroupDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -81720,10 +83322,12 @@ func (e *EventStreamCloudEventGroupDeletedCloudEvent) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventGroupDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -81859,13 +83463,13 @@ func (e EventStreamCloudEventGroupDeletedCloudEventTypeEnum) Ptr() *EventStreamC
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventGroupDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventGroupDeletedData struct {
 	Object         *EventStreamCloudEventGroupDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventGroupDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -81907,10 +83511,12 @@ func (e *EventStreamCloudEventGroupDeletedData) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventGroupDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -82007,6 +83613,54 @@ func (e *EventStreamCloudEventGroupDeletedObject) GetEventStreamCloudEventGroupD
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedObject0 := new(EventStreamCloudEventGroupDeletedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedObject0"
+			e.EventStreamCloudEventGroupDeletedObject0 = valueEventStreamCloudEventGroupDeletedObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedObject1 := new(EventStreamCloudEventGroupDeletedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedObject1"
+			e.EventStreamCloudEventGroupDeletedObject1 = valueEventStreamCloudEventGroupDeletedObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedObject2 := new(EventStreamCloudEventGroupDeletedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedObject2"
+			e.EventStreamCloudEventGroupDeletedObject2 = valueEventStreamCloudEventGroupDeletedObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedObject0 := new(EventStreamCloudEventGroupDeletedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedObject0"
+			e.EventStreamCloudEventGroupDeletedObject0 = valueEventStreamCloudEventGroupDeletedObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedObject1 := new(EventStreamCloudEventGroupDeletedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedObject1"
+			e.EventStreamCloudEventGroupDeletedObject1 = valueEventStreamCloudEventGroupDeletedObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedObject2 := new(EventStreamCloudEventGroupDeletedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedObject2"
+			e.EventStreamCloudEventGroupDeletedObject2 = valueEventStreamCloudEventGroupDeletedObject2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupDeletedObject0 := new(EventStreamCloudEventGroupDeletedObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedObject0); err == nil {
 		e.typ = "EventStreamCloudEventGroupDeletedObject0"
@@ -82060,7 +83714,6 @@ func (e *EventStreamCloudEventGroupDeletedObject) Accept(visitor EventStreamClou
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Connection group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupDeletedObject0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedObject0FieldName         = big.NewInt(1 << 1)
@@ -82071,6 +83724,7 @@ var (
 	eventStreamCloudEventGroupDeletedObject0FieldUpdatedAt    = big.NewInt(1 << 6)
 )
 
+// Connection group with updated_at timestamp
 type EventStreamCloudEventGroupDeletedObject0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -82150,10 +83804,12 @@ func (e *EventStreamCloudEventGroupDeletedObject0) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -82279,7 +83935,6 @@ func (e EventStreamCloudEventGroupDeletedObject0TypeEnum) Ptr() *EventStreamClou
 	return &e
 }
 
-// Organization group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupDeletedObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedObject1FieldName           = big.NewInt(1 << 1)
@@ -82290,6 +83945,7 @@ var (
 	eventStreamCloudEventGroupDeletedObject1FieldUpdatedAt      = big.NewInt(1 << 6)
 )
 
+// Organization group with updated_at timestamp
 type EventStreamCloudEventGroupDeletedObject1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -82369,10 +84025,12 @@ func (e *EventStreamCloudEventGroupDeletedObject1) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -82498,7 +84156,6 @@ func (e EventStreamCloudEventGroupDeletedObject1TypeEnum) Ptr() *EventStreamClou
 	return &e
 }
 
-// Tenant group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupDeletedObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedObject2FieldName       = big.NewInt(1 << 1)
@@ -82508,6 +84165,7 @@ var (
 	eventStreamCloudEventGroupDeletedObject2FieldUpdatedAt  = big.NewInt(1 << 5)
 )
 
+// Tenant group with updated_at timestamp
 type EventStreamCloudEventGroupDeletedObject2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -82578,10 +84236,12 @@ func (e *EventStreamCloudEventGroupDeletedObject2) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupDeletedObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -82731,6 +84391,54 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject) GetEventStreamCloudEve
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedPreviousObject0 := new(EventStreamCloudEventGroupDeletedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject0"
+			e.EventStreamCloudEventGroupDeletedPreviousObject0 = valueEventStreamCloudEventGroupDeletedPreviousObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedPreviousObject1 := new(EventStreamCloudEventGroupDeletedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject1"
+			e.EventStreamCloudEventGroupDeletedPreviousObject1 = valueEventStreamCloudEventGroupDeletedPreviousObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedPreviousObject2 := new(EventStreamCloudEventGroupDeletedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject2"
+			e.EventStreamCloudEventGroupDeletedPreviousObject2 = valueEventStreamCloudEventGroupDeletedPreviousObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedPreviousObject0 := new(EventStreamCloudEventGroupDeletedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject0"
+			e.EventStreamCloudEventGroupDeletedPreviousObject0 = valueEventStreamCloudEventGroupDeletedPreviousObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedPreviousObject1 := new(EventStreamCloudEventGroupDeletedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject1"
+			e.EventStreamCloudEventGroupDeletedPreviousObject1 = valueEventStreamCloudEventGroupDeletedPreviousObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupDeletedPreviousObject2 := new(EventStreamCloudEventGroupDeletedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupDeletedPreviousObject2"
+			e.EventStreamCloudEventGroupDeletedPreviousObject2 = valueEventStreamCloudEventGroupDeletedPreviousObject2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupDeletedPreviousObject0 := new(EventStreamCloudEventGroupDeletedPreviousObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupDeletedPreviousObject0); err == nil {
 		e.typ = "EventStreamCloudEventGroupDeletedPreviousObject0"
@@ -82784,7 +84492,6 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject) Accept(visitor EventSt
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Connection group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupDeletedPreviousObject0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedPreviousObject0FieldName         = big.NewInt(1 << 1)
@@ -82795,6 +84502,7 @@ var (
 	eventStreamCloudEventGroupDeletedPreviousObject0FieldUpdatedAt    = big.NewInt(1 << 6)
 )
 
+// Connection group with updated_at timestamp
 type EventStreamCloudEventGroupDeletedPreviousObject0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -82874,10 +84582,12 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject0) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -83003,7 +84713,6 @@ func (e EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// Organization group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupDeletedPreviousObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedPreviousObject1FieldName           = big.NewInt(1 << 1)
@@ -83014,6 +84723,7 @@ var (
 	eventStreamCloudEventGroupDeletedPreviousObject1FieldUpdatedAt      = big.NewInt(1 << 6)
 )
 
+// Organization group with updated_at timestamp
 type EventStreamCloudEventGroupDeletedPreviousObject1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -83093,10 +84803,12 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject1) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -83222,7 +84934,6 @@ func (e EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// Tenant group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupDeletedPreviousObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupDeletedPreviousObject2FieldName       = big.NewInt(1 << 1)
@@ -83232,6 +84943,7 @@ var (
 	eventStreamCloudEventGroupDeletedPreviousObject2FieldUpdatedAt  = big.NewInt(1 << 5)
 )
 
+// Tenant group with updated_at timestamp
 type EventStreamCloudEventGroupDeletedPreviousObject2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -83302,10 +85014,12 @@ func (e *EventStreamCloudEventGroupDeletedPreviousObject2) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupDeletedPreviousObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -83424,12 +85138,12 @@ func (e EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// SSE message for group.member.added.
 var (
 	eventStreamCloudEventGroupMemberAddedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for group.member.added.
 type EventStreamCloudEventGroupMemberAdded struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                           `json:"offset" url:"offset"`
@@ -83464,10 +85178,12 @@ func (e *EventStreamCloudEventGroupMemberAdded) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventGroupMemberAdded) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -83526,7 +85242,6 @@ func (e *EventStreamCloudEventGroupMemberAdded) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a member is added to a group.
 var (
 	eventStreamCloudEventGroupMemberAddedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -83539,6 +85254,7 @@ var (
 	eventStreamCloudEventGroupMemberAddedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a member is added to a group.
 type EventStreamCloudEventGroupMemberAddedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                    `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventGroupMemberAddedCloudEventTypeEnum `json:"type" url:"type"`
@@ -83633,10 +85349,12 @@ func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -83772,13 +85490,13 @@ func (e EventStreamCloudEventGroupMemberAddedCloudEventTypeEnum) Ptr() *EventStr
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventGroupMemberAddedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupMemberAddedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventGroupMemberAddedData struct {
 	Object         *EventStreamCloudEventGroupMemberAddedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventGroupMemberAddedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -83820,10 +85538,12 @@ func (e *EventStreamCloudEventGroupMemberAddedData) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -83889,12 +85609,12 @@ func (e *EventStreamCloudEventGroupMemberAddedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventGroupMemberAddedObjectFieldGroup  = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectFieldMember = big.NewInt(1 << 1)
 )
 
+// The event content.
 type EventStreamCloudEventGroupMemberAddedObject struct {
 	Group  *EventStreamCloudEventGroupMemberAddedObjectGroup  `json:"group" url:"group"`
 	Member *EventStreamCloudEventGroupMemberAddedObjectMember `json:"member" url:"member"`
@@ -83928,10 +85648,12 @@ func (e *EventStreamCloudEventGroupMemberAddedObject) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -84021,6 +85743,54 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) GetEventStreamCloudEv
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup0"
+			e.EventStreamCloudEventGroupMemberAddedObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup1"
+			e.EventStreamCloudEventGroupMemberAddedObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup2"
+			e.EventStreamCloudEventGroupMemberAddedObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup0"
+			e.EventStreamCloudEventGroupMemberAddedObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup1"
+			e.EventStreamCloudEventGroupMemberAddedObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup2"
+			e.EventStreamCloudEventGroupMemberAddedObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberAddedObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberAddedObjectGroup0"
@@ -84074,7 +85844,6 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup) Accept(visitor EventS
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -84082,6 +85851,7 @@ var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupMemberAddedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -84134,10 +85904,12 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -84230,7 +86002,6 @@ func (e EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum) Ptr() *EventS
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -84238,6 +86009,7 @@ var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupMemberAddedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -84290,10 +86062,12 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -84386,13 +86160,13 @@ func (e EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum) Ptr() *EventS
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupMemberAddedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupMemberAddedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupMemberAddedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -84436,10 +86210,12 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -84548,6 +86324,38 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember) GetEventStreamCloudE
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectMember) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectMember0 := new(EventStreamCloudEventGroupMemberAddedObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember0"
+			e.EventStreamCloudEventGroupMemberAddedObjectMember0 = valueEventStreamCloudEventGroupMemberAddedObjectMember0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectMember1 := new(EventStreamCloudEventGroupMemberAddedObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember1"
+			e.EventStreamCloudEventGroupMemberAddedObjectMember1 = valueEventStreamCloudEventGroupMemberAddedObjectMember1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectMember0 := new(EventStreamCloudEventGroupMemberAddedObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember0"
+			e.EventStreamCloudEventGroupMemberAddedObjectMember0 = valueEventStreamCloudEventGroupMemberAddedObjectMember0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedObjectMember1 := new(EventStreamCloudEventGroupMemberAddedObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember1"
+			e.EventStreamCloudEventGroupMemberAddedObjectMember1 = valueEventStreamCloudEventGroupMemberAddedObjectMember1
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberAddedObjectMember0 := new(EventStreamCloudEventGroupMemberAddedObjectMember0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedObjectMember0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberAddedObjectMember0"
@@ -84588,12 +86396,12 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember) Accept(visitor Event
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// A group member of member_type user
 var (
 	eventStreamCloudEventGroupMemberAddedObjectMember0FieldMemberType = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectMember0FieldID         = big.NewInt(1 << 1)
 )
 
+// A group member of member_type user
 type EventStreamCloudEventGroupMemberAddedObjectMember0 struct {
 	MemberType EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
@@ -84628,10 +86436,12 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember0) GetExtraProperties(
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectMember0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -84710,7 +86520,6 @@ func (e EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum) Ptr() 
 	return &e
 }
 
-// A group member of member_type group
 var (
 	eventStreamCloudEventGroupMemberAddedObjectMember1FieldMemberType   = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedObjectMember1FieldID           = big.NewInt(1 << 1)
@@ -84718,6 +86527,7 @@ var (
 	eventStreamCloudEventGroupMemberAddedObjectMember1FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// A group member of member_type group
 type EventStreamCloudEventGroupMemberAddedObjectMember1 struct {
 	MemberType EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
@@ -84770,10 +86580,12 @@ func (e *EventStreamCloudEventGroupMemberAddedObjectMember1) GetExtraProperties(
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedObjectMember1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -84866,12 +86678,12 @@ func (e EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum) Ptr() 
 	return &e
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectFieldGroup  = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectFieldMember = big.NewInt(1 << 1)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventGroupMemberAddedPreviousObject struct {
 	Group  *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup  `json:"group" url:"group"`
 	Member *EventStreamCloudEventGroupMemberAddedPreviousObjectMember `json:"member" url:"member"`
@@ -84905,10 +86717,12 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObject) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -84998,6 +86812,54 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) GetEventStrea
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0"
@@ -85051,7 +86913,6 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup) Accept(visito
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -85059,6 +86920,7 @@ var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -85111,10 +86973,12 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) GetExtraProp
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -85207,7 +87071,6 @@ func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum) Ptr()
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -85215,6 +87078,7 @@ var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -85267,10 +87131,12 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) GetExtraProp
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -85363,13 +87229,13 @@ func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum) Ptr()
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -85413,10 +87279,12 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) GetExtraProp
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -85525,6 +87393,38 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) GetEventStre
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember1"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember1"
+			e.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember1
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberAddedPreviousObjectMember0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberAddedPreviousObjectMember0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberAddedPreviousObjectMember0"
@@ -85565,12 +87465,12 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember) Accept(visit
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// A group member of member_type user
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectMember0FieldMemberType = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectMember0FieldID         = big.NewInt(1 << 1)
 )
 
+// A group member of member_type user
 type EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 struct {
 	MemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
@@ -85605,10 +87505,12 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) GetExtraPro
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -85687,7 +87589,6 @@ func (e EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum
 	return &e
 }
 
-// A group member of member_type group
 var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldMemberType   = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldID           = big.NewInt(1 << 1)
@@ -85695,6 +87596,7 @@ var (
 	eventStreamCloudEventGroupMemberAddedPreviousObjectMember1FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// A group member of member_type group
 type EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 struct {
 	MemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
@@ -85747,10 +87649,12 @@ func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) GetExtraPro
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -85843,12 +87747,12 @@ func (e EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum
 	return &e
 }
 
-// SSE message for group.member.deleted.
 var (
 	eventStreamCloudEventGroupMemberDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for group.member.deleted.
 type EventStreamCloudEventGroupMemberDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                             `json:"offset" url:"offset"`
@@ -85883,10 +87787,12 @@ func (e *EventStreamCloudEventGroupMemberDeleted) GetExtraProperties() map[strin
 }
 
 func (e *EventStreamCloudEventGroupMemberDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -85945,7 +87851,6 @@ func (e *EventStreamCloudEventGroupMemberDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a member is removed from a group.
 var (
 	eventStreamCloudEventGroupMemberDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -85958,6 +87863,7 @@ var (
 	eventStreamCloudEventGroupMemberDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a member is removed from a group.
 type EventStreamCloudEventGroupMemberDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                      `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventGroupMemberDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -86052,10 +87958,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -86191,13 +88099,13 @@ func (e EventStreamCloudEventGroupMemberDeletedCloudEventTypeEnum) Ptr() *EventS
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventGroupMemberDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupMemberDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventGroupMemberDeletedData struct {
 	Object         *EventStreamCloudEventGroupMemberDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventGroupMemberDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -86239,10 +88147,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedData) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -86308,12 +88218,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectFieldGroup  = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectFieldMember = big.NewInt(1 << 1)
 )
 
+// The event content.
 type EventStreamCloudEventGroupMemberDeletedObject struct {
 	Group  *EventStreamCloudEventGroupMemberDeletedObjectGroup  `json:"group" url:"group"`
 	Member *EventStreamCloudEventGroupMemberDeletedObjectMember `json:"member" url:"member"`
@@ -86347,10 +88257,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedObject) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -86440,6 +88352,54 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) GetEventStreamCloud
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup0"
+			e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup1"
+			e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup2"
+			e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup0"
+			e.EventStreamCloudEventGroupMemberDeletedObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup1"
+			e.EventStreamCloudEventGroupMemberDeletedObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup2"
+			e.EventStreamCloudEventGroupMemberDeletedObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberDeletedObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberDeletedObjectGroup0"
@@ -86493,7 +88453,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup) Accept(visitor Even
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -86501,6 +88460,7 @@ var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupMemberDeletedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -86553,10 +88513,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -86649,7 +88611,6 @@ func (e EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum) Ptr() *Even
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -86657,6 +88618,7 @@ var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupMemberDeletedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -86709,10 +88671,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -86805,13 +88769,13 @@ func (e EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum) Ptr() *Even
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupMemberDeletedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupMemberDeletedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -86855,10 +88819,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -86967,6 +88933,38 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) GetEventStreamClou
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember0"
+			e.EventStreamCloudEventGroupMemberDeletedObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedObjectMember0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember1"
+			e.EventStreamCloudEventGroupMemberDeletedObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedObjectMember1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember0"
+			e.EventStreamCloudEventGroupMemberDeletedObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedObjectMember0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember1"
+			e.EventStreamCloudEventGroupMemberDeletedObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedObjectMember1
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberDeletedObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedObjectMember0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedObjectMember0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberDeletedObjectMember0"
@@ -87007,12 +89005,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember) Accept(visitor Eve
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// A group member of member_type user
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectMember0FieldMemberType = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectMember0FieldID         = big.NewInt(1 << 1)
 )
 
+// A group member of member_type user
 type EventStreamCloudEventGroupMemberDeletedObjectMember0 struct {
 	MemberType EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
@@ -87047,10 +89045,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember0) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectMember0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -87129,7 +89129,6 @@ func (e EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum) Ptr(
 	return &e
 }
 
-// A group member of member_type group
 var (
 	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldMemberType   = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldID           = big.NewInt(1 << 1)
@@ -87137,6 +89136,7 @@ var (
 	eventStreamCloudEventGroupMemberDeletedObjectMember1FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// A group member of member_type group
 type EventStreamCloudEventGroupMemberDeletedObjectMember1 struct {
 	MemberType EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
@@ -87189,10 +89189,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedObjectMember1) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedObjectMember1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -87285,12 +89287,12 @@ func (e EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum) Ptr(
 	return &e
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectFieldGroup  = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectFieldMember = big.NewInt(1 << 1)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventGroupMemberDeletedPreviousObject struct {
 	Group  *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup  `json:"group" url:"group"`
 	Member *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember `json:"member" url:"member"`
@@ -87324,10 +89326,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObject) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -87417,6 +89421,54 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) GetEventStr
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0"
@@ -87470,7 +89522,6 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup) Accept(visi
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -87478,6 +89529,7 @@ var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -87530,10 +89582,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) GetExtraPr
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87626,7 +89680,6 @@ func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum) Ptr
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -87634,6 +89687,7 @@ var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -87686,10 +89740,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) GetExtraPr
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87782,13 +89838,13 @@ func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum) Ptr
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -87832,10 +89888,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) GetExtraPr
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87944,6 +90002,38 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) GetEventSt
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id"}, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"member_type", "id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1); err == nil {
+			e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1"
+			e.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 = valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 := new(EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0); err == nil {
 		e.typ = "EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0"
@@ -87984,12 +90074,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember) Accept(vis
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// A group member of member_type user
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember0FieldMemberType = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember0FieldID         = big.NewInt(1 << 1)
 )
 
+// A group member of member_type user
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 struct {
 	MemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The user's unique identifier
@@ -88024,10 +90114,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) GetExtraP
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -88106,7 +90198,6 @@ func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEn
 	return &e
 }
 
-// A group member of member_type group
 var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldMemberType   = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldID           = big.NewInt(1 << 1)
@@ -88114,6 +90205,7 @@ var (
 	eventStreamCloudEventGroupMemberDeletedPreviousObjectMember1FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// A group member of member_type group
 type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 struct {
 	MemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum `json:"member_type" url:"member_type"`
 	// The connection member's unique identifier
@@ -88166,10 +90258,12 @@ func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) GetExtraP
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMemberType sets the MemberType field and marks it as non-optional;
@@ -88262,12 +90356,12 @@ func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEn
 	return &e
 }
 
-// SSE message for group.role.assigned.
 var (
 	eventStreamCloudEventGroupRoleAssignedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for group.role.assigned.
 type EventStreamCloudEventGroupRoleAssigned struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                            `json:"offset" url:"offset"`
@@ -88302,10 +90396,12 @@ func (e *EventStreamCloudEventGroupRoleAssigned) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventGroupRoleAssigned) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -88364,7 +90460,6 @@ func (e *EventStreamCloudEventGroupRoleAssigned) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a role is assigned to a group.
 var (
 	eventStreamCloudEventGroupRoleAssignedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -88377,6 +90472,7 @@ var (
 	eventStreamCloudEventGroupRoleAssignedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a role is assigned to a group.
 type EventStreamCloudEventGroupRoleAssignedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                     `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventGroupRoleAssignedCloudEventTypeEnum `json:"type" url:"type"`
@@ -88471,10 +90567,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -88610,13 +90708,13 @@ func (e EventStreamCloudEventGroupRoleAssignedCloudEventTypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventGroupRoleAssignedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleAssignedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventGroupRoleAssignedData struct {
 	Object         *EventStreamCloudEventGroupRoleAssignedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventGroupRoleAssignedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -88658,10 +90756,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedData) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -88727,13 +90827,13 @@ func (e *EventStreamCloudEventGroupRoleAssignedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectFieldGroup     = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectFieldRole      = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleAssignedObjectFieldCreatedAt = big.NewInt(1 << 2)
 )
 
+// The event content.
 type EventStreamCloudEventGroupRoleAssignedObject struct {
 	Group *EventStreamCloudEventGroupRoleAssignedObjectGroup `json:"group" url:"group"`
 	Role  *EventStreamCloudEventGroupRoleAssignedObjectRole  `json:"role" url:"role"`
@@ -88776,10 +90876,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedObject) GetExtraProperties() map[
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -88884,6 +90986,54 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) GetEventStreamCloudE
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup0"
+			e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup1"
+			e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup2"
+			e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup0"
+			e.EventStreamCloudEventGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup1"
+			e.EventStreamCloudEventGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup2"
+			e.EventStreamCloudEventGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupRoleAssignedObjectGroup0"
@@ -88937,7 +91087,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup) Accept(visitor Event
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -88945,6 +91094,7 @@ var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupRoleAssignedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -88997,10 +91147,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) GetExtraProperties(
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89093,7 +91245,6 @@ func (e EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum) Ptr() *Event
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -89101,6 +91252,7 @@ var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupRoleAssignedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -89153,10 +91305,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) GetExtraProperties(
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89249,13 +91403,13 @@ func (e EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum) Ptr() *Event
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleAssignedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupRoleAssignedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -89299,10 +91453,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) GetExtraProperties(
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89388,12 +91544,12 @@ func (e EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum) Ptr() *Event
 	return &e
 }
 
-// The role assigned to the group.
 var (
 	eventStreamCloudEventGroupRoleAssignedObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the group.
 type EventStreamCloudEventGroupRoleAssignedObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -89429,10 +91585,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectRole) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89491,13 +91649,13 @@ func (e *EventStreamCloudEventGroupRoleAssignedObjectRole) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectFieldGroup     = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectFieldRole      = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectFieldCreatedAt = big.NewInt(1 << 2)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventGroupRoleAssignedPreviousObject struct {
 	Group *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup `json:"group" url:"group"`
 	Role  *EventStreamCloudEventGroupRoleAssignedPreviousObjectRole  `json:"role" url:"role"`
@@ -89540,10 +91698,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObject) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -89648,6 +91808,54 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) GetEventStre
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0"
@@ -89701,7 +91909,6 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup) Accept(visit
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -89709,6 +91916,7 @@ var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -89761,10 +91969,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) GetExtraPro
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89857,7 +92067,6 @@ func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum) Ptr(
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -89865,6 +92074,7 @@ var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -89917,10 +92127,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) GetExtraPro
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -90013,13 +92225,13 @@ func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum) Ptr(
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -90063,10 +92275,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) GetExtraPro
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -90152,12 +92366,12 @@ func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum) Ptr(
 	return &e
 }
 
-// The role assigned to the group.
 var (
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleAssignedPreviousObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the group.
 type EventStreamCloudEventGroupRoleAssignedPreviousObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -90193,10 +92407,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectRole) GetExtraPrope
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -90255,12 +92471,12 @@ func (e *EventStreamCloudEventGroupRoleAssignedPreviousObjectRole) String() stri
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for group.role.deleted.
 var (
 	eventStreamCloudEventGroupRoleDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for group.role.deleted.
 type EventStreamCloudEventGroupRoleDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                           `json:"offset" url:"offset"`
@@ -90295,10 +92511,12 @@ func (e *EventStreamCloudEventGroupRoleDeleted) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventGroupRoleDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -90357,7 +92575,6 @@ func (e *EventStreamCloudEventGroupRoleDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a role is removed from a group.
 var (
 	eventStreamCloudEventGroupRoleDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -90370,6 +92587,7 @@ var (
 	eventStreamCloudEventGroupRoleDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a role is removed from a group.
 type EventStreamCloudEventGroupRoleDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                    `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventGroupRoleDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -90464,10 +92682,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -90603,13 +92823,13 @@ func (e EventStreamCloudEventGroupRoleDeletedCloudEventTypeEnum) Ptr() *EventStr
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventGroupRoleDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventGroupRoleDeletedData struct {
 	Object         *EventStreamCloudEventGroupRoleDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventGroupRoleDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -90651,10 +92871,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedData) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -90720,13 +92942,13 @@ func (e *EventStreamCloudEventGroupRoleDeletedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectFieldGroup     = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedObjectFieldRole      = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleDeletedObjectFieldDeletedAt = big.NewInt(1 << 2)
 )
 
+// The event content.
 type EventStreamCloudEventGroupRoleDeletedObject struct {
 	Group *EventStreamCloudEventGroupRoleDeletedObjectGroup `json:"group" url:"group"`
 	Role  *EventStreamCloudEventGroupRoleDeletedObjectRole  `json:"role" url:"role"`
@@ -90769,10 +92991,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedObject) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -90877,6 +93101,54 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) GetEventStreamCloudEv
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup0"
+			e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup1"
+			e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup2"
+			e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup0"
+			e.EventStreamCloudEventGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup1"
+			e.EventStreamCloudEventGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup2"
+			e.EventStreamCloudEventGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupRoleDeletedObjectGroup0"
@@ -90930,7 +93202,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup) Accept(visitor EventS
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -90938,6 +93209,7 @@ var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupRoleDeletedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -90990,10 +93262,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91086,7 +93360,6 @@ func (e EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum) Ptr() *EventS
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -91094,6 +93367,7 @@ var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupRoleDeletedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -91146,10 +93420,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91242,13 +93518,13 @@ func (e EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum) Ptr() *EventS
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleDeletedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupRoleDeletedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -91292,10 +93568,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91381,11 +93659,11 @@ func (e EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum) Ptr() *EventS
 	return &e
 }
 
-// The role removed from the group.
 var (
 	eventStreamCloudEventGroupRoleDeletedObjectRoleFieldID = big.NewInt(1 << 0)
 )
 
+// The role removed from the group.
 type EventStreamCloudEventGroupRoleDeletedObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -91412,10 +93690,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectRole) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91467,13 +93747,13 @@ func (e *EventStreamCloudEventGroupRoleDeletedObjectRole) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectFieldGroup     = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectFieldRole      = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectFieldCreatedAt = big.NewInt(1 << 2)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventGroupRoleDeletedPreviousObject struct {
 	Group *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup `json:"group" url:"group"`
 	Role  *EventStreamCloudEventGroupRoleDeletedPreviousObjectRole  `json:"role" url:"role"`
@@ -91516,10 +93796,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObject) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -91624,6 +93906,54 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) GetEventStrea
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0"
+			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1"
+			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2"
+			e.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0"
@@ -91677,7 +94007,6 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup) Accept(visito
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -91685,6 +94014,7 @@ var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -91737,10 +94067,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) GetExtraProp
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91833,7 +94165,6 @@ func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum) Ptr()
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -91841,6 +94172,7 @@ var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -91893,10 +94225,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) GetExtraProp
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91989,13 +94323,13 @@ func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum) Ptr()
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -92039,10 +94373,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) GetExtraProp
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -92128,12 +94464,12 @@ func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum) Ptr()
 	return &e
 }
 
-// The role assigned to the group.
 var (
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupRoleDeletedPreviousObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the group.
 type EventStreamCloudEventGroupRoleDeletedPreviousObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -92169,10 +94505,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectRole) GetExtraProper
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -92231,12 +94569,12 @@ func (e *EventStreamCloudEventGroupRoleDeletedPreviousObjectRole) String() strin
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for group.updated.
 var (
 	eventStreamCloudEventGroupUpdatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for group.updated.
 type EventStreamCloudEventGroupUpdated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                       `json:"offset" url:"offset"`
@@ -92271,10 +94609,12 @@ func (e *EventStreamCloudEventGroupUpdated) GetExtraProperties() map[string]inte
 }
 
 func (e *EventStreamCloudEventGroupUpdated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -92333,7 +94673,6 @@ func (e *EventStreamCloudEventGroupUpdated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a group is updated.
 var (
 	eventStreamCloudEventGroupUpdatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -92346,6 +94685,7 @@ var (
 	eventStreamCloudEventGroupUpdatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a group is updated.
 type EventStreamCloudEventGroupUpdatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventGroupUpdatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -92440,10 +94780,12 @@ func (e *EventStreamCloudEventGroupUpdatedCloudEvent) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventGroupUpdatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -92579,13 +94921,13 @@ func (e EventStreamCloudEventGroupUpdatedCloudEventTypeEnum) Ptr() *EventStreamC
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventGroupUpdatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventGroupUpdatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventGroupUpdatedData struct {
 	Object         *EventStreamCloudEventGroupUpdatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventGroupUpdatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -92627,10 +94969,12 @@ func (e *EventStreamCloudEventGroupUpdatedData) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventGroupUpdatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -92727,6 +95071,54 @@ func (e *EventStreamCloudEventGroupUpdatedObject) GetEventStreamCloudEventGroupU
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedObject0 := new(EventStreamCloudEventGroupUpdatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedObject0"
+			e.EventStreamCloudEventGroupUpdatedObject0 = valueEventStreamCloudEventGroupUpdatedObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedObject1 := new(EventStreamCloudEventGroupUpdatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedObject1"
+			e.EventStreamCloudEventGroupUpdatedObject1 = valueEventStreamCloudEventGroupUpdatedObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedObject2 := new(EventStreamCloudEventGroupUpdatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedObject2"
+			e.EventStreamCloudEventGroupUpdatedObject2 = valueEventStreamCloudEventGroupUpdatedObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedObject0 := new(EventStreamCloudEventGroupUpdatedObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedObject0"
+			e.EventStreamCloudEventGroupUpdatedObject0 = valueEventStreamCloudEventGroupUpdatedObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedObject1 := new(EventStreamCloudEventGroupUpdatedObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedObject1"
+			e.EventStreamCloudEventGroupUpdatedObject1 = valueEventStreamCloudEventGroupUpdatedObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedObject2 := new(EventStreamCloudEventGroupUpdatedObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedObject2"
+			e.EventStreamCloudEventGroupUpdatedObject2 = valueEventStreamCloudEventGroupUpdatedObject2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupUpdatedObject0 := new(EventStreamCloudEventGroupUpdatedObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedObject0); err == nil {
 		e.typ = "EventStreamCloudEventGroupUpdatedObject0"
@@ -92780,7 +95172,6 @@ func (e *EventStreamCloudEventGroupUpdatedObject) Accept(visitor EventStreamClou
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Connection group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupUpdatedObject0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedObject0FieldName         = big.NewInt(1 << 1)
@@ -92791,6 +95182,7 @@ var (
 	eventStreamCloudEventGroupUpdatedObject0FieldUpdatedAt    = big.NewInt(1 << 6)
 )
 
+// Connection group with updated_at timestamp
 type EventStreamCloudEventGroupUpdatedObject0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -92870,10 +95262,12 @@ func (e *EventStreamCloudEventGroupUpdatedObject0) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -92999,7 +95393,6 @@ func (e EventStreamCloudEventGroupUpdatedObject0TypeEnum) Ptr() *EventStreamClou
 	return &e
 }
 
-// Organization group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupUpdatedObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedObject1FieldName           = big.NewInt(1 << 1)
@@ -93010,6 +95403,7 @@ var (
 	eventStreamCloudEventGroupUpdatedObject1FieldUpdatedAt      = big.NewInt(1 << 6)
 )
 
+// Organization group with updated_at timestamp
 type EventStreamCloudEventGroupUpdatedObject1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -93089,10 +95483,12 @@ func (e *EventStreamCloudEventGroupUpdatedObject1) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -93218,7 +95614,6 @@ func (e EventStreamCloudEventGroupUpdatedObject1TypeEnum) Ptr() *EventStreamClou
 	return &e
 }
 
-// Tenant group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupUpdatedObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedObject2FieldName       = big.NewInt(1 << 1)
@@ -93228,6 +95623,7 @@ var (
 	eventStreamCloudEventGroupUpdatedObject2FieldUpdatedAt  = big.NewInt(1 << 5)
 )
 
+// Tenant group with updated_at timestamp
 type EventStreamCloudEventGroupUpdatedObject2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -93298,10 +95694,12 @@ func (e *EventStreamCloudEventGroupUpdatedObject2) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventGroupUpdatedObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -93451,6 +95849,54 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject) GetEventStreamCloudEve
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "connection_id", "updated_at"}, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedPreviousObject0 := new(EventStreamCloudEventGroupUpdatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject0"
+			e.EventStreamCloudEventGroupUpdatedPreviousObject0 = valueEventStreamCloudEventGroupUpdatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "organization_id", "updated_at"}, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedPreviousObject1 := new(EventStreamCloudEventGroupUpdatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject1"
+			e.EventStreamCloudEventGroupUpdatedPreviousObject1 = valueEventStreamCloudEventGroupUpdatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "external_id", "created_at", "type", "updated_at"}, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedPreviousObject2 := new(EventStreamCloudEventGroupUpdatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject2"
+			e.EventStreamCloudEventGroupUpdatedPreviousObject2 = valueEventStreamCloudEventGroupUpdatedPreviousObject2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "connection_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedPreviousObject0 := new(EventStreamCloudEventGroupUpdatedPreviousObject0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject0); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject0"
+			e.EventStreamCloudEventGroupUpdatedPreviousObject0 = valueEventStreamCloudEventGroupUpdatedPreviousObject0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "organization_id", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedPreviousObject1 := new(EventStreamCloudEventGroupUpdatedPreviousObject1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject1); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject1"
+			e.EventStreamCloudEventGroupUpdatedPreviousObject1 = valueEventStreamCloudEventGroupUpdatedPreviousObject1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "name", "created_at", "type", "updated_at"}) {
+		valueEventStreamCloudEventGroupUpdatedPreviousObject2 := new(EventStreamCloudEventGroupUpdatedPreviousObject2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject2); err == nil {
+			e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject2"
+			e.EventStreamCloudEventGroupUpdatedPreviousObject2 = valueEventStreamCloudEventGroupUpdatedPreviousObject2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventGroupUpdatedPreviousObject0 := new(EventStreamCloudEventGroupUpdatedPreviousObject0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventGroupUpdatedPreviousObject0); err == nil {
 		e.typ = "EventStreamCloudEventGroupUpdatedPreviousObject0"
@@ -93504,7 +95950,6 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject) Accept(visitor EventSt
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Connection group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupUpdatedPreviousObject0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedPreviousObject0FieldName         = big.NewInt(1 << 1)
@@ -93515,6 +95960,7 @@ var (
 	eventStreamCloudEventGroupUpdatedPreviousObject0FieldUpdatedAt    = big.NewInt(1 << 6)
 )
 
+// Connection group with updated_at timestamp
 type EventStreamCloudEventGroupUpdatedPreviousObject0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -93594,10 +96040,12 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -93723,7 +96171,6 @@ func (e EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// Organization group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupUpdatedPreviousObject1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedPreviousObject1FieldName           = big.NewInt(1 << 1)
@@ -93734,6 +96181,7 @@ var (
 	eventStreamCloudEventGroupUpdatedPreviousObject1FieldUpdatedAt      = big.NewInt(1 << 6)
 )
 
+// Organization group with updated_at timestamp
 type EventStreamCloudEventGroupUpdatedPreviousObject1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -93813,10 +96261,12 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -93942,7 +96392,6 @@ func (e EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// Tenant group with updated_at timestamp
 var (
 	eventStreamCloudEventGroupUpdatedPreviousObject2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventGroupUpdatedPreviousObject2FieldName       = big.NewInt(1 << 1)
@@ -93952,6 +96401,7 @@ var (
 	eventStreamCloudEventGroupUpdatedPreviousObject2FieldUpdatedAt  = big.NewInt(1 << 5)
 )
 
+// Tenant group with updated_at timestamp
 type EventStreamCloudEventGroupUpdatedPreviousObject2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -94022,10 +96472,12 @@ func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventGroupUpdatedPreviousObject2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -94144,11 +96596,11 @@ func (e EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum) Ptr() *EventSt
 	return &e
 }
 
-// An offset-only heartbeat message. Advances the cursor without delivering an event.
 var (
 	eventStreamCloudEventOffsetOnlyMessageFieldOffset = big.NewInt(1 << 0)
 )
 
+// An offset-only heartbeat message. Advances the cursor without delivering an event.
 type EventStreamCloudEventOffsetOnlyMessage struct {
 	// Opaque cursor representing the latest position in the stream. Pass as the `from` query parameter to resume.
 	Offset string `json:"offset" url:"offset"`
@@ -94175,10 +96627,12 @@ func (e *EventStreamCloudEventOffsetOnlyMessage) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventOffsetOnlyMessage) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -94230,12 +96684,12 @@ func (e *EventStreamCloudEventOffsetOnlyMessage) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.connection.added.
 var (
 	eventStreamCloudEventOrgConnectionAddedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionAddedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.connection.added.
 type EventStreamCloudEventOrgConnectionAdded struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                             `json:"offset" url:"offset"`
@@ -94270,10 +96724,12 @@ func (e *EventStreamCloudEventOrgConnectionAdded) GetExtraProperties() map[strin
 }
 
 func (e *EventStreamCloudEventOrgConnectionAdded) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -94332,7 +96788,6 @@ func (e *EventStreamCloudEventOrgConnectionAdded) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a connection is added to an organization.
 var (
 	eventStreamCloudEventOrgConnectionAddedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionAddedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -94345,6 +96800,7 @@ var (
 	eventStreamCloudEventOrgConnectionAddedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a connection is added to an organization.
 type EventStreamCloudEventOrgConnectionAddedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                      `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgConnectionAddedCloudEventTypeEnum `json:"type" url:"type"`
@@ -94439,10 +96895,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -94578,13 +97036,13 @@ func (e EventStreamCloudEventOrgConnectionAddedCloudEventTypeEnum) Ptr() *EventS
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgConnectionAddedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionAddedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgConnectionAddedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgConnectionAddedData struct {
 	Object         *EventStreamCloudEventOrgConnectionAddedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgConnectionAddedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -94626,10 +97084,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedData) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -94695,7 +97155,6 @@ func (e *EventStreamCloudEventOrgConnectionAddedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgConnectionAddedObjectFieldOrganization            = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionAddedObjectFieldConnection              = big.NewInt(1 << 1)
@@ -94706,6 +97165,7 @@ var (
 	eventStreamCloudEventOrgConnectionAddedObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
 )
 
+// The event content.
 type EventStreamCloudEventOrgConnectionAddedObject struct {
 	Organization *EventStreamCloudEventOrgConnectionAddedObjectOrganization `json:"organization" url:"organization"`
 	Connection   *EventStreamCloudEventOrgConnectionAddedObjectConnection   `json:"connection" url:"connection"`
@@ -94787,10 +97247,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedObject) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -94914,10 +97376,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedObjectConnection) GetExtraProper
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedObjectConnection) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -94969,12 +97433,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedObjectConnection) String() strin
 	return fmt.Sprintf("%#v", e)
 }
 
-// Information about an Auth0 Organization.
 var (
 	eventStreamCloudEventOrgConnectionAddedObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionAddedObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// Information about an Auth0 Organization.
 type EventStreamCloudEventOrgConnectionAddedObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -95010,10 +97474,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganization) GetExtraProp
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -95253,7 +97719,6 @@ func (e EventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessLevel3Enu
 	return &e
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganization            = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldConnection              = big.NewInt(1 << 1)
@@ -95264,6 +97729,7 @@ var (
 	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgConnectionAddedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganization `json:"organization" url:"organization"`
 	Connection   *EventStreamCloudEventOrgConnectionAddedPreviousObjectConnection   `json:"connection" url:"connection"`
@@ -95345,10 +97811,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -95472,10 +97940,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectConnection) GetExt
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectConnection) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -95527,12 +97997,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectConnection) String
 	return fmt.Sprintf("%#v", e)
 }
 
-// Information about an Auth0 Organization.
 var (
 	eventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// Information about an Auth0 Organization.
 type EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -95568,10 +98038,12 @@ func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganization) GetE
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -95811,12 +98283,12 @@ func (e EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessL
 	return &e
 }
 
-// SSE message for organization.connection.removed.
 var (
 	eventStreamCloudEventOrgConnectionRemovedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.connection.removed.
 type EventStreamCloudEventOrgConnectionRemoved struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                               `json:"offset" url:"offset"`
@@ -95851,10 +98323,12 @@ func (e *EventStreamCloudEventOrgConnectionRemoved) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemoved) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -95913,7 +98387,6 @@ func (e *EventStreamCloudEventOrgConnectionRemoved) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a connection is removed from an organization.
 var (
 	eventStreamCloudEventOrgConnectionRemovedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -95926,6 +98399,7 @@ var (
 	eventStreamCloudEventOrgConnectionRemovedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a connection is removed from an organization.
 type EventStreamCloudEventOrgConnectionRemovedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                        `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgConnectionRemovedCloudEventTypeEnum `json:"type" url:"type"`
@@ -96020,10 +98494,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -96159,13 +98635,13 @@ func (e EventStreamCloudEventOrgConnectionRemovedCloudEventTypeEnum) Ptr() *Even
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgConnectionRemovedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgConnectionRemovedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgConnectionRemovedData struct {
 	Object         *EventStreamCloudEventOrgConnectionRemovedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgConnectionRemovedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -96207,10 +98683,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedData) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -96276,12 +98754,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgConnectionRemovedObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedObjectFieldConnection   = big.NewInt(1 << 1)
 )
 
+// The event content.
 type EventStreamCloudEventOrgConnectionRemovedObject struct {
 	Organization *EventStreamCloudEventOrgConnectionRemovedObjectOrganization `json:"organization" url:"organization"`
 	Connection   *EventStreamCloudEventOrgConnectionRemovedObjectConnection   `json:"connection" url:"connection"`
@@ -96315,10 +98793,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedObject) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -96407,10 +98887,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedObjectConnection) GetExtraProp
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedObjectConnection) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -96462,12 +98944,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedObjectConnection) String() str
 	return fmt.Sprintf("%#v", e)
 }
 
-// Information about an Auth0 Organization.
 var (
 	eventStreamCloudEventOrgConnectionRemovedObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// Information about an Auth0 Organization.
 type EventStreamCloudEventOrgConnectionRemovedObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -96503,10 +98985,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedObjectOrganization) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -96565,12 +99049,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedObjectOrganization) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgConnectionRemovedPreviousObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedPreviousObjectFieldConnection   = big.NewInt(1 << 1)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgConnectionRemovedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgConnectionRemovedPreviousObjectOrganization `json:"organization" url:"organization"`
 	Connection   *EventStreamCloudEventOrgConnectionRemovedPreviousObjectConnection   `json:"connection" url:"connection"`
@@ -96604,10 +99088,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObject) GetExtraProper
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -96696,10 +99182,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObjectConnection) GetE
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObjectConnection) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -96751,12 +99239,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObjectConnection) Stri
 	return fmt.Sprintf("%#v", e)
 }
 
-// Information about an Auth0 Organization.
 var (
 	eventStreamCloudEventOrgConnectionRemovedPreviousObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedPreviousObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// Information about an Auth0 Organization.
 type EventStreamCloudEventOrgConnectionRemovedPreviousObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -96792,10 +99280,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObjectOrganization) Ge
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -96854,12 +99344,12 @@ func (e *EventStreamCloudEventOrgConnectionRemovedPreviousObjectOrganization) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.connection.updated.
 var (
 	eventStreamCloudEventOrgConnectionUpdatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionUpdatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.connection.updated.
 type EventStreamCloudEventOrgConnectionUpdated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                               `json:"offset" url:"offset"`
@@ -96894,10 +99384,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdated) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -96956,7 +99448,6 @@ func (e *EventStreamCloudEventOrgConnectionUpdated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a organization connection is updated.
 var (
 	eventStreamCloudEventOrgConnectionUpdatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionUpdatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -96969,6 +99460,7 @@ var (
 	eventStreamCloudEventOrgConnectionUpdatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a organization connection is updated.
 type EventStreamCloudEventOrgConnectionUpdatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                        `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgConnectionUpdatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -97063,10 +99555,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -97202,13 +99696,13 @@ func (e EventStreamCloudEventOrgConnectionUpdatedCloudEventTypeEnum) Ptr() *Even
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgConnectionUpdatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionUpdatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgConnectionUpdatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgConnectionUpdatedData struct {
 	Object         *EventStreamCloudEventOrgConnectionUpdatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgConnectionUpdatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -97250,10 +99744,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedData) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -97319,7 +99815,6 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganization            = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionUpdatedObjectFieldConnection              = big.NewInt(1 << 1)
@@ -97330,6 +99825,7 @@ var (
 	eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
 )
 
+// The event content.
 type EventStreamCloudEventOrgConnectionUpdatedObject struct {
 	Organization *EventStreamCloudEventOrgConnectionUpdatedObjectOrganization `json:"organization" url:"organization"`
 	Connection   *EventStreamCloudEventOrgConnectionUpdatedObjectConnection   `json:"connection" url:"connection"`
@@ -97411,10 +99907,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedObject) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -97538,10 +100036,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedObjectConnection) GetExtraProp
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedObjectConnection) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -97593,12 +100093,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedObjectConnection) String() str
 	return fmt.Sprintf("%#v", e)
 }
 
-// Information about an Auth0 Organization.
 var (
 	eventStreamCloudEventOrgConnectionUpdatedObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionUpdatedObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// Information about an Auth0 Organization.
 type EventStreamCloudEventOrgConnectionUpdatedObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -97634,10 +100134,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganization) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -97877,7 +100379,6 @@ func (e EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAccessLevel3E
 	return &e
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganization            = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldConnection              = big.NewInt(1 << 1)
@@ -97888,6 +100389,7 @@ var (
 	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgConnectionUpdatedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganization `json:"organization" url:"organization"`
 	Connection   *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectConnection   `json:"connection" url:"connection"`
@@ -97969,10 +100471,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) GetExtraProper
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -98096,10 +100600,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectConnection) GetE
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectConnection) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -98151,12 +100657,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectConnection) Stri
 	return fmt.Sprintf("%#v", e)
 }
 
-// Information about an Auth0 Organization.
 var (
 	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// Information about an Auth0 Organization.
 type EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -98192,10 +100698,12 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganization) Ge
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -98435,12 +100943,12 @@ func (e EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAcces
 	return &e
 }
 
-// SSE message for organization.created.
 var (
 	eventStreamCloudEventOrgCreatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.created.
 type EventStreamCloudEventOrgCreated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                     `json:"offset" url:"offset"`
@@ -98475,10 +100983,12 @@ func (e *EventStreamCloudEventOrgCreated) GetExtraProperties() map[string]interf
 }
 
 func (e *EventStreamCloudEventOrgCreated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -98537,7 +101047,6 @@ func (e *EventStreamCloudEventOrgCreated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when an organization is created.
 var (
 	eventStreamCloudEventOrgCreatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -98550,6 +101059,7 @@ var (
 	eventStreamCloudEventOrgCreatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when an organization is created.
 type EventStreamCloudEventOrgCreatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum              `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgCreatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -98644,10 +101154,12 @@ func (e *EventStreamCloudEventOrgCreatedCloudEvent) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgCreatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -98783,13 +101295,13 @@ func (e EventStreamCloudEventOrgCreatedCloudEventTypeEnum) Ptr() *EventStreamClo
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgCreatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgCreatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgCreatedData struct {
 	Object         *EventStreamCloudEventOrgCreatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgCreatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -98831,10 +101343,12 @@ func (e *EventStreamCloudEventOrgCreatedData) GetExtraProperties() map[string]in
 }
 
 func (e *EventStreamCloudEventOrgCreatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -98900,7 +101414,6 @@ func (e *EventStreamCloudEventOrgCreatedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgCreatedObjectFieldName        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedObjectFieldID          = big.NewInt(1 << 1)
@@ -98909,6 +101422,7 @@ var (
 	eventStreamCloudEventOrgCreatedObjectFieldBranding    = big.NewInt(1 << 4)
 )
 
+// The event content.
 type EventStreamCloudEventOrgCreatedObject struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -98969,10 +101483,12 @@ func (e *EventStreamCloudEventOrgCreatedObject) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventOrgCreatedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -99052,12 +101568,12 @@ func (e *EventStreamCloudEventOrgCreatedObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The branding associated with the organization.
 var (
 	eventStreamCloudEventOrgCreatedObjectBrandingFieldLogoURL = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedObjectBrandingFieldColors  = big.NewInt(1 << 1)
 )
 
+// The branding associated with the organization.
 type EventStreamCloudEventOrgCreatedObjectBranding struct {
 	// URL of logo to display on login page.
 	LogoURL *string                                              `json:"logo_url,omitempty" url:"logo_url,omitempty"`
@@ -99092,10 +101608,12 @@ func (e *EventStreamCloudEventOrgCreatedObjectBranding) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgCreatedObjectBranding) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetLogoURL sets the LogoURL field and marks it as non-optional;
@@ -99154,12 +101672,12 @@ func (e *EventStreamCloudEventOrgCreatedObjectBranding) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Color scheme used to customize the login pages.
 var (
 	eventStreamCloudEventOrgCreatedObjectBrandingColorsFieldPrimary        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedObjectBrandingColorsFieldPageBackground = big.NewInt(1 << 1)
 )
 
+// Color scheme used to customize the login pages.
 type EventStreamCloudEventOrgCreatedObjectBrandingColors struct {
 	// HEX Color for primary elements.
 	Primary *string `json:"primary,omitempty" url:"primary,omitempty"`
@@ -99195,10 +101713,12 @@ func (e *EventStreamCloudEventOrgCreatedObjectBrandingColors) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgCreatedObjectBrandingColors) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -99260,7 +101780,6 @@ func (e *EventStreamCloudEventOrgCreatedObjectBrandingColors) String() string {
 // The metadata associated with the organization.
 type EventStreamCloudEventOrgCreatedObjectMetadata = map[string]any
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgCreatedPreviousObjectFieldName        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedPreviousObjectFieldID          = big.NewInt(1 << 1)
@@ -99269,6 +101788,7 @@ var (
 	eventStreamCloudEventOrgCreatedPreviousObjectFieldBranding    = big.NewInt(1 << 4)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgCreatedPreviousObject struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -99329,10 +101849,12 @@ func (e *EventStreamCloudEventOrgCreatedPreviousObject) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgCreatedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -99412,12 +101934,12 @@ func (e *EventStreamCloudEventOrgCreatedPreviousObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The branding associated with the organization.
 var (
 	eventStreamCloudEventOrgCreatedPreviousObjectBrandingFieldLogoURL = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedPreviousObjectBrandingFieldColors  = big.NewInt(1 << 1)
 )
 
+// The branding associated with the organization.
 type EventStreamCloudEventOrgCreatedPreviousObjectBranding struct {
 	// URL of logo to display on login page.
 	LogoURL *string                                                      `json:"logo_url,omitempty" url:"logo_url,omitempty"`
@@ -99452,10 +101974,12 @@ func (e *EventStreamCloudEventOrgCreatedPreviousObjectBranding) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgCreatedPreviousObjectBranding) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetLogoURL sets the LogoURL field and marks it as non-optional;
@@ -99514,12 +102038,12 @@ func (e *EventStreamCloudEventOrgCreatedPreviousObjectBranding) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Color scheme used to customize the login pages.
 var (
 	eventStreamCloudEventOrgCreatedPreviousObjectBrandingColorsFieldPrimary        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedPreviousObjectBrandingColorsFieldPageBackground = big.NewInt(1 << 1)
 )
 
+// Color scheme used to customize the login pages.
 type EventStreamCloudEventOrgCreatedPreviousObjectBrandingColors struct {
 	// HEX Color for primary elements.
 	Primary *string `json:"primary,omitempty" url:"primary,omitempty"`
@@ -99555,10 +102079,12 @@ func (e *EventStreamCloudEventOrgCreatedPreviousObjectBrandingColors) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgCreatedPreviousObjectBrandingColors) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -99620,12 +102146,12 @@ func (e *EventStreamCloudEventOrgCreatedPreviousObjectBrandingColors) String() s
 // The metadata associated with the organization.
 type EventStreamCloudEventOrgCreatedPreviousObjectMetadata = map[string]any
 
-// SSE message for organization.deleted.
 var (
 	eventStreamCloudEventOrgDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.deleted.
 type EventStreamCloudEventOrgDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                     `json:"offset" url:"offset"`
@@ -99660,10 +102186,12 @@ func (e *EventStreamCloudEventOrgDeleted) GetExtraProperties() map[string]interf
 }
 
 func (e *EventStreamCloudEventOrgDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -99722,7 +102250,6 @@ func (e *EventStreamCloudEventOrgDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when an organization is deleted.
 var (
 	eventStreamCloudEventOrgDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -99735,6 +102262,7 @@ var (
 	eventStreamCloudEventOrgDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when an organization is deleted.
 type EventStreamCloudEventOrgDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum              `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -99829,10 +102357,12 @@ func (e *EventStreamCloudEventOrgDeletedCloudEvent) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -99968,13 +102498,13 @@ func (e EventStreamCloudEventOrgDeletedCloudEventTypeEnum) Ptr() *EventStreamClo
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgDeletedData struct {
 	Object         *EventStreamCloudEventOrgDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -100016,10 +102546,12 @@ func (e *EventStreamCloudEventOrgDeletedData) GetExtraProperties() map[string]in
 }
 
 func (e *EventStreamCloudEventOrgDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -100085,7 +102617,6 @@ func (e *EventStreamCloudEventOrgDeletedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgDeletedObjectFieldName        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgDeletedObjectFieldID          = big.NewInt(1 << 1)
@@ -100093,6 +102624,7 @@ var (
 	eventStreamCloudEventOrgDeletedObjectFieldMetadata    = big.NewInt(1 << 3)
 )
 
+// The event content.
 type EventStreamCloudEventOrgDeletedObject struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -100145,10 +102677,12 @@ func (e *EventStreamCloudEventOrgDeletedObject) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventOrgDeletedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -100224,7 +102758,6 @@ func (e *EventStreamCloudEventOrgDeletedObject) String() string {
 // The metadata associated with the organization.
 type EventStreamCloudEventOrgDeletedObjectMetadata = map[string]any
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgDeletedPreviousObjectFieldName        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgDeletedPreviousObjectFieldID          = big.NewInt(1 << 1)
@@ -100232,6 +102765,7 @@ var (
 	eventStreamCloudEventOrgDeletedPreviousObjectFieldMetadata    = big.NewInt(1 << 3)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgDeletedPreviousObject struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -100284,10 +102818,12 @@ func (e *EventStreamCloudEventOrgDeletedPreviousObject) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgDeletedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -100363,12 +102899,12 @@ func (e *EventStreamCloudEventOrgDeletedPreviousObject) String() string {
 // The metadata associated with the organization.
 type EventStreamCloudEventOrgDeletedPreviousObjectMetadata = map[string]any
 
-// SSE message for organization.group.role.assigned.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.group.role.assigned.
 type EventStreamCloudEventOrgGroupRoleAssigned struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                               `json:"offset" url:"offset"`
@@ -100403,10 +102939,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssigned) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssigned) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -100465,7 +103003,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssigned) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a role is assigned to an organization group.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -100478,6 +103015,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleAssignedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a role is assigned to an organization group.
 type EventStreamCloudEventOrgGroupRoleAssignedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                        `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgGroupRoleAssignedCloudEventTypeEnum `json:"type" url:"type"`
@@ -100572,10 +103110,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -100711,13 +103251,13 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedCloudEventTypeEnum) Ptr() *Even
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgGroupRoleAssignedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgGroupRoleAssignedData struct {
 	Object         *EventStreamCloudEventOrgGroupRoleAssignedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgGroupRoleAssignedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -100759,10 +103299,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedData) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -100828,7 +103370,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectFieldRole         = big.NewInt(1 << 1)
@@ -100836,6 +103377,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectFieldCreatedAt    = big.NewInt(1 << 3)
 )
 
+// The event content.
 type EventStreamCloudEventOrgGroupRoleAssignedObject struct {
 	Organization *EventStreamCloudEventOrgGroupRoleAssignedObjectOrganization `json:"organization" url:"organization"`
 	Role         *EventStreamCloudEventOrgGroupRoleAssignedObjectRole         `json:"role" url:"role"`
@@ -100886,10 +103428,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObject) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -101001,6 +103545,54 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) GetEventStreamClo
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0"
@@ -101054,7 +103646,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup) Accept(visitor Ev
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -101062,6 +103653,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -101114,10 +103706,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -101210,7 +103804,6 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum) Ptr() *Ev
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -101218,6 +103811,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -101270,10 +103864,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -101366,13 +103962,13 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum) Ptr() *Ev
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -101416,10 +104012,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -101505,11 +104103,11 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum) Ptr() *Ev
 	return &e
 }
 
-// The organization the group role is assigned in.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the group role is assigned in.
 type EventStreamCloudEventOrgGroupRoleAssignedObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -101536,10 +104134,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectOrganization) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -101591,12 +104191,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectOrganization) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role assigned to the group in the organization.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the group in the organization.
 type EventStreamCloudEventOrgGroupRoleAssignedObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -101632,10 +104232,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectRole) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -101694,7 +104296,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedObjectRole) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectFieldRole         = big.NewInt(1 << 1)
@@ -101702,6 +104303,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectFieldCreatedAt    = big.NewInt(1 << 3)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectOrganization `json:"organization" url:"organization"`
 	Role         *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectRole         `json:"role" url:"role"`
@@ -101752,10 +104354,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObject) GetExtraProper
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -101867,6 +104471,54 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) GetEventS
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0"
@@ -101920,7 +104572,6 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup) Accept(vi
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -101928,6 +104579,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -101980,10 +104632,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) GetExtra
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -102076,7 +104730,6 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum) P
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -102084,6 +104737,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -102136,10 +104790,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) GetExtra
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -102232,13 +104888,13 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum) P
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -102282,10 +104938,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) GetExtra
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -102371,11 +105029,11 @@ func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum) P
 	return &e
 }
 
-// The organization the group role is assigned in.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the group role is assigned in.
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -102402,10 +105060,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectOrganization) Ge
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -102457,12 +105117,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectOrganization) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role assigned to the group in the organization.
 var (
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleAssignedPreviousObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the group in the organization.
 type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -102498,10 +105158,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectRole) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -102560,12 +105222,12 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectRole) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.group.role.deleted.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.group.role.deleted.
 type EventStreamCloudEventOrgGroupRoleDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                              `json:"offset" url:"offset"`
@@ -102600,10 +105262,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeleted) GetExtraProperties() map[stri
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -102662,7 +105326,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a role is removed from an organization group.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -102675,6 +105338,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a role is removed from an organization group.
 type EventStreamCloudEventOrgGroupRoleDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                       `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -102769,10 +105433,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) GetExtraProperties(
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -102908,13 +105574,13 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnum) Ptr() *Event
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgGroupRoleDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgGroupRoleDeletedData struct {
 	Object         *EventStreamCloudEventOrgGroupRoleDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgGroupRoleDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -102956,10 +105622,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedData) GetExtraProperties() map[
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -103025,7 +105693,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectFieldRole         = big.NewInt(1 << 1)
@@ -103033,6 +105700,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectFieldDeletedAt    = big.NewInt(1 << 3)
 )
 
+// The event content.
 type EventStreamCloudEventOrgGroupRoleDeletedObject struct {
 	Organization *EventStreamCloudEventOrgGroupRoleDeletedObjectOrganization `json:"organization" url:"organization"`
 	Role         *EventStreamCloudEventOrgGroupRoleDeletedObjectRole         `json:"role" url:"role"`
@@ -103083,10 +105751,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObject) GetExtraProperties() ma
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -103198,6 +105868,54 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) GetEventStreamClou
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0"
@@ -103251,7 +105969,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup) Accept(visitor Eve
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -103259,6 +105976,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -103311,10 +106029,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -103407,7 +106127,6 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum) Ptr() *Eve
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -103415,6 +106134,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -103467,10 +106187,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -103563,13 +106285,13 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum) Ptr() *Eve
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgGroupRoleDeletedObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -103613,10 +106335,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -103702,11 +106426,11 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum) Ptr() *Eve
 	return &e
 }
 
-// The organization the group role is removed from.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the group role is removed from.
 type EventStreamCloudEventOrgGroupRoleDeletedObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -103733,10 +106457,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectOrganization) GetExtraPro
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -103788,11 +106514,11 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectOrganization) String() st
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role removed from the group.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedObjectRoleFieldID = big.NewInt(1 << 0)
 )
 
+// The role removed from the group.
 type EventStreamCloudEventOrgGroupRoleDeletedObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -103819,10 +106545,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectRole) GetExtraProperties(
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -103874,7 +106602,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedObjectRole) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectFieldRole         = big.NewInt(1 << 1)
@@ -103882,6 +106609,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectFieldCreatedAt    = big.NewInt(1 << 3)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectOrganization `json:"organization" url:"organization"`
 	Role         *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectRole         `json:"role" url:"role"`
@@ -103932,10 +106660,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObject) GetExtraPropert
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -104047,6 +106777,54 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) GetEventSt
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "connection_id"}, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type", "organization_id"}, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "external_id", "type"}, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "connection_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0"
+			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "organization_id"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1"
+			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type"}) {
+		valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2); err == nil {
+			e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2"
+			e.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 = valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
+			return nil
+		}
+	}
 	valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 := new(EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0); err == nil {
 		e.typ = "EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0"
@@ -104100,7 +106878,6 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup) Accept(vis
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Reference to a connection group
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldID           = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldExternalID   = big.NewInt(1 << 1)
@@ -104108,6 +106885,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0FieldConnectionID = big.NewInt(1 << 3)
 )
 
+// Reference to a connection group
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -104160,10 +106938,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) GetExtraP
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -104256,7 +107036,6 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum) Pt
 	return &e
 }
 
-// Reference to an organization group
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldID             = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldExternalID     = big.NewInt(1 << 1)
@@ -104264,6 +107043,7 @@ var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1FieldOrganizationID = big.NewInt(1 << 3)
 )
 
+// Reference to an organization group
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -104316,10 +107096,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) GetExtraP
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -104412,13 +107194,13 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum) Pt
 	return &e
 }
 
-// Reference to a tenant group
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldID         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldExternalID = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2FieldType       = big.NewInt(1 << 2)
 )
 
+// Reference to a tenant group
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 struct {
 	// The unique identifier for the group.
 	ID string `json:"id" url:"id"`
@@ -104462,10 +107244,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) GetExtraP
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -104551,11 +107335,11 @@ func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum) Pt
 	return &e
 }
 
-// The organization the group role is assigned in.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the group role is assigned in.
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -104582,10 +107366,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectOrganization) Get
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -104637,12 +107423,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectOrganization) Str
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role assigned to the group in the organization.
 var (
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgGroupRoleDeletedPreviousObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the group in the organization.
 type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -104678,10 +107464,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectRole) GetExtraPro
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -104740,12 +107528,12 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectRole) String() st
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.member.added.
 var (
 	eventStreamCloudEventOrgMemberAddedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberAddedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.member.added.
 type EventStreamCloudEventOrgMemberAdded struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                         `json:"offset" url:"offset"`
@@ -104780,10 +107568,12 @@ func (e *EventStreamCloudEventOrgMemberAdded) GetExtraProperties() map[string]in
 }
 
 func (e *EventStreamCloudEventOrgMemberAdded) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -104842,7 +107632,6 @@ func (e *EventStreamCloudEventOrgMemberAdded) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a member is added to an organization.
 var (
 	eventStreamCloudEventOrgMemberAddedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberAddedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -104855,6 +107644,7 @@ var (
 	eventStreamCloudEventOrgMemberAddedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a member is added to an organization.
 type EventStreamCloudEventOrgMemberAddedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                  `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgMemberAddedCloudEventTypeEnum `json:"type" url:"type"`
@@ -104949,10 +107739,12 @@ func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -105088,13 +107880,13 @@ func (e EventStreamCloudEventOrgMemberAddedCloudEventTypeEnum) Ptr() *EventStrea
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgMemberAddedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberAddedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberAddedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgMemberAddedData struct {
 	Object         *EventStreamCloudEventOrgMemberAddedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgMemberAddedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -105136,10 +107928,12 @@ func (e *EventStreamCloudEventOrgMemberAddedData) GetExtraProperties() map[strin
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -105205,12 +107999,12 @@ func (e *EventStreamCloudEventOrgMemberAddedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgMemberAddedObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberAddedObjectFieldUser         = big.NewInt(1 << 1)
 )
 
+// The event content.
 type EventStreamCloudEventOrgMemberAddedObject struct {
 	Organization *EventStreamCloudEventOrgMemberAddedObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberAddedObjectUser         `json:"user" url:"user"`
@@ -105244,10 +108038,12 @@ func (e *EventStreamCloudEventOrgMemberAddedObject) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -105306,12 +108102,12 @@ func (e *EventStreamCloudEventOrgMemberAddedObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberAddedObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberAddedObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberAddedObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -105347,10 +108143,12 @@ func (e *EventStreamCloudEventOrgMemberAddedObjectOrganization) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -105409,11 +108207,11 @@ func (e *EventStreamCloudEventOrgMemberAddedObjectOrganization) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberAddedObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberAddedObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -105441,10 +108239,12 @@ func (e *EventStreamCloudEventOrgMemberAddedObjectUser) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -105500,12 +108300,12 @@ func (e *EventStreamCloudEventOrgMemberAddedObjectUser) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgMemberAddedPreviousObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberAddedPreviousObjectFieldUser         = big.NewInt(1 << 1)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgMemberAddedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgMemberAddedPreviousObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberAddedPreviousObjectUser         `json:"user" url:"user"`
@@ -105539,10 +108339,12 @@ func (e *EventStreamCloudEventOrgMemberAddedPreviousObject) GetExtraProperties()
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -105601,12 +108403,12 @@ func (e *EventStreamCloudEventOrgMemberAddedPreviousObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberAddedPreviousObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberAddedPreviousObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberAddedPreviousObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -105642,10 +108444,12 @@ func (e *EventStreamCloudEventOrgMemberAddedPreviousObjectOrganization) GetExtra
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -105704,11 +108508,11 @@ func (e *EventStreamCloudEventOrgMemberAddedPreviousObjectOrganization) String()
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberAddedPreviousObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberAddedPreviousObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -105736,10 +108540,12 @@ func (e *EventStreamCloudEventOrgMemberAddedPreviousObjectUser) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedPreviousObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -105795,12 +108601,12 @@ func (e *EventStreamCloudEventOrgMemberAddedPreviousObjectUser) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.member.deleted.
 var (
 	eventStreamCloudEventOrgMemberDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.member.deleted.
 type EventStreamCloudEventOrgMemberDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                           `json:"offset" url:"offset"`
@@ -105835,10 +108641,12 @@ func (e *EventStreamCloudEventOrgMemberDeleted) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventOrgMemberDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -105897,7 +108705,6 @@ func (e *EventStreamCloudEventOrgMemberDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a member is removed from an organization.
 var (
 	eventStreamCloudEventOrgMemberDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -105910,6 +108717,7 @@ var (
 	eventStreamCloudEventOrgMemberDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a member is removed from an organization.
 type EventStreamCloudEventOrgMemberDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                    `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgMemberDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -106004,10 +108812,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -106143,13 +108953,13 @@ func (e EventStreamCloudEventOrgMemberDeletedCloudEventTypeEnum) Ptr() *EventStr
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgMemberDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgMemberDeletedData struct {
 	Object         *EventStreamCloudEventOrgMemberDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgMemberDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -106191,10 +109001,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedData) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -106260,12 +109072,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgMemberDeletedObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberDeletedObjectFieldUser         = big.NewInt(1 << 1)
 )
 
+// The event content.
 type EventStreamCloudEventOrgMemberDeletedObject struct {
 	Organization *EventStreamCloudEventOrgMemberDeletedObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberDeletedObjectUser         `json:"user" url:"user"`
@@ -106299,10 +109111,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedObject) GetExtraProperties() map[s
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -106361,12 +109175,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberDeletedObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberDeletedObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberDeletedObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -106402,10 +109216,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedObjectOrganization) GetExtraProper
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -106464,11 +109280,11 @@ func (e *EventStreamCloudEventOrgMemberDeletedObjectOrganization) String() strin
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberDeletedObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberDeletedObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -106496,10 +109312,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedObjectUser) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -106555,12 +109373,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedObjectUser) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgMemberDeletedPreviousObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberDeletedPreviousObjectFieldUser         = big.NewInt(1 << 1)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgMemberDeletedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgMemberDeletedPreviousObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberDeletedPreviousObjectUser         `json:"user" url:"user"`
@@ -106594,10 +109412,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedPreviousObject) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -106656,12 +109476,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedPreviousObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberDeletedPreviousObjectOrganizationFieldName = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberDeletedPreviousObjectOrganizationFieldID   = big.NewInt(1 << 1)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberDeletedPreviousObjectOrganization struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -106697,10 +109517,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedPreviousObjectOrganization) GetExt
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -106759,11 +109581,11 @@ func (e *EventStreamCloudEventOrgMemberDeletedPreviousObjectOrganization) String
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberDeletedPreviousObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberDeletedPreviousObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -106791,10 +109613,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedPreviousObjectUser) GetExtraProper
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedPreviousObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -106850,12 +109674,12 @@ func (e *EventStreamCloudEventOrgMemberDeletedPreviousObjectUser) String() strin
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.member.role.assigned.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleAssignedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.member.role.assigned.
 type EventStreamCloudEventOrgMemberRoleAssigned struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                                `json:"offset" url:"offset"`
@@ -106890,10 +109714,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssigned) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssigned) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -106952,7 +109778,6 @@ func (e *EventStreamCloudEventOrgMemberRoleAssigned) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a member is added to an organization.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleAssignedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -106965,6 +109790,7 @@ var (
 	eventStreamCloudEventOrgMemberRoleAssignedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a member is added to an organization.
 type EventStreamCloudEventOrgMemberRoleAssignedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                         `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgMemberRoleAssignedCloudEventTypeEnum `json:"type" url:"type"`
@@ -107059,10 +109885,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -107198,13 +110026,13 @@ func (e EventStreamCloudEventOrgMemberRoleAssignedCloudEventTypeEnum) Ptr() *Eve
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleAssignedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberRoleAssignedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgMemberRoleAssignedData struct {
 	Object         *EventStreamCloudEventOrgMemberRoleAssignedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgMemberRoleAssignedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -107246,10 +110074,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedData) GetExtraProperties() ma
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -107315,13 +110145,13 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleAssignedObjectFieldUser         = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberRoleAssignedObjectFieldRole         = big.NewInt(1 << 2)
 )
 
+// The event content.
 type EventStreamCloudEventOrgMemberRoleAssignedObject struct {
 	Organization *EventStreamCloudEventOrgMemberRoleAssignedObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberRoleAssignedObjectUser         `json:"user" url:"user"`
@@ -107363,10 +110193,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObject) GetExtraProperties() 
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -107432,11 +110264,11 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberRoleAssignedObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -107463,10 +110295,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectOrganization) GetExtraP
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -107518,12 +110352,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectOrganization) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role assigned to the user in the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleAssignedObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the user in the organization.
 type EventStreamCloudEventOrgMemberRoleAssignedObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -107559,10 +110393,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectRole) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -107621,11 +110457,11 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectRole) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberRoleAssignedObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -107653,10 +110489,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectUser) GetExtraPropertie
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -107712,13 +110550,13 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedObjectUser) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedPreviousObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleAssignedPreviousObjectFieldUser         = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberRoleAssignedPreviousObjectFieldRole         = big.NewInt(1 << 2)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgMemberRoleAssignedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectUser         `json:"user" url:"user"`
@@ -107760,10 +110598,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObject) GetExtraPrope
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -107829,11 +110669,11 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObject) String() stri
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedPreviousObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -107860,10 +110700,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectOrganization) G
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -107915,12 +110757,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectOrganization) S
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role assigned to the user in the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedPreviousObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleAssignedPreviousObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the user in the organization.
 type EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -107956,10 +110798,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectRole) GetExtraP
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -108018,11 +110862,11 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectRole) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleAssignedPreviousObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -108050,10 +110894,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectUser) GetExtraP
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -108109,12 +110955,12 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedPreviousObjectUser) String() 
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.member.role.deleted.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.member.role.deleted.
 type EventStreamCloudEventOrgMemberRoleDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                               `json:"offset" url:"offset"`
@@ -108149,10 +110995,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeleted) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -108211,7 +111059,6 @@ func (e *EventStreamCloudEventOrgMemberRoleDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a member is removed from an organization.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -108224,6 +111071,7 @@ var (
 	eventStreamCloudEventOrgMemberRoleDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a member is removed from an organization.
 type EventStreamCloudEventOrgMemberRoleDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum                        `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgMemberRoleDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -108318,10 +111166,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -108457,13 +111307,13 @@ func (e EventStreamCloudEventOrgMemberRoleDeletedCloudEventTypeEnum) Ptr() *Even
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberRoleDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgMemberRoleDeletedData struct {
 	Object         *EventStreamCloudEventOrgMemberRoleDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgMemberRoleDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -108505,10 +111355,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedData) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -108574,13 +111426,13 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleDeletedObjectFieldUser         = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberRoleDeletedObjectFieldRole         = big.NewInt(1 << 2)
 )
 
+// The event content.
 type EventStreamCloudEventOrgMemberRoleDeletedObject struct {
 	Organization *EventStreamCloudEventOrgMemberRoleDeletedObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberRoleDeletedObjectUser         `json:"user" url:"user"`
@@ -108622,10 +111474,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObject) GetExtraProperties() m
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -108691,11 +111545,11 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberRoleDeletedObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -108722,10 +111576,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectOrganization) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -108777,12 +111633,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectOrganization) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role assigned to the user in the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleDeletedObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the user in the organization.
 type EventStreamCloudEventOrgMemberRoleDeletedObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -108818,10 +111674,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectRole) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -108880,11 +111738,11 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectRole) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberRoleDeletedObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -108912,10 +111770,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectUser) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -108971,13 +111831,13 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedObjectUser) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedPreviousObjectFieldOrganization = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleDeletedPreviousObjectFieldUser         = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgMemberRoleDeletedPreviousObjectFieldRole         = big.NewInt(1 << 2)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgMemberRoleDeletedPreviousObject struct {
 	Organization *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectOrganization `json:"organization" url:"organization"`
 	User         *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectUser         `json:"user" url:"user"`
@@ -109019,10 +111879,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObject) GetExtraProper
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOrganization sets the Organization field and marks it as non-optional;
@@ -109088,11 +111950,11 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObject) String() strin
 	return fmt.Sprintf("%#v", e)
 }
 
-// The organization the member belongs to.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedPreviousObjectOrganizationFieldID = big.NewInt(1 << 0)
 )
 
+// The organization the member belongs to.
 type EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectOrganization struct {
 	// ID of the organization.
 	ID string `json:"id" url:"id"`
@@ -109119,10 +111981,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectOrganization) Ge
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectOrganization) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -109174,12 +112038,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectOrganization) St
 	return fmt.Sprintf("%#v", e)
 }
 
-// The role assigned to the user in the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedPreviousObjectRoleFieldID   = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgMemberRoleDeletedPreviousObjectRoleFieldName = big.NewInt(1 << 1)
 )
 
+// The role assigned to the user in the organization.
 type EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectRole struct {
 	// The ID of the role.
 	ID string `json:"id" url:"id"`
@@ -109215,10 +112079,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectRole) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectRole) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -109277,11 +112143,11 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectRole) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// The user that is a member of the organization.
 var (
 	eventStreamCloudEventOrgMemberRoleDeletedPreviousObjectUserFieldUserID = big.NewInt(1 << 0)
 )
 
+// The user that is a member of the organization.
 type EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectUser struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -109309,10 +112175,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectUser) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectUser) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -109368,12 +112236,12 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedPreviousObjectUser) String() s
 	return fmt.Sprintf("%#v", e)
 }
 
-// SSE message for organization.updated.
 var (
 	eventStreamCloudEventOrgUpdatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for organization.updated.
 type EventStreamCloudEventOrgUpdated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                     `json:"offset" url:"offset"`
@@ -109408,10 +112276,12 @@ func (e *EventStreamCloudEventOrgUpdated) GetExtraProperties() map[string]interf
 }
 
 func (e *EventStreamCloudEventOrgUpdated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -109470,7 +112340,6 @@ func (e *EventStreamCloudEventOrgUpdated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when an organization is updated.
 var (
 	eventStreamCloudEventOrgUpdatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -109483,6 +112352,7 @@ var (
 	eventStreamCloudEventOrgUpdatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when an organization is updated.
 type EventStreamCloudEventOrgUpdatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum              `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventOrgUpdatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -109577,10 +112447,12 @@ func (e *EventStreamCloudEventOrgUpdatedCloudEvent) GetExtraProperties() map[str
 }
 
 func (e *EventStreamCloudEventOrgUpdatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -109716,13 +112588,13 @@ func (e EventStreamCloudEventOrgUpdatedCloudEventTypeEnum) Ptr() *EventStreamClo
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventOrgUpdatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventOrgUpdatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventOrgUpdatedData struct {
 	Object         *EventStreamCloudEventOrgUpdatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventOrgUpdatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -109764,10 +112636,12 @@ func (e *EventStreamCloudEventOrgUpdatedData) GetExtraProperties() map[string]in
 }
 
 func (e *EventStreamCloudEventOrgUpdatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -109833,7 +112707,6 @@ func (e *EventStreamCloudEventOrgUpdatedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventOrgUpdatedObjectFieldName        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedObjectFieldID          = big.NewInt(1 << 1)
@@ -109842,6 +112715,7 @@ var (
 	eventStreamCloudEventOrgUpdatedObjectFieldBranding    = big.NewInt(1 << 4)
 )
 
+// The event content.
 type EventStreamCloudEventOrgUpdatedObject struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -109902,10 +112776,12 @@ func (e *EventStreamCloudEventOrgUpdatedObject) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamCloudEventOrgUpdatedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -109985,12 +112861,12 @@ func (e *EventStreamCloudEventOrgUpdatedObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The branding associated with the organization.
 var (
 	eventStreamCloudEventOrgUpdatedObjectBrandingFieldLogoURL = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedObjectBrandingFieldColors  = big.NewInt(1 << 1)
 )
 
+// The branding associated with the organization.
 type EventStreamCloudEventOrgUpdatedObjectBranding struct {
 	// URL of logo to display on login page.
 	LogoURL *string                                              `json:"logo_url,omitempty" url:"logo_url,omitempty"`
@@ -110025,10 +112901,12 @@ func (e *EventStreamCloudEventOrgUpdatedObjectBranding) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgUpdatedObjectBranding) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetLogoURL sets the LogoURL field and marks it as non-optional;
@@ -110087,12 +112965,12 @@ func (e *EventStreamCloudEventOrgUpdatedObjectBranding) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Color scheme used to customize the login pages.
 var (
 	eventStreamCloudEventOrgUpdatedObjectBrandingColorsFieldPrimary        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedObjectBrandingColorsFieldPageBackground = big.NewInt(1 << 1)
 )
 
+// Color scheme used to customize the login pages.
 type EventStreamCloudEventOrgUpdatedObjectBrandingColors struct {
 	// HEX Color for primary elements.
 	Primary *string `json:"primary,omitempty" url:"primary,omitempty"`
@@ -110128,10 +113006,12 @@ func (e *EventStreamCloudEventOrgUpdatedObjectBrandingColors) GetExtraProperties
 }
 
 func (e *EventStreamCloudEventOrgUpdatedObjectBrandingColors) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -110193,7 +113073,6 @@ func (e *EventStreamCloudEventOrgUpdatedObjectBrandingColors) String() string {
 // The metadata associated with the organization.
 type EventStreamCloudEventOrgUpdatedObjectMetadata = map[string]any
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventOrgUpdatedPreviousObjectFieldName        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedPreviousObjectFieldID          = big.NewInt(1 << 1)
@@ -110202,6 +113081,7 @@ var (
 	eventStreamCloudEventOrgUpdatedPreviousObjectFieldBranding    = big.NewInt(1 << 4)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventOrgUpdatedPreviousObject struct {
 	// The human-readable identifier for the organization that will be used by end-users to direct them to their organization in your application..
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -110262,10 +113142,12 @@ func (e *EventStreamCloudEventOrgUpdatedPreviousObject) GetExtraProperties() map
 }
 
 func (e *EventStreamCloudEventOrgUpdatedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -110345,12 +113227,12 @@ func (e *EventStreamCloudEventOrgUpdatedPreviousObject) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The branding associated with the organization.
 var (
 	eventStreamCloudEventOrgUpdatedPreviousObjectBrandingFieldLogoURL = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedPreviousObjectBrandingFieldColors  = big.NewInt(1 << 1)
 )
 
+// The branding associated with the organization.
 type EventStreamCloudEventOrgUpdatedPreviousObjectBranding struct {
 	// URL of logo to display on login page.
 	LogoURL *string                                                      `json:"logo_url,omitempty" url:"logo_url,omitempty"`
@@ -110385,10 +113267,12 @@ func (e *EventStreamCloudEventOrgUpdatedPreviousObjectBranding) GetExtraProperti
 }
 
 func (e *EventStreamCloudEventOrgUpdatedPreviousObjectBranding) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetLogoURL sets the LogoURL field and marks it as non-optional;
@@ -110447,12 +113331,12 @@ func (e *EventStreamCloudEventOrgUpdatedPreviousObjectBranding) String() string 
 	return fmt.Sprintf("%#v", e)
 }
 
-// Color scheme used to customize the login pages.
 var (
 	eventStreamCloudEventOrgUpdatedPreviousObjectBrandingColorsFieldPrimary        = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgUpdatedPreviousObjectBrandingColorsFieldPageBackground = big.NewInt(1 << 1)
 )
 
+// Color scheme used to customize the login pages.
 type EventStreamCloudEventOrgUpdatedPreviousObjectBrandingColors struct {
 	// HEX Color for primary elements.
 	Primary *string `json:"primary,omitempty" url:"primary,omitempty"`
@@ -110488,10 +113372,12 @@ func (e *EventStreamCloudEventOrgUpdatedPreviousObjectBrandingColors) GetExtraPr
 }
 
 func (e *EventStreamCloudEventOrgUpdatedPreviousObjectBrandingColors) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -110573,12 +113459,12 @@ func (e EventStreamCloudEventSpecVersionEnum) Ptr() *EventStreamCloudEventSpecVe
 	return &e
 }
 
-// SSE message for user.created.
 var (
 	eventStreamCloudEventUserCreatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for user.created.
 type EventStreamCloudEventUserCreated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                      `json:"offset" url:"offset"`
@@ -110613,10 +113499,12 @@ func (e *EventStreamCloudEventUserCreated) GetExtraProperties() map[string]inter
 }
 
 func (e *EventStreamCloudEventUserCreated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -110675,7 +113563,6 @@ func (e *EventStreamCloudEventUserCreated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a user is created.
 var (
 	eventStreamCloudEventUserCreatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -110688,6 +113575,7 @@ var (
 	eventStreamCloudEventUserCreatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a user is created.
 type EventStreamCloudEventUserCreatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum               `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventUserCreatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -110782,10 +113670,12 @@ func (e *EventStreamCloudEventUserCreatedCloudEvent) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventUserCreatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -110921,13 +113811,13 @@ func (e EventStreamCloudEventUserCreatedCloudEventTypeEnum) Ptr() *EventStreamCl
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventUserCreatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventUserCreatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventUserCreatedData struct {
 	Object         *EventStreamCloudEventUserCreatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventUserCreatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -110969,10 +113859,12 @@ func (e *EventStreamCloudEventUserCreatedData) GetExtraProperties() map[string]i
 }
 
 func (e *EventStreamCloudEventUserCreatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -111038,7 +113930,6 @@ func (e *EventStreamCloudEventUserCreatedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventUserCreatedObjectFieldUserID        = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectFieldEmail         = big.NewInt(1 << 1)
@@ -111063,6 +113954,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectFieldFamilyName    = big.NewInt(1 << 20)
 )
 
+// The event content.
 type EventStreamCloudEventUserCreatedObject struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -111268,10 +114160,12 @@ func (e *EventStreamCloudEventUserCreatedObject) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventUserCreatedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -111529,6 +114423,86 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItem) GetEventStreamClo
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItem) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemSocial := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemSocial
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedObjectIdentitiesItemSocial := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial = valueEventStreamCloudEventUserCreatedObjectIdentitiesItemSocial
+			return nil
+		}
+	}
 	valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedObjectIdentitiesItemCustom); err == nil {
 		e.typ = "EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom"
@@ -111608,7 +114582,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItem) Accept(visitor Ev
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for custom identity providers.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemCustomFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemCustomFieldUserID      = big.NewInt(1 << 1)
@@ -111617,6 +114590,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemCustomFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for custom identity providers.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                 `json:"connection" url:"connection"`
@@ -111675,10 +114649,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom) GetExtraPro
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -111760,7 +114736,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemCustom) String() st
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemCustomProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemCustomProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -111772,6 +114747,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemCustomProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -111862,10 +114838,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomProfileData) 
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -112053,7 +115031,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemCustomUserID) Accep
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for database identity providers.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseFieldUserID      = big.NewInt(1 << 1)
@@ -112062,6 +115039,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for database identity providers.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                   `json:"connection" url:"connection"`
@@ -112120,10 +115098,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase) GetExtraP
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -112205,7 +115185,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabase) String() 
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -112217,6 +115196,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -112307,10 +115287,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseProfileData
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -112498,7 +115480,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemDatabaseUserID) Acc
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for enterprise identity providers.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseFieldUserID      = big.NewInt(1 << 1)
@@ -112507,6 +115488,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for enterprise identity providers.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                     `json:"connection" url:"connection"`
@@ -112565,10 +115547,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise) GetExtr
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -112650,7 +115634,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterprise) String(
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -112662,6 +115645,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -112752,10 +115736,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseProfileDa
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -112973,7 +115959,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemEnterpriseUserID) A
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for passwordless identity providers.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessFieldUserID      = big.NewInt(1 << 1)
@@ -112982,6 +115967,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for passwordless identity providers.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                       `json:"connection" url:"connection"`
@@ -113040,10 +116026,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless) GetEx
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -113125,7 +116113,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordless) Strin
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -113137,6 +116124,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -113227,10 +116215,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessProfile
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -113421,7 +116411,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemPasswordlessUserID)
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for social identity providers.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemSocialFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemSocialFieldUserID      = big.NewInt(1 << 1)
@@ -113430,6 +116419,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemSocialFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for social identity providers.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                 `json:"connection" url:"connection"`
@@ -113488,10 +116478,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial) GetExtraPro
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -113573,7 +116565,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemSocial) String() st
 
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemSocialProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemSocialProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -113585,6 +116576,7 @@ var (
 	eventStreamCloudEventUserCreatedObjectIdentitiesItemSocialProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -113675,10 +116667,12 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialProfileData) 
 }
 
 func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -113983,7 +116977,6 @@ func (e *EventStreamCloudEventUserCreatedObjectIdentitiesItemSocialUserID) Accep
 // User metadata to which this user has read/write access.
 type EventStreamCloudEventUserCreatedObjectUserMetadata = map[string]any
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectFieldUserID        = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectFieldEmail         = big.NewInt(1 << 1)
@@ -114008,6 +117001,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectFieldFamilyName    = big.NewInt(1 << 20)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventUserCreatedPreviousObject struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -114213,10 +117207,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObject) GetExtraProperties() ma
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -114474,6 +117470,86 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItem) GetEventS
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItem) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial = valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial
+			return nil
+		}
+	}
 	valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom); err == nil {
 		e.typ = "EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom"
@@ -114553,7 +117629,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItem) Accept(vi
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for custom identity providers.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomFieldUserID      = big.NewInt(1 << 1)
@@ -114562,6 +117637,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for custom identity providers.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                         `json:"connection" url:"connection"`
@@ -114620,10 +117696,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom) Get
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -114705,7 +117783,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustom) Str
 
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -114717,6 +117794,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -114807,10 +117885,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomProfi
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -114998,7 +118078,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemCustomUserI
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for database identity providers.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseFieldUserID      = big.NewInt(1 << 1)
@@ -115007,6 +118086,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for database identity providers.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                           `json:"connection" url:"connection"`
@@ -115065,10 +118145,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase) G
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -115150,7 +118232,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabase) S
 
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -115162,6 +118243,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -115252,10 +118334,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabasePro
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -115443,7 +118527,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemDatabaseUse
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for enterprise identity providers.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseFieldUserID      = big.NewInt(1 << 1)
@@ -115452,6 +118535,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for enterprise identity providers.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                             `json:"connection" url:"connection"`
@@ -115510,10 +118594,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise)
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -115595,7 +118681,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterprise)
 
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -115607,6 +118692,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -115697,10 +118783,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseP
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -115918,7 +119006,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemEnterpriseU
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for passwordless identity providers.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessFieldUserID      = big.NewInt(1 << 1)
@@ -115927,6 +119014,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for passwordless identity providers.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                               `json:"connection" url:"connection"`
@@ -115985,10 +119073,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordles
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordless) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -116070,7 +119160,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordles
 
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -116082,6 +119171,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -116172,10 +119262,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordles
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordlessProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -116366,7 +119458,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemPasswordles
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for social identity providers.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialFieldUserID      = big.NewInt(1 << 1)
@@ -116375,6 +119466,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for social identity providers.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                         `json:"connection" url:"connection"`
@@ -116433,10 +119525,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial) Get
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -116518,7 +119612,6 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocial) Str
 
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -116530,6 +119623,7 @@ var (
 	eventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -116620,10 +119714,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialProfi
 }
 
 func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -116928,12 +120024,12 @@ func (e *EventStreamCloudEventUserCreatedPreviousObjectIdentitiesItemSocialUserI
 // User metadata to which this user has read/write access.
 type EventStreamCloudEventUserCreatedPreviousObjectUserMetadata = map[string]any
 
-// SSE message for user.deleted.
 var (
 	eventStreamCloudEventUserDeletedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for user.deleted.
 type EventStreamCloudEventUserDeleted struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                      `json:"offset" url:"offset"`
@@ -116968,10 +120064,12 @@ func (e *EventStreamCloudEventUserDeleted) GetExtraProperties() map[string]inter
 }
 
 func (e *EventStreamCloudEventUserDeleted) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -117030,7 +120128,6 @@ func (e *EventStreamCloudEventUserDeleted) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a user is deleted.
 var (
 	eventStreamCloudEventUserDeletedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -117043,6 +120140,7 @@ var (
 	eventStreamCloudEventUserDeletedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a user is deleted.
 type EventStreamCloudEventUserDeletedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum               `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventUserDeletedCloudEventTypeEnum `json:"type" url:"type"`
@@ -117137,10 +120235,12 @@ func (e *EventStreamCloudEventUserDeletedCloudEvent) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventUserDeletedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -117276,13 +120376,13 @@ func (e EventStreamCloudEventUserDeletedCloudEventTypeEnum) Ptr() *EventStreamCl
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventUserDeletedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventUserDeletedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventUserDeletedData struct {
 	Object         *EventStreamCloudEventUserDeletedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventUserDeletedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -117324,10 +120424,12 @@ func (e *EventStreamCloudEventUserDeletedData) GetExtraProperties() map[string]i
 }
 
 func (e *EventStreamCloudEventUserDeletedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -117393,7 +120495,6 @@ func (e *EventStreamCloudEventUserDeletedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventUserDeletedObjectFieldUserID        = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectFieldEmail         = big.NewInt(1 << 1)
@@ -117419,6 +120520,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectFieldDeletedAt     = big.NewInt(1 << 21)
 )
 
+// The event content.
 type EventStreamCloudEventUserDeletedObject struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -117633,10 +120735,12 @@ func (e *EventStreamCloudEventUserDeletedObject) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventUserDeletedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -117905,6 +121009,86 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItem) GetEventStreamClo
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItem) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemSocial := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemSocial
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedObjectIdentitiesItemSocial := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial = valueEventStreamCloudEventUserDeletedObjectIdentitiesItemSocial
+			return nil
+		}
+	}
 	valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedObjectIdentitiesItemCustom); err == nil {
 		e.typ = "EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom"
@@ -117984,7 +121168,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItem) Accept(visitor Ev
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for custom identity providers.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemCustomFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemCustomFieldUserID      = big.NewInt(1 << 1)
@@ -117993,6 +121176,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemCustomFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for custom identity providers.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                 `json:"connection" url:"connection"`
@@ -118051,10 +121235,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom) GetExtraPro
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -118136,7 +121322,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemCustom) String() st
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemCustomProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemCustomProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -118148,6 +121333,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemCustomProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -118238,10 +121424,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomProfileData) 
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -118429,7 +121617,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemCustomUserID) Accep
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for database identity providers.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseFieldUserID      = big.NewInt(1 << 1)
@@ -118438,6 +121625,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for database identity providers.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                   `json:"connection" url:"connection"`
@@ -118496,10 +121684,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase) GetExtraP
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -118581,7 +121771,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabase) String() 
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -118593,6 +121782,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -118683,10 +121873,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseProfileData
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -118874,7 +122066,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemDatabaseUserID) Acc
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for enterprise identity providers.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseFieldUserID      = big.NewInt(1 << 1)
@@ -118883,6 +122074,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for enterprise identity providers.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                     `json:"connection" url:"connection"`
@@ -118941,10 +122133,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise) GetExtr
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -119026,7 +122220,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterprise) String(
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -119038,6 +122231,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -119128,10 +122322,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseProfileDa
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -119349,7 +122545,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemEnterpriseUserID) A
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for passwordless identity providers.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessFieldUserID      = big.NewInt(1 << 1)
@@ -119358,6 +122553,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for passwordless identity providers.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                       `json:"connection" url:"connection"`
@@ -119416,10 +122612,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless) GetEx
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -119501,7 +122699,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordless) Strin
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -119513,6 +122710,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -119603,10 +122801,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessProfile
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -119797,7 +122997,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemPasswordlessUserID)
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for social identity providers.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemSocialFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemSocialFieldUserID      = big.NewInt(1 << 1)
@@ -119806,6 +123005,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemSocialFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for social identity providers.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                 `json:"connection" url:"connection"`
@@ -119864,10 +123064,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial) GetExtraPro
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -119949,7 +123151,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemSocial) String() st
 
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemSocialProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemSocialProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -119961,6 +123162,7 @@ var (
 	eventStreamCloudEventUserDeletedObjectIdentitiesItemSocialProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -120051,10 +123253,12 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialProfileData) 
 }
 
 func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -120359,7 +123563,6 @@ func (e *EventStreamCloudEventUserDeletedObjectIdentitiesItemSocialUserID) Accep
 // User metadata to which this user has read/write access.
 type EventStreamCloudEventUserDeletedObjectUserMetadata = map[string]any
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectFieldUserID        = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectFieldEmail         = big.NewInt(1 << 1)
@@ -120384,6 +123587,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectFieldFamilyName    = big.NewInt(1 << 20)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventUserDeletedPreviousObject struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -120589,10 +123793,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObject) GetExtraProperties() ma
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -120850,6 +124056,86 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItem) GetEventS
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItem) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial = valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial
+			return nil
+		}
+	}
 	valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom); err == nil {
 		e.typ = "EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom"
@@ -120929,7 +124215,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItem) Accept(vi
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for custom identity providers.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomFieldUserID      = big.NewInt(1 << 1)
@@ -120938,6 +124223,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for custom identity providers.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                         `json:"connection" url:"connection"`
@@ -120996,10 +124282,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom) Get
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -121081,7 +124369,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustom) Str
 
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -121093,6 +124380,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -121183,10 +124471,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomProfi
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -121374,7 +124664,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemCustomUserI
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for database identity providers.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseFieldUserID      = big.NewInt(1 << 1)
@@ -121383,6 +124672,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for database identity providers.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                           `json:"connection" url:"connection"`
@@ -121441,10 +124731,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase) G
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -121526,7 +124818,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabase) S
 
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -121538,6 +124829,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -121628,10 +124920,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabasePro
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -121819,7 +125113,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemDatabaseUse
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for enterprise identity providers.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseFieldUserID      = big.NewInt(1 << 1)
@@ -121828,6 +125121,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for enterprise identity providers.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                             `json:"connection" url:"connection"`
@@ -121886,10 +125180,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise)
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -121971,7 +125267,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterprise)
 
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -121983,6 +125278,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -122073,10 +125369,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseP
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -122294,7 +125592,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemEnterpriseU
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for passwordless identity providers.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessFieldUserID      = big.NewInt(1 << 1)
@@ -122303,6 +125600,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for passwordless identity providers.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                               `json:"connection" url:"connection"`
@@ -122361,10 +125659,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordles
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordless) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -122446,7 +125746,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordles
 
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -122458,6 +125757,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -122548,10 +125848,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordles
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordlessProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -122742,7 +126044,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemPasswordles
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for social identity providers.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialFieldUserID      = big.NewInt(1 << 1)
@@ -122751,6 +126052,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for social identity providers.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                         `json:"connection" url:"connection"`
@@ -122809,10 +126111,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial) Get
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -122894,7 +126198,6 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocial) Str
 
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -122906,6 +126209,7 @@ var (
 	eventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -122996,10 +126300,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialProfi
 }
 
 func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -123304,12 +126610,12 @@ func (e *EventStreamCloudEventUserDeletedPreviousObjectIdentitiesItemSocialUserI
 // User metadata to which this user has read/write access.
 type EventStreamCloudEventUserDeletedPreviousObjectUserMetadata = map[string]any
 
-// SSE message for user.updated.
 var (
 	eventStreamCloudEventUserUpdatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedFieldEvent  = big.NewInt(1 << 1)
 )
 
+// SSE message for user.updated.
 type EventStreamCloudEventUserUpdated struct {
 	// Opaque cursor representing position in the stream. Pass as the `from` query parameter to resume.
 	Offset string                                      `json:"offset" url:"offset"`
@@ -123344,10 +126650,12 @@ func (e *EventStreamCloudEventUserUpdated) GetExtraProperties() map[string]inter
 }
 
 func (e *EventStreamCloudEventUserUpdated) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetOffset sets the Offset field and marks it as non-optional;
@@ -123406,7 +126714,6 @@ func (e *EventStreamCloudEventUserUpdated) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Represents an event that occurs when a user is updated.
 var (
 	eventStreamCloudEventUserUpdatedCloudEventFieldSpecversion = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedCloudEventFieldType        = big.NewInt(1 << 1)
@@ -123419,6 +126726,7 @@ var (
 	eventStreamCloudEventUserUpdatedCloudEventFieldA0Purpose   = big.NewInt(1 << 8)
 )
 
+// Represents an event that occurs when a user is updated.
 type EventStreamCloudEventUserUpdatedCloudEvent struct {
 	Specversion EventStreamCloudEventSpecVersionEnum               `json:"specversion" url:"specversion"`
 	Type        EventStreamCloudEventUserUpdatedCloudEventTypeEnum `json:"type" url:"type"`
@@ -123513,10 +126821,12 @@ func (e *EventStreamCloudEventUserUpdatedCloudEvent) GetExtraProperties() map[st
 }
 
 func (e *EventStreamCloudEventUserUpdatedCloudEvent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetSpecversion sets the Specversion field and marks it as non-optional;
@@ -123652,13 +126962,13 @@ func (e EventStreamCloudEventUserUpdatedCloudEventTypeEnum) Ptr() *EventStreamCl
 	return &e
 }
 
-// The event payload.
 var (
 	eventStreamCloudEventUserUpdatedDataFieldObject         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedDataFieldPreviousObject = big.NewInt(1 << 1)
 	eventStreamCloudEventUserUpdatedDataFieldContext        = big.NewInt(1 << 2)
 )
 
+// The event payload.
 type EventStreamCloudEventUserUpdatedData struct {
 	Object         *EventStreamCloudEventUserUpdatedObject         `json:"object" url:"object"`
 	PreviousObject *EventStreamCloudEventUserUpdatedPreviousObject `json:"previous_object,omitempty" url:"previous_object,omitempty"`
@@ -123700,10 +127010,12 @@ func (e *EventStreamCloudEventUserUpdatedData) GetExtraProperties() map[string]i
 }
 
 func (e *EventStreamCloudEventUserUpdatedData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -123769,7 +127081,6 @@ func (e *EventStreamCloudEventUserUpdatedData) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// The event content.
 var (
 	eventStreamCloudEventUserUpdatedObjectFieldUserID        = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectFieldEmail         = big.NewInt(1 << 1)
@@ -123794,6 +127105,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectFieldFamilyName    = big.NewInt(1 << 20)
 )
 
+// The event content.
 type EventStreamCloudEventUserUpdatedObject struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -123999,10 +127311,12 @@ func (e *EventStreamCloudEventUserUpdatedObject) GetExtraProperties() map[string
 }
 
 func (e *EventStreamCloudEventUserUpdatedObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -124260,6 +127574,86 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItem) GetEventStreamClo
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItem) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial = valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial
+			return nil
+		}
+	}
 	valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom := new(EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom); err == nil {
 		e.typ = "EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom"
@@ -124339,7 +127733,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItem) Accept(visitor Ev
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for custom identity providers.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomFieldUserID      = big.NewInt(1 << 1)
@@ -124348,6 +127741,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for custom identity providers.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                 `json:"connection" url:"connection"`
@@ -124406,10 +127800,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom) GetExtraPro
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -124491,7 +127887,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustom) String() st
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -124503,6 +127898,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -124593,10 +127989,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomProfileData) 
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -124784,7 +128182,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemCustomUserID) Accep
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for database identity providers.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseFieldUserID      = big.NewInt(1 << 1)
@@ -124793,6 +128190,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for database identity providers.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                   `json:"connection" url:"connection"`
@@ -124851,10 +128249,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase) GetExtraP
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -124936,7 +128336,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabase) String() 
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -124948,6 +128347,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -125038,10 +128438,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseProfileData
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -125229,7 +128631,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemDatabaseUserID) Acc
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for enterprise identity providers.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseFieldUserID      = big.NewInt(1 << 1)
@@ -125238,6 +128639,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for enterprise identity providers.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                     `json:"connection" url:"connection"`
@@ -125296,10 +128698,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise) GetExtr
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -125381,7 +128785,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterprise) String(
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -125393,6 +128796,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -125483,10 +128887,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseProfileDa
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -125704,7 +129110,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemEnterpriseUserID) A
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for passwordless identity providers.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessFieldUserID      = big.NewInt(1 << 1)
@@ -125713,6 +129118,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for passwordless identity providers.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                       `json:"connection" url:"connection"`
@@ -125771,10 +129177,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless) GetEx
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -125856,7 +129264,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordless) Strin
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -125868,6 +129275,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -125958,10 +129366,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessProfile
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -126152,7 +129562,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemPasswordlessUserID)
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for social identity providers.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialFieldUserID      = big.NewInt(1 << 1)
@@ -126161,6 +129570,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for social identity providers.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                 `json:"connection" url:"connection"`
@@ -126219,10 +129629,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial) GetExtraPro
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -126304,7 +129716,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocial) String() st
 
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -126316,6 +129727,7 @@ var (
 	eventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -126406,10 +129818,12 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialProfileData) 
 }
 
 func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -126714,7 +130128,6 @@ func (e *EventStreamCloudEventUserUpdatedObjectIdentitiesItemSocialUserID) Accep
 // User metadata to which this user has read/write access.
 type EventStreamCloudEventUserUpdatedObjectUserMetadata = map[string]any
 
-// The event content as it was prior to the change described by this event, when applicable.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectFieldUserID        = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectFieldEmail         = big.NewInt(1 << 1)
@@ -126739,6 +130152,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectFieldFamilyName    = big.NewInt(1 << 20)
 )
 
+// The event content as it was prior to the change described by this event, when applicable.
 type EventStreamCloudEventUserUpdatedPreviousObject struct {
 	// ID of the user which can be used when interacting with other APIs.
 	UserID string `json:"user_id" url:"user_id"`
@@ -126944,10 +130358,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObject) GetExtraProperties() ma
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObject) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -127205,6 +130621,86 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItem) GetEventS
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItem) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"connection", "user_id", "profileData", "provider", "isSocial"}, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"connection", "user_id", "provider", "isSocial"}) {
+		valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial)
+		if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial); err == nil {
+			e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial"
+			e.EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial = valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial
+			return nil
+		}
+	}
 	valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom := new(EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom)
 	if err := json.Unmarshal(data, &valueEventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom); err == nil {
 		e.typ = "EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom"
@@ -127284,7 +130780,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItem) Accept(vi
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for custom identity providers.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomFieldUserID      = big.NewInt(1 << 1)
@@ -127293,6 +130788,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for custom identity providers.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                         `json:"connection" url:"connection"`
@@ -127351,10 +130847,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom) Get
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -127436,7 +130934,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustom) Str
 
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -127448,6 +130945,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -127538,10 +131036,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomProfi
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -127729,7 +131229,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemCustomUserI
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for database identity providers.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseFieldUserID      = big.NewInt(1 << 1)
@@ -127738,6 +131237,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for database identity providers.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                           `json:"connection" url:"connection"`
@@ -127796,10 +131296,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase) G
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -127881,7 +131383,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabase) S
 
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -127893,6 +131394,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -127983,10 +131485,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabasePro
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -128174,7 +131678,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemDatabaseUse
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for enterprise identity providers.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseFieldUserID      = big.NewInt(1 << 1)
@@ -128183,6 +131686,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for enterprise identity providers.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                             `json:"connection" url:"connection"`
@@ -128241,10 +131745,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise)
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -128326,7 +131832,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterprise)
 
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -128338,6 +131843,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -128428,10 +131934,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseP
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -128649,7 +132157,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemEnterpriseU
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for passwordless identity providers.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessFieldUserID      = big.NewInt(1 << 1)
@@ -128658,6 +132165,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for passwordless identity providers.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                               `json:"connection" url:"connection"`
@@ -128716,10 +132224,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordles
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordless) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -128801,7 +132311,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordles
 
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -128813,6 +132322,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -128903,10 +132413,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordles
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordlessProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -129097,7 +132609,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemPasswordles
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// The identity object for social identity providers.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialFieldConnection  = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialFieldUserID      = big.NewInt(1 << 1)
@@ -129106,6 +132617,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialFieldIsSocial    = big.NewInt(1 << 4)
 )
 
+// The identity object for social identity providers.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial struct {
 	// Name of the connection containing this identity.
 	Connection  string                                                                         `json:"connection" url:"connection"`
@@ -129164,10 +132676,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial) Get
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -129249,7 +132763,6 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocial) Str
 
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialIsSocialEnum = bool
 
-// Profile data for the user.
 var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialProfileDataFieldEmail         = big.NewInt(1 << 0)
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialProfileDataFieldEmailVerified = big.NewInt(1 << 1)
@@ -129261,6 +132774,7 @@ var (
 	eventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialProfileDataFieldPhoneVerified = big.NewInt(1 << 7)
 )
 
+// Profile data for the user.
 type EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialProfileData struct {
 	// Email address of this user.
 	Email *string `json:"email,omitempty" url:"email,omitempty"`
@@ -129351,10 +132865,12 @@ func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialProfi
 }
 
 func (e *EventStreamCloudEventUserUpdatedPreviousObjectIdentitiesItemSocialProfileData) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;

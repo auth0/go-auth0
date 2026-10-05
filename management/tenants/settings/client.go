@@ -35,6 +35,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve tenant settings. A list of fields to include or exclude may also be specified.
+//
+// Example:
+//
+//	request := &management.GetTenantSettingsRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Tenants.Settings.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *management.GetTenantSettingsRequestParameters,
@@ -52,6 +67,14 @@ func (c *Client) Get(
 }
 
 // Update settings for a tenant.
+//
+// Example:
+//
+//	request := &management.UpdateTenantSettingsRequestContent{}
+//	client.Tenants.Settings.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateTenantSettingsRequestContent,

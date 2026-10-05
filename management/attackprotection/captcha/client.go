@@ -35,6 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get the CAPTCHA configuration for your client.
+//
+// Example:
+//
+//	client.AttackProtection.Captcha.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -50,6 +56,14 @@ func (c *Client) Get(
 }
 
 // Update existing CAPTCHA configuration for your client.
+//
+// Example:
+//
+//	request := &management.UpdateAttackProtectionCaptchaRequestContent{}
+//	client.AttackProtection.Captcha.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateAttackProtectionCaptchaRequestContent,

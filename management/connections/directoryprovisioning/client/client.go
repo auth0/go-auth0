@@ -39,6 +39,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of directory provisioning configurations of a tenant.
+//
+// Example:
+//
+//	request := &management.ListDirectoryProvisioningsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Connections.DirectoryProvisioning.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListDirectoryProvisioningsRequestParameters,
@@ -93,7 +108,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -105,6 +120,13 @@ func (c *Client) List(
 }
 
 // Retrieve the directory provisioning configuration of a connection.
+//
+// Example:
+//
+//	client.Connections.DirectoryProvisioning.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the connection to retrieve its directory provisioning configuration
@@ -123,6 +145,15 @@ func (c *Client) Get(
 }
 
 // Create a directory provisioning configuration for a connection.
+//
+// Example:
+//
+//	request := &management.CreateDirectoryProvisioningRequestContent{}
+//	client.Connections.DirectoryProvisioning.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its directory provisioning configuration
@@ -143,6 +174,13 @@ func (c *Client) Create(
 }
 
 // Delete the directory provisioning configuration of a connection.
+//
+// Example:
+//
+//	client.Connections.DirectoryProvisioning.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The id of the connection to delete its directory provisioning configuration
@@ -161,6 +199,15 @@ func (c *Client) Delete(
 }
 
 // Update the directory provisioning configuration of a connection.
+//
+// Example:
+//
+//	request := &management.UpdateDirectoryProvisioningRequestContent{}
+//	client.Connections.DirectoryProvisioning.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the connection to create its directory provisioning configuration
@@ -181,6 +228,13 @@ func (c *Client) Update(
 }
 
 // Retrieve the directory provisioning default attribute mapping of a connection.
+//
+// Example:
+//
+//	client.Connections.DirectoryProvisioning.GetDefaultMapping(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) GetDefaultMapping(
 	ctx context.Context,
 	// The id of the connection to retrieve its directory provisioning configuration
@@ -199,6 +253,25 @@ func (c *Client) GetDefaultMapping(
 }
 
 // Retrieve the configured synchronized groups for a connection directory provisioning configuration.
+//
+// Example:
+//
+//	request := &management.ListSynchronizedGroupsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	}
+//	client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) ListSynchronizedGroups(
 	ctx context.Context,
 	// The id of the connection to list synchronized groups for.
@@ -258,7 +331,7 @@ func (c *Client) ListSynchronizedGroups(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -270,6 +343,21 @@ func (c *Client) ListSynchronizedGroups(
 }
 
 // Add synchronized group selections to a directory provisioning configuration.
+//
+// Example:
+//
+//	request := &management.AddSynchronizedGroupsRequestContent{
+//	    Groups: []*management.SynchronizedGroupPayload{
+//	        &management.SynchronizedGroupPayload{
+//	            ID: "id",
+//	        },
+//	    },
+//	}
+//	client.Connections.DirectoryProvisioning.AddSynchronizedGroupSelections(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) AddSynchronizedGroupSelections(
 	ctx context.Context,
 	// The id of the connection to add synchronized groups to
@@ -290,6 +378,21 @@ func (c *Client) AddSynchronizedGroupSelections(
 }
 
 // Create or replace the selected groups for a connection directory provisioning configuration.
+//
+// Example:
+//
+//	request := &management.ReplaceSynchronizedGroupsRequestContent{
+//	    Groups: []*management.SynchronizedGroupPayload{
+//	        &management.SynchronizedGroupPayload{
+//	            ID: "id",
+//	        },
+//	    },
+//	}
+//	client.Connections.DirectoryProvisioning.Set(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// The id of the connection to create or replace synchronized groups for
@@ -310,6 +413,21 @@ func (c *Client) Set(
 }
 
 // Delete synchronized group selections for a directory provisioning configuration
+//
+// Example:
+//
+//	request := &management.DeleteSynchronizedGroupsRequestContent{
+//	    Groups: []*management.SynchronizedGroupSelectionID{
+//	        &management.SynchronizedGroupSelectionID{
+//	            ID: "id",
+//	        },
+//	    },
+//	}
+//	client.Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) DeleteSynchronizedGroupSelections(
 	ctx context.Context,
 	// The id of the connection to delete synchronized group selections for

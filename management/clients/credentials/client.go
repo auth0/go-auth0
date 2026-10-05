@@ -37,6 +37,13 @@ func NewClient(options *core.RequestOptions) *Client {
 // Get the details of a client credential.
 //
 // **Important**: To enable credentials to be used for a client authentication method, set the `client_authentication_methods` property on the client. To enable credentials to be used for JWT-Secured Authorization requests set the `signed_request_object` property on the client.
+//
+// Example:
+//
+//	client.Clients.Credentials.List(
+//	    context.TODO(),
+//	    "client_id",
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the client.
@@ -119,6 +126,17 @@ func (c *Client) List(
 //
 // - To enable the credential for Private Key JWT or mTLS authentication methods, set the `client_authentication_methods` property on the client. For more information, read [Configure Private Key JWT Authentication](https://auth0.com/docs/get-started/applications/configure-private-key-jwt) and [Configure mTLS Authentication](https://auth0.com/docs/get-started/applications/configure-mtls)
 // - To enable the credential for JWT-secured Authorization requests, set the `signed_request_object`property on the client. For more information, read [Configure JWT-secured Authorization Requests (JAR)](https://auth0.com/docs/get-started/applications/configure-jar)
+//
+// Example:
+//
+//	request := &management.PostClientCredentialRequestContent{
+//	    CredentialType: management.ClientCredentialTypeEnumPublicKey,
+//	}
+//	client.Clients.Credentials.Create(
+//	    context.TODO(),
+//	    "client_id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the client.
@@ -141,6 +159,14 @@ func (c *Client) Create(
 // Get the details of a client credential.
 //
 // **Important**: To enable credentials to be used for a client authentication method, set the `client_authentication_methods` property on the client. To enable credentials to be used for JWT-Secured Authorization requests set the `signed_request_object` property on the client.
+//
+// Example:
+//
+//	client.Clients.Credentials.Get(
+//	    context.TODO(),
+//	    "client_id",
+//	    "credential_id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client.
@@ -162,6 +188,14 @@ func (c *Client) Get(
 }
 
 // Delete a client credential you previously created. May be enabled or disabled. For more information, read <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a>.
+//
+// Example:
+//
+//	client.Clients.Credentials.Delete(
+//	    context.TODO(),
+//	    "client_id",
+//	    "credential_id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the client.
@@ -183,6 +217,16 @@ func (c *Client) Delete(
 }
 
 // Change a client credential you previously created. May be enabled or disabled. For more information, read <a href="https://www.auth0.com/docs/get-started/authentication-and-authorization-flow/client-credentials-flow">Client Credential Flow</a>.
+//
+// Example:
+//
+//	request := &management.PatchClientCredentialRequestContent{}
+//	client.Clients.Credentials.Update(
+//	    context.TODO(),
+//	    "client_id",
+//	    "credential_id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the client.

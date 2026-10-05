@@ -35,6 +35,33 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.ListEventStreamDeliveriesRequestParameters{
+//	    Statuses: management.String(
+//	        "statuses",
+//	    ),
+//	    EventTypes: management.String(
+//	        "event_types",
+//	    ),
+//	    DateFrom: management.String(
+//	        "date_from",
+//	    ),
+//	    DateTo: management.String(
+//	        "date_to",
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.EventStreams.Deliveries.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Unique identifier for the event stream.
@@ -94,7 +121,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -105,6 +132,13 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
+// Example:
+//
+//	client.EventStreams.Deliveries.GetHistory(
+//	    context.TODO(),
+//	    "id",
+//	    "event_id",
+//	)
 func (c *Client) GetHistory(
 	ctx context.Context,
 	// Unique identifier for the event stream.

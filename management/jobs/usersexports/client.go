@@ -35,6 +35,14 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Export all users to a file via a long-running job.
+//
+// Example:
+//
+//	request := &management.CreateExportUsersRequestContent{}
+//	client.Jobs.UsersExports.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateExportUsersRequestContent,

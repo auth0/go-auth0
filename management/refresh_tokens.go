@@ -24,6 +24,16 @@ var (
 	getRefreshTokenResponseContentFieldLastExchangedAt      = big.NewInt(1 << 11)
 )
 
+// getRefreshTokenResponseContentNullableFields maps the wire names of GetRefreshTokenResponseContent's nullable fields (required or optional) to their field bits.
+var getRefreshTokenResponseContentNullableFields = map[string]*big.Int{
+	"created_at":             getRefreshTokenResponseContentFieldCreatedAt,
+	"idle_expires_at":        getRefreshTokenResponseContentFieldIdleExpiresAt,
+	"expires_at":             getRefreshTokenResponseContentFieldExpiresAt,
+	"session_id":             getRefreshTokenResponseContentFieldSessionID,
+	"refresh_token_metadata": getRefreshTokenResponseContentFieldRefreshTokenMetadata,
+	"last_exchanged_at":      getRefreshTokenResponseContentFieldLastExchangedAt,
+}
+
 type GetRefreshTokenResponseContent struct {
 	// The ID of the refresh token
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -143,10 +153,12 @@ func (g *GetRefreshTokenResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (g *GetRefreshTokenResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -249,6 +261,13 @@ func (g *GetRefreshTokenResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, getRefreshTokenResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		g.require(presentFields)
+	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -319,10 +338,12 @@ func (g *GetRefreshTokensPaginatedResponseContent) GetExtraProperties() map[stri
 }
 
 func (g *GetRefreshTokensPaginatedResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetRefreshTokens sets the RefreshTokens field and marks it as non-optional;
@@ -399,6 +420,16 @@ var (
 	updateRefreshTokenResponseContentFieldRefreshTokenMetadata = big.NewInt(1 << 10)
 	updateRefreshTokenResponseContentFieldLastExchangedAt      = big.NewInt(1 << 11)
 )
+
+// updateRefreshTokenResponseContentNullableFields maps the wire names of UpdateRefreshTokenResponseContent's nullable fields (required or optional) to their field bits.
+var updateRefreshTokenResponseContentNullableFields = map[string]*big.Int{
+	"created_at":             updateRefreshTokenResponseContentFieldCreatedAt,
+	"idle_expires_at":        updateRefreshTokenResponseContentFieldIdleExpiresAt,
+	"expires_at":             updateRefreshTokenResponseContentFieldExpiresAt,
+	"session_id":             updateRefreshTokenResponseContentFieldSessionID,
+	"refresh_token_metadata": updateRefreshTokenResponseContentFieldRefreshTokenMetadata,
+	"last_exchanged_at":      updateRefreshTokenResponseContentFieldLastExchangedAt,
+}
 
 type UpdateRefreshTokenResponseContent struct {
 	// The ID of the refresh token
@@ -519,10 +550,12 @@ func (u *UpdateRefreshTokenResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (u *UpdateRefreshTokenResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -625,6 +658,13 @@ func (u *UpdateRefreshTokenResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateRefreshTokenResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }

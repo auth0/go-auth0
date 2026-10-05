@@ -79,6 +79,30 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `take`: The total number of entries to retrieve when using the `from` parameter. Defaults to 50.
 //
 // **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+//
+// Example:
+//
+//	request := &management.ListOrganizationsRequestParameters{
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    Sort: management.String(
+//	        "sort",
+//	    ),
+//	    IncludeClientAssociationFor: management.String(
+//	        "include_client_association_for",
+//	    ),
+//	}
+//	client.Organizations.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListOrganizationsRequestParameters,
@@ -134,7 +158,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -146,6 +170,16 @@ func (c *Client) List(
 }
 
 // Create a new Organization within your tenant.  To learn more about Organization settings, behavior, and configuration options, review [Create Your First Organization](https://auth0.com/docs/manage-users/organizations/create-first-organization).
+//
+// Example:
+//
+//	request := &management.CreateOrganizationRequestContent{
+//	    Name: "name",
+//	}
+//	client.Organizations.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateOrganizationRequestContent,
@@ -163,6 +197,13 @@ func (c *Client) Create(
 }
 
 // Retrieve details about a single Organization specified by name.
+//
+// Example:
+//
+//	client.Organizations.GetByName(
+//	    context.TODO(),
+//	    "name",
+//	)
 func (c *Client) GetByName(
 	ctx context.Context,
 	// name of the organization to retrieve.
@@ -195,6 +236,26 @@ func (c *Client) GetByName(
 // Results are eventually consistent and may not reflect recent updates immediately.
 //
 // **Sortable fields:** `name`, `display_name`, `created_at` (ascending only). Defaults to insertion order (oldest first).
+//
+// Example:
+//
+//	request := &management.SearchOrganizationsRequestParameters{
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	    Parser: management.SearchParserEnumSCIM.Ptr(),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Sort: management.OrganizationSortFieldEnumName.Ptr(),
+//	}
+//	client.Organizations.Search(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Search(
 	ctx context.Context,
 	request *management.SearchOrganizationsRequestParameters,
@@ -249,7 +310,7 @@ func (c *Client) Search(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -261,6 +322,13 @@ func (c *Client) Search(
 }
 
 // Retrieve details about a single Organization specified by ID.
+//
+// Example:
+//
+//	client.Organizations.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the organization to retrieve.
@@ -281,6 +349,13 @@ func (c *Client) Get(
 // Remove an Organization from your tenant.  This action cannot be undone.
 //
 // **Note**: Members are automatically disassociated from an Organization when it is deleted. However, this action does **not** delete these users from your tenant.
+//
+// Example:
+//
+//	client.Organizations.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.
@@ -299,6 +374,15 @@ func (c *Client) Delete(
 }
 
 // Update the details of a specific [Organization](https://auth0.com/docs/manage-users/organizations/configure-organizations/create-organizations), such as name and display name, branding options, and metadata.
+//
+// Example:
+//
+//	request := &management.UpdateOrganizationRequestContent{}
+//	client.Organizations.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the organization to update.

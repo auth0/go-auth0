@@ -38,6 +38,34 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a detailed list of invitations sent to users for a specific Organization. The list includes details such as inviter and invitee information, invitation URLs, and dates of creation and expiration. To learn more about Organization invitations, review [Invite Organization Members](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members).
+//
+// Example:
+//
+//	request := &management.ListOrganizationInvitationsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Sort: management.String(
+//	        "sort",
+//	    ),
+//	}
+//	client.Organizations.Invitations.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
@@ -117,6 +145,23 @@ func (c *Client) List(
 }
 
 // Create a user invitation for a specific Organization. Upon creation, the listed user receives an email inviting them to join the Organization. To learn more about Organization invitations, review [Invite Organization Members](https://auth0.com/docs/manage-users/organizations/configure-organizations/invite-members).
+//
+// Example:
+//
+//	request := &management.CreateOrganizationInvitationRequestContent{
+//	    Inviter: &management.OrganizationInvitationInviter{
+//	        Name: "name",
+//	    },
+//	    Invitee: &management.OrganizationInvitationInvitee{
+//	        Email: "email",
+//	    },
+//	    ClientID: "client_id",
+//	}
+//	client.Organizations.Invitations.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// Organization identifier.
@@ -136,6 +181,22 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &management.GetOrganizationInvitationRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Organizations.Invitations.Get(
+//	    context.TODO(),
+//	    "id",
+//	    "invitation_id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Organization identifier.
@@ -158,6 +219,13 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Organizations.Invitations.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    "invitation_id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.

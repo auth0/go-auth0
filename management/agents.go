@@ -92,10 +92,12 @@ func (a *AgentResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AgentResponseContent) require(field *big.Int) {
-	if a.explicitFields == nil {
-		a.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
-	a.explicitFields.Or(a.explicitFields, field)
+	next.Or(next, field)
+	a.explicitFields = next
 }
 
 // SetAgentID sets the AgentID field and marks it as non-optional;
@@ -233,10 +235,12 @@ func (l *ListAgentsResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (l *ListAgentsResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetAgents sets the Agents field and marks it as non-optional;

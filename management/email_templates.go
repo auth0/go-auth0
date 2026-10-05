@@ -21,6 +21,17 @@ var (
 	createEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
 )
 
+// createEmailTemplateResponseContentNullableFields maps the wire names of CreateEmailTemplateResponseContent's nullable fields (required or optional) to their field bits.
+var createEmailTemplateResponseContentNullableFields = map[string]*big.Int{
+	"body":                 createEmailTemplateResponseContentFieldBody,
+	"from":                 createEmailTemplateResponseContentFieldFrom,
+	"resultUrl":            createEmailTemplateResponseContentFieldResultURL,
+	"subject":              createEmailTemplateResponseContentFieldSubject,
+	"syntax":               createEmailTemplateResponseContentFieldSyntax,
+	"urlLifetimeInSeconds": createEmailTemplateResponseContentFieldURLLifetimeInSeconds,
+	"enabled":              createEmailTemplateResponseContentFieldEnabled,
+}
+
 type CreateEmailTemplateResponseContent struct {
 	Template EmailTemplateNameEnum `json:"template" url:"template"`
 	// Body of the email template.
@@ -118,10 +129,12 @@ func (c *CreateEmailTemplateResponseContent) GetExtraProperties() map[string]int
 }
 
 func (c *CreateEmailTemplateResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -199,6 +212,13 @@ func (c *CreateEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, createEmailTemplateResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -300,6 +320,17 @@ var (
 	getEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
 )
 
+// getEmailTemplateResponseContentNullableFields maps the wire names of GetEmailTemplateResponseContent's nullable fields (required or optional) to their field bits.
+var getEmailTemplateResponseContentNullableFields = map[string]*big.Int{
+	"body":                 getEmailTemplateResponseContentFieldBody,
+	"from":                 getEmailTemplateResponseContentFieldFrom,
+	"resultUrl":            getEmailTemplateResponseContentFieldResultURL,
+	"subject":              getEmailTemplateResponseContentFieldSubject,
+	"syntax":               getEmailTemplateResponseContentFieldSyntax,
+	"urlLifetimeInSeconds": getEmailTemplateResponseContentFieldURLLifetimeInSeconds,
+	"enabled":              getEmailTemplateResponseContentFieldEnabled,
+}
+
 type GetEmailTemplateResponseContent struct {
 	Template *EmailTemplateNameEnum `json:"template,omitempty" url:"template,omitempty"`
 	// Body of the email template.
@@ -397,10 +428,12 @@ func (g *GetEmailTemplateResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetEmailTemplateResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -478,6 +511,13 @@ func (g *GetEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, getEmailTemplateResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		g.require(presentFields)
+	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -519,6 +559,17 @@ var (
 	setEmailTemplateResponseContentFieldIncludeEmailInRedirect = big.NewInt(1 << 7)
 	setEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
 )
+
+// setEmailTemplateResponseContentNullableFields maps the wire names of SetEmailTemplateResponseContent's nullable fields (required or optional) to their field bits.
+var setEmailTemplateResponseContentNullableFields = map[string]*big.Int{
+	"body":                 setEmailTemplateResponseContentFieldBody,
+	"from":                 setEmailTemplateResponseContentFieldFrom,
+	"resultUrl":            setEmailTemplateResponseContentFieldResultURL,
+	"subject":              setEmailTemplateResponseContentFieldSubject,
+	"syntax":               setEmailTemplateResponseContentFieldSyntax,
+	"urlLifetimeInSeconds": setEmailTemplateResponseContentFieldURLLifetimeInSeconds,
+	"enabled":              setEmailTemplateResponseContentFieldEnabled,
+}
 
 type SetEmailTemplateResponseContent struct {
 	Template EmailTemplateNameEnum `json:"template" url:"template"`
@@ -617,10 +668,12 @@ func (s *SetEmailTemplateResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (s *SetEmailTemplateResponseContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -698,6 +751,13 @@ func (s *SetEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, setEmailTemplateResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		s.require(presentFields)
+	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -739,6 +799,17 @@ var (
 	updateEmailTemplateResponseContentFieldIncludeEmailInRedirect = big.NewInt(1 << 7)
 	updateEmailTemplateResponseContentFieldEnabled                = big.NewInt(1 << 8)
 )
+
+// updateEmailTemplateResponseContentNullableFields maps the wire names of UpdateEmailTemplateResponseContent's nullable fields (required or optional) to their field bits.
+var updateEmailTemplateResponseContentNullableFields = map[string]*big.Int{
+	"body":                 updateEmailTemplateResponseContentFieldBody,
+	"from":                 updateEmailTemplateResponseContentFieldFrom,
+	"resultUrl":            updateEmailTemplateResponseContentFieldResultURL,
+	"subject":              updateEmailTemplateResponseContentFieldSubject,
+	"syntax":               updateEmailTemplateResponseContentFieldSyntax,
+	"urlLifetimeInSeconds": updateEmailTemplateResponseContentFieldURLLifetimeInSeconds,
+	"enabled":              updateEmailTemplateResponseContentFieldEnabled,
+}
 
 type UpdateEmailTemplateResponseContent struct {
 	Template *EmailTemplateNameEnum `json:"template,omitempty" url:"template,omitempty"`
@@ -837,10 +908,12 @@ func (u *UpdateEmailTemplateResponseContent) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateEmailTemplateResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -918,6 +991,13 @@ func (u *UpdateEmailTemplateResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateEmailTemplateResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }

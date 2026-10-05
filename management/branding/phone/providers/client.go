@@ -35,6 +35,18 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of [phone providers](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers) details set for a Tenant. A list of fields to include or exclude may also be specified.
+//
+// Example:
+//
+//	request := &management.ListBrandingPhoneProvidersRequestParameters{
+//	    Disabled: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Branding.Phone.Providers.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListBrandingPhoneProvidersRequestParameters,
@@ -53,6 +65,21 @@ func (c *Client) List(
 
 // Create a [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers).
 // The `credentials` object requires different properties depending on the phone provider (which is specified using the `name` property).
+//
+// Example:
+//
+//	request := &management.CreateBrandingPhoneProviderRequestContent{
+//	    Name: management.PhoneProviderNameEnumTwilio,
+//	    Credentials: &management.PhoneProviderCredentials{
+//	        TwilioProviderCredentials: &management.TwilioProviderCredentials{
+//	            AuthToken: "auth_token",
+//	        },
+//	    },
+//	}
+//	client.Branding.Phone.Providers.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateBrandingPhoneProviderRequestContent,
@@ -70,6 +97,13 @@ func (c *Client) Create(
 }
 
 // Retrieve [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers) details. A list of fields to include or exclude may also be specified.
+//
+// Example:
+//
+//	client.Branding.Phone.Providers.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,
@@ -87,6 +121,13 @@ func (c *Client) Get(
 }
 
 // Delete the configured phone provider.
+//
+// Example:
+//
+//	client.Branding.Phone.Providers.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	id string,
@@ -105,6 +146,15 @@ func (c *Client) Delete(
 
 // Update a [phone provider](https://auth0.com/docs/customize/phone-messages/configure-phone-messaging-providers).
 // The `credentials` object requires different properties depending on the phone provider (which is specified using the `name` property).
+//
+// Example:
+//
+//	request := &management.UpdateBrandingPhoneProviderRequestContent{}
+//	client.Branding.Phone.Providers.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	id string,
@@ -123,6 +173,16 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &management.CreatePhoneProviderSendTestRequestContent{
+//	    To: "to",
+//	}
+//	client.Branding.Phone.Providers.Test(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Test(
 	ctx context.Context,
 	id string,

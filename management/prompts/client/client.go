@@ -44,6 +44,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of the Universal Login configuration of your tenant. This includes the <a href="https://auth0.com/docs/authenticate/login/auth0-universal-login/identifier-first">Identifier First Authentication</a> and <a href="https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa">WebAuthn with Device Biometrics for MFA</a> features.
+//
+// Example:
+//
+//	client.Prompts.GetSettings(
+//	    context.TODO(),
+//	)
 func (c *Client) GetSettings(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -59,6 +65,14 @@ func (c *Client) GetSettings(
 }
 
 // Update the Universal Login configuration of your tenant. This includes the <a href="https://auth0.com/docs/authenticate/login/auth0-universal-login/identifier-first">Identifier First Authentication</a> and <a href="https://auth0.com/docs/secure/multi-factor-authentication/fido-authentication-with-webauthn/configure-webauthn-device-biometrics-for-mfa">WebAuthn with Device Biometrics for MFA</a> features.
+//
+// Example:
+//
+//	request := &management.UpdateSettingsRequestContent{}
+//	client.Prompts.UpdateSettings(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) UpdateSettings(
 	ctx context.Context,
 	request *management.UpdateSettingsRequestContent,

@@ -37,6 +37,16 @@ func NewClient(options *core.RequestOptions) *Client {
 // Send an email to the specified user that asks them to click a link to [verify their email address](https://auth0.com/docs/email/custom#verification-email).
 //
 // Note: You must have the `Status` toggle enabled for the verification email template for the email to be sent.
+//
+// Example:
+//
+//	request := &management.CreateVerificationEmailRequestContent{
+//	    UserID: "user_id",
+//	}
+//	client.Jobs.VerificationEmail.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateVerificationEmailRequestContent,

@@ -10,7 +10,6 @@ import (
 	time "time"
 )
 
-// Represents the metadata of a group. Member lists are retrieved via a separate endpoint.
 var (
 	getGroupResponseContentFieldID           = big.NewInt(1 << 0)
 	getGroupResponseContentFieldName         = big.NewInt(1 << 1)
@@ -21,6 +20,7 @@ var (
 	getGroupResponseContentFieldUpdatedAt    = big.NewInt(1 << 6)
 )
 
+// Represents the metadata of a group. Member lists are retrieved via a separate endpoint.
 type GetGroupResponseContent struct {
 	// Unique identifier for the group (service-generated).
 	ID string `json:"id" url:"id"`
@@ -102,10 +102,12 @@ func (g *GetGroupResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetGroupResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -277,10 +279,12 @@ func (l *ListGroupsPaginatedResponseContent) GetExtraProperties() map[string]int
 }
 
 func (l *ListGroupsPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;

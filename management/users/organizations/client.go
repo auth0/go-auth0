@@ -54,6 +54,25 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `take`: The total number of entries to retrieve when using the `from` parameter. Defaults to 50.
 //
 // **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+//
+// Example:
+//
+//	request := &management.ListUserOrganizationsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Users.Organizations.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to retrieve the organizations for.

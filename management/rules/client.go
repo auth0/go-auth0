@@ -38,6 +38,33 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a filtered list of [rules](https://auth0.com/docs/rules). Accepts a list of fields to include or exclude.
+//
+// Example:
+//
+//	request := &management.ListRulesRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    Enabled: management.Bool(
+//	        true,
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Rules.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListRulesRequestParameters,
@@ -114,6 +141,17 @@ func (c *Client) List(
 // Create a [new rule](https://auth0.com/docs/rules#create-a-new-rule-using-the-management-api).
 //
 // Note: Changing a rule's stage of execution from the default `login_success` can change the rule's function signature to have user omitted.
+//
+// Example:
+//
+//	request := &management.CreateRuleRequestContent{
+//	    Name: "name",
+//	    Script: "script",
+//	}
+//	client.Rules.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateRuleRequestContent,
@@ -131,6 +169,22 @@ func (c *Client) Create(
 }
 
 // Retrieve [rule](https://auth0.com/docs/rules) details. Accepts a list of fields to include or exclude in the result.
+//
+// Example:
+//
+//	request := &management.GetRuleRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Rules.Get(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the rule to retrieve.
@@ -151,6 +205,13 @@ func (c *Client) Get(
 }
 
 // Delete a rule.
+//
+// Example:
+//
+//	client.Rules.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the rule to delete.
@@ -169,6 +230,15 @@ func (c *Client) Delete(
 }
 
 // Update an existing rule.
+//
+// Example:
+//
+//	request := &management.UpdateRuleRequestContent{}
+//	client.Rules.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the rule to retrieve.

@@ -38,6 +38,33 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve the [grants](https://auth0.com/docs/api-auth/which-oauth-flow-to-use) associated with your account.
+//
+// Example:
+//
+//	request := &management.ListUserGrantsRequestParameters{
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    UserID: management.String(
+//	        "user_id",
+//	    ),
+//	    ClientID: management.String(
+//	        "client_id",
+//	    ),
+//	    Audience: management.String(
+//	        "audience",
+//	    ),
+//	}
+//	client.UserGrants.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListUserGrantsRequestParameters,
@@ -112,6 +139,16 @@ func (c *Client) List(
 }
 
 // Delete a grant associated with your account.
+//
+// Example:
+//
+//	request := &management.DeleteUserGrantByUserIDRequestParameters{
+//	    UserID: "user_id",
+//	}
+//	client.UserGrants.DeleteByUserID(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) DeleteByUserID(
 	ctx context.Context,
 	request *management.DeleteUserGrantByUserIDRequestParameters,
@@ -129,6 +166,13 @@ func (c *Client) DeleteByUserID(
 }
 
 // Delete a grant associated with your account.
+//
+// Example:
+//
+//	client.UserGrants.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the grant to delete.

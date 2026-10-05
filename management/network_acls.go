@@ -95,10 +95,12 @@ func (g *GetNetworkACLsResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (g *GetNetworkACLsResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -252,10 +254,12 @@ func (l *ListNetworkACLsOffsetPaginatedResponseContent) GetExtraProperties() map
 }
 
 func (l *ListNetworkACLsOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNetworkACLs sets the NetworkACLs field and marks it as non-optional;
@@ -394,10 +398,12 @@ func (n *NetworkACLAction) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NetworkACLAction) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetBlock sets the Block field and marks it as non-optional;
@@ -489,11 +495,11 @@ type NetworkACLActionLogEnum = bool
 // Indicates the rule will redirect requests that either match or not_match specific criteria
 type NetworkACLActionRedirectEnum = bool
 
-// HTTP Message Signature configuration.
 var (
 	networkAclHttpMessageSignatureFieldKeys = big.NewInt(1 << 0)
 )
 
+// HTTP Message Signature configuration.
 type NetworkAclHttpMessageSignature struct {
 	Keys NetworkAclHttpMessageSignatureKeys `json:"keys" url:"keys"`
 
@@ -519,10 +525,12 @@ func (n *NetworkAclHttpMessageSignature) GetExtraProperties() map[string]interfa
 }
 
 func (n *NetworkAclHttpMessageSignature) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetKeys sets the Keys field and marks it as non-optional;
@@ -604,10 +612,12 @@ func (n *NetworkAclHttpMessageSignatureKey) GetExtraProperties() map[string]inte
 }
 
 func (n *NetworkAclHttpMessageSignatureKey) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -799,10 +809,12 @@ func (n *NetworkACLMatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NetworkACLMatch) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetAsns sets the Asns field and marks it as non-optional;
@@ -1011,10 +1023,12 @@ func (n *NetworkACLRule) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NetworkACLRule) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetAction sets the Action field and marks it as non-optional;
@@ -1212,10 +1226,12 @@ func (n *NetworkACLsResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (n *NetworkACLsResponseContent) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1399,10 +1415,12 @@ func (s *SetNetworkACLsResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (s *SetNetworkACLsResponseContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1586,10 +1604,12 @@ func (u *UpdateNetworkACLResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (u *UpdateNetworkACLResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;

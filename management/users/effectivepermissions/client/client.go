@@ -39,6 +39,23 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Returns the list of effective permissions for a user, taking into account permissions granted directly to the user, as well as those inherited through roles and group memberships.
+//
+// Example:
+//
+//	request := &management.ListUserEffectivePermissionsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    ResourceServerIdentifier: "resource_server_identifier",
+//	}
+//	client.Users.EffectivePermissions.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to retrieve the permissions for.
@@ -98,7 +115,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(

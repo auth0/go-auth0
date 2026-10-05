@@ -43,6 +43,22 @@ func NewClient(options *core.RequestOptions) *Client {
 //	</li>
 //
 // </ul>
+//
+// Example:
+//
+//	request := &management.ListOrganizationClientsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Organizations.Clients.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization.
@@ -102,7 +118,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -114,6 +130,22 @@ func (c *Client) List(
 }
 
 // Associate one or more clients with an organization.
+//
+// Example:
+//
+//	request := &management.CreateOrganizationClientsRequestContent{
+//	    Clients: []*management.CreateOrganizationClientRequestItem{
+//	        &management.CreateOrganizationClientRequestItem{
+//	            ClientID: "client_id",
+//	            UseForMemberAccess: true,
+//	        },
+//	    },
+//	}
+//	client.Organizations.Clients.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the organization.
@@ -134,6 +166,19 @@ func (c *Client) Create(
 }
 
 // Remove one or more client associations from an organization.
+//
+// Example:
+//
+//	request := &management.DeleteOrganizationClientsRequestContent{
+//	    Clients: []string{
+//	        "clients",
+//	    },
+//	}
+//	client.Organizations.Clients.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the organization.
@@ -154,6 +199,14 @@ func (c *Client) Delete(
 }
 
 // Get a specific client association for an organization.
+//
+// Example:
+//
+//	client.Organizations.Clients.Get(
+//	    context.TODO(),
+//	    "id",
+//	    "client_id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the organization.
@@ -175,6 +228,16 @@ func (c *Client) Get(
 }
 
 // Update an organization client association.
+//
+// Example:
+//
+//	request := &management.UpdateOrganizationClientRequestContent{}
+//	client.Organizations.Clients.Update(
+//	    context.TODO(),
+//	    "id",
+//	    "client_id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the organization.
