@@ -611,7 +611,7 @@ func TestWithClockTolerance(t *testing.T) {
 		WithClientID(idTokenClientID),
 		WithClientSecret(idTokenClientSecret),
 		WithIDTokenSigningAlg("HS256"),
-		WithIDTokenClockTolerance(1*time.Second), // Set a low clock tolerance to cause a failure
+		WithIDTokenClockSkew(1*time.Second), // Set a low clock tolerance to cause a failure
 	)
 	assert.NoError(t, err)
 
