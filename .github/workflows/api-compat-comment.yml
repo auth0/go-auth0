@@ -76,7 +76,8 @@ jobs:
           # Strip carriage returns and backticks, and cap the number of lines.
           sanitize() {
             local file="$1" total="$2"
-            tr -d '\r' < "$file" | sed "s/\`/'/g" | head -n "$max_lines"
+            # awk reads all input so an early pipe close cannot fail the step under pipefail.
+            tr -d '\r' < "$file" | sed "s/\`/'/g" | awk -v n="$max_lines" 'NR<=n'
             if [ "$total" -gt "$max_lines" ]; then
               printf '... and %s more (see the workflow run summary)\n' "$((total - max_lines))"
             fi
