@@ -2,10 +2,11 @@
 
 ## [Unreleased]
 
+## [v1.51.0](https://github.com/auth0/go-auth0/tree/v1.51.0) (2026-10-07)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.50.0...v1.51.0)
+
 **Added**
-- feat: add `RequireConsentNonRepudiation` field to `ResourceServer`, enabling operators to
-  require cryptographic signing of consent decisions via the My Account API (Early Access)
-  [#NNN](https://github.com/auth0/go-auth0/pull/NNN)
+- feat: add `RequireConsentNonRepudiation` field to `ResourceServer`, enabling operators to require cryptographic signing of consent decisions via the My Account API (Early Access) [\#883](https://github.com/auth0/go-auth0/pull/883) ([KartikJha](https://github.com/KartikJha))
 
 ## [v1.50.0](https://github.com/auth0/go-auth0/tree/v1.50.0) (2026-09-18)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.49.0...v1.50.0)
