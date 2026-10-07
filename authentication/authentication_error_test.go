@@ -16,6 +16,9 @@ func Test_newError(t *testing.T) {
 		givenResponse    http.Response
 		expectedError    Error
 		expectedMFAToken string
+
+		expectedMFARequirements  *MFARequirements
+		expectedValidationErrors []ValidationError
 	}{
 		{
 			name: "it fails to decode if body is not json",
@@ -96,6 +99,47 @@ func Test_newError(t *testing.T) {
 			},
 			expectedMFAToken: "123456",
 		},
+		{
+			name: "it will decode mfa requirements with the MFA token",
+			givenResponse: http.Response{
+				StatusCode: http.StatusForbidden,
+				Body:       io.NopCloser(strings.NewReader(`{"error":"mfa_required","error_description":"Multifactor authentication required","mfa_token":"abc","mfa_requirements":{"challenge":[{"type":"otp"}],"enroll":[{"type":"phone"}]}}`)),
+			},
+			expectedError: Error{
+				StatusCode: 403,
+				Err:        "mfa_required",
+				Message:    "Multifactor authentication required",
+				MFAToken:   "abc",
+				MFARequirements: &MFARequirements{
+					Challenge: []MFAFactor{{Type: "otp"}},
+					Enroll:    []MFAFactor{{Type: "phone"}},
+				},
+			},
+			expectedMFAToken: "abc",
+			expectedMFARequirements: &MFARequirements{
+				Challenge: []MFAFactor{{Type: "otp"}},
+				Enroll:    []MFAFactor{{Type: "phone"}},
+			},
+		},
+		{
+			name: "it will decode validation errors",
+			givenResponse: http.Response{
+				StatusCode: http.StatusBadRequest,
+				Body:       io.NopCloser(strings.NewReader(`{"error":"invalid_request","error_description":"Validation failed","validation_errors":[{"field":"connection","message":"email_otp is not enabled"}]}`)),
+			},
+			expectedError: Error{
+				StatusCode: 400,
+				Err:        "invalid_request",
+				Message:    "Validation failed",
+				ValidationErrors: &[]ValidationError{
+					{Field: "connection", Message: "email_otp is not enabled"},
+				},
+			},
+			expectedMFAToken: "",
+			expectedValidationErrors: []ValidationError{
+				{Field: "connection", Message: "email_otp is not enabled"},
+			},
+		},
 	}
 
 	for _, testCase := range testCases {
@@ -108,6 +152,24 @@ func Test_newError(t *testing.T) {
 			assert.True(t, ok, "newError should return an *Error")
 			assert.Equal(t, testCase.expectedError, *actualError)
 			assert.Equal(t, testCase.expectedMFAToken, actualError.GetMFAToken())
+			assert.Equal(t, testCase.expectedMFARequirements, actualError.GetMFARequirements())
+			assert.Equal(t, testCase.expectedValidationErrors, actualError.GetValidationErrors())
 		})
 	}
+}
+
+func TestError_NilSafeGetters(t *testing.T) {
+	t.Run("nil error", func(t *testing.T) {
+		var err *Error
+
+		assert.Nil(t, err.GetMFARequirements())
+		assert.Nil(t, err.GetValidationErrors())
+	})
+
+	t.Run("fields absent", func(t *testing.T) {
+		err := &Error{StatusCode: 400, Err: "invalid_request"}
+
+		assert.Nil(t, err.GetMFARequirements())
+		assert.Nil(t, err.GetValidationErrors())
+	})
 }

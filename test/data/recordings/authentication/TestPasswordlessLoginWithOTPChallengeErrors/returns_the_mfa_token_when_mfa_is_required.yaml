@@ -1,0 +1,44 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 144
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: auth_session=test-auth_session&client_id=test-client_id&grant_type=http%3A%2F%2Fauth0.com%2Foauth%2Fgrant-type%2Fpasswordless%2Fotp&otp=test-otp
+        form:
+            auth_session:
+                - test-auth_session
+            client_id:
+                - test-client_id
+            grant_type:
+                - http://auth0.com/oauth/grant-type/passwordless/otp
+            otp:
+                - test-otp
+        headers:
+            Content-Type:
+                - application/x-www-form-urlencoded
+        url: https://go-auth0-dev.eu.auth0.com/oauth/token
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"error":"mfa_required","error_description":"Multifactor authentication required","mfa_token":"test-mfa-token","mfa_requirements":{"challenge":[{"type":"otp"}]}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 403 Forbidden
+        code: 403
+        duration: 312.5ms
