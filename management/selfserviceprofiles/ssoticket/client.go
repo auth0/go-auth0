@@ -35,6 +35,15 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Creates an access ticket to initiate the Self-Service Enterprise Configuration flow using a self-service profile.
+//
+// Example:
+//
+//	request := &management.CreateSelfServiceProfileSSOTicketRequestContent{}
+//	client.SelfServiceProfiles.SSOTicket.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The id of the self-service profile to retrieve
@@ -56,6 +65,14 @@ func (c *Client) Create(
 
 // Revokes a Self-Service Enterprise Configuration access ticket and invalidates associated sessions. The ticket will no longer be accepted to initiate a Self-Service Enterprise Configuration session. If any users have already started a session through this ticket, their session will be terminated. Clients should expect a `202 Accepted` response upon successful processing, indicating that the request has been acknowledged and that the revocation is underway but may not be fully completed at the time of response. If the specified ticket does not exist, a `202 Accepted` response is also returned, signaling that no further action is required.
 // Clients should treat these `202` responses as an acknowledgment that the request has been accepted and is in progress, even if the ticket was not found.
+//
+// Example:
+//
+//	client.SelfServiceProfiles.SSOTicket.Revoke(
+//	    context.TODO(),
+//	    "profileId",
+//	    "id",
+//	)
 func (c *Client) Revoke(
 	ctx context.Context,
 	// The id of the self-service profile

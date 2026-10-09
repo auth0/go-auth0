@@ -38,6 +38,22 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve all of an action's versions. An action version is created whenever an action is deployed. An action version is immutable, once created.
+//
+// Example:
+//
+//	request := &management.ListActionVersionsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Actions.Versions.List(
+//	    context.TODO(),
+//	    "actionId",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// The ID of the action.
@@ -116,6 +132,14 @@ func (c *Client) List(
 }
 
 // Retrieve a specific version of an action. An action version is created whenever an action is deployed. An action version is immutable, once created.
+//
+// Example:
+//
+//	client.Actions.Versions.Get(
+//	    context.TODO(),
+//	    "actionId",
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the action.
@@ -137,6 +161,16 @@ func (c *Client) Get(
 }
 
 // Performs the equivalent of a roll-back of an action to an earlier, specified version. Creates a new, deployed action version that is identical to the specified version. If this action is currently bound to a trigger, the system will begin executing the newly-created version immediately.
+//
+// Example:
+//
+//	request := &management.DeployActionVersionRequestContent{}
+//	client.Actions.Versions.Deploy(
+//	    context.TODO(),
+//	    "actionId",
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Deploy(
 	ctx context.Context,
 	// The ID of an action.

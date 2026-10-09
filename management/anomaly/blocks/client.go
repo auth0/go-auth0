@@ -35,6 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Check if the given IP address is blocked via the <a href="https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling">Suspicious IP Throttling</a> due to multiple suspicious attempts.
+//
+// Example:
+//
+//	client.Anomaly.Blocks.CheckIP(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) CheckIP(
 	ctx context.Context,
 	// IP address to check.
@@ -53,6 +60,13 @@ func (c *Client) CheckIP(
 }
 
 // Remove a block imposed by <a href="https://auth0.com/docs/configure/attack-protection/suspicious-ip-throttling">Suspicious IP Throttling</a> for the given IP address.
+//
+// Example:
+//
+//	client.Anomaly.Blocks.UnblockIP(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) UnblockIP(
 	ctx context.Context,
 	// IP address to unblock.

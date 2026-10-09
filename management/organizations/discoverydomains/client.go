@@ -37,6 +37,22 @@ func NewClient(options *core.RequestOptions) *Client {
 
 // Retrieve list of all organization discovery domains associated with the specified organization.
 // This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
+//
+// Example:
+//
+//	request := &management.ListOrganizationDiscoveryDomainsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Organizations.DiscoveryDomains.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization.
@@ -96,7 +112,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -108,6 +124,17 @@ func (c *Client) List(
 }
 
 // Create a new discovery domain for an organization.
+//
+// Example:
+//
+//	request := &management.CreateOrganizationDiscoveryDomainRequestContent{
+//	    Domain: "domain",
+//	}
+//	client.Organizations.DiscoveryDomains.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the organization.
@@ -129,6 +156,14 @@ func (c *Client) Create(
 
 // Retrieve details about a single organization discovery domain specified by domain name.
 // This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
+//
+// Example:
+//
+//	client.Organizations.DiscoveryDomains.GetByName(
+//	    context.TODO(),
+//	    "id",
+//	    "discovery_domain",
+//	)
 func (c *Client) GetByName(
 	ctx context.Context,
 	// ID of the organization.
@@ -151,6 +186,14 @@ func (c *Client) GetByName(
 
 // Retrieve details about a single organization discovery domain specified by ID.
 // This endpoint is subject to eventual consistency; newly created, updated, or deleted discovery domains may not immediately appear in the response.
+//
+// Example:
+//
+//	client.Organizations.DiscoveryDomains.Get(
+//	    context.TODO(),
+//	    "id",
+//	    "discovery_domain_id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the organization.
@@ -172,6 +215,14 @@ func (c *Client) Get(
 }
 
 // Remove a discovery domain from an organization. This action cannot be undone.
+//
+// Example:
+//
+//	client.Organizations.DiscoveryDomains.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    "discovery_domain_id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the organization.
@@ -193,6 +244,16 @@ func (c *Client) Delete(
 }
 
 // Update the verification status and/or use_for_organization_discovery for an organization discovery domain. The `status` field must be either `pending` or `verified`. The `use_for_organization_discovery` field can be `true` or `false` (default: `true`).
+//
+// Example:
+//
+//	request := &management.UpdateOrganizationDiscoveryDomainRequestContent{}
+//	client.Organizations.DiscoveryDomains.Update(
+//	    context.TODO(),
+//	    "id",
+//	    "discovery_domain_id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the organization.

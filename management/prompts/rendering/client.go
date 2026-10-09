@@ -38,6 +38,37 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get render setting configurations for all screens.
+//
+// Example:
+//
+//	request := &management.ListAculsRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    Prompt: management.String(
+//	        "prompt",
+//	    ),
+//	    Screen: management.String(
+//	        "screen",
+//	    ),
+//	    RenderingMode: management.AculRenderingModeEnumAdvanced.Ptr(),
+//	}
+//	client.Prompts.Rendering.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListAculsRequestParameters,
@@ -112,6 +143,21 @@ func (c *Client) List(
 }
 
 // Learn more about [configuring render settings](https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens) for advanced customization.
+//
+// Example:
+//
+//	request := &management.BulkUpdateAculRequestContent{
+//	    Configs: []*management.AculConfigsItem{
+//	        &management.AculConfigsItem{
+//	            Prompt: management.PromptGroupNameEnumLogin,
+//	            Screen: management.ScreenGroupNameEnumLogin,
+//	        },
+//	    },
+//	}
+//	client.Prompts.Rendering.BulkUpdate(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) BulkUpdate(
 	ctx context.Context,
 	request *management.BulkUpdateAculRequestContent,
@@ -129,6 +175,14 @@ func (c *Client) BulkUpdate(
 }
 
 // Get render settings for a screen.
+//
+// Example:
+//
+//	client.Prompts.Rendering.Get(
+//	    context.TODO(),
+//	    management.PromptGroupNameEnumLogin.Ptr(),
+//	    management.ScreenGroupNameEnumLogin.Ptr(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Name of the prompt
@@ -150,6 +204,16 @@ func (c *Client) Get(
 }
 
 // Learn more about [configuring render settings](https://auth0.com/docs/customize/login-pages/advanced-customizations/getting-started/configure-acul-screens) for advanced customization.
+//
+// Example:
+//
+//	request := &management.UpdateAculRequestContent{}
+//	client.Prompts.Rendering.Update(
+//	    context.TODO(),
+//	    management.PromptGroupNameEnumLogin.Ptr(),
+//	    management.ScreenGroupNameEnumLogin.Ptr(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// Name of the prompt

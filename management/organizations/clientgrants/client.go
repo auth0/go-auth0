@@ -37,6 +37,35 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.ListOrganizationClientGrantsRequestParameters{
+//	    Audience: management.String(
+//	        "audience",
+//	    ),
+//	    ClientID: management.String(
+//	        "client_id",
+//	    ),
+//	    GrantIDs: []*string{
+//	        management.String(
+//	            "grant_ids",
+//	        ),
+//	    },
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Organizations.ClientGrants.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
@@ -115,6 +144,16 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &management.AssociateOrganizationClientGrantRequestContent{
+//	    GrantID: "grant_id",
+//	}
+//	client.Organizations.ClientGrants.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// Organization identifier.
@@ -134,6 +173,13 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Organizations.ClientGrants.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    "grant_id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.

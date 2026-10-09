@@ -39,6 +39,23 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a paginated list of feature flags for the tenant.
+//
+// Example:
+//
+//	request := &management.ListFeatureFlagsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    Type: management.FeatureFlagTypeEnumAuth0.Ptr(),
+//	    Status: management.FeatureFlagStatusEnumDraft.Ptr(),
+//	}
+//	client.Experimentation.FeatureFlags.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListFeatureFlagsRequestParameters,
@@ -93,7 +110,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -105,6 +122,17 @@ func (c *Client) List(
 }
 
 // Create a new feature flag with parameters for use in experiments.
+//
+// Example:
+//
+//	request := &management.CreateFeatureFlagRequestContent{
+//	    Name: "name",
+//	    Parameters: map[string]*management.FeatureFlagConfigParam{},
+//	}
+//	client.Experimentation.FeatureFlags.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateFeatureFlagRequestContent,
@@ -122,6 +150,13 @@ func (c *Client) Create(
 }
 
 // Retrieve a single feature flag by its ID.
+//
+// Example:
+//
+//	client.Experimentation.FeatureFlags.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the feature flag to retrieve.
@@ -140,6 +175,13 @@ func (c *Client) Get(
 }
 
 // Delete a feature flag by ID. Idempotent: returns 204 even if flag does not exist.
+//
+// Example:
+//
+//	client.Experimentation.FeatureFlags.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the feature flag to delete.
@@ -158,6 +200,15 @@ func (c *Client) Delete(
 }
 
 // Partially update a feature flag by ID. Only provided fields are updated.
+//
+// Example:
+//
+//	request := &management.UpdateFeatureFlagRequestContent{}
+//	client.Experimentation.FeatureFlags.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the feature flag to update.
@@ -178,6 +229,17 @@ func (c *Client) Update(
 }
 
 // Transitions a feature flag through its lifecycle states: draft → active, draft → archived, active → archived.
+//
+// Example:
+//
+//	request := &management.UpdateFeatureFlagStatusRequestContent{
+//	    Status: management.FeatureFlagStatusEnumDraft,
+//	}
+//	client.Experimentation.FeatureFlags.UpdateStatus(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) UpdateStatus(
 	ctx context.Context,
 	// The ID of the feature flag to transition.

@@ -36,6 +36,25 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details for a user's refresh tokens.
+//
+// Example:
+//
+//	request := &management.ListRefreshTokensRequestParameters{
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Users.RefreshToken.List(
+//	    context.TODO(),
+//	    "user_id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to get refresh tokens for
@@ -96,7 +115,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -108,6 +127,13 @@ func (c *Client) List(
 }
 
 // Delete all refresh tokens for a user.
+//
+// Example:
+//
+//	client.Users.RefreshToken.Delete(
+//	    context.TODO(),
+//	    "user_id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user to get remove refresh tokens for

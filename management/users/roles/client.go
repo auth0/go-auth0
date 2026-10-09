@@ -42,6 +42,25 @@ func NewClient(options *core.RequestOptions) *Client {
 // **Note**: This action retrieves all roles assigned to a user in the context of your whole tenant. To retrieve Organization-specific roles, use the following endpoint: [Get user roles assigned to an Organization member](https://auth0.com/docs/api/management/v2/organizations/get-organization-member-roles).
 //
 // **Note**: Returns only direct role assignments. To also include group-based role assignments, use `GET /api/v2/users/{id}/effective-roles`.
+//
+// Example:
+//
+//	request := &management.ListUserRolesRequestParameters{
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Users.Roles.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to list roles for.
@@ -123,6 +142,19 @@ func (c *Client) List(
 // Assign one or more existing user roles to a user. For more information, review [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
 //
 // **Note**: New roles cannot be created through this action. Additionally, this action is used to assign roles to a user in the context of your whole tenant. To assign roles in the context of a specific Organization, use the following endpoint: [Assign user roles to an Organization member](https://auth0.com/docs/api/management/v2/organizations/post-organization-member-roles).
+//
+// Example:
+//
+//	request := &management.AssignUserRolesRequestContent{
+//	    Roles: []string{
+//	        "roles",
+//	    },
+//	}
+//	client.Users.Roles.Assign(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Assign(
 	ctx context.Context,
 	// ID of the user to associate roles with.
@@ -145,6 +177,19 @@ func (c *Client) Assign(
 // Remove one or more specified user roles assigned to a user.
 //
 // **Note**: This action removes a role from a user in the context of your whole tenant. If you want to unassign a role from a user in the context of a specific Organization, use the following endpoint: [Delete user roles from an Organization member](https://auth0.com/docs/api/management/v2/organizations/delete-organization-member-roles).
+//
+// Example:
+//
+//	request := &management.DeleteUserRolesRequestContent{
+//	    Roles: []string{
+//	        "roles",
+//	    },
+//	}
+//	client.Users.Roles.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user to remove roles from.

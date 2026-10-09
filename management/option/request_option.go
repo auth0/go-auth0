@@ -22,6 +22,14 @@ func WithBaseURL(baseURL string) *core.BaseURLOption {
 	}
 }
 
+// WithTenantDomain sets the tenant domain used to build the default base URL
+// (https://<tenantDomain>/api/v2). It has no effect when a custom base URL is set.
+func WithTenantDomain(tenantDomain string) *core.TenantDomainOption {
+	return &core.TenantDomainOption{
+		TenantDomain: tenantDomain,
+	}
+}
+
 // WithHTTPClient uses the given HTTPClient to issue the request.
 func WithHTTPClient(httpClient core.HTTPClient) *core.HTTPClientOption {
 	return &core.HTTPClientOption{

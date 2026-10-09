@@ -37,6 +37,16 @@ var (
 	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 )
 
+// createResourceServerResponseContentNullableFields maps the wire names of CreateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
+var createResourceServerResponseContentNullableFields = map[string]*big.Int{
+	"access_token":          createResourceServerResponseContentFieldAccessToken,
+	"token_encryption":      createResourceServerResponseContentFieldTokenEncryption,
+	"consent_policy":        createResourceServerResponseContentFieldConsentPolicy,
+	"authorization_details": createResourceServerResponseContentFieldAuthorizationDetails,
+	"proof_of_possession":   createResourceServerResponseContentFieldProofOfPossession,
+	"authorization_policy":  createResourceServerResponseContentFieldAuthorizationPolicy,
+}
+
 type CreateResourceServerResponseContent struct {
 	// ID of the API (resource server).
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -270,10 +280,12 @@ func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]in
 }
 
 func (c *CreateResourceServerResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -463,6 +475,13 @@ func (c *CreateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, createResourceServerResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -520,6 +539,16 @@ var (
 	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 )
+
+// getResourceServerResponseContentNullableFields maps the wire names of GetResourceServerResponseContent's nullable fields (required or optional) to their field bits.
+var getResourceServerResponseContentNullableFields = map[string]*big.Int{
+	"access_token":          getResourceServerResponseContentFieldAccessToken,
+	"token_encryption":      getResourceServerResponseContentFieldTokenEncryption,
+	"consent_policy":        getResourceServerResponseContentFieldConsentPolicy,
+	"authorization_details": getResourceServerResponseContentFieldAuthorizationDetails,
+	"proof_of_possession":   getResourceServerResponseContentFieldProofOfPossession,
+	"authorization_policy":  getResourceServerResponseContentFieldAuthorizationPolicy,
+}
 
 type GetResourceServerResponseContent struct {
 	// ID of the API (resource server).
@@ -754,10 +783,12 @@ func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (g *GetResourceServerResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -947,6 +978,13 @@ func (g *GetResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, getResourceServerResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		g.require(presentFields)
+	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1033,10 +1071,12 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) GetExtraProperties() 
 }
 
 func (l *ListResourceServerOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -1136,6 +1176,16 @@ var (
 	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	resourceServerFieldClientID                                  = big.NewInt(1 << 24)
 )
+
+// resourceServerNullableFields maps the wire names of ResourceServer's nullable fields (required or optional) to their field bits.
+var resourceServerNullableFields = map[string]*big.Int{
+	"access_token":          resourceServerFieldAccessToken,
+	"token_encryption":      resourceServerFieldTokenEncryption,
+	"consent_policy":        resourceServerFieldConsentPolicy,
+	"authorization_details": resourceServerFieldAuthorizationDetails,
+	"proof_of_possession":   resourceServerFieldProofOfPossession,
+	"authorization_policy":  resourceServerFieldAuthorizationPolicy,
+}
 
 type ResourceServer struct {
 	// ID of the API (resource server).
@@ -1370,10 +1420,12 @@ func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ResourceServer) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1563,6 +1615,13 @@ func (r *ResourceServer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, resourceServerNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		r.require(presentFields)
+	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1593,11 +1652,11 @@ func (r *ResourceServer) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Authorization policy for the resource server.
 var (
 	resourceServerAuthorizationPolicyFieldPolicyID = big.NewInt(1 << 0)
 )
 
+// Authorization policy for the resource server.
 type ResourceServerAuthorizationPolicy struct {
 	// The ID of the authorization policy to apply.
 	PolicyID string `json:"policy_id" url:"policy_id"`
@@ -1624,10 +1683,12 @@ func (r *ResourceServerAuthorizationPolicy) GetExtraProperties() map[string]inte
 }
 
 func (r *ResourceServerAuthorizationPolicy) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetPolicyID sets the PolicyID field and marks it as non-optional;
@@ -1698,13 +1759,13 @@ func (r ResourceServerConsentPolicyEnum) Ptr() *ResourceServerConsentPolicyEnum 
 	return &r
 }
 
-// Proof-of-Possession configuration for access tokens
 var (
 	resourceServerProofOfPossessionFieldMechanism   = big.NewInt(1 << 0)
 	resourceServerProofOfPossessionFieldRequired    = big.NewInt(1 << 1)
 	resourceServerProofOfPossessionFieldRequiredFor = big.NewInt(1 << 2)
 )
 
+// Proof-of-Possession configuration for access tokens
 type ResourceServerProofOfPossession struct {
 	Mechanism ResourceServerProofOfPossessionMechanismEnum `json:"mechanism" url:"mechanism"`
 	// Whether the use of Proof-of-Possession is required for the resource server
@@ -1747,10 +1808,12 @@ func (r *ResourceServerProofOfPossession) GetExtraProperties() map[string]interf
 }
 
 func (r *ResourceServerProofOfPossession) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetMechanism sets the Mechanism field and marks it as non-optional;
@@ -1902,10 +1965,12 @@ func (r *ResourceServerScope) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ResourceServerScope) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1990,6 +2055,16 @@ var (
 	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
 	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 23)
 )
+
+// resourceServerSearchResponseNullableFields maps the wire names of ResourceServerSearchResponse's nullable fields (required or optional) to their field bits.
+var resourceServerSearchResponseNullableFields = map[string]*big.Int{
+	"access_token":          resourceServerSearchResponseFieldAccessToken,
+	"token_encryption":      resourceServerSearchResponseFieldTokenEncryption,
+	"consent_policy":        resourceServerSearchResponseFieldConsentPolicy,
+	"authorization_details": resourceServerSearchResponseFieldAuthorizationDetails,
+	"proof_of_possession":   resourceServerSearchResponseFieldProofOfPossession,
+	"authorization_policy":  resourceServerSearchResponseFieldAuthorizationPolicy,
+}
 
 type ResourceServerSearchResponse struct {
 	// ID of the API (resource server).
@@ -2215,10 +2290,12 @@ func (r *ResourceServerSearchResponse) GetExtraProperties() map[string]interface
 }
 
 func (r *ResourceServerSearchResponse) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2401,6 +2478,13 @@ func (r *ResourceServerSearchResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, resourceServerSearchResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		r.require(presentFields)
+	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -2457,13 +2541,13 @@ func (r ResourceServerSortFieldEnum) Ptr() *ResourceServerSortFieldEnum {
 	return &r
 }
 
-// Defines application access permission for a resource server
 var (
 	resourceServerSubjectTypeAuthorizationFieldUser          = big.NewInt(1 << 0)
 	resourceServerSubjectTypeAuthorizationFieldClient        = big.NewInt(1 << 1)
 	resourceServerSubjectTypeAuthorizationFieldAnonymousUser = big.NewInt(1 << 2)
 )
 
+// Defines application access permission for a resource server
 type ResourceServerSubjectTypeAuthorization struct {
 	User          *ResourceServerSubjectTypeAuthorizationUser          `json:"user,omitempty" url:"user,omitempty"`
 	Client        *ResourceServerSubjectTypeAuthorizationClient        `json:"client,omitempty" url:"client,omitempty"`
@@ -2505,10 +2589,12 @@ func (r *ResourceServerSubjectTypeAuthorization) GetExtraProperties() map[string
 }
 
 func (r *ResourceServerSubjectTypeAuthorization) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetUser sets the User field and marks it as non-optional;
@@ -2574,11 +2660,11 @@ func (r *ResourceServerSubjectTypeAuthorization) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Access Permissions for anonymous user flows
 var (
 	resourceServerSubjectTypeAuthorizationAnonymousUserFieldPolicy = big.NewInt(1 << 0)
 )
 
+// Access Permissions for anonymous user flows
 type ResourceServerSubjectTypeAuthorizationAnonymousUser struct {
 	Policy *ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
 
@@ -2605,10 +2691,12 @@ func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) GetExtraProperties
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetPolicy sets the Policy field and marks it as non-optional;
@@ -2687,11 +2775,11 @@ func (r ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum) Ptr() *Re
 	return &r
 }
 
-// Access Permissions for client flows
 var (
 	resourceServerSubjectTypeAuthorizationClientFieldPolicy = big.NewInt(1 << 0)
 )
 
+// Access Permissions for client flows
 type ResourceServerSubjectTypeAuthorizationClient struct {
 	Policy *ResourceServerSubjectTypeAuthorizationClientPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
 
@@ -2718,10 +2806,12 @@ func (r *ResourceServerSubjectTypeAuthorizationClient) GetExtraProperties() map[
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationClient) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetPolicy sets the Policy field and marks it as non-optional;
@@ -2800,11 +2890,11 @@ func (r ResourceServerSubjectTypeAuthorizationClientPolicyEnum) Ptr() *ResourceS
 	return &r
 }
 
-// Access Permissions for user flows
 var (
 	resourceServerSubjectTypeAuthorizationUserFieldPolicy = big.NewInt(1 << 0)
 )
 
+// Access Permissions for user flows
 type ResourceServerSubjectTypeAuthorizationUser struct {
 	Policy *ResourceServerSubjectTypeAuthorizationUserPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
 
@@ -2831,10 +2921,12 @@ func (r *ResourceServerSubjectTypeAuthorizationUser) GetExtraProperties() map[st
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationUser) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetPolicy sets the Policy field and marks it as non-optional;
@@ -3012,10 +3104,12 @@ func (r *ResourceServerTokenEncryption) GetExtraProperties() map[string]interfac
 }
 
 func (r *ResourceServerTokenEncryption) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetFormat sets the Format field and marks it as non-optional;
@@ -3179,10 +3273,12 @@ func (r *ResourceServerTokenEncryptionKey) GetExtraProperties() map[string]inter
 }
 
 func (r *ResourceServerTokenEncryptionKey) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3295,10 +3391,12 @@ func (s *SearchResourceServersResponseContent) GetExtraProperties() map[string]i
 }
 
 func (s *SearchResourceServersResponseContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetResourceServers sets the ResourceServers field and marks it as non-optional;
@@ -3384,6 +3482,16 @@ var (
 	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 )
+
+// updateResourceServerResponseContentNullableFields maps the wire names of UpdateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
+var updateResourceServerResponseContentNullableFields = map[string]*big.Int{
+	"access_token":          updateResourceServerResponseContentFieldAccessToken,
+	"token_encryption":      updateResourceServerResponseContentFieldTokenEncryption,
+	"consent_policy":        updateResourceServerResponseContentFieldConsentPolicy,
+	"authorization_details": updateResourceServerResponseContentFieldAuthorizationDetails,
+	"proof_of_possession":   updateResourceServerResponseContentFieldProofOfPossession,
+	"authorization_policy":  updateResourceServerResponseContentFieldAuthorizationPolicy,
+}
 
 type UpdateResourceServerResponseContent struct {
 	// ID of the API (resource server).
@@ -3618,10 +3726,12 @@ func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateResourceServerResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3811,6 +3921,13 @@ func (u *UpdateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateResourceServerResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }

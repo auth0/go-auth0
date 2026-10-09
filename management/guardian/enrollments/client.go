@@ -35,6 +35,16 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Create a [multi-factor authentication (MFA) enrollment ticket](https://auth0.com/docs/secure/multi-factor-authentication/auth0-guardian/create-custom-enrollment-tickets), and optionally send an email with the created ticket to a given user. Enrollment tickets can specify which factor users must enroll with or allow existing MFA users to enroll in additional factors.
+//
+// Example:
+//
+//	request := &management.CreateGuardianEnrollmentTicketRequestContent{
+//	    UserID: "user_id",
+//	}
+//	client.Guardian.Enrollments.CreateTicket(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) CreateTicket(
 	ctx context.Context,
 	request *management.CreateGuardianEnrollmentTicketRequestContent,
@@ -52,6 +62,13 @@ func (c *Client) CreateTicket(
 }
 
 // Retrieve details, such as status and type, for a specific multi-factor authentication enrollment registered to a user account.
+//
+// Example:
+//
+//	client.Guardian.Enrollments.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the enrollment to be retrieve.
@@ -70,6 +87,13 @@ func (c *Client) Get(
 }
 
 // Remove a specific multi-factor authentication (MFA) enrollment from a user's account. This allows the user to re-enroll with MFA. For more information, review [Reset User Multi-Factor Authentication and Recovery Codes](https://auth0.com/docs/secure/multi-factor-authentication/reset-user-mfa).
+//
+// Example:
+//
+//	client.Guardian.Enrollments.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the enrollment to be deleted.

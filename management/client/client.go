@@ -3,6 +3,9 @@
 package client
 
 import (
+	fmt "fmt"
+
+	management "github.com/auth0/go-auth0/v3/management"
 	client "github.com/auth0/go-auth0/v3/management/actions/client"
 	agents "github.com/auth0/go-auth0/v3/management/agents"
 	anomalyclient "github.com/auth0/go-auth0/v3/management/anomaly/client"
@@ -111,6 +114,19 @@ type Management struct {
 
 func NewWithOptions(opts ...option.RequestOption) *Management {
 	options := core.NewRequestOptions(opts...)
+	if options.TenantDomain != "" {
+		tenantDomain := options.TenantDomain
+		if tenantDomain == "" {
+			tenantDomain = "{TENANT}.auth0.com"
+		}
+		switch options.BaseURL {
+		case "", management.Environments.Default:
+			options.BaseURL = fmt.Sprintf(
+				"https://%s/api/v2",
+				tenantDomain,
+			)
+		}
+	}
 	return &Management{
 		Actions:               client.NewClient(options),
 		Agents:                agents.NewClient(options),

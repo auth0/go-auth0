@@ -34,6 +34,17 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.ListPhoneTemplatesRequestParameters{
+//	    Disabled: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Branding.Phone.Templates.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListPhoneTemplatesRequestParameters,
@@ -50,6 +61,13 @@ func (c *Client) List(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &management.CreatePhoneTemplateRequestContent{}
+//	client.Branding.Phone.Templates.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreatePhoneTemplateRequestContent,
@@ -66,6 +84,12 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Branding.Phone.Templates.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id string,
@@ -82,6 +106,12 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Branding.Phone.Templates.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	id string,
@@ -98,6 +128,14 @@ func (c *Client) Delete(
 	return nil
 }
 
+// Example:
+//
+//	request := &management.UpdatePhoneTemplateRequestContent{}
+//	client.Branding.Phone.Templates.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	id string,
@@ -116,6 +154,16 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := map[string]any{
+//	    "key": "value",
+//	}
+//	client.Branding.Phone.Templates.Reset(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Reset(
 	ctx context.Context,
 	id string,
@@ -134,6 +182,16 @@ func (c *Client) Reset(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &management.CreatePhoneTemplateTestNotificationRequestContent{
+//	    To: "to",
+//	}
+//	client.Branding.Phone.Templates.Test(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Test(
 	ctx context.Context,
 	id string,

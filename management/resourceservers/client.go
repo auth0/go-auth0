@@ -38,6 +38,32 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of all APIs associated with your tenant.
+//
+// Example:
+//
+//	request := &management.ListResourceServerRequestParameters{
+//	    Identifiers: []*string{
+//	        management.String(
+//	            "identifiers",
+//	        ),
+//	    },
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.ResourceServers.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListResourceServerRequestParameters,
@@ -112,6 +138,16 @@ func (c *Client) List(
 }
 
 // Create a new API associated with your tenant. Note that all new APIs must be registered with Auth0. For more information, read <a href="https://www.auth0.com/docs/get-started/apis"> APIs</a>.
+//
+// Example:
+//
+//	request := &management.CreateResourceServerRequestContent{
+//	    Identifier: "identifier",
+//	}
+//	client.ResourceServers.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateResourceServerRequestContent,
@@ -132,6 +168,32 @@ func (c *Client) Create(
 // Results may not reflect recent updates immediately.
 //
 // The `signing_secret` field is not supported by this endpoint.
+//
+// Example:
+//
+//	request := &management.SearchResourceServersRequestParameters{
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	    Parser: management.SearchParserEnumSCIM.Ptr(),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Sort: management.ResourceServerSortFieldEnumIdentifier.Ptr(),
+//	}
+//	client.ResourceServers.Search(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Search(
 	ctx context.Context,
 	request *management.SearchResourceServersRequestParameters,
@@ -186,7 +248,7 @@ func (c *Client) Search(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -198,6 +260,19 @@ func (c *Client) Search(
 }
 
 // Retrieve <a href="https://auth0.com/docs/apis">API</a> details with the given ID.
+//
+// Example:
+//
+//	request := &management.GetResourceServerRequestParameters{
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.ResourceServers.Get(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID or audience of the resource server to retrieve.
@@ -218,6 +293,13 @@ func (c *Client) Get(
 }
 
 // Delete an existing API by ID. For more information, read <a href="https://www.auth0.com/docs/get-started/apis/api-settings">API Settings</a>.
+//
+// Example:
+//
+//	client.ResourceServers.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID or the audience of the resource server to delete.
@@ -236,6 +318,15 @@ func (c *Client) Delete(
 }
 
 // Change an existing API setting by resource server ID. For more information, read <a href="https://www.auth0.com/docs/get-started/apis/api-settings">API Settings</a>.
+//
+// Example:
+//
+//	request := &management.UpdateResourceServerRequestContent{}
+//	client.ResourceServers.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID or audience of the resource server to update.

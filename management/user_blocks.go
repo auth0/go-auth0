@@ -39,10 +39,12 @@ func (l *ListUserBlocksByIdentifierResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListUserBlocksByIdentifierResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetBlockedFor sets the BlockedFor field and marks it as non-optional;
@@ -124,10 +126,12 @@ func (l *ListUserBlocksResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (l *ListUserBlocksResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetBlockedFor sets the BlockedFor field and marks it as non-optional;
@@ -230,10 +234,12 @@ func (u *UserBlockIdentifier) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserBlockIdentifier) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;

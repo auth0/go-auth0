@@ -35,6 +35,17 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Deletes a specified connection user by its email (you cannot delete all users from specific connection). Currently, only Database Connections are supported.
+//
+// Example:
+//
+//	request := &management.DeleteConnectionUsersByEmailQueryParameters{
+//	    Email: "email",
+//	}
+//	client.Connections.Users.DeleteByEmail(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) DeleteByEmail(
 	ctx context.Context,
 	// The id of the connection (currently only database connections are supported)

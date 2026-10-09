@@ -42,6 +42,26 @@ func NewClient(options *core.RequestOptions) *Client {
 // Users can be members of multiple Organizations with unique roles assigned for each membership. This action only returns the roles associated with the specified Organization; any roles assigned to the user within other Organizations are not included.
 //
 // **Note**: Returns only direct role assignments for this member. To also include group-based role assignments, use `GET /api/v2/organizations/{id}/members/{user_id}/effective-roles`.
+//
+// Example:
+//
+//	request := &management.ListOrganizationMemberRolesRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Organizations.Members.Roles.List(
+//	    context.TODO(),
+//	    "id",
+//	    "user_id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
@@ -126,6 +146,20 @@ func (c *Client) List(
 // Assign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) to a user to determine their access for a specific Organization.
 //
 // Users can be members of multiple Organizations with unique roles assigned for each membership. This action assigns roles to a user only for the specified Organization. Roles cannot be assigned to a user across multiple Organizations in the same call.
+//
+// Example:
+//
+//	request := &management.AssignOrganizationMemberRolesRequestContent{
+//	    Roles: []string{
+//	        "roles",
+//	    },
+//	}
+//	client.Organizations.Members.Roles.Assign(
+//	    context.TODO(),
+//	    "id",
+//	    "user_id",
+//	    request,
+//	)
 func (c *Client) Assign(
 	ctx context.Context,
 	// Organization identifier.
@@ -151,6 +185,20 @@ func (c *Client) Assign(
 // Remove one or more Organization-specific [roles](https://auth0.com/docs/manage-users/access-control/rbac) from a given user.
 //
 // Users can be members of multiple Organizations with unique roles assigned for each membership. This action removes roles from a user in relation to the specified Organization. Roles assigned to the user within a different Organization cannot be managed in the same call.
+//
+// Example:
+//
+//	request := &management.DeleteOrganizationMemberRolesRequestContent{
+//	    Roles: []string{
+//	        "roles",
+//	    },
+//	}
+//	client.Organizations.Members.Roles.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    "user_id",
+//	    request,
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.

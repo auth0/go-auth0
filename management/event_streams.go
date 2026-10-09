@@ -68,10 +68,12 @@ func (c *CreateEventStreamActionRequestContent) GetExtraProperties() map[string]
 }
 
 func (c *CreateEventStreamActionRequestContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -202,10 +204,12 @@ func (c *CreateEventStreamEventBridgeRequestContent) GetExtraProperties() map[st
 }
 
 func (c *CreateEventStreamEventBridgeRequestContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -308,6 +312,30 @@ func (c *CreateEventStreamResponseContent) GetEventStreamActionResponseContent()
 }
 
 func (c *CreateEventStreamResponseContent) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
+			c.typ = "EventStreamWebhookResponseContent"
+			c.EventStreamWebhookResponseContent = valueEventStreamWebhookResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamEventBridgeResponseContent := new(EventStreamEventBridgeResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamEventBridgeResponseContent); err == nil {
+			c.typ = "EventStreamEventBridgeResponseContent"
+			c.EventStreamEventBridgeResponseContent = valueEventStreamEventBridgeResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamActionResponseContent := new(EventStreamActionResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamActionResponseContent); err == nil {
+			c.typ = "EventStreamActionResponseContent"
+			c.EventStreamActionResponseContent = valueEventStreamActionResponseContent
+			return nil
+		}
+	}
 	valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
 	if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
 		c.typ = "EventStreamWebhookResponseContent"
@@ -361,7 +389,6 @@ func (c *CreateEventStreamResponseContent) Accept(visitor CreateEventStreamRespo
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
-// Metadata about a specific attempt to deliver an event
 var (
 	createEventStreamTestEventResponseContentFieldID            = big.NewInt(1 << 0)
 	createEventStreamTestEventResponseContentFieldEventStreamID = big.NewInt(1 << 1)
@@ -371,6 +398,7 @@ var (
 	createEventStreamTestEventResponseContentFieldEvent         = big.NewInt(1 << 5)
 )
 
+// Metadata about a specific attempt to deliver an event
 type CreateEventStreamTestEventResponseContent struct {
 	// Unique identifier for the delivery
 	ID string `json:"id" url:"id"`
@@ -439,10 +467,12 @@ func (c *CreateEventStreamTestEventResponseContent) GetExtraProperties() map[str
 }
 
 func (c *CreateEventStreamTestEventResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -587,10 +617,12 @@ func (c *CreateEventStreamWebHookRequestContent) GetExtraProperties() map[string
 }
 
 func (c *CreateEventStreamWebHookRequestContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -663,11 +695,11 @@ func (c *CreateEventStreamWebHookRequestContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration specific to an action destination.
 var (
 	eventStreamActionConfigurationFieldActionID = big.NewInt(1 << 0)
 )
 
+// Configuration specific to an action destination.
 type EventStreamActionConfiguration struct {
 	// Action ID for the action destination.
 	ActionID string `json:"action_id" url:"action_id"`
@@ -694,10 +726,12 @@ func (e *EventStreamActionConfiguration) GetExtraProperties() map[string]interfa
 }
 
 func (e *EventStreamActionConfiguration) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActionID sets the ActionID field and marks it as non-optional;
@@ -787,10 +821,12 @@ func (e *EventStreamActionDestination) GetExtraProperties() map[string]interface
 }
 
 func (e *EventStreamActionDestination) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -956,10 +992,12 @@ func (e *EventStreamActionResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (e *EventStreamActionResponseContent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1087,6 +1125,38 @@ func (e *EventStreamDestinationPatch) GetEventStreamActionDestination() *EventSt
 }
 
 func (e *EventStreamDestinationPatch) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"type", "configuration"}, []string{"type", "configuration"}) {
+		valueEventStreamWebhookDestination := new(EventStreamWebhookDestination)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookDestination); err == nil {
+			e.typ = "EventStreamWebhookDestination"
+			e.EventStreamWebhookDestination = valueEventStreamWebhookDestination
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"type", "configuration"}, []string{"type", "configuration"}) {
+		valueEventStreamActionDestination := new(EventStreamActionDestination)
+		if err := json.Unmarshal(data, &valueEventStreamActionDestination); err == nil {
+			e.typ = "EventStreamActionDestination"
+			e.EventStreamActionDestination = valueEventStreamActionDestination
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "configuration"}) {
+		valueEventStreamWebhookDestination := new(EventStreamWebhookDestination)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookDestination); err == nil {
+			e.typ = "EventStreamWebhookDestination"
+			e.EventStreamWebhookDestination = valueEventStreamWebhookDestination
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "configuration"}) {
+		valueEventStreamActionDestination := new(EventStreamActionDestination)
+		if err := json.Unmarshal(data, &valueEventStreamActionDestination); err == nil {
+			e.typ = "EventStreamActionDestination"
+			e.EventStreamActionDestination = valueEventStreamActionDestination
+			return nil
+		}
+	}
 	valueEventStreamWebhookDestination := new(EventStreamWebhookDestination)
 	if err := json.Unmarshal(data, &valueEventStreamWebhookDestination); err == nil {
 		e.typ = "EventStreamWebhookDestination"
@@ -1252,13 +1322,13 @@ func (e EventStreamEventBridgeAwsRegionEnum) Ptr() *EventStreamEventBridgeAwsReg
 	return &e
 }
 
-// Configuration specific to an eventbridge destination.
 var (
 	eventStreamEventBridgeConfigurationFieldAwsAccountID          = big.NewInt(1 << 0)
 	eventStreamEventBridgeConfigurationFieldAwsRegion             = big.NewInt(1 << 1)
 	eventStreamEventBridgeConfigurationFieldAwsPartnerEventSource = big.NewInt(1 << 2)
 )
 
+// Configuration specific to an eventbridge destination.
 type EventStreamEventBridgeConfiguration struct {
 	// AWS Account ID for EventBridge destination.
 	AwsAccountID string                              `json:"aws_account_id" url:"aws_account_id"`
@@ -1302,10 +1372,12 @@ func (e *EventStreamEventBridgeConfiguration) GetExtraProperties() map[string]in
 }
 
 func (e *EventStreamEventBridgeConfiguration) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetAwsAccountID sets the AwsAccountID field and marks it as non-optional;
@@ -1409,10 +1481,12 @@ func (e *EventStreamEventBridgeDestination) GetExtraProperties() map[string]inte
 }
 
 func (e *EventStreamEventBridgeDestination) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -1578,10 +1652,12 @@ func (e *EventStreamEventBridgeResponseContent) GetExtraProperties() map[string]
 }
 
 func (e *EventStreamEventBridgeResponseContent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1717,6 +1793,30 @@ func (e *EventStreamResponseContent) GetEventStreamActionResponseContent() *Even
 }
 
 func (e *EventStreamResponseContent) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
+			e.typ = "EventStreamWebhookResponseContent"
+			e.EventStreamWebhookResponseContent = valueEventStreamWebhookResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamEventBridgeResponseContent := new(EventStreamEventBridgeResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamEventBridgeResponseContent); err == nil {
+			e.typ = "EventStreamEventBridgeResponseContent"
+			e.EventStreamEventBridgeResponseContent = valueEventStreamEventBridgeResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamActionResponseContent := new(EventStreamActionResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamActionResponseContent); err == nil {
+			e.typ = "EventStreamActionResponseContent"
+			e.EventStreamActionResponseContent = valueEventStreamActionResponseContent
+			return nil
+		}
+	}
 	valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
 	if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
 		e.typ = "EventStreamWebhookResponseContent"
@@ -1793,11 +1893,11 @@ func (e EventStreamStatusEnum) Ptr() *EventStreamStatusEnum {
 	return &e
 }
 
-// Event types
 var (
 	eventStreamSubscriptionFieldEventType = big.NewInt(1 << 0)
 )
 
+// Event types
 type EventStreamSubscription struct {
 	EventType *string `json:"event_type,omitempty" url:"event_type,omitempty"`
 
@@ -1823,10 +1923,12 @@ func (e *EventStreamSubscription) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EventStreamSubscription) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetEventType sets the EventType field and marks it as non-optional;
@@ -2000,6 +2102,54 @@ func (e *EventStreamWebhookAuthorizationResponse) GetEventStreamWebhookCustomHea
 }
 
 func (e *EventStreamWebhookAuthorizationResponse) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"method", "username"}, []string{"method", "username"}) {
+		valueEventStreamWebhookBasicAuth := new(EventStreamWebhookBasicAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBasicAuth); err == nil {
+			e.typ = "EventStreamWebhookBasicAuth"
+			e.EventStreamWebhookBasicAuth = valueEventStreamWebhookBasicAuth
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"method"}, []string{"method"}) {
+		valueEventStreamWebhookBearerAuth := new(EventStreamWebhookBearerAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBearerAuth); err == nil {
+			e.typ = "EventStreamWebhookBearerAuth"
+			e.EventStreamWebhookBearerAuth = valueEventStreamWebhookBearerAuth
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"method", "header_key"}, []string{"method", "header_key"}) {
+		valueEventStreamWebhookCustomHeaderAuth := new(EventStreamWebhookCustomHeaderAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookCustomHeaderAuth); err == nil {
+			e.typ = "EventStreamWebhookCustomHeaderAuth"
+			e.EventStreamWebhookCustomHeaderAuth = valueEventStreamWebhookCustomHeaderAuth
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "username"}) {
+		valueEventStreamWebhookBasicAuth := new(EventStreamWebhookBasicAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBasicAuth); err == nil {
+			e.typ = "EventStreamWebhookBasicAuth"
+			e.EventStreamWebhookBasicAuth = valueEventStreamWebhookBasicAuth
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method"}) {
+		valueEventStreamWebhookBearerAuth := new(EventStreamWebhookBearerAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBearerAuth); err == nil {
+			e.typ = "EventStreamWebhookBearerAuth"
+			e.EventStreamWebhookBearerAuth = valueEventStreamWebhookBearerAuth
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "header_key"}) {
+		valueEventStreamWebhookCustomHeaderAuth := new(EventStreamWebhookCustomHeaderAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookCustomHeaderAuth); err == nil {
+			e.typ = "EventStreamWebhookCustomHeaderAuth"
+			e.EventStreamWebhookCustomHeaderAuth = valueEventStreamWebhookCustomHeaderAuth
+			return nil
+		}
+	}
 	valueEventStreamWebhookBasicAuth := new(EventStreamWebhookBasicAuth)
 	if err := json.Unmarshal(data, &valueEventStreamWebhookBasicAuth); err == nil {
 		e.typ = "EventStreamWebhookBasicAuth"
@@ -2053,12 +2203,12 @@ func (e *EventStreamWebhookAuthorizationResponse) Accept(visitor EventStreamWebh
 	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
-// Basic Authorization for HTTP requests (e.g., 'Basic credentials').
 var (
 	eventStreamWebhookBasicAuthFieldMethod   = big.NewInt(1 << 0)
 	eventStreamWebhookBasicAuthFieldUsername = big.NewInt(1 << 1)
 )
 
+// Basic Authorization for HTTP requests (e.g., 'Basic credentials').
 type EventStreamWebhookBasicAuth struct {
 	Method EventStreamWebhookBasicAuthMethodEnum `json:"method" url:"method"`
 	// Username
@@ -2093,10 +2243,12 @@ func (e *EventStreamWebhookBasicAuth) GetExtraProperties() map[string]interface{
 }
 
 func (e *EventStreamWebhookBasicAuth) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -2175,11 +2327,11 @@ func (e EventStreamWebhookBasicAuthMethodEnum) Ptr() *EventStreamWebhookBasicAut
 	return &e
 }
 
-// Bearer Authorization for HTTP requests (e.g., 'Bearer token').
 var (
 	eventStreamWebhookBearerAuthFieldMethod = big.NewInt(1 << 0)
 )
 
+// Bearer Authorization for HTTP requests (e.g., 'Bearer token').
 type EventStreamWebhookBearerAuth struct {
 	Method EventStreamWebhookBearerAuthMethodEnum `json:"method" url:"method"`
 
@@ -2205,10 +2357,12 @@ func (e *EventStreamWebhookBearerAuth) GetExtraProperties() map[string]interface
 }
 
 func (e *EventStreamWebhookBearerAuth) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -2280,12 +2434,12 @@ func (e EventStreamWebhookBearerAuthMethodEnum) Ptr() *EventStreamWebhookBearerA
 	return &e
 }
 
-// Configuration specific to a webhook destination.
 var (
 	eventStreamWebhookConfigurationFieldWebhookEndpoint      = big.NewInt(1 << 0)
 	eventStreamWebhookConfigurationFieldWebhookAuthorization = big.NewInt(1 << 1)
 )
 
+// Configuration specific to a webhook destination.
 type EventStreamWebhookConfiguration struct {
 	// Target HTTP endpoint URL.
 	WebhookEndpoint      string                                   `json:"webhook_endpoint" url:"webhook_endpoint"`
@@ -2320,10 +2474,12 @@ func (e *EventStreamWebhookConfiguration) GetExtraProperties() map[string]interf
 }
 
 func (e *EventStreamWebhookConfiguration) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetWebhookEndpoint sets the WebhookEndpoint field and marks it as non-optional;
@@ -2382,12 +2538,12 @@ func (e *EventStreamWebhookConfiguration) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Custom header authorization for HTTP requests.
 var (
 	eventStreamWebhookCustomHeaderAuthFieldMethod    = big.NewInt(1 << 0)
 	eventStreamWebhookCustomHeaderAuthFieldHeaderKey = big.NewInt(1 << 1)
 )
 
+// Custom header authorization for HTTP requests.
 type EventStreamWebhookCustomHeaderAuth struct {
 	Method EventStreamWebhookCustomHeaderAuthMethodEnum `json:"method" url:"method"`
 	// HTTP header name.
@@ -2422,10 +2578,12 @@ func (e *EventStreamWebhookCustomHeaderAuth) GetExtraProperties() map[string]int
 }
 
 func (e *EventStreamWebhookCustomHeaderAuth) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -2542,10 +2700,12 @@ func (e *EventStreamWebhookDestination) GetExtraProperties() map[string]interfac
 }
 
 func (e *EventStreamWebhookDestination) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -2711,10 +2871,12 @@ func (e *EventStreamWebhookResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (e *EventStreamWebhookResponseContent) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2850,6 +3012,30 @@ func (g *GetEventStreamResponseContent) GetEventStreamActionResponseContent() *E
 }
 
 func (g *GetEventStreamResponseContent) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
+			g.typ = "EventStreamWebhookResponseContent"
+			g.EventStreamWebhookResponseContent = valueEventStreamWebhookResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamEventBridgeResponseContent := new(EventStreamEventBridgeResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamEventBridgeResponseContent); err == nil {
+			g.typ = "EventStreamEventBridgeResponseContent"
+			g.EventStreamEventBridgeResponseContent = valueEventStreamEventBridgeResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamActionResponseContent := new(EventStreamActionResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamActionResponseContent); err == nil {
+			g.typ = "EventStreamActionResponseContent"
+			g.EventStreamActionResponseContent = valueEventStreamActionResponseContent
+			return nil
+		}
+	}
 	valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
 	if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
 		g.typ = "EventStreamWebhookResponseContent"
@@ -2943,10 +3129,12 @@ func (l *ListEventStreamsResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (l *ListEventStreamsResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetEventStreams sets the EventStreams field and marks it as non-optional;
@@ -3042,6 +3230,30 @@ func (u *UpdateEventStreamResponseContent) GetEventStreamActionResponseContent()
 }
 
 func (u *UpdateEventStreamResponseContent) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
+			u.typ = "EventStreamWebhookResponseContent"
+			u.EventStreamWebhookResponseContent = valueEventStreamWebhookResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamEventBridgeResponseContent := new(EventStreamEventBridgeResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamEventBridgeResponseContent); err == nil {
+			u.typ = "EventStreamEventBridgeResponseContent"
+			u.EventStreamEventBridgeResponseContent = valueEventStreamEventBridgeResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "name", "subscriptions", "destination", "status", "created_at", "updated_at"}, []string{}) {
+		valueEventStreamActionResponseContent := new(EventStreamActionResponseContent)
+		if err := json.Unmarshal(data, &valueEventStreamActionResponseContent); err == nil {
+			u.typ = "EventStreamActionResponseContent"
+			u.EventStreamActionResponseContent = valueEventStreamActionResponseContent
+			return nil
+		}
+	}
 	valueEventStreamWebhookResponseContent := new(EventStreamWebhookResponseContent)
 	if err := json.Unmarshal(data, &valueEventStreamWebhookResponseContent); err == nil {
 		u.typ = "EventStreamWebhookResponseContent"
@@ -3125,6 +3337,54 @@ func (e *EventStreamsCreateRequest) GetCreateEventStreamActionRequestContent() *
 }
 
 func (e *EventStreamsCreateRequest) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"name", "subscriptions", "destination", "status"}, []string{"destination"}) {
+		valueCreateEventStreamWebHookRequestContent := new(CreateEventStreamWebHookRequestContent)
+		if err := json.Unmarshal(data, &valueCreateEventStreamWebHookRequestContent); err == nil {
+			e.typ = "CreateEventStreamWebHookRequestContent"
+			e.CreateEventStreamWebHookRequestContent = valueCreateEventStreamWebHookRequestContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "subscriptions", "destination", "status"}, []string{"destination"}) {
+		valueCreateEventStreamEventBridgeRequestContent := new(CreateEventStreamEventBridgeRequestContent)
+		if err := json.Unmarshal(data, &valueCreateEventStreamEventBridgeRequestContent); err == nil {
+			e.typ = "CreateEventStreamEventBridgeRequestContent"
+			e.CreateEventStreamEventBridgeRequestContent = valueCreateEventStreamEventBridgeRequestContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "subscriptions", "destination", "status"}, []string{"destination"}) {
+		valueCreateEventStreamActionRequestContent := new(CreateEventStreamActionRequestContent)
+		if err := json.Unmarshal(data, &valueCreateEventStreamActionRequestContent); err == nil {
+			e.typ = "CreateEventStreamActionRequestContent"
+			e.CreateEventStreamActionRequestContent = valueCreateEventStreamActionRequestContent
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"destination"}) {
+		valueCreateEventStreamWebHookRequestContent := new(CreateEventStreamWebHookRequestContent)
+		if err := json.Unmarshal(data, &valueCreateEventStreamWebHookRequestContent); err == nil {
+			e.typ = "CreateEventStreamWebHookRequestContent"
+			e.CreateEventStreamWebHookRequestContent = valueCreateEventStreamWebHookRequestContent
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"destination"}) {
+		valueCreateEventStreamEventBridgeRequestContent := new(CreateEventStreamEventBridgeRequestContent)
+		if err := json.Unmarshal(data, &valueCreateEventStreamEventBridgeRequestContent); err == nil {
+			e.typ = "CreateEventStreamEventBridgeRequestContent"
+			e.CreateEventStreamEventBridgeRequestContent = valueCreateEventStreamEventBridgeRequestContent
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"destination"}) {
+		valueCreateEventStreamActionRequestContent := new(CreateEventStreamActionRequestContent)
+		if err := json.Unmarshal(data, &valueCreateEventStreamActionRequestContent); err == nil {
+			e.typ = "CreateEventStreamActionRequestContent"
+			e.CreateEventStreamActionRequestContent = valueCreateEventStreamActionRequestContent
+			return nil
+		}
+	}
 	valueCreateEventStreamWebHookRequestContent := new(CreateEventStreamWebHookRequestContent)
 	if err := json.Unmarshal(data, &valueCreateEventStreamWebHookRequestContent); err == nil {
 		e.typ = "CreateEventStreamWebHookRequestContent"

@@ -37,6 +37,26 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.ListFormsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    Hydrate: []*management.FormsRequestParametersHydrateEnum{
+//	        management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
+//	    },
+//	}
+//	client.Forms.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListFormsRequestParameters,
@@ -110,6 +130,15 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
+// Example:
+//
+//	request := &management.CreateFormRequestContent{
+//	    Name: "name",
+//	}
+//	client.Forms.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateFormRequestContent,
@@ -126,6 +155,18 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &management.GetFormRequestParameters{
+//	    Hydrate: []*management.FormsRequestParametersHydrateEnum{
+//	        management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
+//	    },
+//	}
+//	client.Forms.Get(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the form to retrieve.
@@ -145,6 +186,12 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.Forms.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the form to delete.
@@ -162,6 +209,14 @@ func (c *Client) Delete(
 	return nil
 }
 
+// Example:
+//
+//	request := &management.UpdateFormRequestContent{}
+//	client.Forms.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the form to update.

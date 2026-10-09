@@ -24,6 +24,11 @@ var (
 	createCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 11)
 )
 
+// createCustomDomainResponseContentNullableFields maps the wire names of CreateCustomDomainResponseContent's nullable fields (required or optional) to their field bits.
+var createCustomDomainResponseContentNullableFields = map[string]*big.Int{
+	"custom_client_ip_header": createCustomDomainResponseContentFieldCustomClientIPHeader,
+}
+
 type CreateCustomDomainResponseContent struct {
 	// ID of the custom domain.
 	CustomDomainID string `json:"custom_domain_id" url:"custom_domain_id"`
@@ -144,10 +149,12 @@ func (c *CreateCustomDomainResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateCustomDomainResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCustomDomainID sets the CustomDomainID field and marks it as non-optional;
@@ -246,6 +253,13 @@ func (c *CreateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, createCustomDomainResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -291,6 +305,11 @@ var (
 	customDomainFieldCertificate            = big.NewInt(1 << 11)
 	customDomainFieldRelyingPartyIdentifier = big.NewInt(1 << 12)
 )
+
+// customDomainNullableFields maps the wire names of CustomDomain's nullable fields (required or optional) to their field bits.
+var customDomainNullableFields = map[string]*big.Int{
+	"custom_client_ip_header": customDomainFieldCustomClientIPHeader,
+}
 
 type CustomDomain struct {
 	// ID of the custom domain.
@@ -421,10 +440,12 @@ func (c *CustomDomain) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CustomDomain) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCustomDomainID sets the CustomDomainID field and marks it as non-optional;
@@ -530,6 +551,13 @@ func (c *CustomDomain) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, customDomainNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -706,7 +734,6 @@ func (c CustomDomainVerificationMethodEnum) Ptr() *CustomDomainVerificationMetho
 	return &c
 }
 
-// Certificate information. This object is relevant only for Custom Domains with Auth0-Managed Certificates.
 var (
 	domainCertificateFieldStatus               = big.NewInt(1 << 0)
 	domainCertificateFieldErrorMsg             = big.NewInt(1 << 1)
@@ -714,6 +741,7 @@ var (
 	domainCertificateFieldRenewsBefore         = big.NewInt(1 << 3)
 )
 
+// Certificate information. This object is relevant only for Custom Domains with Auth0-Managed Certificates.
 type DomainCertificate struct {
 	Status *DomainCertificateStatusEnum `json:"status,omitempty" url:"status,omitempty"`
 	// A user-friendly error message will be presented if the certificate status is provisioning_failed or renewing_failed.
@@ -765,10 +793,12 @@ func (d *DomainCertificate) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DomainCertificate) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -896,7 +926,6 @@ func (d DomainCertificateStatusEnum) Ptr() *DomainCertificateStatusEnum {
 // Domain metadata associated with the custom domain, in the form of an object with string values (max 255 chars). Maximum of 10 domain metadata properties allowed.
 type DomainMetadata = map[string]*string
 
-// Domain verification settings.
 var (
 	domainVerificationFieldMethods        = big.NewInt(1 << 0)
 	domainVerificationFieldStatus         = big.NewInt(1 << 1)
@@ -904,6 +933,7 @@ var (
 	domainVerificationFieldLastVerifiedAt = big.NewInt(1 << 3)
 )
 
+// Domain verification settings.
 type DomainVerification struct {
 	// Domain verification methods.
 	Methods []*DomainVerificationMethod   `json:"methods,omitempty" url:"methods,omitempty"`
@@ -956,10 +986,12 @@ func (d *DomainVerification) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DomainVerification) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetMethods sets the Methods field and marks it as non-optional;
@@ -1081,10 +1113,12 @@ func (d *DomainVerificationMethod) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DomainVerificationMethod) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1215,6 +1249,11 @@ var (
 	getCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 12)
 )
 
+// getCustomDomainResponseContentNullableFields maps the wire names of GetCustomDomainResponseContent's nullable fields (required or optional) to their field bits.
+var getCustomDomainResponseContentNullableFields = map[string]*big.Int{
+	"custom_client_ip_header": getCustomDomainResponseContentFieldCustomClientIPHeader,
+}
+
 type GetCustomDomainResponseContent struct {
 	// ID of the custom domain.
 	CustomDomainID string `json:"custom_domain_id" url:"custom_domain_id"`
@@ -1344,10 +1383,12 @@ func (g *GetCustomDomainResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (g *GetCustomDomainResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetCustomDomainID sets the CustomDomainID field and marks it as non-optional;
@@ -1453,6 +1494,13 @@ func (g *GetCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, getCustomDomainResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		g.require(presentFields)
+	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1513,10 +1561,12 @@ func (g *GetDefaultCanonicalDomainResponseContent) GetExtraProperties() map[stri
 }
 
 func (g *GetDefaultCanonicalDomainResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -1583,6 +1633,11 @@ var (
 	getDefaultCustomDomainResponseContentFieldCertificate            = big.NewInt(1 << 11)
 	getDefaultCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 12)
 )
+
+// getDefaultCustomDomainResponseContentNullableFields maps the wire names of GetDefaultCustomDomainResponseContent's nullable fields (required or optional) to their field bits.
+var getDefaultCustomDomainResponseContentNullableFields = map[string]*big.Int{
+	"custom_client_ip_header": getDefaultCustomDomainResponseContentFieldCustomClientIPHeader,
+}
 
 type GetDefaultCustomDomainResponseContent struct {
 	// ID of the custom domain.
@@ -1713,10 +1768,12 @@ func (g *GetDefaultCustomDomainResponseContent) GetExtraProperties() map[string]
 }
 
 func (g *GetDefaultCustomDomainResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetCustomDomainID sets the CustomDomainID field and marks it as non-optional;
@@ -1822,6 +1879,13 @@ func (g *GetDefaultCustomDomainResponseContent) UnmarshalJSON(data []byte) error
 		return err
 	}
 	g.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, getDefaultCustomDomainResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		g.require(presentFields)
+	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1874,6 +1938,38 @@ func (g *GetDefaultDomainResponseContent) GetGetDefaultCanonicalDomainResponseCo
 }
 
 func (g *GetDefaultDomainResponseContent) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"custom_domain_id", "domain", "primary", "is_default", "status", "type", "origin_domain_name", "verification", "custom_client_ip_header", "tls_policy", "domain_metadata", "certificate", "relying_party_identifier"}, []string{"custom_domain_id", "domain", "primary", "status", "type"}) {
+		valueGetDefaultCustomDomainResponseContent := new(GetDefaultCustomDomainResponseContent)
+		if err := json.Unmarshal(data, &valueGetDefaultCustomDomainResponseContent); err == nil {
+			g.typ = "GetDefaultCustomDomainResponseContent"
+			g.GetDefaultCustomDomainResponseContent = valueGetDefaultCustomDomainResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"domain"}, []string{"domain"}) {
+		valueGetDefaultCanonicalDomainResponseContent := new(GetDefaultCanonicalDomainResponseContent)
+		if err := json.Unmarshal(data, &valueGetDefaultCanonicalDomainResponseContent); err == nil {
+			g.typ = "GetDefaultCanonicalDomainResponseContent"
+			g.GetDefaultCanonicalDomainResponseContent = valueGetDefaultCanonicalDomainResponseContent
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"custom_domain_id", "domain", "primary", "status", "type"}) {
+		valueGetDefaultCustomDomainResponseContent := new(GetDefaultCustomDomainResponseContent)
+		if err := json.Unmarshal(data, &valueGetDefaultCustomDomainResponseContent); err == nil {
+			g.typ = "GetDefaultCustomDomainResponseContent"
+			g.GetDefaultCustomDomainResponseContent = valueGetDefaultCustomDomainResponseContent
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"domain"}) {
+		valueGetDefaultCanonicalDomainResponseContent := new(GetDefaultCanonicalDomainResponseContent)
+		if err := json.Unmarshal(data, &valueGetDefaultCanonicalDomainResponseContent); err == nil {
+			g.typ = "GetDefaultCanonicalDomainResponseContent"
+			g.GetDefaultCanonicalDomainResponseContent = valueGetDefaultCanonicalDomainResponseContent
+			return nil
+		}
+	}
 	valueGetDefaultCustomDomainResponseContent := new(GetDefaultCustomDomainResponseContent)
 	if err := json.Unmarshal(data, &valueGetDefaultCustomDomainResponseContent); err == nil {
 		g.typ = "GetDefaultCustomDomainResponseContent"
@@ -1956,10 +2052,12 @@ func (t *TestCustomDomainResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (t *TestCustomDomainResponseContent) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetSuccess sets the Success field and marks it as non-optional;
@@ -2032,6 +2130,11 @@ var (
 	updateCustomDomainResponseContentFieldCertificate            = big.NewInt(1 << 10)
 	updateCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 11)
 )
+
+// updateCustomDomainResponseContentNullableFields maps the wire names of UpdateCustomDomainResponseContent's nullable fields (required or optional) to their field bits.
+var updateCustomDomainResponseContentNullableFields = map[string]*big.Int{
+	"custom_client_ip_header": updateCustomDomainResponseContentFieldCustomClientIPHeader,
+}
 
 type UpdateCustomDomainResponseContent struct {
 	// ID of the custom domain.
@@ -2153,10 +2256,12 @@ func (u *UpdateCustomDomainResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (u *UpdateCustomDomainResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetCustomDomainID sets the CustomDomainID field and marks it as non-optional;
@@ -2255,6 +2360,13 @@ func (u *UpdateCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateCustomDomainResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -2315,10 +2427,12 @@ func (u *UpdateDefaultCanonicalDomainResponseContent) GetExtraProperties() map[s
 }
 
 func (u *UpdateDefaultCanonicalDomainResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -2385,6 +2499,11 @@ var (
 	updateDefaultCustomDomainResponseContentFieldCertificate            = big.NewInt(1 << 11)
 	updateDefaultCustomDomainResponseContentFieldRelyingPartyIdentifier = big.NewInt(1 << 12)
 )
+
+// updateDefaultCustomDomainResponseContentNullableFields maps the wire names of UpdateDefaultCustomDomainResponseContent's nullable fields (required or optional) to their field bits.
+var updateDefaultCustomDomainResponseContentNullableFields = map[string]*big.Int{
+	"custom_client_ip_header": updateDefaultCustomDomainResponseContentFieldCustomClientIPHeader,
+}
 
 type UpdateDefaultCustomDomainResponseContent struct {
 	// ID of the custom domain.
@@ -2515,10 +2634,12 @@ func (u *UpdateDefaultCustomDomainResponseContent) GetExtraProperties() map[stri
 }
 
 func (u *UpdateDefaultCustomDomainResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetCustomDomainID sets the CustomDomainID field and marks it as non-optional;
@@ -2624,6 +2745,13 @@ func (u *UpdateDefaultCustomDomainResponseContent) UnmarshalJSON(data []byte) er
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateDefaultCustomDomainResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -2676,6 +2804,38 @@ func (u *UpdateDefaultDomainResponseContent) GetUpdateDefaultCanonicalDomainResp
 }
 
 func (u *UpdateDefaultDomainResponseContent) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"custom_domain_id", "domain", "primary", "is_default", "status", "type", "origin_domain_name", "verification", "custom_client_ip_header", "tls_policy", "domain_metadata", "certificate", "relying_party_identifier"}, []string{"custom_domain_id", "domain", "primary", "status", "type"}) {
+		valueUpdateDefaultCustomDomainResponseContent := new(UpdateDefaultCustomDomainResponseContent)
+		if err := json.Unmarshal(data, &valueUpdateDefaultCustomDomainResponseContent); err == nil {
+			u.typ = "UpdateDefaultCustomDomainResponseContent"
+			u.UpdateDefaultCustomDomainResponseContent = valueUpdateDefaultCustomDomainResponseContent
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"domain"}, []string{"domain"}) {
+		valueUpdateDefaultCanonicalDomainResponseContent := new(UpdateDefaultCanonicalDomainResponseContent)
+		if err := json.Unmarshal(data, &valueUpdateDefaultCanonicalDomainResponseContent); err == nil {
+			u.typ = "UpdateDefaultCanonicalDomainResponseContent"
+			u.UpdateDefaultCanonicalDomainResponseContent = valueUpdateDefaultCanonicalDomainResponseContent
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"custom_domain_id", "domain", "primary", "status", "type"}) {
+		valueUpdateDefaultCustomDomainResponseContent := new(UpdateDefaultCustomDomainResponseContent)
+		if err := json.Unmarshal(data, &valueUpdateDefaultCustomDomainResponseContent); err == nil {
+			u.typ = "UpdateDefaultCustomDomainResponseContent"
+			u.UpdateDefaultCustomDomainResponseContent = valueUpdateDefaultCustomDomainResponseContent
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"domain"}) {
+		valueUpdateDefaultCanonicalDomainResponseContent := new(UpdateDefaultCanonicalDomainResponseContent)
+		if err := json.Unmarshal(data, &valueUpdateDefaultCanonicalDomainResponseContent); err == nil {
+			u.typ = "UpdateDefaultCanonicalDomainResponseContent"
+			u.UpdateDefaultCanonicalDomainResponseContent = valueUpdateDefaultCanonicalDomainResponseContent
+			return nil
+		}
+	}
 	valueUpdateDefaultCustomDomainResponseContent := new(UpdateDefaultCustomDomainResponseContent)
 	if err := json.Unmarshal(data, &valueUpdateDefaultCustomDomainResponseContent); err == nil {
 		u.typ = "UpdateDefaultCustomDomainResponseContent"
@@ -2730,6 +2890,11 @@ var (
 	verifyCustomDomainResponseContentFieldDomainMetadata       = big.NewInt(1 << 10)
 	verifyCustomDomainResponseContentFieldCertificate          = big.NewInt(1 << 11)
 )
+
+// verifyCustomDomainResponseContentNullableFields maps the wire names of VerifyCustomDomainResponseContent's nullable fields (required or optional) to their field bits.
+var verifyCustomDomainResponseContentNullableFields = map[string]*big.Int{
+	"custom_client_ip_header": verifyCustomDomainResponseContentFieldCustomClientIPHeader,
+}
 
 type VerifyCustomDomainResponseContent struct {
 	// ID of the custom domain.
@@ -2851,10 +3016,12 @@ func (v *VerifyCustomDomainResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (v *VerifyCustomDomainResponseContent) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetCustomDomainID sets the CustomDomainID field and marks it as non-optional;
@@ -2953,6 +3120,13 @@ func (v *VerifyCustomDomainResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	v.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, verifyCustomDomainResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		v.require(presentFields)
+	}
 	v.rawJSON = json.RawMessage(data)
 	return nil
 }

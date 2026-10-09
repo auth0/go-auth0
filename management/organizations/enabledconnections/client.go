@@ -38,6 +38,25 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.
+//
+// Example:
+//
+//	request := &management.ListOrganizationConnectionsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Organizations.EnabledConnections.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
@@ -119,6 +138,17 @@ func (c *Client) List(
 // Enable a specific connection for a given Organization. To enable a connection, it must already exist within your tenant; connections cannot be created through this action.
 //
 // [Connections](https://auth0.com/docs/authenticate/identity-providers) represent the relationship between Auth0 and a source of users. Available types of connections include database, enterprise, and social.
+//
+// Example:
+//
+//	request := &management.AddOrganizationConnectionRequestContent{
+//	    ConnectionID: "connection_id",
+//	}
+//	client.Organizations.EnabledConnections.Add(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Add(
 	ctx context.Context,
 	// Organization identifier.
@@ -139,6 +169,14 @@ func (c *Client) Add(
 }
 
 // Retrieve details about a specific connection currently enabled for an Organization. Information returned includes details such as connection ID, name, strategy, and whether the connection automatically grants membership upon login.
+//
+// Example:
+//
+//	client.Organizations.EnabledConnections.Get(
+//	    context.TODO(),
+//	    "id",
+//	    "connectionId",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Organization identifier.
@@ -162,6 +200,14 @@ func (c *Client) Get(
 // Disable a specific connection for an Organization. Once disabled, Organization members can no longer use that connection to authenticate.
 //
 // **Note**: This action does not remove the connection from your tenant.
+//
+// Example:
+//
+//	client.Organizations.EnabledConnections.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    "connectionId",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.
@@ -183,6 +229,16 @@ func (c *Client) Delete(
 }
 
 // Modify the details of a specific connection currently enabled for an Organization.
+//
+// Example:
+//
+//	request := &management.UpdateOrganizationConnectionRequestContent{}
+//	client.Organizations.EnabledConnections.Update(
+//	    context.TODO(),
+//	    "id",
+//	    "connectionId",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// Organization identifier.

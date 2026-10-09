@@ -69,10 +69,12 @@ func (g *GetGuardianSettingsResponseContent) GetExtraProperties() map[string]int
 }
 
 func (g *GetGuardianSettingsResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetDisplayRememberMeCheckbox sets the DisplayRememberMeCheckbox field and marks it as non-optional;
@@ -205,10 +207,12 @@ func (s *SetGuardianSettingsResponseContent) GetExtraProperties() map[string]int
 }
 
 func (s *SetGuardianSettingsResponseContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetDisplayRememberMeCheckbox sets the DisplayRememberMeCheckbox field and marks it as non-optional;

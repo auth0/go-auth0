@@ -35,6 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieves all scim tokens by its connection `id`.
+//
+// Example:
+//
+//	client.Connections.SCIMConfiguration.Tokens.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the connection to retrieve its SCIM configuration
@@ -53,6 +60,15 @@ func (c *Client) Get(
 }
 
 // Create a scim token for a scim client.
+//
+// Example:
+//
+//	request := &management.CreateSCIMTokenRequestContent{}
+//	client.Connections.SCIMConfiguration.Tokens.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM token
@@ -73,6 +89,14 @@ func (c *Client) Create(
 }
 
 // Deletes a scim token by its connection `id` and `tokenId`.
+//
+// Example:
+//
+//	client.Connections.SCIMConfiguration.Tokens.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    "tokenId",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The connection id that owns the SCIM token to delete

@@ -9,13 +9,13 @@ import (
 	big "math/big"
 )
 
-// The user's identity. If you set this value, you must also send the user_id parameter.
 var (
 	changePasswordTicketIdentityFieldUserID       = big.NewInt(1 << 0)
 	changePasswordTicketIdentityFieldProvider     = big.NewInt(1 << 1)
 	changePasswordTicketIdentityFieldConnectionID = big.NewInt(1 << 2)
 )
 
+// The user's identity. If you set this value, you must also send the user_id parameter.
 type ChangePasswordTicketIdentity struct {
 	// user_id of the identity.
 	UserID   string                        `json:"user_id" url:"user_id"`
@@ -59,10 +59,12 @@ func (c *ChangePasswordTicketIdentity) GetExtraProperties() map[string]interface
 }
 
 func (c *ChangePasswordTicketIdentity) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -159,10 +161,12 @@ func (c *ChangePasswordTicketResponseContent) GetExtraProperties() map[string]in
 }
 
 func (c *ChangePasswordTicketResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetTicket sets the Ticket field and marks it as non-optional;
@@ -269,10 +273,12 @@ func (v *VerifyEmailTicketResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (v *VerifyEmailTicketResponseContent) require(field *big.Int) {
-	if v.explicitFields == nil {
-		v.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if v.explicitFields != nil {
+		next.Set(v.explicitFields)
 	}
-	v.explicitFields.Or(v.explicitFields, field)
+	next.Or(next, field)
+	v.explicitFields = next
 }
 
 // SetTicket sets the Ticket field and marks it as non-optional;

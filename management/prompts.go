@@ -59,10 +59,12 @@ func (g *GetSettingsResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (g *GetSettingsResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetUniversalLoginExperience sets the UniversalLoginExperience field and marks it as non-optional;
@@ -205,10 +207,12 @@ func (u *UpdateSettingsResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (u *UpdateSettingsResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUniversalLoginExperience sets the UniversalLoginExperience field and marks it as non-optional;

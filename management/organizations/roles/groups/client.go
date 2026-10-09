@@ -36,6 +36,23 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve the list of groups assigned to a role in the context of an organization.
+//
+// Example:
+//
+//	request := &management.ListOrganizationRoleGroupsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Organizations.Roles.Groups.List(
+//	    context.TODO(),
+//	    "organization_id",
+//	    "role_id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization.
@@ -98,7 +115,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(

@@ -54,6 +54,25 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
 //
 // **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+//
+// Example:
+//
+//	request := &management.ListRoleUsersRequestParameters{
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Roles.Users.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the role to retrieve a list of users associated with.
@@ -114,7 +133,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -128,6 +147,19 @@ func (c *Client) List(
 // Assign one or more users to an existing user role. To learn more, review [Role-Based Access Control](https://auth0.com/docs/manage-users/access-control/rbac).
 //
 // **Note**: New roles cannot be created through this action.
+//
+// Example:
+//
+//	request := &management.AssignRoleUsersRequestContent{
+//	    Users: []string{
+//	        "users",
+//	    },
+//	}
+//	client.Roles.Users.Assign(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Assign(
 	ctx context.Context,
 	// ID of the role to assign users to.

@@ -36,6 +36,22 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve all connected accounts associated with the user.
+//
+// Example:
+//
+//	request := &management.GetUserConnectedAccountsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Users.ConnectedAccounts.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to list connected accounts for.
@@ -95,7 +111,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(

@@ -35,6 +35,19 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for a user with the given identifier (username, phone number, or email).
+//
+// Example:
+//
+//	request := &management.ListUserBlocksByIdentifierRequestParameters{
+//	    Identifier: "identifier",
+//	    ConsiderBruteForceEnablement: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.UserBlocks.ListByIdentifier(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ListByIdentifier(
 	ctx context.Context,
 	request *management.ListUserBlocksByIdentifierRequestParameters,
@@ -54,6 +67,16 @@ func (c *Client) ListByIdentifier(
 // Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given identifier (username, phone number, or email).
 //
 // Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
+//
+// Example:
+//
+//	request := &management.DeleteUserBlocksByIdentifierRequestParameters{
+//	    Identifier: "identifier",
+//	}
+//	client.UserBlocks.DeleteByIdentifier(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) DeleteByIdentifier(
 	ctx context.Context,
 	request *management.DeleteUserBlocksByIdentifierRequestParameters,
@@ -71,6 +94,19 @@ func (c *Client) DeleteByIdentifier(
 }
 
 // Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
+//
+// Example:
+//
+//	request := &management.ListUserBlocksRequestParameters{
+//	    ConsiderBruteForceEnablement: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.UserBlocks.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// user_id of the user blocks to retrieve.
@@ -93,6 +129,13 @@ func (c *Client) List(
 // Remove all [Brute-force Protection](https://auth0.com/docs/secure/attack-protection/brute-force-protection) blocks for the user with the given ID.
 //
 // Note: This endpoint does not unblock users that were [blocked by a tenant administrator](https://auth0.com/docs/user-profile#block-and-unblock-a-user).
+//
+// Example:
+//
+//	client.UserBlocks.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The user_id of the user to update.
