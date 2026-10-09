@@ -865,6 +865,61 @@
       }
     },
     {
+      "id": "e4f1c4be-c358-48c6-9536-845bfd9b7f1e",
+      "name": "Search clients using SCIM or Lucene filter syntax - default",
+      "request": {
+        "urlPathTemplate": "/clients/search",
+        "method": "GET",
+        "headers": {
+          "Authorization": {
+            "matches": "Bearer .+"
+          }
+        },
+        "queryParameters": {
+          "q": {
+            "equalTo": "q"
+          },
+          "parser": {
+            "equalTo": "scim"
+          },
+          "fields": {
+            "equalTo": "fields"
+          },
+          "include_fields": {
+            "equalTo": "true"
+          },
+          "take": {
+            "equalTo": "1"
+          },
+          "from": {
+            "equalTo": "from"
+          },
+          "sort": {
+            "equalTo": "name"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "body": "{\n  \"clients\": [\n    {\n      \"client_id\": \"client_id\",\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\",\n      \"tenant\": \"tenant\",\n      \"name\": \"name\",\n      \"description\": \"description\",\n      \"global\": true,\n      \"app_type\": \"native\",\n      \"logo_uri\": \"logo_uri\",\n      \"is_first_party\": true,\n      \"oidc_conformant\": true,\n      \"callbacks\": [\n        \"callbacks\"\n      ],\n      \"allowed_origins\": [\n        \"allowed_origins\"\n      ],\n      \"web_origins\": [\n        \"web_origins\"\n      ],\n      \"client_aliases\": [\n        \"client_aliases\"\n      ],\n      \"allowed_clients\": [\n        \"allowed_clients\"\n      ],\n      \"allowed_logout_urls\": [\n        \"allowed_logout_urls\"\n      ],\n      \"grant_types\": [\n        \"grant_types\"\n      ],\n      \"sso\": true,\n      \"sso_disabled\": true,\n      \"cross_origin_authentication\": true,\n      \"cross_origin_loc\": \"cross_origin_loc\",\n      \"custom_login_page_on\": true,\n      \"custom_login_page\": \"custom_login_page\",\n      \"custom_login_page_preview\": \"custom_login_page_preview\",\n      \"form_template\": \"form_template\",\n      \"token_endpoint_auth_method\": \"none\",\n      \"is_token_endpoint_ip_header_trusted\": true,\n      \"client_metadata\": {\n        \"key\": \"value\"\n      },\n      \"initiate_login_uri\": \"initiate_login_uri\",\n      \"refresh_token\": {\n        \"rotation_type\": \"rotating\",\n        \"expiration_type\": \"expiring\"\n      },\n      \"default_organization\": {\n        \"organization_id\": \"organization_id\",\n        \"flows\": [\n          \"client_credentials\"\n        ]\n      },\n      \"organization_usage\": \"deny\",\n      \"organization_require_behavior\": \"no_prompt\",\n      \"organization_discovery_methods\": [\n        \"email\"\n      ],\n      \"require_pushed_authorization_requests\": true,\n      \"require_proof_of_possession\": true,\n      \"token_vault_privileged_access\": {\n        \"credentials\": [\n          {\n            \"id\": \"id\"\n          }\n        ]\n      },\n      \"compliance_level\": \"none\",\n      \"skip_non_verifiable_callback_uri_confirmation_prompt\": true,\n      \"par_request_expiry\": 1,\n      \"token_quota\": {\n        \"client_credentials\": {}\n      },\n      \"express_configuration\": {\n        \"initiate_login_uri_template\": \"initiate_login_uri_template\",\n        \"user_attribute_profile_id\": \"user_attribute_profile_id\",\n        \"connection_profile_id\": \"connection_profile_id\",\n        \"enable_client\": true,\n        \"enable_organization\": true,\n        \"okta_oin_client_id\": \"okta_oin_client_id\",\n        \"admin_login_domain\": \"admin_login_domain\"\n      },\n      \"my_organization_configuration\": {\n        \"allowed_strategies\": [\n          \"pingfederate\"\n        ],\n        \"connection_deletion_behavior\": \"allow\"\n      },\n      \"identity_assertion_authorization_grant\": {\n        \"active\": true\n      },\n      \"anonymous_sessions\": {\n        \"active\": true\n      },\n      \"enforce_anon_session_transfer_network_binding\": \"ip\",\n      \"third_party_security_mode\": \"strict\",\n      \"redirection_policy\": \"allow_always\",\n      \"resource_server_identifier\": \"resource_server_identifier\",\n      \"async_approval_notification_channels\": [\n        \"guardian-push\"\n      ],\n      \"external_metadata_type\": \"cimd\",\n      \"external_metadata_created_by\": \"admin\",\n      \"external_client_id\": \"external_client_id\",\n      \"jwks_uri\": \"jwks_uri\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "headers": {
+          "Content-Type": "application/json"
+        }
+      },
+      "uuid": "e4f1c4be-c358-48c6-9536-845bfd9b7f1e",
+      "persistent": true,
+      "priority": 3,
+      "metadata": {
+        "mocklab": {
+          "created": {
+            "at": "2020-01-01T00:00:00.000Z",
+            "via": "SYSTEM"
+          }
+        }
+      },
+      "postServeActions": []
+    },
+    {
       "id": "12071cdc-1adc-4b32-8601-2cd12aa19c0c",
       "name": "Get client by ID - default",
       "request": {
@@ -1070,7 +1125,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organization\": {\n    \"show_as_button\": \"none\",\n    \"assign_membership_on_login\": \"none\"\n  },\n  \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n  \"enabled_features\": [\n    \"scim\"\n  ],\n  \"strategy_overrides\": {\n    \"pingfederate\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"ad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"adfs\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"waad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"google-apps\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"okta\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"oidc\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"samlp\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    }\n  },\n  \"provisioning\": {\n    \"scim\": {\n      \"tokens\": {\n        \"scopes\": [\n          \"get:users\"\n        ]\n      }\n    }\n  },\n  \"cross_app_access_resource_app\": {\n    \"status\": {\n      \"default_value\": \"enabled\",\n      \"allowed_values\": [\n        \"enabled\"\n      ]\n    }\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organization\": {\n    \"show_as_button\": \"none\",\n    \"assign_membership_on_login\": \"none\"\n  },\n  \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n  \"enabled_features\": [\n    \"scim\"\n  ],\n  \"strategy_overrides\": {\n    \"pingfederate\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"ad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"adfs\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"waad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"google-apps\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"okta\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"oidc\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"samlp\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    }\n  },\n  \"provisioning\": {\n    \"scim\": {\n      \"tokens\": {\n        \"scopes\": [\n          \"get:users\"\n        ]\n      }\n    },\n    \"google_workspace\": {\n      \"sync_users\": true\n    }\n  },\n  \"cross_app_access_resource_app\": {\n    \"status\": {\n      \"default_value\": \"enabled\",\n      \"allowed_values\": [\n        \"enabled\"\n      ]\n    }\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1138,7 +1193,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"display_name\": \"display_name\",\n  \"template\": {\n    \"name\": \"name\",\n    \"organization\": {\n      \"show_as_button\": \"none\",\n      \"assign_membership_on_login\": \"none\"\n    },\n    \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n    \"enabled_features\": [\n      \"scim\"\n    ],\n    \"provisioning\": {\n      \"scim\": {\n        \"tokens\": {\n          \"scopes\": [\n            \"get:users\"\n          ]\n        }\n      }\n    }\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"display_name\": \"display_name\",\n  \"template\": {\n    \"name\": \"name\",\n    \"organization\": {\n      \"show_as_button\": \"none\",\n      \"assign_membership_on_login\": \"none\"\n    },\n    \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n    \"enabled_features\": [\n      \"scim\"\n    ],\n    \"provisioning\": {\n      \"scim\": {\n        \"tokens\": {\n          \"scopes\": [\n            \"get:users\"\n          ]\n        }\n      },\n      \"google_workspace\": {\n        \"sync_users\": true\n      }\n    }\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1174,7 +1229,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organization\": {\n    \"show_as_button\": \"none\",\n    \"assign_membership_on_login\": \"none\"\n  },\n  \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n  \"enabled_features\": [\n    \"scim\"\n  ],\n  \"strategy_overrides\": {\n    \"pingfederate\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"ad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"adfs\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"waad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"google-apps\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"okta\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"oidc\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"samlp\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    }\n  },\n  \"provisioning\": {\n    \"scim\": {\n      \"tokens\": {\n        \"scopes\": [\n          \"get:users\"\n        ]\n      }\n    }\n  },\n  \"cross_app_access_resource_app\": {\n    \"status\": {\n      \"default_value\": \"enabled\",\n      \"allowed_values\": [\n        \"enabled\"\n      ]\n    }\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organization\": {\n    \"show_as_button\": \"none\",\n    \"assign_membership_on_login\": \"none\"\n  },\n  \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n  \"enabled_features\": [\n    \"scim\"\n  ],\n  \"strategy_overrides\": {\n    \"pingfederate\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"ad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"adfs\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"waad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"google-apps\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"okta\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"oidc\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"samlp\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    }\n  },\n  \"provisioning\": {\n    \"scim\": {\n      \"tokens\": {\n        \"scopes\": [\n          \"get:users\"\n        ]\n      }\n    },\n    \"google_workspace\": {\n      \"sync_users\": true\n    }\n  },\n  \"cross_app_access_resource_app\": {\n    \"status\": {\n      \"default_value\": \"enabled\",\n      \"allowed_values\": [\n        \"enabled\"\n      ]\n    }\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -1246,7 +1301,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organization\": {\n    \"show_as_button\": \"none\",\n    \"assign_membership_on_login\": \"none\"\n  },\n  \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n  \"enabled_features\": [\n    \"scim\"\n  ],\n  \"strategy_overrides\": {\n    \"pingfederate\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"ad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"adfs\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"waad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"google-apps\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"okta\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"oidc\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"samlp\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    }\n  },\n  \"provisioning\": {\n    \"scim\": {\n      \"tokens\": {\n        \"scopes\": [\n          \"get:users\"\n        ]\n      }\n    }\n  },\n  \"cross_app_access_resource_app\": {\n    \"status\": {\n      \"default_value\": \"enabled\",\n      \"allowed_values\": [\n        \"enabled\"\n      ]\n    }\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"organization\": {\n    \"show_as_button\": \"none\",\n    \"assign_membership_on_login\": \"none\"\n  },\n  \"connection_name_prefix_template\": \"connection_name_prefix_template\",\n  \"enabled_features\": [\n    \"scim\"\n  ],\n  \"strategy_overrides\": {\n    \"pingfederate\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"ad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"adfs\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"waad\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"google-apps\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"okta\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"oidc\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    },\n    \"samlp\": {\n      \"enabled_features\": [\n        \"scim\"\n      ]\n    }\n  },\n  \"provisioning\": {\n    \"scim\": {\n      \"tokens\": {\n        \"scopes\": [\n          \"get:users\"\n        ]\n      }\n    },\n    \"google_workspace\": {\n      \"sync_users\": true\n    }\n  },\n  \"cross_app_access_resource_app\": {\n    \"status\": {\n      \"default_value\": \"enabled\",\n      \"allowed_values\": [\n        \"enabled\"\n      ]\n    }\n  }\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -7531,7 +7586,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"enabled\": true,\n  \"shields\": [\n    \"block\"\n  ],\n  \"allowlist\": [\n    \"allowlist\"\n  ],\n  \"mode\": \"count_per_identifier_and_ip\",\n  \"max_attempts\": 1\n}",
+        "body": "{\n  \"enabled\": true,\n  \"shields\": [\n    \"block\"\n  ],\n  \"allowlist\": [\n    \"allowlist\"\n  ],\n  \"mode\": \"count_per_identifier_and_ip\",\n  \"max_attempts\": 1,\n  \"form_submission_mode\": \"auto\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -7563,7 +7618,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"enabled\": true,\n  \"shields\": [\n    \"block\"\n  ],\n  \"allowlist\": [\n    \"allowlist\"\n  ],\n  \"mode\": \"count_per_identifier_and_ip\",\n  \"max_attempts\": 1\n}",
+        "body": "{\n  \"enabled\": true,\n  \"shields\": [\n    \"block\"\n  ],\n  \"allowlist\": [\n    \"allowlist\"\n  ],\n  \"mode\": \"count_per_identifier_and_ip\",\n  \"max_attempts\": 1,\n  \"form_submission_mode\": \"auto\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -10286,42 +10341,6 @@
       }
     },
     {
-      "id": "bad7af9d-5e89-4f47-b2d5-36b3d3560d91",
-      "name": "Transition an experiment to a new status. - default",
-      "request": {
-        "urlPathTemplate": "/experimentation/experiments/{id}/status",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "id": {
-            "equalTo": "id"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"feature_flag_id\": \"feature_flag_id\",\n  \"feature_flag_name\": \"feature_flag_name\",\n  \"authentication_flow\": \"authentication_flow\",\n  \"allocation_strategy\": \"percentage\",\n  \"status\": \"draft\",\n  \"is_valid\": true,\n  \"default_config\": \"tenant\",\n  \"feature_flag_snapshot\": {\n    \"key\": \"value\"\n  },\n  \"allocations\": [\n    {\n      \"variation_id\": \"variation_id\",\n      \"variation_name\": \"variation_name\",\n      \"segment_id\": \"segment_id\",\n      \"segment_name\": \"segment_name\",\n      \"weight\": 1,\n      \"priority\": 1,\n      \"is_control\": true,\n      \"is_fallback\": true,\n      \"variation_snapshot\": {\n        \"key\": \"value\"\n      },\n      \"segment_snapshot\": {\n        \"key\": \"value\"\n      }\n    }\n  ],\n  \"editable_fields\": [\n    \"editable_fields\"\n  ],\n  \"levels\": [\n    1\n  ],\n  \"current_level\": 1,\n  \"started_at\": \"2024-01-15T09:30:00Z\",\n  \"ended_at\": \"2024-01-15T09:30:00Z\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "bad7af9d-5e89-4f47-b2d5-36b3d3560d91",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
       "id": "20ae6e00-fdf5-43c3-a259-bcdbc0129c9d",
       "name": "Validate an experiment. - default",
       "request": {
@@ -10543,42 +10562,6 @@
       }
     },
     {
-      "id": "e8918863-9064-44c0-a1b7-db3c423377a1",
-      "name": "Transition a feature flag to a new status. - default",
-      "request": {
-        "urlPathTemplate": "/experimentation/feature-flags/{id}/status",
-        "method": "POST",
-        "headers": {
-          "Authorization": {
-            "matches": "Bearer .+"
-          }
-        },
-        "pathParameters": {
-          "id": {
-            "equalTo": "id"
-          }
-        }
-      },
-      "response": {
-        "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"type\": \"auth0\",\n  \"status\": \"draft\",\n  \"parameters\": {\n    \"key\": {\n      \"type\": \"string\",\n      \"value\": {\n        \"key\": \"value\"\n      },\n      \"description\": \"description\"\n    }\n  },\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
-        "headers": {
-          "Content-Type": "application/json"
-        }
-      },
-      "uuid": "e8918863-9064-44c0-a1b7-db3c423377a1",
-      "persistent": true,
-      "priority": 3,
-      "metadata": {
-        "mocklab": {
-          "created": {
-            "at": "2020-01-01T00:00:00.000Z",
-            "via": "SYSTEM"
-          }
-        }
-      }
-    },
-    {
       "id": "f3d101fb-cdd6-4ae1-9613-a72ab8cb6207",
       "name": "List segments for the tenant. - default",
       "request": {
@@ -10603,7 +10586,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"segments\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"description\": \"description\",\n      \"type\": \"self\",\n      \"rules\": [\n        {}\n      ],\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "body": "{\n  \"segments\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"description\": \"description\",\n      \"type\": \"self\",\n      \"status\": \"active\",\n      \"rules\": [\n        {}\n      ],\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\"\n    }\n  ],\n  \"next\": \"next\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -10635,7 +10618,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"type\": \"self\",\n  \"rules\": [\n    {}\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"type\": \"self\",\n  \"status\": \"active\",\n  \"rules\": [\n    {}\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -10671,7 +10654,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"type\": \"self\",\n  \"rules\": [\n    {}\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"type\": \"self\",\n  \"status\": \"active\",\n  \"rules\": [\n    {}\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -10743,7 +10726,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"type\": \"self\",\n  \"rules\": [\n    {}\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"description\": \"description\",\n  \"type\": \"self\",\n  \"status\": \"active\",\n  \"rules\": [\n    {}\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -17843,6 +17826,6 @@
     }
   ],
   "meta": {
-    "total": 477
+    "total": 476
   }
 }

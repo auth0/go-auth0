@@ -698,12 +698,14 @@ func (c ConnectionProfileOrganizationShowAsButtonEnum) Ptr() *ConnectionProfileO
 }
 
 var (
-	connectionProfileProvisioningFieldSCIM = big.NewInt(1 << 0)
+	connectionProfileProvisioningFieldSCIM            = big.NewInt(1 << 0)
+	connectionProfileProvisioningFieldGoogleWorkspace = big.NewInt(1 << 1)
 )
 
 // Provisioning settings for connections created from this profile.
 type ConnectionProfileProvisioning struct {
-	SCIM *ConnectionProfileProvisioningSCIM `json:"scim,omitempty" url:"scim,omitempty"`
+	SCIM            *ConnectionProfileProvisioningSCIM            `json:"scim,omitempty" url:"scim,omitempty"`
+	GoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace `json:"google_workspace,omitempty" url:"google_workspace,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -717,6 +719,13 @@ func (c *ConnectionProfileProvisioning) GetSCIM() ConnectionProfileProvisioningS
 		return ConnectionProfileProvisioningSCIM{}
 	}
 	return *c.SCIM
+}
+
+func (c *ConnectionProfileProvisioning) GetGoogleWorkspace() ConnectionProfileProvisioningGoogleWorkspace {
+	if c == nil || c.GoogleWorkspace == nil {
+		return ConnectionProfileProvisioningGoogleWorkspace{}
+	}
+	return *c.GoogleWorkspace
 }
 
 func (c *ConnectionProfileProvisioning) GetExtraProperties() map[string]interface{} {
@@ -740,6 +749,13 @@ func (c *ConnectionProfileProvisioning) require(field *big.Int) {
 func (c *ConnectionProfileProvisioning) SetSCIM(scim *ConnectionProfileProvisioningSCIM) {
 	c.SCIM = scim
 	c.require(connectionProfileProvisioningFieldSCIM)
+}
+
+// SetGoogleWorkspace sets the GoogleWorkspace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioning) SetGoogleWorkspace(googleWorkspace *ConnectionProfileProvisioningGoogleWorkspace) {
+	c.GoogleWorkspace = googleWorkspace
+	c.require(connectionProfileProvisioningFieldGoogleWorkspace)
 }
 
 func (c *ConnectionProfileProvisioning) UnmarshalJSON(data []byte) error {
@@ -783,6 +799,96 @@ func (c *ConnectionProfileProvisioning) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+var (
+	connectionProfileProvisioningGoogleWorkspaceFieldSyncUsers = big.NewInt(1 << 0)
+)
+
+// Google Workspace provisioning settings.
+type ConnectionProfileProvisioningGoogleWorkspace struct {
+	SyncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers `json:"sync_users" url:"sync_users"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) GetSyncUsers() ConnectionProfileProvisioningGoogleWorkspaceSyncUsers {
+	if c == nil {
+		return false
+	}
+	return c.SyncUsers
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSyncUsers sets the SyncUsers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioningGoogleWorkspace) SetSyncUsers(syncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers) {
+	c.SyncUsers = syncUsers
+	c.require(connectionProfileProvisioningGoogleWorkspaceFieldSyncUsers)
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileProvisioningGoogleWorkspace
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileProvisioningGoogleWorkspace(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileProvisioningGoogleWorkspace
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Whether the connection is authorized to run Google Workspace user provisioning.
+type ConnectionProfileProvisioningGoogleWorkspaceSyncUsers = bool
 
 var (
 	connectionProfileProvisioningSCIMFieldTokens = big.NewInt(1 << 0)
@@ -1434,12 +1540,14 @@ func (c *ConnectionProfileStrategyOverridesConnectionConfig) String() string {
 type ConnectionProfileStrategyOverridesEnabledFeatures = []EnabledFeaturesEnum
 
 var (
-	connectionProfileStrategyOverridesProvisioningFieldSCIM = big.NewInt(1 << 0)
+	connectionProfileStrategyOverridesProvisioningFieldSCIM            = big.NewInt(1 << 0)
+	connectionProfileStrategyOverridesProvisioningFieldGoogleWorkspace = big.NewInt(1 << 1)
 )
 
 // Provisioning settings for a connection profile strategy override.
 type ConnectionProfileStrategyOverridesProvisioning struct {
-	SCIM *ConnectionProfileProvisioningSCIM `json:"scim,omitempty" url:"scim,omitempty"`
+	SCIM            *ConnectionProfileProvisioningSCIM            `json:"scim,omitempty" url:"scim,omitempty"`
+	GoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace `json:"google_workspace,omitempty" url:"google_workspace,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1453,6 +1561,13 @@ func (c *ConnectionProfileStrategyOverridesProvisioning) GetSCIM() ConnectionPro
 		return ConnectionProfileProvisioningSCIM{}
 	}
 	return *c.SCIM
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) GetGoogleWorkspace() ConnectionProfileProvisioningGoogleWorkspace {
+	if c == nil || c.GoogleWorkspace == nil {
+		return ConnectionProfileProvisioningGoogleWorkspace{}
+	}
+	return *c.GoogleWorkspace
 }
 
 func (c *ConnectionProfileStrategyOverridesProvisioning) GetExtraProperties() map[string]interface{} {
@@ -1476,6 +1591,13 @@ func (c *ConnectionProfileStrategyOverridesProvisioning) require(field *big.Int)
 func (c *ConnectionProfileStrategyOverridesProvisioning) SetSCIM(scim *ConnectionProfileProvisioningSCIM) {
 	c.SCIM = scim
 	c.require(connectionProfileStrategyOverridesProvisioningFieldSCIM)
+}
+
+// SetGoogleWorkspace sets the GoogleWorkspace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileStrategyOverridesProvisioning) SetGoogleWorkspace(googleWorkspace *ConnectionProfileProvisioningGoogleWorkspace) {
+	c.GoogleWorkspace = googleWorkspace
+	c.require(connectionProfileStrategyOverridesProvisioningFieldGoogleWorkspace)
 }
 
 func (c *ConnectionProfileStrategyOverridesProvisioning) UnmarshalJSON(data []byte) error {
@@ -2043,6 +2165,7 @@ type EnabledFeaturesEnum string
 const (
 	EnabledFeaturesEnumSCIM            EnabledFeaturesEnum = "scim"
 	EnabledFeaturesEnumUniversalLogout EnabledFeaturesEnum = "universal_logout"
+	EnabledFeaturesEnumDirectorySync   EnabledFeaturesEnum = "directory_sync"
 )
 
 func NewEnabledFeaturesEnumFromString(s string) (EnabledFeaturesEnum, error) {
@@ -2051,6 +2174,8 @@ func NewEnabledFeaturesEnumFromString(s string) (EnabledFeaturesEnum, error) {
 		return EnabledFeaturesEnumSCIM, nil
 	case "universal_logout":
 		return EnabledFeaturesEnumUniversalLogout, nil
+	case "directory_sync":
+		return EnabledFeaturesEnumDirectorySync, nil
 	}
 	var t EnabledFeaturesEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

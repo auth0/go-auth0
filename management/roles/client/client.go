@@ -46,7 +46,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Retrieve detailed list of user roles created in your tenant.
+// Retrieve a list of roles. Includes roles created in your tenant and, when `owner_id=auth0` is supplied, Auth0-managed System Roles.
 //
 // **Note**: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.
 //

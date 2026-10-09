@@ -262,37 +262,6 @@ func (c *Client) AdvanceRamp(
 	return response.Body, nil
 }
 
-// Transitions an experiment through its lifecycle: draft → active, active → paused, paused → active, active/paused → completed. Activation runs full readiness validation.
-//
-// Example:
-//
-//	request := &management.UpdateExperimentStatusRequestContent{
-//	    Status: management.ExperimentTransitionStatusEnumActive,
-//	}
-//	client.Experimentation.Experiments.UpdateStatus(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
-func (c *Client) UpdateStatus(
-	ctx context.Context,
-	// The ID of the experiment to transition.
-	id string,
-	request *management.UpdateExperimentStatusRequestContent,
-	opts ...option.RequestOption,
-) (*management.UpdateExperimentStatusResponseContent, error) {
-	response, err := c.WithRawResponse.UpdateStatus(
-		ctx,
-		id,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}
-
 // Checks whether an experiment is ready to be activated. Returns is_valid boolean and an errors array describing any blockers. Read-only; no state is modified.
 //
 // Example:

@@ -1125,10 +1125,9 @@ var (
 	searchOrganizationFieldName                   = big.NewInt(1 << 1)
 	searchOrganizationFieldDisplayName            = big.NewInt(1 << 2)
 	searchOrganizationFieldBranding               = big.NewInt(1 << 3)
-	searchOrganizationFieldMetadata               = big.NewInt(1 << 4)
-	searchOrganizationFieldTokenQuota             = big.NewInt(1 << 5)
-	searchOrganizationFieldThirdPartyClientAccess = big.NewInt(1 << 6)
-	searchOrganizationFieldIsAppEntitlementActive = big.NewInt(1 << 7)
+	searchOrganizationFieldTokenQuota             = big.NewInt(1 << 4)
+	searchOrganizationFieldThirdPartyClientAccess = big.NewInt(1 << 5)
+	searchOrganizationFieldIsAppEntitlementActive = big.NewInt(1 << 6)
 )
 
 type SearchOrganization struct {
@@ -1139,7 +1138,6 @@ type SearchOrganization struct {
 	// Friendly name of this organization.
 	DisplayName            *string                                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"branding,omitempty"`
-	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 	// Whether app entitlement is active for this organization.
@@ -1179,13 +1177,6 @@ func (s *SearchOrganization) GetBranding() OrganizationBranding {
 		return OrganizationBranding{}
 	}
 	return *s.Branding
-}
-
-func (s *SearchOrganization) GetMetadata() OrganizationMetadata {
-	if s == nil || s.Metadata == nil {
-		return nil
-	}
-	return *s.Metadata
 }
 
 func (s *SearchOrganization) GetTokenQuota() TokenQuota {
@@ -1251,13 +1242,6 @@ func (s *SearchOrganization) SetDisplayName(displayName *string) {
 func (s *SearchOrganization) SetBranding(branding *OrganizationBranding) {
 	s.Branding = branding
 	s.require(searchOrganizationFieldBranding)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchOrganization) SetMetadata(metadata *OrganizationMetadata) {
-	s.Metadata = metadata
-	s.require(searchOrganizationFieldMetadata)
 }
 
 // SetTokenQuota sets the TokenQuota field and marks it as non-optional;
@@ -1333,6 +1317,7 @@ var (
 )
 
 type SearchOrganizationsPaginatedResponseContent struct {
+	// Array of organization objects matching the search criteria.
 	Organizations []*SearchOrganization `json:"organizations" url:"organizations"`
 	// Cursor for retrieving the next page of results. Absent when no more results are available.
 	Next *string `json:"next,omitempty" url:"next,omitempty"`

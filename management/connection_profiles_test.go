@@ -1064,6 +1064,14 @@ func TestSettersConnectionProfileProvisioning(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetGoogleWorkspace", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
+		assert.Equal(t, fernTestValueGoogleWorkspace, obj.GoogleWorkspace)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersConnectionProfileProvisioning(t *testing.T) {
@@ -1101,6 +1109,40 @@ func TestGettersConnectionProfileProvisioning(t *testing.T) {
 		_ = obj.GetSCIM() // Should return zero value
 	})
 
+	t.Run("GetGoogleWorkspace", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		var value ConnectionProfileProvisioningGoogleWorkspace
+		obj.GoogleWorkspace = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleWorkspace(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleWorkspace_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		obj.GoogleWorkspace = nil
+		var expectedZero ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleWorkspace(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleWorkspace_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioning
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleWorkspace() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionProfileProvisioning(t *testing.T) {
@@ -1112,6 +1154,108 @@ func TestSettersMarkExplicitConnectionProfileProvisioning(t *testing.T) {
 
 		// Act
 		obj.SetSCIM(fernTestValueSCIM)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGoogleWorkspace_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("SetSyncUsers", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		var fernTestValueSyncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers
+		obj.SetSyncUsers(fernTestValueSyncUsers)
+		assert.Equal(t, fernTestValueSyncUsers, obj.SyncUsers)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("GetSyncUsers", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		var expected ConnectionProfileProvisioningGoogleWorkspaceSyncUsers
+		obj.SyncUsers = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSyncUsers(), "getter should return the property value")
+	})
+
+	t.Run("GetSyncUsers_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningGoogleWorkspace
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSyncUsers() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("SetSyncUsers_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		var fernTestValueSyncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers
+
+		// Act
+		obj.SetSyncUsers(fernTestValueSyncUsers)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2265,6 +2409,14 @@ func TestSettersConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetGoogleWorkspace", func(t *testing.T) {
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
+		assert.Equal(t, fernTestValueGoogleWorkspace, obj.GoogleWorkspace)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
@@ -2302,6 +2454,40 @@ func TestGettersConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
 		_ = obj.GetSCIM() // Should return zero value
 	})
 
+	t.Run("GetGoogleWorkspace", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var value ConnectionProfileProvisioningGoogleWorkspace
+		obj.GoogleWorkspace = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleWorkspace(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleWorkspace_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		obj.GoogleWorkspace = nil
+		var expectedZero ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleWorkspace(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleWorkspace_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileStrategyOverridesProvisioning
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleWorkspace() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
@@ -2313,6 +2499,37 @@ func TestSettersMarkExplicitConnectionProfileStrategyOverridesProvisioning(t *te
 
 		// Act
 		obj.SetSCIM(fernTestValueSCIM)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGoogleWorkspace_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5745,6 +5962,39 @@ func TestJSONMarshalingConnectionProfileProvisioning(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileProvisioningGoogleWorkspace
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningGoogleWorkspace
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningGoogleWorkspace
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingConnectionProfileProvisioningSCIM(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -6347,6 +6597,22 @@ func TestStringConnectionProfileProvisioning(t *testing.T) {
 	})
 }
 
+func TestStringConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningGoogleWorkspace
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringConnectionProfileProvisioningSCIM(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -6766,6 +7032,13 @@ func TestEnumEnabledFeaturesEnum(t *testing.T) {
 		assert.Equal(t, EnabledFeaturesEnum("universal_logout"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_directory_sync", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEnabledFeaturesEnumFromString("directory_sync")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EnabledFeaturesEnum("directory_sync"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewEnabledFeaturesEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
@@ -6913,6 +7186,29 @@ func TestExtraPropertiesConnectionProfileProvisioning(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionProfileProvisioning
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningGoogleWorkspace
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

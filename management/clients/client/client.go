@@ -286,6 +286,109 @@ func (c *Client) RegisterCimdClient(
 	return response.Body, nil
 }
 
+// Search clients using SCIM or Lucene filter syntax with low-latency, eventually consistent results.
+// Use the parser parameter to specify "scim" or "lucene" syntax (default: "lucene").
+// This endpoint provides an alternative to the standard GET /clients endpoint with better performance
+// for complex queries. Results may not reflect recent updates immediately.
+//
+// - This endpoint only supports `read:clients` and `read:client_summary` scopes. The `read:client_keys` and `read:client_credentials` scopes are not supported.
+// - The following fields are never returned by this endpoint:
+//   - `client_secret`
+//   - `encryption_key`
+//   - `signing_keys`
+//   - `owners`
+//   - `addons`
+//
+// Example:
+//
+//	request := &management.SearchClientsRequestParameters{
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	    Parser: management.SearchParserEnumSCIM.Ptr(),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Sort: management.ClientSortFieldEnumName.Ptr(),
+//	}
+//	client.Clients.Search(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) Search(
+	ctx context.Context,
+	request *management.SearchClientsRequestParameters,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *management.ClientSearchResponse, *management.SearchClientsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/clients/search"
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.SearchClientsResponseContent) *core.PageResponse[*string, *management.ClientSearchResponse, *management.SearchClientsResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.Clients
+		return &core.PageResponse[*string, *management.ClientSearchResponse, *management.SearchClientsResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
+}
+
 // Retrieve client details by ID. Clients are SSO connections or Applications linked with your Auth0 tenant. A list of fields to include or exclude may also be specified.
 // For more information, read [Applications in Auth0](https://www.auth0.com/docs/get-started/applications) and [Single Sign-On](https://www.auth0.com/docs/authenticate/single-sign-on).
 //
