@@ -161,7 +161,9 @@ type EventStreamCloudEventConnectionCreatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -221,10 +223,10 @@ func (e *EventStreamCloudEventConnectionCreatedCloudEvent) GetA0Tenant() string 
 }
 
 func (e *EventStreamCloudEventConnectionCreatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventConnectionCreatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -301,7 +303,7 @@ func (e *EventStreamCloudEventConnectionCreatedCloudEvent) SetA0Tenant(a0Tenant 
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionCreatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventConnectionCreatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventConnectionCreatedCloudEventFieldA0Stream)
 }
@@ -26850,7 +26852,9 @@ type EventStreamCloudEventConnectionDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -26910,10 +26914,10 @@ func (e *EventStreamCloudEventConnectionDeletedCloudEvent) GetA0Tenant() string 
 }
 
 func (e *EventStreamCloudEventConnectionDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventConnectionDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -26990,7 +26994,7 @@ func (e *EventStreamCloudEventConnectionDeletedCloudEvent) SetA0Tenant(a0Tenant 
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventConnectionDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventConnectionDeletedCloudEventFieldA0Stream)
 }
@@ -53539,7 +53543,9 @@ type EventStreamCloudEventConnectionUpdatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -53599,10 +53605,10 @@ func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) GetA0Tenant() string 
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -53679,7 +53685,7 @@ func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) SetA0Tenant(a0Tenant 
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventConnectionUpdatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventConnectionUpdatedCloudEventFieldA0Stream)
 }
@@ -81340,7 +81346,9 @@ type EventStreamCloudEventGroupCreatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -81400,10 +81408,10 @@ func (e *EventStreamCloudEventGroupCreatedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventGroupCreatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventGroupCreatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -81480,7 +81488,7 @@ func (e *EventStreamCloudEventGroupCreatedCloudEvent) SetA0Tenant(a0Tenant strin
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupCreatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventGroupCreatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventGroupCreatedCloudEventFieldA0Stream)
 }
@@ -83241,7 +83249,9 @@ type EventStreamCloudEventGroupDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -83301,10 +83311,10 @@ func (e *EventStreamCloudEventGroupDeletedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventGroupDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventGroupDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -83381,7 +83391,7 @@ func (e *EventStreamCloudEventGroupDeletedCloudEvent) SetA0Tenant(a0Tenant strin
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventGroupDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventGroupDeletedCloudEventFieldA0Stream)
 }
@@ -85268,7 +85278,9 @@ type EventStreamCloudEventGroupMemberAddedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -85328,10 +85340,10 @@ func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -85408,7 +85420,7 @@ func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) SetA0Tenant(a0Tenant s
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventGroupMemberAddedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventGroupMemberAddedCloudEventFieldA0Stream)
 }
@@ -87877,7 +87889,9 @@ type EventStreamCloudEventGroupMemberDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -87937,10 +87951,10 @@ func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) GetA0Tenant() string
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -88017,7 +88031,7 @@ func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) SetA0Tenant(a0Tenant
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventGroupMemberDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventGroupMemberDeletedCloudEventFieldA0Stream)
 }
@@ -90486,7 +90500,9 @@ type EventStreamCloudEventGroupRoleAssignedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -90546,10 +90562,10 @@ func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) GetA0Tenant() string 
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -90626,7 +90642,7 @@ func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) SetA0Tenant(a0Tenant 
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventGroupRoleAssignedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventGroupRoleAssignedCloudEventFieldA0Stream)
 }
@@ -92601,7 +92617,9 @@ type EventStreamCloudEventGroupRoleDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -92661,10 +92679,10 @@ func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -92741,7 +92759,7 @@ func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) SetA0Tenant(a0Tenant s
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventGroupRoleDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventGroupRoleDeletedCloudEventFieldA0Stream)
 }
@@ -94699,7 +94717,9 @@ type EventStreamCloudEventGroupUpdatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -94759,10 +94779,10 @@ func (e *EventStreamCloudEventGroupUpdatedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventGroupUpdatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventGroupUpdatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -94839,7 +94859,7 @@ func (e *EventStreamCloudEventGroupUpdatedCloudEvent) SetA0Tenant(a0Tenant strin
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventGroupUpdatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventGroupUpdatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventGroupUpdatedCloudEventFieldA0Stream)
 }
@@ -96814,7 +96834,9 @@ type EventStreamCloudEventOrgConnectionAddedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -96874,10 +96896,10 @@ func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) GetA0Tenant() string
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -96954,7 +96976,7 @@ func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) SetA0Tenant(a0Tenant
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgConnectionAddedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgConnectionAddedCloudEventFieldA0Stream)
 }
@@ -97156,13 +97178,14 @@ func (e *EventStreamCloudEventOrgConnectionAddedData) String() string {
 }
 
 var (
-	eventStreamCloudEventOrgConnectionAddedObjectFieldOrganization            = big.NewInt(1 << 0)
-	eventStreamCloudEventOrgConnectionAddedObjectFieldConnection              = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgConnectionAddedObjectFieldAssignMembershipOnLogin = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgConnectionAddedObjectFieldShowAsButton            = big.NewInt(1 << 3)
-	eventStreamCloudEventOrgConnectionAddedObjectFieldIsSignupEnabled         = big.NewInt(1 << 4)
-	eventStreamCloudEventOrgConnectionAddedObjectFieldIsEnabled               = big.NewInt(1 << 5)
-	eventStreamCloudEventOrgConnectionAddedObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldOrganization                  = big.NewInt(1 << 0)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldConnection                    = big.NewInt(1 << 1)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldAssignMembershipOnLogin       = big.NewInt(1 << 2)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldShowAsButton                  = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldIsSignupEnabled               = big.NewInt(1 << 4)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldIsEnabled                     = big.NewInt(1 << 5)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldOrganizationAccessLevel       = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionAddedObjectFieldOrganizationMemberAccessLevel = big.NewInt(1 << 7)
 )
 
 // The event content.
@@ -97180,8 +97203,9 @@ type EventStreamCloudEventOrgConnectionAddedObject struct {
 	// Only applicable for database connections.
 	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
 	// Determines whether the connection is enabled for the organization.
-	IsEnabled               *bool                                                                 `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
-	OrganizationAccessLevel *EventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessLevel `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsEnabled                     *bool                                                                       `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	OrganizationAccessLevel       *EventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessLevel       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -97237,6 +97261,13 @@ func (e *EventStreamCloudEventOrgConnectionAddedObject) GetOrganizationAccessLev
 		return EventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessLevel{}
 	}
 	return *e.OrganizationAccessLevel
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedObject) GetOrganizationMemberAccessLevel() EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel {
+	if e == nil || e.OrganizationMemberAccessLevel == nil {
+		return EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel{}
+	}
+	return *e.OrganizationMemberAccessLevel
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedObject) GetExtraProperties() map[string]interface{} {
@@ -97302,6 +97333,13 @@ func (e *EventStreamCloudEventOrgConnectionAddedObject) SetIsEnabled(isEnabled *
 func (e *EventStreamCloudEventOrgConnectionAddedObject) SetOrganizationAccessLevel(organizationAccessLevel *EventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessLevel) {
 	e.OrganizationAccessLevel = organizationAccessLevel
 	e.require(eventStreamCloudEventOrgConnectionAddedObjectFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventOrgConnectionAddedObject) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) {
+	e.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	e.require(eventStreamCloudEventOrgConnectionAddedObjectFieldOrganizationMemberAccessLevel)
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedObject) UnmarshalJSON(data []byte) error {
@@ -97719,14 +97757,196 @@ func (e EventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessLevel3Enu
 	return &e
 }
 
+// The organization member access level granted to the connection for an organization.
+type EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel struct {
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum
+
+	typ string
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum() EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum() EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum() EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum() EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) UnmarshalJSON(data []byte) error {
+	var valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum"
+		e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum = valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum"
+		e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum = valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum"
+		e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum = valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum"
+		e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum = valueEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) MarshalJSON() ([]byte, error) {
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevelVisitor interface {
+	VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum(EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum) error
+	VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum(EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum) error
+	VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum(EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum) error
+	VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum(EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum) error
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel) Accept(visitor EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevelVisitor) error {
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum(e.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0EnumNone EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum = "none"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum, error) {
+	switch s {
+	case "none":
+		return EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0EnumNone, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1EnumReadonly EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum = "readonly"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum, error) {
+	switch s {
+	case "readonly":
+		return EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1EnumReadonly, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2EnumLimited EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum = "limited"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum, error) {
+	switch s {
+	case "limited":
+		return EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2EnumLimited, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3EnumFull EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum = "full"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum, error) {
+	switch s {
+	case "full":
+		return EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3EnumFull, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum {
+	return &e
+}
+
 var (
-	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganization            = big.NewInt(1 << 0)
-	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldConnection              = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldAssignMembershipOnLogin = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldShowAsButton            = big.NewInt(1 << 3)
-	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldIsSignupEnabled         = big.NewInt(1 << 4)
-	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldIsEnabled               = big.NewInt(1 << 5)
-	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganization                  = big.NewInt(1 << 0)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldConnection                    = big.NewInt(1 << 1)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldAssignMembershipOnLogin       = big.NewInt(1 << 2)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldShowAsButton                  = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldIsSignupEnabled               = big.NewInt(1 << 4)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldIsEnabled                     = big.NewInt(1 << 5)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganizationAccessLevel       = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganizationMemberAccessLevel = big.NewInt(1 << 7)
 )
 
 // The event content as it was prior to the change described by this event, when applicable.
@@ -97744,8 +97964,9 @@ type EventStreamCloudEventOrgConnectionAddedPreviousObject struct {
 	// Only applicable for database connections.
 	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
 	// Determines whether the connection is enabled for the organization.
-	IsEnabled               *bool                                                                         `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
-	OrganizationAccessLevel *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessLevel `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsEnabled                     *bool                                                                               `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	OrganizationAccessLevel       *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessLevel       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -97801,6 +98022,13 @@ func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) GetOrganizationA
 		return EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessLevel{}
 	}
 	return *e.OrganizationAccessLevel
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) GetOrganizationMemberAccessLevel() EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel {
+	if e == nil || e.OrganizationMemberAccessLevel == nil {
+		return EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel{}
+	}
+	return *e.OrganizationMemberAccessLevel
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) GetExtraProperties() map[string]interface{} {
@@ -97866,6 +98094,13 @@ func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) SetIsEnabled(isE
 func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) SetOrganizationAccessLevel(organizationAccessLevel *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessLevel) {
 	e.OrganizationAccessLevel = organizationAccessLevel
 	e.require(eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) {
+	e.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	e.require(eventStreamCloudEventOrgConnectionAddedPreviousObjectFieldOrganizationMemberAccessLevel)
 }
 
 func (e *EventStreamCloudEventOrgConnectionAddedPreviousObject) UnmarshalJSON(data []byte) error {
@@ -98283,6 +98518,187 @@ func (e EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessL
 	return &e
 }
 
+// The organization member access level granted to the connection for an organization.
+type EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel struct {
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum
+
+	typ string
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum() EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum() EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum() EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum() EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) UnmarshalJSON(data []byte) error {
+	var valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum"
+		e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum = valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum"
+		e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum = valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum"
+		e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum = valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum"
+		e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum = valueEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) MarshalJSON() ([]byte, error) {
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevelVisitor interface {
+	VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum(EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum) error
+	VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum(EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum) error
+	VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum(EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum) error
+	VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum(EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum) error
+}
+
+func (e *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel) Accept(visitor EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevelVisitor) error {
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum(e.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0EnumNone EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum = "none"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum, error) {
+	switch s {
+	case "none":
+		return EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0EnumNone, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1EnumReadonly EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum = "readonly"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum, error) {
+	switch s {
+	case "readonly":
+		return EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1EnumReadonly, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2EnumLimited EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum = "limited"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum, error) {
+	switch s {
+	case "limited":
+		return EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2EnumLimited, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3EnumFull EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum = "full"
+)
+
+func NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3EnumFromString(s string) (EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum, error) {
+	switch s {
+	case "full":
+		return EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3EnumFull, nil
+	}
+	var t EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum) Ptr() *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum {
+	return &e
+}
+
 var (
 	eventStreamCloudEventOrgConnectionRemovedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgConnectionRemovedFieldEvent  = big.NewInt(1 << 1)
@@ -98413,7 +98829,9 @@ type EventStreamCloudEventOrgConnectionRemovedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -98473,10 +98891,10 @@ func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) GetA0Tenant() stri
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -98553,7 +98971,7 @@ func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) SetA0Tenant(a0Tena
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgConnectionRemovedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgConnectionRemovedCloudEventFieldA0Stream)
 }
@@ -99474,7 +99892,9 @@ type EventStreamCloudEventOrgConnectionUpdatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -99534,10 +99954,10 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) GetA0Tenant() stri
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -99614,7 +100034,7 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) SetA0Tenant(a0Tena
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgConnectionUpdatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgConnectionUpdatedCloudEventFieldA0Stream)
 }
@@ -99816,13 +100236,14 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedData) String() string {
 }
 
 var (
-	eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganization            = big.NewInt(1 << 0)
-	eventStreamCloudEventOrgConnectionUpdatedObjectFieldConnection              = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgConnectionUpdatedObjectFieldAssignMembershipOnLogin = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgConnectionUpdatedObjectFieldShowAsButton            = big.NewInt(1 << 3)
-	eventStreamCloudEventOrgConnectionUpdatedObjectFieldIsSignupEnabled         = big.NewInt(1 << 4)
-	eventStreamCloudEventOrgConnectionUpdatedObjectFieldIsEnabled               = big.NewInt(1 << 5)
-	eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganization                  = big.NewInt(1 << 0)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldConnection                    = big.NewInt(1 << 1)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldAssignMembershipOnLogin       = big.NewInt(1 << 2)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldShowAsButton                  = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldIsSignupEnabled               = big.NewInt(1 << 4)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldIsEnabled                     = big.NewInt(1 << 5)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganizationAccessLevel       = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganizationMemberAccessLevel = big.NewInt(1 << 7)
 )
 
 // The event content.
@@ -99840,8 +100261,9 @@ type EventStreamCloudEventOrgConnectionUpdatedObject struct {
 	// Only applicable for database connections.
 	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
 	// Determines whether the connection is enabled for the organization.
-	IsEnabled               *bool                                                                   `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
-	OrganizationAccessLevel *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAccessLevel `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsEnabled                     *bool                                                                         `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	OrganizationAccessLevel       *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAccessLevel       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -99897,6 +100319,13 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedObject) GetOrganizationAccessL
 		return EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAccessLevel{}
 	}
 	return *e.OrganizationAccessLevel
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedObject) GetOrganizationMemberAccessLevel() EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel {
+	if e == nil || e.OrganizationMemberAccessLevel == nil {
+		return EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel{}
+	}
+	return *e.OrganizationMemberAccessLevel
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedObject) GetExtraProperties() map[string]interface{} {
@@ -99962,6 +100391,13 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedObject) SetIsEnabled(isEnabled
 func (e *EventStreamCloudEventOrgConnectionUpdatedObject) SetOrganizationAccessLevel(organizationAccessLevel *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAccessLevel) {
 	e.OrganizationAccessLevel = organizationAccessLevel
 	e.require(eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventOrgConnectionUpdatedObject) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) {
+	e.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	e.require(eventStreamCloudEventOrgConnectionUpdatedObjectFieldOrganizationMemberAccessLevel)
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedObject) UnmarshalJSON(data []byte) error {
@@ -100379,14 +100815,196 @@ func (e EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAccessLevel3E
 	return &e
 }
 
+// The organization member access level granted to the connection for an organization.
+type EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel struct {
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum
+
+	typ string
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum() EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum() EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum() EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum() EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) UnmarshalJSON(data []byte) error {
+	var valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum = valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum = valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum = valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum = valueEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) MarshalJSON() ([]byte, error) {
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevelVisitor interface {
+	VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum(EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum) error
+	VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum(EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum) error
+	VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum(EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum) error
+	VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum(EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum) error
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel) Accept(visitor EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevelVisitor) error {
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum(e.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0EnumNone EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum = "none"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum, error) {
+	switch s {
+	case "none":
+		return EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0EnumNone, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1EnumReadonly EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum = "readonly"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum, error) {
+	switch s {
+	case "readonly":
+		return EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1EnumReadonly, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2EnumLimited EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum = "limited"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum, error) {
+	switch s {
+	case "limited":
+		return EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2EnumLimited, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3EnumFull EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum = "full"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum, error) {
+	switch s {
+	case "full":
+		return EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3EnumFull, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum {
+	return &e
+}
+
 var (
-	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganization            = big.NewInt(1 << 0)
-	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldConnection              = big.NewInt(1 << 1)
-	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldAssignMembershipOnLogin = big.NewInt(1 << 2)
-	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldShowAsButton            = big.NewInt(1 << 3)
-	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldIsSignupEnabled         = big.NewInt(1 << 4)
-	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldIsEnabled               = big.NewInt(1 << 5)
-	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganizationAccessLevel = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganization                  = big.NewInt(1 << 0)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldConnection                    = big.NewInt(1 << 1)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldAssignMembershipOnLogin       = big.NewInt(1 << 2)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldShowAsButton                  = big.NewInt(1 << 3)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldIsSignupEnabled               = big.NewInt(1 << 4)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldIsEnabled                     = big.NewInt(1 << 5)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganizationAccessLevel       = big.NewInt(1 << 6)
+	eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganizationMemberAccessLevel = big.NewInt(1 << 7)
 )
 
 // The event content as it was prior to the change described by this event, when applicable.
@@ -100404,8 +101022,9 @@ type EventStreamCloudEventOrgConnectionUpdatedPreviousObject struct {
 	// Only applicable for database connections.
 	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty" url:"is_signup_enabled,omitempty"`
 	// Determines whether the connection is enabled for the organization.
-	IsEnabled               *bool                                                                           `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
-	OrganizationAccessLevel *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAccessLevel `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	IsEnabled                     *bool                                                                                 `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
+	OrganizationAccessLevel       *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAccessLevel       `json:"organization_access_level,omitempty" url:"organization_access_level,omitempty"`
+	OrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel `json:"organization_member_access_level,omitempty" url:"organization_member_access_level,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -100461,6 +101080,13 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) GetOrganizatio
 		return EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAccessLevel{}
 	}
 	return *e.OrganizationAccessLevel
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) GetOrganizationMemberAccessLevel() EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel {
+	if e == nil || e.OrganizationMemberAccessLevel == nil {
+		return EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel{}
+	}
+	return *e.OrganizationMemberAccessLevel
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) GetExtraProperties() map[string]interface{} {
@@ -100526,6 +101152,13 @@ func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) SetIsEnabled(i
 func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) SetOrganizationAccessLevel(organizationAccessLevel *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAccessLevel) {
 	e.OrganizationAccessLevel = organizationAccessLevel
 	e.require(eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) {
+	e.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	e.require(eventStreamCloudEventOrgConnectionUpdatedPreviousObjectFieldOrganizationMemberAccessLevel)
 }
 
 func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObject) UnmarshalJSON(data []byte) error {
@@ -100943,6 +101576,187 @@ func (e EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAcces
 	return &e
 }
 
+// The organization member access level granted to the connection for an organization.
+type EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel struct {
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum
+
+	typ string
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum() EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum() EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum() EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum() EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum {
+	if e == nil {
+		return ""
+	}
+	return e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) UnmarshalJSON(data []byte) error {
+	var valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum = valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum = valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum = valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum
+		return nil
+	}
+	var valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum
+	if err := json.Unmarshal(data, &valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum); err == nil {
+		e.typ = "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum"
+		e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum = valueEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) MarshalJSON() ([]byte, error) {
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum != "" {
+		return json.Marshal(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevelVisitor interface {
+	VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum(EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum) error
+	VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum(EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum) error
+	VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum(EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum) error
+	VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum(EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum) error
+}
+
+func (e *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel) Accept(visitor EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevelVisitor) error {
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum)
+	}
+	if e.typ == "EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum" || e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum != "" {
+		return visitor.VisitEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum(e.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum)
+	}
+	return fmt.Errorf("type %T does not include a non-empty union type", e)
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0EnumNone EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum = "none"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum, error) {
+	switch s {
+	case "none":
+		return EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0EnumNone, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1EnumReadonly EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum = "readonly"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum, error) {
+	switch s {
+	case "readonly":
+		return EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1EnumReadonly, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2EnumLimited EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum = "limited"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum, error) {
+	switch s {
+	case "limited":
+		return EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2EnumLimited, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum {
+	return &e
+}
+
+type EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum string
+
+const (
+	EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3EnumFull EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum = "full"
+)
+
+func NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3EnumFromString(s string) (EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum, error) {
+	switch s {
+	case "full":
+		return EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3EnumFull, nil
+	}
+	var t EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum) Ptr() *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum {
+	return &e
+}
+
 var (
 	eventStreamCloudEventOrgCreatedFieldOffset = big.NewInt(1 << 0)
 	eventStreamCloudEventOrgCreatedFieldEvent  = big.NewInt(1 << 1)
@@ -101073,7 +101887,9 @@ type EventStreamCloudEventOrgCreatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -101133,10 +101949,10 @@ func (e *EventStreamCloudEventOrgCreatedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventOrgCreatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgCreatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -101213,7 +102029,7 @@ func (e *EventStreamCloudEventOrgCreatedCloudEvent) SetA0Tenant(a0Tenant string)
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgCreatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgCreatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgCreatedCloudEventFieldA0Stream)
 }
@@ -102276,7 +103092,9 @@ type EventStreamCloudEventOrgDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -102336,10 +103154,10 @@ func (e *EventStreamCloudEventOrgDeletedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventOrgDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -102416,7 +103234,7 @@ func (e *EventStreamCloudEventOrgDeletedCloudEvent) SetA0Tenant(a0Tenant string)
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgDeletedCloudEventFieldA0Stream)
 }
@@ -103029,7 +103847,9 @@ type EventStreamCloudEventOrgGroupRoleAssignedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -103089,10 +103909,10 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) GetA0Tenant() stri
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -103169,7 +103989,7 @@ func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) SetA0Tenant(a0Tena
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgGroupRoleAssignedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgGroupRoleAssignedCloudEventFieldA0Stream)
 }
@@ -105352,7 +106172,9 @@ type EventStreamCloudEventOrgGroupRoleDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -105412,10 +106234,10 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) GetA0Tenant() strin
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -105492,7 +106314,7 @@ func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) SetA0Tenant(a0Tenan
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgGroupRoleDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgGroupRoleDeletedCloudEventFieldA0Stream)
 }
@@ -107658,7 +108480,9 @@ type EventStreamCloudEventOrgMemberAddedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -107718,10 +108542,10 @@ func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -107798,7 +108622,7 @@ func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) SetA0Tenant(a0Tenant str
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgMemberAddedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgMemberAddedCloudEventFieldA0Stream)
 }
@@ -108731,7 +109555,9 @@ type EventStreamCloudEventOrgMemberDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -108791,10 +109617,10 @@ func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -108871,7 +109697,7 @@ func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) SetA0Tenant(a0Tenant s
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgMemberDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgMemberDeletedCloudEventFieldA0Stream)
 }
@@ -109804,7 +110630,9 @@ type EventStreamCloudEventOrgMemberRoleAssignedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -109864,10 +110692,10 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) GetA0Tenant() str
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -109944,7 +110772,7 @@ func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) SetA0Tenant(a0Ten
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgMemberRoleAssignedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgMemberRoleAssignedCloudEventFieldA0Stream)
 }
@@ -111085,7 +111913,9 @@ type EventStreamCloudEventOrgMemberRoleDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -111145,10 +111975,10 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) GetA0Tenant() stri
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -111225,7 +112055,7 @@ func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) SetA0Tenant(a0Tena
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgMemberRoleDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgMemberRoleDeletedCloudEventFieldA0Stream)
 }
@@ -112366,7 +113196,9 @@ type EventStreamCloudEventOrgUpdatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -112426,10 +113258,10 @@ func (e *EventStreamCloudEventOrgUpdatedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventOrgUpdatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventOrgUpdatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -112506,7 +113338,7 @@ func (e *EventStreamCloudEventOrgUpdatedCloudEvent) SetA0Tenant(a0Tenant string)
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventOrgUpdatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventOrgUpdatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventOrgUpdatedCloudEventFieldA0Stream)
 }
@@ -113589,7 +114421,9 @@ type EventStreamCloudEventUserCreatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -113649,10 +114483,10 @@ func (e *EventStreamCloudEventUserCreatedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventUserCreatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventUserCreatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -113729,7 +114563,7 @@ func (e *EventStreamCloudEventUserCreatedCloudEvent) SetA0Tenant(a0Tenant string
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventUserCreatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventUserCreatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventUserCreatedCloudEventFieldA0Stream)
 }
@@ -120154,7 +120988,9 @@ type EventStreamCloudEventUserDeletedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -120214,10 +121050,10 @@ func (e *EventStreamCloudEventUserDeletedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventUserDeletedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventUserDeletedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -120294,7 +121130,7 @@ func (e *EventStreamCloudEventUserDeletedCloudEvent) SetA0Tenant(a0Tenant string
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventUserDeletedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventUserDeletedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventUserDeletedCloudEventFieldA0Stream)
 }
@@ -126740,7 +127576,9 @@ type EventStreamCloudEventUserUpdatedCloudEvent struct {
 	// The auth0 tenant ID to which the event is associated.
 	A0Tenant string `json:"a0tenant" url:"a0tenant"`
 	// The auth0 event stream ID of the stream the event was delivered on.
-	A0Stream  string                              `json:"a0stream" url:"a0stream"`
+	// Present when the event is delivered via an event stream; omitted when
+	// events are retrieved via the Events API (GET /api/v2/events).
+	A0Stream  *string                             `json:"a0stream,omitempty" url:"a0stream,omitempty"`
 	A0Purpose *EventStreamCloudEventA0PurposeEnum `json:"a0purpose,omitempty" url:"a0purpose,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -126800,10 +127638,10 @@ func (e *EventStreamCloudEventUserUpdatedCloudEvent) GetA0Tenant() string {
 }
 
 func (e *EventStreamCloudEventUserUpdatedCloudEvent) GetA0Stream() string {
-	if e == nil {
+	if e == nil || e.A0Stream == nil {
 		return ""
 	}
-	return e.A0Stream
+	return *e.A0Stream
 }
 
 func (e *EventStreamCloudEventUserUpdatedCloudEvent) GetA0Purpose() EventStreamCloudEventA0PurposeEnum {
@@ -126880,7 +127718,7 @@ func (e *EventStreamCloudEventUserUpdatedCloudEvent) SetA0Tenant(a0Tenant string
 
 // SetA0Stream sets the A0Stream field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (e *EventStreamCloudEventUserUpdatedCloudEvent) SetA0Stream(a0Stream string) {
+func (e *EventStreamCloudEventUserUpdatedCloudEvent) SetA0Stream(a0Stream *string) {
 	e.A0Stream = a0Stream
 	e.require(eventStreamCloudEventUserUpdatedCloudEventFieldA0Stream)
 }

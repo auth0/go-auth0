@@ -2421,6 +2421,141 @@ client.Clients.RegisterCimdClient(
 </dl>
 </details>
 
+<details><summary><code>client.Clients.Search() -> *management.SearchClientsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search clients using SCIM or Lucene filter syntax with low-latency, eventually consistent results.
+Use the parser parameter to specify "scim" or "lucene" syntax (default: "lucene").
+This endpoint provides an alternative to the standard GET /clients endpoint with better performance
+for complex queries. Results may not reflect recent updates immediately.
+
+- This endpoint only supports `read:clients` and `read:client_summary` scopes. The `read:client_keys` and `read:client_credentials` scopes are not supported.
+- The following fields are never returned by this endpoint:
+  - `client_secret`
+  - `encryption_key`
+  - `signing_keys`
+  - `owners`
+  - `addons`
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SearchClientsRequestParameters{
+    Q: management.String(
+        "q",
+    ),
+    Parser: management.SearchParserEnumSCIM.Ptr(),
+    Fields: management.String(
+        "fields",
+    ),
+    IncludeFields: management.Bool(
+        true,
+    ),
+    Take: management.Int(
+        1,
+    ),
+    From: management.String(
+        "from",
+    ),
+    Sort: management.ClientSortFieldEnumName.Ptr(),
+}
+client.Clients.Search(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**q:** `*string` — Filter expression in SCIM or Lucene syntax (depending on parser parameter). SCIM examples: `name eq "Auth0"`, `name sw "auth" and app_type eq "spa"`. SCIM operators: eq, ne, sw, ew, co, pr, gt, ge, lt, le, and, or. <br /><br /><b>Supported Fields</b>:<br /><ul><li><i>client_id</i> - Auth0 client ID (case-sensitive, exact match)</li><li><i>external_client_id</i> - URL of the Client ID Metadata Document (CIMD); case-sensitive, exact match</li><li><i>name</i> - Client name (supports contains, starts-with, ends-with operators; sortable)</li><li><i>app_type</i> - Application type (e.g. "spa", "native", "non_interactive")</li><li><i>is_first_party</i> - Whether the client is first-party (boolean)</li><li><i>updated_at</i> - Last update timestamp (supports date range operators; sortable)</li><li><i>metadata.{key}</i> - Filter by client metadata key-value pairs (max 2-level key depth, values indexed up to 64 characters)</li><li><i>client_grant.organization_id</i> - Filter by associated organization ID</li><li><i>client_grant.allow_any_organization</i> - Filter by allow any organization setting</li></ul>Maximum 5 filter operations per query. Results are eventually consistent and may not reflect recent updates.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parser:** `*management.SearchParserEnum` — Query parser to use for the filter expression. Use "scim" for SCIM filter syntax or "lucene" for Lucene query syntax (default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude in the response. Works with the include_fields parameter to control projection mode. Maximum 50 fields.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Controls field projection mode. Set to true to include only fields specified in the fields parameter. Set to false to exclude fields specified in the fields parameter. Defaults to true if not specified.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Maximum number of results to return per page (1-100). Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Cursor for the next page of results. Use the value from the next field in the previous response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `*management.ClientSortFieldEnum` — Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Clients.Get(ID) -> *management.GetClientResponseContent</code></summary>
 <dl>
 <dd>
@@ -7273,7 +7408,7 @@ client.Groups.List(
 <dl>
 <dd>
 
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). The returned total reflects at most 1,000 results.
     
 </dd>
 </dl>
@@ -11806,7 +11941,7 @@ client.ResourceServers.Update(
 <dl>
 <dd>
 
-Retrieve detailed list of user roles created in your tenant.
+Retrieve a list of roles. Includes roles created in your tenant and, when `owner_id=auth0` is supplied, Auth0-managed System Roles.
 
 **Note**: The returned list does not include standard roles available for tenant members, such as Admin or Support Access.
 </dd>
@@ -11899,7 +12034,7 @@ client.Roles.List(
 <dl>
 <dd>
 
-**ownerID:** `*string` — Filter organization-level roles by owner ID. Required when type is "organization".
+**ownerID:** `*management.RoleOwnerIDFilter` — Filter organization-level roles by owner ID. Use an organization ID to filter that organization's roles, or "auth0" to retrieve Auth0-managed System Roles. Required when type is "organization".
     
 </dd>
 </dl>
@@ -17727,6 +17862,14 @@ Action to take when a brute force protection threshold is violated.
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**formSubmissionMode:** `*management.BruteForceProtectionFormSubmissionModeEnum` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -23050,6 +23193,14 @@ client.Experimentation.Experiments.Update(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**status:** `*management.ExperimentTransitionStatusEnum` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -23116,75 +23267,6 @@ client.Experimentation.Experiments.AdvanceRamp(
 <dd>
 
 **targetLevel:** `int` — The target percentage level from the experiment schedule. Must be the immediate next level.
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Experimentation.Experiments.UpdateStatus(ID, request) -> *management.UpdateExperimentStatusResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Transitions an experiment through its lifecycle: draft → active, active → paused, paused → active, active/paused → completed. Activation runs full readiness validation.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateExperimentStatusRequestContent{
-    Status: management.ExperimentTransitionStatusEnumActive,
-}
-client.Experimentation.Experiments.UpdateStatus(
-    context.TODO(),
-    "id",
-    request,
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the experiment to transition.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `management.ExperimentTransitionStatusEnum` 
     
 </dd>
 </dl>
@@ -23611,72 +23693,11 @@ client.Experimentation.FeatureFlags.Update(
     
 </dd>
 </dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.Experimentation.FeatureFlags.UpdateStatus(ID, request) -> *management.UpdateFeatureFlagStatusResponseContent</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
 
 <dl>
 <dd>
 
-<dl>
-<dd>
-
-Transitions a feature flag through its lifecycle states: draft → active, draft → archived, active → archived.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```go
-request := &management.UpdateFeatureFlagStatusRequestContent{
-    Status: management.FeatureFlagStatusEnumDraft,
-}
-client.Experimentation.FeatureFlags.UpdateStatus(
-    context.TODO(),
-    "id",
-    request,
-)
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**id:** `string` — The ID of the feature flag to transition.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**status:** `management.FeatureFlagStatusEnum` — The target status to transition the feature flag to.
+**status:** `*management.FeatureFlagStatusEnum` — Target lifecycle status (draft → active, draft → archived, active → archived). Activating a flag requires at least 2 variations. When combined with field edits, the edits and the transition are applied together; if the transition is rejected, no edits are applied.
     
 </dd>
 </dl>
@@ -24036,6 +24057,14 @@ client.Experimentation.Segments.Update(
 <dd>
 
 **rules:** `[]*management.SegmentRule` — Replaces the entire rules array. Each rule is limited to 4KB and the whole segment to 10KB (serialized).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.SegmentStatusEnum` — Target lifecycle status. Archiving removes the segment from the active pool and is terminal (an archived segment cannot return to active). When combined with field edits, the edits apply first and the transition follows.
     
 </dd>
 </dl>

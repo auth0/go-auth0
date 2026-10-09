@@ -265,55 +265,6 @@ func (r *RawClient) AdvanceRamp(
 	}, nil
 }
 
-func (r *RawClient) UpdateStatus(
-	ctx context.Context,
-	// The ID of the experiment to transition.
-	id string,
-	request *management.UpdateExperimentStatusRequestContent,
-	opts ...option.RequestOption,
-) (*core.Response[*management.UpdateExperimentStatusResponseContent], error) {
-	options := core.NewRequestOptions(opts...)
-	baseURL := internal.ResolveBaseURL(
-		options.BaseURL,
-		r.baseURL,
-		"https://%7BTENANT%7D.auth0.com/api/v2",
-	)
-	endpointURL := internal.EncodeURL(
-		baseURL+"/experimentation/experiments/%v/status",
-		id,
-	)
-	headers := internal.MergeHeaders(
-		r.options.ToHeader(),
-		options.ToHeader(),
-	)
-	headers.Add("Content-Type", "application/json")
-	var response *management.UpdateExperimentStatusResponseContent
-	raw, err := r.caller.Call(
-		ctx,
-		&internal.CallParams{
-			URL:             endpointURL,
-			Method:          http.MethodPost,
-			Headers:         headers,
-			MaxAttempts:     options.MaxAttempts,
-			DisableRetries:  options.DisableRetries,
-			BodyProperties:  options.BodyProperties,
-			QueryParameters: options.QueryParameters,
-			Client:          options.HTTPClient,
-			Request:         request,
-			Response:        &response,
-			ErrorDecoder:    internal.NewErrorDecoder(experimentation.ErrorCodes),
-		},
-	)
-	if err != nil {
-		return nil, err
-	}
-	return &core.Response[*management.UpdateExperimentStatusResponseContent]{
-		StatusCode: raw.StatusCode,
-		Header:     raw.Header,
-		Body:       response,
-	}, nil
-}
-
 func (r *RawClient) Validate(
 	ctx context.Context,
 	// The ID of the experiment to validate.

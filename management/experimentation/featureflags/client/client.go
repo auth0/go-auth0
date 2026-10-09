@@ -227,34 +227,3 @@ func (c *Client) Update(
 	}
 	return response.Body, nil
 }
-
-// Transitions a feature flag through its lifecycle states: draft → active, draft → archived, active → archived.
-//
-// Example:
-//
-//	request := &management.UpdateFeatureFlagStatusRequestContent{
-//	    Status: management.FeatureFlagStatusEnumDraft,
-//	}
-//	client.Experimentation.FeatureFlags.UpdateStatus(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
-func (c *Client) UpdateStatus(
-	ctx context.Context,
-	// The ID of the feature flag to transition.
-	id string,
-	request *management.UpdateFeatureFlagStatusRequestContent,
-	opts ...option.RequestOption,
-) (*management.UpdateFeatureFlagStatusResponseContent, error) {
-	response, err := c.WithRawResponse.UpdateStatus(
-		ctx,
-		id,
-		request,
-		opts...,
-	)
-	if err != nil {
-		return nil, err
-	}
-	return response.Body, nil
-}

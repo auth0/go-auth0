@@ -44,7 +44,7 @@ func TestSettersCreateRoleResponseContent(t *testing.T) {
 
 	t.Run("SetOwnerID", func(t *testing.T) {
 		obj := &CreateRoleResponseContent{}
-		var fernTestValueOwnerID *string
+		var fernTestValueOwnerID *RoleOwnerID
 		obj.SetOwnerID(fernTestValueOwnerID)
 		assert.Equal(t, fernTestValueOwnerID, obj.OwnerID)
 		assert.NotNil(t, obj.explicitFields)
@@ -193,7 +193,7 @@ func TestGettersCreateRoleResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateRoleResponseContent{}
-		var value string
+		var value RoleOwnerID
 		obj.OwnerID = &value
 
 		// Act & Assert
@@ -205,7 +205,7 @@ func TestGettersCreateRoleResponseContent(t *testing.T) {
 		// Arrange
 		obj := &CreateRoleResponseContent{}
 		obj.OwnerID = nil
-		var expectedZero string
+		var expectedZero RoleOwnerID
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetOwnerID(), "getter should return zero value when property is nil")
@@ -354,7 +354,7 @@ func TestSettersMarkExplicitCreateRoleResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateRoleResponseContent{}
-		var fernTestValueOwnerID *string
+		var fernTestValueOwnerID *RoleOwnerID
 
 		// Act
 		obj.SetOwnerID(fernTestValueOwnerID)
@@ -418,7 +418,7 @@ func TestSettersGetRoleResponseContent(t *testing.T) {
 
 	t.Run("SetOwnerID", func(t *testing.T) {
 		obj := &GetRoleResponseContent{}
-		var fernTestValueOwnerID *string
+		var fernTestValueOwnerID *RoleOwnerID
 		obj.SetOwnerID(fernTestValueOwnerID)
 		assert.Equal(t, fernTestValueOwnerID, obj.OwnerID)
 		assert.NotNil(t, obj.explicitFields)
@@ -567,7 +567,7 @@ func TestGettersGetRoleResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetRoleResponseContent{}
-		var value string
+		var value RoleOwnerID
 		obj.OwnerID = &value
 
 		// Act & Assert
@@ -579,7 +579,7 @@ func TestGettersGetRoleResponseContent(t *testing.T) {
 		// Arrange
 		obj := &GetRoleResponseContent{}
 		obj.OwnerID = nil
-		var expectedZero string
+		var expectedZero RoleOwnerID
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetOwnerID(), "getter should return zero value when property is nil")
@@ -728,7 +728,7 @@ func TestSettersMarkExplicitGetRoleResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetRoleResponseContent{}
-		var fernTestValueOwnerID *string
+		var fernTestValueOwnerID *RoleOwnerID
 
 		// Act
 		obj.SetOwnerID(fernTestValueOwnerID)
@@ -1059,7 +1059,7 @@ func TestSettersUpdateRoleResponseContent(t *testing.T) {
 
 	t.Run("SetOwnerID", func(t *testing.T) {
 		obj := &UpdateRoleResponseContent{}
-		var fernTestValueOwnerID *string
+		var fernTestValueOwnerID *RoleOwnerID
 		obj.SetOwnerID(fernTestValueOwnerID)
 		assert.Equal(t, fernTestValueOwnerID, obj.OwnerID)
 		assert.NotNil(t, obj.explicitFields)
@@ -1208,7 +1208,7 @@ func TestGettersUpdateRoleResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateRoleResponseContent{}
-		var value string
+		var value RoleOwnerID
 		obj.OwnerID = &value
 
 		// Act & Assert
@@ -1220,7 +1220,7 @@ func TestGettersUpdateRoleResponseContent(t *testing.T) {
 		// Arrange
 		obj := &UpdateRoleResponseContent{}
 		obj.OwnerID = nil
-		var expectedZero string
+		var expectedZero RoleOwnerID
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetOwnerID(), "getter should return zero value when property is nil")
@@ -1369,7 +1369,7 @@ func TestSettersMarkExplicitUpdateRoleResponseContent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateRoleResponseContent{}
-		var fernTestValueOwnerID *string
+		var fernTestValueOwnerID *RoleOwnerID
 
 		// Act
 		obj.SetOwnerID(fernTestValueOwnerID)
