@@ -43,6 +43,11 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 			APIError: apiError,
 		}
 	},
+	504: func(apiError *core.APIError) error {
+		return &GatewayTimeoutError{
+			APIError: apiError,
+		}
+	},
 	422: func(apiError *core.APIError) error {
 		return &UnprocessableEntityError{
 			APIError: apiError,
@@ -50,11 +55,6 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 	},
 	410: func(apiError *core.APIError) error {
 		return &GoneError{
-			APIError: apiError,
-		}
-	},
-	504: func(apiError *core.APIError) error {
-		return &GatewayTimeoutError{
 			APIError: apiError,
 		}
 	},

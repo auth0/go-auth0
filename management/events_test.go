@@ -212,7 +212,7 @@ func TestSettersEventStreamCloudEventConnectionCreatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventConnectionCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -404,11 +404,22 @@ func TestGettersEventStreamCloudEventConnectionCreatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionCreatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -681,7 +692,7 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedCloudEvent(t *
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -66402,7 +66413,7 @@ func TestSettersEventStreamCloudEventConnectionDeletedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventConnectionDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -66594,11 +66605,22 @@ func TestGettersEventStreamCloudEventConnectionDeletedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -66871,7 +66893,7 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedCloudEvent(t *
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -132592,7 +132614,7 @@ func TestSettersEventStreamCloudEventConnectionUpdatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventConnectionUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -132784,11 +132806,22 @@ func TestGettersEventStreamCloudEventConnectionUpdatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionUpdatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -133061,7 +133094,7 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedCloudEvent(t *
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -200898,7 +200931,7 @@ func TestSettersEventStreamCloudEventGroupCreatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -201090,11 +201123,22 @@ func TestGettersEventStreamCloudEventGroupCreatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupCreatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -201367,7 +201411,7 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedCloudEvent(t *testi
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -204288,7 +204332,7 @@ func TestSettersEventStreamCloudEventGroupDeletedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -204480,11 +204524,22 @@ func TestGettersEventStreamCloudEventGroupDeletedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -204757,7 +204812,7 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedCloudEvent(t *testi
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -208050,7 +208105,7 @@ func TestSettersEventStreamCloudEventGroupMemberAddedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberAddedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -208242,11 +208297,22 @@ func TestGettersEventStreamCloudEventGroupMemberAddedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberAddedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -208519,7 +208585,7 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedCloudEvent(t *t
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -211920,7 +211986,7 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedCloudEvent(t *testing.T) 
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -212112,11 +212178,22 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedCloudEvent(t *testing.T) 
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -212389,7 +212466,7 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedCloudEvent(t 
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -215790,7 +215867,7 @@ func TestSettersEventStreamCloudEventGroupRoleAssignedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupRoleAssignedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -215982,11 +216059,22 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupRoleAssignedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -216259,7 +216347,7 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedCloudEvent(t *
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -219132,7 +219220,7 @@ func TestSettersEventStreamCloudEventGroupRoleDeletedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupRoleDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -219324,11 +219412,22 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupRoleDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -219601,7 +219700,7 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedCloudEvent(t *t
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -222412,7 +222511,7 @@ func TestSettersEventStreamCloudEventGroupUpdatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -222604,11 +222703,22 @@ func TestGettersEventStreamCloudEventGroupUpdatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupUpdatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -222881,7 +222991,7 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedCloudEvent(t *testi
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -226245,7 +226355,7 @@ func TestSettersEventStreamCloudEventOrgConnectionAddedCloudEvent(t *testing.T) 
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgConnectionAddedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -226437,11 +226547,22 @@ func TestGettersEventStreamCloudEventOrgConnectionAddedCloudEvent(t *testing.T) 
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgConnectionAddedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -226714,7 +226835,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionAddedCloudEvent(t 
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgConnectionAddedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -227058,6 +227179,14 @@ func TestSettersEventStreamCloudEventOrgConnectionAddedObject(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOrganizationMemberAccessLevel", func(t *testing.T) {
+		obj := &EventStreamCloudEventOrgConnectionAddedObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
+		assert.Equal(t, fernTestValueOrganizationMemberAccessLevel, obj.OrganizationMemberAccessLevel)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersEventStreamCloudEventOrgConnectionAddedObject(t *testing.T) {
@@ -227297,6 +227426,40 @@ func TestGettersEventStreamCloudEventOrgConnectionAddedObject(t *testing.T) {
 		_ = obj.GetOrganizationAccessLevel() // Should return zero value
 	})
 
+	t.Run("GetOrganizationMemberAccessLevel", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedObject{}
+		var value EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+		obj.OrganizationMemberAccessLevel = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOrganizationMemberAccessLevel(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedObject{}
+		obj.OrganizationMemberAccessLevel = nil
+		var expectedZero EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOrganizationMemberAccessLevel(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOrganizationMemberAccessLevel() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionAddedObject(t *testing.T) {
@@ -227494,6 +227657,37 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionAddedObject(t *tes
 
 		// Act
 		obj.SetOrganizationAccessLevel(fernTestValueOrganizationAccessLevel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOrganizationMemberAccessLevel_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+
+		// Act
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -227829,6 +228023,101 @@ func TestGettersEventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessL
 
 }
 
+func TestGettersEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum
+		obj.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum
+		obj.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum
+		obj.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum
+		obj.EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum() // Should return zero value
+	})
+
+}
+
 func TestSettersEventStreamCloudEventOrgConnectionAddedPreviousObject(t *testing.T) {
 	t.Run("SetOrganization", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObject{}
@@ -227883,6 +228172,14 @@ func TestSettersEventStreamCloudEventOrgConnectionAddedPreviousObject(t *testing
 		var fernTestValueOrganizationAccessLevel *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessLevel
 		obj.SetOrganizationAccessLevel(fernTestValueOrganizationAccessLevel)
 		assert.Equal(t, fernTestValueOrganizationAccessLevel, obj.OrganizationAccessLevel)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOrganizationMemberAccessLevel", func(t *testing.T) {
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
+		assert.Equal(t, fernTestValueOrganizationMemberAccessLevel, obj.OrganizationMemberAccessLevel)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -228125,6 +228422,40 @@ func TestGettersEventStreamCloudEventOrgConnectionAddedPreviousObject(t *testing
 		_ = obj.GetOrganizationAccessLevel() // Should return zero value
 	})
 
+	t.Run("GetOrganizationMemberAccessLevel", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObject{}
+		var value EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+		obj.OrganizationMemberAccessLevel = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOrganizationMemberAccessLevel(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObject{}
+		obj.OrganizationMemberAccessLevel = nil
+		var expectedZero EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOrganizationMemberAccessLevel(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOrganizationMemberAccessLevel() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionAddedPreviousObject(t *testing.T) {
@@ -228322,6 +228653,37 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionAddedPreviousObjec
 
 		// Act
 		obj.SetOrganizationAccessLevel(fernTestValueOrganizationAccessLevel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOrganizationMemberAccessLevel_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+
+		// Act
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -228657,6 +229019,101 @@ func TestGettersEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizatio
 
 }
 
+func TestGettersEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum
+		obj.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum
+		obj.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum
+		obj.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum
+		obj.EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum() // Should return zero value
+	})
+
+}
+
 func TestSettersEventStreamCloudEventOrgConnectionRemoved(t *testing.T) {
 	t.Run("SetOffset", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgConnectionRemoved{}
@@ -228859,7 +229316,7 @@ func TestSettersEventStreamCloudEventOrgConnectionRemovedCloudEvent(t *testing.T
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgConnectionRemovedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -229051,11 +229508,22 @@ func TestGettersEventStreamCloudEventOrgConnectionRemovedCloudEvent(t *testing.T
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgConnectionRemovedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionRemovedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -229328,7 +229796,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionRemovedCloudEvent(
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgConnectionRemovedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -230553,7 +231021,7 @@ func TestSettersEventStreamCloudEventOrgConnectionUpdatedCloudEvent(t *testing.T
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgConnectionUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -230745,11 +231213,22 @@ func TestGettersEventStreamCloudEventOrgConnectionUpdatedCloudEvent(t *testing.T
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgConnectionUpdatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -231022,7 +231501,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionUpdatedCloudEvent(
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgConnectionUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -231366,6 +231845,14 @@ func TestSettersEventStreamCloudEventOrgConnectionUpdatedObject(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOrganizationMemberAccessLevel", func(t *testing.T) {
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
+		assert.Equal(t, fernTestValueOrganizationMemberAccessLevel, obj.OrganizationMemberAccessLevel)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersEventStreamCloudEventOrgConnectionUpdatedObject(t *testing.T) {
@@ -231605,6 +232092,40 @@ func TestGettersEventStreamCloudEventOrgConnectionUpdatedObject(t *testing.T) {
 		_ = obj.GetOrganizationAccessLevel() // Should return zero value
 	})
 
+	t.Run("GetOrganizationMemberAccessLevel", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObject{}
+		var value EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+		obj.OrganizationMemberAccessLevel = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOrganizationMemberAccessLevel(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObject{}
+		obj.OrganizationMemberAccessLevel = nil
+		var expectedZero EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOrganizationMemberAccessLevel(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOrganizationMemberAccessLevel() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionUpdatedObject(t *testing.T) {
@@ -231802,6 +232323,37 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionUpdatedObject(t *t
 
 		// Act
 		obj.SetOrganizationAccessLevel(fernTestValueOrganizationAccessLevel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOrganizationMemberAccessLevel_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+
+		// Act
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -232137,6 +232689,101 @@ func TestGettersEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAcces
 
 }
 
+func TestGettersEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum() // Should return zero value
+	})
+
+}
+
 func TestSettersEventStreamCloudEventOrgConnectionUpdatedPreviousObject(t *testing.T) {
 	t.Run("SetOrganization", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObject{}
@@ -232191,6 +232838,14 @@ func TestSettersEventStreamCloudEventOrgConnectionUpdatedPreviousObject(t *testi
 		var fernTestValueOrganizationAccessLevel *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAccessLevel
 		obj.SetOrganizationAccessLevel(fernTestValueOrganizationAccessLevel)
 		assert.Equal(t, fernTestValueOrganizationAccessLevel, obj.OrganizationAccessLevel)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOrganizationMemberAccessLevel", func(t *testing.T) {
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
+		assert.Equal(t, fernTestValueOrganizationMemberAccessLevel, obj.OrganizationMemberAccessLevel)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -232433,6 +233088,40 @@ func TestGettersEventStreamCloudEventOrgConnectionUpdatedPreviousObject(t *testi
 		_ = obj.GetOrganizationAccessLevel() // Should return zero value
 	})
 
+	t.Run("GetOrganizationMemberAccessLevel", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObject{}
+		var value EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+		obj.OrganizationMemberAccessLevel = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOrganizationMemberAccessLevel(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObject{}
+		obj.OrganizationMemberAccessLevel = nil
+		var expectedZero EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOrganizationMemberAccessLevel(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOrganizationMemberAccessLevel_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOrganizationMemberAccessLevel() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionUpdatedPreviousObject(t *testing.T) {
@@ -232630,6 +233319,37 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgConnectionUpdatedPreviousObj
 
 		// Act
 		obj.SetOrganizationAccessLevel(fernTestValueOrganizationAccessLevel)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOrganizationMemberAccessLevel_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObject{}
+		var fernTestValueOrganizationMemberAccessLevel *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+
+		// Act
+		obj.SetOrganizationMemberAccessLevel(fernTestValueOrganizationMemberAccessLevel)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -232965,6 +233685,101 @@ func TestGettersEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizat
 
 }
 
+func TestGettersEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel(t *testing.T) {
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum() // Should return zero value
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel{}
+		var expected EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum
+		obj.EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum(), "getter should return the property value")
+	})
+
+	t.Run("GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum() // Should return zero value
+	})
+
+}
+
 func TestSettersEventStreamCloudEventOrgCreated(t *testing.T) {
 	t.Run("SetOffset", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgCreated{}
@@ -233167,7 +233982,7 @@ func TestSettersEventStreamCloudEventOrgCreatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -233359,11 +234174,22 @@ func TestGettersEventStreamCloudEventOrgCreatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgCreatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgCreatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -233636,7 +234462,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgCreatedCloudEvent(t *testing
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -235471,7 +236297,7 @@ func TestSettersEventStreamCloudEventOrgDeletedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -235663,11 +236489,22 @@ func TestGettersEventStreamCloudEventOrgDeletedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -235940,7 +236777,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgDeletedCloudEvent(t *testing
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -237009,7 +237846,7 @@ func TestSettersEventStreamCloudEventOrgGroupRoleAssignedCloudEvent(t *testing.T
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -237201,11 +238038,22 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedCloudEvent(t *testing.T
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgGroupRoleAssignedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -237478,7 +238326,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedCloudEvent(
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -240637,7 +241485,7 @@ func TestSettersEventStreamCloudEventOrgGroupRoleDeletedCloudEvent(t *testing.T)
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -240829,11 +241677,22 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedCloudEvent(t *testing.T)
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgGroupRoleDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -241106,7 +241965,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedCloudEvent(t
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -244203,7 +245062,7 @@ func TestSettersEventStreamCloudEventOrgMemberAddedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgMemberAddedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -244395,11 +245254,22 @@ func TestGettersEventStreamCloudEventOrgMemberAddedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberAddedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgMemberAddedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -244672,7 +245542,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgMemberAddedCloudEvent(t *tes
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberAddedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -245897,7 +246767,7 @@ func TestSettersEventStreamCloudEventOrgMemberDeletedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgMemberDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -246089,11 +246959,22 @@ func TestGettersEventStreamCloudEventOrgMemberDeletedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgMemberDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -246366,7 +247247,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgMemberDeletedCloudEvent(t *t
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -247591,7 +248472,7 @@ func TestSettersEventStreamCloudEventOrgMemberRoleAssignedCloudEvent(t *testing.
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgMemberRoleAssignedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -247783,11 +248664,22 @@ func TestGettersEventStreamCloudEventOrgMemberRoleAssignedCloudEvent(t *testing.
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberRoleAssignedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgMemberRoleAssignedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -248060,7 +248952,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgMemberRoleAssignedCloudEvent
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberRoleAssignedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -249549,7 +250441,7 @@ func TestSettersEventStreamCloudEventOrgMemberRoleDeletedCloudEvent(t *testing.T
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgMemberRoleDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -249741,11 +250633,22 @@ func TestGettersEventStreamCloudEventOrgMemberRoleDeletedCloudEvent(t *testing.T
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberRoleDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgMemberRoleDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -250018,7 +250921,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgMemberRoleDeletedCloudEvent(
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgMemberRoleDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -251507,7 +252410,7 @@ func TestSettersEventStreamCloudEventOrgUpdatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventOrgUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -251699,11 +252602,22 @@ func TestGettersEventStreamCloudEventOrgUpdatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgUpdatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgUpdatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -251976,7 +252890,7 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgUpdatedCloudEvent(t *testing
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -253811,7 +254725,7 @@ func TestSettersEventStreamCloudEventUserCreatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventUserCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -254003,11 +254917,22 @@ func TestGettersEventStreamCloudEventUserCreatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventUserCreatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventUserCreatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -254280,7 +255205,7 @@ func TestSettersMarkExplicitEventStreamCloudEventUserCreatedCloudEvent(t *testin
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventUserCreatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -267939,7 +268864,7 @@ func TestSettersEventStreamCloudEventUserDeletedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventUserDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -268131,11 +269056,22 @@ func TestGettersEventStreamCloudEventUserDeletedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventUserDeletedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventUserDeletedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -268408,7 +269344,7 @@ func TestSettersMarkExplicitEventStreamCloudEventUserDeletedCloudEvent(t *testin
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventUserDeletedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -282129,7 +283065,7 @@ func TestSettersEventStreamCloudEventUserUpdatedCloudEvent(t *testing.T) {
 
 	t.Run("SetA0Stream", func(t *testing.T) {
 		obj := &EventStreamCloudEventUserUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 		obj.SetA0Stream(fernTestValueA0Stream)
 		assert.Equal(t, fernTestValueA0Stream, obj.A0Stream)
 		assert.NotNil(t, obj.explicitFields)
@@ -282321,11 +283257,22 @@ func TestGettersEventStreamCloudEventUserUpdatedCloudEvent(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventUserUpdatedCloudEvent{}
-		var expected string
-		obj.A0Stream = expected
+		var value string
+		obj.A0Stream = &value
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetA0Stream(), "getter should return the property value")
+		assert.Equal(t, value, obj.GetA0Stream(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetA0Stream_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventUserUpdatedCloudEvent{}
+		obj.A0Stream = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetA0Stream(), "getter should return zero value when property is nil")
 	})
 
 	t.Run("GetA0Stream_NilReceiver", func(t *testing.T) {
@@ -282598,7 +283545,7 @@ func TestSettersMarkExplicitEventStreamCloudEventUserUpdatedCloudEvent(t *testin
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventUserUpdatedCloudEvent{}
-		var fernTestValueA0Stream string
+		var fernTestValueA0Stream *string
 
 		// Act
 		obj.SetA0Stream(fernTestValueA0Stream)
@@ -339403,6 +340350,94 @@ func TestEnumEventStreamCloudEventOrgConnectionAddedObjectOrganizationAccessLeve
 	})
 }
 
+func TestEnumEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum(t *testing.T) {
+	t.Run("NewFromString_none", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0Enum("none"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum(t *testing.T) {
+	t.Run("NewFromString_readonly", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1Enum("readonly"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum(t *testing.T) {
+	t.Run("NewFromString_limited", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2Enum("limited"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum(t *testing.T) {
+	t.Run("NewFromString_full", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3EnumFromString("full")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3Enum("full"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedObjectOrganizationMemberAccessLevel3EnumFromString("full")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessLevel0Enum(t *testing.T) {
 	t.Run("NewFromString_none", func(t *testing.T) {
 		t.Parallel()
@@ -339484,6 +340519,94 @@ func TestEnumEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAc
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationAccessLevel3EnumFromString("full")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum(t *testing.T) {
+	t.Run("NewFromString_none", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0Enum("none"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum(t *testing.T) {
+	t.Run("NewFromString_readonly", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1Enum("readonly"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum(t *testing.T) {
+	t.Run("NewFromString_limited", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2Enum("limited"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum(t *testing.T) {
+	t.Run("NewFromString_full", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3EnumFromString("full")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3Enum("full"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionAddedPreviousObjectOrganizationMemberAccessLevel3EnumFromString("full")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -339623,6 +340746,94 @@ func TestEnumEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationAccessLe
 	})
 }
 
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum(t *testing.T) {
+	t.Run("NewFromString_none", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0Enum("none"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum(t *testing.T) {
+	t.Run("NewFromString_readonly", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1Enum("readonly"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum(t *testing.T) {
+	t.Run("NewFromString_limited", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2Enum("limited"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum(t *testing.T) {
+	t.Run("NewFromString_full", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3EnumFromString("full")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3Enum("full"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedObjectOrganizationMemberAccessLevel3EnumFromString("full")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAccessLevel0Enum(t *testing.T) {
 	t.Run("NewFromString_none", func(t *testing.T) {
 		t.Parallel()
@@ -339704,6 +340915,94 @@ func TestEnumEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganization
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationAccessLevel3EnumFromString("full")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum(t *testing.T) {
+	t.Run("NewFromString_none", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0Enum("none"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel0EnumFromString("none")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum(t *testing.T) {
+	t.Run("NewFromString_readonly", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1Enum("readonly"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel1EnumFromString("readonly")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum(t *testing.T) {
+	t.Run("NewFromString_limited", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2Enum("limited"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel2EnumFromString("limited")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum(t *testing.T) {
+	t.Run("NewFromString_full", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3EnumFromString("full")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3Enum("full"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3EnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgConnectionUpdatedPreviousObjectOrganizationMemberAccessLevel3EnumFromString("full")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

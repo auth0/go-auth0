@@ -241,33 +241,6 @@ func TestExperimentationExperimentsAdvanceRampWithWireMock(
 	VerifyRequestCount(t, "TestExperimentationExperimentsAdvanceRampWithWireMock", "POST", "/experimentation/experiments/id/advance-ramp", nil, 1)
 }
 
-func TestExperimentationExperimentsUpdateStatusWithWireMock(
-	t *testing.T,
-) {
-	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
-	if WireMockBaseURL == "" {
-		WireMockBaseURL = "http://localhost:8080"
-	}
-	client := client.NewWithOptions(
-		option.WithBaseURL(WireMockBaseURL),
-		option.WithToken("test-token"),
-	)
-	request := &management.UpdateExperimentStatusRequestContent{
-		Status: management.ExperimentTransitionStatusEnumActive,
-	}
-	_, invocationErr := client.Experimentation.Experiments.UpdateStatus(
-		context.TODO(),
-		"id",
-		request,
-		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsUpdateStatusWithWireMock"}},
-		),
-	)
-
-	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestExperimentationExperimentsUpdateStatusWithWireMock", "POST", "/experimentation/experiments/id/status", nil, 1)
-}
-
 func TestExperimentationExperimentsValidateWithWireMock(
 	t *testing.T,
 ) {

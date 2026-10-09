@@ -25,8 +25,7 @@ type CreateRoleResponseContent struct {
 	// Description of this role.
 	Description *string       `json:"description,omitempty" url:"description,omitempty"`
 	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
-	// The id of the entity that owns this role, such as an organization id.
-	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -63,7 +62,7 @@ func (c *CreateRoleResponseContent) GetType() RoleTypeEnum {
 	return *c.Type
 }
 
-func (c *CreateRoleResponseContent) GetOwnerID() string {
+func (c *CreateRoleResponseContent) GetOwnerID() RoleOwnerID {
 	if c == nil || c.OwnerID == nil {
 		return ""
 	}
@@ -116,7 +115,7 @@ func (c *CreateRoleResponseContent) SetType(type_ *RoleTypeEnum) {
 
 // SetOwnerID sets the OwnerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRoleResponseContent) SetOwnerID(ownerID *string) {
+func (c *CreateRoleResponseContent) SetOwnerID(ownerID *RoleOwnerID) {
 	c.OwnerID = ownerID
 	c.require(createRoleResponseContentFieldOwnerID)
 }
@@ -179,8 +178,7 @@ type GetRoleResponseContent struct {
 	// Description of this role.
 	Description *string       `json:"description,omitempty" url:"description,omitempty"`
 	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
-	// The id of the entity that owns this role, such as an organization id.
-	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -217,7 +215,7 @@ func (g *GetRoleResponseContent) GetType() RoleTypeEnum {
 	return *g.Type
 }
 
-func (g *GetRoleResponseContent) GetOwnerID() string {
+func (g *GetRoleResponseContent) GetOwnerID() RoleOwnerID {
 	if g == nil || g.OwnerID == nil {
 		return ""
 	}
@@ -270,7 +268,7 @@ func (g *GetRoleResponseContent) SetType(type_ *RoleTypeEnum) {
 
 // SetOwnerID sets the OwnerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRoleResponseContent) SetOwnerID(ownerID *string) {
+func (g *GetRoleResponseContent) SetOwnerID(ownerID *RoleOwnerID) {
 	g.OwnerID = ownerID
 	g.require(getRoleResponseContentFieldOwnerID)
 }
@@ -451,6 +449,9 @@ func (l *ListRolesOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+// Filter organization-level roles by owner ID. Use an organization ID to filter that organization's roles, or "auth0" to retrieve Auth0-managed System Roles. Required when type is "organization".
+type RoleOwnerIDFilter = string
+
 var (
 	updateRoleResponseContentFieldID          = big.NewInt(1 << 0)
 	updateRoleResponseContentFieldName        = big.NewInt(1 << 1)
@@ -467,8 +468,7 @@ type UpdateRoleResponseContent struct {
 	// Description of this role.
 	Description *string       `json:"description,omitempty" url:"description,omitempty"`
 	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
-	// The id of the entity that owns this role, such as an organization id.
-	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -505,7 +505,7 @@ func (u *UpdateRoleResponseContent) GetType() RoleTypeEnum {
 	return *u.Type
 }
 
-func (u *UpdateRoleResponseContent) GetOwnerID() string {
+func (u *UpdateRoleResponseContent) GetOwnerID() RoleOwnerID {
 	if u == nil || u.OwnerID == nil {
 		return ""
 	}
@@ -558,7 +558,7 @@ func (u *UpdateRoleResponseContent) SetType(type_ *RoleTypeEnum) {
 
 // SetOwnerID sets the OwnerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRoleResponseContent) SetOwnerID(ownerID *string) {
+func (u *UpdateRoleResponseContent) SetOwnerID(ownerID *RoleOwnerID) {
 	u.OwnerID = ownerID
 	u.require(updateRoleResponseContentFieldOwnerID)
 }

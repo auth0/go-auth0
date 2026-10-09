@@ -10931,6 +10931,29 @@ func (b *BreachedPasswordDetectionStage) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Controls whether the unblock form is submitted automatically when the link is opened or must be submitted manually by the user.
+type BruteForceProtectionFormSubmissionModeEnum string
+
+const (
+	BruteForceProtectionFormSubmissionModeEnumAuto   BruteForceProtectionFormSubmissionModeEnum = "auto"
+	BruteForceProtectionFormSubmissionModeEnumManual BruteForceProtectionFormSubmissionModeEnum = "manual"
+)
+
+func NewBruteForceProtectionFormSubmissionModeEnumFromString(s string) (BruteForceProtectionFormSubmissionModeEnum, error) {
+	switch s {
+	case "auto":
+		return BruteForceProtectionFormSubmissionModeEnumAuto, nil
+	case "manual":
+		return BruteForceProtectionFormSubmissionModeEnumManual, nil
+	}
+	var t BruteForceProtectionFormSubmissionModeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (b BruteForceProtectionFormSubmissionModeEnum) Ptr() *BruteForceProtectionFormSubmissionModeEnum {
+	return &b
+}
+
 // Account Lockout: Determines whether or not IP address is used when counting failed attempts.
 //
 //	Possible values: <code>count_per_identifier_and_ip</code>, <code>count_per_identifier</code>.
@@ -33618,30 +33641,51 @@ type ConnectionRequireRequestURIRegistration = bool
 type ConnectionRequiresUsername = bool
 
 var (
-	connectionResponseCommonFieldName               = big.NewInt(1 << 0)
-	connectionResponseCommonFieldEnabledClients     = big.NewInt(1 << 1)
-	connectionResponseCommonFieldDisplayName        = big.NewInt(1 << 2)
-	connectionResponseCommonFieldIsDomainConnection = big.NewInt(1 << 3)
-	connectionResponseCommonFieldMetadata           = big.NewInt(1 << 4)
-	connectionResponseCommonFieldID                 = big.NewInt(1 << 5)
-	connectionResponseCommonFieldRealms             = big.NewInt(1 << 6)
+	connectionResponseCommonFieldDisplayName        = big.NewInt(1 << 0)
+	connectionResponseCommonFieldID                 = big.NewInt(1 << 1)
+	connectionResponseCommonFieldRealms             = big.NewInt(1 << 2)
+	connectionResponseCommonFieldName               = big.NewInt(1 << 3)
+	connectionResponseCommonFieldEnabledClients     = big.NewInt(1 << 4)
+	connectionResponseCommonFieldIsDomainConnection = big.NewInt(1 << 5)
+	connectionResponseCommonFieldMetadata           = big.NewInt(1 << 6)
 )
 
 type ConnectionResponseCommon struct {
-	Name ConnectionName `json:"name" url:"name"`
+	DisplayName ConnectionDisplayName `json:"display_name" url:"display_name"`
+	ID          ConnectionID          `json:"id" url:"id"`
+	Realms      *ConnectionRealms     `json:"realms,omitempty" url:"realms,omitempty"`
+	Name        ConnectionName        `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                      `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata          `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                  `json:"id" url:"id"`
-	Realms             *ConnectionRealms             `json:"realms,omitempty" url:"realms,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionResponseCommon) GetDisplayName() ConnectionDisplayName {
+	if c == nil {
+		return ""
+	}
+	return c.DisplayName
+}
+
+func (c *ConnectionResponseCommon) GetID() ConnectionID {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *ConnectionResponseCommon) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
 }
 
 func (c *ConnectionResponseCommon) GetName() ConnectionName {
@@ -33658,13 +33702,6 @@ func (c *ConnectionResponseCommon) GetEnabledClients() []string {
 	return c.EnabledClients
 }
 
-func (c *ConnectionResponseCommon) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
 func (c *ConnectionResponseCommon) GetIsDomainConnection() ConnectionIsDomainConnection {
 	if c == nil || c.IsDomainConnection == nil {
 		return false
@@ -33677,20 +33714,6 @@ func (c *ConnectionResponseCommon) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *c.Metadata
-}
-
-func (c *ConnectionResponseCommon) GetID() ConnectionID {
-	if c == nil {
-		return ""
-	}
-	return c.ID
-}
-
-func (c *ConnectionResponseCommon) GetRealms() ConnectionRealms {
-	if c == nil || c.Realms == nil {
-		return nil
-	}
-	return *c.Realms
 }
 
 func (c *ConnectionResponseCommon) GetExtraProperties() map[string]interface{} {
@@ -33709,39 +33732,11 @@ func (c *ConnectionResponseCommon) require(field *big.Int) {
 	c.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseCommon) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseCommonFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseCommon) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseCommonFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseCommon) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseCommon) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseCommonFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseCommon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseCommonFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseCommon) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseCommonFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -33756,6 +33751,34 @@ func (c *ConnectionResponseCommon) SetID(id ConnectionID) {
 func (c *ConnectionResponseCommon) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseCommonFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseCommonFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseCommonFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseCommonFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseCommon) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseCommonFieldMetadata)
 }
 
 func (c *ConnectionResponseCommon) UnmarshalJSON(data []byte) error {
@@ -33803,13 +33826,13 @@ func (c *ConnectionResponseCommon) String() string {
 var (
 	connectionResponseContentAdFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentAdFieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentAdFieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentAdFieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentAdFieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentAdFieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentAdFieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentAdFieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentAdFieldRealms                = big.NewInt(1 << 8)
+	connectionResponseContentAdFieldDisplayName           = big.NewInt(1 << 2)
+	connectionResponseContentAdFieldID                    = big.NewInt(1 << 3)
+	connectionResponseContentAdFieldRealms                = big.NewInt(1 << 4)
+	connectionResponseContentAdFieldName                  = big.NewInt(1 << 5)
+	connectionResponseContentAdFieldEnabledClients        = big.NewInt(1 << 6)
+	connectionResponseContentAdFieldIsDomainConnection    = big.NewInt(1 << 7)
+	connectionResponseContentAdFieldMetadata              = big.NewInt(1 << 8)
 	connectionResponseContentAdFieldStrategy              = big.NewInt(1 << 9)
 	connectionResponseContentAdFieldOptions               = big.NewInt(1 << 10)
 	connectionResponseContentAdFieldProvisioningTicketURL = big.NewInt(1 << 11)
@@ -33819,14 +33842,14 @@ var (
 type ConnectionResponseContentAd struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients        []string                            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection    *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata              *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                        `json:"id" url:"id"`
-	Realms                *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy              ConnectionResponseContentAdStrategy `json:"strategy" url:"strategy"`
 	Options               *ConnectionOptionsAd                `json:"options,omitempty" url:"options,omitempty"`
 	ProvisioningTicketURL *ConnectionProvisioningTicketURL    `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
@@ -33852,39 +33875,11 @@ func (c *ConnectionResponseContentAd) GetConnectedAccounts() ConnectionConnected
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentAd) GetName() ConnectionName {
+func (c *ConnectionResponseContentAd) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentAd) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentAd) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentAd) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentAd) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentAd) GetID() ConnectionID {
@@ -33899,6 +33894,34 @@ func (c *ConnectionResponseContentAd) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentAd) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentAd) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentAd) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentAd) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentAd) GetStrategy() ConnectionResponseContentAdStrategy {
@@ -33952,39 +33975,11 @@ func (c *ConnectionResponseContentAd) SetConnectedAccounts(connectedAccounts *Co
 	c.require(connectionResponseContentAdFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAd) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentAdFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAd) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentAdFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAd) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentAd) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentAdFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentAdFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAd) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentAdFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -33999,6 +33994,34 @@ func (c *ConnectionResponseContentAd) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentAd) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentAdFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAd) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentAdFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAd) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentAdFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentAdFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAd) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentAdFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -34086,13 +34109,13 @@ func (c ConnectionResponseContentAdStrategy) Ptr() *ConnectionResponseContentAdS
 var (
 	connectionResponseContentAdfsFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentAdfsFieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentAdfsFieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentAdfsFieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentAdfsFieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentAdfsFieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentAdfsFieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentAdfsFieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentAdfsFieldRealms                = big.NewInt(1 << 8)
+	connectionResponseContentAdfsFieldDisplayName           = big.NewInt(1 << 2)
+	connectionResponseContentAdfsFieldID                    = big.NewInt(1 << 3)
+	connectionResponseContentAdfsFieldRealms                = big.NewInt(1 << 4)
+	connectionResponseContentAdfsFieldName                  = big.NewInt(1 << 5)
+	connectionResponseContentAdfsFieldEnabledClients        = big.NewInt(1 << 6)
+	connectionResponseContentAdfsFieldIsDomainConnection    = big.NewInt(1 << 7)
+	connectionResponseContentAdfsFieldMetadata              = big.NewInt(1 << 8)
 	connectionResponseContentAdfsFieldStrategy              = big.NewInt(1 << 9)
 	connectionResponseContentAdfsFieldOptions               = big.NewInt(1 << 10)
 	connectionResponseContentAdfsFieldProvisioningTicketURL = big.NewInt(1 << 11)
@@ -34103,14 +34126,14 @@ var (
 type ConnectionResponseContentAdfs struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients        []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection    *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata              *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                          `json:"id" url:"id"`
-	Realms                *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy              ConnectionResponseContentAdfsStrategy `json:"strategy" url:"strategy"`
 	Options               *ConnectionOptionsAdfs                `json:"options,omitempty" url:"options,omitempty"`
 	ProvisioningTicketURL *ConnectionProvisioningTicketURL      `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
@@ -34137,39 +34160,11 @@ func (c *ConnectionResponseContentAdfs) GetConnectedAccounts() ConnectionConnect
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentAdfs) GetName() ConnectionName {
+func (c *ConnectionResponseContentAdfs) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentAdfs) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentAdfs) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentAdfs) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentAdfs) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentAdfs) GetID() ConnectionID {
@@ -34184,6 +34179,34 @@ func (c *ConnectionResponseContentAdfs) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentAdfs) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentAdfs) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentAdfs) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentAdfs) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentAdfs) GetStrategy() ConnectionResponseContentAdfsStrategy {
@@ -34244,39 +34267,11 @@ func (c *ConnectionResponseContentAdfs) SetConnectedAccounts(connectedAccounts *
 	c.require(connectionResponseContentAdfsFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAdfs) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentAdfsFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAdfs) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentAdfsFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAdfs) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentAdfs) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentAdfsFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAdfs) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentAdfsFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAdfs) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentAdfsFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -34291,6 +34286,34 @@ func (c *ConnectionResponseContentAdfs) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentAdfs) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentAdfsFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAdfs) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentAdfsFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAdfs) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentAdfsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAdfs) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentAdfsFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAdfs) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentAdfsFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -34385,13 +34408,13 @@ func (c ConnectionResponseContentAdfsStrategy) Ptr() *ConnectionResponseContentA
 var (
 	connectionResponseContentAmazonFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAmazonFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentAmazonFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentAmazonFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentAmazonFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentAmazonFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentAmazonFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentAmazonFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentAmazonFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentAmazonFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentAmazonFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentAmazonFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentAmazonFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentAmazonFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentAmazonFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentAmazonFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentAmazonFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentAmazonFieldOptions            = big.NewInt(1 << 10)
 )
@@ -34400,14 +34423,14 @@ var (
 type ConnectionResponseContentAmazon struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentAmazonStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsAmazon                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -34432,39 +34455,11 @@ func (c *ConnectionResponseContentAmazon) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentAmazon) GetName() ConnectionName {
+func (c *ConnectionResponseContentAmazon) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentAmazon) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentAmazon) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentAmazon) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentAmazon) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentAmazon) GetID() ConnectionID {
@@ -34479,6 +34474,34 @@ func (c *ConnectionResponseContentAmazon) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentAmazon) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentAmazon) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentAmazon) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentAmazon) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentAmazon) GetStrategy() ConnectionResponseContentAmazonStrategy {
@@ -34525,39 +34548,11 @@ func (c *ConnectionResponseContentAmazon) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentAmazonFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAmazon) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentAmazonFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAmazon) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentAmazonFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAmazon) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentAmazon) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentAmazonFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAmazon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentAmazonFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAmazon) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentAmazonFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -34572,6 +34567,34 @@ func (c *ConnectionResponseContentAmazon) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentAmazon) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentAmazonFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAmazon) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentAmazonFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAmazon) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentAmazonFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAmazon) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentAmazonFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAmazon) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentAmazonFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -34652,13 +34675,13 @@ func (c ConnectionResponseContentAmazonStrategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentAppleFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAppleFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentAppleFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentAppleFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentAppleFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentAppleFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentAppleFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentAppleFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentAppleFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentAppleFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentAppleFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentAppleFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentAppleFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentAppleFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentAppleFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentAppleFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentAppleFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentAppleFieldOptions            = big.NewInt(1 << 10)
 )
@@ -34667,14 +34690,14 @@ var (
 type ConnectionResponseContentApple struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentAppleStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsApple                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -34699,39 +34722,11 @@ func (c *ConnectionResponseContentApple) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentApple) GetName() ConnectionName {
+func (c *ConnectionResponseContentApple) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentApple) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentApple) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentApple) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentApple) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentApple) GetID() ConnectionID {
@@ -34746,6 +34741,34 @@ func (c *ConnectionResponseContentApple) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentApple) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentApple) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentApple) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentApple) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentApple) GetStrategy() ConnectionResponseContentAppleStrategy {
@@ -34792,39 +34815,11 @@ func (c *ConnectionResponseContentApple) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentAppleFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentApple) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentAppleFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentApple) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentAppleFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentApple) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentApple) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentAppleFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentApple) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentAppleFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentApple) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentAppleFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -34839,6 +34834,34 @@ func (c *ConnectionResponseContentApple) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentApple) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentAppleFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentApple) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentAppleFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentApple) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentAppleFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentApple) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentAppleFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentApple) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentAppleFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -34919,13 +34942,13 @@ func (c ConnectionResponseContentAppleStrategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentAuth0FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAuth0FieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentAuth0FieldName               = big.NewInt(1 << 2)
-	connectionResponseContentAuth0FieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentAuth0FieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentAuth0FieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentAuth0FieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentAuth0FieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentAuth0FieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentAuth0FieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentAuth0FieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentAuth0FieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentAuth0FieldName               = big.NewInt(1 << 5)
+	connectionResponseContentAuth0FieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentAuth0FieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentAuth0FieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentAuth0FieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentAuth0FieldOptions            = big.NewInt(1 << 10)
 )
@@ -34934,14 +34957,14 @@ var (
 type ConnectionResponseContentAuth0 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentAuth0Strategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsAuth0                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -34966,39 +34989,11 @@ func (c *ConnectionResponseContentAuth0) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentAuth0) GetName() ConnectionName {
+func (c *ConnectionResponseContentAuth0) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentAuth0) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentAuth0) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentAuth0) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentAuth0) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentAuth0) GetID() ConnectionID {
@@ -35013,6 +35008,34 @@ func (c *ConnectionResponseContentAuth0) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentAuth0) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentAuth0) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentAuth0) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentAuth0) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentAuth0) GetStrategy() ConnectionResponseContentAuth0Strategy {
@@ -35059,39 +35082,11 @@ func (c *ConnectionResponseContentAuth0) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentAuth0FieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentAuth0FieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentAuth0FieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentAuth0) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentAuth0FieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentAuth0FieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentAuth0FieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -35106,6 +35101,34 @@ func (c *ConnectionResponseContentAuth0) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentAuth0) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentAuth0FieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentAuth0FieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentAuth0FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentAuth0FieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentAuth0FieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -35167,13 +35190,13 @@ func (c *ConnectionResponseContentAuth0) String() string {
 var (
 	connectionResponseContentAuth0OidcFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAuth0OidcFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentAuth0OidcFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentAuth0OidcFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentAuth0OidcFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentAuth0OidcFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentAuth0OidcFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentAuth0OidcFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentAuth0OidcFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentAuth0OidcFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentAuth0OidcFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentAuth0OidcFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentAuth0OidcFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentAuth0OidcFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentAuth0OidcFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentAuth0OidcFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentAuth0OidcFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentAuth0OidcFieldOptions            = big.NewInt(1 << 10)
 )
@@ -35182,14 +35205,14 @@ var (
 type ConnectionResponseContentAuth0Oidc struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                               `json:"id" url:"id"`
-	Realms             *ConnectionRealms                          `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentAuth0OidcStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsAuth0Oidc                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -35214,39 +35237,11 @@ func (c *ConnectionResponseContentAuth0Oidc) GetConnectedAccounts() ConnectionCo
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentAuth0Oidc) GetName() ConnectionName {
+func (c *ConnectionResponseContentAuth0Oidc) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentAuth0Oidc) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentAuth0Oidc) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentAuth0Oidc) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentAuth0Oidc) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentAuth0Oidc) GetID() ConnectionID {
@@ -35261,6 +35256,34 @@ func (c *ConnectionResponseContentAuth0Oidc) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentAuth0Oidc) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentAuth0Oidc) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentAuth0Oidc) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentAuth0Oidc) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentAuth0Oidc) GetStrategy() ConnectionResponseContentAuth0OidcStrategy {
@@ -35307,39 +35330,11 @@ func (c *ConnectionResponseContentAuth0Oidc) SetConnectedAccounts(connectedAccou
 	c.require(connectionResponseContentAuth0OidcFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0Oidc) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentAuth0OidcFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0Oidc) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentAuth0OidcFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0Oidc) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentAuth0Oidc) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentAuth0OidcFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0Oidc) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentAuth0OidcFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAuth0Oidc) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentAuth0OidcFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -35354,6 +35349,34 @@ func (c *ConnectionResponseContentAuth0Oidc) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentAuth0Oidc) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentAuth0OidcFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0Oidc) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentAuth0OidcFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0Oidc) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentAuth0OidcFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0Oidc) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentAuth0OidcFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAuth0Oidc) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentAuth0OidcFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -35453,13 +35476,13 @@ func (c ConnectionResponseContentAuth0Strategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentAzureAdFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentAzureAdFieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentAzureAdFieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentAzureAdFieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentAzureAdFieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentAzureAdFieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentAzureAdFieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentAzureAdFieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentAzureAdFieldRealms                = big.NewInt(1 << 8)
+	connectionResponseContentAzureAdFieldDisplayName           = big.NewInt(1 << 2)
+	connectionResponseContentAzureAdFieldID                    = big.NewInt(1 << 3)
+	connectionResponseContentAzureAdFieldRealms                = big.NewInt(1 << 4)
+	connectionResponseContentAzureAdFieldName                  = big.NewInt(1 << 5)
+	connectionResponseContentAzureAdFieldEnabledClients        = big.NewInt(1 << 6)
+	connectionResponseContentAzureAdFieldIsDomainConnection    = big.NewInt(1 << 7)
+	connectionResponseContentAzureAdFieldMetadata              = big.NewInt(1 << 8)
 	connectionResponseContentAzureAdFieldStrategy              = big.NewInt(1 << 9)
 	connectionResponseContentAzureAdFieldOptions               = big.NewInt(1 << 10)
 	connectionResponseContentAzureAdFieldProvisioningTicketURL = big.NewInt(1 << 11)
@@ -35470,14 +35493,14 @@ var (
 type ConnectionResponseContentAzureAd struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients        []string                                 `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName                   `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection    *ConnectionIsDomainConnection            `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata              *ConnectionsMetadata                     `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                             `json:"id" url:"id"`
-	Realms                *ConnectionRealms                        `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy              ConnectionResponseContentAzureAdStrategy `json:"strategy" url:"strategy"`
 	Options               *ConnectionOptionsAzureAd                `json:"options,omitempty" url:"options,omitempty"`
 	ProvisioningTicketURL *ConnectionProvisioningTicketURL         `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
@@ -35504,39 +35527,11 @@ func (c *ConnectionResponseContentAzureAd) GetConnectedAccounts() ConnectionConn
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentAzureAd) GetName() ConnectionName {
+func (c *ConnectionResponseContentAzureAd) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentAzureAd) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentAzureAd) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentAzureAd) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentAzureAd) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentAzureAd) GetID() ConnectionID {
@@ -35551,6 +35546,34 @@ func (c *ConnectionResponseContentAzureAd) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentAzureAd) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentAzureAd) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentAzureAd) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentAzureAd) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentAzureAd) GetStrategy() ConnectionResponseContentAzureAdStrategy {
@@ -35611,39 +35634,11 @@ func (c *ConnectionResponseContentAzureAd) SetConnectedAccounts(connectedAccount
 	c.require(connectionResponseContentAzureAdFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAzureAd) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentAzureAdFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAzureAd) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentAzureAdFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAzureAd) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentAzureAd) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentAzureAdFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAzureAd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentAzureAdFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentAzureAd) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentAzureAdFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -35658,6 +35653,34 @@ func (c *ConnectionResponseContentAzureAd) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentAzureAd) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentAzureAdFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAzureAd) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentAzureAdFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAzureAd) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentAzureAdFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAzureAd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentAzureAdFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentAzureAd) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentAzureAdFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -35752,13 +35775,13 @@ func (c ConnectionResponseContentAzureAdStrategy) Ptr() *ConnectionResponseConte
 var (
 	connectionResponseContentBaiduFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBaiduFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentBaiduFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentBaiduFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentBaiduFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentBaiduFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentBaiduFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentBaiduFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentBaiduFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentBaiduFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentBaiduFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentBaiduFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentBaiduFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentBaiduFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentBaiduFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentBaiduFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentBaiduFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentBaiduFieldOptions            = big.NewInt(1 << 10)
 )
@@ -35767,14 +35790,14 @@ var (
 type ConnectionResponseContentBaidu struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentBaiduStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsBaidu                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -35799,39 +35822,11 @@ func (c *ConnectionResponseContentBaidu) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentBaidu) GetName() ConnectionName {
+func (c *ConnectionResponseContentBaidu) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentBaidu) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentBaidu) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentBaidu) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentBaidu) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentBaidu) GetID() ConnectionID {
@@ -35846,6 +35841,34 @@ func (c *ConnectionResponseContentBaidu) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentBaidu) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentBaidu) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentBaidu) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentBaidu) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentBaidu) GetStrategy() ConnectionResponseContentBaiduStrategy {
@@ -35892,39 +35915,11 @@ func (c *ConnectionResponseContentBaidu) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentBaiduFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBaidu) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentBaiduFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBaidu) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentBaiduFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBaidu) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentBaidu) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentBaiduFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBaidu) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentBaiduFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBaidu) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentBaiduFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -35939,6 +35934,34 @@ func (c *ConnectionResponseContentBaidu) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentBaidu) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentBaiduFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBaidu) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentBaiduFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBaidu) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentBaiduFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBaidu) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentBaiduFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBaidu) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentBaiduFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -36019,13 +36042,13 @@ func (c ConnectionResponseContentBaiduStrategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentBitbucketFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBitbucketFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentBitbucketFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentBitbucketFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentBitbucketFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentBitbucketFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentBitbucketFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentBitbucketFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentBitbucketFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentBitbucketFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentBitbucketFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentBitbucketFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentBitbucketFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentBitbucketFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentBitbucketFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentBitbucketFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentBitbucketFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentBitbucketFieldOptions            = big.NewInt(1 << 10)
 )
@@ -36034,14 +36057,14 @@ var (
 type ConnectionResponseContentBitbucket struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                               `json:"id" url:"id"`
-	Realms             *ConnectionRealms                          `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentBitbucketStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsBitbucket                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -36066,39 +36089,11 @@ func (c *ConnectionResponseContentBitbucket) GetConnectedAccounts() ConnectionCo
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentBitbucket) GetName() ConnectionName {
+func (c *ConnectionResponseContentBitbucket) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentBitbucket) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentBitbucket) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentBitbucket) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentBitbucket) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentBitbucket) GetID() ConnectionID {
@@ -36113,6 +36108,34 @@ func (c *ConnectionResponseContentBitbucket) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentBitbucket) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentBitbucket) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentBitbucket) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentBitbucket) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentBitbucket) GetStrategy() ConnectionResponseContentBitbucketStrategy {
@@ -36159,39 +36182,11 @@ func (c *ConnectionResponseContentBitbucket) SetConnectedAccounts(connectedAccou
 	c.require(connectionResponseContentBitbucketFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitbucket) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentBitbucketFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitbucket) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentBitbucketFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitbucket) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentBitbucket) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentBitbucketFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitbucket) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentBitbucketFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitbucket) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentBitbucketFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -36206,6 +36201,34 @@ func (c *ConnectionResponseContentBitbucket) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentBitbucket) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentBitbucketFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitbucket) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentBitbucketFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitbucket) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentBitbucketFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitbucket) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentBitbucketFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitbucket) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentBitbucketFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -36286,13 +36309,13 @@ func (c ConnectionResponseContentBitbucketStrategy) Ptr() *ConnectionResponseCon
 var (
 	connectionResponseContentBitlyFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBitlyFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentBitlyFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentBitlyFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentBitlyFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentBitlyFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentBitlyFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentBitlyFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentBitlyFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentBitlyFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentBitlyFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentBitlyFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentBitlyFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentBitlyFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentBitlyFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentBitlyFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentBitlyFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentBitlyFieldOptions            = big.NewInt(1 << 10)
 )
@@ -36301,14 +36324,14 @@ var (
 type ConnectionResponseContentBitly struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentBitlyStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsBitly                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -36333,39 +36356,11 @@ func (c *ConnectionResponseContentBitly) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentBitly) GetName() ConnectionName {
+func (c *ConnectionResponseContentBitly) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentBitly) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentBitly) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentBitly) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentBitly) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentBitly) GetID() ConnectionID {
@@ -36380,6 +36375,34 @@ func (c *ConnectionResponseContentBitly) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentBitly) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentBitly) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentBitly) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentBitly) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentBitly) GetStrategy() ConnectionResponseContentBitlyStrategy {
@@ -36426,39 +36449,11 @@ func (c *ConnectionResponseContentBitly) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentBitlyFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitly) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentBitlyFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitly) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentBitlyFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitly) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentBitly) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentBitlyFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitly) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentBitlyFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBitly) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentBitlyFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -36473,6 +36468,34 @@ func (c *ConnectionResponseContentBitly) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentBitly) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentBitlyFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitly) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentBitlyFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitly) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentBitlyFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitly) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentBitlyFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBitly) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentBitlyFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -36553,13 +36576,13 @@ func (c ConnectionResponseContentBitlyStrategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentBoxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBoxFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentBoxFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentBoxFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentBoxFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentBoxFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentBoxFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentBoxFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentBoxFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentBoxFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentBoxFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentBoxFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentBoxFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentBoxFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentBoxFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentBoxFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentBoxFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentBoxFieldOptions            = big.NewInt(1 << 10)
 )
@@ -36568,14 +36591,14 @@ var (
 type ConnectionResponseContentBox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                             `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection        `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                 `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                         `json:"id" url:"id"`
-	Realms             *ConnectionRealms                    `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentBoxStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsBox                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -36600,39 +36623,11 @@ func (c *ConnectionResponseContentBox) GetConnectedAccounts() ConnectionConnecte
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentBox) GetName() ConnectionName {
+func (c *ConnectionResponseContentBox) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentBox) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentBox) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentBox) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentBox) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentBox) GetID() ConnectionID {
@@ -36647,6 +36642,34 @@ func (c *ConnectionResponseContentBox) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentBox) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentBox) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentBox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentBox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentBox) GetStrategy() ConnectionResponseContentBoxStrategy {
@@ -36693,39 +36716,11 @@ func (c *ConnectionResponseContentBox) SetConnectedAccounts(connectedAccounts *C
 	c.require(connectionResponseContentBoxFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBox) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentBoxFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBox) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentBoxFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBox) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentBox) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentBoxFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentBoxFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentBox) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentBoxFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -36740,6 +36735,34 @@ func (c *ConnectionResponseContentBox) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentBox) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentBoxFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBox) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentBoxFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBox) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentBoxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentBoxFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentBox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentBoxFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -36820,13 +36843,13 @@ func (c ConnectionResponseContentBoxStrategy) Ptr() *ConnectionResponseContentBo
 var (
 	connectionResponseContentCustomFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentCustomFieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentCustomFieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentCustomFieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentCustomFieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentCustomFieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentCustomFieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentCustomFieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentCustomFieldRealms                = big.NewInt(1 << 8)
+	connectionResponseContentCustomFieldDisplayName           = big.NewInt(1 << 2)
+	connectionResponseContentCustomFieldID                    = big.NewInt(1 << 3)
+	connectionResponseContentCustomFieldRealms                = big.NewInt(1 << 4)
+	connectionResponseContentCustomFieldName                  = big.NewInt(1 << 5)
+	connectionResponseContentCustomFieldEnabledClients        = big.NewInt(1 << 6)
+	connectionResponseContentCustomFieldIsDomainConnection    = big.NewInt(1 << 7)
+	connectionResponseContentCustomFieldMetadata              = big.NewInt(1 << 8)
 	connectionResponseContentCustomFieldStrategy              = big.NewInt(1 << 9)
 	connectionResponseContentCustomFieldOptions               = big.NewInt(1 << 10)
 	connectionResponseContentCustomFieldProvisioningTicketURL = big.NewInt(1 << 11)
@@ -36836,14 +36859,14 @@ var (
 type ConnectionResponseContentCustom struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients        []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection    *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata              *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                            `json:"id" url:"id"`
-	Realms                *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy              ConnectionResponseContentCustomStrategy `json:"strategy" url:"strategy"`
 	Options               *ConnectionOptionsCustom                `json:"options,omitempty" url:"options,omitempty"`
 	ProvisioningTicketURL *ConnectionProvisioningTicketURL        `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
@@ -36869,39 +36892,11 @@ func (c *ConnectionResponseContentCustom) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentCustom) GetName() ConnectionName {
+func (c *ConnectionResponseContentCustom) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentCustom) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentCustom) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentCustom) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentCustom) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentCustom) GetID() ConnectionID {
@@ -36916,6 +36911,34 @@ func (c *ConnectionResponseContentCustom) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentCustom) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentCustom) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentCustom) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentCustom) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentCustom) GetStrategy() ConnectionResponseContentCustomStrategy {
@@ -36969,39 +36992,11 @@ func (c *ConnectionResponseContentCustom) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentCustomFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentCustom) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentCustomFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentCustom) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentCustomFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentCustom) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentCustom) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentCustomFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentCustom) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentCustomFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentCustom) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentCustomFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -37016,6 +37011,34 @@ func (c *ConnectionResponseContentCustom) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentCustom) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentCustomFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentCustom) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentCustomFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentCustom) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentCustomFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentCustom) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentCustomFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentCustom) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentCustomFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -37103,13 +37126,13 @@ func (c ConnectionResponseContentCustomStrategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentDaccountFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentDaccountFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentDaccountFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentDaccountFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentDaccountFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentDaccountFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentDaccountFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentDaccountFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentDaccountFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentDaccountFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentDaccountFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentDaccountFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentDaccountFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentDaccountFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentDaccountFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentDaccountFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentDaccountFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentDaccountFieldOptions            = big.NewInt(1 << 10)
 )
@@ -37118,14 +37141,14 @@ var (
 type ConnectionResponseContentDaccount struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                  `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                    `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection             `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                      `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                              `json:"id" url:"id"`
-	Realms             *ConnectionRealms                         `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentDaccountStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsDaccount                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -37150,39 +37173,11 @@ func (c *ConnectionResponseContentDaccount) GetConnectedAccounts() ConnectionCon
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentDaccount) GetName() ConnectionName {
+func (c *ConnectionResponseContentDaccount) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentDaccount) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentDaccount) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentDaccount) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentDaccount) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentDaccount) GetID() ConnectionID {
@@ -37197,6 +37192,34 @@ func (c *ConnectionResponseContentDaccount) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentDaccount) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentDaccount) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentDaccount) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentDaccount) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentDaccount) GetStrategy() ConnectionResponseContentDaccountStrategy {
@@ -37243,39 +37266,11 @@ func (c *ConnectionResponseContentDaccount) SetConnectedAccounts(connectedAccoun
 	c.require(connectionResponseContentDaccountFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDaccount) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentDaccountFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDaccount) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentDaccountFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDaccount) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentDaccount) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentDaccountFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDaccount) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentDaccountFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDaccount) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentDaccountFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -37290,6 +37285,34 @@ func (c *ConnectionResponseContentDaccount) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentDaccount) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentDaccountFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDaccount) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentDaccountFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDaccount) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentDaccountFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDaccount) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentDaccountFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDaccount) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentDaccountFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -37370,13 +37393,13 @@ func (c ConnectionResponseContentDaccountStrategy) Ptr() *ConnectionResponseCont
 var (
 	connectionResponseContentDropboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentDropboxFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentDropboxFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentDropboxFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentDropboxFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentDropboxFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentDropboxFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentDropboxFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentDropboxFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentDropboxFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentDropboxFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentDropboxFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentDropboxFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentDropboxFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentDropboxFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentDropboxFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentDropboxFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentDropboxFieldOptions            = big.NewInt(1 << 10)
 )
@@ -37385,14 +37408,14 @@ var (
 type ConnectionResponseContentDropbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                 `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                   `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection            `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                     `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                             `json:"id" url:"id"`
-	Realms             *ConnectionRealms                        `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentDropboxStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsDropbox                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -37417,39 +37440,11 @@ func (c *ConnectionResponseContentDropbox) GetConnectedAccounts() ConnectionConn
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentDropbox) GetName() ConnectionName {
+func (c *ConnectionResponseContentDropbox) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentDropbox) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentDropbox) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentDropbox) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentDropbox) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentDropbox) GetID() ConnectionID {
@@ -37464,6 +37459,34 @@ func (c *ConnectionResponseContentDropbox) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentDropbox) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentDropbox) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentDropbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentDropbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentDropbox) GetStrategy() ConnectionResponseContentDropboxStrategy {
@@ -37510,39 +37533,11 @@ func (c *ConnectionResponseContentDropbox) SetConnectedAccounts(connectedAccount
 	c.require(connectionResponseContentDropboxFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDropbox) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentDropboxFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDropbox) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentDropboxFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDropbox) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentDropbox) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentDropboxFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDropbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentDropboxFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDropbox) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentDropboxFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -37557,6 +37552,34 @@ func (c *ConnectionResponseContentDropbox) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentDropbox) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentDropboxFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDropbox) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentDropboxFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDropbox) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentDropboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDropbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentDropboxFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDropbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentDropboxFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -37637,13 +37660,13 @@ func (c ConnectionResponseContentDropboxStrategy) Ptr() *ConnectionResponseConte
 var (
 	connectionResponseContentDwollaFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentDwollaFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentDwollaFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentDwollaFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentDwollaFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentDwollaFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentDwollaFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentDwollaFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentDwollaFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentDwollaFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentDwollaFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentDwollaFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentDwollaFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentDwollaFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentDwollaFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentDwollaFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentDwollaFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentDwollaFieldOptions            = big.NewInt(1 << 10)
 )
@@ -37652,14 +37675,14 @@ var (
 type ConnectionResponseContentDwolla struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentDwollaStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsDwolla                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -37684,39 +37707,11 @@ func (c *ConnectionResponseContentDwolla) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentDwolla) GetName() ConnectionName {
+func (c *ConnectionResponseContentDwolla) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentDwolla) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentDwolla) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentDwolla) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentDwolla) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentDwolla) GetID() ConnectionID {
@@ -37731,6 +37726,34 @@ func (c *ConnectionResponseContentDwolla) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentDwolla) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentDwolla) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentDwolla) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentDwolla) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentDwolla) GetStrategy() ConnectionResponseContentDwollaStrategy {
@@ -37777,39 +37800,11 @@ func (c *ConnectionResponseContentDwolla) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentDwollaFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDwolla) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentDwollaFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDwolla) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentDwollaFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDwolla) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentDwolla) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentDwollaFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDwolla) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentDwollaFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentDwolla) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentDwollaFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -37824,6 +37819,34 @@ func (c *ConnectionResponseContentDwolla) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentDwolla) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentDwollaFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDwolla) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentDwollaFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDwolla) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentDwollaFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDwolla) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentDwollaFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentDwolla) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentDwollaFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -37904,13 +37927,13 @@ func (c ConnectionResponseContentDwollaStrategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentEmailFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentEmailFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentEmailFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentEmailFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentEmailFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentEmailFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentEmailFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentEmailFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentEmailFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentEmailFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentEmailFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentEmailFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentEmailFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentEmailFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentEmailFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentEmailFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentEmailFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentEmailFieldOptions            = big.NewInt(1 << 10)
 )
@@ -37919,14 +37942,14 @@ var (
 type ConnectionResponseContentEmail struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentEmailStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsEmail                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -37951,39 +37974,11 @@ func (c *ConnectionResponseContentEmail) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentEmail) GetName() ConnectionName {
+func (c *ConnectionResponseContentEmail) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentEmail) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentEmail) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentEmail) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentEmail) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentEmail) GetID() ConnectionID {
@@ -37998,6 +37993,34 @@ func (c *ConnectionResponseContentEmail) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentEmail) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentEmail) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentEmail) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentEmail) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentEmail) GetStrategy() ConnectionResponseContentEmailStrategy {
@@ -38044,39 +38067,11 @@ func (c *ConnectionResponseContentEmail) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentEmailFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEmail) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentEmailFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEmail) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentEmailFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEmail) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentEmail) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentEmailFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEmail) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentEmailFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEmail) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentEmailFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -38091,6 +38086,34 @@ func (c *ConnectionResponseContentEmail) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentEmail) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentEmailFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEmail) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentEmailFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEmail) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentEmailFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEmail) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentEmailFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEmail) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentEmailFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -38171,13 +38194,13 @@ func (c ConnectionResponseContentEmailStrategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentEvernoteFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentEvernoteFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentEvernoteFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentEvernoteFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentEvernoteFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentEvernoteFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentEvernoteFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentEvernoteFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentEvernoteFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentEvernoteFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentEvernoteFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentEvernoteFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentEvernoteFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentEvernoteFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentEvernoteFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentEvernoteFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentEvernoteFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentEvernoteFieldOptions            = big.NewInt(1 << 10)
 )
@@ -38186,14 +38209,14 @@ var (
 type ConnectionResponseContentEvernote struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                  `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                    `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection             `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                      `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                              `json:"id" url:"id"`
-	Realms             *ConnectionRealms                         `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentEvernoteStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsEvernote                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -38218,39 +38241,11 @@ func (c *ConnectionResponseContentEvernote) GetConnectedAccounts() ConnectionCon
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentEvernote) GetName() ConnectionName {
+func (c *ConnectionResponseContentEvernote) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentEvernote) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentEvernote) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentEvernote) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentEvernote) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentEvernote) GetID() ConnectionID {
@@ -38265,6 +38260,34 @@ func (c *ConnectionResponseContentEvernote) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentEvernote) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentEvernote) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentEvernote) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentEvernote) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentEvernote) GetStrategy() ConnectionResponseContentEvernoteStrategy {
@@ -38311,39 +38334,11 @@ func (c *ConnectionResponseContentEvernote) SetConnectedAccounts(connectedAccoun
 	c.require(connectionResponseContentEvernoteFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernote) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentEvernoteFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernote) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentEvernoteFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernote) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentEvernote) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentEvernoteFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernote) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentEvernoteFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernote) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentEvernoteFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -38358,6 +38353,34 @@ func (c *ConnectionResponseContentEvernote) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentEvernote) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentEvernoteFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernote) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentEvernoteFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernote) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentEvernoteFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernote) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentEvernoteFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernote) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentEvernoteFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -38419,13 +38442,13 @@ func (c *ConnectionResponseContentEvernote) String() string {
 var (
 	connectionResponseContentEvernoteSandboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentEvernoteSandboxFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentEvernoteSandboxFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentEvernoteSandboxFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentEvernoteSandboxFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentEvernoteSandboxFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentEvernoteSandboxFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentEvernoteSandboxFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentEvernoteSandboxFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentEvernoteSandboxFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentEvernoteSandboxFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentEvernoteSandboxFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentEvernoteSandboxFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentEvernoteSandboxFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentEvernoteSandboxFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentEvernoteSandboxFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentEvernoteSandboxFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentEvernoteSandboxFieldOptions            = big.NewInt(1 << 10)
 )
@@ -38434,14 +38457,14 @@ var (
 type ConnectionResponseContentEvernoteSandbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                         `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                           `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                    `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                             `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                     `json:"id" url:"id"`
-	Realms             *ConnectionRealms                                `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentEvernoteSandboxStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsEvernote                       `json:"options,omitempty" url:"options,omitempty"`
 
@@ -38466,39 +38489,11 @@ func (c *ConnectionResponseContentEvernoteSandbox) GetConnectedAccounts() Connec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentEvernoteSandbox) GetName() ConnectionName {
+func (c *ConnectionResponseContentEvernoteSandbox) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentEvernoteSandbox) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentEvernoteSandbox) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentEvernoteSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentEvernoteSandbox) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentEvernoteSandbox) GetID() ConnectionID {
@@ -38513,6 +38508,34 @@ func (c *ConnectionResponseContentEvernoteSandbox) GetRealms() ConnectionRealms 
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentEvernoteSandbox) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentEvernoteSandbox) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentEvernoteSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentEvernoteSandbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentEvernoteSandbox) GetStrategy() ConnectionResponseContentEvernoteSandboxStrategy {
@@ -38559,39 +38582,11 @@ func (c *ConnectionResponseContentEvernoteSandbox) SetConnectedAccounts(connecte
 	c.require(connectionResponseContentEvernoteSandboxFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernoteSandbox) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentEvernoteSandboxFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernoteSandbox) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentEvernoteSandboxFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernoteSandbox) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentEvernoteSandbox) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentEvernoteSandboxFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernoteSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentEvernoteSandboxFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentEvernoteSandbox) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentEvernoteSandboxFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -38606,6 +38601,34 @@ func (c *ConnectionResponseContentEvernoteSandbox) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentEvernoteSandbox) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentEvernoteSandboxFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernoteSandbox) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentEvernoteSandboxFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernoteSandbox) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentEvernoteSandboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernoteSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentEvernoteSandboxFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentEvernoteSandbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentEvernoteSandboxFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -38705,13 +38728,13 @@ func (c ConnectionResponseContentEvernoteStrategy) Ptr() *ConnectionResponseCont
 var (
 	connectionResponseContentExactFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentExactFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentExactFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentExactFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentExactFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentExactFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentExactFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentExactFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentExactFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentExactFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentExactFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentExactFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentExactFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentExactFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentExactFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentExactFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentExactFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentExactFieldOptions            = big.NewInt(1 << 10)
 )
@@ -38720,14 +38743,14 @@ var (
 type ConnectionResponseContentExact struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentExactStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsExact                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -38752,39 +38775,11 @@ func (c *ConnectionResponseContentExact) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentExact) GetName() ConnectionName {
+func (c *ConnectionResponseContentExact) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentExact) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentExact) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentExact) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentExact) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentExact) GetID() ConnectionID {
@@ -38799,6 +38794,34 @@ func (c *ConnectionResponseContentExact) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentExact) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentExact) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentExact) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentExact) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentExact) GetStrategy() ConnectionResponseContentExactStrategy {
@@ -38845,39 +38868,11 @@ func (c *ConnectionResponseContentExact) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentExactFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentExact) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentExactFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentExact) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentExactFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentExact) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentExact) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentExactFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentExact) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentExactFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentExact) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentExactFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -38892,6 +38887,34 @@ func (c *ConnectionResponseContentExact) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentExact) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentExactFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentExact) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentExactFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentExact) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentExactFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentExact) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentExactFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentExact) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentExactFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -38972,13 +38995,13 @@ func (c ConnectionResponseContentExactStrategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentFacebookFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentFacebookFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentFacebookFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentFacebookFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentFacebookFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentFacebookFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentFacebookFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentFacebookFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentFacebookFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentFacebookFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentFacebookFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentFacebookFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentFacebookFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentFacebookFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentFacebookFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentFacebookFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentFacebookFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentFacebookFieldOptions            = big.NewInt(1 << 10)
 )
@@ -38987,14 +39010,14 @@ var (
 type ConnectionResponseContentFacebook struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                  `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                    `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection             `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                      `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                              `json:"id" url:"id"`
-	Realms             *ConnectionRealms                         `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentFacebookStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsFacebook                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -39019,39 +39042,11 @@ func (c *ConnectionResponseContentFacebook) GetConnectedAccounts() ConnectionCon
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentFacebook) GetName() ConnectionName {
+func (c *ConnectionResponseContentFacebook) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentFacebook) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentFacebook) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentFacebook) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentFacebook) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentFacebook) GetID() ConnectionID {
@@ -39066,6 +39061,34 @@ func (c *ConnectionResponseContentFacebook) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentFacebook) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentFacebook) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentFacebook) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentFacebook) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentFacebook) GetStrategy() ConnectionResponseContentFacebookStrategy {
@@ -39112,39 +39135,11 @@ func (c *ConnectionResponseContentFacebook) SetConnectedAccounts(connectedAccoun
 	c.require(connectionResponseContentFacebookFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFacebook) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentFacebookFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFacebook) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentFacebookFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFacebook) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentFacebook) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentFacebookFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFacebook) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentFacebookFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFacebook) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentFacebookFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -39159,6 +39154,34 @@ func (c *ConnectionResponseContentFacebook) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentFacebook) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentFacebookFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFacebook) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentFacebookFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFacebook) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentFacebookFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFacebook) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentFacebookFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFacebook) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentFacebookFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -39239,13 +39262,13 @@ func (c ConnectionResponseContentFacebookStrategy) Ptr() *ConnectionResponseCont
 var (
 	connectionResponseContentFitbitFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentFitbitFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentFitbitFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentFitbitFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentFitbitFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentFitbitFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentFitbitFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentFitbitFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentFitbitFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentFitbitFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentFitbitFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentFitbitFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentFitbitFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentFitbitFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentFitbitFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentFitbitFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentFitbitFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentFitbitFieldOptions            = big.NewInt(1 << 10)
 )
@@ -39254,14 +39277,14 @@ var (
 type ConnectionResponseContentFitbit struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentFitbitStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsFitbit                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -39286,39 +39309,11 @@ func (c *ConnectionResponseContentFitbit) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentFitbit) GetName() ConnectionName {
+func (c *ConnectionResponseContentFitbit) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentFitbit) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentFitbit) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentFitbit) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentFitbit) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentFitbit) GetID() ConnectionID {
@@ -39333,6 +39328,34 @@ func (c *ConnectionResponseContentFitbit) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentFitbit) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentFitbit) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentFitbit) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentFitbit) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentFitbit) GetStrategy() ConnectionResponseContentFitbitStrategy {
@@ -39379,39 +39402,11 @@ func (c *ConnectionResponseContentFitbit) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentFitbitFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFitbit) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentFitbitFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFitbit) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentFitbitFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFitbit) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentFitbit) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentFitbitFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFitbit) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentFitbitFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentFitbit) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentFitbitFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -39426,6 +39421,34 @@ func (c *ConnectionResponseContentFitbit) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentFitbit) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentFitbitFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFitbit) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentFitbitFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFitbit) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentFitbitFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFitbit) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentFitbitFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentFitbit) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentFitbitFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -39506,13 +39529,13 @@ func (c ConnectionResponseContentFitbitStrategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentGitHubFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentGitHubFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentGitHubFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentGitHubFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentGitHubFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentGitHubFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentGitHubFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentGitHubFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentGitHubFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentGitHubFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentGitHubFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentGitHubFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentGitHubFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentGitHubFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentGitHubFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentGitHubFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentGitHubFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentGitHubFieldOptions            = big.NewInt(1 << 10)
 )
@@ -39521,14 +39544,14 @@ var (
 type ConnectionResponseContentGitHub struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentGitHubStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsGitHub                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -39553,39 +39576,11 @@ func (c *ConnectionResponseContentGitHub) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentGitHub) GetName() ConnectionName {
+func (c *ConnectionResponseContentGitHub) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentGitHub) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentGitHub) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentGitHub) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentGitHub) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentGitHub) GetID() ConnectionID {
@@ -39600,6 +39595,34 @@ func (c *ConnectionResponseContentGitHub) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentGitHub) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentGitHub) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentGitHub) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentGitHub) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentGitHub) GetStrategy() ConnectionResponseContentGitHubStrategy {
@@ -39646,39 +39669,11 @@ func (c *ConnectionResponseContentGitHub) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentGitHubFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGitHub) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentGitHubFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGitHub) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentGitHubFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGitHub) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentGitHub) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentGitHubFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGitHub) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentGitHubFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGitHub) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentGitHubFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -39693,6 +39688,34 @@ func (c *ConnectionResponseContentGitHub) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentGitHub) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentGitHubFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGitHub) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentGitHubFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGitHub) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentGitHubFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGitHub) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentGitHubFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGitHub) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentGitHubFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -39773,13 +39796,13 @@ func (c ConnectionResponseContentGitHubStrategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentGoogleAppsFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentGoogleAppsFieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentGoogleAppsFieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentGoogleAppsFieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentGoogleAppsFieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentGoogleAppsFieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentGoogleAppsFieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentGoogleAppsFieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentGoogleAppsFieldRealms                = big.NewInt(1 << 8)
+	connectionResponseContentGoogleAppsFieldDisplayName           = big.NewInt(1 << 2)
+	connectionResponseContentGoogleAppsFieldID                    = big.NewInt(1 << 3)
+	connectionResponseContentGoogleAppsFieldRealms                = big.NewInt(1 << 4)
+	connectionResponseContentGoogleAppsFieldName                  = big.NewInt(1 << 5)
+	connectionResponseContentGoogleAppsFieldEnabledClients        = big.NewInt(1 << 6)
+	connectionResponseContentGoogleAppsFieldIsDomainConnection    = big.NewInt(1 << 7)
+	connectionResponseContentGoogleAppsFieldMetadata              = big.NewInt(1 << 8)
 	connectionResponseContentGoogleAppsFieldStrategy              = big.NewInt(1 << 9)
 	connectionResponseContentGoogleAppsFieldOptions               = big.NewInt(1 << 10)
 	connectionResponseContentGoogleAppsFieldProvisioningTicketURL = big.NewInt(1 << 11)
@@ -39790,14 +39813,14 @@ var (
 type ConnectionResponseContentGoogleApps struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients        []string                                    `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName                      `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection    *ConnectionIsDomainConnection               `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata              *ConnectionsMetadata                        `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                                `json:"id" url:"id"`
-	Realms                *ConnectionRealms                           `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy              ConnectionResponseContentGoogleAppsStrategy `json:"strategy" url:"strategy"`
 	Options               *ConnectionOptionsGoogleApps                `json:"options,omitempty" url:"options,omitempty"`
 	ProvisioningTicketURL *ConnectionProvisioningTicketURL            `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
@@ -39824,39 +39847,11 @@ func (c *ConnectionResponseContentGoogleApps) GetConnectedAccounts() ConnectionC
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentGoogleApps) GetName() ConnectionName {
+func (c *ConnectionResponseContentGoogleApps) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentGoogleApps) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentGoogleApps) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentGoogleApps) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentGoogleApps) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentGoogleApps) GetID() ConnectionID {
@@ -39871,6 +39866,34 @@ func (c *ConnectionResponseContentGoogleApps) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentGoogleApps) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentGoogleApps) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentGoogleApps) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentGoogleApps) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentGoogleApps) GetStrategy() ConnectionResponseContentGoogleAppsStrategy {
@@ -39931,39 +39954,11 @@ func (c *ConnectionResponseContentGoogleApps) SetConnectedAccounts(connectedAcco
 	c.require(connectionResponseContentGoogleAppsFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleApps) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentGoogleAppsFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleApps) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentGoogleAppsFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleApps) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentGoogleApps) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentGoogleAppsFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleApps) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentGoogleAppsFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleApps) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentGoogleAppsFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -39978,6 +39973,34 @@ func (c *ConnectionResponseContentGoogleApps) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentGoogleApps) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentGoogleAppsFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleApps) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentGoogleAppsFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleApps) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentGoogleAppsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleApps) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentGoogleAppsFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleApps) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentGoogleAppsFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -40072,13 +40095,13 @@ func (c ConnectionResponseContentGoogleAppsStrategy) Ptr() *ConnectionResponseCo
 var (
 	connectionResponseContentGoogleOAuth2FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentGoogleOAuth2FieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentGoogleOAuth2FieldName               = big.NewInt(1 << 2)
-	connectionResponseContentGoogleOAuth2FieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentGoogleOAuth2FieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentGoogleOAuth2FieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentGoogleOAuth2FieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentGoogleOAuth2FieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentGoogleOAuth2FieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentGoogleOAuth2FieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentGoogleOAuth2FieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentGoogleOAuth2FieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentGoogleOAuth2FieldName               = big.NewInt(1 << 5)
+	connectionResponseContentGoogleOAuth2FieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentGoogleOAuth2FieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentGoogleOAuth2FieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentGoogleOAuth2FieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentGoogleOAuth2FieldOptions            = big.NewInt(1 << 10)
 )
@@ -40087,14 +40110,14 @@ var (
 type ConnectionResponseContentGoogleOAuth2 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                      `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                 `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                          `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                  `json:"id" url:"id"`
-	Realms             *ConnectionRealms                             `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentGoogleOAuth2Strategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsGoogleOAuth2                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -40119,39 +40142,11 @@ func (c *ConnectionResponseContentGoogleOAuth2) GetConnectedAccounts() Connectio
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentGoogleOAuth2) GetName() ConnectionName {
+func (c *ConnectionResponseContentGoogleOAuth2) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentGoogleOAuth2) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentGoogleOAuth2) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentGoogleOAuth2) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentGoogleOAuth2) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentGoogleOAuth2) GetID() ConnectionID {
@@ -40166,6 +40161,34 @@ func (c *ConnectionResponseContentGoogleOAuth2) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentGoogleOAuth2) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentGoogleOAuth2) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentGoogleOAuth2) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentGoogleOAuth2) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentGoogleOAuth2) GetStrategy() ConnectionResponseContentGoogleOAuth2Strategy {
@@ -40212,39 +40235,11 @@ func (c *ConnectionResponseContentGoogleOAuth2) SetConnectedAccounts(connectedAc
 	c.require(connectionResponseContentGoogleOAuth2FieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleOAuth2) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentGoogleOAuth2FieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleOAuth2) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentGoogleOAuth2FieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleOAuth2) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentGoogleOAuth2) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentGoogleOAuth2FieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleOAuth2) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentGoogleOAuth2FieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentGoogleOAuth2) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentGoogleOAuth2FieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -40259,6 +40254,34 @@ func (c *ConnectionResponseContentGoogleOAuth2) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentGoogleOAuth2) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentGoogleOAuth2FieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleOAuth2) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentGoogleOAuth2FieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleOAuth2) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentGoogleOAuth2FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleOAuth2) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentGoogleOAuth2FieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentGoogleOAuth2) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentGoogleOAuth2FieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -40339,13 +40362,13 @@ func (c ConnectionResponseContentGoogleOAuth2Strategy) Ptr() *ConnectionResponse
 var (
 	connectionResponseContentInstagramFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentInstagramFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentInstagramFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentInstagramFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentInstagramFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentInstagramFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentInstagramFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentInstagramFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentInstagramFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentInstagramFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentInstagramFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentInstagramFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentInstagramFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentInstagramFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentInstagramFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentInstagramFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentInstagramFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentInstagramFieldOptions            = big.NewInt(1 << 10)
 )
@@ -40354,14 +40377,14 @@ var (
 type ConnectionResponseContentInstagram struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                               `json:"id" url:"id"`
-	Realms             *ConnectionRealms                          `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentInstagramStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsInstagram                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -40386,39 +40409,11 @@ func (c *ConnectionResponseContentInstagram) GetConnectedAccounts() ConnectionCo
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentInstagram) GetName() ConnectionName {
+func (c *ConnectionResponseContentInstagram) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentInstagram) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentInstagram) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentInstagram) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentInstagram) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentInstagram) GetID() ConnectionID {
@@ -40433,6 +40428,34 @@ func (c *ConnectionResponseContentInstagram) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentInstagram) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentInstagram) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentInstagram) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentInstagram) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentInstagram) GetStrategy() ConnectionResponseContentInstagramStrategy {
@@ -40479,39 +40502,11 @@ func (c *ConnectionResponseContentInstagram) SetConnectedAccounts(connectedAccou
 	c.require(connectionResponseContentInstagramFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentInstagram) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentInstagramFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentInstagram) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentInstagramFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentInstagram) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentInstagram) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentInstagramFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentInstagram) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentInstagramFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentInstagram) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentInstagramFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -40526,6 +40521,34 @@ func (c *ConnectionResponseContentInstagram) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentInstagram) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentInstagramFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentInstagram) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentInstagramFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentInstagram) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentInstagramFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentInstagram) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentInstagramFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentInstagram) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentInstagramFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -40606,13 +40629,13 @@ func (c ConnectionResponseContentInstagramStrategy) Ptr() *ConnectionResponseCon
 var (
 	connectionResponseContentIPFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentIPFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentIPFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentIPFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentIPFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentIPFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentIPFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentIPFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentIPFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentIPFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentIPFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentIPFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentIPFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentIPFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentIPFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentIPFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentIPFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentIPFieldOptions            = big.NewInt(1 << 10)
 	connectionResponseContentIPFieldShowAsButton       = big.NewInt(1 << 11)
@@ -40622,14 +40645,14 @@ var (
 type ConnectionResponseContentIP struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                        `json:"id" url:"id"`
-	Realms             *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentIPStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsIP                `json:"options,omitempty" url:"options,omitempty"`
 	ShowAsButton       *ConnectionShowAsButton             `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
@@ -40655,39 +40678,11 @@ func (c *ConnectionResponseContentIP) GetConnectedAccounts() ConnectionConnected
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentIP) GetName() ConnectionName {
+func (c *ConnectionResponseContentIP) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentIP) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentIP) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentIP) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentIP) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentIP) GetID() ConnectionID {
@@ -40702,6 +40697,34 @@ func (c *ConnectionResponseContentIP) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentIP) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentIP) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentIP) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentIP) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentIP) GetStrategy() ConnectionResponseContentIPStrategy {
@@ -40755,39 +40778,11 @@ func (c *ConnectionResponseContentIP) SetConnectedAccounts(connectedAccounts *Co
 	c.require(connectionResponseContentIPFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentIP) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentIPFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentIP) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentIPFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentIP) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentIP) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentIPFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentIP) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentIPFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentIP) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentIPFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -40802,6 +40797,34 @@ func (c *ConnectionResponseContentIP) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentIP) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentIPFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentIP) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentIPFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentIP) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentIPFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentIP) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentIPFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentIP) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentIPFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -40889,13 +40912,13 @@ func (c ConnectionResponseContentIPStrategy) Ptr() *ConnectionResponseContentIPS
 var (
 	connectionResponseContentLineFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentLineFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentLineFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentLineFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentLineFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentLineFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentLineFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentLineFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentLineFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentLineFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentLineFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentLineFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentLineFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentLineFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentLineFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentLineFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentLineFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentLineFieldOptions            = big.NewInt(1 << 10)
 )
@@ -40904,14 +40927,14 @@ var (
 type ConnectionResponseContentLine struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                          `json:"id" url:"id"`
-	Realms             *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentLineStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsLine                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -40936,39 +40959,11 @@ func (c *ConnectionResponseContentLine) GetConnectedAccounts() ConnectionConnect
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentLine) GetName() ConnectionName {
+func (c *ConnectionResponseContentLine) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentLine) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentLine) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentLine) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentLine) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentLine) GetID() ConnectionID {
@@ -40983,6 +40978,34 @@ func (c *ConnectionResponseContentLine) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentLine) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentLine) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentLine) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentLine) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentLine) GetStrategy() ConnectionResponseContentLineStrategy {
@@ -41029,39 +41052,11 @@ func (c *ConnectionResponseContentLine) SetConnectedAccounts(connectedAccounts *
 	c.require(connectionResponseContentLineFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLine) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentLineFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLine) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentLineFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLine) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentLine) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentLineFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLine) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentLineFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLine) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentLineFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -41076,6 +41071,34 @@ func (c *ConnectionResponseContentLine) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentLine) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentLineFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLine) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentLineFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLine) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentLineFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLine) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentLineFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLine) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentLineFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -41156,13 +41179,13 @@ func (c ConnectionResponseContentLineStrategy) Ptr() *ConnectionResponseContentL
 var (
 	connectionResponseContentLinkedinFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentLinkedinFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentLinkedinFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentLinkedinFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentLinkedinFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentLinkedinFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentLinkedinFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentLinkedinFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentLinkedinFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentLinkedinFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentLinkedinFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentLinkedinFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentLinkedinFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentLinkedinFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentLinkedinFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentLinkedinFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentLinkedinFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentLinkedinFieldOptions            = big.NewInt(1 << 10)
 )
@@ -41171,14 +41194,14 @@ var (
 type ConnectionResponseContentLinkedin struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                  `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                    `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection             `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                      `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                              `json:"id" url:"id"`
-	Realms             *ConnectionRealms                         `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentLinkedinStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsLinkedin                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -41203,39 +41226,11 @@ func (c *ConnectionResponseContentLinkedin) GetConnectedAccounts() ConnectionCon
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentLinkedin) GetName() ConnectionName {
+func (c *ConnectionResponseContentLinkedin) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentLinkedin) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentLinkedin) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentLinkedin) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentLinkedin) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentLinkedin) GetID() ConnectionID {
@@ -41250,6 +41245,34 @@ func (c *ConnectionResponseContentLinkedin) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentLinkedin) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentLinkedin) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentLinkedin) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentLinkedin) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentLinkedin) GetStrategy() ConnectionResponseContentLinkedinStrategy {
@@ -41296,39 +41319,11 @@ func (c *ConnectionResponseContentLinkedin) SetConnectedAccounts(connectedAccoun
 	c.require(connectionResponseContentLinkedinFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLinkedin) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentLinkedinFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLinkedin) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentLinkedinFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLinkedin) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentLinkedin) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentLinkedinFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLinkedin) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentLinkedinFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentLinkedin) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentLinkedinFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -41343,6 +41338,34 @@ func (c *ConnectionResponseContentLinkedin) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentLinkedin) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentLinkedinFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLinkedin) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentLinkedinFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLinkedin) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentLinkedinFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLinkedin) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentLinkedinFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentLinkedin) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentLinkedinFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -41423,13 +41446,13 @@ func (c ConnectionResponseContentLinkedinStrategy) Ptr() *ConnectionResponseCont
 var (
 	connectionResponseContentOAuth1FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentOAuth1FieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentOAuth1FieldName               = big.NewInt(1 << 2)
-	connectionResponseContentOAuth1FieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentOAuth1FieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentOAuth1FieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentOAuth1FieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentOAuth1FieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentOAuth1FieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentOAuth1FieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentOAuth1FieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentOAuth1FieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentOAuth1FieldName               = big.NewInt(1 << 5)
+	connectionResponseContentOAuth1FieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentOAuth1FieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentOAuth1FieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentOAuth1FieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentOAuth1FieldOptions            = big.NewInt(1 << 10)
 )
@@ -41438,14 +41461,14 @@ var (
 type ConnectionResponseContentOAuth1 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentOAuth1Strategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsOAuth1                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -41470,39 +41493,11 @@ func (c *ConnectionResponseContentOAuth1) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentOAuth1) GetName() ConnectionName {
+func (c *ConnectionResponseContentOAuth1) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentOAuth1) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentOAuth1) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentOAuth1) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentOAuth1) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentOAuth1) GetID() ConnectionID {
@@ -41517,6 +41512,34 @@ func (c *ConnectionResponseContentOAuth1) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentOAuth1) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentOAuth1) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentOAuth1) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentOAuth1) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentOAuth1) GetStrategy() ConnectionResponseContentOAuth1Strategy {
@@ -41563,39 +41586,11 @@ func (c *ConnectionResponseContentOAuth1) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentOAuth1FieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth1) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentOAuth1FieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth1) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentOAuth1FieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth1) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentOAuth1) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentOAuth1FieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth1) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentOAuth1FieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth1) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentOAuth1FieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -41610,6 +41605,34 @@ func (c *ConnectionResponseContentOAuth1) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentOAuth1) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentOAuth1FieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth1) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentOAuth1FieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth1) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentOAuth1FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth1) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentOAuth1FieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth1) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentOAuth1FieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -41690,13 +41713,13 @@ func (c ConnectionResponseContentOAuth1Strategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentOAuth2FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentOAuth2FieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentOAuth2FieldName               = big.NewInt(1 << 2)
-	connectionResponseContentOAuth2FieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentOAuth2FieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentOAuth2FieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentOAuth2FieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentOAuth2FieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentOAuth2FieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentOAuth2FieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentOAuth2FieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentOAuth2FieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentOAuth2FieldName               = big.NewInt(1 << 5)
+	connectionResponseContentOAuth2FieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentOAuth2FieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentOAuth2FieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentOAuth2FieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentOAuth2FieldOptions            = big.NewInt(1 << 10)
 )
@@ -41705,14 +41728,14 @@ var (
 type ConnectionResponseContentOAuth2 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentOAuth2Strategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsOAuth2                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -41737,39 +41760,11 @@ func (c *ConnectionResponseContentOAuth2) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentOAuth2) GetName() ConnectionName {
+func (c *ConnectionResponseContentOAuth2) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentOAuth2) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentOAuth2) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentOAuth2) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentOAuth2) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentOAuth2) GetID() ConnectionID {
@@ -41784,6 +41779,34 @@ func (c *ConnectionResponseContentOAuth2) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentOAuth2) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentOAuth2) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentOAuth2) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentOAuth2) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentOAuth2) GetStrategy() ConnectionResponseContentOAuth2Strategy {
@@ -41830,39 +41853,11 @@ func (c *ConnectionResponseContentOAuth2) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentOAuth2FieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth2) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentOAuth2FieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth2) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentOAuth2FieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth2) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentOAuth2) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentOAuth2FieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth2) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentOAuth2FieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOAuth2) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentOAuth2FieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -41877,6 +41872,34 @@ func (c *ConnectionResponseContentOAuth2) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentOAuth2) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentOAuth2FieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth2) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentOAuth2FieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth2) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentOAuth2FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth2) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentOAuth2FieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOAuth2) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentOAuth2FieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -41957,13 +41980,13 @@ func (c ConnectionResponseContentOAuth2Strategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentOffice365FieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentOffice365FieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentOffice365FieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentOffice365FieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentOffice365FieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentOffice365FieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentOffice365FieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentOffice365FieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentOffice365FieldRealms                = big.NewInt(1 << 8)
+	connectionResponseContentOffice365FieldDisplayName           = big.NewInt(1 << 2)
+	connectionResponseContentOffice365FieldID                    = big.NewInt(1 << 3)
+	connectionResponseContentOffice365FieldRealms                = big.NewInt(1 << 4)
+	connectionResponseContentOffice365FieldName                  = big.NewInt(1 << 5)
+	connectionResponseContentOffice365FieldEnabledClients        = big.NewInt(1 << 6)
+	connectionResponseContentOffice365FieldIsDomainConnection    = big.NewInt(1 << 7)
+	connectionResponseContentOffice365FieldMetadata              = big.NewInt(1 << 8)
 	connectionResponseContentOffice365FieldStrategy              = big.NewInt(1 << 9)
 	connectionResponseContentOffice365FieldOptions               = big.NewInt(1 << 10)
 	connectionResponseContentOffice365FieldProvisioningTicketURL = big.NewInt(1 << 11)
@@ -41974,14 +41997,14 @@ var (
 type ConnectionResponseContentOffice365 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients        []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection    *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata              *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                               `json:"id" url:"id"`
-	Realms                *ConnectionRealms                          `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy              ConnectionResponseContentOffice365Strategy `json:"strategy" url:"strategy"`
 	Options               *ConnectionOptionsOffice365                `json:"options,omitempty" url:"options,omitempty"`
 	ProvisioningTicketURL *ConnectionProvisioningTicketURL           `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
@@ -42008,39 +42031,11 @@ func (c *ConnectionResponseContentOffice365) GetConnectedAccounts() ConnectionCo
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentOffice365) GetName() ConnectionName {
+func (c *ConnectionResponseContentOffice365) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentOffice365) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentOffice365) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentOffice365) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentOffice365) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentOffice365) GetID() ConnectionID {
@@ -42055,6 +42050,34 @@ func (c *ConnectionResponseContentOffice365) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentOffice365) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentOffice365) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentOffice365) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentOffice365) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentOffice365) GetStrategy() ConnectionResponseContentOffice365Strategy {
@@ -42115,39 +42138,11 @@ func (c *ConnectionResponseContentOffice365) SetConnectedAccounts(connectedAccou
 	c.require(connectionResponseContentOffice365FieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOffice365) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentOffice365FieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOffice365) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentOffice365FieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOffice365) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentOffice365) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentOffice365FieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOffice365) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentOffice365FieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOffice365) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentOffice365FieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -42162,6 +42157,34 @@ func (c *ConnectionResponseContentOffice365) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentOffice365) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentOffice365FieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOffice365) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentOffice365FieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOffice365) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentOffice365FieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOffice365) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentOffice365FieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOffice365) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentOffice365FieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -42254,13 +42277,13 @@ func (c ConnectionResponseContentOffice365Strategy) Ptr() *ConnectionResponseCon
 }
 
 var (
-	connectionResponseContentOidcFieldName                        = big.NewInt(1 << 0)
-	connectionResponseContentOidcFieldEnabledClients              = big.NewInt(1 << 1)
-	connectionResponseContentOidcFieldDisplayName                 = big.NewInt(1 << 2)
-	connectionResponseContentOidcFieldIsDomainConnection          = big.NewInt(1 << 3)
-	connectionResponseContentOidcFieldMetadata                    = big.NewInt(1 << 4)
-	connectionResponseContentOidcFieldID                          = big.NewInt(1 << 5)
-	connectionResponseContentOidcFieldRealms                      = big.NewInt(1 << 6)
+	connectionResponseContentOidcFieldDisplayName                 = big.NewInt(1 << 0)
+	connectionResponseContentOidcFieldID                          = big.NewInt(1 << 1)
+	connectionResponseContentOidcFieldRealms                      = big.NewInt(1 << 2)
+	connectionResponseContentOidcFieldName                        = big.NewInt(1 << 3)
+	connectionResponseContentOidcFieldEnabledClients              = big.NewInt(1 << 4)
+	connectionResponseContentOidcFieldIsDomainConnection          = big.NewInt(1 << 5)
+	connectionResponseContentOidcFieldMetadata                    = big.NewInt(1 << 6)
 	connectionResponseContentOidcFieldStrategy                    = big.NewInt(1 << 7)
 	connectionResponseContentOidcFieldAuthentication              = big.NewInt(1 << 8)
 	connectionResponseContentOidcFieldConnectedAccounts           = big.NewInt(1 << 9)
@@ -42277,14 +42300,14 @@ var connectionResponseContentOidcNullableFields = map[string]*big.Int{
 
 // Response for connections with strategy=oidc
 type ConnectionResponseContentOidc struct {
-	Name ConnectionName `json:"name" url:"name"`
+	DisplayName ConnectionDisplayName `json:"display_name" url:"display_name"`
+	ID          ConnectionID          `json:"id" url:"id"`
+	Realms      *ConnectionRealms     `json:"realms,omitempty" url:"realms,omitempty"`
+	Name        ConnectionName        `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients              []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName                 *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection          *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata                    *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                          ConnectionID                           `json:"id" url:"id"`
-	Realms                      *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy                    ConnectionResponseContentOidcStrategy  `json:"strategy" url:"strategy"`
 	Authentication              *ConnectionAuthenticationPurpose       `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts           *ConnectionConnectedAccountsPurposeXaa `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -42298,6 +42321,27 @@ type ConnectionResponseContentOidc struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionResponseContentOidc) GetDisplayName() ConnectionDisplayName {
+	if c == nil {
+		return ""
+	}
+	return c.DisplayName
+}
+
+func (c *ConnectionResponseContentOidc) GetID() ConnectionID {
+	if c == nil {
+		return ""
+	}
+	return c.ID
+}
+
+func (c *ConnectionResponseContentOidc) GetRealms() ConnectionRealms {
+	if c == nil || c.Realms == nil {
+		return nil
+	}
+	return *c.Realms
 }
 
 func (c *ConnectionResponseContentOidc) GetName() ConnectionName {
@@ -42314,13 +42358,6 @@ func (c *ConnectionResponseContentOidc) GetEnabledClients() []string {
 	return c.EnabledClients
 }
 
-func (c *ConnectionResponseContentOidc) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
 func (c *ConnectionResponseContentOidc) GetIsDomainConnection() ConnectionIsDomainConnection {
 	if c == nil || c.IsDomainConnection == nil {
 		return false
@@ -42333,20 +42370,6 @@ func (c *ConnectionResponseContentOidc) GetMetadata() ConnectionsMetadata {
 		return nil
 	}
 	return *c.Metadata
-}
-
-func (c *ConnectionResponseContentOidc) GetID() ConnectionID {
-	if c == nil {
-		return ""
-	}
-	return c.ID
-}
-
-func (c *ConnectionResponseContentOidc) GetRealms() ConnectionRealms {
-	if c == nil || c.Realms == nil {
-		return nil
-	}
-	return *c.Realms
 }
 
 func (c *ConnectionResponseContentOidc) GetStrategy() ConnectionResponseContentOidcStrategy {
@@ -42414,39 +42437,11 @@ func (c *ConnectionResponseContentOidc) require(field *big.Int) {
 	c.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOidc) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentOidcFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOidc) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentOidcFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOidc) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentOidc) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentOidcFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOidc) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentOidcFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOidc) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentOidcFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -42461,6 +42456,34 @@ func (c *ConnectionResponseContentOidc) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentOidc) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentOidcFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOidc) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentOidcFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOidc) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentOidcFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOidc) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentOidcFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOidc) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentOidcFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -42583,13 +42606,13 @@ func (c ConnectionResponseContentOidcStrategy) Ptr() *ConnectionResponseContentO
 var (
 	connectionResponseContentOktaFieldAuthentication              = big.NewInt(1 << 0)
 	connectionResponseContentOktaFieldConnectedAccounts           = big.NewInt(1 << 1)
-	connectionResponseContentOktaFieldName                        = big.NewInt(1 << 2)
-	connectionResponseContentOktaFieldEnabledClients              = big.NewInt(1 << 3)
-	connectionResponseContentOktaFieldDisplayName                 = big.NewInt(1 << 4)
-	connectionResponseContentOktaFieldIsDomainConnection          = big.NewInt(1 << 5)
-	connectionResponseContentOktaFieldMetadata                    = big.NewInt(1 << 6)
-	connectionResponseContentOktaFieldID                          = big.NewInt(1 << 7)
-	connectionResponseContentOktaFieldRealms                      = big.NewInt(1 << 8)
+	connectionResponseContentOktaFieldDisplayName                 = big.NewInt(1 << 2)
+	connectionResponseContentOktaFieldID                          = big.NewInt(1 << 3)
+	connectionResponseContentOktaFieldRealms                      = big.NewInt(1 << 4)
+	connectionResponseContentOktaFieldName                        = big.NewInt(1 << 5)
+	connectionResponseContentOktaFieldEnabledClients              = big.NewInt(1 << 6)
+	connectionResponseContentOktaFieldIsDomainConnection          = big.NewInt(1 << 7)
+	connectionResponseContentOktaFieldMetadata                    = big.NewInt(1 << 8)
 	connectionResponseContentOktaFieldStrategy                    = big.NewInt(1 << 9)
 	connectionResponseContentOktaFieldCrossAppAccessRequestingApp = big.NewInt(1 << 10)
 	connectionResponseContentOktaFieldOptions                     = big.NewInt(1 << 11)
@@ -42600,14 +42623,14 @@ var (
 type ConnectionResponseContentOkta struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients              []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName                 *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection          *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata                    *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                          ConnectionID                          `json:"id" url:"id"`
-	Realms                      *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy                    ConnectionResponseContentOktaStrategy `json:"strategy" url:"strategy"`
 	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp          `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
 	Options                     *ConnectionOptionsOkta                `json:"options,omitempty" url:"options,omitempty"`
@@ -42634,39 +42657,11 @@ func (c *ConnectionResponseContentOkta) GetConnectedAccounts() ConnectionConnect
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentOkta) GetName() ConnectionName {
+func (c *ConnectionResponseContentOkta) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentOkta) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentOkta) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentOkta) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentOkta) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentOkta) GetID() ConnectionID {
@@ -42681,6 +42676,34 @@ func (c *ConnectionResponseContentOkta) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentOkta) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentOkta) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentOkta) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentOkta) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentOkta) GetStrategy() ConnectionResponseContentOktaStrategy {
@@ -42741,39 +42764,11 @@ func (c *ConnectionResponseContentOkta) SetConnectedAccounts(connectedAccounts *
 	c.require(connectionResponseContentOktaFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOkta) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentOktaFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOkta) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentOktaFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOkta) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentOkta) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentOktaFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOkta) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentOktaFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentOkta) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentOktaFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -42788,6 +42783,34 @@ func (c *ConnectionResponseContentOkta) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentOkta) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentOktaFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOkta) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentOktaFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOkta) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentOktaFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOkta) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentOktaFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentOkta) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentOktaFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -42882,13 +42905,13 @@ func (c ConnectionResponseContentOktaStrategy) Ptr() *ConnectionResponseContentO
 var (
 	connectionResponseContentPaypalFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentPaypalFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentPaypalFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentPaypalFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentPaypalFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentPaypalFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentPaypalFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentPaypalFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentPaypalFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentPaypalFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentPaypalFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentPaypalFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentPaypalFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentPaypalFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentPaypalFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentPaypalFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentPaypalFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentPaypalFieldOptions            = big.NewInt(1 << 10)
 )
@@ -42897,14 +42920,14 @@ var (
 type ConnectionResponseContentPaypal struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentPaypalStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsPaypal                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -42929,39 +42952,11 @@ func (c *ConnectionResponseContentPaypal) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentPaypal) GetName() ConnectionName {
+func (c *ConnectionResponseContentPaypal) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentPaypal) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentPaypal) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentPaypal) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentPaypal) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentPaypal) GetID() ConnectionID {
@@ -42976,6 +42971,34 @@ func (c *ConnectionResponseContentPaypal) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentPaypal) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentPaypal) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentPaypal) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentPaypal) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentPaypal) GetStrategy() ConnectionResponseContentPaypalStrategy {
@@ -43022,39 +43045,11 @@ func (c *ConnectionResponseContentPaypal) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentPaypalFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypal) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentPaypalFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypal) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentPaypalFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypal) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentPaypal) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentPaypalFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypal) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentPaypalFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypal) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentPaypalFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -43069,6 +43064,34 @@ func (c *ConnectionResponseContentPaypal) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentPaypal) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentPaypalFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypal) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentPaypalFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypal) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentPaypalFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypal) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentPaypalFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypal) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentPaypalFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -43130,13 +43153,13 @@ func (c *ConnectionResponseContentPaypal) String() string {
 var (
 	connectionResponseContentPaypalSandboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentPaypalSandboxFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentPaypalSandboxFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentPaypalSandboxFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentPaypalSandboxFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentPaypalSandboxFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentPaypalSandboxFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentPaypalSandboxFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentPaypalSandboxFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentPaypalSandboxFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentPaypalSandboxFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentPaypalSandboxFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentPaypalSandboxFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentPaypalSandboxFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentPaypalSandboxFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentPaypalSandboxFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentPaypalSandboxFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentPaypalSandboxFieldOptions            = big.NewInt(1 << 10)
 )
@@ -43145,14 +43168,14 @@ var (
 type ConnectionResponseContentPaypalSandbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                       `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                         `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                  `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                           `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                   `json:"id" url:"id"`
-	Realms             *ConnectionRealms                              `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentPaypalSandboxStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsPaypal                       `json:"options,omitempty" url:"options,omitempty"`
 
@@ -43177,39 +43200,11 @@ func (c *ConnectionResponseContentPaypalSandbox) GetConnectedAccounts() Connecti
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentPaypalSandbox) GetName() ConnectionName {
+func (c *ConnectionResponseContentPaypalSandbox) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentPaypalSandbox) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentPaypalSandbox) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentPaypalSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentPaypalSandbox) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentPaypalSandbox) GetID() ConnectionID {
@@ -43224,6 +43219,34 @@ func (c *ConnectionResponseContentPaypalSandbox) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentPaypalSandbox) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentPaypalSandbox) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentPaypalSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentPaypalSandbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentPaypalSandbox) GetStrategy() ConnectionResponseContentPaypalSandboxStrategy {
@@ -43270,39 +43293,11 @@ func (c *ConnectionResponseContentPaypalSandbox) SetConnectedAccounts(connectedA
 	c.require(connectionResponseContentPaypalSandboxFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypalSandbox) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentPaypalSandboxFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypalSandbox) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentPaypalSandboxFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypalSandbox) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentPaypalSandbox) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentPaypalSandboxFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypalSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentPaypalSandboxFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPaypalSandbox) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentPaypalSandboxFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -43317,6 +43312,34 @@ func (c *ConnectionResponseContentPaypalSandbox) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentPaypalSandbox) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentPaypalSandboxFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypalSandbox) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentPaypalSandboxFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypalSandbox) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentPaypalSandboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypalSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentPaypalSandboxFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPaypalSandbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentPaypalSandboxFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -43416,13 +43439,13 @@ func (c ConnectionResponseContentPaypalStrategy) Ptr() *ConnectionResponseConten
 var (
 	connectionResponseContentPingFederateFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentPingFederateFieldConnectedAccounts     = big.NewInt(1 << 1)
-	connectionResponseContentPingFederateFieldName                  = big.NewInt(1 << 2)
-	connectionResponseContentPingFederateFieldEnabledClients        = big.NewInt(1 << 3)
-	connectionResponseContentPingFederateFieldDisplayName           = big.NewInt(1 << 4)
-	connectionResponseContentPingFederateFieldIsDomainConnection    = big.NewInt(1 << 5)
-	connectionResponseContentPingFederateFieldMetadata              = big.NewInt(1 << 6)
-	connectionResponseContentPingFederateFieldID                    = big.NewInt(1 << 7)
-	connectionResponseContentPingFederateFieldRealms                = big.NewInt(1 << 8)
+	connectionResponseContentPingFederateFieldDisplayName           = big.NewInt(1 << 2)
+	connectionResponseContentPingFederateFieldID                    = big.NewInt(1 << 3)
+	connectionResponseContentPingFederateFieldRealms                = big.NewInt(1 << 4)
+	connectionResponseContentPingFederateFieldName                  = big.NewInt(1 << 5)
+	connectionResponseContentPingFederateFieldEnabledClients        = big.NewInt(1 << 6)
+	connectionResponseContentPingFederateFieldIsDomainConnection    = big.NewInt(1 << 7)
+	connectionResponseContentPingFederateFieldMetadata              = big.NewInt(1 << 8)
 	connectionResponseContentPingFederateFieldStrategy              = big.NewInt(1 << 9)
 	connectionResponseContentPingFederateFieldOptions               = big.NewInt(1 << 10)
 	connectionResponseContentPingFederateFieldProvisioningTicketURL = big.NewInt(1 << 11)
@@ -43433,14 +43456,14 @@ var (
 type ConnectionResponseContentPingFederate struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients        []string                                      `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName           *ConnectionDisplayName                        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection    *ConnectionIsDomainConnection                 `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata              *ConnectionsMetadata                          `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                    ConnectionID                                  `json:"id" url:"id"`
-	Realms                *ConnectionRealms                             `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy              ConnectionResponseContentPingFederateStrategy `json:"strategy" url:"strategy"`
 	Options               *ConnectionOptionsPingFederate                `json:"options,omitempty" url:"options,omitempty"`
 	ProvisioningTicketURL *ConnectionProvisioningTicketURL              `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
@@ -43467,39 +43490,11 @@ func (c *ConnectionResponseContentPingFederate) GetConnectedAccounts() Connectio
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentPingFederate) GetName() ConnectionName {
+func (c *ConnectionResponseContentPingFederate) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentPingFederate) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentPingFederate) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentPingFederate) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentPingFederate) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentPingFederate) GetID() ConnectionID {
@@ -43514,6 +43509,34 @@ func (c *ConnectionResponseContentPingFederate) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentPingFederate) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentPingFederate) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentPingFederate) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentPingFederate) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentPingFederate) GetStrategy() ConnectionResponseContentPingFederateStrategy {
@@ -43574,39 +43597,11 @@ func (c *ConnectionResponseContentPingFederate) SetConnectedAccounts(connectedAc
 	c.require(connectionResponseContentPingFederateFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPingFederate) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentPingFederateFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPingFederate) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentPingFederateFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPingFederate) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentPingFederate) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentPingFederateFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPingFederate) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentPingFederateFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPingFederate) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentPingFederateFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -43621,6 +43616,34 @@ func (c *ConnectionResponseContentPingFederate) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentPingFederate) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentPingFederateFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPingFederate) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentPingFederateFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPingFederate) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentPingFederateFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPingFederate) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentPingFederateFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPingFederate) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentPingFederateFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -43715,13 +43738,13 @@ func (c ConnectionResponseContentPingFederateStrategy) Ptr() *ConnectionResponse
 var (
 	connectionResponseContentPlanningCenterFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentPlanningCenterFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentPlanningCenterFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentPlanningCenterFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentPlanningCenterFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentPlanningCenterFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentPlanningCenterFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentPlanningCenterFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentPlanningCenterFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentPlanningCenterFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentPlanningCenterFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentPlanningCenterFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentPlanningCenterFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentPlanningCenterFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentPlanningCenterFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentPlanningCenterFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentPlanningCenterFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentPlanningCenterFieldOptions            = big.NewInt(1 << 10)
 )
@@ -43730,14 +43753,14 @@ var (
 type ConnectionResponseContentPlanningCenter struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                        `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                          `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                   `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                            `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                    `json:"id" url:"id"`
-	Realms             *ConnectionRealms                               `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentPlanningCenterStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsPlanningCenter                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -43762,39 +43785,11 @@ func (c *ConnectionResponseContentPlanningCenter) GetConnectedAccounts() Connect
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentPlanningCenter) GetName() ConnectionName {
+func (c *ConnectionResponseContentPlanningCenter) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentPlanningCenter) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentPlanningCenter) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentPlanningCenter) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentPlanningCenter) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentPlanningCenter) GetID() ConnectionID {
@@ -43809,6 +43804,34 @@ func (c *ConnectionResponseContentPlanningCenter) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentPlanningCenter) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentPlanningCenter) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentPlanningCenter) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentPlanningCenter) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentPlanningCenter) GetStrategy() ConnectionResponseContentPlanningCenterStrategy {
@@ -43855,39 +43878,11 @@ func (c *ConnectionResponseContentPlanningCenter) SetConnectedAccounts(connected
 	c.require(connectionResponseContentPlanningCenterFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPlanningCenter) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentPlanningCenterFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPlanningCenter) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentPlanningCenterFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPlanningCenter) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentPlanningCenter) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentPlanningCenterFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPlanningCenter) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentPlanningCenterFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentPlanningCenter) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentPlanningCenterFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -43902,6 +43897,34 @@ func (c *ConnectionResponseContentPlanningCenter) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentPlanningCenter) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentPlanningCenterFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPlanningCenter) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentPlanningCenterFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPlanningCenter) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentPlanningCenterFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPlanningCenter) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentPlanningCenterFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentPlanningCenter) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentPlanningCenterFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -43982,13 +44005,13 @@ func (c ConnectionResponseContentPlanningCenterStrategy) Ptr() *ConnectionRespon
 var (
 	connectionResponseContentSalesforceFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSalesforceFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentSalesforceFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentSalesforceFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentSalesforceFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentSalesforceFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentSalesforceFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentSalesforceFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentSalesforceFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentSalesforceFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentSalesforceFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentSalesforceFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentSalesforceFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentSalesforceFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentSalesforceFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentSalesforceFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentSalesforceFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentSalesforceFieldOptions            = big.NewInt(1 << 10)
 )
@@ -43997,14 +44020,14 @@ var (
 type ConnectionResponseContentSalesforce struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                    `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                      `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection               `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                        `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                `json:"id" url:"id"`
-	Realms             *ConnectionRealms                           `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentSalesforceStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsSalesforce                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -44029,39 +44052,11 @@ func (c *ConnectionResponseContentSalesforce) GetConnectedAccounts() ConnectionC
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentSalesforce) GetName() ConnectionName {
+func (c *ConnectionResponseContentSalesforce) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentSalesforce) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentSalesforce) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentSalesforce) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentSalesforce) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentSalesforce) GetID() ConnectionID {
@@ -44076,6 +44071,34 @@ func (c *ConnectionResponseContentSalesforce) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentSalesforce) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentSalesforce) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentSalesforce) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentSalesforce) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentSalesforce) GetStrategy() ConnectionResponseContentSalesforceStrategy {
@@ -44122,39 +44145,11 @@ func (c *ConnectionResponseContentSalesforce) SetConnectedAccounts(connectedAcco
 	c.require(connectionResponseContentSalesforceFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforce) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentSalesforceFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforce) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentSalesforceFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforce) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentSalesforce) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentSalesforceFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforce) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentSalesforceFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforce) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentSalesforceFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -44169,6 +44164,34 @@ func (c *ConnectionResponseContentSalesforce) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentSalesforce) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentSalesforceFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforce) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentSalesforceFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforce) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentSalesforceFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforce) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentSalesforceFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforce) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentSalesforceFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -44230,13 +44253,13 @@ func (c *ConnectionResponseContentSalesforce) String() string {
 var (
 	connectionResponseContentSalesforceCommunityFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSalesforceCommunityFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentSalesforceCommunityFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentSalesforceCommunityFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentSalesforceCommunityFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentSalesforceCommunityFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentSalesforceCommunityFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentSalesforceCommunityFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentSalesforceCommunityFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentSalesforceCommunityFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentSalesforceCommunityFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentSalesforceCommunityFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentSalesforceCommunityFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentSalesforceCommunityFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentSalesforceCommunityFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentSalesforceCommunityFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentSalesforceCommunityFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentSalesforceCommunityFieldOptions            = big.NewInt(1 << 10)
 )
@@ -44245,14 +44268,14 @@ var (
 type ConnectionResponseContentSalesforceCommunity struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                             `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                               `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                        `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                                 `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                         `json:"id" url:"id"`
-	Realms             *ConnectionRealms                                    `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentSalesforceCommunityStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsSalesforceCommunity                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -44277,39 +44300,11 @@ func (c *ConnectionResponseContentSalesforceCommunity) GetConnectedAccounts() Co
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentSalesforceCommunity) GetName() ConnectionName {
+func (c *ConnectionResponseContentSalesforceCommunity) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentSalesforceCommunity) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentSalesforceCommunity) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentSalesforceCommunity) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentSalesforceCommunity) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentSalesforceCommunity) GetID() ConnectionID {
@@ -44324,6 +44319,34 @@ func (c *ConnectionResponseContentSalesforceCommunity) GetRealms() ConnectionRea
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentSalesforceCommunity) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentSalesforceCommunity) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentSalesforceCommunity) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentSalesforceCommunity) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentSalesforceCommunity) GetStrategy() ConnectionResponseContentSalesforceCommunityStrategy {
@@ -44370,39 +44393,11 @@ func (c *ConnectionResponseContentSalesforceCommunity) SetConnectedAccounts(conn
 	c.require(connectionResponseContentSalesforceCommunityFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceCommunity) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentSalesforceCommunityFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceCommunity) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentSalesforceCommunityFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceCommunity) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentSalesforceCommunity) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentSalesforceCommunityFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceCommunity) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentSalesforceCommunityFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceCommunity) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentSalesforceCommunityFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -44417,6 +44412,34 @@ func (c *ConnectionResponseContentSalesforceCommunity) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentSalesforceCommunity) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentSalesforceCommunityFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceCommunity) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentSalesforceCommunityFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceCommunity) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentSalesforceCommunityFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceCommunity) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentSalesforceCommunityFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceCommunity) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentSalesforceCommunityFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -44497,13 +44520,13 @@ func (c ConnectionResponseContentSalesforceCommunityStrategy) Ptr() *ConnectionR
 var (
 	connectionResponseContentSalesforceSandboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSalesforceSandboxFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentSalesforceSandboxFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentSalesforceSandboxFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentSalesforceSandboxFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentSalesforceSandboxFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentSalesforceSandboxFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentSalesforceSandboxFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentSalesforceSandboxFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentSalesforceSandboxFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentSalesforceSandboxFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentSalesforceSandboxFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentSalesforceSandboxFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentSalesforceSandboxFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentSalesforceSandboxFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentSalesforceSandboxFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentSalesforceSandboxFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentSalesforceSandboxFieldOptions            = big.NewInt(1 << 10)
 )
@@ -44512,14 +44535,14 @@ var (
 type ConnectionResponseContentSalesforceSandbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                             `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                      `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                               `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                       `json:"id" url:"id"`
-	Realms             *ConnectionRealms                                  `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentSalesforceSandboxStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsSalesforce                       `json:"options,omitempty" url:"options,omitempty"`
 
@@ -44544,39 +44567,11 @@ func (c *ConnectionResponseContentSalesforceSandbox) GetConnectedAccounts() Conn
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentSalesforceSandbox) GetName() ConnectionName {
+func (c *ConnectionResponseContentSalesforceSandbox) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentSalesforceSandbox) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentSalesforceSandbox) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentSalesforceSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentSalesforceSandbox) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentSalesforceSandbox) GetID() ConnectionID {
@@ -44591,6 +44586,34 @@ func (c *ConnectionResponseContentSalesforceSandbox) GetRealms() ConnectionRealm
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentSalesforceSandbox) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentSalesforceSandbox) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentSalesforceSandbox) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentSalesforceSandbox) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentSalesforceSandbox) GetStrategy() ConnectionResponseContentSalesforceSandboxStrategy {
@@ -44637,39 +44660,11 @@ func (c *ConnectionResponseContentSalesforceSandbox) SetConnectedAccounts(connec
 	c.require(connectionResponseContentSalesforceSandboxFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceSandbox) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentSalesforceSandboxFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceSandbox) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentSalesforceSandboxFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceSandbox) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentSalesforceSandbox) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentSalesforceSandboxFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentSalesforceSandboxFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSalesforceSandbox) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentSalesforceSandboxFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -44684,6 +44679,34 @@ func (c *ConnectionResponseContentSalesforceSandbox) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentSalesforceSandbox) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentSalesforceSandboxFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceSandbox) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentSalesforceSandboxFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceSandbox) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentSalesforceSandboxFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceSandbox) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentSalesforceSandboxFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSalesforceSandbox) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentSalesforceSandboxFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -44783,13 +44806,13 @@ func (c ConnectionResponseContentSalesforceStrategy) Ptr() *ConnectionResponseCo
 var (
 	connectionResponseContentSAMLFieldAuthentication            = big.NewInt(1 << 0)
 	connectionResponseContentSAMLFieldConnectedAccounts         = big.NewInt(1 << 1)
-	connectionResponseContentSAMLFieldName                      = big.NewInt(1 << 2)
-	connectionResponseContentSAMLFieldEnabledClients            = big.NewInt(1 << 3)
-	connectionResponseContentSAMLFieldDisplayName               = big.NewInt(1 << 4)
-	connectionResponseContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 5)
-	connectionResponseContentSAMLFieldMetadata                  = big.NewInt(1 << 6)
-	connectionResponseContentSAMLFieldID                        = big.NewInt(1 << 7)
-	connectionResponseContentSAMLFieldRealms                    = big.NewInt(1 << 8)
+	connectionResponseContentSAMLFieldDisplayName               = big.NewInt(1 << 2)
+	connectionResponseContentSAMLFieldID                        = big.NewInt(1 << 3)
+	connectionResponseContentSAMLFieldRealms                    = big.NewInt(1 << 4)
+	connectionResponseContentSAMLFieldName                      = big.NewInt(1 << 5)
+	connectionResponseContentSAMLFieldEnabledClients            = big.NewInt(1 << 6)
+	connectionResponseContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 7)
+	connectionResponseContentSAMLFieldMetadata                  = big.NewInt(1 << 8)
 	connectionResponseContentSAMLFieldStrategy                  = big.NewInt(1 << 9)
 	connectionResponseContentSAMLFieldCrossAppAccessResourceApp = big.NewInt(1 << 10)
 	connectionResponseContentSAMLFieldOptions                   = big.NewInt(1 << 11)
@@ -44806,14 +44829,14 @@ var connectionResponseContentSAMLNullableFields = map[string]*big.Int{
 type ConnectionResponseContentSAML struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients            []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName               *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection        *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata                  *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                        ConnectionID                          `json:"id" url:"id"`
-	Realms                    *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy                  ConnectionResponseContentSAMLStrategy `json:"strategy" url:"strategy"`
 	CrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp  `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 	Options                   *ConnectionOptionsSAML                `json:"options,omitempty" url:"options,omitempty"`
@@ -44841,39 +44864,11 @@ func (c *ConnectionResponseContentSAML) GetConnectedAccounts() ConnectionConnect
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentSAML) GetName() ConnectionName {
+func (c *ConnectionResponseContentSAML) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentSAML) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentSAML) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentSAML) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentSAML) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentSAML) GetID() ConnectionID {
@@ -44888,6 +44883,34 @@ func (c *ConnectionResponseContentSAML) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentSAML) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentSAML) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentSAML) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentSAML) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentSAML) GetStrategy() ConnectionResponseContentSAMLStrategy {
@@ -44955,39 +44978,11 @@ func (c *ConnectionResponseContentSAML) SetConnectedAccounts(connectedAccounts *
 	c.require(connectionResponseContentSAMLFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSAML) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentSAMLFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSAML) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentSAMLFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSAML) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentSAML) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentSAMLFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSAML) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentSAMLFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSAML) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentSAMLFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -45002,6 +44997,34 @@ func (c *ConnectionResponseContentSAML) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentSAML) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentSAMLFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSAML) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentSAMLFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSAML) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentSAMLFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSAML) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentSAMLFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSAML) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentSAMLFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -45110,13 +45133,13 @@ func (c ConnectionResponseContentSAMLStrategy) Ptr() *ConnectionResponseContentS
 var (
 	connectionResponseContentSharepointFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSharepointFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentSharepointFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentSharepointFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentSharepointFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentSharepointFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentSharepointFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentSharepointFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentSharepointFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentSharepointFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentSharepointFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentSharepointFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentSharepointFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentSharepointFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentSharepointFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentSharepointFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentSharepointFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentSharepointFieldOptions            = big.NewInt(1 << 10)
 	connectionResponseContentSharepointFieldShowAsButton       = big.NewInt(1 << 11)
@@ -45126,14 +45149,14 @@ var (
 type ConnectionResponseContentSharepoint struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                    `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                      `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection               `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                        `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                `json:"id" url:"id"`
-	Realms             *ConnectionRealms                           `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentSharepointStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsSharepoint                `json:"options,omitempty" url:"options,omitempty"`
 	ShowAsButton       *ConnectionShowAsButton                     `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
@@ -45159,39 +45182,11 @@ func (c *ConnectionResponseContentSharepoint) GetConnectedAccounts() ConnectionC
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentSharepoint) GetName() ConnectionName {
+func (c *ConnectionResponseContentSharepoint) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentSharepoint) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentSharepoint) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentSharepoint) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentSharepoint) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentSharepoint) GetID() ConnectionID {
@@ -45206,6 +45201,34 @@ func (c *ConnectionResponseContentSharepoint) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentSharepoint) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentSharepoint) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentSharepoint) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentSharepoint) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentSharepoint) GetStrategy() ConnectionResponseContentSharepointStrategy {
@@ -45259,39 +45282,11 @@ func (c *ConnectionResponseContentSharepoint) SetConnectedAccounts(connectedAcco
 	c.require(connectionResponseContentSharepointFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSharepoint) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentSharepointFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSharepoint) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentSharepointFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSharepoint) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentSharepoint) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentSharepointFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSharepoint) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentSharepointFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSharepoint) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentSharepointFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -45306,6 +45301,34 @@ func (c *ConnectionResponseContentSharepoint) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentSharepoint) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentSharepointFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSharepoint) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentSharepointFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSharepoint) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentSharepointFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSharepoint) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentSharepointFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSharepoint) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentSharepointFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -45393,13 +45416,13 @@ func (c ConnectionResponseContentSharepointStrategy) Ptr() *ConnectionResponseCo
 var (
 	connectionResponseContentShopFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentShopFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentShopFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentShopFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentShopFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentShopFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentShopFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentShopFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentShopFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentShopFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentShopFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentShopFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentShopFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentShopFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentShopFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentShopFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentShopFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentShopFieldOptions            = big.NewInt(1 << 10)
 )
@@ -45408,14 +45431,14 @@ var (
 type ConnectionResponseContentShop struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                          `json:"id" url:"id"`
-	Realms             *ConnectionRealms                     `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentShopStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsShop                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -45440,39 +45463,11 @@ func (c *ConnectionResponseContentShop) GetConnectedAccounts() ConnectionConnect
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentShop) GetName() ConnectionName {
+func (c *ConnectionResponseContentShop) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentShop) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentShop) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentShop) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentShop) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentShop) GetID() ConnectionID {
@@ -45487,6 +45482,34 @@ func (c *ConnectionResponseContentShop) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentShop) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentShop) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentShop) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentShop) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentShop) GetStrategy() ConnectionResponseContentShopStrategy {
@@ -45533,39 +45556,11 @@ func (c *ConnectionResponseContentShop) SetConnectedAccounts(connectedAccounts *
 	c.require(connectionResponseContentShopFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShop) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentShopFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShop) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentShopFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShop) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentShop) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentShopFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShop) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentShopFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShop) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentShopFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -45580,6 +45575,34 @@ func (c *ConnectionResponseContentShop) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentShop) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentShopFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShop) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentShopFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShop) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentShopFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShop) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentShopFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShop) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentShopFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -45660,13 +45683,13 @@ func (c ConnectionResponseContentShopStrategy) Ptr() *ConnectionResponseContentS
 var (
 	connectionResponseContentShopifyFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentShopifyFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentShopifyFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentShopifyFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentShopifyFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentShopifyFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentShopifyFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentShopifyFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentShopifyFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentShopifyFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentShopifyFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentShopifyFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentShopifyFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentShopifyFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentShopifyFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentShopifyFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentShopifyFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentShopifyFieldOptions            = big.NewInt(1 << 10)
 )
@@ -45675,14 +45698,14 @@ var (
 type ConnectionResponseContentShopify struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                 `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                   `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection            `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                     `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                             `json:"id" url:"id"`
-	Realms             *ConnectionRealms                        `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentShopifyStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsShopify                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -45707,39 +45730,11 @@ func (c *ConnectionResponseContentShopify) GetConnectedAccounts() ConnectionConn
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentShopify) GetName() ConnectionName {
+func (c *ConnectionResponseContentShopify) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentShopify) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentShopify) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentShopify) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentShopify) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentShopify) GetID() ConnectionID {
@@ -45754,6 +45749,34 @@ func (c *ConnectionResponseContentShopify) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentShopify) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentShopify) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentShopify) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentShopify) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentShopify) GetStrategy() ConnectionResponseContentShopifyStrategy {
@@ -45800,39 +45823,11 @@ func (c *ConnectionResponseContentShopify) SetConnectedAccounts(connectedAccount
 	c.require(connectionResponseContentShopifyFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShopify) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentShopifyFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShopify) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentShopifyFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShopify) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentShopify) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentShopifyFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShopify) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentShopifyFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentShopify) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentShopifyFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -45847,6 +45842,34 @@ func (c *ConnectionResponseContentShopify) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentShopify) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentShopifyFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShopify) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentShopifyFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShopify) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentShopifyFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShopify) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentShopifyFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentShopify) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentShopifyFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -45927,13 +45950,13 @@ func (c ConnectionResponseContentShopifyStrategy) Ptr() *ConnectionResponseConte
 var (
 	connectionResponseContentSmsFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSmsFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentSmsFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentSmsFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentSmsFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentSmsFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentSmsFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentSmsFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentSmsFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentSmsFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentSmsFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentSmsFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentSmsFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentSmsFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentSmsFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentSmsFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentSmsFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentSmsFieldOptions            = big.NewInt(1 << 10)
 )
@@ -45942,14 +45965,14 @@ var (
 type ConnectionResponseContentSms struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                             `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection        `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                 `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                         `json:"id" url:"id"`
-	Realms             *ConnectionRealms                    `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentSmsStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsSms                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -45974,39 +45997,11 @@ func (c *ConnectionResponseContentSms) GetConnectedAccounts() ConnectionConnecte
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentSms) GetName() ConnectionName {
+func (c *ConnectionResponseContentSms) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentSms) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentSms) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentSms) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentSms) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentSms) GetID() ConnectionID {
@@ -46021,6 +46016,34 @@ func (c *ConnectionResponseContentSms) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentSms) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentSms) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentSms) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentSms) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentSms) GetStrategy() ConnectionResponseContentSmsStrategy {
@@ -46067,39 +46090,11 @@ func (c *ConnectionResponseContentSms) SetConnectedAccounts(connectedAccounts *C
 	c.require(connectionResponseContentSmsFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSms) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentSmsFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSms) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentSmsFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSms) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentSms) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentSmsFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSms) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentSmsFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSms) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentSmsFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -46114,6 +46109,34 @@ func (c *ConnectionResponseContentSms) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentSms) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentSmsFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSms) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentSmsFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSms) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentSmsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSms) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentSmsFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSms) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentSmsFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -46194,13 +46217,13 @@ func (c ConnectionResponseContentSmsStrategy) Ptr() *ConnectionResponseContentSm
 var (
 	connectionResponseContentSoundcloudFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSoundcloudFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentSoundcloudFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentSoundcloudFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentSoundcloudFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentSoundcloudFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentSoundcloudFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentSoundcloudFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentSoundcloudFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentSoundcloudFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentSoundcloudFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentSoundcloudFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentSoundcloudFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentSoundcloudFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentSoundcloudFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentSoundcloudFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentSoundcloudFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentSoundcloudFieldOptions            = big.NewInt(1 << 10)
 )
@@ -46209,14 +46232,14 @@ var (
 type ConnectionResponseContentSoundcloud struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                    `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                      `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection               `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                        `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                `json:"id" url:"id"`
-	Realms             *ConnectionRealms                           `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentSoundcloudStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsSoundcloud                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -46241,39 +46264,11 @@ func (c *ConnectionResponseContentSoundcloud) GetConnectedAccounts() ConnectionC
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentSoundcloud) GetName() ConnectionName {
+func (c *ConnectionResponseContentSoundcloud) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentSoundcloud) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentSoundcloud) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentSoundcloud) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentSoundcloud) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentSoundcloud) GetID() ConnectionID {
@@ -46288,6 +46283,34 @@ func (c *ConnectionResponseContentSoundcloud) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentSoundcloud) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentSoundcloud) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentSoundcloud) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentSoundcloud) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentSoundcloud) GetStrategy() ConnectionResponseContentSoundcloudStrategy {
@@ -46334,39 +46357,11 @@ func (c *ConnectionResponseContentSoundcloud) SetConnectedAccounts(connectedAcco
 	c.require(connectionResponseContentSoundcloudFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSoundcloud) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentSoundcloudFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSoundcloud) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentSoundcloudFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSoundcloud) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentSoundcloud) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentSoundcloudFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSoundcloud) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentSoundcloudFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentSoundcloud) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentSoundcloudFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -46381,6 +46376,34 @@ func (c *ConnectionResponseContentSoundcloud) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentSoundcloud) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentSoundcloudFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSoundcloud) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentSoundcloudFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSoundcloud) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentSoundcloudFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSoundcloud) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentSoundcloudFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSoundcloud) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentSoundcloudFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -46461,13 +46484,13 @@ func (c ConnectionResponseContentSoundcloudStrategy) Ptr() *ConnectionResponseCo
 var (
 	connectionResponseContentThirtySevenSignalsFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentThirtySevenSignalsFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentThirtySevenSignalsFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentThirtySevenSignalsFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentThirtySevenSignalsFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentThirtySevenSignalsFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentThirtySevenSignalsFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentThirtySevenSignalsFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentThirtySevenSignalsFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentThirtySevenSignalsFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentThirtySevenSignalsFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentThirtySevenSignalsFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentThirtySevenSignalsFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentThirtySevenSignalsFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentThirtySevenSignalsFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentThirtySevenSignalsFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentThirtySevenSignalsFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentThirtySevenSignalsFieldOptions            = big.NewInt(1 << 10)
 )
@@ -46476,14 +46499,14 @@ var (
 type ConnectionResponseContentThirtySevenSignals struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                       `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                                `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                        `json:"id" url:"id"`
-	Realms             *ConnectionRealms                                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentThirtySevenSignalsStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsThirtySevenSignals                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -46508,39 +46531,11 @@ func (c *ConnectionResponseContentThirtySevenSignals) GetConnectedAccounts() Con
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentThirtySevenSignals) GetName() ConnectionName {
+func (c *ConnectionResponseContentThirtySevenSignals) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentThirtySevenSignals) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentThirtySevenSignals) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentThirtySevenSignals) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentThirtySevenSignals) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentThirtySevenSignals) GetID() ConnectionID {
@@ -46555,6 +46550,34 @@ func (c *ConnectionResponseContentThirtySevenSignals) GetRealms() ConnectionReal
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentThirtySevenSignals) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentThirtySevenSignals) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentThirtySevenSignals) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentThirtySevenSignals) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentThirtySevenSignals) GetStrategy() ConnectionResponseContentThirtySevenSignalsStrategy {
@@ -46601,39 +46624,11 @@ func (c *ConnectionResponseContentThirtySevenSignals) SetConnectedAccounts(conne
 	c.require(connectionResponseContentThirtySevenSignalsFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentThirtySevenSignals) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentThirtySevenSignalsFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentThirtySevenSignals) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentThirtySevenSignalsFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentThirtySevenSignals) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentThirtySevenSignals) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentThirtySevenSignalsFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentThirtySevenSignals) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentThirtySevenSignalsFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentThirtySevenSignals) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentThirtySevenSignalsFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -46648,6 +46643,34 @@ func (c *ConnectionResponseContentThirtySevenSignals) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentThirtySevenSignals) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentThirtySevenSignalsFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentThirtySevenSignals) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentThirtySevenSignalsFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentThirtySevenSignals) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentThirtySevenSignalsFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentThirtySevenSignals) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentThirtySevenSignalsFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentThirtySevenSignals) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentThirtySevenSignalsFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -46728,13 +46751,13 @@ func (c ConnectionResponseContentThirtySevenSignalsStrategy) Ptr() *ConnectionRe
 var (
 	connectionResponseContentTwitterFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentTwitterFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentTwitterFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentTwitterFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentTwitterFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentTwitterFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentTwitterFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentTwitterFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentTwitterFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentTwitterFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentTwitterFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentTwitterFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentTwitterFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentTwitterFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentTwitterFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentTwitterFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentTwitterFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentTwitterFieldOptions            = big.NewInt(1 << 10)
 )
@@ -46743,14 +46766,14 @@ var (
 type ConnectionResponseContentTwitter struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                 `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                   `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection            `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                     `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                             `json:"id" url:"id"`
-	Realms             *ConnectionRealms                        `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentTwitterStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsTwitter                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -46775,39 +46798,11 @@ func (c *ConnectionResponseContentTwitter) GetConnectedAccounts() ConnectionConn
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentTwitter) GetName() ConnectionName {
+func (c *ConnectionResponseContentTwitter) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentTwitter) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentTwitter) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentTwitter) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentTwitter) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentTwitter) GetID() ConnectionID {
@@ -46822,6 +46817,34 @@ func (c *ConnectionResponseContentTwitter) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentTwitter) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentTwitter) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentTwitter) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentTwitter) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentTwitter) GetStrategy() ConnectionResponseContentTwitterStrategy {
@@ -46868,39 +46891,11 @@ func (c *ConnectionResponseContentTwitter) SetConnectedAccounts(connectedAccount
 	c.require(connectionResponseContentTwitterFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentTwitter) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentTwitterFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentTwitter) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentTwitterFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentTwitter) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentTwitter) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentTwitterFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentTwitter) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentTwitterFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentTwitter) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentTwitterFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -46915,6 +46910,34 @@ func (c *ConnectionResponseContentTwitter) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentTwitter) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentTwitterFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentTwitter) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentTwitterFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentTwitter) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentTwitterFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentTwitter) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentTwitterFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentTwitter) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentTwitterFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -46995,13 +47018,13 @@ func (c ConnectionResponseContentTwitterStrategy) Ptr() *ConnectionResponseConte
 var (
 	connectionResponseContentUntappdFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentUntappdFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentUntappdFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentUntappdFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentUntappdFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentUntappdFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentUntappdFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentUntappdFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentUntappdFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentUntappdFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentUntappdFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentUntappdFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentUntappdFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentUntappdFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentUntappdFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentUntappdFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentUntappdFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentUntappdFieldOptions            = big.NewInt(1 << 10)
 )
@@ -47010,14 +47033,14 @@ var (
 type ConnectionResponseContentUntappd struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                 `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                   `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection            `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                     `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                             `json:"id" url:"id"`
-	Realms             *ConnectionRealms                        `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentUntappdStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsUntappd                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -47042,39 +47065,11 @@ func (c *ConnectionResponseContentUntappd) GetConnectedAccounts() ConnectionConn
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentUntappd) GetName() ConnectionName {
+func (c *ConnectionResponseContentUntappd) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentUntappd) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentUntappd) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentUntappd) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentUntappd) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentUntappd) GetID() ConnectionID {
@@ -47089,6 +47084,34 @@ func (c *ConnectionResponseContentUntappd) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentUntappd) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentUntappd) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentUntappd) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentUntappd) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentUntappd) GetStrategy() ConnectionResponseContentUntappdStrategy {
@@ -47135,39 +47158,11 @@ func (c *ConnectionResponseContentUntappd) SetConnectedAccounts(connectedAccount
 	c.require(connectionResponseContentUntappdFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentUntappd) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentUntappdFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentUntappd) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentUntappdFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentUntappd) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentUntappd) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentUntappdFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentUntappd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentUntappdFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentUntappd) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentUntappdFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -47182,6 +47177,34 @@ func (c *ConnectionResponseContentUntappd) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentUntappd) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentUntappdFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentUntappd) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentUntappdFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentUntappd) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentUntappdFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentUntappd) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentUntappdFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentUntappd) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentUntappdFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -47262,13 +47285,13 @@ func (c ConnectionResponseContentUntappdStrategy) Ptr() *ConnectionResponseConte
 var (
 	connectionResponseContentVkontakteFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentVkontakteFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentVkontakteFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentVkontakteFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentVkontakteFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentVkontakteFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentVkontakteFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentVkontakteFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentVkontakteFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentVkontakteFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentVkontakteFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentVkontakteFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentVkontakteFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentVkontakteFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentVkontakteFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentVkontakteFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentVkontakteFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentVkontakteFieldOptions            = big.NewInt(1 << 10)
 )
@@ -47277,14 +47300,14 @@ var (
 type ConnectionResponseContentVkontakte struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                               `json:"id" url:"id"`
-	Realms             *ConnectionRealms                          `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentVkontakteStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsVkontakte                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -47309,39 +47332,11 @@ func (c *ConnectionResponseContentVkontakte) GetConnectedAccounts() ConnectionCo
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentVkontakte) GetName() ConnectionName {
+func (c *ConnectionResponseContentVkontakte) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentVkontakte) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentVkontakte) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentVkontakte) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentVkontakte) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentVkontakte) GetID() ConnectionID {
@@ -47356,6 +47351,34 @@ func (c *ConnectionResponseContentVkontakte) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentVkontakte) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentVkontakte) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentVkontakte) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentVkontakte) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentVkontakte) GetStrategy() ConnectionResponseContentVkontakteStrategy {
@@ -47402,39 +47425,11 @@ func (c *ConnectionResponseContentVkontakte) SetConnectedAccounts(connectedAccou
 	c.require(connectionResponseContentVkontakteFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentVkontakte) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentVkontakteFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentVkontakte) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentVkontakteFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentVkontakte) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentVkontakte) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentVkontakteFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentVkontakte) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentVkontakteFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentVkontakte) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentVkontakteFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -47449,6 +47444,34 @@ func (c *ConnectionResponseContentVkontakte) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentVkontakte) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentVkontakteFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentVkontakte) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentVkontakteFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentVkontakte) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentVkontakteFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentVkontakte) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentVkontakteFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentVkontakte) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentVkontakteFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -47529,13 +47552,13 @@ func (c ConnectionResponseContentVkontakteStrategy) Ptr() *ConnectionResponseCon
 var (
 	connectionResponseContentWeiboFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentWeiboFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentWeiboFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentWeiboFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentWeiboFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentWeiboFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentWeiboFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentWeiboFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentWeiboFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentWeiboFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentWeiboFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentWeiboFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentWeiboFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentWeiboFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentWeiboFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentWeiboFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentWeiboFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentWeiboFieldOptions            = big.NewInt(1 << 10)
 )
@@ -47544,14 +47567,14 @@ var (
 type ConnectionResponseContentWeibo struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentWeiboStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsWeibo                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -47576,39 +47599,11 @@ func (c *ConnectionResponseContentWeibo) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentWeibo) GetName() ConnectionName {
+func (c *ConnectionResponseContentWeibo) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentWeibo) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentWeibo) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentWeibo) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentWeibo) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentWeibo) GetID() ConnectionID {
@@ -47623,6 +47618,34 @@ func (c *ConnectionResponseContentWeibo) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentWeibo) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentWeibo) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentWeibo) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentWeibo) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentWeibo) GetStrategy() ConnectionResponseContentWeiboStrategy {
@@ -47669,39 +47692,11 @@ func (c *ConnectionResponseContentWeibo) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentWeiboFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWeibo) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentWeiboFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWeibo) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentWeiboFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWeibo) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentWeibo) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentWeiboFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWeibo) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentWeiboFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWeibo) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentWeiboFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -47716,6 +47711,34 @@ func (c *ConnectionResponseContentWeibo) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentWeibo) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentWeiboFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWeibo) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentWeiboFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWeibo) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentWeiboFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWeibo) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentWeiboFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWeibo) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentWeiboFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -47796,13 +47819,13 @@ func (c ConnectionResponseContentWeiboStrategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentWindowsLiveFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentWindowsLiveFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentWindowsLiveFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentWindowsLiveFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentWindowsLiveFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentWindowsLiveFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentWindowsLiveFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentWindowsLiveFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentWindowsLiveFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentWindowsLiveFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentWindowsLiveFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentWindowsLiveFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentWindowsLiveFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentWindowsLiveFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentWindowsLiveFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentWindowsLiveFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentWindowsLiveFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentWindowsLiveFieldOptions            = big.NewInt(1 << 10)
 )
@@ -47811,14 +47834,14 @@ var (
 type ConnectionResponseContentWindowsLive struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                       `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection                `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                         `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                                 `json:"id" url:"id"`
-	Realms             *ConnectionRealms                            `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentWindowsLiveStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsWindowsLive                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -47843,39 +47866,11 @@ func (c *ConnectionResponseContentWindowsLive) GetConnectedAccounts() Connection
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentWindowsLive) GetName() ConnectionName {
+func (c *ConnectionResponseContentWindowsLive) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentWindowsLive) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentWindowsLive) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentWindowsLive) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentWindowsLive) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentWindowsLive) GetID() ConnectionID {
@@ -47890,6 +47885,34 @@ func (c *ConnectionResponseContentWindowsLive) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentWindowsLive) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentWindowsLive) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentWindowsLive) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentWindowsLive) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentWindowsLive) GetStrategy() ConnectionResponseContentWindowsLiveStrategy {
@@ -47936,39 +47959,11 @@ func (c *ConnectionResponseContentWindowsLive) SetConnectedAccounts(connectedAcc
 	c.require(connectionResponseContentWindowsLiveFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWindowsLive) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentWindowsLiveFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWindowsLive) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentWindowsLiveFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWindowsLive) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentWindowsLive) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentWindowsLiveFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWindowsLive) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentWindowsLiveFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWindowsLive) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentWindowsLiveFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -47983,6 +47978,34 @@ func (c *ConnectionResponseContentWindowsLive) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentWindowsLive) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentWindowsLiveFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWindowsLive) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentWindowsLiveFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWindowsLive) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentWindowsLiveFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWindowsLive) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentWindowsLiveFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWindowsLive) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentWindowsLiveFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -48063,13 +48086,13 @@ func (c ConnectionResponseContentWindowsLiveStrategy) Ptr() *ConnectionResponseC
 var (
 	connectionResponseContentWordpressFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentWordpressFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentWordpressFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentWordpressFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentWordpressFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentWordpressFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentWordpressFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentWordpressFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentWordpressFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentWordpressFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentWordpressFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentWordpressFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentWordpressFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentWordpressFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentWordpressFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentWordpressFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentWordpressFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentWordpressFieldOptions            = big.NewInt(1 << 10)
 )
@@ -48078,14 +48101,14 @@ var (
 type ConnectionResponseContentWordpress struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                               `json:"id" url:"id"`
-	Realms             *ConnectionRealms                          `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentWordpressStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsWordpress                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -48110,39 +48133,11 @@ func (c *ConnectionResponseContentWordpress) GetConnectedAccounts() ConnectionCo
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentWordpress) GetName() ConnectionName {
+func (c *ConnectionResponseContentWordpress) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentWordpress) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentWordpress) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentWordpress) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentWordpress) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentWordpress) GetID() ConnectionID {
@@ -48157,6 +48152,34 @@ func (c *ConnectionResponseContentWordpress) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentWordpress) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentWordpress) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentWordpress) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentWordpress) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentWordpress) GetStrategy() ConnectionResponseContentWordpressStrategy {
@@ -48203,39 +48226,11 @@ func (c *ConnectionResponseContentWordpress) SetConnectedAccounts(connectedAccou
 	c.require(connectionResponseContentWordpressFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWordpress) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentWordpressFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWordpress) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentWordpressFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWordpress) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentWordpress) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentWordpressFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWordpress) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentWordpressFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentWordpress) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentWordpressFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -48250,6 +48245,34 @@ func (c *ConnectionResponseContentWordpress) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentWordpress) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentWordpressFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWordpress) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentWordpressFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWordpress) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentWordpressFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWordpress) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentWordpressFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentWordpress) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentWordpressFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -48330,13 +48353,13 @@ func (c ConnectionResponseContentWordpressStrategy) Ptr() *ConnectionResponseCon
 var (
 	connectionResponseContentYahooFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentYahooFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentYahooFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentYahooFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentYahooFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentYahooFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentYahooFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentYahooFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentYahooFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentYahooFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentYahooFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentYahooFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentYahooFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentYahooFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentYahooFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentYahooFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentYahooFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentYahooFieldOptions            = big.NewInt(1 << 10)
 )
@@ -48345,14 +48368,14 @@ var (
 type ConnectionResponseContentYahoo struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                               `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection          `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                           `json:"id" url:"id"`
-	Realms             *ConnectionRealms                      `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentYahooStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsYahoo                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -48377,39 +48400,11 @@ func (c *ConnectionResponseContentYahoo) GetConnectedAccounts() ConnectionConnec
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentYahoo) GetName() ConnectionName {
+func (c *ConnectionResponseContentYahoo) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentYahoo) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentYahoo) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentYahoo) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentYahoo) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentYahoo) GetID() ConnectionID {
@@ -48424,6 +48419,34 @@ func (c *ConnectionResponseContentYahoo) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentYahoo) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentYahoo) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentYahoo) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentYahoo) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentYahoo) GetStrategy() ConnectionResponseContentYahooStrategy {
@@ -48470,39 +48493,11 @@ func (c *ConnectionResponseContentYahoo) SetConnectedAccounts(connectedAccounts 
 	c.require(connectionResponseContentYahooFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYahoo) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentYahooFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYahoo) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentYahooFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYahoo) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentYahoo) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentYahooFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYahoo) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentYahooFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYahoo) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentYahooFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -48517,6 +48512,34 @@ func (c *ConnectionResponseContentYahoo) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentYahoo) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentYahooFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYahoo) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentYahooFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYahoo) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentYahooFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYahoo) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentYahooFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYahoo) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentYahooFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -48597,13 +48620,13 @@ func (c ConnectionResponseContentYahooStrategy) Ptr() *ConnectionResponseContent
 var (
 	connectionResponseContentYandexFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentYandexFieldConnectedAccounts  = big.NewInt(1 << 1)
-	connectionResponseContentYandexFieldName               = big.NewInt(1 << 2)
-	connectionResponseContentYandexFieldEnabledClients     = big.NewInt(1 << 3)
-	connectionResponseContentYandexFieldDisplayName        = big.NewInt(1 << 4)
-	connectionResponseContentYandexFieldIsDomainConnection = big.NewInt(1 << 5)
-	connectionResponseContentYandexFieldMetadata           = big.NewInt(1 << 6)
-	connectionResponseContentYandexFieldID                 = big.NewInt(1 << 7)
-	connectionResponseContentYandexFieldRealms             = big.NewInt(1 << 8)
+	connectionResponseContentYandexFieldDisplayName        = big.NewInt(1 << 2)
+	connectionResponseContentYandexFieldID                 = big.NewInt(1 << 3)
+	connectionResponseContentYandexFieldRealms             = big.NewInt(1 << 4)
+	connectionResponseContentYandexFieldName               = big.NewInt(1 << 5)
+	connectionResponseContentYandexFieldEnabledClients     = big.NewInt(1 << 6)
+	connectionResponseContentYandexFieldIsDomainConnection = big.NewInt(1 << 7)
+	connectionResponseContentYandexFieldMetadata           = big.NewInt(1 << 8)
 	connectionResponseContentYandexFieldStrategy           = big.NewInt(1 << 9)
 	connectionResponseContentYandexFieldOptions            = big.NewInt(1 << 10)
 )
@@ -48612,14 +48635,14 @@ var (
 type ConnectionResponseContentYandex struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
+	DisplayName       ConnectionDisplayName               `json:"display_name" url:"display_name"`
+	ID                ConnectionID                        `json:"id" url:"id"`
+	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
 	EnabledClients     []string                                `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName        *ConnectionDisplayName                  `json:"display_name,omitempty" url:"display_name,omitempty"`
 	IsDomainConnection *ConnectionIsDomainConnection           `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
 	Metadata           *ConnectionsMetadata                    `json:"metadata,omitempty" url:"metadata,omitempty"`
-	ID                 ConnectionID                            `json:"id" url:"id"`
-	Realms             *ConnectionRealms                       `json:"realms,omitempty" url:"realms,omitempty"`
 	Strategy           ConnectionResponseContentYandexStrategy `json:"strategy" url:"strategy"`
 	Options            *ConnectionOptionsYandex                `json:"options,omitempty" url:"options,omitempty"`
 
@@ -48644,39 +48667,11 @@ func (c *ConnectionResponseContentYandex) GetConnectedAccounts() ConnectionConne
 	return *c.ConnectedAccounts
 }
 
-func (c *ConnectionResponseContentYandex) GetName() ConnectionName {
+func (c *ConnectionResponseContentYandex) GetDisplayName() ConnectionDisplayName {
 	if c == nil {
 		return ""
 	}
-	return c.Name
-}
-
-func (c *ConnectionResponseContentYandex) GetEnabledClients() []string {
-	if c == nil || c.EnabledClients == nil {
-		return nil
-	}
-	return c.EnabledClients
-}
-
-func (c *ConnectionResponseContentYandex) GetDisplayName() ConnectionDisplayName {
-	if c == nil || c.DisplayName == nil {
-		return ""
-	}
-	return *c.DisplayName
-}
-
-func (c *ConnectionResponseContentYandex) GetIsDomainConnection() ConnectionIsDomainConnection {
-	if c == nil || c.IsDomainConnection == nil {
-		return false
-	}
-	return *c.IsDomainConnection
-}
-
-func (c *ConnectionResponseContentYandex) GetMetadata() ConnectionsMetadata {
-	if c == nil || c.Metadata == nil {
-		return nil
-	}
-	return *c.Metadata
+	return c.DisplayName
 }
 
 func (c *ConnectionResponseContentYandex) GetID() ConnectionID {
@@ -48691,6 +48686,34 @@ func (c *ConnectionResponseContentYandex) GetRealms() ConnectionRealms {
 		return nil
 	}
 	return *c.Realms
+}
+
+func (c *ConnectionResponseContentYandex) GetName() ConnectionName {
+	if c == nil {
+		return ""
+	}
+	return c.Name
+}
+
+func (c *ConnectionResponseContentYandex) GetEnabledClients() []string {
+	if c == nil || c.EnabledClients == nil {
+		return nil
+	}
+	return c.EnabledClients
+}
+
+func (c *ConnectionResponseContentYandex) GetIsDomainConnection() ConnectionIsDomainConnection {
+	if c == nil || c.IsDomainConnection == nil {
+		return false
+	}
+	return *c.IsDomainConnection
+}
+
+func (c *ConnectionResponseContentYandex) GetMetadata() ConnectionsMetadata {
+	if c == nil || c.Metadata == nil {
+		return nil
+	}
+	return *c.Metadata
 }
 
 func (c *ConnectionResponseContentYandex) GetStrategy() ConnectionResponseContentYandexStrategy {
@@ -48737,39 +48760,11 @@ func (c *ConnectionResponseContentYandex) SetConnectedAccounts(connectedAccounts
 	c.require(connectionResponseContentYandexFieldConnectedAccounts)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYandex) SetName(name ConnectionName) {
-	c.Name = name
-	c.require(connectionResponseContentYandexFieldName)
-}
-
-// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYandex) SetEnabledClients(enabledClients []string) {
-	c.EnabledClients = enabledClients
-	c.require(connectionResponseContentYandexFieldEnabledClients)
-}
-
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYandex) SetDisplayName(displayName *ConnectionDisplayName) {
+func (c *ConnectionResponseContentYandex) SetDisplayName(displayName ConnectionDisplayName) {
 	c.DisplayName = displayName
 	c.require(connectionResponseContentYandexFieldDisplayName)
-}
-
-// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYandex) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
-	c.IsDomainConnection = isDomainConnection
-	c.require(connectionResponseContentYandexFieldIsDomainConnection)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionResponseContentYandex) SetMetadata(metadata *ConnectionsMetadata) {
-	c.Metadata = metadata
-	c.require(connectionResponseContentYandexFieldMetadata)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -48784,6 +48779,34 @@ func (c *ConnectionResponseContentYandex) SetID(id ConnectionID) {
 func (c *ConnectionResponseContentYandex) SetRealms(realms *ConnectionRealms) {
 	c.Realms = realms
 	c.require(connectionResponseContentYandexFieldRealms)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYandex) SetName(name ConnectionName) {
+	c.Name = name
+	c.require(connectionResponseContentYandexFieldName)
+}
+
+// SetEnabledClients sets the EnabledClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYandex) SetEnabledClients(enabledClients []string) {
+	c.EnabledClients = enabledClients
+	c.require(connectionResponseContentYandexFieldEnabledClients)
+}
+
+// SetIsDomainConnection sets the IsDomainConnection field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYandex) SetIsDomainConnection(isDomainConnection *ConnectionIsDomainConnection) {
+	c.IsDomainConnection = isDomainConnection
+	c.require(connectionResponseContentYandexFieldIsDomainConnection)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentYandex) SetMetadata(metadata *ConnectionsMetadata) {
+	c.Metadata = metadata
+	c.require(connectionResponseContentYandexFieldMetadata)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -75615,19 +75638,21 @@ var (
 	createSegmentResponseContentFieldName        = big.NewInt(1 << 1)
 	createSegmentResponseContentFieldDescription = big.NewInt(1 << 2)
 	createSegmentResponseContentFieldType        = big.NewInt(1 << 3)
-	createSegmentResponseContentFieldRules       = big.NewInt(1 << 4)
-	createSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
-	createSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+	createSegmentResponseContentFieldStatus      = big.NewInt(1 << 4)
+	createSegmentResponseContentFieldRules       = big.NewInt(1 << 5)
+	createSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
+	createSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
 )
 
 type CreateSegmentResponseContent struct {
-	ID          string          `json:"id" url:"id"`
-	Name        string          `json:"name" url:"name"`
-	Description *string         `json:"description,omitempty" url:"description,omitempty"`
-	Type        SegmentTypeEnum `json:"type" url:"type"`
-	Rules       []*SegmentRule  `json:"rules" url:"rules"`
-	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
-	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+	ID          string            `json:"id" url:"id"`
+	Name        string            `json:"name" url:"name"`
+	Description *string           `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum   `json:"type" url:"type"`
+	Status      SegmentStatusEnum `json:"status" url:"status"`
+	Rules       []*SegmentRule    `json:"rules" url:"rules"`
+	CreatedAt   time.Time         `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time         `json:"updated_at" url:"updated_at"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -75662,6 +75687,13 @@ func (c *CreateSegmentResponseContent) GetType() SegmentTypeEnum {
 		return ""
 	}
 	return c.Type
+}
+
+func (c *CreateSegmentResponseContent) GetStatus() SegmentStatusEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Status
 }
 
 func (c *CreateSegmentResponseContent) GetRules() []*SegmentRule {
@@ -75727,6 +75759,13 @@ func (c *CreateSegmentResponseContent) SetDescription(description *string) {
 func (c *CreateSegmentResponseContent) SetType(type_ SegmentTypeEnum) {
 	c.Type = type_
 	c.require(createSegmentResponseContentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSegmentResponseContent) SetStatus(status SegmentStatusEnum) {
+	c.Status = status
+	c.require(createSegmentResponseContentFieldStatus)
 }
 
 // SetRules sets the Rules field and marks it as non-optional;
@@ -82911,7 +82950,7 @@ func (e ExperimentStatusEnum) Ptr() *ExperimentStatusEnum {
 	return &e
 }
 
-// The target status to transition the experiment to.
+// Target lifecycle status. Transitions the experiment through its lifecycle (draft → active, draft → archived, active → paused, paused → active, active/paused → completed, paused/completed → archived). Activation runs full readiness validation and snapshots the configuration. When combined with field edits, the edits apply first and the transition sees the updated config.
 type ExperimentTransitionStatusEnum string
 
 const (
@@ -89653,11 +89692,12 @@ func (g *GetBreachedPasswordDetectionSettingsResponseContent) String() string {
 }
 
 var (
-	getBruteForceSettingsResponseContentFieldEnabled     = big.NewInt(1 << 0)
-	getBruteForceSettingsResponseContentFieldShields     = big.NewInt(1 << 1)
-	getBruteForceSettingsResponseContentFieldAllowlist   = big.NewInt(1 << 2)
-	getBruteForceSettingsResponseContentFieldMode        = big.NewInt(1 << 3)
-	getBruteForceSettingsResponseContentFieldMaxAttempts = big.NewInt(1 << 4)
+	getBruteForceSettingsResponseContentFieldEnabled            = big.NewInt(1 << 0)
+	getBruteForceSettingsResponseContentFieldShields            = big.NewInt(1 << 1)
+	getBruteForceSettingsResponseContentFieldAllowlist          = big.NewInt(1 << 2)
+	getBruteForceSettingsResponseContentFieldMode               = big.NewInt(1 << 3)
+	getBruteForceSettingsResponseContentFieldMaxAttempts        = big.NewInt(1 << 4)
+	getBruteForceSettingsResponseContentFieldFormSubmissionMode = big.NewInt(1 << 5)
 )
 
 type GetBruteForceSettingsResponseContent struct {
@@ -89671,7 +89711,8 @@ type GetBruteForceSettingsResponseContent struct {
 	Allowlist []string                      `json:"allowlist,omitempty" url:"allowlist,omitempty"`
 	Mode      *BruteForceProtectionModeEnum `json:"mode,omitempty" url:"mode,omitempty"`
 	// Maximum number of unsuccessful attempts.
-	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
+	MaxAttempts        *int                                        `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
+	FormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum `json:"form_submission_mode,omitempty" url:"form_submission_mode,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -89713,6 +89754,13 @@ func (g *GetBruteForceSettingsResponseContent) GetMaxAttempts() int {
 		return 0
 	}
 	return *g.MaxAttempts
+}
+
+func (g *GetBruteForceSettingsResponseContent) GetFormSubmissionMode() BruteForceProtectionFormSubmissionModeEnum {
+	if g == nil || g.FormSubmissionMode == nil {
+		return ""
+	}
+	return *g.FormSubmissionMode
 }
 
 func (g *GetBruteForceSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -89764,6 +89812,13 @@ func (g *GetBruteForceSettingsResponseContent) SetMode(mode *BruteForceProtectio
 func (g *GetBruteForceSettingsResponseContent) SetMaxAttempts(maxAttempts *int) {
 	g.MaxAttempts = maxAttempts
 	g.require(getBruteForceSettingsResponseContentFieldMaxAttempts)
+}
+
+// SetFormSubmissionMode sets the FormSubmissionMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBruteForceSettingsResponseContent) SetFormSubmissionMode(formSubmissionMode *BruteForceProtectionFormSubmissionModeEnum) {
+	g.FormSubmissionMode = formSubmissionMode
+	g.require(getBruteForceSettingsResponseContentFieldFormSubmissionMode)
 }
 
 func (g *GetBruteForceSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -96375,19 +96430,21 @@ var (
 	getSegmentResponseContentFieldName        = big.NewInt(1 << 1)
 	getSegmentResponseContentFieldDescription = big.NewInt(1 << 2)
 	getSegmentResponseContentFieldType        = big.NewInt(1 << 3)
-	getSegmentResponseContentFieldRules       = big.NewInt(1 << 4)
-	getSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
-	getSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+	getSegmentResponseContentFieldStatus      = big.NewInt(1 << 4)
+	getSegmentResponseContentFieldRules       = big.NewInt(1 << 5)
+	getSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
+	getSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
 )
 
 type GetSegmentResponseContent struct {
-	ID          string          `json:"id" url:"id"`
-	Name        string          `json:"name" url:"name"`
-	Description *string         `json:"description,omitempty" url:"description,omitempty"`
-	Type        SegmentTypeEnum `json:"type" url:"type"`
-	Rules       []*SegmentRule  `json:"rules" url:"rules"`
-	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
-	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+	ID          string            `json:"id" url:"id"`
+	Name        string            `json:"name" url:"name"`
+	Description *string           `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum   `json:"type" url:"type"`
+	Status      SegmentStatusEnum `json:"status" url:"status"`
+	Rules       []*SegmentRule    `json:"rules" url:"rules"`
+	CreatedAt   time.Time         `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time         `json:"updated_at" url:"updated_at"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -96422,6 +96479,13 @@ func (g *GetSegmentResponseContent) GetType() SegmentTypeEnum {
 		return ""
 	}
 	return g.Type
+}
+
+func (g *GetSegmentResponseContent) GetStatus() SegmentStatusEnum {
+	if g == nil {
+		return ""
+	}
+	return g.Status
 }
 
 func (g *GetSegmentResponseContent) GetRules() []*SegmentRule {
@@ -96487,6 +96551,13 @@ func (g *GetSegmentResponseContent) SetDescription(description *string) {
 func (g *GetSegmentResponseContent) SetType(type_ SegmentTypeEnum) {
 	g.Type = type_
 	g.require(getSegmentResponseContentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetSegmentResponseContent) SetStatus(status SegmentStatusEnum) {
+	g.Status = status
+	g.require(getSegmentResponseContentFieldStatus)
 }
 
 // SetRules sets the Rules field and marks it as non-optional;
@@ -116758,8 +116829,7 @@ type Role struct {
 	// Description of this role.
 	Description *string       `json:"description,omitempty" url:"description,omitempty"`
 	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
-	// The id of the entity that owns this role, such as an organization id.
-	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -116796,7 +116866,7 @@ func (r *Role) GetType() RoleTypeEnum {
 	return *r.Type
 }
 
-func (r *Role) GetOwnerID() string {
+func (r *Role) GetOwnerID() RoleOwnerID {
 	if r == nil || r.OwnerID == nil {
 		return ""
 	}
@@ -116849,7 +116919,7 @@ func (r *Role) SetType(type_ *RoleTypeEnum) {
 
 // SetOwnerID sets the OwnerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (r *Role) SetOwnerID(ownerID *string) {
+func (r *Role) SetOwnerID(ownerID *RoleOwnerID) {
 	r.OwnerID = ownerID
 	r.require(roleFieldOwnerID)
 }
@@ -117282,6 +117352,9 @@ func (r *RoleMember) String() string {
 	}
 	return fmt.Sprintf("%#v", r)
 }
+
+// The id of the entity that owns this role: an organization id, or "auth0" for Auth0-managed System Roles.
+type RoleOwnerID = string
 
 // The type of the role
 type RoleTypeEnum string
@@ -118976,19 +119049,21 @@ var (
 	segmentFieldName        = big.NewInt(1 << 1)
 	segmentFieldDescription = big.NewInt(1 << 2)
 	segmentFieldType        = big.NewInt(1 << 3)
-	segmentFieldRules       = big.NewInt(1 << 4)
-	segmentFieldCreatedAt   = big.NewInt(1 << 5)
-	segmentFieldUpdatedAt   = big.NewInt(1 << 6)
+	segmentFieldStatus      = big.NewInt(1 << 4)
+	segmentFieldRules       = big.NewInt(1 << 5)
+	segmentFieldCreatedAt   = big.NewInt(1 << 6)
+	segmentFieldUpdatedAt   = big.NewInt(1 << 7)
 )
 
 type Segment struct {
-	ID          string          `json:"id" url:"id"`
-	Name        string          `json:"name" url:"name"`
-	Description *string         `json:"description,omitempty" url:"description,omitempty"`
-	Type        SegmentTypeEnum `json:"type" url:"type"`
-	Rules       []*SegmentRule  `json:"rules" url:"rules"`
-	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
-	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+	ID          string            `json:"id" url:"id"`
+	Name        string            `json:"name" url:"name"`
+	Description *string           `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum   `json:"type" url:"type"`
+	Status      SegmentStatusEnum `json:"status" url:"status"`
+	Rules       []*SegmentRule    `json:"rules" url:"rules"`
+	CreatedAt   time.Time         `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time         `json:"updated_at" url:"updated_at"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -119023,6 +119098,13 @@ func (s *Segment) GetType() SegmentTypeEnum {
 		return ""
 	}
 	return s.Type
+}
+
+func (s *Segment) GetStatus() SegmentStatusEnum {
+	if s == nil {
+		return ""
+	}
+	return s.Status
 }
 
 func (s *Segment) GetRules() []*SegmentRule {
@@ -119088,6 +119170,13 @@ func (s *Segment) SetDescription(description *string) {
 func (s *Segment) SetType(type_ SegmentTypeEnum) {
 	s.Type = type_
 	s.require(segmentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *Segment) SetStatus(status SegmentStatusEnum) {
+	s.Status = status
+	s.require(segmentFieldStatus)
 }
 
 // SetRules sets the Rules field and marks it as non-optional;
@@ -120302,6 +120391,28 @@ func (s *SegmentStartsWithExpression) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", s)
+}
+
+type SegmentStatusEnum string
+
+const (
+	SegmentStatusEnumActive   SegmentStatusEnum = "active"
+	SegmentStatusEnumArchived SegmentStatusEnum = "archived"
+)
+
+func NewSegmentStatusEnumFromString(s string) (SegmentStatusEnum, error) {
+	switch s {
+	case "active":
+		return SegmentStatusEnumActive, nil
+	case "archived":
+		return SegmentStatusEnumArchived, nil
+	}
+	var t SegmentStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SegmentStatusEnum) Ptr() *SegmentStatusEnum {
+	return &s
 }
 
 type SegmentTypeEnum string
@@ -126296,6 +126407,25 @@ func (s *SynchronizedGroupSelectionID) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+type SystemRoleOwnerID string
+
+const (
+	SystemRoleOwnerIDAuth0 SystemRoleOwnerID = "auth0"
+)
+
+func NewSystemRoleOwnerIDFromString(s string) (SystemRoleOwnerID, error) {
+	switch s {
+	case "auth0":
+		return SystemRoleOwnerIDAuth0, nil
+	}
+	var t SystemRoleOwnerID
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (s SystemRoleOwnerID) Ptr() *SystemRoleOwnerID {
+	return &s
+}
+
 var (
 	tenantOidcLogoutSettingsFieldRpLogoutEndSessionEndpointDiscovery = big.NewInt(1 << 0)
 )
@@ -130940,11 +131070,12 @@ func (u *UpdateBreachedPasswordDetectionSettingsResponseContent) String() string
 }
 
 var (
-	updateBruteForceSettingsResponseContentFieldEnabled     = big.NewInt(1 << 0)
-	updateBruteForceSettingsResponseContentFieldShields     = big.NewInt(1 << 1)
-	updateBruteForceSettingsResponseContentFieldAllowlist   = big.NewInt(1 << 2)
-	updateBruteForceSettingsResponseContentFieldMode        = big.NewInt(1 << 3)
-	updateBruteForceSettingsResponseContentFieldMaxAttempts = big.NewInt(1 << 4)
+	updateBruteForceSettingsResponseContentFieldEnabled            = big.NewInt(1 << 0)
+	updateBruteForceSettingsResponseContentFieldShields            = big.NewInt(1 << 1)
+	updateBruteForceSettingsResponseContentFieldAllowlist          = big.NewInt(1 << 2)
+	updateBruteForceSettingsResponseContentFieldMode               = big.NewInt(1 << 3)
+	updateBruteForceSettingsResponseContentFieldMaxAttempts        = big.NewInt(1 << 4)
+	updateBruteForceSettingsResponseContentFieldFormSubmissionMode = big.NewInt(1 << 5)
 )
 
 type UpdateBruteForceSettingsResponseContent struct {
@@ -130958,7 +131089,8 @@ type UpdateBruteForceSettingsResponseContent struct {
 	Allowlist []string                      `json:"allowlist,omitempty" url:"allowlist,omitempty"`
 	Mode      *BruteForceProtectionModeEnum `json:"mode,omitempty" url:"mode,omitempty"`
 	// Maximum number of unsuccessful attempts.
-	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
+	MaxAttempts        *int                                        `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
+	FormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum `json:"form_submission_mode,omitempty" url:"form_submission_mode,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -131000,6 +131132,13 @@ func (u *UpdateBruteForceSettingsResponseContent) GetMaxAttempts() int {
 		return 0
 	}
 	return *u.MaxAttempts
+}
+
+func (u *UpdateBruteForceSettingsResponseContent) GetFormSubmissionMode() BruteForceProtectionFormSubmissionModeEnum {
+	if u == nil || u.FormSubmissionMode == nil {
+		return ""
+	}
+	return *u.FormSubmissionMode
 }
 
 func (u *UpdateBruteForceSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -131051,6 +131190,13 @@ func (u *UpdateBruteForceSettingsResponseContent) SetMode(mode *BruteForceProtec
 func (u *UpdateBruteForceSettingsResponseContent) SetMaxAttempts(maxAttempts *int) {
 	u.MaxAttempts = maxAttempts
 	u.require(updateBruteForceSettingsResponseContentFieldMaxAttempts)
+}
+
+// SetFormSubmissionMode sets the FormSubmissionMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBruteForceSettingsResponseContent) SetFormSubmissionMode(formSubmissionMode *BruteForceProtectionFormSubmissionModeEnum) {
+	u.FormSubmissionMode = formSubmissionMode
+	u.require(updateBruteForceSettingsResponseContentFieldFormSubmissionMode)
 }
 
 func (u *UpdateBruteForceSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -140917,416 +141063,6 @@ func (u *UpdateExperimentResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-var (
-	updateExperimentStatusResponseContentFieldID                  = big.NewInt(1 << 0)
-	updateExperimentStatusResponseContentFieldName                = big.NewInt(1 << 1)
-	updateExperimentStatusResponseContentFieldDescription         = big.NewInt(1 << 2)
-	updateExperimentStatusResponseContentFieldFeatureFlagID       = big.NewInt(1 << 3)
-	updateExperimentStatusResponseContentFieldFeatureFlagName     = big.NewInt(1 << 4)
-	updateExperimentStatusResponseContentFieldAuthenticationFlow  = big.NewInt(1 << 5)
-	updateExperimentStatusResponseContentFieldAllocationStrategy  = big.NewInt(1 << 6)
-	updateExperimentStatusResponseContentFieldStatus              = big.NewInt(1 << 7)
-	updateExperimentStatusResponseContentFieldIsValid             = big.NewInt(1 << 8)
-	updateExperimentStatusResponseContentFieldDefaultConfig       = big.NewInt(1 << 9)
-	updateExperimentStatusResponseContentFieldFeatureFlagSnapshot = big.NewInt(1 << 10)
-	updateExperimentStatusResponseContentFieldAllocations         = big.NewInt(1 << 11)
-	updateExperimentStatusResponseContentFieldEditableFields      = big.NewInt(1 << 12)
-	updateExperimentStatusResponseContentFieldLevels              = big.NewInt(1 << 13)
-	updateExperimentStatusResponseContentFieldCurrentLevel        = big.NewInt(1 << 14)
-	updateExperimentStatusResponseContentFieldStartedAt           = big.NewInt(1 << 15)
-	updateExperimentStatusResponseContentFieldEndedAt             = big.NewInt(1 << 16)
-	updateExperimentStatusResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
-	updateExperimentStatusResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
-)
-
-// updateExperimentStatusResponseContentNullableFields maps the wire names of UpdateExperimentStatusResponseContent's nullable fields (required or optional) to their field bits.
-var updateExperimentStatusResponseContentNullableFields = map[string]*big.Int{
-	"feature_flag_snapshot": updateExperimentStatusResponseContentFieldFeatureFlagSnapshot,
-	"current_level":         updateExperimentStatusResponseContentFieldCurrentLevel,
-}
-
-type UpdateExperimentStatusResponseContent struct {
-	ID                  string                 `json:"id" url:"id"`
-	Name                string                 `json:"name" url:"name"`
-	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
-	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
-	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
-	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
-	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
-	Status              ExperimentStatusEnum   `json:"status" url:"status"`
-	IsValid             bool                   `json:"is_valid" url:"is_valid"`
-	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
-	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
-	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
-	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
-	EditableFields []string `json:"editable_fields" url:"editable_fields"`
-	// Ramp experiment levels configuration.
-	Levels []int `json:"levels,omitempty" url:"levels,omitempty"`
-	// Read-only. The active exposure percentage for the current ramp step. Null when no ramp schedule is active.
-	CurrentLevel *int       `json:"current_level,omitempty" url:"current_level,omitempty"`
-	StartedAt    *time.Time `json:"started_at,omitempty" url:"started_at,omitempty"`
-	EndedAt      *time.Time `json:"ended_at,omitempty" url:"ended_at,omitempty"`
-	CreatedAt    time.Time  `json:"created_at" url:"created_at"`
-	UpdatedAt    time.Time  `json:"updated_at" url:"updated_at"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetID() string {
-	if u == nil {
-		return ""
-	}
-	return u.ID
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetName() string {
-	if u == nil {
-		return ""
-	}
-	return u.Name
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetDescription() string {
-	if u == nil || u.Description == nil {
-		return ""
-	}
-	return *u.Description
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetFeatureFlagID() string {
-	if u == nil {
-		return ""
-	}
-	return u.FeatureFlagID
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetFeatureFlagName() string {
-	if u == nil || u.FeatureFlagName == nil {
-		return ""
-	}
-	return *u.FeatureFlagName
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetAuthenticationFlow() string {
-	if u == nil {
-		return ""
-	}
-	return u.AuthenticationFlow
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetAllocationStrategy() AllocationStrategyEnum {
-	if u == nil {
-		return ""
-	}
-	return u.AllocationStrategy
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetStatus() ExperimentStatusEnum {
-	if u == nil {
-		return ""
-	}
-	return u.Status
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetIsValid() bool {
-	if u == nil {
-		return false
-	}
-	return u.IsValid
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetDefaultConfig() DefaultConfigEnum {
-	if u == nil || u.DefaultConfig == nil {
-		return ""
-	}
-	return *u.DefaultConfig
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetFeatureFlagSnapshot() map[string]any {
-	if u == nil || u.FeatureFlagSnapshot == nil {
-		return nil
-	}
-	return u.FeatureFlagSnapshot
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetAllocations() []*AllocationItem {
-	if u == nil {
-		return nil
-	}
-	return u.Allocations
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetEditableFields() []string {
-	if u == nil {
-		return nil
-	}
-	return u.EditableFields
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetLevels() []int {
-	if u == nil || u.Levels == nil {
-		return nil
-	}
-	return u.Levels
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetCurrentLevel() int {
-	if u == nil || u.CurrentLevel == nil {
-		return 0
-	}
-	return *u.CurrentLevel
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetStartedAt() time.Time {
-	if u == nil || u.StartedAt == nil {
-		return time.Time{}
-	}
-	return *u.StartedAt
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetEndedAt() time.Time {
-	if u == nil || u.EndedAt == nil {
-		return time.Time{}
-	}
-	return *u.EndedAt
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetCreatedAt() time.Time {
-	if u == nil {
-		return time.Time{}
-	}
-	return u.CreatedAt
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetUpdatedAt() time.Time {
-	if u == nil {
-		return time.Time{}
-	}
-	return u.UpdatedAt
-}
-
-func (u *UpdateExperimentStatusResponseContent) GetExtraProperties() map[string]interface{} {
-	if u == nil {
-		return nil
-	}
-	return u.extraProperties
-}
-
-func (u *UpdateExperimentStatusResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetID sets the ID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetID(id string) {
-	u.ID = id
-	u.require(updateExperimentStatusResponseContentFieldID)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetName(name string) {
-	u.Name = name
-	u.require(updateExperimentStatusResponseContentFieldName)
-}
-
-// SetDescription sets the Description field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetDescription(description *string) {
-	u.Description = description
-	u.require(updateExperimentStatusResponseContentFieldDescription)
-}
-
-// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetFeatureFlagID(featureFlagID string) {
-	u.FeatureFlagID = featureFlagID
-	u.require(updateExperimentStatusResponseContentFieldFeatureFlagID)
-}
-
-// SetFeatureFlagName sets the FeatureFlagName field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetFeatureFlagName(featureFlagName *string) {
-	u.FeatureFlagName = featureFlagName
-	u.require(updateExperimentStatusResponseContentFieldFeatureFlagName)
-}
-
-// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetAuthenticationFlow(authenticationFlow string) {
-	u.AuthenticationFlow = authenticationFlow
-	u.require(updateExperimentStatusResponseContentFieldAuthenticationFlow)
-}
-
-// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetAllocationStrategy(allocationStrategy AllocationStrategyEnum) {
-	u.AllocationStrategy = allocationStrategy
-	u.require(updateExperimentStatusResponseContentFieldAllocationStrategy)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetStatus(status ExperimentStatusEnum) {
-	u.Status = status
-	u.require(updateExperimentStatusResponseContentFieldStatus)
-}
-
-// SetIsValid sets the IsValid field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetIsValid(isValid bool) {
-	u.IsValid = isValid
-	u.require(updateExperimentStatusResponseContentFieldIsValid)
-}
-
-// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
-	u.DefaultConfig = defaultConfig
-	u.require(updateExperimentStatusResponseContentFieldDefaultConfig)
-}
-
-// SetFeatureFlagSnapshot sets the FeatureFlagSnapshot field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetFeatureFlagSnapshot(featureFlagSnapshot map[string]any) {
-	u.FeatureFlagSnapshot = featureFlagSnapshot
-	u.require(updateExperimentStatusResponseContentFieldFeatureFlagSnapshot)
-}
-
-// SetAllocations sets the Allocations field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetAllocations(allocations []*AllocationItem) {
-	u.Allocations = allocations
-	u.require(updateExperimentStatusResponseContentFieldAllocations)
-}
-
-// SetEditableFields sets the EditableFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetEditableFields(editableFields []string) {
-	u.EditableFields = editableFields
-	u.require(updateExperimentStatusResponseContentFieldEditableFields)
-}
-
-// SetLevels sets the Levels field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetLevels(levels []int) {
-	u.Levels = levels
-	u.require(updateExperimentStatusResponseContentFieldLevels)
-}
-
-// SetCurrentLevel sets the CurrentLevel field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetCurrentLevel(currentLevel *int) {
-	u.CurrentLevel = currentLevel
-	u.require(updateExperimentStatusResponseContentFieldCurrentLevel)
-}
-
-// SetStartedAt sets the StartedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetStartedAt(startedAt *time.Time) {
-	u.StartedAt = startedAt
-	u.require(updateExperimentStatusResponseContentFieldStartedAt)
-}
-
-// SetEndedAt sets the EndedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetEndedAt(endedAt *time.Time) {
-	u.EndedAt = endedAt
-	u.require(updateExperimentStatusResponseContentFieldEndedAt)
-}
-
-// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetCreatedAt(createdAt time.Time) {
-	u.CreatedAt = createdAt
-	u.require(updateExperimentStatusResponseContentFieldCreatedAt)
-}
-
-// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateExperimentStatusResponseContent) SetUpdatedAt(updatedAt time.Time) {
-	u.UpdatedAt = updatedAt
-	u.require(updateExperimentStatusResponseContentFieldUpdatedAt)
-}
-
-func (u *UpdateExperimentStatusResponseContent) UnmarshalJSON(data []byte) error {
-	type embed UpdateExperimentStatusResponseContent
-	var unmarshaler = struct {
-		embed
-		StartedAt *internal.DateTime `json:"started_at,omitempty"`
-		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
-		CreatedAt *internal.DateTime `json:"created_at"`
-		UpdatedAt *internal.DateTime `json:"updated_at"`
-	}{
-		embed: embed(*u),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*u = UpdateExperimentStatusResponseContent(unmarshaler.embed)
-	u.StartedAt = unmarshaler.StartedAt.TimePtr()
-	u.EndedAt = unmarshaler.EndedAt.TimePtr()
-	u.CreatedAt = unmarshaler.CreatedAt.Time()
-	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
-	extraProperties, err := internal.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateExperimentStatusResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
-	u.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (u *UpdateExperimentStatusResponseContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateExperimentStatusResponseContent
-	var marshaler = struct {
-		embed
-		StartedAt *internal.DateTime `json:"started_at,omitempty"`
-		EndedAt   *internal.DateTime `json:"ended_at,omitempty"`
-		CreatedAt *internal.DateTime `json:"created_at"`
-		UpdatedAt *internal.DateTime `json:"updated_at"`
-	}{
-		embed:     embed(*u),
-		StartedAt: internal.NewOptionalDateTime(u.StartedAt),
-		EndedAt:   internal.NewOptionalDateTime(u.EndedAt),
-		CreatedAt: internal.NewDateTime(u.CreatedAt),
-		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (u *UpdateExperimentStatusResponseContent) String() string {
-	if u == nil {
-		return "<nil>"
-	}
-	if len(u.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(u); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", u)
-}
-
 // Configuration parameters for this feature flag
 type UpdateFeatureFlagParameters = map[string]*FeatureFlagConfigParam
 
@@ -141526,216 +141262,6 @@ func (u *UpdateFeatureFlagResponseContent) MarshalJSON() ([]byte, error) {
 }
 
 func (u *UpdateFeatureFlagResponseContent) String() string {
-	if u == nil {
-		return "<nil>"
-	}
-	if len(u.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(u); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", u)
-}
-
-var (
-	updateFeatureFlagStatusResponseContentFieldID          = big.NewInt(1 << 0)
-	updateFeatureFlagStatusResponseContentFieldName        = big.NewInt(1 << 1)
-	updateFeatureFlagStatusResponseContentFieldDescription = big.NewInt(1 << 2)
-	updateFeatureFlagStatusResponseContentFieldType        = big.NewInt(1 << 3)
-	updateFeatureFlagStatusResponseContentFieldStatus      = big.NewInt(1 << 4)
-	updateFeatureFlagStatusResponseContentFieldParameters  = big.NewInt(1 << 5)
-	updateFeatureFlagStatusResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
-	updateFeatureFlagStatusResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
-)
-
-type UpdateFeatureFlagStatusResponseContent struct {
-	ID          string                   `json:"id" url:"id"`
-	Name        string                   `json:"name" url:"name"`
-	Description *string                  `json:"description,omitempty" url:"description,omitempty"`
-	Type        FeatureFlagTypeEnum      `json:"type" url:"type"`
-	Status      FeatureFlagStatusEnum    `json:"status" url:"status"`
-	Parameters  *FeatureFlagConfigParams `json:"parameters,omitempty" url:"parameters,omitempty"`
-	CreatedAt   time.Time                `json:"created_at" url:"created_at"`
-	UpdatedAt   time.Time                `json:"updated_at" url:"updated_at"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetID() string {
-	if u == nil {
-		return ""
-	}
-	return u.ID
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetName() string {
-	if u == nil {
-		return ""
-	}
-	return u.Name
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetDescription() string {
-	if u == nil || u.Description == nil {
-		return ""
-	}
-	return *u.Description
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetType() FeatureFlagTypeEnum {
-	if u == nil {
-		return ""
-	}
-	return u.Type
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetStatus() FeatureFlagStatusEnum {
-	if u == nil {
-		return ""
-	}
-	return u.Status
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetParameters() FeatureFlagConfigParams {
-	if u == nil || u.Parameters == nil {
-		return nil
-	}
-	return *u.Parameters
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetCreatedAt() time.Time {
-	if u == nil {
-		return time.Time{}
-	}
-	return u.CreatedAt
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetUpdatedAt() time.Time {
-	if u == nil {
-		return time.Time{}
-	}
-	return u.UpdatedAt
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) GetExtraProperties() map[string]interface{} {
-	if u == nil {
-		return nil
-	}
-	return u.extraProperties
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetID sets the ID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetID(id string) {
-	u.ID = id
-	u.require(updateFeatureFlagStatusResponseContentFieldID)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetName(name string) {
-	u.Name = name
-	u.require(updateFeatureFlagStatusResponseContentFieldName)
-}
-
-// SetDescription sets the Description field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetDescription(description *string) {
-	u.Description = description
-	u.require(updateFeatureFlagStatusResponseContentFieldDescription)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetType(type_ FeatureFlagTypeEnum) {
-	u.Type = type_
-	u.require(updateFeatureFlagStatusResponseContentFieldType)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetStatus(status FeatureFlagStatusEnum) {
-	u.Status = status
-	u.require(updateFeatureFlagStatusResponseContentFieldStatus)
-}
-
-// SetParameters sets the Parameters field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetParameters(parameters *FeatureFlagConfigParams) {
-	u.Parameters = parameters
-	u.require(updateFeatureFlagStatusResponseContentFieldParameters)
-}
-
-// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetCreatedAt(createdAt time.Time) {
-	u.CreatedAt = createdAt
-	u.require(updateFeatureFlagStatusResponseContentFieldCreatedAt)
-}
-
-// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateFeatureFlagStatusResponseContent) SetUpdatedAt(updatedAt time.Time) {
-	u.UpdatedAt = updatedAt
-	u.require(updateFeatureFlagStatusResponseContentFieldUpdatedAt)
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) UnmarshalJSON(data []byte) error {
-	type embed UpdateFeatureFlagStatusResponseContent
-	var unmarshaler = struct {
-		embed
-		CreatedAt *internal.DateTime `json:"created_at"`
-		UpdatedAt *internal.DateTime `json:"updated_at"`
-	}{
-		embed: embed(*u),
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	*u = UpdateFeatureFlagStatusResponseContent(unmarshaler.embed)
-	u.CreatedAt = unmarshaler.CreatedAt.Time()
-	u.UpdatedAt = unmarshaler.UpdatedAt.Time()
-	extraProperties, err := internal.ExtractExtraProperties(data, *u)
-	if err != nil {
-		return err
-	}
-	u.extraProperties = extraProperties
-	u.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateFeatureFlagStatusResponseContent
-	var marshaler = struct {
-		embed
-		CreatedAt *internal.DateTime `json:"created_at"`
-		UpdatedAt *internal.DateTime `json:"updated_at"`
-	}{
-		embed:     embed(*u),
-		CreatedAt: internal.NewDateTime(u.CreatedAt),
-		UpdatedAt: internal.NewDateTime(u.UpdatedAt),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (u *UpdateFeatureFlagStatusResponseContent) String() string {
 	if u == nil {
 		return "<nil>"
 	}
@@ -144244,19 +143770,21 @@ var (
 	updateSegmentResponseContentFieldName        = big.NewInt(1 << 1)
 	updateSegmentResponseContentFieldDescription = big.NewInt(1 << 2)
 	updateSegmentResponseContentFieldType        = big.NewInt(1 << 3)
-	updateSegmentResponseContentFieldRules       = big.NewInt(1 << 4)
-	updateSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 5)
-	updateSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 6)
+	updateSegmentResponseContentFieldStatus      = big.NewInt(1 << 4)
+	updateSegmentResponseContentFieldRules       = big.NewInt(1 << 5)
+	updateSegmentResponseContentFieldCreatedAt   = big.NewInt(1 << 6)
+	updateSegmentResponseContentFieldUpdatedAt   = big.NewInt(1 << 7)
 )
 
 type UpdateSegmentResponseContent struct {
-	ID          string          `json:"id" url:"id"`
-	Name        string          `json:"name" url:"name"`
-	Description *string         `json:"description,omitempty" url:"description,omitempty"`
-	Type        SegmentTypeEnum `json:"type" url:"type"`
-	Rules       []*SegmentRule  `json:"rules" url:"rules"`
-	CreatedAt   time.Time       `json:"created_at" url:"created_at"`
-	UpdatedAt   time.Time       `json:"updated_at" url:"updated_at"`
+	ID          string            `json:"id" url:"id"`
+	Name        string            `json:"name" url:"name"`
+	Description *string           `json:"description,omitempty" url:"description,omitempty"`
+	Type        SegmentTypeEnum   `json:"type" url:"type"`
+	Status      SegmentStatusEnum `json:"status" url:"status"`
+	Rules       []*SegmentRule    `json:"rules" url:"rules"`
+	CreatedAt   time.Time         `json:"created_at" url:"created_at"`
+	UpdatedAt   time.Time         `json:"updated_at" url:"updated_at"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -144291,6 +143819,13 @@ func (u *UpdateSegmentResponseContent) GetType() SegmentTypeEnum {
 		return ""
 	}
 	return u.Type
+}
+
+func (u *UpdateSegmentResponseContent) GetStatus() SegmentStatusEnum {
+	if u == nil {
+		return ""
+	}
+	return u.Status
 }
 
 func (u *UpdateSegmentResponseContent) GetRules() []*SegmentRule {
@@ -144356,6 +143891,13 @@ func (u *UpdateSegmentResponseContent) SetDescription(description *string) {
 func (u *UpdateSegmentResponseContent) SetType(type_ SegmentTypeEnum) {
 	u.Type = type_
 	u.require(updateSegmentResponseContentFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSegmentResponseContent) SetStatus(status SegmentStatusEnum) {
+	u.Status = status
+	u.require(updateSegmentResponseContentFieldStatus)
 }
 
 // SetRules sets the Rules field and marks it as non-optional;
@@ -147163,8 +146705,7 @@ type UserEffectivePermissionRoleSourceResponseContent struct {
 	// Description of this role.
 	Description *string       `json:"description,omitempty" url:"description,omitempty"`
 	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
-	// The id of the entity that owns this role, such as an organization id.
-	OwnerID *string `json:"owner_id,omitempty" url:"owner_id,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 	// List of sources where this role is coming from.
 	Sources []UserEffectivePermissionRoleSourceEnum `json:"sources,omitempty" url:"sources,omitempty"`
 
@@ -147203,7 +146744,7 @@ func (u *UserEffectivePermissionRoleSourceResponseContent) GetType() RoleTypeEnu
 	return *u.Type
 }
 
-func (u *UserEffectivePermissionRoleSourceResponseContent) GetOwnerID() string {
+func (u *UserEffectivePermissionRoleSourceResponseContent) GetOwnerID() RoleOwnerID {
 	if u == nil || u.OwnerID == nil {
 		return ""
 	}
@@ -147263,7 +146804,7 @@ func (u *UserEffectivePermissionRoleSourceResponseContent) SetType(type_ *RoleTy
 
 // SetOwnerID sets the OwnerID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UserEffectivePermissionRoleSourceResponseContent) SetOwnerID(ownerID *string) {
+func (u *UserEffectivePermissionRoleSourceResponseContent) SetOwnerID(ownerID *RoleOwnerID) {
 	u.OwnerID = ownerID
 	u.require(userEffectivePermissionRoleSourceResponseContentFieldOwnerID)
 }
