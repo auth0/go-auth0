@@ -1,5 +1,34 @@
 # Change Log
 
+## [v3.8.0](https://github.com/auth0/go-auth0/tree/v3.8.0) (2026-10-09)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.7.0...v3.8.0)
+
+**Breaking Changes**
+- Removed `Experimentation.Experiments.UpdateStatus` and `Experimentation.FeatureFlags.UpdateStatus`, along with the `UpdateExperimentStatusRequestContent`, `UpdateExperimentStatusResponseContent`, `UpdateFeatureFlagStatusRequestContent`, and `UpdateFeatureFlagStatusResponseContent` types. The status is now set through the update request using the `Status` field on `Experiments.Update` and `FeatureFlags.Update` [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- Removed `SearchOrganization.Metadata` along with its getter and setter [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- `A0Stream` on all `EventStreamCloudEvent<Event>CloudEvent` types is now optional, so the field changed from `string` to `*string` and `SetA0Stream` now takes a `*string` [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- `DisplayName` on `ConnectionResponseCommon` and the `ConnectionResponseContent<Strategy>` types is now required, so the field changed from `*string` to `string` and `SetDisplayName` now takes a `string`. No endpoint returns these types, so client calls are not affected [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add `Clients.Search` for searching clients with SCIM or Lucene filter syntax, along with the `SearchClientsRequestParameters` (`Q`, `Parser`, `Fields`, `IncludeFields`, `Take`, `From`, `Sort`), `SearchClientsResponseContent`, `ClientSearchResponse`, and `ClientSortFieldEnum` (`name`, `updated_at`) types [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add passwordless OTP on database connections to the Authentication API with `Passwordless.ChallengeWithEmail`, `Passwordless.ChallengeWithPhoneNumber`, and `Passwordless.LoginWithOTPChallenge`, along with the `ChallengeWithEmailRequest`, `ChallengeWithPhoneNumberRequest`, `ChallengeResponse`, and `LoginWithOTPChallengeRequest` types. `authentication.Error` also gains the `ValidationErrors` and `MFARequirements` fields with nil safe getters, along with the `authentication.ValidationError`, `authentication.MFARequirements`, and `authentication.MFAFactor` types [\#884](https://github.com/auth0/go-auth0/pull/884) ([developerkunal](https://github.com/developerkunal))
+- feat: add `option.WithTenantDomain` and `core.RequestOptions.TenantDomain`, which set the default base URL to `https://<tenantDomain>/api/v2` when passed to `client.NewWithOptions` without a custom base URL [\#889](https://github.com/auth0/go-auth0/pull/889) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OidcSupport` (`ClientOidcSupportPatch`) to `UpdateClientRequestContent`, `EnforceAnonSessionTransferNetworkBinding` (`ClientAnonymousSessionTransferNetworkBindingEnum`: `asn`, `ip`, `none`) to the client request and response types, and `DpopStrictRefreshTokenBinding` to the tenant settings types [\#889](https://github.com/auth0/go-auth0/pull/889) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `GetBody()` to typed API errors [\#889](https://github.com/auth0/go-auth0/pull/889) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: support Auth0-managed System Roles on `Roles.List` by passing `auth0` as `OwnerID`, and add the `RoleOwnerIDFilter` and `RoleOwnerID` string aliases for `OwnerID` on the list parameters and role response types, along with the `SystemRoleOwnerID` type (`SystemRoleOwnerIDAuth0`) [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `FormSubmissionMode` (`BruteForceProtectionFormSubmissionModeEnum`: `auto`, `manual`) to the brute force protection settings request and response types [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `GoogleWorkspace` provisioning (`ConnectionProfileProvisioningGoogleWorkspace` with `SyncUsers`) to `ConnectionProfileProvisioning` and `ConnectionProfileStrategyOverridesProvisioning`, along with `EnabledFeaturesEnumDirectorySync` [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Status` (`SegmentStatusEnum`: `active`, `archived`) to experimentation segments [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OrganizationMemberAccessLevel` (`none`, `readonly`, `limited`, `full`) to the organization connection added and updated event stream objects [\#893](https://github.com/auth0/go-auth0/pull/893) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Changed**
+- Responses with `Content-Encoding: gzip` that the HTTP client did not decompress are now decompressed before decoding, and the wait between retries now stops when the context is cancelled [\#889](https://github.com/auth0/go-auth0/pull/889) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Fixed**
+- fix: preserve all `SegmentMatchExpression` variants (`contains`, `starts_with`, `ends_with`, and `exists`) on a JSON round trip. Previously every variant other than `contains` was dropped and serialized as `{"contains":null}`, which the API rejects with a 400 [\#889](https://github.com/auth0/go-auth0/pull/889) ([fern-api[bot]](https://github.com/apps/fern-api))
+- fix: honor `option.WithoutRetries()` when it is passed to the client constructor, and skip the retry wait after the final attempt [\#889](https://github.com/auth0/go-auth0/pull/889) ([fern-api[bot]](https://github.com/apps/fern-api))
+- fix: reject non-compact JWS serialization when validating ID tokens [\#885](https://github.com/auth0/go-auth0/pull/885) ([developerkunal](https://github.com/developerkunal))
+
 ## [v3.7.0](https://github.com/auth0/go-auth0/tree/v3.7.0) (2026-09-30)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.6.0...v3.7.0)
 
