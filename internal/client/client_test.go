@@ -1349,6 +1349,74 @@ func TestRedactSensitiveHeaders(t *testing.T) {
 	assert.Equal(t, "Bearer secret-token", headers.Get("Authorization"))
 }
 
+func TestRedactSensitiveHeaders_NilHeaders(t *testing.T) {
+	redacted := redactSensitiveHeaders(nil)
+
+	assert.NotNil(t, redacted)
+	assert.Empty(t, redacted)
+}
+
+func TestDebugTransport_LeavesHeadersIntact(t *testing.T) {
+	var buf bytes.Buffer
+
+	log.SetOutput(&buf)
+
+	defer log.SetOutput(os.Stderr)
+
+	var received http.Header
+
+	srv := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		received = r.Header.Clone()
+
+		w.Header().Set("Set-Cookie", "session=server-cookie")
+		w.Header().Set("X-Custom", "custom-value")
+		_, _ = w.Write([]byte("ok"))
+	}))
+	defer srv.Close()
+
+	httpClient := &http.Client{Transport: DebugTransport(http.DefaultTransport, true)}
+
+	req, err := http.NewRequest(http.MethodPost, srv.URL, strings.NewReader(`{"a":"b"}`))
+	require.NoError(t, err)
+
+	req.Header.Set("Authorization", "Bearer secret-token")
+	req.Header.Set("Proxy-Authorization", "Basic proxy-secret")
+	req.Header.Set("Cookie", "session=client-cookie")
+	req.Header.Set("X-Api-Key", "api-key-123")
+
+	resp, err := httpClient.Do(req)
+	require.NoError(t, err)
+
+	defer func() { _ = resp.Body.Close() }()
+
+	body, err := io.ReadAll(resp.Body)
+	require.NoError(t, err)
+
+	// The server must receive the real, unredacted values.
+	assert.Equal(t, "Bearer secret-token", received.Get("Authorization"))
+	assert.Equal(t, "Basic proxy-secret", received.Get("Proxy-Authorization"))
+	assert.Equal(t, "session=client-cookie", received.Get("Cookie"))
+	assert.Equal(t, "api-key-123", received.Get("X-Api-Key"))
+
+	// The caller's request and response must still carry the real values and body.
+	assert.Equal(t, "Bearer secret-token", req.Header.Get("Authorization"))
+	assert.Equal(t, "Basic proxy-secret", req.Header.Get("Proxy-Authorization"))
+	assert.Equal(t, "session=server-cookie", resp.Header.Get("Set-Cookie"))
+	assert.Equal(t, "custom-value", resp.Header.Get("X-Custom"))
+	assert.Equal(t, "ok", string(body))
+
+	// Only the log output is redacted.
+	logOutput := buf.String()
+	assert.NotContains(t, logOutput, "secret-token")
+	assert.NotContains(t, logOutput, "proxy-secret")
+	assert.NotContains(t, logOutput, "client-cookie")
+	assert.NotContains(t, logOutput, "server-cookie")
+	assert.NotContains(t, logOutput, "api-key-123")
+	assert.Contains(t, logOutput, "Authorization: [REDACTED]")
+	assert.Contains(t, logOutput, "Proxy-Authorization: [REDACTED]")
+	assert.Contains(t, logOutput, "X-Custom: custom-value")
+}
+
 func TestCustomDomainHeaderTransport(t *testing.T) {
 	t.Run("Adds header for whitelisted path with client-level domain", func(t *testing.T) {
 		var capturedHeaders http.Header
