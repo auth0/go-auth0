@@ -8,6 +8,7 @@
 [![License](https://img.shields.io/github/license/auth0/go-auth0.svg?style=flat-square)](https://github.com/auth0/go-auth0/blob/main/LICENSE)
 [![Build Status](https://img.shields.io/github/actions/workflow/status/auth0/go-auth0/main.yml?branch=main&style=flat-square)](https://github.com/auth0/go-auth0/actions?query=branch%3Amain)
 [![Codecov](https://img.shields.io/codecov/c/github/auth0/go-auth0/main?style=flat-square)](https://codecov.io/gh/auth0/go-auth0/tree/main)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/auth0/go-auth0/badge?style=flat-square)](https://securityscorecards.dev/viewer/?uri=github.com/auth0/go-auth0)
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fauth0%2Fgo-auth0?ref=badge_shield)
 [![Ask DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/auth0/go-auth0)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fauth0%2Fgo-auth0)
