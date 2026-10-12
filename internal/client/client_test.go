@@ -1326,22 +1326,27 @@ func TestDumpResponse(t *testing.T) {
 
 func TestRedactSensitiveHeaders(t *testing.T) {
 	headers := http.Header{
-		"Content-Type":  []string{"application/json"},
-		"Authorization": []string{"Bearer secret-token"},
-		"Cookie":        []string{"session=abc123"},
-		"X-Api-Key":     []string{"api-key-123"},
-		"X-Custom":      []string{"custom-value"},
-		"User-Agent":    []string{"Go-Auth0"},
+		"Content-Type":        []string{"application/json"},
+		"Authorization":       []string{"Bearer secret-token"},
+		"Proxy-Authorization": []string{"Basic proxy-secret"},
+		"Cookie":              []string{"session=abc123"},
+		"X-Api-Key":           []string{"api-key-123"},
+		"X-Custom":            []string{"custom-value"},
+		"User-Agent":          []string{"Go-Auth0"},
 	}
 
-	redactSensitiveHeaders(headers)
+	redacted := redactSensitiveHeaders(headers)
 
-	assert.Equal(t, "application/json", headers.Get("Content-Type"))
-	assert.Equal(t, "[REDACTED]", headers.Get("Authorization"))
-	assert.Equal(t, "[REDACTED]", headers.Get("Cookie"))
-	assert.Equal(t, "[REDACTED]", headers.Get("X-Api-Key"))
-	assert.Equal(t, "custom-value", headers.Get("X-Custom"))
-	assert.Equal(t, "Go-Auth0", headers.Get("User-Agent"))
+	assert.Equal(t, "application/json", redacted.Get("Content-Type"))
+	assert.Equal(t, "[REDACTED]", redacted.Get("Authorization"))
+	assert.Equal(t, "[REDACTED]", redacted.Get("Cookie"))
+	assert.Equal(t, "[REDACTED]", redacted.Get("X-Api-Key"))
+	assert.Equal(t, "[REDACTED]", redacted.Get("Proxy-Authorization"))
+	assert.Equal(t, "custom-value", redacted.Get("X-Custom"))
+	assert.Equal(t, "Go-Auth0", redacted.Get("User-Agent"))
+
+	// The input headers must be left untouched.
+	assert.Equal(t, "Bearer secret-token", headers.Get("Authorization"))
 }
 
 func TestCustomDomainHeaderTransport(t *testing.T) {
