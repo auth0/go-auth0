@@ -629,111 +629,23 @@ func (c *ClearAssessorsRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createVerificationEmailRequestContentFieldUserID         = big.NewInt(1 << 0)
-	createVerificationEmailRequestContentFieldClientID       = big.NewInt(1 << 1)
-	createVerificationEmailRequestContentFieldIdentity       = big.NewInt(1 << 2)
-	createVerificationEmailRequestContentFieldOrganizationID = big.NewInt(1 << 3)
+	createKeysNetworkACLsRequestContentFieldName  = big.NewInt(1 << 0)
+	createKeysNetworkACLsRequestContentFieldAlg   = big.NewInt(1 << 1)
+	createKeysNetworkACLsRequestContentFieldValue = big.NewInt(1 << 2)
 )
 
-type CreateVerificationEmailRequestContent struct {
-	// user_id of the user to send the verification email to.
-	UserID string `json:"user_id" url:"-"`
-	// client_id of the client (application). If no value provided, the global Client ID will be used.
-	ClientID *string   `json:"client_id,omitempty" url:"-"`
-	Identity *Identity `json:"identity,omitempty" url:"-"`
-	// (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
-	OrganizationID *string `json:"organization_id,omitempty" url:"-"`
+type CreateKeysNetworkACLsRequestContent struct {
+	// Customer-supplied label with no cryptographic meaning. Must be unique across all Network ACL keys for the tenant.
+	Name string                     `json:"name" url:"-"`
+	Alg  NetworkACLKeyAlgorithmEnum `json:"alg" url:"-"`
+	// Base64-encoded raw key material. Constraints on the decoded value depend on the algorithm specified. Currently only HMAC-SHA256 is supported.
+	Value string `json:"value" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateVerificationEmailRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetUserID sets the UserID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVerificationEmailRequestContent) SetUserID(userID string) {
-	c.UserID = userID
-	c.require(createVerificationEmailRequestContentFieldUserID)
-}
-
-// SetClientID sets the ClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVerificationEmailRequestContent) SetClientID(clientID *string) {
-	c.ClientID = clientID
-	c.require(createVerificationEmailRequestContentFieldClientID)
-}
-
-// SetIdentity sets the Identity field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVerificationEmailRequestContent) SetIdentity(identity *Identity) {
-	c.Identity = identity
-	c.require(createVerificationEmailRequestContentFieldIdentity)
-}
-
-// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVerificationEmailRequestContent) SetOrganizationID(organizationID *string) {
-	c.OrganizationID = organizationID
-	c.require(createVerificationEmailRequestContentFieldOrganizationID)
-}
-
-func (c *CreateVerificationEmailRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateVerificationEmailRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateVerificationEmailRequestContent(body)
-	return nil
-}
-
-func (c *CreateVerificationEmailRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateVerificationEmailRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createActionModuleRequestContentFieldName         = big.NewInt(1 << 0)
-	createActionModuleRequestContentFieldCode         = big.NewInt(1 << 1)
-	createActionModuleRequestContentFieldSecrets      = big.NewInt(1 << 2)
-	createActionModuleRequestContentFieldDependencies = big.NewInt(1 << 3)
-	createActionModuleRequestContentFieldAPIVersion   = big.NewInt(1 << 4)
-	createActionModuleRequestContentFieldPublish      = big.NewInt(1 << 5)
-)
-
-type CreateActionModuleRequestContent struct {
-	// The name of the action module.
-	Name string `json:"name" url:"-"`
-	// The source code of the action module.
-	Code string `json:"code" url:"-"`
-	// The secrets to associate with the action module.
-	Secrets []*ActionModuleSecretRequest `json:"secrets,omitempty" url:"-"`
-	// The npm dependencies of the action module.
-	Dependencies []*ActionModuleDependencyRequest `json:"dependencies,omitempty" url:"-"`
-	// The API version of the module.
-	APIVersion *string `json:"api_version,omitempty" url:"-"`
-	// Whether to publish the module immediately after creation.
-	Publish *bool `json:"publish,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateActionModuleRequestContent) require(field *big.Int) {
+func (c *CreateKeysNetworkACLsRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -744,58 +656,37 @@ func (c *CreateActionModuleRequestContent) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionModuleRequestContent) SetName(name string) {
+func (c *CreateKeysNetworkACLsRequestContent) SetName(name string) {
 	c.Name = name
-	c.require(createActionModuleRequestContentFieldName)
+	c.require(createKeysNetworkACLsRequestContentFieldName)
 }
 
-// SetCode sets the Code field and marks it as non-optional;
+// SetAlg sets the Alg field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionModuleRequestContent) SetCode(code string) {
-	c.Code = code
-	c.require(createActionModuleRequestContentFieldCode)
+func (c *CreateKeysNetworkACLsRequestContent) SetAlg(alg NetworkACLKeyAlgorithmEnum) {
+	c.Alg = alg
+	c.require(createKeysNetworkACLsRequestContentFieldAlg)
 }
 
-// SetSecrets sets the Secrets field and marks it as non-optional;
+// SetValue sets the Value field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionModuleRequestContent) SetSecrets(secrets []*ActionModuleSecretRequest) {
-	c.Secrets = secrets
-	c.require(createActionModuleRequestContentFieldSecrets)
+func (c *CreateKeysNetworkACLsRequestContent) SetValue(value string) {
+	c.Value = value
+	c.require(createKeysNetworkACLsRequestContentFieldValue)
 }
 
-// SetDependencies sets the Dependencies field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionModuleRequestContent) SetDependencies(dependencies []*ActionModuleDependencyRequest) {
-	c.Dependencies = dependencies
-	c.require(createActionModuleRequestContentFieldDependencies)
-}
-
-// SetAPIVersion sets the APIVersion field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionModuleRequestContent) SetAPIVersion(apiVersion *string) {
-	c.APIVersion = apiVersion
-	c.require(createActionModuleRequestContentFieldAPIVersion)
-}
-
-// SetPublish sets the Publish field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionModuleRequestContent) SetPublish(publish *bool) {
-	c.Publish = publish
-	c.require(createActionModuleRequestContentFieldPublish)
-}
-
-func (c *CreateActionModuleRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateActionModuleRequestContent
+func (c *CreateKeysNetworkACLsRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateKeysNetworkACLsRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateActionModuleRequestContent(body)
+	*c = CreateKeysNetworkACLsRequestContent(body)
 	return nil
 }
 
-func (c *CreateActionModuleRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateActionModuleRequestContent
+func (c *CreateKeysNetworkACLsRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateKeysNetworkACLsRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -806,27 +697,29 @@ func (c *CreateActionModuleRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createEventStreamRedeliveryRequestContentFieldDateFrom   = big.NewInt(1 << 0)
-	createEventStreamRedeliveryRequestContentFieldDateTo     = big.NewInt(1 << 1)
-	createEventStreamRedeliveryRequestContentFieldStatuses   = big.NewInt(1 << 2)
-	createEventStreamRedeliveryRequestContentFieldEventTypes = big.NewInt(1 << 3)
+	createHookRequestContentFieldName         = big.NewInt(1 << 0)
+	createHookRequestContentFieldScript       = big.NewInt(1 << 1)
+	createHookRequestContentFieldEnabled      = big.NewInt(1 << 2)
+	createHookRequestContentFieldDependencies = big.NewInt(1 << 3)
+	createHookRequestContentFieldTriggerID    = big.NewInt(1 << 4)
 )
 
-type CreateEventStreamRedeliveryRequestContent struct {
-	// An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
-	DateFrom *time.Time `json:"date_from,omitempty" url:"-"`
-	// An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
-	DateTo *time.Time `json:"date_to,omitempty" url:"-"`
-	// Filter by status
-	Statuses []EventStreamDeliveryStatusEnum `json:"statuses,omitempty" url:"-"`
-	// Filter by event type
-	EventTypes []EventStreamEventTypeEnum `json:"event_types,omitempty" url:"-"`
+type CreateHookRequestContent struct {
+	// Name of this hook.
+	Name string `json:"name" url:"-"`
+	// Code to be executed when this hook runs.
+	Script string `json:"script" url:"-"`
+	// Whether this hook will be executed (true) or ignored (false).
+	Enabled      *bool             `json:"enabled,omitempty" url:"-"`
+	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"-"`
+	// Execution stage of this rule. Can be `credentials-exchange`, `pre-user-registration`, `post-user-registration`, `post-change-password`, or `send-phone-message`.
+	TriggerID HookTriggerIDEnum `json:"triggerId" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateEventStreamRedeliveryRequestContent) require(field *big.Int) {
+func (c *CreateHookRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -835,62 +728,143 @@ func (c *CreateEventStreamRedeliveryRequestContent) require(field *big.Int) {
 	c.explicitFields = next
 }
 
-// SetDateFrom sets the DateFrom field and marks it as non-optional;
+// SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamRedeliveryRequestContent) SetDateFrom(dateFrom *time.Time) {
-	c.DateFrom = dateFrom
-	c.require(createEventStreamRedeliveryRequestContentFieldDateFrom)
+func (c *CreateHookRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createHookRequestContentFieldName)
 }
 
-// SetDateTo sets the DateTo field and marks it as non-optional;
+// SetScript sets the Script field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamRedeliveryRequestContent) SetDateTo(dateTo *time.Time) {
-	c.DateTo = dateTo
-	c.require(createEventStreamRedeliveryRequestContentFieldDateTo)
+func (c *CreateHookRequestContent) SetScript(script string) {
+	c.Script = script
+	c.require(createHookRequestContentFieldScript)
 }
 
-// SetStatuses sets the Statuses field and marks it as non-optional;
+// SetEnabled sets the Enabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamRedeliveryRequestContent) SetStatuses(statuses []EventStreamDeliveryStatusEnum) {
-	c.Statuses = statuses
-	c.require(createEventStreamRedeliveryRequestContentFieldStatuses)
+func (c *CreateHookRequestContent) SetEnabled(enabled *bool) {
+	c.Enabled = enabled
+	c.require(createHookRequestContentFieldEnabled)
 }
 
-// SetEventTypes sets the EventTypes field and marks it as non-optional;
+// SetDependencies sets the Dependencies field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamRedeliveryRequestContent) SetEventTypes(eventTypes []EventStreamEventTypeEnum) {
-	c.EventTypes = eventTypes
-	c.require(createEventStreamRedeliveryRequestContentFieldEventTypes)
+func (c *CreateHookRequestContent) SetDependencies(dependencies *HookDependencies) {
+	c.Dependencies = dependencies
+	c.require(createHookRequestContentFieldDependencies)
 }
 
-func (c *CreateEventStreamRedeliveryRequestContent) UnmarshalJSON(data []byte) error {
-	type embed CreateEventStreamRedeliveryRequestContent
-	var body = struct {
-		embed
-		DateFrom *internal.DateTime `json:"date_from,omitempty"`
-		DateTo   *internal.DateTime `json:"date_to,omitempty"`
-	}{
-		embed: embed(*c),
-	}
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateHookRequestContent) SetTriggerID(triggerID HookTriggerIDEnum) {
+	c.TriggerID = triggerID
+	c.require(createHookRequestContentFieldTriggerID)
+}
+
+func (c *CreateHookRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateHookRequestContent
+	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateEventStreamRedeliveryRequestContent(body.embed)
-	c.DateFrom = body.DateFrom.TimePtr()
-	c.DateTo = body.DateTo.TimePtr()
+	*c = CreateHookRequestContent(body)
 	return nil
 }
 
-func (c *CreateEventStreamRedeliveryRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateEventStreamRedeliveryRequestContent
+func (c *CreateHookRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateHookRequestContent
 	var marshaler = struct {
 		embed
-		DateFrom *internal.DateTime `json:"date_from,omitempty"`
-		DateTo   *internal.DateTime `json:"date_to,omitempty"`
 	}{
-		embed:    embed(*c),
-		DateFrom: internal.NewOptionalDateTime(c.DateFrom),
-		DateTo:   internal.NewOptionalDateTime(c.DateTo),
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createEmailProviderRequestContentFieldName               = big.NewInt(1 << 0)
+	createEmailProviderRequestContentFieldEnabled            = big.NewInt(1 << 1)
+	createEmailProviderRequestContentFieldDefaultFromAddress = big.NewInt(1 << 2)
+	createEmailProviderRequestContentFieldCredentials        = big.NewInt(1 << 3)
+	createEmailProviderRequestContentFieldSettings           = big.NewInt(1 << 4)
+)
+
+type CreateEmailProviderRequestContent struct {
+	Name EmailProviderNameEnum `json:"name" url:"-"`
+	// Whether the provider is enabled (true) or disabled (false).
+	Enabled *bool `json:"enabled,omitempty" url:"-"`
+	// Email address to use as "from" when no other address specified.
+	DefaultFromAddress *string                                                `json:"default_from_address,omitempty" url:"-"`
+	Credentials        *EmailProviderCredentialsSchema                        `json:"credentials" url:"-"`
+	Settings           *EmailSpecificProviderSettingsWithAdditionalProperties `json:"settings,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateEmailProviderRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailProviderRequestContent) SetName(name EmailProviderNameEnum) {
+	c.Name = name
+	c.require(createEmailProviderRequestContentFieldName)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailProviderRequestContent) SetEnabled(enabled *bool) {
+	c.Enabled = enabled
+	c.require(createEmailProviderRequestContentFieldEnabled)
+}
+
+// SetDefaultFromAddress sets the DefaultFromAddress field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailProviderRequestContent) SetDefaultFromAddress(defaultFromAddress *string) {
+	c.DefaultFromAddress = defaultFromAddress
+	c.require(createEmailProviderRequestContentFieldDefaultFromAddress)
+}
+
+// SetCredentials sets the Credentials field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailProviderRequestContent) SetCredentials(credentials *EmailProviderCredentialsSchema) {
+	c.Credentials = credentials
+	c.require(createEmailProviderRequestContentFieldCredentials)
+}
+
+// SetSettings sets the Settings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEmailProviderRequestContent) SetSettings(settings *EmailSpecificProviderSettingsWithAdditionalProperties) {
+	c.Settings = settings
+	c.require(createEmailProviderRequestContentFieldSettings)
+}
+
+func (c *CreateEmailProviderRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateEmailProviderRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateEmailProviderRequestContent(body)
+	return nil
+}
+
+func (c *CreateEmailProviderRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEmailProviderRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
@@ -1012,696 +986,6 @@ func (c *CreateOrganizationInvitationRequestContent) UnmarshalJSON(data []byte) 
 
 func (c *CreateOrganizationInvitationRequestContent) MarshalJSON() ([]byte, error) {
 	type embed CreateOrganizationInvitationRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createEmailProviderRequestContentFieldName               = big.NewInt(1 << 0)
-	createEmailProviderRequestContentFieldEnabled            = big.NewInt(1 << 1)
-	createEmailProviderRequestContentFieldDefaultFromAddress = big.NewInt(1 << 2)
-	createEmailProviderRequestContentFieldCredentials        = big.NewInt(1 << 3)
-	createEmailProviderRequestContentFieldSettings           = big.NewInt(1 << 4)
-)
-
-type CreateEmailProviderRequestContent struct {
-	Name EmailProviderNameEnum `json:"name" url:"-"`
-	// Whether the provider is enabled (true) or disabled (false).
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
-	// Email address to use as "from" when no other address specified.
-	DefaultFromAddress *string                                                `json:"default_from_address,omitempty" url:"-"`
-	Credentials        *EmailProviderCredentialsSchema                        `json:"credentials" url:"-"`
-	Settings           *EmailSpecificProviderSettingsWithAdditionalProperties `json:"settings,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateEmailProviderRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEmailProviderRequestContent) SetName(name EmailProviderNameEnum) {
-	c.Name = name
-	c.require(createEmailProviderRequestContentFieldName)
-}
-
-// SetEnabled sets the Enabled field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEmailProviderRequestContent) SetEnabled(enabled *bool) {
-	c.Enabled = enabled
-	c.require(createEmailProviderRequestContentFieldEnabled)
-}
-
-// SetDefaultFromAddress sets the DefaultFromAddress field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEmailProviderRequestContent) SetDefaultFromAddress(defaultFromAddress *string) {
-	c.DefaultFromAddress = defaultFromAddress
-	c.require(createEmailProviderRequestContentFieldDefaultFromAddress)
-}
-
-// SetCredentials sets the Credentials field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEmailProviderRequestContent) SetCredentials(credentials *EmailProviderCredentialsSchema) {
-	c.Credentials = credentials
-	c.require(createEmailProviderRequestContentFieldCredentials)
-}
-
-// SetSettings sets the Settings field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEmailProviderRequestContent) SetSettings(settings *EmailSpecificProviderSettingsWithAdditionalProperties) {
-	c.Settings = settings
-	c.require(createEmailProviderRequestContentFieldSettings)
-}
-
-func (c *CreateEmailProviderRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateEmailProviderRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateEmailProviderRequestContent(body)
-	return nil
-}
-
-func (c *CreateEmailProviderRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateEmailProviderRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createAgentRequestContentFieldName            = big.NewInt(1 << 0)
-	createAgentRequestContentFieldClientID        = big.NewInt(1 << 1)
-	createAgentRequestContentFieldExternalAgentID = big.NewInt(1 << 2)
-	createAgentRequestContentFieldMetadata        = big.NewInt(1 << 3)
-)
-
-type CreateAgentRequestContent struct {
-	// The agent name. Cannot contain <, >, or null bytes.
-	Name string `json:"name" url:"-"`
-	// Optional client ID to associate with the agent
-	ClientID *string `json:"client_id,omitempty" url:"-"`
-	// Optional external identifier for the agent. Immutable after creation. Must be unique within the tenant.
-	ExternalAgentID *string        `json:"external_agent_id,omitempty" url:"-"`
-	Metadata        *AgentMetadata `json:"metadata,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateAgentRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateAgentRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createAgentRequestContentFieldName)
-}
-
-// SetClientID sets the ClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateAgentRequestContent) SetClientID(clientID *string) {
-	c.ClientID = clientID
-	c.require(createAgentRequestContentFieldClientID)
-}
-
-// SetExternalAgentID sets the ExternalAgentID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateAgentRequestContent) SetExternalAgentID(externalAgentID *string) {
-	c.ExternalAgentID = externalAgentID
-	c.require(createAgentRequestContentFieldExternalAgentID)
-}
-
-// SetMetadata sets the Metadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateAgentRequestContent) SetMetadata(metadata *AgentMetadata) {
-	c.Metadata = metadata
-	c.require(createAgentRequestContentFieldMetadata)
-}
-
-func (c *CreateAgentRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateAgentRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateAgentRequestContent(body)
-	return nil
-}
-
-func (c *CreateAgentRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateAgentRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createExperimentRequestContentFieldName               = big.NewInt(1 << 0)
-	createExperimentRequestContentFieldDescription        = big.NewInt(1 << 1)
-	createExperimentRequestContentFieldFeatureFlagID      = big.NewInt(1 << 2)
-	createExperimentRequestContentFieldAuthenticationFlow = big.NewInt(1 << 3)
-	createExperimentRequestContentFieldDefaultConfig      = big.NewInt(1 << 4)
-	createExperimentRequestContentFieldAllocationStrategy = big.NewInt(1 << 5)
-	createExperimentRequestContentFieldAllocations        = big.NewInt(1 << 6)
-	createExperimentRequestContentFieldLevels             = big.NewInt(1 << 7)
-)
-
-type CreateExperimentRequestContent struct {
-	// A human-readable name for the experiment
-	Name string `json:"name" url:"-"`
-	// A description of the experiment
-	Description *string `json:"description,omitempty" url:"-"`
-	// The ID of the feature flag this experiment is based on
-	FeatureFlagID      string                 `json:"feature_flag_id" url:"-"`
-	AuthenticationFlow AuthenticationFlowEnum `json:"authentication_flow" url:"-"`
-	// Applies only to Auth0-managed flags. Controls where non-overridden config keys resolve from: 'tenant' inherits the tenant's live config so the experiment overlays only its changes, 'flag' uses the flag's frozen defaults for a complete config. Optional; defaults to 'tenant' when omitted. Rejected for customer-defined flags.
-	DefaultConfig *DefaultConfigEnum `json:"default_config,omitempty" url:"-"`
-	// The traffic allocation strategy for this experiment
-	AllocationStrategy *AllocationStrategyEnum `json:"allocation_strategy,omitempty" url:"-"`
-	// Traffic allocations mapping variations to weights or segments
-	Allocations []*AllocationRequestItem `json:"allocations,omitempty" url:"-"`
-	// Ramp experiment levels configuration. A strictly-increasing sequence of exposure percentages, each an integer in [0, 100].
-	Levels []int `json:"levels,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateExperimentRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createExperimentRequestContentFieldName)
-}
-
-// SetDescription sets the Description field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetDescription(description *string) {
-	c.Description = description
-	c.require(createExperimentRequestContentFieldDescription)
-}
-
-// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetFeatureFlagID(featureFlagID string) {
-	c.FeatureFlagID = featureFlagID
-	c.require(createExperimentRequestContentFieldFeatureFlagID)
-}
-
-// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetAuthenticationFlow(authenticationFlow AuthenticationFlowEnum) {
-	c.AuthenticationFlow = authenticationFlow
-	c.require(createExperimentRequestContentFieldAuthenticationFlow)
-}
-
-// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
-	c.DefaultConfig = defaultConfig
-	c.require(createExperimentRequestContentFieldDefaultConfig)
-}
-
-// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetAllocationStrategy(allocationStrategy *AllocationStrategyEnum) {
-	c.AllocationStrategy = allocationStrategy
-	c.require(createExperimentRequestContentFieldAllocationStrategy)
-}
-
-// SetAllocations sets the Allocations field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetAllocations(allocations []*AllocationRequestItem) {
-	c.Allocations = allocations
-	c.require(createExperimentRequestContentFieldAllocations)
-}
-
-// SetLevels sets the Levels field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExperimentRequestContent) SetLevels(levels []int) {
-	c.Levels = levels
-	c.require(createExperimentRequestContentFieldLevels)
-}
-
-func (c *CreateExperimentRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateExperimentRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateExperimentRequestContent(body)
-	return nil
-}
-
-func (c *CreateExperimentRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateExperimentRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createOrganizationGroupRolesRequestContentFieldRoles = big.NewInt(1 << 0)
-)
-
-type CreateOrganizationGroupRolesRequestContent struct {
-	// Array of role IDs to assign to organization group.
-	Roles []string `json:"roles" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateOrganizationGroupRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetRoles sets the Roles field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateOrganizationGroupRolesRequestContent) SetRoles(roles []string) {
-	c.Roles = roles
-	c.require(createOrganizationGroupRolesRequestContentFieldRoles)
-}
-
-func (c *CreateOrganizationGroupRolesRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateOrganizationGroupRolesRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateOrganizationGroupRolesRequestContent(body)
-	return nil
-}
-
-func (c *CreateOrganizationGroupRolesRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateOrganizationGroupRolesRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createActionRequestContentFieldName              = big.NewInt(1 << 0)
-	createActionRequestContentFieldSupportedTriggers = big.NewInt(1 << 1)
-	createActionRequestContentFieldCode              = big.NewInt(1 << 2)
-	createActionRequestContentFieldDependencies      = big.NewInt(1 << 3)
-	createActionRequestContentFieldRuntime           = big.NewInt(1 << 4)
-	createActionRequestContentFieldSecrets           = big.NewInt(1 << 5)
-	createActionRequestContentFieldModules           = big.NewInt(1 << 6)
-	createActionRequestContentFieldDeploy            = big.NewInt(1 << 7)
-)
-
-type CreateActionRequestContent struct {
-	// The name of an action.
-	Name string `json:"name" url:"-"`
-	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
-	SupportedTriggers []*ActionTrigger `json:"supported_triggers" url:"-"`
-	// The source code of the action.
-	Code *string `json:"code,omitempty" url:"-"`
-	// The list of third party npm modules, and their versions, that this action depends on.
-	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"-"`
-	// The Node runtime. For example: `node22`, defaults to `node22`
-	Runtime *string `json:"runtime,omitempty" url:"-"`
-	// The list of secrets that are included in an action or a version of an action.
-	Secrets []*ActionSecretRequest `json:"secrets,omitempty" url:"-"`
-	// The list of action modules and their versions used by this action.
-	Modules []*ActionModuleReference `json:"modules,omitempty" url:"-"`
-	// True if the action should be deployed after creation.
-	Deploy *bool `json:"deploy,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateActionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createActionRequestContentFieldName)
-}
-
-// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
-	c.SupportedTriggers = supportedTriggers
-	c.require(createActionRequestContentFieldSupportedTriggers)
-}
-
-// SetCode sets the Code field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetCode(code *string) {
-	c.Code = code
-	c.require(createActionRequestContentFieldCode)
-}
-
-// SetDependencies sets the Dependencies field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetDependencies(dependencies []*ActionVersionDependency) {
-	c.Dependencies = dependencies
-	c.require(createActionRequestContentFieldDependencies)
-}
-
-// SetRuntime sets the Runtime field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetRuntime(runtime *string) {
-	c.Runtime = runtime
-	c.require(createActionRequestContentFieldRuntime)
-}
-
-// SetSecrets sets the Secrets field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetSecrets(secrets []*ActionSecretRequest) {
-	c.Secrets = secrets
-	c.require(createActionRequestContentFieldSecrets)
-}
-
-// SetModules sets the Modules field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetModules(modules []*ActionModuleReference) {
-	c.Modules = modules
-	c.require(createActionRequestContentFieldModules)
-}
-
-// SetDeploy sets the Deploy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateActionRequestContent) SetDeploy(deploy *bool) {
-	c.Deploy = deploy
-	c.require(createActionRequestContentFieldDeploy)
-}
-
-func (c *CreateActionRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateActionRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateActionRequestContent(body)
-	return nil
-}
-
-func (c *CreateActionRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateActionRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createResourceServerRequestContentFieldName                                      = big.NewInt(1 << 0)
-	createResourceServerRequestContentFieldIdentifier                                = big.NewInt(1 << 1)
-	createResourceServerRequestContentFieldScopes                                    = big.NewInt(1 << 2)
-	createResourceServerRequestContentFieldSigningAlg                                = big.NewInt(1 << 3)
-	createResourceServerRequestContentFieldSigningSecret                             = big.NewInt(1 << 4)
-	createResourceServerRequestContentFieldAllowOfflineAccess                        = big.NewInt(1 << 5)
-	createResourceServerRequestContentFieldAllowOnlineAccess                         = big.NewInt(1 << 6)
-	createResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 7)
-	createResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 8)
-	createResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 9)
-	createResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
-	createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 11)
-	createResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	createResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 13)
-	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 14)
-	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 15)
-	createResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 16)
-	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
-	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 18)
-	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
-	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
-)
-
-type CreateResourceServerRequestContent struct {
-	// Friendly name for this resource server. Can not contain `<` or `>` characters.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Unique identifier for the API used as the audience parameter on authorization calls. Can not be changed once set.
-	Identifier string `json:"identifier" url:"-"`
-	// List of permissions (scopes) that this API uses.
-	Scopes     []*ResourceServerScope `json:"scopes,omitempty" url:"-"`
-	SigningAlg *SigningAlgorithmEnum  `json:"signing_alg,omitempty" url:"-"`
-	// Secret used to sign tokens when using symmetric algorithms (HS256).
-	SigningSecret *string `json:"signing_secret,omitempty" url:"-"`
-	// Whether refresh tokens can be issued for this API (true) or not (false).
-	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
-	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
-	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"-"`
-	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
-	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"-"`
-	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
-	TokenLifetime *int `json:"token_lifetime,omitempty" url:"-"`
-	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
-	TokenLifetimeForAnonymousAccessTokens *int                                  `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"-"`
-	TokenDialect                          *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
-	// Whether to skip user consent for applications flagged as first party (true) or not (false).
-	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
-	// Whether to enforce authorization policies (true) or to ignore them (false).
-	EnforcePolicies *bool                            `json:"enforce_policies,omitempty" url:"-"`
-	AccessToken     *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
-	TokenEncryption *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy   *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
-	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
-	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"-"`
-	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"-"`
-	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
-	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
-	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateResourceServerRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetName(name *string) {
-	c.Name = name
-	c.require(createResourceServerRequestContentFieldName)
-}
-
-// SetIdentifier sets the Identifier field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetIdentifier(identifier string) {
-	c.Identifier = identifier
-	c.require(createResourceServerRequestContentFieldIdentifier)
-}
-
-// SetScopes sets the Scopes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetScopes(scopes []*ResourceServerScope) {
-	c.Scopes = scopes
-	c.require(createResourceServerRequestContentFieldScopes)
-}
-
-// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
-	c.SigningAlg = signingAlg
-	c.require(createResourceServerRequestContentFieldSigningAlg)
-}
-
-// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetSigningSecret(signingSecret *string) {
-	c.SigningSecret = signingSecret
-	c.require(createResourceServerRequestContentFieldSigningSecret)
-}
-
-// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetAllowOfflineAccess(allowOfflineAccess *bool) {
-	c.AllowOfflineAccess = allowOfflineAccess
-	c.require(createResourceServerRequestContentFieldAllowOfflineAccess)
-}
-
-// SetAllowOnlineAccess sets the AllowOnlineAccess field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
-	c.AllowOnlineAccess = allowOnlineAccess
-	c.require(createResourceServerRequestContentFieldAllowOnlineAccess)
-}
-
-// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
-	c.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
-	c.require(createResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions)
-}
-
-// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetTokenLifetime(tokenLifetime *int) {
-	c.TokenLifetime = tokenLifetime
-	c.require(createResourceServerRequestContentFieldTokenLifetime)
-}
-
-// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
-	c.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
-	c.require(createResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens)
-}
-
-// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectSchemaEnum) {
-	c.TokenDialect = tokenDialect
-	c.require(createResourceServerRequestContentFieldTokenDialect)
-}
-
-// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
-	c.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
-	c.require(createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients)
-}
-
-// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
-	c.EnforcePolicies = enforcePolicies
-	c.require(createResourceServerRequestContentFieldEnforcePolicies)
-}
-
-// SetAccessToken sets the AccessToken field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
-	c.AccessToken = accessToken
-	c.require(createResourceServerRequestContentFieldAccessToken)
-}
-
-// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
-	c.TokenEncryption = tokenEncryption
-	c.require(createResourceServerRequestContentFieldTokenEncryption)
-}
-
-// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
-	c.ConsentPolicy = consentPolicy
-	c.require(createResourceServerRequestContentFieldConsentPolicy)
-}
-
-// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
-	c.RequireConsentNonRepudiation = requireConsentNonRepudiation
-	c.require(createResourceServerRequestContentFieldRequireConsentNonRepudiation)
-}
-
-// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetAuthorizationDetails(authorizationDetails []any) {
-	c.AuthorizationDetails = authorizationDetails
-	c.require(createResourceServerRequestContentFieldAuthorizationDetails)
-}
-
-// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
-	c.ProofOfPossession = proofOfPossession
-	c.require(createResourceServerRequestContentFieldProofOfPossession)
-}
-
-// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
-	c.SubjectTypeAuthorization = subjectTypeAuthorization
-	c.require(createResourceServerRequestContentFieldSubjectTypeAuthorization)
-}
-
-// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateResourceServerRequestContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
-	c.AuthorizationPolicy = authorizationPolicy
-	c.require(createResourceServerRequestContentFieldAuthorizationPolicy)
-}
-
-func (c *CreateResourceServerRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateResourceServerRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateResourceServerRequestContent(body)
-	return nil
-}
-
-func (c *CreateResourceServerRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateResourceServerRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -1840,6 +1124,760 @@ func (c *CreateEmailTemplateRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	createAgentRequestContentFieldName            = big.NewInt(1 << 0)
+	createAgentRequestContentFieldClientID        = big.NewInt(1 << 1)
+	createAgentRequestContentFieldExternalAgentID = big.NewInt(1 << 2)
+	createAgentRequestContentFieldMetadata        = big.NewInt(1 << 3)
+)
+
+type CreateAgentRequestContent struct {
+	// The agent name. Cannot contain <, >, or null bytes.
+	Name string `json:"name" url:"-"`
+	// Optional client ID to associate with the agent
+	ClientID *string `json:"client_id,omitempty" url:"-"`
+	// Optional external identifier for the agent. Immutable after creation. Must be unique within the tenant.
+	ExternalAgentID *string        `json:"external_agent_id,omitempty" url:"-"`
+	Metadata        *AgentMetadata `json:"metadata,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateAgentRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAgentRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createAgentRequestContentFieldName)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAgentRequestContent) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(createAgentRequestContentFieldClientID)
+}
+
+// SetExternalAgentID sets the ExternalAgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAgentRequestContent) SetExternalAgentID(externalAgentID *string) {
+	c.ExternalAgentID = externalAgentID
+	c.require(createAgentRequestContentFieldExternalAgentID)
+}
+
+// SetMetadata sets the Metadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAgentRequestContent) SetMetadata(metadata *AgentMetadata) {
+	c.Metadata = metadata
+	c.require(createAgentRequestContentFieldMetadata)
+}
+
+func (c *CreateAgentRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateAgentRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateAgentRequestContent(body)
+	return nil
+}
+
+func (c *CreateAgentRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateAgentRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createEventStreamRedeliveryRequestContentFieldDateFrom   = big.NewInt(1 << 0)
+	createEventStreamRedeliveryRequestContentFieldDateTo     = big.NewInt(1 << 1)
+	createEventStreamRedeliveryRequestContentFieldStatuses   = big.NewInt(1 << 2)
+	createEventStreamRedeliveryRequestContentFieldEventTypes = big.NewInt(1 << 3)
+)
+
+type CreateEventStreamRedeliveryRequestContent struct {
+	// An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
+	DateFrom *time.Time `json:"date_from,omitempty" url:"-"`
+	// An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
+	DateTo *time.Time `json:"date_to,omitempty" url:"-"`
+	// Filter by status
+	Statuses []EventStreamDeliveryStatusEnum `json:"statuses,omitempty" url:"-"`
+	// Filter by event type
+	EventTypes []EventStreamEventTypeEnum `json:"event_types,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateEventStreamRedeliveryRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetDateFrom sets the DateFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryRequestContent) SetDateFrom(dateFrom *time.Time) {
+	c.DateFrom = dateFrom
+	c.require(createEventStreamRedeliveryRequestContentFieldDateFrom)
+}
+
+// SetDateTo sets the DateTo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryRequestContent) SetDateTo(dateTo *time.Time) {
+	c.DateTo = dateTo
+	c.require(createEventStreamRedeliveryRequestContentFieldDateTo)
+}
+
+// SetStatuses sets the Statuses field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryRequestContent) SetStatuses(statuses []EventStreamDeliveryStatusEnum) {
+	c.Statuses = statuses
+	c.require(createEventStreamRedeliveryRequestContentFieldStatuses)
+}
+
+// SetEventTypes sets the EventTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEventStreamRedeliveryRequestContent) SetEventTypes(eventTypes []EventStreamEventTypeEnum) {
+	c.EventTypes = eventTypes
+	c.require(createEventStreamRedeliveryRequestContentFieldEventTypes)
+}
+
+func (c *CreateEventStreamRedeliveryRequestContent) UnmarshalJSON(data []byte) error {
+	type embed CreateEventStreamRedeliveryRequestContent
+	var body = struct {
+		embed
+		DateFrom *internal.DateTime `json:"date_from,omitempty"`
+		DateTo   *internal.DateTime `json:"date_to,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateEventStreamRedeliveryRequestContent(body.embed)
+	c.DateFrom = body.DateFrom.TimePtr()
+	c.DateTo = body.DateTo.TimePtr()
+	return nil
+}
+
+func (c *CreateEventStreamRedeliveryRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEventStreamRedeliveryRequestContent
+	var marshaler = struct {
+		embed
+		DateFrom *internal.DateTime `json:"date_from,omitempty"`
+		DateTo   *internal.DateTime `json:"date_to,omitempty"`
+	}{
+		embed:    embed(*c),
+		DateFrom: internal.NewOptionalDateTime(c.DateFrom),
+		DateTo:   internal.NewOptionalDateTime(c.DateTo),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createOrganizationGroupRolesRequestContentFieldRoles = big.NewInt(1 << 0)
+)
+
+type CreateOrganizationGroupRolesRequestContent struct {
+	// Array of role IDs to assign to organization group.
+	Roles []string `json:"roles" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateOrganizationGroupRolesRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationGroupRolesRequestContent) SetRoles(roles []string) {
+	c.Roles = roles
+	c.require(createOrganizationGroupRolesRequestContentFieldRoles)
+}
+
+func (c *CreateOrganizationGroupRolesRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateOrganizationGroupRolesRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateOrganizationGroupRolesRequestContent(body)
+	return nil
+}
+
+func (c *CreateOrganizationGroupRolesRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateOrganizationGroupRolesRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createExperimentRequestContentFieldName               = big.NewInt(1 << 0)
+	createExperimentRequestContentFieldDescription        = big.NewInt(1 << 1)
+	createExperimentRequestContentFieldFeatureFlagID      = big.NewInt(1 << 2)
+	createExperimentRequestContentFieldAuthenticationFlow = big.NewInt(1 << 3)
+	createExperimentRequestContentFieldDefaultConfig      = big.NewInt(1 << 4)
+	createExperimentRequestContentFieldAllocationStrategy = big.NewInt(1 << 5)
+	createExperimentRequestContentFieldAllocations        = big.NewInt(1 << 6)
+	createExperimentRequestContentFieldLevels             = big.NewInt(1 << 7)
+)
+
+type CreateExperimentRequestContent struct {
+	// A human-readable name for the experiment
+	Name string `json:"name" url:"-"`
+	// A description of the experiment
+	Description *string `json:"description,omitempty" url:"-"`
+	// The ID of the feature flag this experiment is based on
+	FeatureFlagID      string                 `json:"feature_flag_id" url:"-"`
+	AuthenticationFlow AuthenticationFlowEnum `json:"authentication_flow" url:"-"`
+	// Applies only to Auth0-managed flags. Controls where non-overridden config keys resolve from: 'tenant' inherits the tenant's live config so the experiment overlays only its changes, 'flag' uses the flag's frozen defaults for a complete config. Optional; defaults to 'tenant' when omitted. Rejected for customer-defined flags.
+	DefaultConfig *DefaultConfigEnum `json:"default_config,omitempty" url:"-"`
+	// The traffic allocation strategy for this experiment
+	AllocationStrategy *AllocationStrategyEnum `json:"allocation_strategy,omitempty" url:"-"`
+	// Traffic allocations mapping variations to weights or segments
+	Allocations []*AllocationRequestItem `json:"allocations,omitempty" url:"-"`
+	// Ramp experiment levels configuration. A strictly-increasing sequence of exposure percentages, each an integer in [0, 100].
+	Levels []int `json:"levels,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateExperimentRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createExperimentRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createExperimentRequestContentFieldDescription)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetFeatureFlagID(featureFlagID string) {
+	c.FeatureFlagID = featureFlagID
+	c.require(createExperimentRequestContentFieldFeatureFlagID)
+}
+
+// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetAuthenticationFlow(authenticationFlow AuthenticationFlowEnum) {
+	c.AuthenticationFlow = authenticationFlow
+	c.require(createExperimentRequestContentFieldAuthenticationFlow)
+}
+
+// SetDefaultConfig sets the DefaultConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetDefaultConfig(defaultConfig *DefaultConfigEnum) {
+	c.DefaultConfig = defaultConfig
+	c.require(createExperimentRequestContentFieldDefaultConfig)
+}
+
+// SetAllocationStrategy sets the AllocationStrategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetAllocationStrategy(allocationStrategy *AllocationStrategyEnum) {
+	c.AllocationStrategy = allocationStrategy
+	c.require(createExperimentRequestContentFieldAllocationStrategy)
+}
+
+// SetAllocations sets the Allocations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetAllocations(allocations []*AllocationRequestItem) {
+	c.Allocations = allocations
+	c.require(createExperimentRequestContentFieldAllocations)
+}
+
+// SetLevels sets the Levels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExperimentRequestContent) SetLevels(levels []int) {
+	c.Levels = levels
+	c.require(createExperimentRequestContentFieldLevels)
+}
+
+func (c *CreateExperimentRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateExperimentRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateExperimentRequestContent(body)
+	return nil
+}
+
+func (c *CreateExperimentRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateExperimentRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createActionModuleRequestContentFieldName         = big.NewInt(1 << 0)
+	createActionModuleRequestContentFieldCode         = big.NewInt(1 << 1)
+	createActionModuleRequestContentFieldSecrets      = big.NewInt(1 << 2)
+	createActionModuleRequestContentFieldDependencies = big.NewInt(1 << 3)
+	createActionModuleRequestContentFieldAPIVersion   = big.NewInt(1 << 4)
+	createActionModuleRequestContentFieldPublish      = big.NewInt(1 << 5)
+)
+
+type CreateActionModuleRequestContent struct {
+	// The name of the action module.
+	Name string `json:"name" url:"-"`
+	// The source code of the action module.
+	Code string `json:"code" url:"-"`
+	// The secrets to associate with the action module.
+	Secrets []*ActionModuleSecretRequest `json:"secrets,omitempty" url:"-"`
+	// The npm dependencies of the action module.
+	Dependencies []*ActionModuleDependencyRequest `json:"dependencies,omitempty" url:"-"`
+	// The API version of the module.
+	APIVersion *string `json:"api_version,omitempty" url:"-"`
+	// Whether to publish the module immediately after creation.
+	Publish *bool `json:"publish,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateActionModuleRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createActionModuleRequestContentFieldName)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleRequestContent) SetCode(code string) {
+	c.Code = code
+	c.require(createActionModuleRequestContentFieldCode)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleRequestContent) SetSecrets(secrets []*ActionModuleSecretRequest) {
+	c.Secrets = secrets
+	c.require(createActionModuleRequestContentFieldSecrets)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleRequestContent) SetDependencies(dependencies []*ActionModuleDependencyRequest) {
+	c.Dependencies = dependencies
+	c.require(createActionModuleRequestContentFieldDependencies)
+}
+
+// SetAPIVersion sets the APIVersion field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleRequestContent) SetAPIVersion(apiVersion *string) {
+	c.APIVersion = apiVersion
+	c.require(createActionModuleRequestContentFieldAPIVersion)
+}
+
+// SetPublish sets the Publish field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionModuleRequestContent) SetPublish(publish *bool) {
+	c.Publish = publish
+	c.require(createActionModuleRequestContentFieldPublish)
+}
+
+func (c *CreateActionModuleRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateActionModuleRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateActionModuleRequestContent(body)
+	return nil
+}
+
+func (c *CreateActionModuleRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateActionModuleRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createCustomDomainRequestContentFieldDomain                 = big.NewInt(1 << 0)
+	createCustomDomainRequestContentFieldType                   = big.NewInt(1 << 1)
+	createCustomDomainRequestContentFieldVerificationMethod     = big.NewInt(1 << 2)
+	createCustomDomainRequestContentFieldTLSPolicy              = big.NewInt(1 << 3)
+	createCustomDomainRequestContentFieldCustomClientIPHeader   = big.NewInt(1 << 4)
+	createCustomDomainRequestContentFieldDomainMetadata         = big.NewInt(1 << 5)
+	createCustomDomainRequestContentFieldRelyingPartyIdentifier = big.NewInt(1 << 6)
+)
+
+type CreateCustomDomainRequestContent struct {
+	// Domain name.
+	Domain               string                              `json:"domain" url:"-"`
+	Type                 CustomDomainProvisioningTypeEnum    `json:"type" url:"-"`
+	VerificationMethod   *CustomDomainVerificationMethodEnum `json:"verification_method,omitempty" url:"-"`
+	TLSPolicy            *CustomDomainTLSPolicyEnum          `json:"tls_policy,omitempty" url:"-"`
+	CustomClientIPHeader *CustomDomainCustomClientIPHeader   `json:"custom_client_ip_header,omitempty" url:"-"`
+	DomainMetadata       *DomainMetadata                     `json:"domain_metadata,omitempty" url:"-"`
+	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. If not provided, the full domain will be used.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateCustomDomainRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetDomain sets the Domain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainRequestContent) SetDomain(domain string) {
+	c.Domain = domain
+	c.require(createCustomDomainRequestContentFieldDomain)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainRequestContent) SetType(type_ CustomDomainProvisioningTypeEnum) {
+	c.Type = type_
+	c.require(createCustomDomainRequestContentFieldType)
+}
+
+// SetVerificationMethod sets the VerificationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainRequestContent) SetVerificationMethod(verificationMethod *CustomDomainVerificationMethodEnum) {
+	c.VerificationMethod = verificationMethod
+	c.require(createCustomDomainRequestContentFieldVerificationMethod)
+}
+
+// SetTLSPolicy sets the TLSPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainRequestContent) SetTLSPolicy(tlsPolicy *CustomDomainTLSPolicyEnum) {
+	c.TLSPolicy = tlsPolicy
+	c.require(createCustomDomainRequestContentFieldTLSPolicy)
+}
+
+// SetCustomClientIPHeader sets the CustomClientIPHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainRequestContent) SetCustomClientIPHeader(customClientIPHeader *CustomDomainCustomClientIPHeader) {
+	c.CustomClientIPHeader = customClientIPHeader
+	c.require(createCustomDomainRequestContentFieldCustomClientIPHeader)
+}
+
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainRequestContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
+	c.DomainMetadata = domainMetadata
+	c.require(createCustomDomainRequestContentFieldDomainMetadata)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateCustomDomainRequestContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	c.RelyingPartyIdentifier = relyingPartyIdentifier
+	c.require(createCustomDomainRequestContentFieldRelyingPartyIdentifier)
+}
+
+func (c *CreateCustomDomainRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateCustomDomainRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateCustomDomainRequestContent(body)
+	return nil
+}
+
+func (c *CreateCustomDomainRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateCustomDomainRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createAttackProtectionCaptchaPolicyRequestContentFieldName        = big.NewInt(1 << 0)
+	createAttackProtectionCaptchaPolicyRequestContentFieldDescription = big.NewInt(1 << 1)
+	createAttackProtectionCaptchaPolicyRequestContentFieldPriority    = big.NewInt(1 << 2)
+	createAttackProtectionCaptchaPolicyRequestContentFieldMatch       = big.NewInt(1 << 3)
+	createAttackProtectionCaptchaPolicyRequestContentFieldAction      = big.NewInt(1 << 4)
+)
+
+type CreateAttackProtectionCaptchaPolicyRequestContent struct {
+	// Human-readable policy name.
+	Name string `json:"name" url:"-"`
+	// Description of the attack protection policy.
+	Description *string `json:"description,omitempty" url:"-"`
+	// Conflict resolution order. Lower number takes higher precedence. Must be unique per tenant.
+	Priority int                                       `json:"priority" url:"-"`
+	Match    *AttackProtectionCaptchaPolicyMatch       `json:"match" url:"-"`
+	Action   *AttackProtectionCaptchaPolicyActionInput `json:"action" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createAttackProtectionCaptchaPolicyRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createAttackProtectionCaptchaPolicyRequestContentFieldDescription)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) SetPriority(priority int) {
+	c.Priority = priority
+	c.require(createAttackProtectionCaptchaPolicyRequestContentFieldPriority)
+}
+
+// SetMatch sets the Match field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) SetMatch(match *AttackProtectionCaptchaPolicyMatch) {
+	c.Match = match
+	c.require(createAttackProtectionCaptchaPolicyRequestContentFieldMatch)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) SetAction(action *AttackProtectionCaptchaPolicyActionInput) {
+	c.Action = action
+	c.require(createAttackProtectionCaptchaPolicyRequestContentFieldAction)
+}
+
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateAttackProtectionCaptchaPolicyRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateAttackProtectionCaptchaPolicyRequestContent(body)
+	return nil
+}
+
+func (c *CreateAttackProtectionCaptchaPolicyRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateAttackProtectionCaptchaPolicyRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createUserPermissionsRequestContentFieldPermissions = big.NewInt(1 << 0)
+)
+
+type CreateUserPermissionsRequestContent struct {
+	// List of permissions to add to this user.
+	Permissions []*PermissionRequestPayload `json:"permissions" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateUserPermissionsRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetPermissions sets the Permissions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserPermissionsRequestContent) SetPermissions(permissions []*PermissionRequestPayload) {
+	c.Permissions = permissions
+	c.require(createUserPermissionsRequestContentFieldPermissions)
+}
+
+func (c *CreateUserPermissionsRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateUserPermissionsRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateUserPermissionsRequestContent(body)
+	return nil
+}
+
+func (c *CreateUserPermissionsRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateUserPermissionsRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createRoleRequestContentFieldName        = big.NewInt(1 << 0)
+	createRoleRequestContentFieldDescription = big.NewInt(1 << 1)
+	createRoleRequestContentFieldType        = big.NewInt(1 << 2)
+	createRoleRequestContentFieldOwnerID     = big.NewInt(1 << 3)
+)
+
+type CreateRoleRequestContent struct {
+	// Name of the role.
+	Name string `json:"name" url:"-"`
+	// Description of the role.
+	Description *string `json:"description,omitempty" url:"-"`
+	// The type of the role. Defaults to tenant.
+	Type *RoleTypeEnum `json:"type,omitempty" url:"-"`
+	// The ID of the organization that owns this role. Required when type is "organization".
+	OwnerID *string `json:"owner_id,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateRoleRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createRoleRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleRequestContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createRoleRequestContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleRequestContent) SetType(type_ *RoleTypeEnum) {
+	c.Type = type_
+	c.require(createRoleRequestContentFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleRequestContent) SetOwnerID(ownerID *string) {
+	c.OwnerID = ownerID
+	c.require(createRoleRequestContentFieldOwnerID)
+}
+
+func (c *CreateRoleRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateRoleRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateRoleRequestContent(body)
+	return nil
+}
+
+func (c *CreateRoleRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateRoleRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	createOrganizationDiscoveryDomainRequestContentFieldDomain                      = big.NewInt(1 << 0)
 	createOrganizationDiscoveryDomainRequestContentFieldStatus                      = big.NewInt(1 << 1)
 	createOrganizationDiscoveryDomainRequestContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 2)
@@ -1898,55 +1936,6 @@ func (c *CreateOrganizationDiscoveryDomainRequestContent) UnmarshalJSON(data []b
 
 func (c *CreateOrganizationDiscoveryDomainRequestContent) MarshalJSON() ([]byte, error) {
 	type embed CreateOrganizationDiscoveryDomainRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createUserPermissionsRequestContentFieldPermissions = big.NewInt(1 << 0)
-)
-
-type CreateUserPermissionsRequestContent struct {
-	// List of permissions to add to this user.
-	Permissions []*PermissionRequestPayload `json:"permissions" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateUserPermissionsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetPermissions sets the Permissions field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserPermissionsRequestContent) SetPermissions(permissions []*PermissionRequestPayload) {
-	c.Permissions = permissions
-	c.require(createUserPermissionsRequestContentFieldPermissions)
-}
-
-func (c *CreateUserPermissionsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateUserPermissionsRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateUserPermissionsRequestContent(body)
-	return nil
-}
-
-func (c *CreateUserPermissionsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateUserPermissionsRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -2074,81 +2063,51 @@ func (c *CreateOrganizationAllConnectionRequestParameters) MarshalJSON() ([]byte
 }
 
 var (
-	createRoleRequestContentFieldName        = big.NewInt(1 << 0)
-	createRoleRequestContentFieldDescription = big.NewInt(1 << 1)
-	createRoleRequestContentFieldType        = big.NewInt(1 << 2)
-	createRoleRequestContentFieldOwnerID     = big.NewInt(1 << 3)
+	assignRoleGroupsRequestContentFieldGroups = big.NewInt(1 << 0)
 )
 
-type CreateRoleRequestContent struct {
-	// Name of the role.
-	Name string `json:"name" url:"-"`
-	// Description of the role.
-	Description *string `json:"description,omitempty" url:"-"`
-	// The type of the role. Defaults to tenant.
-	Type *RoleTypeEnum `json:"type,omitempty" url:"-"`
-	// The ID of the organization that owns this role. Required when type is "organization".
-	OwnerID *string `json:"owner_id,omitempty" url:"-"`
+type AssignRoleGroupsRequestContent struct {
+	// Array of group IDs to assign to the role.
+	Groups []string `json:"groups" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateRoleRequestContent) require(field *big.Int) {
+func (a *AssignRoleGroupsRequestContent) require(field *big.Int) {
 	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
 	}
 	next.Or(next, field)
-	c.explicitFields = next
+	a.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetGroups sets the Groups field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRoleRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createRoleRequestContentFieldName)
+func (a *AssignRoleGroupsRequestContent) SetGroups(groups []string) {
+	a.Groups = groups
+	a.require(assignRoleGroupsRequestContentFieldGroups)
 }
 
-// SetDescription sets the Description field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRoleRequestContent) SetDescription(description *string) {
-	c.Description = description
-	c.require(createRoleRequestContentFieldDescription)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRoleRequestContent) SetType(type_ *RoleTypeEnum) {
-	c.Type = type_
-	c.require(createRoleRequestContentFieldType)
-}
-
-// SetOwnerID sets the OwnerID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRoleRequestContent) SetOwnerID(ownerID *string) {
-	c.OwnerID = ownerID
-	c.require(createRoleRequestContentFieldOwnerID)
-}
-
-func (c *CreateRoleRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateRoleRequestContent
+func (a *AssignRoleGroupsRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler AssignRoleGroupsRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateRoleRequestContent(body)
+	*a = AssignRoleGroupsRequestContent(body)
 	return nil
 }
 
-func (c *CreateRoleRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateRoleRequestContent
+func (a *AssignRoleGroupsRequestContent) MarshalJSON() ([]byte, error) {
+	type embed AssignRoleGroupsRequestContent
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*c),
+		embed: embed(*a),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -2229,23 +2188,21 @@ func (c *CreateBrandingPhoneProviderRequestContent) MarshalJSON() ([]byte, error
 }
 
 var (
-	createFeatureFlagRequestContentFieldName        = big.NewInt(1 << 0)
-	createFeatureFlagRequestContentFieldDescription = big.NewInt(1 << 1)
-	createFeatureFlagRequestContentFieldParameters  = big.NewInt(1 << 2)
+	createSCIMTokenRequestContentFieldScopes        = big.NewInt(1 << 0)
+	createSCIMTokenRequestContentFieldTokenLifetime = big.NewInt(1 << 1)
 )
 
-type CreateFeatureFlagRequestContent struct {
-	// A human-readable name for the feature flag
-	Name string `json:"name" url:"-"`
-	// A description of what this feature flag controls
-	Description *string                     `json:"description,omitempty" url:"-"`
-	Parameters  CreateFeatureFlagParameters `json:"parameters" url:"-"`
+type CreateSCIMTokenRequestContent struct {
+	// The scopes of the scim token
+	Scopes []string `json:"scopes,omitempty" url:"-"`
+	// Lifetime of the token in seconds. Must be greater than 900
+	TokenLifetime *int `json:"token_lifetime,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateFeatureFlagRequestContent) require(field *big.Int) {
+func (c *CreateSCIMTokenRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -2254,39 +2211,32 @@ func (c *CreateFeatureFlagRequestContent) require(field *big.Int) {
 	c.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetScopes sets the Scopes field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFeatureFlagRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createFeatureFlagRequestContentFieldName)
+func (c *CreateSCIMTokenRequestContent) SetScopes(scopes []string) {
+	c.Scopes = scopes
+	c.require(createSCIMTokenRequestContentFieldScopes)
 }
 
-// SetDescription sets the Description field and marks it as non-optional;
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFeatureFlagRequestContent) SetDescription(description *string) {
-	c.Description = description
-	c.require(createFeatureFlagRequestContentFieldDescription)
+func (c *CreateSCIMTokenRequestContent) SetTokenLifetime(tokenLifetime *int) {
+	c.TokenLifetime = tokenLifetime
+	c.require(createSCIMTokenRequestContentFieldTokenLifetime)
 }
 
-// SetParameters sets the Parameters field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFeatureFlagRequestContent) SetParameters(parameters CreateFeatureFlagParameters) {
-	c.Parameters = parameters
-	c.require(createFeatureFlagRequestContentFieldParameters)
-}
-
-func (c *CreateFeatureFlagRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFeatureFlagRequestContent
+func (c *CreateSCIMTokenRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSCIMTokenRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateFeatureFlagRequestContent(body)
+	*c = CreateSCIMTokenRequestContent(body)
 	return nil
 }
 
-func (c *CreateFeatureFlagRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateFeatureFlagRequestContent
+func (c *CreateSCIMTokenRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSCIMTokenRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -2462,6 +2412,125 @@ func (c *CreatePhoneTemplateRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	createActionRequestContentFieldName              = big.NewInt(1 << 0)
+	createActionRequestContentFieldSupportedTriggers = big.NewInt(1 << 1)
+	createActionRequestContentFieldCode              = big.NewInt(1 << 2)
+	createActionRequestContentFieldDependencies      = big.NewInt(1 << 3)
+	createActionRequestContentFieldRuntime           = big.NewInt(1 << 4)
+	createActionRequestContentFieldSecrets           = big.NewInt(1 << 5)
+	createActionRequestContentFieldModules           = big.NewInt(1 << 6)
+	createActionRequestContentFieldDeploy            = big.NewInt(1 << 7)
+)
+
+type CreateActionRequestContent struct {
+	// The name of an action.
+	Name string `json:"name" url:"-"`
+	// The list of triggers that this action supports. At this time, an action can only target a single trigger at a time.
+	SupportedTriggers []*ActionTrigger `json:"supported_triggers" url:"-"`
+	// The source code of the action.
+	Code *string `json:"code,omitempty" url:"-"`
+	// The list of third party npm modules, and their versions, that this action depends on.
+	Dependencies []*ActionVersionDependency `json:"dependencies,omitempty" url:"-"`
+	// The Node runtime. For example: `node22`, defaults to `node22`
+	Runtime *string `json:"runtime,omitempty" url:"-"`
+	// The list of secrets that are included in an action or a version of an action.
+	Secrets []*ActionSecretRequest `json:"secrets,omitempty" url:"-"`
+	// The list of action modules and their versions used by this action.
+	Modules []*ActionModuleReference `json:"modules,omitempty" url:"-"`
+	// True if the action should be deployed after creation.
+	Deploy *bool `json:"deploy,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateActionRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createActionRequestContentFieldName)
+}
+
+// SetSupportedTriggers sets the SupportedTriggers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetSupportedTriggers(supportedTriggers []*ActionTrigger) {
+	c.SupportedTriggers = supportedTriggers
+	c.require(createActionRequestContentFieldSupportedTriggers)
+}
+
+// SetCode sets the Code field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetCode(code *string) {
+	c.Code = code
+	c.require(createActionRequestContentFieldCode)
+}
+
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetDependencies(dependencies []*ActionVersionDependency) {
+	c.Dependencies = dependencies
+	c.require(createActionRequestContentFieldDependencies)
+}
+
+// SetRuntime sets the Runtime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetRuntime(runtime *string) {
+	c.Runtime = runtime
+	c.require(createActionRequestContentFieldRuntime)
+}
+
+// SetSecrets sets the Secrets field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetSecrets(secrets []*ActionSecretRequest) {
+	c.Secrets = secrets
+	c.require(createActionRequestContentFieldSecrets)
+}
+
+// SetModules sets the Modules field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetModules(modules []*ActionModuleReference) {
+	c.Modules = modules
+	c.require(createActionRequestContentFieldModules)
+}
+
+// SetDeploy sets the Deploy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateActionRequestContent) SetDeploy(deploy *bool) {
+	c.Deploy = deploy
+	c.require(createActionRequestContentFieldDeploy)
+}
+
+func (c *CreateActionRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateActionRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateActionRequestContent(body)
+	return nil
+}
+
+func (c *CreateActionRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateActionRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	createOrganizationRequestContentFieldName                   = big.NewInt(1 << 0)
 	createOrganizationRequestContentFieldDisplayName            = big.NewInt(1 << 1)
 	createOrganizationRequestContentFieldBranding               = big.NewInt(1 << 2)
@@ -2573,55 +2642,6 @@ func (c *CreateOrganizationRequestContent) MarshalJSON() ([]byte, error) {
 		embed: embed(*c),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	assignRoleGroupsRequestContentFieldGroups = big.NewInt(1 << 0)
-)
-
-type AssignRoleGroupsRequestContent struct {
-	// Array of group IDs to assign to the role.
-	Groups []string `json:"groups" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (a *AssignRoleGroupsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
-	}
-	next.Or(next, field)
-	a.explicitFields = next
-}
-
-// SetGroups sets the Groups field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (a *AssignRoleGroupsRequestContent) SetGroups(groups []string) {
-	a.Groups = groups
-	a.require(assignRoleGroupsRequestContentFieldGroups)
-}
-
-func (a *AssignRoleGroupsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler AssignRoleGroupsRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*a = AssignRoleGroupsRequestContent(body)
-	return nil
-}
-
-func (a *AssignRoleGroupsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed AssignRoleGroupsRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*a),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -2806,24 +2826,24 @@ func (c *CreateNetworkACLRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createVariationRequestContentFieldName        = big.NewInt(1 << 0)
-	createVariationRequestContentFieldDescription = big.NewInt(1 << 1)
-	createVariationRequestContentFieldOverrides   = big.NewInt(1 << 2)
+	createRateLimitPolicyRequestContentFieldResource         = big.NewInt(1 << 0)
+	createRateLimitPolicyRequestContentFieldConsumer         = big.NewInt(1 << 1)
+	createRateLimitPolicyRequestContentFieldConsumerSelector = big.NewInt(1 << 2)
+	createRateLimitPolicyRequestContentFieldConfiguration    = big.NewInt(1 << 3)
 )
 
-type CreateVariationRequestContent struct {
-	// A human-readable name for the variation
-	Name string `json:"name" url:"-"`
-	// A description of what this variation controls
-	Description *string `json:"description,omitempty" url:"-"`
-	// Configuration overrides for this variation; keys must exist in the parent flag parameters. Empty {} is the baseline (control) variation that overrides nothing.
-	Overrides VariationOverridesMap `json:"overrides" url:"-"`
+type CreateRateLimitPolicyRequestContent struct {
+	Resource RateLimitPolicyResourceEnum `json:"resource" url:"-"`
+	Consumer RateLimitPolicyConsumerEnum `json:"consumer" url:"-"`
+	// Identifier or category within the consumer to which the policy applies. Supported values: `client_id:<client_id>` to target a specific client by ID, `client_id:<cimd_uri>` to target a CIMD client by URI, `cimd_clients` to target all CIMD clients, `third_party_clients` to target all third-party clients, or `default` to apply the policy to any consumer identifier not otherwise explicitly targeted.
+	ConsumerSelector string                        `json:"consumer_selector" url:"-"`
+	Configuration    *RateLimitPolicyConfiguration `json:"configuration" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateVariationRequestContent) require(field *big.Int) {
+func (c *CreateRateLimitPolicyRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -2832,39 +2852,46 @@ func (c *CreateVariationRequestContent) require(field *big.Int) {
 	c.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetResource sets the Resource field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVariationRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createVariationRequestContentFieldName)
+func (c *CreateRateLimitPolicyRequestContent) SetResource(resource RateLimitPolicyResourceEnum) {
+	c.Resource = resource
+	c.require(createRateLimitPolicyRequestContentFieldResource)
 }
 
-// SetDescription sets the Description field and marks it as non-optional;
+// SetConsumer sets the Consumer field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVariationRequestContent) SetDescription(description *string) {
-	c.Description = description
-	c.require(createVariationRequestContentFieldDescription)
+func (c *CreateRateLimitPolicyRequestContent) SetConsumer(consumer RateLimitPolicyConsumerEnum) {
+	c.Consumer = consumer
+	c.require(createRateLimitPolicyRequestContentFieldConsumer)
 }
 
-// SetOverrides sets the Overrides field and marks it as non-optional;
+// SetConsumerSelector sets the ConsumerSelector field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateVariationRequestContent) SetOverrides(overrides VariationOverridesMap) {
-	c.Overrides = overrides
-	c.require(createVariationRequestContentFieldOverrides)
+func (c *CreateRateLimitPolicyRequestContent) SetConsumerSelector(consumerSelector string) {
+	c.ConsumerSelector = consumerSelector
+	c.require(createRateLimitPolicyRequestContentFieldConsumerSelector)
 }
 
-func (c *CreateVariationRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateVariationRequestContent
+// SetConfiguration sets the Configuration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRateLimitPolicyRequestContent) SetConfiguration(configuration *RateLimitPolicyConfiguration) {
+	c.Configuration = configuration
+	c.require(createRateLimitPolicyRequestContentFieldConfiguration)
+}
+
+func (c *CreateRateLimitPolicyRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateRateLimitPolicyRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateVariationRequestContent(body)
+	*c = CreateRateLimitPolicyRequestContent(body)
 	return nil
 }
 
-func (c *CreateVariationRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateVariationRequestContent
+func (c *CreateRateLimitPolicyRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateRateLimitPolicyRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -2991,122 +3018,6 @@ func (c *CreateClientGrantRequestContent) UnmarshalJSON(data []byte) error {
 
 func (c *CreateClientGrantRequestContent) MarshalJSON() ([]byte, error) {
 	type embed CreateClientGrantRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createKeysNetworkACLsRequestContentFieldName  = big.NewInt(1 << 0)
-	createKeysNetworkACLsRequestContentFieldAlg   = big.NewInt(1 << 1)
-	createKeysNetworkACLsRequestContentFieldValue = big.NewInt(1 << 2)
-)
-
-type CreateKeysNetworkACLsRequestContent struct {
-	// Customer-supplied label with no cryptographic meaning. Must be unique across all Network ACL keys for the tenant.
-	Name string                     `json:"name" url:"-"`
-	Alg  NetworkACLKeyAlgorithmEnum `json:"alg" url:"-"`
-	// Base64-encoded raw key material. Constraints on the decoded value depend on the algorithm specified. Currently only HMAC-SHA256 is supported.
-	Value string `json:"value" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateKeysNetworkACLsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateKeysNetworkACLsRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createKeysNetworkACLsRequestContentFieldName)
-}
-
-// SetAlg sets the Alg field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateKeysNetworkACLsRequestContent) SetAlg(alg NetworkACLKeyAlgorithmEnum) {
-	c.Alg = alg
-	c.require(createKeysNetworkACLsRequestContentFieldAlg)
-}
-
-// SetValue sets the Value field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateKeysNetworkACLsRequestContent) SetValue(value string) {
-	c.Value = value
-	c.require(createKeysNetworkACLsRequestContentFieldValue)
-}
-
-func (c *CreateKeysNetworkACLsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateKeysNetworkACLsRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateKeysNetworkACLsRequestContent(body)
-	return nil
-}
-
-func (c *CreateKeysNetworkACLsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateKeysNetworkACLsRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createEncryptionKeyRequestContentFieldType = big.NewInt(1 << 0)
-)
-
-type CreateEncryptionKeyRequestContent struct {
-	Type CreateEncryptionKeyType `json:"type" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateEncryptionKeyRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEncryptionKeyRequestContent) SetType(type_ CreateEncryptionKeyType) {
-	c.Type = type_
-	c.require(createEncryptionKeyRequestContentFieldType)
-}
-
-func (c *CreateEncryptionKeyRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateEncryptionKeyRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateEncryptionKeyRequestContent(body)
-	return nil
-}
-
-func (c *CreateEncryptionKeyRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateEncryptionKeyRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -3314,6 +3225,377 @@ func (c *CreateUserRequestContent) UnmarshalJSON(data []byte) error {
 
 func (c *CreateUserRequestContent) MarshalJSON() ([]byte, error) {
 	type embed CreateUserRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createEncryptionKeyRequestContentFieldType = big.NewInt(1 << 0)
+)
+
+type CreateEncryptionKeyRequestContent struct {
+	Type CreateEncryptionKeyType `json:"type" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateEncryptionKeyRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateEncryptionKeyRequestContent) SetType(type_ CreateEncryptionKeyType) {
+	c.Type = type_
+	c.require(createEncryptionKeyRequestContentFieldType)
+}
+
+func (c *CreateEncryptionKeyRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateEncryptionKeyRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateEncryptionKeyRequestContent(body)
+	return nil
+}
+
+func (c *CreateEncryptionKeyRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEncryptionKeyRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createVerificationEmailRequestContentFieldUserID         = big.NewInt(1 << 0)
+	createVerificationEmailRequestContentFieldClientID       = big.NewInt(1 << 1)
+	createVerificationEmailRequestContentFieldIdentity       = big.NewInt(1 << 2)
+	createVerificationEmailRequestContentFieldOrganizationID = big.NewInt(1 << 3)
+)
+
+type CreateVerificationEmailRequestContent struct {
+	// user_id of the user to send the verification email to.
+	UserID string `json:"user_id" url:"-"`
+	// client_id of the client (application). If no value provided, the global Client ID will be used.
+	ClientID *string   `json:"client_id,omitempty" url:"-"`
+	Identity *Identity `json:"identity,omitempty" url:"-"`
+	// (Optional) Organization ID – the ID of the Organization. If provided, organization parameters will be made available to the email template and organization branding will be applied to the prompt. In addition, the redirect link in the prompt will include organization_id and organization_name query string parameters.
+	OrganizationID *string `json:"organization_id,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateVerificationEmailRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailRequestContent) SetUserID(userID string) {
+	c.UserID = userID
+	c.require(createVerificationEmailRequestContentFieldUserID)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailRequestContent) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(createVerificationEmailRequestContentFieldClientID)
+}
+
+// SetIdentity sets the Identity field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailRequestContent) SetIdentity(identity *Identity) {
+	c.Identity = identity
+	c.require(createVerificationEmailRequestContentFieldIdentity)
+}
+
+// SetOrganizationID sets the OrganizationID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVerificationEmailRequestContent) SetOrganizationID(organizationID *string) {
+	c.OrganizationID = organizationID
+	c.require(createVerificationEmailRequestContentFieldOrganizationID)
+}
+
+func (c *CreateVerificationEmailRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateVerificationEmailRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateVerificationEmailRequestContent(body)
+	return nil
+}
+
+func (c *CreateVerificationEmailRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateVerificationEmailRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+type CreateImportUsersRequestContent struct {
+	Users io.Reader `json:"-" url:"-"`
+	// connection_id of the connection to which users will be imported.
+	ConnectionID string `json:"connection_id" url:"-"`
+	// Whether to update users if they already exist (true) or to ignore them (false).
+	Upsert *bool `json:"upsert,omitempty" url:"-"`
+	// Customer-defined ID.
+	ExternalID *string `json:"external_id,omitempty" url:"-"`
+	// Whether to send a completion email to all tenant owners when the job is finished (true) or not (false).
+	SendCompletionEmail *bool `json:"send_completion_email,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateImportUsersRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+var (
+	createClientProfileRequestContentFieldName                = big.NewInt(1 << 0)
+	createClientProfileRequestContentFieldDescription         = big.NewInt(1 << 1)
+	createClientProfileRequestContentFieldClientConfiguration = big.NewInt(1 << 2)
+	createClientProfileRequestContentFieldApplyPolicy         = big.NewInt(1 << 3)
+)
+
+type CreateClientProfileRequestContent struct {
+	Name                ClientProfileName                 `json:"name" url:"-"`
+	Description         *ClientProfileDescription         `json:"description,omitempty" url:"-"`
+	ClientConfiguration *ClientProfileClientConfiguration `json:"client_configuration" url:"-"`
+	ApplyPolicy         *ClientProfileApplyPolicy         `json:"apply_policy" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateClientProfileRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientProfileRequestContent) SetName(name ClientProfileName) {
+	c.Name = name
+	c.require(createClientProfileRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientProfileRequestContent) SetDescription(description *ClientProfileDescription) {
+	c.Description = description
+	c.require(createClientProfileRequestContentFieldDescription)
+}
+
+// SetClientConfiguration sets the ClientConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientProfileRequestContent) SetClientConfiguration(clientConfiguration *ClientProfileClientConfiguration) {
+	c.ClientConfiguration = clientConfiguration
+	c.require(createClientProfileRequestContentFieldClientConfiguration)
+}
+
+// SetApplyPolicy sets the ApplyPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientProfileRequestContent) SetApplyPolicy(applyPolicy *ClientProfileApplyPolicy) {
+	c.ApplyPolicy = applyPolicy
+	c.require(createClientProfileRequestContentFieldApplyPolicy)
+}
+
+func (c *CreateClientProfileRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateClientProfileRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateClientProfileRequestContent(body)
+	return nil
+}
+
+func (c *CreateClientProfileRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateClientProfileRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createExportUsersRequestContentFieldConnectionID = big.NewInt(1 << 0)
+	createExportUsersRequestContentFieldFormat       = big.NewInt(1 << 1)
+	createExportUsersRequestContentFieldLimit        = big.NewInt(1 << 2)
+	createExportUsersRequestContentFieldFields       = big.NewInt(1 << 3)
+)
+
+type CreateExportUsersRequestContent struct {
+	// connection_id of the connection from which users will be exported.
+	ConnectionID *string            `json:"connection_id,omitempty" url:"-"`
+	Format       *JobFileFormatEnum `json:"format,omitempty" url:"-"`
+	// Limit the number of records.
+	Limit *int `json:"limit,omitempty" url:"-"`
+	// List of fields to be included in the CSV. Defaults to a predefined set of fields.
+	Fields []*CreateExportUsersFields `json:"fields,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateExportUsersRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetConnectionID sets the ConnectionID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersRequestContent) SetConnectionID(connectionID *string) {
+	c.ConnectionID = connectionID
+	c.require(createExportUsersRequestContentFieldConnectionID)
+}
+
+// SetFormat sets the Format field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersRequestContent) SetFormat(format *JobFileFormatEnum) {
+	c.Format = format
+	c.require(createExportUsersRequestContentFieldFormat)
+}
+
+// SetLimit sets the Limit field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersRequestContent) SetLimit(limit *int) {
+	c.Limit = limit
+	c.require(createExportUsersRequestContentFieldLimit)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateExportUsersRequestContent) SetFields(fields []*CreateExportUsersFields) {
+	c.Fields = fields
+	c.require(createExportUsersRequestContentFieldFields)
+}
+
+func (c *CreateExportUsersRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateExportUsersRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateExportUsersRequestContent(body)
+	return nil
+}
+
+func (c *CreateExportUsersRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateExportUsersRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createFeatureFlagRequestContentFieldName        = big.NewInt(1 << 0)
+	createFeatureFlagRequestContentFieldDescription = big.NewInt(1 << 1)
+	createFeatureFlagRequestContentFieldParameters  = big.NewInt(1 << 2)
+)
+
+type CreateFeatureFlagRequestContent struct {
+	// A human-readable name for the feature flag
+	Name string `json:"name" url:"-"`
+	// A description of what this feature flag controls
+	Description *string                     `json:"description,omitempty" url:"-"`
+	Parameters  CreateFeatureFlagParameters `json:"parameters" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateFeatureFlagRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createFeatureFlagRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagRequestContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createFeatureFlagRequestContentFieldDescription)
+}
+
+// SetParameters sets the Parameters field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFeatureFlagRequestContent) SetParameters(parameters CreateFeatureFlagParameters) {
+	c.Parameters = parameters
+	c.require(createFeatureFlagRequestContentFieldParameters)
+}
+
+func (c *CreateFeatureFlagRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFeatureFlagRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateFeatureFlagRequestContent(body)
+	return nil
+}
+
+func (c *CreateFeatureFlagRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateFeatureFlagRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -3933,196 +4215,6 @@ func (c *CreateClientRequestContent) MarshalJSON() ([]byte, error) {
 	return json.Marshal(explicitMarshaler)
 }
 
-type CreateImportUsersRequestContent struct {
-	Users io.Reader `json:"-" url:"-"`
-	// connection_id of the connection to which users will be imported.
-	ConnectionID string `json:"connection_id" url:"-"`
-	// Whether to update users if they already exist (true) or to ignore them (false).
-	Upsert *bool `json:"upsert,omitempty" url:"-"`
-	// Customer-defined ID.
-	ExternalID *string `json:"external_id,omitempty" url:"-"`
-	// Whether to send a completion email to all tenant owners when the job is finished (true) or not (false).
-	SendCompletionEmail *bool `json:"send_completion_email,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateImportUsersRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-var (
-	createExportUsersRequestContentFieldConnectionID = big.NewInt(1 << 0)
-	createExportUsersRequestContentFieldFormat       = big.NewInt(1 << 1)
-	createExportUsersRequestContentFieldLimit        = big.NewInt(1 << 2)
-	createExportUsersRequestContentFieldFields       = big.NewInt(1 << 3)
-)
-
-type CreateExportUsersRequestContent struct {
-	// connection_id of the connection from which users will be exported.
-	ConnectionID *string            `json:"connection_id,omitempty" url:"-"`
-	Format       *JobFileFormatEnum `json:"format,omitempty" url:"-"`
-	// Limit the number of records.
-	Limit *int `json:"limit,omitempty" url:"-"`
-	// List of fields to be included in the CSV. Defaults to a predefined set of fields.
-	Fields []*CreateExportUsersFields `json:"fields,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateExportUsersRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetConnectionID sets the ConnectionID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExportUsersRequestContent) SetConnectionID(connectionID *string) {
-	c.ConnectionID = connectionID
-	c.require(createExportUsersRequestContentFieldConnectionID)
-}
-
-// SetFormat sets the Format field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExportUsersRequestContent) SetFormat(format *JobFileFormatEnum) {
-	c.Format = format
-	c.require(createExportUsersRequestContentFieldFormat)
-}
-
-// SetLimit sets the Limit field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExportUsersRequestContent) SetLimit(limit *int) {
-	c.Limit = limit
-	c.require(createExportUsersRequestContentFieldLimit)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateExportUsersRequestContent) SetFields(fields []*CreateExportUsersFields) {
-	c.Fields = fields
-	c.require(createExportUsersRequestContentFieldFields)
-}
-
-func (c *CreateExportUsersRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateExportUsersRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateExportUsersRequestContent(body)
-	return nil
-}
-
-func (c *CreateExportUsersRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateExportUsersRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createHookRequestContentFieldName         = big.NewInt(1 << 0)
-	createHookRequestContentFieldScript       = big.NewInt(1 << 1)
-	createHookRequestContentFieldEnabled      = big.NewInt(1 << 2)
-	createHookRequestContentFieldDependencies = big.NewInt(1 << 3)
-	createHookRequestContentFieldTriggerID    = big.NewInt(1 << 4)
-)
-
-type CreateHookRequestContent struct {
-	// Name of this hook.
-	Name string `json:"name" url:"-"`
-	// Code to be executed when this hook runs.
-	Script string `json:"script" url:"-"`
-	// Whether this hook will be executed (true) or ignored (false).
-	Enabled      *bool             `json:"enabled,omitempty" url:"-"`
-	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"-"`
-	// Execution stage of this rule. Can be `credentials-exchange`, `pre-user-registration`, `post-user-registration`, `post-change-password`, or `send-phone-message`.
-	TriggerID HookTriggerIDEnum `json:"triggerId" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateHookRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateHookRequestContent) SetName(name string) {
-	c.Name = name
-	c.require(createHookRequestContentFieldName)
-}
-
-// SetScript sets the Script field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateHookRequestContent) SetScript(script string) {
-	c.Script = script
-	c.require(createHookRequestContentFieldScript)
-}
-
-// SetEnabled sets the Enabled field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateHookRequestContent) SetEnabled(enabled *bool) {
-	c.Enabled = enabled
-	c.require(createHookRequestContentFieldEnabled)
-}
-
-// SetDependencies sets the Dependencies field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateHookRequestContent) SetDependencies(dependencies *HookDependencies) {
-	c.Dependencies = dependencies
-	c.require(createHookRequestContentFieldDependencies)
-}
-
-// SetTriggerID sets the TriggerID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateHookRequestContent) SetTriggerID(triggerID HookTriggerIDEnum) {
-	c.TriggerID = triggerID
-	c.require(createHookRequestContentFieldTriggerID)
-}
-
-func (c *CreateHookRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateHookRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateHookRequestContent(body)
-	return nil
-}
-
-func (c *CreateHookRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateHookRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
 var (
 	createOrganizationMemberRequestContentFieldMembers = big.NewInt(1 << 0)
 )
@@ -4173,307 +4265,242 @@ func (c *CreateOrganizationMemberRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createCustomDomainRequestContentFieldDomain                 = big.NewInt(1 << 0)
-	createCustomDomainRequestContentFieldType                   = big.NewInt(1 << 1)
-	createCustomDomainRequestContentFieldVerificationMethod     = big.NewInt(1 << 2)
-	createCustomDomainRequestContentFieldTLSPolicy              = big.NewInt(1 << 3)
-	createCustomDomainRequestContentFieldCustomClientIPHeader   = big.NewInt(1 << 4)
-	createCustomDomainRequestContentFieldDomainMetadata         = big.NewInt(1 << 5)
-	createCustomDomainRequestContentFieldRelyingPartyIdentifier = big.NewInt(1 << 6)
+	createResourceServerRequestContentFieldName                                      = big.NewInt(1 << 0)
+	createResourceServerRequestContentFieldIdentifier                                = big.NewInt(1 << 1)
+	createResourceServerRequestContentFieldScopes                                    = big.NewInt(1 << 2)
+	createResourceServerRequestContentFieldSigningAlg                                = big.NewInt(1 << 3)
+	createResourceServerRequestContentFieldSigningSecret                             = big.NewInt(1 << 4)
+	createResourceServerRequestContentFieldAllowOfflineAccess                        = big.NewInt(1 << 5)
+	createResourceServerRequestContentFieldAllowOnlineAccess                         = big.NewInt(1 << 6)
+	createResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 7)
+	createResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 8)
+	createResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 9)
+	createResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
+	createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 11)
+	createResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 12)
+	createResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 13)
+	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 14)
+	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 15)
+	createResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 16)
+	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
+	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 18)
+	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
+	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
 )
 
-type CreateCustomDomainRequestContent struct {
-	// Domain name.
-	Domain               string                              `json:"domain" url:"-"`
-	Type                 CustomDomainProvisioningTypeEnum    `json:"type" url:"-"`
-	VerificationMethod   *CustomDomainVerificationMethodEnum `json:"verification_method,omitempty" url:"-"`
-	TLSPolicy            *CustomDomainTLSPolicyEnum          `json:"tls_policy,omitempty" url:"-"`
-	CustomClientIPHeader *CustomDomainCustomClientIPHeader   `json:"custom_client_ip_header,omitempty" url:"-"`
-	DomainMetadata       *DomainMetadata                     `json:"domain_metadata,omitempty" url:"-"`
-	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. If not provided, the full domain will be used.
-	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateCustomDomainRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetDomain sets the Domain field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateCustomDomainRequestContent) SetDomain(domain string) {
-	c.Domain = domain
-	c.require(createCustomDomainRequestContentFieldDomain)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateCustomDomainRequestContent) SetType(type_ CustomDomainProvisioningTypeEnum) {
-	c.Type = type_
-	c.require(createCustomDomainRequestContentFieldType)
-}
-
-// SetVerificationMethod sets the VerificationMethod field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateCustomDomainRequestContent) SetVerificationMethod(verificationMethod *CustomDomainVerificationMethodEnum) {
-	c.VerificationMethod = verificationMethod
-	c.require(createCustomDomainRequestContentFieldVerificationMethod)
-}
-
-// SetTLSPolicy sets the TLSPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateCustomDomainRequestContent) SetTLSPolicy(tlsPolicy *CustomDomainTLSPolicyEnum) {
-	c.TLSPolicy = tlsPolicy
-	c.require(createCustomDomainRequestContentFieldTLSPolicy)
-}
-
-// SetCustomClientIPHeader sets the CustomClientIPHeader field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateCustomDomainRequestContent) SetCustomClientIPHeader(customClientIPHeader *CustomDomainCustomClientIPHeader) {
-	c.CustomClientIPHeader = customClientIPHeader
-	c.require(createCustomDomainRequestContentFieldCustomClientIPHeader)
-}
-
-// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateCustomDomainRequestContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
-	c.DomainMetadata = domainMetadata
-	c.require(createCustomDomainRequestContentFieldDomainMetadata)
-}
-
-// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateCustomDomainRequestContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
-	c.RelyingPartyIdentifier = relyingPartyIdentifier
-	c.require(createCustomDomainRequestContentFieldRelyingPartyIdentifier)
-}
-
-func (c *CreateCustomDomainRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateCustomDomainRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateCustomDomainRequestContent(body)
-	return nil
-}
-
-func (c *CreateCustomDomainRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateCustomDomainRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createRateLimitPolicyRequestContentFieldResource         = big.NewInt(1 << 0)
-	createRateLimitPolicyRequestContentFieldConsumer         = big.NewInt(1 << 1)
-	createRateLimitPolicyRequestContentFieldConsumerSelector = big.NewInt(1 << 2)
-	createRateLimitPolicyRequestContentFieldConfiguration    = big.NewInt(1 << 3)
-)
-
-type CreateRateLimitPolicyRequestContent struct {
-	Resource RateLimitPolicyResourceEnum `json:"resource" url:"-"`
-	Consumer RateLimitPolicyConsumerEnum `json:"consumer" url:"-"`
-	// Identifier or category within the consumer to which the policy applies. Supported values: `client_id:<client_id>` to target a specific client by ID, `client_id:<cimd_uri>` to target a CIMD client by URI, `cimd_clients` to target all CIMD clients, `third_party_clients` to target all third-party clients, or `default` to apply the policy to any consumer identifier not otherwise explicitly targeted.
-	ConsumerSelector string                        `json:"consumer_selector" url:"-"`
-	Configuration    *RateLimitPolicyConfiguration `json:"configuration" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateRateLimitPolicyRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetResource sets the Resource field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRateLimitPolicyRequestContent) SetResource(resource RateLimitPolicyResourceEnum) {
-	c.Resource = resource
-	c.require(createRateLimitPolicyRequestContentFieldResource)
-}
-
-// SetConsumer sets the Consumer field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRateLimitPolicyRequestContent) SetConsumer(consumer RateLimitPolicyConsumerEnum) {
-	c.Consumer = consumer
-	c.require(createRateLimitPolicyRequestContentFieldConsumer)
-}
-
-// SetConsumerSelector sets the ConsumerSelector field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRateLimitPolicyRequestContent) SetConsumerSelector(consumerSelector string) {
-	c.ConsumerSelector = consumerSelector
-	c.require(createRateLimitPolicyRequestContentFieldConsumerSelector)
-}
-
-// SetConfiguration sets the Configuration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateRateLimitPolicyRequestContent) SetConfiguration(configuration *RateLimitPolicyConfiguration) {
-	c.Configuration = configuration
-	c.require(createRateLimitPolicyRequestContentFieldConfiguration)
-}
-
-func (c *CreateRateLimitPolicyRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateRateLimitPolicyRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateRateLimitPolicyRequestContent(body)
-	return nil
-}
-
-func (c *CreateRateLimitPolicyRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateRateLimitPolicyRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	postClientCredentialRequestContentFieldCredentialType      = big.NewInt(1 << 0)
-	postClientCredentialRequestContentFieldName                = big.NewInt(1 << 1)
-	postClientCredentialRequestContentFieldSubjectDn           = big.NewInt(1 << 2)
-	postClientCredentialRequestContentFieldPem                 = big.NewInt(1 << 3)
-	postClientCredentialRequestContentFieldAlg                 = big.NewInt(1 << 4)
-	postClientCredentialRequestContentFieldParseExpiryFromCert = big.NewInt(1 << 5)
-	postClientCredentialRequestContentFieldExpiresAt           = big.NewInt(1 << 6)
-	postClientCredentialRequestContentFieldKid                 = big.NewInt(1 << 7)
-)
-
-type PostClientCredentialRequestContent struct {
-	CredentialType ClientCredentialTypeEnum `json:"credential_type" url:"-"`
-	// Friendly name for a credential.
+type CreateResourceServerRequestContent struct {
+	// Friendly name for this resource server. Can not contain `<` or `>` characters.
 	Name *string `json:"name,omitempty" url:"-"`
-	// Subject Distinguished Name. Mutually exclusive with `pem` property. Applies to `cert_subject_dn` credential type.
-	SubjectDn *string `json:"subject_dn,omitempty" url:"-"`
-	// PEM-formatted public key (SPKI and PKCS1) or X509 certificate. Must be JSON escaped.
-	Pem *string                           `json:"pem,omitempty" url:"-"`
-	Alg *PublicKeyCredentialAlgorithmEnum `json:"alg,omitempty" url:"-"`
-	// Parse expiry from x509 certificate. If true, attempts to parse the expiry date from the provided PEM. Applies to `public_key` credential type.
-	ParseExpiryFromCert *bool `json:"parse_expiry_from_cert,omitempty" url:"-"`
-	// The ISO 8601 formatted date representing the expiration of the credential. If not specified (not recommended), the credential never expires. Applies to `public_key` credential type.
-	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"-"`
-	// Optional kid (Key ID), used to uniquely identify the credential. If not specified, a kid value will be auto-generated. The kid header parameter in JWTs sent by your client should match this value. Valid format is [0-9a-zA-Z-_]{10,64}
-	Kid *string `json:"kid,omitempty" url:"-"`
+	// Unique identifier for the API used as the audience parameter on authorization calls. Can not be changed once set.
+	Identifier string `json:"identifier" url:"-"`
+	// List of permissions (scopes) that this API uses.
+	Scopes     []*ResourceServerScope `json:"scopes,omitempty" url:"-"`
+	SigningAlg *SigningAlgorithmEnum  `json:"signing_alg,omitempty" url:"-"`
+	// Secret used to sign tokens when using symmetric algorithms (HS256).
+	SigningSecret *string `json:"signing_secret,omitempty" url:"-"`
+	// Whether refresh tokens can be issued for this API (true) or not (false).
+	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
+	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
+	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"-"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"-"`
+	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
+	TokenLifetime *int `json:"token_lifetime,omitempty" url:"-"`
+	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
+	TokenLifetimeForAnonymousAccessTokens *int                                  `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"-"`
+	TokenDialect                          *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
+	// Whether to skip user consent for applications flagged as first party (true) or not (false).
+	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
+	// Whether to enforce authorization policies (true) or to ignore them (false).
+	EnforcePolicies *bool                            `json:"enforce_policies,omitempty" url:"-"`
+	AccessToken     *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
+	TokenEncryption *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
+	ConsentPolicy   *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"-"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"-"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (p *PostClientCredentialRequestContent) require(field *big.Int) {
+func (c *CreateResourceServerRequestContent) require(field *big.Int) {
 	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
 	next.Or(next, field)
-	p.explicitFields = next
-}
-
-// SetCredentialType sets the CredentialType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetCredentialType(credentialType ClientCredentialTypeEnum) {
-	p.CredentialType = credentialType
-	p.require(postClientCredentialRequestContentFieldCredentialType)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetName(name *string) {
-	p.Name = name
-	p.require(postClientCredentialRequestContentFieldName)
+func (c *CreateResourceServerRequestContent) SetName(name *string) {
+	c.Name = name
+	c.require(createResourceServerRequestContentFieldName)
 }
 
-// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// SetIdentifier sets the Identifier field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetSubjectDn(subjectDn *string) {
-	p.SubjectDn = subjectDn
-	p.require(postClientCredentialRequestContentFieldSubjectDn)
+func (c *CreateResourceServerRequestContent) SetIdentifier(identifier string) {
+	c.Identifier = identifier
+	c.require(createResourceServerRequestContentFieldIdentifier)
 }
 
-// SetPem sets the Pem field and marks it as non-optional;
+// SetScopes sets the Scopes field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetPem(pem *string) {
-	p.Pem = pem
-	p.require(postClientCredentialRequestContentFieldPem)
+func (c *CreateResourceServerRequestContent) SetScopes(scopes []*ResourceServerScope) {
+	c.Scopes = scopes
+	c.require(createResourceServerRequestContentFieldScopes)
 }
 
-// SetAlg sets the Alg field and marks it as non-optional;
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetAlg(alg *PublicKeyCredentialAlgorithmEnum) {
-	p.Alg = alg
-	p.require(postClientCredentialRequestContentFieldAlg)
+func (c *CreateResourceServerRequestContent) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
+	c.SigningAlg = signingAlg
+	c.require(createResourceServerRequestContentFieldSigningAlg)
 }
 
-// SetParseExpiryFromCert sets the ParseExpiryFromCert field and marks it as non-optional;
+// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetParseExpiryFromCert(parseExpiryFromCert *bool) {
-	p.ParseExpiryFromCert = parseExpiryFromCert
-	p.require(postClientCredentialRequestContentFieldParseExpiryFromCert)
+func (c *CreateResourceServerRequestContent) SetSigningSecret(signingSecret *string) {
+	c.SigningSecret = signingSecret
+	c.require(createResourceServerRequestContentFieldSigningSecret)
 }
 
-// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetExpiresAt(expiresAt *time.Time) {
-	p.ExpiresAt = expiresAt
-	p.require(postClientCredentialRequestContentFieldExpiresAt)
+func (c *CreateResourceServerRequestContent) SetAllowOfflineAccess(allowOfflineAccess *bool) {
+	c.AllowOfflineAccess = allowOfflineAccess
+	c.require(createResourceServerRequestContentFieldAllowOfflineAccess)
 }
 
-// SetKid sets the Kid field and marks it as non-optional;
+// SetAllowOnlineAccess sets the AllowOnlineAccess field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PostClientCredentialRequestContent) SetKid(kid *string) {
-	p.Kid = kid
-	p.require(postClientCredentialRequestContentFieldKid)
+func (c *CreateResourceServerRequestContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
+	c.AllowOnlineAccess = allowOnlineAccess
+	c.require(createResourceServerRequestContentFieldAllowOnlineAccess)
 }
 
-func (p *PostClientCredentialRequestContent) UnmarshalJSON(data []byte) error {
-	type embed PostClientCredentialRequestContent
-	var body = struct {
-		embed
-		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
-	}{
-		embed: embed(*p),
-	}
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	c.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	c.require(createResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetTokenLifetime(tokenLifetime *int) {
+	c.TokenLifetime = tokenLifetime
+	c.require(createResourceServerRequestContentFieldTokenLifetime)
+}
+
+// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
+	c.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
+	c.require(createResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens)
+}
+
+// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectSchemaEnum) {
+	c.TokenDialect = tokenDialect
+	c.require(createResourceServerRequestContentFieldTokenDialect)
+}
+
+// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
+	c.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
+	c.require(createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients)
+}
+
+// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
+	c.EnforcePolicies = enforcePolicies
+	c.require(createResourceServerRequestContentFieldEnforcePolicies)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	c.AccessToken = accessToken
+	c.require(createResourceServerRequestContentFieldAccessToken)
+}
+
+// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
+	c.TokenEncryption = tokenEncryption
+	c.require(createResourceServerRequestContentFieldTokenEncryption)
+}
+
+// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
+	c.ConsentPolicy = consentPolicy
+	c.require(createResourceServerRequestContentFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	c.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	c.require(createResourceServerRequestContentFieldRequireConsentNonRepudiation)
+}
+
+// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetAuthorizationDetails(authorizationDetails []any) {
+	c.AuthorizationDetails = authorizationDetails
+	c.require(createResourceServerRequestContentFieldAuthorizationDetails)
+}
+
+// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
+	c.ProofOfPossession = proofOfPossession
+	c.require(createResourceServerRequestContentFieldProofOfPossession)
+}
+
+// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
+	c.SubjectTypeAuthorization = subjectTypeAuthorization
+	c.require(createResourceServerRequestContentFieldSubjectTypeAuthorization)
+}
+
+// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
+	c.AuthorizationPolicy = authorizationPolicy
+	c.require(createResourceServerRequestContentFieldAuthorizationPolicy)
+}
+
+func (c *CreateResourceServerRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateResourceServerRequestContent
+	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*p = PostClientCredentialRequestContent(body.embed)
-	p.ExpiresAt = body.ExpiresAt.TimePtr()
+	*c = CreateResourceServerRequestContent(body)
 	return nil
 }
 
-func (p *PostClientCredentialRequestContent) MarshalJSON() ([]byte, error) {
-	type embed PostClientCredentialRequestContent
+func (c *CreateResourceServerRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateResourceServerRequestContent
 	var marshaler = struct {
 		embed
-		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
 	}{
-		embed:     embed(*p),
-		ExpiresAt: internal.NewOptionalDateTime(p.ExpiresAt),
+		embed: embed(*c),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -4655,117 +4682,6 @@ func (c *CreateSelfServiceProfileRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createConnectionProfileRequestContentFieldName                         = big.NewInt(1 << 0)
-	createConnectionProfileRequestContentFieldOrganization                 = big.NewInt(1 << 1)
-	createConnectionProfileRequestContentFieldConnectionNamePrefixTemplate = big.NewInt(1 << 2)
-	createConnectionProfileRequestContentFieldEnabledFeatures              = big.NewInt(1 << 3)
-	createConnectionProfileRequestContentFieldConnectionConfig             = big.NewInt(1 << 4)
-	createConnectionProfileRequestContentFieldStrategyOverrides            = big.NewInt(1 << 5)
-	createConnectionProfileRequestContentFieldProvisioning                 = big.NewInt(1 << 6)
-	createConnectionProfileRequestContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 7)
-)
-
-type CreateConnectionProfileRequestContent struct {
-	Name                         ConnectionProfileName                       `json:"name" url:"-"`
-	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"-"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"-"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"-"`
-	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"-"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"-"`
-	Provisioning                 *ConnectionProfileProvisioning              `json:"provisioning,omitempty" url:"-"`
-	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateConnectionProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetName(name ConnectionProfileName) {
-	c.Name = name
-	c.require(createConnectionProfileRequestContentFieldName)
-}
-
-// SetOrganization sets the Organization field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetOrganization(organization *ConnectionProfileOrganization) {
-	c.Organization = organization
-	c.require(createConnectionProfileRequestContentFieldOrganization)
-}
-
-// SetConnectionNamePrefixTemplate sets the ConnectionNamePrefixTemplate field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetConnectionNamePrefixTemplate(connectionNamePrefixTemplate *ConnectionNamePrefixTemplate) {
-	c.ConnectionNamePrefixTemplate = connectionNamePrefixTemplate
-	c.require(createConnectionProfileRequestContentFieldConnectionNamePrefixTemplate)
-}
-
-// SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetEnabledFeatures(enabledFeatures *ConnectionProfileEnabledFeatures) {
-	c.EnabledFeatures = enabledFeatures
-	c.require(createConnectionProfileRequestContentFieldEnabledFeatures)
-}
-
-// SetConnectionConfig sets the ConnectionConfig field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetConnectionConfig(connectionConfig *ConnectionProfileConfig) {
-	c.ConnectionConfig = connectionConfig
-	c.require(createConnectionProfileRequestContentFieldConnectionConfig)
-}
-
-// SetStrategyOverrides sets the StrategyOverrides field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
-	c.StrategyOverrides = strategyOverrides
-	c.require(createConnectionProfileRequestContentFieldStrategyOverrides)
-}
-
-// SetProvisioning sets the Provisioning field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetProvisioning(provisioning *ConnectionProfileProvisioning) {
-	c.Provisioning = provisioning
-	c.require(createConnectionProfileRequestContentFieldProvisioning)
-}
-
-// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateConnectionProfileRequestContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
-	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
-	c.require(createConnectionProfileRequestContentFieldCrossAppAccessResourceApp)
-}
-
-func (c *CreateConnectionProfileRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateConnectionProfileRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateConnectionProfileRequestContent(body)
-	return nil
-}
-
-func (c *CreateConnectionProfileRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateConnectionProfileRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	createSelfServiceProfileSSOTicketRequestContentFieldConnectionID                 = big.NewInt(1 << 0)
 	createSelfServiceProfileSSOTicketRequestContentFieldConnectionConfig             = big.NewInt(1 << 1)
 	createSelfServiceProfileSSOTicketRequestContentFieldEnabledClients               = big.NewInt(1 << 2)
@@ -4890,6 +4806,622 @@ func (c *CreateSelfServiceProfileSSOTicketRequestContent) UnmarshalJSON(data []b
 
 func (c *CreateSelfServiceProfileSSOTicketRequestContent) MarshalJSON() ([]byte, error) {
 	type embed CreateSelfServiceProfileSSOTicketRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createVariationRequestContentFieldName        = big.NewInt(1 << 0)
+	createVariationRequestContentFieldDescription = big.NewInt(1 << 1)
+	createVariationRequestContentFieldOverrides   = big.NewInt(1 << 2)
+)
+
+type CreateVariationRequestContent struct {
+	// A human-readable name for the variation
+	Name string `json:"name" url:"-"`
+	// A description of what this variation controls
+	Description *string `json:"description,omitempty" url:"-"`
+	// Configuration overrides for this variation; keys must exist in the parent flag parameters. Empty {} is the baseline (control) variation that overrides nothing.
+	Overrides VariationOverridesMap `json:"overrides" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateVariationRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationRequestContent) SetName(name string) {
+	c.Name = name
+	c.require(createVariationRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationRequestContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createVariationRequestContentFieldDescription)
+}
+
+// SetOverrides sets the Overrides field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateVariationRequestContent) SetOverrides(overrides VariationOverridesMap) {
+	c.Overrides = overrides
+	c.require(createVariationRequestContentFieldOverrides)
+}
+
+func (c *CreateVariationRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateVariationRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateVariationRequestContent(body)
+	return nil
+}
+
+func (c *CreateVariationRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateVariationRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	postClientCredentialRequestContentFieldCredentialType      = big.NewInt(1 << 0)
+	postClientCredentialRequestContentFieldName                = big.NewInt(1 << 1)
+	postClientCredentialRequestContentFieldSubjectDn           = big.NewInt(1 << 2)
+	postClientCredentialRequestContentFieldPem                 = big.NewInt(1 << 3)
+	postClientCredentialRequestContentFieldAlg                 = big.NewInt(1 << 4)
+	postClientCredentialRequestContentFieldParseExpiryFromCert = big.NewInt(1 << 5)
+	postClientCredentialRequestContentFieldExpiresAt           = big.NewInt(1 << 6)
+	postClientCredentialRequestContentFieldKid                 = big.NewInt(1 << 7)
+)
+
+type PostClientCredentialRequestContent struct {
+	CredentialType ClientCredentialTypeEnum `json:"credential_type" url:"-"`
+	// Friendly name for a credential.
+	Name *string `json:"name,omitempty" url:"-"`
+	// Subject Distinguished Name. Mutually exclusive with `pem` property. Applies to `cert_subject_dn` credential type.
+	SubjectDn *string `json:"subject_dn,omitempty" url:"-"`
+	// PEM-formatted public key (SPKI and PKCS1) or X509 certificate. Must be JSON escaped.
+	Pem *string                           `json:"pem,omitempty" url:"-"`
+	Alg *PublicKeyCredentialAlgorithmEnum `json:"alg,omitempty" url:"-"`
+	// Parse expiry from x509 certificate. If true, attempts to parse the expiry date from the provided PEM. Applies to `public_key` credential type.
+	ParseExpiryFromCert *bool `json:"parse_expiry_from_cert,omitempty" url:"-"`
+	// The ISO 8601 formatted date representing the expiration of the credential. If not specified (not recommended), the credential never expires. Applies to `public_key` credential type.
+	ExpiresAt *time.Time `json:"expires_at,omitempty" url:"-"`
+	// Optional kid (Key ID), used to uniquely identify the credential. If not specified, a kid value will be auto-generated. The kid header parameter in JWTs sent by your client should match this value. Valid format is [0-9a-zA-Z-_]{10,64}
+	Kid *string `json:"kid,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (p *PostClientCredentialRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
+	}
+	next.Or(next, field)
+	p.explicitFields = next
+}
+
+// SetCredentialType sets the CredentialType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetCredentialType(credentialType ClientCredentialTypeEnum) {
+	p.CredentialType = credentialType
+	p.require(postClientCredentialRequestContentFieldCredentialType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetName(name *string) {
+	p.Name = name
+	p.require(postClientCredentialRequestContentFieldName)
+}
+
+// SetSubjectDn sets the SubjectDn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetSubjectDn(subjectDn *string) {
+	p.SubjectDn = subjectDn
+	p.require(postClientCredentialRequestContentFieldSubjectDn)
+}
+
+// SetPem sets the Pem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetPem(pem *string) {
+	p.Pem = pem
+	p.require(postClientCredentialRequestContentFieldPem)
+}
+
+// SetAlg sets the Alg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetAlg(alg *PublicKeyCredentialAlgorithmEnum) {
+	p.Alg = alg
+	p.require(postClientCredentialRequestContentFieldAlg)
+}
+
+// SetParseExpiryFromCert sets the ParseExpiryFromCert field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetParseExpiryFromCert(parseExpiryFromCert *bool) {
+	p.ParseExpiryFromCert = parseExpiryFromCert
+	p.require(postClientCredentialRequestContentFieldParseExpiryFromCert)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetExpiresAt(expiresAt *time.Time) {
+	p.ExpiresAt = expiresAt
+	p.require(postClientCredentialRequestContentFieldExpiresAt)
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostClientCredentialRequestContent) SetKid(kid *string) {
+	p.Kid = kid
+	p.require(postClientCredentialRequestContentFieldKid)
+}
+
+func (p *PostClientCredentialRequestContent) UnmarshalJSON(data []byte) error {
+	type embed PostClientCredentialRequestContent
+	var body = struct {
+		embed
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed: embed(*p),
+	}
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*p = PostClientCredentialRequestContent(body.embed)
+	p.ExpiresAt = body.ExpiresAt.TimePtr()
+	return nil
+}
+
+func (p *PostClientCredentialRequestContent) MarshalJSON() ([]byte, error) {
+	type embed PostClientCredentialRequestContent
+	var marshaler = struct {
+		embed
+		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
+	}{
+		embed:     embed(*p),
+		ExpiresAt: internal.NewOptionalDateTime(p.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createUserAuthenticationMethodRequestContentFieldType                          = big.NewInt(1 << 0)
+	createUserAuthenticationMethodRequestContentFieldName                          = big.NewInt(1 << 1)
+	createUserAuthenticationMethodRequestContentFieldTotpSecret                    = big.NewInt(1 << 2)
+	createUserAuthenticationMethodRequestContentFieldPhoneNumber                   = big.NewInt(1 << 3)
+	createUserAuthenticationMethodRequestContentFieldEmail                         = big.NewInt(1 << 4)
+	createUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 5)
+	createUserAuthenticationMethodRequestContentFieldKeyID                         = big.NewInt(1 << 6)
+	createUserAuthenticationMethodRequestContentFieldPublicKey                     = big.NewInt(1 << 7)
+	createUserAuthenticationMethodRequestContentFieldAaguid                        = big.NewInt(1 << 8)
+	createUserAuthenticationMethodRequestContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 9)
+	createUserAuthenticationMethodRequestContentFieldCredentialDeviceType          = big.NewInt(1 << 10)
+	createUserAuthenticationMethodRequestContentFieldCredentialBackedUp            = big.NewInt(1 << 11)
+	createUserAuthenticationMethodRequestContentFieldIdentityUserID                = big.NewInt(1 << 12)
+	createUserAuthenticationMethodRequestContentFieldUserAgent                     = big.NewInt(1 << 13)
+	createUserAuthenticationMethodRequestContentFieldUserHandle                    = big.NewInt(1 << 14)
+	createUserAuthenticationMethodRequestContentFieldTransports                    = big.NewInt(1 << 15)
+)
+
+type CreateUserAuthenticationMethodRequestContent struct {
+	Type CreatedUserAuthenticationMethodTypeEnum `json:"type" url:"-"`
+	// A human-readable label to identify the authentication method.
+	Name *string `json:"name,omitempty" url:"-"`
+	// Base32 encoded secret for TOTP generation.
+	TotpSecret *string `json:"totp_secret,omitempty" url:"-"`
+	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
+	PhoneNumber *string `json:"phone_number,omitempty" url:"-"`
+	// Applies to email authentication methods only. The email address used to send verification messages.
+	Email                         *string                            `json:"email,omitempty" url:"-"`
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"-"`
+	// Applies to webauthn/passkey authentication methods only. The id of the credential.
+	KeyID *string `json:"key_id,omitempty" url:"-"`
+	// Applies to webauthn/passkey authentication methods only. The public key, which is encoded as base64.
+	PublicKey *string `json:"public_key,omitempty" url:"-"`
+	// Applies to passkeys only. Authenticator Attestation Globally Unique Identifier
+	Aaguid *string `json:"aaguid,omitempty" url:"-"`
+	// Applies to webauthn authentication methods only. The relying party identifier.
+	RelyingPartyIdentifier *string                   `json:"relying_party_identifier,omitempty" url:"-"`
+	CredentialDeviceType   *CredentialDeviceTypeEnum `json:"credential_device_type,omitempty" url:"-"`
+	// Applies to passkeys only. Whether the credential was backed up.
+	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"-"`
+	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
+	IdentityUserID *string `json:"identity_user_id,omitempty" url:"-"`
+	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
+	UserAgent *string `json:"user_agent,omitempty" url:"-"`
+	// Applies to passkeys only. The user handle of the user identity.
+	UserHandle *string `json:"user_handle,omitempty" url:"-"`
+	// Applies to passkeys only. The transports used by clients to communicate with the authenticator.
+	Transports []string `json:"transports,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateUserAuthenticationMethodRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetType(type_ CreatedUserAuthenticationMethodTypeEnum) {
+	c.Type = type_
+	c.require(createUserAuthenticationMethodRequestContentFieldType)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetName(name *string) {
+	c.Name = name
+	c.require(createUserAuthenticationMethodRequestContentFieldName)
+}
+
+// SetTotpSecret sets the TotpSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetTotpSecret(totpSecret *string) {
+	c.TotpSecret = totpSecret
+	c.require(createUserAuthenticationMethodRequestContentFieldTotpSecret)
+}
+
+// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetPhoneNumber(phoneNumber *string) {
+	c.PhoneNumber = phoneNumber
+	c.require(createUserAuthenticationMethodRequestContentFieldPhoneNumber)
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetEmail(email *string) {
+	c.Email = email
+	c.require(createUserAuthenticationMethodRequestContentFieldEmail)
+}
+
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	c.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	c.require(createUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod)
+}
+
+// SetKeyID sets the KeyID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetKeyID(keyID *string) {
+	c.KeyID = keyID
+	c.require(createUserAuthenticationMethodRequestContentFieldKeyID)
+}
+
+// SetPublicKey sets the PublicKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetPublicKey(publicKey *string) {
+	c.PublicKey = publicKey
+	c.require(createUserAuthenticationMethodRequestContentFieldPublicKey)
+}
+
+// SetAaguid sets the Aaguid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetAaguid(aaguid *string) {
+	c.Aaguid = aaguid
+	c.require(createUserAuthenticationMethodRequestContentFieldAaguid)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	c.RelyingPartyIdentifier = relyingPartyIdentifier
+	c.require(createUserAuthenticationMethodRequestContentFieldRelyingPartyIdentifier)
+}
+
+// SetCredentialDeviceType sets the CredentialDeviceType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetCredentialDeviceType(credentialDeviceType *CredentialDeviceTypeEnum) {
+	c.CredentialDeviceType = credentialDeviceType
+	c.require(createUserAuthenticationMethodRequestContentFieldCredentialDeviceType)
+}
+
+// SetCredentialBackedUp sets the CredentialBackedUp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetCredentialBackedUp(credentialBackedUp *bool) {
+	c.CredentialBackedUp = credentialBackedUp
+	c.require(createUserAuthenticationMethodRequestContentFieldCredentialBackedUp)
+}
+
+// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetIdentityUserID(identityUserID *string) {
+	c.IdentityUserID = identityUserID
+	c.require(createUserAuthenticationMethodRequestContentFieldIdentityUserID)
+}
+
+// SetUserAgent sets the UserAgent field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetUserAgent(userAgent *string) {
+	c.UserAgent = userAgent
+	c.require(createUserAuthenticationMethodRequestContentFieldUserAgent)
+}
+
+// SetUserHandle sets the UserHandle field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetUserHandle(userHandle *string) {
+	c.UserHandle = userHandle
+	c.require(createUserAuthenticationMethodRequestContentFieldUserHandle)
+}
+
+// SetTransports sets the Transports field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAuthenticationMethodRequestContent) SetTransports(transports []string) {
+	c.Transports = transports
+	c.require(createUserAuthenticationMethodRequestContentFieldTransports)
+}
+
+func (c *CreateUserAuthenticationMethodRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateUserAuthenticationMethodRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateUserAuthenticationMethodRequestContent(body)
+	return nil
+}
+
+func (c *CreateUserAuthenticationMethodRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateUserAuthenticationMethodRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createUserAttributeProfileRequestContentFieldName           = big.NewInt(1 << 0)
+	createUserAttributeProfileRequestContentFieldUserID         = big.NewInt(1 << 1)
+	createUserAttributeProfileRequestContentFieldUserAttributes = big.NewInt(1 << 2)
+)
+
+type CreateUserAttributeProfileRequestContent struct {
+	Name           UserAttributeProfileName           `json:"name" url:"-"`
+	UserID         *UserAttributeProfileUserID        `json:"user_id,omitempty" url:"-"`
+	UserAttributes UserAttributeProfileUserAttributes `json:"user_attributes" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateUserAttributeProfileRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAttributeProfileRequestContent) SetName(name UserAttributeProfileName) {
+	c.Name = name
+	c.require(createUserAttributeProfileRequestContentFieldName)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAttributeProfileRequestContent) SetUserID(userID *UserAttributeProfileUserID) {
+	c.UserID = userID
+	c.require(createUserAttributeProfileRequestContentFieldUserID)
+}
+
+// SetUserAttributes sets the UserAttributes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateUserAttributeProfileRequestContent) SetUserAttributes(userAttributes UserAttributeProfileUserAttributes) {
+	c.UserAttributes = userAttributes
+	c.require(createUserAttributeProfileRequestContentFieldUserAttributes)
+}
+
+func (c *CreateUserAttributeProfileRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateUserAttributeProfileRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateUserAttributeProfileRequestContent(body)
+	return nil
+}
+
+func (c *CreateUserAttributeProfileRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateUserAttributeProfileRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createConnectionProfileRequestContentFieldName                         = big.NewInt(1 << 0)
+	createConnectionProfileRequestContentFieldOrganization                 = big.NewInt(1 << 1)
+	createConnectionProfileRequestContentFieldConnectionNamePrefixTemplate = big.NewInt(1 << 2)
+	createConnectionProfileRequestContentFieldEnabledFeatures              = big.NewInt(1 << 3)
+	createConnectionProfileRequestContentFieldConnectionConfig             = big.NewInt(1 << 4)
+	createConnectionProfileRequestContentFieldStrategyOverrides            = big.NewInt(1 << 5)
+	createConnectionProfileRequestContentFieldProvisioning                 = big.NewInt(1 << 6)
+	createConnectionProfileRequestContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 7)
+)
+
+type CreateConnectionProfileRequestContent struct {
+	Name                         ConnectionProfileName                       `json:"name" url:"-"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"-"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"-"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"-"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"-"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"-"`
+	Provisioning                 *ConnectionProfileProvisioning              `json:"provisioning,omitempty" url:"-"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateConnectionProfileRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetName(name ConnectionProfileName) {
+	c.Name = name
+	c.require(createConnectionProfileRequestContentFieldName)
+}
+
+// SetOrganization sets the Organization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetOrganization(organization *ConnectionProfileOrganization) {
+	c.Organization = organization
+	c.require(createConnectionProfileRequestContentFieldOrganization)
+}
+
+// SetConnectionNamePrefixTemplate sets the ConnectionNamePrefixTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetConnectionNamePrefixTemplate(connectionNamePrefixTemplate *ConnectionNamePrefixTemplate) {
+	c.ConnectionNamePrefixTemplate = connectionNamePrefixTemplate
+	c.require(createConnectionProfileRequestContentFieldConnectionNamePrefixTemplate)
+}
+
+// SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetEnabledFeatures(enabledFeatures *ConnectionProfileEnabledFeatures) {
+	c.EnabledFeatures = enabledFeatures
+	c.require(createConnectionProfileRequestContentFieldEnabledFeatures)
+}
+
+// SetConnectionConfig sets the ConnectionConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetConnectionConfig(connectionConfig *ConnectionProfileConfig) {
+	c.ConnectionConfig = connectionConfig
+	c.require(createConnectionProfileRequestContentFieldConnectionConfig)
+}
+
+// SetStrategyOverrides sets the StrategyOverrides field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
+	c.StrategyOverrides = strategyOverrides
+	c.require(createConnectionProfileRequestContentFieldStrategyOverrides)
+}
+
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetProvisioning(provisioning *ConnectionProfileProvisioning) {
+	c.Provisioning = provisioning
+	c.require(createConnectionProfileRequestContentFieldProvisioning)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileRequestContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(createConnectionProfileRequestContentFieldCrossAppAccessResourceApp)
+}
+
+func (c *CreateConnectionProfileRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateConnectionProfileRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateConnectionProfileRequestContent(body)
+	return nil
+}
+
+func (c *CreateConnectionProfileRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateConnectionProfileRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createGroupRolesRequestParametersFieldRoles = big.NewInt(1 << 0)
+)
+
+type CreateGroupRolesRequestParameters struct {
+	// Array of role IDs to assign to the group.
+	Roles []string `json:"roles" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreateGroupRolesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateGroupRolesRequestParameters) SetRoles(roles []string) {
+	c.Roles = roles
+	c.require(createGroupRolesRequestParametersFieldRoles)
+}
+
+func (c *CreateGroupRolesRequestParameters) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateGroupRolesRequestParameters
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*c = CreateGroupRolesRequestParameters(body)
+	return nil
+}
+
+func (c *CreateGroupRolesRequestParameters) MarshalJSON() ([]byte, error) {
+	type embed CreateGroupRolesRequestParameters
 	var marshaler = struct {
 		embed
 	}{
@@ -5155,24 +5687,31 @@ func (c *CreateConnectionRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createSegmentRequestContentFieldName        = big.NewInt(1 << 0)
-	createSegmentRequestContentFieldDescription = big.NewInt(1 << 1)
-	createSegmentRequestContentFieldRules       = big.NewInt(1 << 2)
+	createFormRequestContentFieldName         = big.NewInt(1 << 0)
+	createFormRequestContentFieldMessages     = big.NewInt(1 << 1)
+	createFormRequestContentFieldLanguages    = big.NewInt(1 << 2)
+	createFormRequestContentFieldTranslations = big.NewInt(1 << 3)
+	createFormRequestContentFieldNodes        = big.NewInt(1 << 4)
+	createFormRequestContentFieldStart        = big.NewInt(1 << 5)
+	createFormRequestContentFieldEnding       = big.NewInt(1 << 6)
+	createFormRequestContentFieldStyle        = big.NewInt(1 << 7)
 )
 
-type CreateSegmentRequestContent struct {
-	// A human-readable name for the segment
-	Name string `json:"name" url:"-"`
-	// A description of the segment
-	Description *string `json:"description,omitempty" url:"-"`
-	// An ordered list of rules. A segment matches if any rule matches. Each rule is limited to 4KB and the whole segment to 10KB (serialized).
-	Rules []*SegmentRule `json:"rules" url:"-"`
+type CreateFormRequestContent struct {
+	Name         string            `json:"name" url:"-"`
+	Messages     *FormMessages     `json:"messages,omitempty" url:"-"`
+	Languages    *FormLanguages    `json:"languages,omitempty" url:"-"`
+	Translations *FormTranslations `json:"translations,omitempty" url:"-"`
+	Nodes        *FormNodeList     `json:"nodes,omitempty" url:"-"`
+	Start        *FormStartNode    `json:"start,omitempty" url:"-"`
+	Ending       *FormEndingNode   `json:"ending,omitempty" url:"-"`
+	Style        *FormStyle        `json:"style,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateSegmentRequestContent) require(field *big.Int) {
+func (c *CreateFormRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -5183,341 +5722,72 @@ func (c *CreateSegmentRequestContent) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSegmentRequestContent) SetName(name string) {
+func (c *CreateFormRequestContent) SetName(name string) {
 	c.Name = name
-	c.require(createSegmentRequestContentFieldName)
+	c.require(createFormRequestContentFieldName)
 }
 
-// SetDescription sets the Description field and marks it as non-optional;
+// SetMessages sets the Messages field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSegmentRequestContent) SetDescription(description *string) {
-	c.Description = description
-	c.require(createSegmentRequestContentFieldDescription)
+func (c *CreateFormRequestContent) SetMessages(messages *FormMessages) {
+	c.Messages = messages
+	c.require(createFormRequestContentFieldMessages)
 }
 
-// SetRules sets the Rules field and marks it as non-optional;
+// SetLanguages sets the Languages field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSegmentRequestContent) SetRules(rules []*SegmentRule) {
-	c.Rules = rules
-	c.require(createSegmentRequestContentFieldRules)
+func (c *CreateFormRequestContent) SetLanguages(languages *FormLanguages) {
+	c.Languages = languages
+	c.require(createFormRequestContentFieldLanguages)
 }
 
-func (c *CreateSegmentRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateSegmentRequestContent
+// SetTranslations sets the Translations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormRequestContent) SetTranslations(translations *FormTranslations) {
+	c.Translations = translations
+	c.require(createFormRequestContentFieldTranslations)
+}
+
+// SetNodes sets the Nodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormRequestContent) SetNodes(nodes *FormNodeList) {
+	c.Nodes = nodes
+	c.require(createFormRequestContentFieldNodes)
+}
+
+// SetStart sets the Start field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormRequestContent) SetStart(start *FormStartNode) {
+	c.Start = start
+	c.require(createFormRequestContentFieldStart)
+}
+
+// SetEnding sets the Ending field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormRequestContent) SetEnding(ending *FormEndingNode) {
+	c.Ending = ending
+	c.require(createFormRequestContentFieldEnding)
+}
+
+// SetStyle sets the Style field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateFormRequestContent) SetStyle(style *FormStyle) {
+	c.Style = style
+	c.require(createFormRequestContentFieldStyle)
+}
+
+func (c *CreateFormRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateFormRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateSegmentRequestContent(body)
+	*c = CreateFormRequestContent(body)
 	return nil
 }
 
-func (c *CreateSegmentRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateSegmentRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createUserAuthenticationMethodRequestContentFieldType                          = big.NewInt(1 << 0)
-	createUserAuthenticationMethodRequestContentFieldName                          = big.NewInt(1 << 1)
-	createUserAuthenticationMethodRequestContentFieldTotpSecret                    = big.NewInt(1 << 2)
-	createUserAuthenticationMethodRequestContentFieldPhoneNumber                   = big.NewInt(1 << 3)
-	createUserAuthenticationMethodRequestContentFieldEmail                         = big.NewInt(1 << 4)
-	createUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 5)
-	createUserAuthenticationMethodRequestContentFieldKeyID                         = big.NewInt(1 << 6)
-	createUserAuthenticationMethodRequestContentFieldPublicKey                     = big.NewInt(1 << 7)
-	createUserAuthenticationMethodRequestContentFieldAaguid                        = big.NewInt(1 << 8)
-	createUserAuthenticationMethodRequestContentFieldRelyingPartyIdentifier        = big.NewInt(1 << 9)
-	createUserAuthenticationMethodRequestContentFieldCredentialDeviceType          = big.NewInt(1 << 10)
-	createUserAuthenticationMethodRequestContentFieldCredentialBackedUp            = big.NewInt(1 << 11)
-	createUserAuthenticationMethodRequestContentFieldIdentityUserID                = big.NewInt(1 << 12)
-	createUserAuthenticationMethodRequestContentFieldUserAgent                     = big.NewInt(1 << 13)
-	createUserAuthenticationMethodRequestContentFieldUserHandle                    = big.NewInt(1 << 14)
-	createUserAuthenticationMethodRequestContentFieldTransports                    = big.NewInt(1 << 15)
-)
-
-type CreateUserAuthenticationMethodRequestContent struct {
-	Type CreatedUserAuthenticationMethodTypeEnum `json:"type" url:"-"`
-	// A human-readable label to identify the authentication method.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Base32 encoded secret for TOTP generation.
-	TotpSecret *string `json:"totp_secret,omitempty" url:"-"`
-	// Applies to phone authentication methods only. The destination phone number used to send verification codes via text and voice.
-	PhoneNumber *string `json:"phone_number,omitempty" url:"-"`
-	// Applies to email authentication methods only. The email address used to send verification messages.
-	Email                         *string                            `json:"email,omitempty" url:"-"`
-	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"-"`
-	// Applies to webauthn/passkey authentication methods only. The id of the credential.
-	KeyID *string `json:"key_id,omitempty" url:"-"`
-	// Applies to webauthn/passkey authentication methods only. The public key, which is encoded as base64.
-	PublicKey *string `json:"public_key,omitempty" url:"-"`
-	// Applies to passkeys only. Authenticator Attestation Globally Unique Identifier
-	Aaguid *string `json:"aaguid,omitempty" url:"-"`
-	// Applies to webauthn authentication methods only. The relying party identifier.
-	RelyingPartyIdentifier *string                   `json:"relying_party_identifier,omitempty" url:"-"`
-	CredentialDeviceType   *CredentialDeviceTypeEnum `json:"credential_device_type,omitempty" url:"-"`
-	// Applies to passkeys only. Whether the credential was backed up.
-	CredentialBackedUp *bool `json:"credential_backed_up,omitempty" url:"-"`
-	// Applies to passkeys only. The ID of the user identity linked with the authentication method.
-	IdentityUserID *string `json:"identity_user_id,omitempty" url:"-"`
-	// Applies to passkeys only. The user-agent of the browser used to create the passkey.
-	UserAgent *string `json:"user_agent,omitempty" url:"-"`
-	// Applies to passkeys only. The user handle of the user identity.
-	UserHandle *string `json:"user_handle,omitempty" url:"-"`
-	// Applies to passkeys only. The transports used by clients to communicate with the authenticator.
-	Transports []string `json:"transports,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateUserAuthenticationMethodRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetType(type_ CreatedUserAuthenticationMethodTypeEnum) {
-	c.Type = type_
-	c.require(createUserAuthenticationMethodRequestContentFieldType)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetName(name *string) {
-	c.Name = name
-	c.require(createUserAuthenticationMethodRequestContentFieldName)
-}
-
-// SetTotpSecret sets the TotpSecret field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetTotpSecret(totpSecret *string) {
-	c.TotpSecret = totpSecret
-	c.require(createUserAuthenticationMethodRequestContentFieldTotpSecret)
-}
-
-// SetPhoneNumber sets the PhoneNumber field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetPhoneNumber(phoneNumber *string) {
-	c.PhoneNumber = phoneNumber
-	c.require(createUserAuthenticationMethodRequestContentFieldPhoneNumber)
-}
-
-// SetEmail sets the Email field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetEmail(email *string) {
-	c.Email = email
-	c.require(createUserAuthenticationMethodRequestContentFieldEmail)
-}
-
-// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
-	c.PreferredAuthenticationMethod = preferredAuthenticationMethod
-	c.require(createUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod)
-}
-
-// SetKeyID sets the KeyID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetKeyID(keyID *string) {
-	c.KeyID = keyID
-	c.require(createUserAuthenticationMethodRequestContentFieldKeyID)
-}
-
-// SetPublicKey sets the PublicKey field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetPublicKey(publicKey *string) {
-	c.PublicKey = publicKey
-	c.require(createUserAuthenticationMethodRequestContentFieldPublicKey)
-}
-
-// SetAaguid sets the Aaguid field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetAaguid(aaguid *string) {
-	c.Aaguid = aaguid
-	c.require(createUserAuthenticationMethodRequestContentFieldAaguid)
-}
-
-// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
-	c.RelyingPartyIdentifier = relyingPartyIdentifier
-	c.require(createUserAuthenticationMethodRequestContentFieldRelyingPartyIdentifier)
-}
-
-// SetCredentialDeviceType sets the CredentialDeviceType field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetCredentialDeviceType(credentialDeviceType *CredentialDeviceTypeEnum) {
-	c.CredentialDeviceType = credentialDeviceType
-	c.require(createUserAuthenticationMethodRequestContentFieldCredentialDeviceType)
-}
-
-// SetCredentialBackedUp sets the CredentialBackedUp field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetCredentialBackedUp(credentialBackedUp *bool) {
-	c.CredentialBackedUp = credentialBackedUp
-	c.require(createUserAuthenticationMethodRequestContentFieldCredentialBackedUp)
-}
-
-// SetIdentityUserID sets the IdentityUserID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetIdentityUserID(identityUserID *string) {
-	c.IdentityUserID = identityUserID
-	c.require(createUserAuthenticationMethodRequestContentFieldIdentityUserID)
-}
-
-// SetUserAgent sets the UserAgent field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetUserAgent(userAgent *string) {
-	c.UserAgent = userAgent
-	c.require(createUserAuthenticationMethodRequestContentFieldUserAgent)
-}
-
-// SetUserHandle sets the UserHandle field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetUserHandle(userHandle *string) {
-	c.UserHandle = userHandle
-	c.require(createUserAuthenticationMethodRequestContentFieldUserHandle)
-}
-
-// SetTransports sets the Transports field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAuthenticationMethodRequestContent) SetTransports(transports []string) {
-	c.Transports = transports
-	c.require(createUserAuthenticationMethodRequestContentFieldTransports)
-}
-
-func (c *CreateUserAuthenticationMethodRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateUserAuthenticationMethodRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateUserAuthenticationMethodRequestContent(body)
-	return nil
-}
-
-func (c *CreateUserAuthenticationMethodRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateUserAuthenticationMethodRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createSCIMTokenRequestContentFieldScopes        = big.NewInt(1 << 0)
-	createSCIMTokenRequestContentFieldTokenLifetime = big.NewInt(1 << 1)
-)
-
-type CreateSCIMTokenRequestContent struct {
-	// The scopes of the scim token
-	Scopes []string `json:"scopes,omitempty" url:"-"`
-	// Lifetime of the token in seconds. Must be greater than 900
-	TokenLifetime *int `json:"token_lifetime,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateSCIMTokenRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetScopes sets the Scopes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSCIMTokenRequestContent) SetScopes(scopes []string) {
-	c.Scopes = scopes
-	c.require(createSCIMTokenRequestContentFieldScopes)
-}
-
-// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateSCIMTokenRequestContent) SetTokenLifetime(tokenLifetime *int) {
-	c.TokenLifetime = tokenLifetime
-	c.require(createSCIMTokenRequestContentFieldTokenLifetime)
-}
-
-func (c *CreateSCIMTokenRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateSCIMTokenRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateSCIMTokenRequestContent(body)
-	return nil
-}
-
-func (c *CreateSCIMTokenRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateSCIMTokenRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createGroupRolesRequestParametersFieldRoles = big.NewInt(1 << 0)
-)
-
-type CreateGroupRolesRequestParameters struct {
-	// Array of role IDs to assign to the group.
-	Roles []string `json:"roles" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateGroupRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetRoles sets the Roles field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateGroupRolesRequestParameters) SetRoles(roles []string) {
-	c.Roles = roles
-	c.require(createGroupRolesRequestParametersFieldRoles)
-}
-
-func (c *CreateGroupRolesRequestParameters) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateGroupRolesRequestParameters
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateGroupRolesRequestParameters(body)
-	return nil
-}
-
-func (c *CreateGroupRolesRequestParameters) MarshalJSON() ([]byte, error) {
-	type embed CreateGroupRolesRequestParameters
+func (c *CreateFormRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateFormRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -5663,31 +5933,24 @@ func (c *CreateFlowRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	createFormRequestContentFieldName         = big.NewInt(1 << 0)
-	createFormRequestContentFieldMessages     = big.NewInt(1 << 1)
-	createFormRequestContentFieldLanguages    = big.NewInt(1 << 2)
-	createFormRequestContentFieldTranslations = big.NewInt(1 << 3)
-	createFormRequestContentFieldNodes        = big.NewInt(1 << 4)
-	createFormRequestContentFieldStart        = big.NewInt(1 << 5)
-	createFormRequestContentFieldEnding       = big.NewInt(1 << 6)
-	createFormRequestContentFieldStyle        = big.NewInt(1 << 7)
+	createSegmentRequestContentFieldName        = big.NewInt(1 << 0)
+	createSegmentRequestContentFieldDescription = big.NewInt(1 << 1)
+	createSegmentRequestContentFieldRules       = big.NewInt(1 << 2)
 )
 
-type CreateFormRequestContent struct {
-	Name         string            `json:"name" url:"-"`
-	Messages     *FormMessages     `json:"messages,omitempty" url:"-"`
-	Languages    *FormLanguages    `json:"languages,omitempty" url:"-"`
-	Translations *FormTranslations `json:"translations,omitempty" url:"-"`
-	Nodes        *FormNodeList     `json:"nodes,omitempty" url:"-"`
-	Start        *FormStartNode    `json:"start,omitempty" url:"-"`
-	Ending       *FormEndingNode   `json:"ending,omitempty" url:"-"`
-	Style        *FormStyle        `json:"style,omitempty" url:"-"`
+type CreateSegmentRequestContent struct {
+	// A human-readable name for the segment
+	Name string `json:"name" url:"-"`
+	// A description of the segment
+	Description *string `json:"description,omitempty" url:"-"`
+	// An ordered list of rules. A segment matches if any rule matches. Each rule is limited to 4KB and the whole segment to 10KB (serialized).
+	Rules []*SegmentRule `json:"rules" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateFormRequestContent) require(field *big.Int) {
+func (c *CreateSegmentRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -5698,138 +5961,37 @@ func (c *CreateFormRequestContent) require(field *big.Int) {
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetName(name string) {
+func (c *CreateSegmentRequestContent) SetName(name string) {
 	c.Name = name
-	c.require(createFormRequestContentFieldName)
+	c.require(createSegmentRequestContentFieldName)
 }
 
-// SetMessages sets the Messages field and marks it as non-optional;
+// SetDescription sets the Description field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetMessages(messages *FormMessages) {
-	c.Messages = messages
-	c.require(createFormRequestContentFieldMessages)
+func (c *CreateSegmentRequestContent) SetDescription(description *string) {
+	c.Description = description
+	c.require(createSegmentRequestContentFieldDescription)
 }
 
-// SetLanguages sets the Languages field and marks it as non-optional;
+// SetRules sets the Rules field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetLanguages(languages *FormLanguages) {
-	c.Languages = languages
-	c.require(createFormRequestContentFieldLanguages)
+func (c *CreateSegmentRequestContent) SetRules(rules []*SegmentRule) {
+	c.Rules = rules
+	c.require(createSegmentRequestContentFieldRules)
 }
 
-// SetTranslations sets the Translations field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetTranslations(translations *FormTranslations) {
-	c.Translations = translations
-	c.require(createFormRequestContentFieldTranslations)
-}
-
-// SetNodes sets the Nodes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetNodes(nodes *FormNodeList) {
-	c.Nodes = nodes
-	c.require(createFormRequestContentFieldNodes)
-}
-
-// SetStart sets the Start field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetStart(start *FormStartNode) {
-	c.Start = start
-	c.require(createFormRequestContentFieldStart)
-}
-
-// SetEnding sets the Ending field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetEnding(ending *FormEndingNode) {
-	c.Ending = ending
-	c.require(createFormRequestContentFieldEnding)
-}
-
-// SetStyle sets the Style field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateFormRequestContent) SetStyle(style *FormStyle) {
-	c.Style = style
-	c.require(createFormRequestContentFieldStyle)
-}
-
-func (c *CreateFormRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateFormRequestContent
+func (c *CreateSegmentRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateSegmentRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateFormRequestContent(body)
+	*c = CreateSegmentRequestContent(body)
 	return nil
 }
 
-func (c *CreateFormRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateFormRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*c),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	createUserAttributeProfileRequestContentFieldName           = big.NewInt(1 << 0)
-	createUserAttributeProfileRequestContentFieldUserID         = big.NewInt(1 << 1)
-	createUserAttributeProfileRequestContentFieldUserAttributes = big.NewInt(1 << 2)
-)
-
-type CreateUserAttributeProfileRequestContent struct {
-	Name           UserAttributeProfileName           `json:"name" url:"-"`
-	UserID         *UserAttributeProfileUserID        `json:"user_id,omitempty" url:"-"`
-	UserAttributes UserAttributeProfileUserAttributes `json:"user_attributes" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (c *CreateUserAttributeProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAttributeProfileRequestContent) SetName(name UserAttributeProfileName) {
-	c.Name = name
-	c.require(createUserAttributeProfileRequestContentFieldName)
-}
-
-// SetUserID sets the UserID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAttributeProfileRequestContent) SetUserID(userID *UserAttributeProfileUserID) {
-	c.UserID = userID
-	c.require(createUserAttributeProfileRequestContentFieldUserID)
-}
-
-// SetUserAttributes sets the UserAttributes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateUserAttributeProfileRequestContent) SetUserAttributes(userAttributes UserAttributeProfileUserAttributes) {
-	c.UserAttributes = userAttributes
-	c.require(createUserAttributeProfileRequestContentFieldUserAttributes)
-}
-
-func (c *CreateUserAttributeProfileRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateUserAttributeProfileRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*c = CreateUserAttributeProfileRequestContent(body)
-	return nil
-}
-
-func (c *CreateUserAttributeProfileRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateUserAttributeProfileRequestContent
+func (c *CreateSegmentRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateSegmentRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -6075,67 +6237,18 @@ func (d *DeleteOrganizationClientsRequestContent) MarshalJSON() ([]byte, error) 
 }
 
 var (
-	deleteOrganizationMembersRequestContentFieldMembers = big.NewInt(1 << 0)
+	deleteUserRolesRequestContentFieldRoles = big.NewInt(1 << 0)
 )
 
-type DeleteOrganizationMembersRequestContent struct {
-	// List of user IDs to remove from the organization.
-	Members []string `json:"members" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (d *DeleteOrganizationMembersRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
-	}
-	next.Or(next, field)
-	d.explicitFields = next
-}
-
-// SetMembers sets the Members field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeleteOrganizationMembersRequestContent) SetMembers(members []string) {
-	d.Members = members
-	d.require(deleteOrganizationMembersRequestContentFieldMembers)
-}
-
-func (d *DeleteOrganizationMembersRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler DeleteOrganizationMembersRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*d = DeleteOrganizationMembersRequestContent(body)
-	return nil
-}
-
-func (d *DeleteOrganizationMembersRequestContent) MarshalJSON() ([]byte, error) {
-	type embed DeleteOrganizationMembersRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*d),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	deleteGroupRolesRequestContentFieldRoles = big.NewInt(1 << 0)
-)
-
-type DeleteGroupRolesRequestContent struct {
-	// Array of role IDs to remove from the group.
+type DeleteUserRolesRequestContent struct {
+	// List of roles IDs to remove from the user.
 	Roles []string `json:"roles" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (d *DeleteGroupRolesRequestContent) require(field *big.Int) {
+func (d *DeleteUserRolesRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if d.explicitFields != nil {
 		next.Set(d.explicitFields)
@@ -6146,23 +6259,23 @@ func (d *DeleteGroupRolesRequestContent) require(field *big.Int) {
 
 // SetRoles sets the Roles field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeleteGroupRolesRequestContent) SetRoles(roles []string) {
+func (d *DeleteUserRolesRequestContent) SetRoles(roles []string) {
 	d.Roles = roles
-	d.require(deleteGroupRolesRequestContentFieldRoles)
+	d.require(deleteUserRolesRequestContentFieldRoles)
 }
 
-func (d *DeleteGroupRolesRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler DeleteGroupRolesRequestContent
+func (d *DeleteUserRolesRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteUserRolesRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*d = DeleteGroupRolesRequestContent(body)
+	*d = DeleteUserRolesRequestContent(body)
 	return nil
 }
 
-func (d *DeleteGroupRolesRequestContent) MarshalJSON() ([]byte, error) {
-	type embed DeleteGroupRolesRequestContent
+func (d *DeleteUserRolesRequestContent) MarshalJSON() ([]byte, error) {
+	type embed DeleteUserRolesRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -6222,55 +6335,6 @@ func (d *DeleteRolePermissionsRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	deleteUserRolesRequestContentFieldRoles = big.NewInt(1 << 0)
-)
-
-type DeleteUserRolesRequestContent struct {
-	// List of roles IDs to remove from the user.
-	Roles []string `json:"roles" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (d *DeleteUserRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
-	}
-	next.Or(next, field)
-	d.explicitFields = next
-}
-
-// SetRoles sets the Roles field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeleteUserRolesRequestContent) SetRoles(roles []string) {
-	d.Roles = roles
-	d.require(deleteUserRolesRequestContentFieldRoles)
-}
-
-func (d *DeleteUserRolesRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler DeleteUserRolesRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*d = DeleteUserRolesRequestContent(body)
-	return nil
-}
-
-func (d *DeleteUserRolesRequestContent) MarshalJSON() ([]byte, error) {
-	type embed DeleteUserRolesRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*d),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	deleteRoleGroupsRequestContentFieldGroups = big.NewInt(1 << 0)
 )
 
@@ -6320,55 +6384,6 @@ func (d *DeleteRoleGroupsRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	deleteOrganizationGroupRolesRequestContentFieldRoles = big.NewInt(1 << 0)
-)
-
-type DeleteOrganizationGroupRolesRequestContent struct {
-	// Array of role IDs to delete from organization group.
-	Roles []string `json:"roles" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (d *DeleteOrganizationGroupRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
-	}
-	next.Or(next, field)
-	d.explicitFields = next
-}
-
-// SetRoles sets the Roles field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (d *DeleteOrganizationGroupRolesRequestContent) SetRoles(roles []string) {
-	d.Roles = roles
-	d.require(deleteOrganizationGroupRolesRequestContentFieldRoles)
-}
-
-func (d *DeleteOrganizationGroupRolesRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler DeleteOrganizationGroupRolesRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*d = DeleteOrganizationGroupRolesRequestContent(body)
-	return nil
-}
-
-func (d *DeleteOrganizationGroupRolesRequestContent) MarshalJSON() ([]byte, error) {
-	type embed DeleteOrganizationGroupRolesRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*d),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	deleteActionRequestParametersFieldForce = big.NewInt(1 << 0)
 )
 
@@ -6394,6 +6409,55 @@ func (d *DeleteActionRequestParameters) require(field *big.Int) {
 func (d *DeleteActionRequestParameters) SetForce(force *bool) {
 	d.Force = force
 	d.require(deleteActionRequestParametersFieldForce)
+}
+
+var (
+	deleteGroupRolesRequestContentFieldRoles = big.NewInt(1 << 0)
+)
+
+type DeleteGroupRolesRequestContent struct {
+	// Array of role IDs to remove from the group.
+	Roles []string `json:"roles" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (d *DeleteGroupRolesRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
+	}
+	next.Or(next, field)
+	d.explicitFields = next
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteGroupRolesRequestContent) SetRoles(roles []string) {
+	d.Roles = roles
+	d.require(deleteGroupRolesRequestContentFieldRoles)
+}
+
+func (d *DeleteGroupRolesRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteGroupRolesRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*d = DeleteGroupRolesRequestContent(body)
+	return nil
+}
+
+func (d *DeleteGroupRolesRequestContent) MarshalJSON() ([]byte, error) {
+	type embed DeleteGroupRolesRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
 }
 
 var (
@@ -6485,6 +6549,104 @@ func (d *DeleteOrganizationMemberRolesRequestContent) UnmarshalJSON(data []byte)
 
 func (d *DeleteOrganizationMemberRolesRequestContent) MarshalJSON() ([]byte, error) {
 	type embed DeleteOrganizationMemberRolesRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	deleteOrganizationMembersRequestContentFieldMembers = big.NewInt(1 << 0)
+)
+
+type DeleteOrganizationMembersRequestContent struct {
+	// List of user IDs to remove from the organization.
+	Members []string `json:"members" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (d *DeleteOrganizationMembersRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
+	}
+	next.Or(next, field)
+	d.explicitFields = next
+}
+
+// SetMembers sets the Members field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteOrganizationMembersRequestContent) SetMembers(members []string) {
+	d.Members = members
+	d.require(deleteOrganizationMembersRequestContentFieldMembers)
+}
+
+func (d *DeleteOrganizationMembersRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteOrganizationMembersRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*d = DeleteOrganizationMembersRequestContent(body)
+	return nil
+}
+
+func (d *DeleteOrganizationMembersRequestContent) MarshalJSON() ([]byte, error) {
+	type embed DeleteOrganizationMembersRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*d),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, d.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	deleteOrganizationGroupRolesRequestContentFieldRoles = big.NewInt(1 << 0)
+)
+
+type DeleteOrganizationGroupRolesRequestContent struct {
+	// Array of role IDs to delete from organization group.
+	Roles []string `json:"roles" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (d *DeleteOrganizationGroupRolesRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
+	}
+	next.Or(next, field)
+	d.explicitFields = next
+}
+
+// SetRoles sets the Roles field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (d *DeleteOrganizationGroupRolesRequestContent) SetRoles(roles []string) {
+	d.Roles = roles
+	d.require(deleteOrganizationGroupRolesRequestContentFieldRoles)
+}
+
+func (d *DeleteOrganizationGroupRolesRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler DeleteOrganizationGroupRolesRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*d = DeleteOrganizationGroupRolesRequestContent(body)
+	return nil
+}
+
+func (d *DeleteOrganizationGroupRolesRequestContent) MarshalJSON() ([]byte, error) {
+	type embed DeleteOrganizationGroupRolesRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -6628,39 +6790,79 @@ func (d *DeleteSynchronizedGroupsRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	getFlowRequestParametersFieldHydrate = big.NewInt(1 << 0)
+	connectionsGetRequestFieldStrategy      = big.NewInt(1 << 0)
+	connectionsGetRequestFieldFrom          = big.NewInt(1 << 1)
+	connectionsGetRequestFieldTake          = big.NewInt(1 << 2)
+	connectionsGetRequestFieldFields        = big.NewInt(1 << 3)
+	connectionsGetRequestFieldIncludeFields = big.NewInt(1 << 4)
 )
 
-type GetFlowRequestParameters struct {
-	// hydration param
-	Hydrate []*GetFlowRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
+type ConnectionsGetRequest struct {
+	// Provide strategies to only retrieve connections with such strategies
+	Strategy []*ConnectionStrategyEnum `json:"-" url:"strategy,omitempty"`
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetFlowRequestParameters) require(field *big.Int) {
+func (c *ConnectionsGetRequest) require(field *big.Int) {
 	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
 	next.Or(next, field)
-	g.explicitFields = next
+	c.explicitFields = next
 }
 
-// SetHydrate sets the Hydrate field and marks it as non-optional;
+// SetStrategy sets the Strategy field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFlowRequestParameters) SetHydrate(hydrate []*GetFlowRequestParametersHydrateEnum) {
-	g.Hydrate = hydrate
-	g.require(getFlowRequestParametersFieldHydrate)
+func (c *ConnectionsGetRequest) SetStrategy(strategy []*ConnectionStrategyEnum) {
+	c.Strategy = strategy
+	c.require(connectionsGetRequestFieldStrategy)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsGetRequest) SetFrom(from *string) {
+	c.From = from
+	c.require(connectionsGetRequestFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsGetRequest) SetTake(take *int) {
+	c.Take = take
+	c.require(connectionsGetRequestFieldTake)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsGetRequest) SetFields(fields *string) {
+	c.Fields = fields
+	c.require(connectionsGetRequestFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsGetRequest) SetIncludeFields(includeFields *bool) {
+	c.IncludeFields = includeFields
+	c.require(connectionsGetRequestFieldIncludeFields)
 }
 
 var (
-	getRuleRequestParametersFieldFields        = big.NewInt(1 << 0)
-	getRuleRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
+	getUserRequestParametersFieldFields        = big.NewInt(1 << 0)
+	getUserRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
 )
 
-type GetRuleRequestParameters struct {
+type GetUserRequestParameters struct {
 	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
 	Fields *string `json:"-" url:"fields,omitempty"`
 	// Whether specified fields are to be included (true) or excluded (false).
@@ -6670,7 +6872,7 @@ type GetRuleRequestParameters struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetRuleRequestParameters) require(field *big.Int) {
+func (g *GetUserRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if g.explicitFields != nil {
 		next.Set(g.explicitFields)
@@ -6681,16 +6883,44 @@ func (g *GetRuleRequestParameters) require(field *big.Int) {
 
 // SetFields sets the Fields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRuleRequestParameters) SetFields(fields *string) {
+func (g *GetUserRequestParameters) SetFields(fields *string) {
 	g.Fields = fields
-	g.require(getRuleRequestParametersFieldFields)
+	g.require(getUserRequestParametersFieldFields)
 }
 
 // SetIncludeFields sets the IncludeFields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetRuleRequestParameters) SetIncludeFields(includeFields *bool) {
+func (g *GetUserRequestParameters) SetIncludeFields(includeFields *bool) {
 	g.IncludeFields = includeFields
-	g.require(getRuleRequestParametersFieldIncludeFields)
+	g.require(getUserRequestParametersFieldIncludeFields)
+}
+
+var (
+	getResourceServerRequestParametersFieldIncludeFields = big.NewInt(1 << 0)
+)
+
+type GetResourceServerRequestParameters struct {
+	// Whether specified fields are to be included (true) or excluded (false).
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetResourceServerRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerRequestParameters) SetIncludeFields(includeFields *bool) {
+	g.IncludeFields = includeFields
+	g.require(getResourceServerRequestParametersFieldIncludeFields)
 }
 
 var (
@@ -6732,34 +6962,6 @@ func (g *GetOrganizationInvitationRequestParameters) SetIncludeFields(includeFie
 }
 
 var (
-	getResourceServerRequestParametersFieldIncludeFields = big.NewInt(1 << 0)
-)
-
-type GetResourceServerRequestParameters struct {
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (g *GetResourceServerRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
-	}
-	next.Or(next, field)
-	g.explicitFields = next
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetResourceServerRequestParameters) SetIncludeFields(includeFields *bool) {
-	g.IncludeFields = includeFields
-	g.require(getResourceServerRequestParametersFieldIncludeFields)
-}
-
-var (
 	listRoleGroupsParametersFieldFrom = big.NewInt(1 << 0)
 	listRoleGroupsParametersFieldTake = big.NewInt(1 << 1)
 )
@@ -6798,56 +7000,18 @@ func (l *ListRoleGroupsParameters) SetTake(take *int) {
 }
 
 var (
-	getEmailProviderRequestParametersFieldFields        = big.NewInt(1 << 0)
-	getEmailProviderRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
+	getFlowRequestParametersFieldHydrate = big.NewInt(1 << 0)
 )
 
-type GetEmailProviderRequestParameters struct {
-	// Comma-separated list of fields to include or exclude (dependent upon include_fields) from the result. Leave empty to retrieve `name` and `enabled`. Additional fields available include `credentials`, `default_from_address`, and `settings`.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+type GetFlowRequestParameters struct {
+	// hydration param
+	Hydrate []*GetFlowRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetEmailProviderRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
-	}
-	next.Or(next, field)
-	g.explicitFields = next
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetEmailProviderRequestParameters) SetFields(fields *string) {
-	g.Fields = fields
-	g.require(getEmailProviderRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetEmailProviderRequestParameters) SetIncludeFields(includeFields *bool) {
-	g.IncludeFields = includeFields
-	g.require(getEmailProviderRequestParametersFieldIncludeFields)
-}
-
-var (
-	getFormRequestParametersFieldHydrate = big.NewInt(1 << 0)
-)
-
-type GetFormRequestParameters struct {
-	// Query parameter to hydrate the response with additional data
-	Hydrate []*FormsRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (g *GetFormRequestParameters) require(field *big.Int) {
+func (g *GetFlowRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if g.explicitFields != nil {
 		next.Set(g.explicitFields)
@@ -6858,47 +7022,9 @@ func (g *GetFormRequestParameters) require(field *big.Int) {
 
 // SetHydrate sets the Hydrate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFormRequestParameters) SetHydrate(hydrate []*FormsRequestParametersHydrateEnum) {
+func (g *GetFlowRequestParameters) SetHydrate(hydrate []*GetFlowRequestParametersHydrateEnum) {
 	g.Hydrate = hydrate
-	g.require(getFormRequestParametersFieldHydrate)
-}
-
-var (
-	getUserRequestParametersFieldFields        = big.NewInt(1 << 0)
-	getUserRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
-)
-
-type GetUserRequestParameters struct {
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (g *GetUserRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
-	}
-	next.Or(next, field)
-	g.explicitFields = next
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserRequestParameters) SetFields(fields *string) {
-	g.Fields = fields
-	g.require(getUserRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserRequestParameters) SetIncludeFields(includeFields *bool) {
-	g.IncludeFields = includeFields
-	g.require(getUserRequestParametersFieldIncludeFields)
+	g.require(getFlowRequestParametersFieldHydrate)
 }
 
 var (
@@ -6970,27 +7096,18 @@ func (g *GetUserGroupsRequestParameters) SetTake(take *int) {
 }
 
 var (
-	getGroupMembersRequestParametersFieldFields        = big.NewInt(1 << 0)
-	getGroupMembersRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
-	getGroupMembersRequestParametersFieldFrom          = big.NewInt(1 << 2)
-	getGroupMembersRequestParametersFieldTake          = big.NewInt(1 << 3)
+	getFlowExecutionRequestParametersFieldHydrate = big.NewInt(1 << 0)
 )
 
-type GetGroupMembersRequestParameters struct {
-	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
+type GetFlowExecutionRequestParameters struct {
+	// Hydration param
+	Hydrate []*GetFlowExecutionRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetGroupMembersRequestParameters) require(field *big.Int) {
+func (g *GetFlowExecutionRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if g.explicitFields != nil {
 		next.Set(g.explicitFields)
@@ -6999,32 +7116,11 @@ func (g *GetGroupMembersRequestParameters) require(field *big.Int) {
 	g.explicitFields = next
 }
 
-// SetFields sets the Fields field and marks it as non-optional;
+// SetHydrate sets the Hydrate field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGroupMembersRequestParameters) SetFields(fields *string) {
-	g.Fields = fields
-	g.require(getGroupMembersRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGroupMembersRequestParameters) SetIncludeFields(includeFields *bool) {
-	g.IncludeFields = includeFields
-	g.require(getGroupMembersRequestParametersFieldIncludeFields)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGroupMembersRequestParameters) SetFrom(from *string) {
-	g.From = from
-	g.require(getGroupMembersRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetGroupMembersRequestParameters) SetTake(take *int) {
-	g.Take = take
-	g.require(getGroupMembersRequestParametersFieldTake)
+func (g *GetFlowExecutionRequestParameters) SetHydrate(hydrate []*GetFlowExecutionRequestParametersHydrateEnum) {
+	g.Hydrate = hydrate
+	g.require(getFlowExecutionRequestParametersFieldHydrate)
 }
 
 var (
@@ -7053,6 +7149,82 @@ func (g *GetHookRequestParameters) require(field *big.Int) {
 func (g *GetHookRequestParameters) SetFields(fields *string) {
 	g.Fields = fields
 	g.require(getHookRequestParametersFieldFields)
+}
+
+var (
+	getEmailProviderRequestParametersFieldFields        = big.NewInt(1 << 0)
+	getEmailProviderRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
+)
+
+type GetEmailProviderRequestParameters struct {
+	// Comma-separated list of fields to include or exclude (dependent upon include_fields) from the result. Leave empty to retrieve `name` and `enabled`. Additional fields available include `credentials`, `default_from_address`, and `settings`.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are to be included (true) or excluded (false).
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetEmailProviderRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailProviderRequestParameters) SetFields(fields *string) {
+	g.Fields = fields
+	g.require(getEmailProviderRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetEmailProviderRequestParameters) SetIncludeFields(includeFields *bool) {
+	g.IncludeFields = includeFields
+	g.require(getEmailProviderRequestParametersFieldIncludeFields)
+}
+
+var (
+	getRuleRequestParametersFieldFields        = big.NewInt(1 << 0)
+	getRuleRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
+)
+
+type GetRuleRequestParameters struct {
+	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are to be included (true) or excluded (false).
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetRuleRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleRequestParameters) SetFields(fields *string) {
+	g.Fields = fields
+	g.require(getRuleRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRuleRequestParameters) SetIncludeFields(includeFields *bool) {
+	g.IncludeFields = includeFields
+	g.require(getRuleRequestParametersFieldIncludeFields)
 }
 
 var (
@@ -7094,20 +7266,11 @@ func (g *GetClientRequestParameters) SetIncludeFields(includeFields *bool) {
 }
 
 var (
-	connectionsGetRequestFieldStrategy      = big.NewInt(1 << 0)
-	connectionsGetRequestFieldFrom          = big.NewInt(1 << 1)
-	connectionsGetRequestFieldTake          = big.NewInt(1 << 2)
-	connectionsGetRequestFieldFields        = big.NewInt(1 << 3)
-	connectionsGetRequestFieldIncludeFields = big.NewInt(1 << 4)
+	getConnectionRequestParametersFieldFields        = big.NewInt(1 << 0)
+	getConnectionRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
 )
 
-type ConnectionsGetRequest struct {
-	// Provide strategies to only retrieve connections with such strategies
-	Strategy []*ConnectionStrategyEnum `json:"-" url:"strategy,omitempty"`
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
+type GetConnectionRequestParameters struct {
 	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
 	Fields *string `json:"-" url:"fields,omitempty"`
 	// <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
@@ -7117,63 +7280,7 @@ type ConnectionsGetRequest struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *ConnectionsGetRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
-	}
-	next.Or(next, field)
-	c.explicitFields = next
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionsGetRequest) SetStrategy(strategy []*ConnectionStrategyEnum) {
-	c.Strategy = strategy
-	c.require(connectionsGetRequestFieldStrategy)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionsGetRequest) SetFrom(from *string) {
-	c.From = from
-	c.require(connectionsGetRequestFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionsGetRequest) SetTake(take *int) {
-	c.Take = take
-	c.require(connectionsGetRequestFieldTake)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionsGetRequest) SetFields(fields *string) {
-	c.Fields = fields
-	c.require(connectionsGetRequestFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (c *ConnectionsGetRequest) SetIncludeFields(includeFields *bool) {
-	c.IncludeFields = includeFields
-	c.require(connectionsGetRequestFieldIncludeFields)
-}
-
-var (
-	getFlowExecutionRequestParametersFieldHydrate = big.NewInt(1 << 0)
-)
-
-type GetFlowExecutionRequestParameters struct {
-	// Hydration param
-	Hydrate []*GetFlowExecutionRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (g *GetFlowExecutionRequestParameters) require(field *big.Int) {
+func (g *GetConnectionRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if g.explicitFields != nil {
 		next.Set(g.explicitFields)
@@ -7182,11 +7289,18 @@ func (g *GetFlowExecutionRequestParameters) require(field *big.Int) {
 	g.explicitFields = next
 }
 
-// SetHydrate sets the Hydrate field and marks it as non-optional;
+// SetFields sets the Fields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetFlowExecutionRequestParameters) SetHydrate(hydrate []*GetFlowExecutionRequestParametersHydrateEnum) {
-	g.Hydrate = hydrate
-	g.require(getFlowExecutionRequestParametersFieldHydrate)
+func (g *GetConnectionRequestParameters) SetFields(fields *string) {
+	g.Fields = fields
+	g.require(getConnectionRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionRequestParameters) SetIncludeFields(includeFields *bool) {
+	g.IncludeFields = includeFields
+	g.require(getConnectionRequestParametersFieldIncludeFields)
 }
 
 var (
@@ -7266,21 +7380,27 @@ func (g *GetTenantSettingsRequestParameters) SetIncludeFields(includeFields *boo
 }
 
 var (
-	getConnectionRequestParametersFieldFields        = big.NewInt(1 << 0)
-	getConnectionRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
+	getGroupMembersRequestParametersFieldFields        = big.NewInt(1 << 0)
+	getGroupMembersRequestParametersFieldIncludeFields = big.NewInt(1 << 1)
+	getGroupMembersRequestParametersFieldFrom          = big.NewInt(1 << 2)
+	getGroupMembersRequestParametersFieldTake          = big.NewInt(1 << 3)
 )
 
-type GetConnectionRequestParameters struct {
+type GetGroupMembersRequestParameters struct {
 	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
 	Fields *string `json:"-" url:"fields,omitempty"`
-	// <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
+	// Whether specified fields are to be included (true) or excluded (false).
 	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetConnectionRequestParameters) require(field *big.Int) {
+func (g *GetGroupMembersRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if g.explicitFields != nil {
 		next.Set(g.explicitFields)
@@ -7291,16 +7411,58 @@ func (g *GetConnectionRequestParameters) require(field *big.Int) {
 
 // SetFields sets the Fields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetConnectionRequestParameters) SetFields(fields *string) {
+func (g *GetGroupMembersRequestParameters) SetFields(fields *string) {
 	g.Fields = fields
-	g.require(getConnectionRequestParametersFieldFields)
+	g.require(getGroupMembersRequestParametersFieldFields)
 }
 
 // SetIncludeFields sets the IncludeFields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetConnectionRequestParameters) SetIncludeFields(includeFields *bool) {
+func (g *GetGroupMembersRequestParameters) SetIncludeFields(includeFields *bool) {
 	g.IncludeFields = includeFields
-	g.require(getConnectionRequestParametersFieldIncludeFields)
+	g.require(getGroupMembersRequestParametersFieldIncludeFields)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetGroupMembersRequestParameters) SetFrom(from *string) {
+	g.From = from
+	g.require(getGroupMembersRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetGroupMembersRequestParameters) SetTake(take *int) {
+	g.Take = take
+	g.require(getGroupMembersRequestParametersFieldTake)
+}
+
+var (
+	getFormRequestParametersFieldHydrate = big.NewInt(1 << 0)
+)
+
+type GetFormRequestParameters struct {
+	// Query parameter to hydrate the response with additional data
+	Hydrate []*FormsRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetFormRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetHydrate sets the Hydrate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetFormRequestParameters) SetHydrate(hydrate []*FormsRequestParametersHydrateEnum) {
+	g.Hydrate = hydrate
+	g.require(getFormRequestParametersFieldHydrate)
 }
 
 var (
@@ -7548,62 +7710,11 @@ func (l *ListHooksRequestParameters) SetTriggerID(triggerID *HookTriggerIDEnum) 
 }
 
 var (
-	listRefreshTokensRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
-	listRefreshTokensRequestParametersFieldFrom          = big.NewInt(1 << 1)
-	listRefreshTokensRequestParametersFieldTake          = big.NewInt(1 << 2)
+	listOrganizationGroupsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listOrganizationGroupsRequestParametersFieldTake = big.NewInt(1 << 1)
 )
 
-type ListRefreshTokensRequestParameters struct {
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// An optional cursor from which to start the selection (exclusive).
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListRefreshTokensRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRefreshTokensRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listRefreshTokensRequestParametersFieldIncludeTotals)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRefreshTokensRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listRefreshTokensRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRefreshTokensRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listRefreshTokensRequestParametersFieldTake)
-}
-
-var (
-	listFlowExecutionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
-	listFlowExecutionsRequestParametersFieldFrom          = big.NewInt(1 << 1)
-	listFlowExecutionsRequestParametersFieldTake          = big.NewInt(1 << 2)
-)
-
-type ListFlowExecutionsRequestParameters struct {
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+type ListOrganizationGroupsRequestParameters struct {
 	// Optional Id from which to start selection.
 	From *string `json:"-" url:"from,omitempty"`
 	// Number of results per page. Defaults to 50.
@@ -7613,7 +7724,7 @@ type ListFlowExecutionsRequestParameters struct {
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListFlowExecutionsRequestParameters) require(field *big.Int) {
+func (l *ListOrganizationGroupsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -7622,25 +7733,172 @@ func (l *ListFlowExecutionsRequestParameters) require(field *big.Int) {
 	l.explicitFields = next
 }
 
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowExecutionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listFlowExecutionsRequestParametersFieldIncludeTotals)
-}
-
 // SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowExecutionsRequestParameters) SetFrom(from *string) {
+func (l *ListOrganizationGroupsRequestParameters) SetFrom(from *string) {
 	l.From = from
-	l.require(listFlowExecutionsRequestParametersFieldFrom)
+	l.require(listOrganizationGroupsRequestParametersFieldFrom)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowExecutionsRequestParameters) SetTake(take *int) {
+func (l *ListOrganizationGroupsRequestParameters) SetTake(take *int) {
 	l.Take = take
-	l.require(listFlowExecutionsRequestParametersFieldTake)
+	l.require(listOrganizationGroupsRequestParametersFieldTake)
+}
+
+var (
+	listFlowsRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listFlowsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listFlowsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+	listFlowsRequestParametersFieldHydrate       = big.NewInt(1 << 3)
+	listFlowsRequestParametersFieldSynchronous   = big.NewInt(1 << 4)
+)
+
+type ListFlowsRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page. Defaults to 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// hydration param
+	Hydrate []*ListFlowsRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
+	// flag to filter by sync/async flows
+	Synchronous *bool `json:"-" url:"synchronous,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListFlowsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listFlowsRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listFlowsRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listFlowsRequestParametersFieldIncludeTotals)
+}
+
+// SetHydrate sets the Hydrate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowsRequestParameters) SetHydrate(hydrate []*ListFlowsRequestParametersHydrateEnum) {
+	l.Hydrate = hydrate
+	l.require(listFlowsRequestParametersFieldHydrate)
+}
+
+// SetSynchronous sets the Synchronous field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowsRequestParameters) SetSynchronous(synchronous *bool) {
+	l.Synchronous = synchronous
+	l.require(listFlowsRequestParametersFieldSynchronous)
+}
+
+var (
+	listDirectoryProvisioningsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listDirectoryProvisioningsRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListDirectoryProvisioningsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListDirectoryProvisioningsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDirectoryProvisioningsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listDirectoryProvisioningsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDirectoryProvisioningsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listDirectoryProvisioningsRequestParametersFieldTake)
+}
+
+var (
+	listSegmentsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listSegmentsRequestParametersFieldTake = big.NewInt(1 << 1)
+	listSegmentsRequestParametersFieldType = big.NewInt(1 << 2)
+)
+
+type ListSegmentsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of segments to return per page. Defaults to 25, maximum 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// Filter by type. Exact match.
+	Type *SegmentTypeFilterEnum `json:"-" url:"type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListSegmentsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSegmentsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listSegmentsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSegmentsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listSegmentsRequestParametersFieldTake)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSegmentsRequestParameters) SetType(type_ *SegmentTypeFilterEnum) {
+	l.Type = type_
+	l.require(listSegmentsRequestParametersFieldType)
 }
 
 var (
@@ -7722,6 +7980,92 @@ func (g *GetRefreshTokensRequestParameters) SetIncludeFields(includeFields *bool
 }
 
 var (
+	listFlowExecutionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
+	listFlowExecutionsRequestParametersFieldFrom          = big.NewInt(1 << 1)
+	listFlowExecutionsRequestParametersFieldTake          = big.NewInt(1 << 2)
+)
+
+type ListFlowExecutionsRequestParameters struct {
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListFlowExecutionsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowExecutionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listFlowExecutionsRequestParametersFieldIncludeTotals)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowExecutionsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listFlowExecutionsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFlowExecutionsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listFlowExecutionsRequestParametersFieldTake)
+}
+
+var (
+	listVerifiableCredentialTemplatesRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listVerifiableCredentialTemplatesRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListVerifiableCredentialTemplatesRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListVerifiableCredentialTemplatesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListVerifiableCredentialTemplatesRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listVerifiableCredentialTemplatesRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListVerifiableCredentialTemplatesRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listVerifiableCredentialTemplatesRequestParametersFieldTake)
+}
+
+var (
 	listFlowsVaultConnectionsRequestParametersFieldPage          = big.NewInt(1 << 0)
 	listFlowsVaultConnectionsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
 	listFlowsVaultConnectionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
@@ -7770,41 +8114,41 @@ func (l *ListFlowsVaultConnectionsRequestParameters) SetIncludeTotals(includeTot
 }
 
 var (
-	listUserAttributeProfileRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listUserAttributeProfileRequestParametersFieldTake = big.NewInt(1 << 1)
+	tokenExchangeProfilesListRequestFieldFrom = big.NewInt(1 << 0)
+	tokenExchangeProfilesListRequestFieldTake = big.NewInt(1 << 1)
 )
 
-type ListUserAttributeProfileRequestParameters struct {
+type TokenExchangeProfilesListRequest struct {
 	// Optional Id from which to start selection.
 	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 5.
+	// Number of results per page. Defaults to 50.
 	Take *int `json:"-" url:"take,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListUserAttributeProfileRequestParameters) require(field *big.Int) {
+func (t *TokenExchangeProfilesListRequest) require(field *big.Int) {
 	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
 	next.Or(next, field)
-	l.explicitFields = next
+	t.explicitFields = next
 }
 
 // SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserAttributeProfileRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listUserAttributeProfileRequestParametersFieldFrom)
+func (t *TokenExchangeProfilesListRequest) SetFrom(from *string) {
+	t.From = from
+	t.require(tokenExchangeProfilesListRequestFieldFrom)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserAttributeProfileRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listUserAttributeProfileRequestParametersFieldTake)
+func (t *TokenExchangeProfilesListRequest) SetTake(take *int) {
+	t.Take = take
+	t.require(tokenExchangeProfilesListRequestFieldTake)
 }
 
 var (
@@ -7866,89 +8210,41 @@ func (l *ListFormsRequestParameters) SetHydrate(hydrate []*FormsRequestParameter
 }
 
 var (
-	listVerifiableCredentialTemplatesRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listVerifiableCredentialTemplatesRequestParametersFieldTake = big.NewInt(1 << 1)
+	getActionModulesRequestParametersFieldPage    = big.NewInt(1 << 0)
+	getActionModulesRequestParametersFieldPerPage = big.NewInt(1 << 1)
 )
 
-type ListVerifiableCredentialTemplatesRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListVerifiableCredentialTemplatesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListVerifiableCredentialTemplatesRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listVerifiableCredentialTemplatesRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListVerifiableCredentialTemplatesRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listVerifiableCredentialTemplatesRequestParametersFieldTake)
-}
-
-var (
-	listUserAuthenticationMethodsRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listUserAuthenticationMethodsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listUserAuthenticationMethodsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-)
-
-type ListUserAuthenticationMethodsRequestParameters struct {
-	// Page index of the results to return. First page is 0. Default is 0.
+type GetActionModulesRequestParameters struct {
+	// Page index of the results to return. First page is 0.
 	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Default is 50.
+	// Number of results per page. Paging is disabled if parameter not sent.
 	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListUserAuthenticationMethodsRequestParameters) require(field *big.Int) {
+func (g *GetActionModulesRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
 	next.Or(next, field)
-	l.explicitFields = next
+	g.explicitFields = next
 }
 
 // SetPage sets the Page field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserAuthenticationMethodsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listUserAuthenticationMethodsRequestParametersFieldPage)
+func (g *GetActionModulesRequestParameters) SetPage(page *int) {
+	g.Page = page
+	g.require(getActionModulesRequestParametersFieldPage)
 }
 
 // SetPerPage sets the PerPage field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserAuthenticationMethodsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listUserAuthenticationMethodsRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserAuthenticationMethodsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listUserAuthenticationMethodsRequestParametersFieldIncludeTotals)
+func (g *GetActionModulesRequestParameters) SetPerPage(perPage *int) {
+	g.PerPage = perPage
+	g.require(getActionModulesRequestParametersFieldPerPage)
 }
 
 var (
@@ -8017,6 +8313,94 @@ func (l *ListRateLimitPoliciesRequestParameters) SetTake(take *int) {
 func (l *ListRateLimitPoliciesRequestParameters) SetFrom(from *string) {
 	l.From = from
 	l.require(listRateLimitPoliciesRequestParametersFieldFrom)
+}
+
+var (
+	listConnectionsQueryParametersFieldIncludeTotals = big.NewInt(1 << 0)
+	listConnectionsQueryParametersFieldFrom          = big.NewInt(1 << 1)
+	listConnectionsQueryParametersFieldTake          = big.NewInt(1 << 2)
+	listConnectionsQueryParametersFieldStrategy      = big.NewInt(1 << 3)
+	listConnectionsQueryParametersFieldName          = big.NewInt(1 << 4)
+	listConnectionsQueryParametersFieldFields        = big.NewInt(1 << 5)
+	listConnectionsQueryParametersFieldIncludeFields = big.NewInt(1 << 6)
+)
+
+type ListConnectionsQueryParameters struct {
+	// true if a query summary must be included in the result, false otherwise. Not returned when using checkpoint pagination. Default <code>false</code>.
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// Provide strategies to only retrieve connections with such strategies
+	Strategy []*ConnectionStrategyEnum `json:"-" url:"strategy,omitempty"`
+	// Provide the name of the connection to retrieve
+	Name *string `json:"-" url:"name,omitempty"`
+	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListConnectionsQueryParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listConnectionsQueryParametersFieldIncludeTotals)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listConnectionsQueryParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listConnectionsQueryParametersFieldTake)
+}
+
+// SetStrategy sets the Strategy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetStrategy(strategy []*ConnectionStrategyEnum) {
+	l.Strategy = strategy
+	l.require(listConnectionsQueryParametersFieldStrategy)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetName(name *string) {
+	l.Name = name
+	l.require(listConnectionsQueryParametersFieldName)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listConnectionsQueryParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListConnectionsQueryParameters) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listConnectionsQueryParametersFieldIncludeFields)
 }
 
 var (
@@ -8128,30 +8512,21 @@ func (l *ListGroupsRequestParameters) SetTake(take *int) {
 }
 
 var (
-	listFlowsRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listFlowsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listFlowsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-	listFlowsRequestParametersFieldHydrate       = big.NewInt(1 << 3)
-	listFlowsRequestParametersFieldSynchronous   = big.NewInt(1 << 4)
+	listSCIMConfigurationsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listSCIMConfigurationsRequestParametersFieldTake = big.NewInt(1 << 1)
 )
 
-type ListFlowsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
+type ListSCIMConfigurationsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
 	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// hydration param
-	Hydrate []*ListFlowsRequestParametersHydrateEnum `json:"-" url:"hydrate,omitempty"`
-	// flag to filter by sync/async flows
-	Synchronous *bool `json:"-" url:"synchronous,omitempty"`
+	Take *int `json:"-" url:"take,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListFlowsRequestParameters) require(field *big.Int) {
+func (l *ListSCIMConfigurationsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -8160,39 +8535,18 @@ func (l *ListFlowsRequestParameters) require(field *big.Int) {
 	l.explicitFields = next
 }
 
-// SetPage sets the Page field and marks it as non-optional;
+// SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listFlowsRequestParametersFieldPage)
+func (l *ListSCIMConfigurationsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listSCIMConfigurationsRequestParametersFieldFrom)
 }
 
-// SetPerPage sets the PerPage field and marks it as non-optional;
+// SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listFlowsRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listFlowsRequestParametersFieldIncludeTotals)
-}
-
-// SetHydrate sets the Hydrate field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowsRequestParameters) SetHydrate(hydrate []*ListFlowsRequestParametersHydrateEnum) {
-	l.Hydrate = hydrate
-	l.require(listFlowsRequestParametersFieldHydrate)
-}
-
-// SetSynchronous sets the Synchronous field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFlowsRequestParameters) SetSynchronous(synchronous *bool) {
-	l.Synchronous = synchronous
-	l.require(listFlowsRequestParametersFieldSynchronous)
+func (l *ListSCIMConfigurationsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listSCIMConfigurationsRequestParametersFieldTake)
 }
 
 var (
@@ -8234,21 +8588,69 @@ func (l *ListGroupRolesRequestParameters) SetTake(take *int) {
 }
 
 var (
-	listDirectoryProvisioningsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listDirectoryProvisioningsRequestParametersFieldTake = big.NewInt(1 << 1)
+	listUserAuthenticationMethodsRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listUserAuthenticationMethodsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listUserAuthenticationMethodsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
 )
 
-type ListDirectoryProvisioningsRequestParameters struct {
+type ListUserAuthenticationMethodsRequestParameters struct {
+	// Page index of the results to return. First page is 0. Default is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page. Default is 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUserAuthenticationMethodsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserAuthenticationMethodsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listUserAuthenticationMethodsRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserAuthenticationMethodsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUserAuthenticationMethodsRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserAuthenticationMethodsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listUserAuthenticationMethodsRequestParametersFieldIncludeTotals)
+}
+
+var (
+	listConnectionProfileRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listConnectionProfileRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListConnectionProfileRequestParameters struct {
 	// Optional Id from which to start selection.
 	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
+	// Number of results per page. Defaults to 5.
 	Take *int `json:"-" url:"take,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListDirectoryProvisioningsRequestParameters) require(field *big.Int) {
+func (l *ListConnectionProfileRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -8259,16 +8661,64 @@ func (l *ListDirectoryProvisioningsRequestParameters) require(field *big.Int) {
 
 // SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDirectoryProvisioningsRequestParameters) SetFrom(from *string) {
+func (l *ListConnectionProfileRequestParameters) SetFrom(from *string) {
 	l.From = from
-	l.require(listDirectoryProvisioningsRequestParametersFieldFrom)
+	l.require(listConnectionProfileRequestParametersFieldFrom)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDirectoryProvisioningsRequestParameters) SetTake(take *int) {
+func (l *ListConnectionProfileRequestParameters) SetTake(take *int) {
 	l.Take = take
-	l.require(listDirectoryProvisioningsRequestParametersFieldTake)
+	l.require(listConnectionProfileRequestParametersFieldTake)
+}
+
+var (
+	listUserSessionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
+	listUserSessionsRequestParametersFieldFrom          = big.NewInt(1 << 1)
+	listUserSessionsRequestParametersFieldTake          = big.NewInt(1 << 2)
+)
+
+type ListUserSessionsRequestParameters struct {
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// An optional cursor from which to start the selection (exclusive).
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUserSessionsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserSessionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listUserSessionsRequestParametersFieldIncludeTotals)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserSessionsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listUserSessionsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserSessionsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listUserSessionsRequestParametersFieldTake)
 }
 
 var (
@@ -8337,102 +8787,6 @@ func (l *ListResourceServerRequestParameters) SetIncludeTotals(includeTotals *bo
 func (l *ListResourceServerRequestParameters) SetIncludeFields(includeFields *bool) {
 	l.IncludeFields = includeFields
 	l.require(listResourceServerRequestParametersFieldIncludeFields)
-}
-
-var (
-	getActionModulesRequestParametersFieldPage    = big.NewInt(1 << 0)
-	getActionModulesRequestParametersFieldPerPage = big.NewInt(1 << 1)
-)
-
-type GetActionModulesRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Paging is disabled if parameter not sent.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (g *GetActionModulesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
-	}
-	next.Or(next, field)
-	g.explicitFields = next
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionModulesRequestParameters) SetPage(page *int) {
-	g.Page = page
-	g.require(getActionModulesRequestParametersFieldPage)
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetActionModulesRequestParameters) SetPerPage(perPage *int) {
-	g.PerPage = perPage
-	g.require(getActionModulesRequestParametersFieldPerPage)
-}
-
-var (
-	listCustomDomainsRequestParametersFieldQ             = big.NewInt(1 << 0)
-	listCustomDomainsRequestParametersFieldFields        = big.NewInt(1 << 1)
-	listCustomDomainsRequestParametersFieldIncludeFields = big.NewInt(1 << 2)
-	listCustomDomainsRequestParametersFieldSort          = big.NewInt(1 << 3)
-)
-
-type ListCustomDomainsRequestParameters struct {
-	// Query in <a href ="https://lucene.apache.org/core/2_9_4/queryparsersyntax.html">Lucene query string syntax</a>.
-	Q *string `json:"-" url:"q,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Field to sort by. Only <code>domain:1</code> (ascending order by domain) is supported at this time.
-	Sort *string `json:"-" url:"sort,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListCustomDomainsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetQ sets the Q field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListCustomDomainsRequestParameters) SetQ(q *string) {
-	l.Q = q
-	l.require(listCustomDomainsRequestParametersFieldQ)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListCustomDomainsRequestParameters) SetFields(fields *string) {
-	l.Fields = fields
-	l.require(listCustomDomainsRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListCustomDomainsRequestParameters) SetIncludeFields(includeFields *bool) {
-	l.IncludeFields = includeFields
-	l.require(listCustomDomainsRequestParametersFieldIncludeFields)
-}
-
-// SetSort sets the Sort field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListCustomDomainsRequestParameters) SetSort(sort *string) {
-	l.Sort = sort
-	l.require(listCustomDomainsRequestParametersFieldSort)
 }
 
 var (
@@ -8534,92 +8888,6 @@ func (l *ListAculsRequestParameters) SetRenderingMode(renderingMode *AculRenderi
 }
 
 var (
-	listUserSessionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
-	listUserSessionsRequestParametersFieldFrom          = big.NewInt(1 << 1)
-	listUserSessionsRequestParametersFieldTake          = big.NewInt(1 << 2)
-)
-
-type ListUserSessionsRequestParameters struct {
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// An optional cursor from which to start the selection (exclusive).
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListUserSessionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserSessionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listUserSessionsRequestParametersFieldIncludeTotals)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserSessionsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listUserSessionsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserSessionsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listUserSessionsRequestParametersFieldTake)
-}
-
-var (
-	tokenExchangeProfilesListRequestFieldFrom = big.NewInt(1 << 0)
-	tokenExchangeProfilesListRequestFieldTake = big.NewInt(1 << 1)
-)
-
-type TokenExchangeProfilesListRequest struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (t *TokenExchangeProfilesListRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
-	}
-	next.Or(next, field)
-	t.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenExchangeProfilesListRequest) SetFrom(from *string) {
-	t.From = from
-	t.require(tokenExchangeProfilesListRequestFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TokenExchangeProfilesListRequest) SetTake(take *int) {
-	t.Take = take
-	t.require(tokenExchangeProfilesListRequestFieldTake)
-}
-
-var (
 	listOrganizationRoleMembersRequestParametersFieldFrom          = big.NewInt(1 << 0)
 	listOrganizationRoleMembersRequestParametersFieldTake          = big.NewInt(1 << 1)
 	listOrganizationRoleMembersRequestParametersFieldFields        = big.NewInt(1 << 2)
@@ -8678,112 +8946,27 @@ func (l *ListOrganizationRoleMembersRequestParameters) SetIncludeFields(includeF
 }
 
 var (
-	listConnectionsQueryParametersFieldIncludeTotals = big.NewInt(1 << 0)
-	listConnectionsQueryParametersFieldFrom          = big.NewInt(1 << 1)
-	listConnectionsQueryParametersFieldTake          = big.NewInt(1 << 2)
-	listConnectionsQueryParametersFieldStrategy      = big.NewInt(1 << 3)
-	listConnectionsQueryParametersFieldName          = big.NewInt(1 << 4)
-	listConnectionsQueryParametersFieldFields        = big.NewInt(1 << 5)
-	listConnectionsQueryParametersFieldIncludeFields = big.NewInt(1 << 6)
+	listFeatureFlagsRequestParametersFieldFrom   = big.NewInt(1 << 0)
+	listFeatureFlagsRequestParametersFieldTake   = big.NewInt(1 << 1)
+	listFeatureFlagsRequestParametersFieldType   = big.NewInt(1 << 2)
+	listFeatureFlagsRequestParametersFieldStatus = big.NewInt(1 << 3)
 )
 
-type ListConnectionsQueryParameters struct {
-	// true if a query summary must be included in the result, false otherwise. Not returned when using checkpoint pagination. Default <code>false</code>.
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+type ListFeatureFlagsRequestParameters struct {
 	// Optional Id from which to start selection.
 	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// Provide strategies to only retrieve connections with such strategies
-	Strategy []*ConnectionStrategyEnum `json:"-" url:"strategy,omitempty"`
-	// Provide the name of the connection to retrieve
-	Name *string `json:"-" url:"name,omitempty"`
-	// A comma separated list of fields to include or exclude (depending on include_fields) from the result, empty to retrieve all fields
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// <code>true</code> if the fields specified are to be included in the result, <code>false</code> otherwise (defaults to <code>true</code>)
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListConnectionsQueryParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listConnectionsQueryParametersFieldIncludeTotals)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listConnectionsQueryParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listConnectionsQueryParametersFieldTake)
-}
-
-// SetStrategy sets the Strategy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetStrategy(strategy []*ConnectionStrategyEnum) {
-	l.Strategy = strategy
-	l.require(listConnectionsQueryParametersFieldStrategy)
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetName(name *string) {
-	l.Name = name
-	l.require(listConnectionsQueryParametersFieldName)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetFields(fields *string) {
-	l.Fields = fields
-	l.require(listConnectionsQueryParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionsQueryParameters) SetIncludeFields(includeFields *bool) {
-	l.IncludeFields = includeFields
-	l.require(listConnectionsQueryParametersFieldIncludeFields)
-}
-
-var (
-	listSegmentsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listSegmentsRequestParametersFieldTake = big.NewInt(1 << 1)
-	listSegmentsRequestParametersFieldType = big.NewInt(1 << 2)
-)
-
-type ListSegmentsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of segments to return per page. Defaults to 25, maximum 50.
+	// Number of feature flags to return per page. Defaults to 25, maximum 50.
 	Take *int `json:"-" url:"take,omitempty"`
 	// Filter by type. Exact match.
-	Type *SegmentTypeFilterEnum `json:"-" url:"type,omitempty"`
+	Type *FeatureFlagTypeEnum `json:"-" url:"type,omitempty"`
+	// Filter by status. Exact match.
+	Status *FeatureFlagStatusEnum `json:"-" url:"status,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListSegmentsRequestParameters) require(field *big.Int) {
+func (l *ListFeatureFlagsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -8794,23 +8977,30 @@ func (l *ListSegmentsRequestParameters) require(field *big.Int) {
 
 // SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSegmentsRequestParameters) SetFrom(from *string) {
+func (l *ListFeatureFlagsRequestParameters) SetFrom(from *string) {
 	l.From = from
-	l.require(listSegmentsRequestParametersFieldFrom)
+	l.require(listFeatureFlagsRequestParametersFieldFrom)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSegmentsRequestParameters) SetTake(take *int) {
+func (l *ListFeatureFlagsRequestParameters) SetTake(take *int) {
 	l.Take = take
-	l.require(listSegmentsRequestParametersFieldTake)
+	l.require(listFeatureFlagsRequestParametersFieldTake)
 }
 
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSegmentsRequestParameters) SetType(type_ *SegmentTypeFilterEnum) {
+func (l *ListFeatureFlagsRequestParameters) SetType(type_ *FeatureFlagTypeEnum) {
 	l.Type = type_
-	l.require(listSegmentsRequestParametersFieldType)
+	l.require(listFeatureFlagsRequestParametersFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListFeatureFlagsRequestParameters) SetStatus(status *FeatureFlagStatusEnum) {
+	l.Status = status
+	l.require(listFeatureFlagsRequestParametersFieldStatus)
 }
 
 var (
@@ -8900,84 +9090,6 @@ func (l *ListOrganizationMemberRolesRequestParameters) SetIncludeTotals(includeT
 }
 
 var (
-	listActionsRequestParametersFieldTriggerID  = big.NewInt(1 << 0)
-	listActionsRequestParametersFieldActionName = big.NewInt(1 << 1)
-	listActionsRequestParametersFieldDeployed   = big.NewInt(1 << 2)
-	listActionsRequestParametersFieldPage       = big.NewInt(1 << 3)
-	listActionsRequestParametersFieldPerPage    = big.NewInt(1 << 4)
-	listActionsRequestParametersFieldInstalled  = big.NewInt(1 << 5)
-)
-
-type ListActionsRequestParameters struct {
-	// An actions extensibility point.
-	TriggerID *ActionTriggerTypeEnum `json:"-" url:"triggerId,omitempty"`
-	// The name of the action to retrieve.
-	ActionName *string `json:"-" url:"actionName,omitempty"`
-	// Optional filter to only retrieve actions that are deployed.
-	Deployed *bool `json:"-" url:"deployed,omitempty"`
-	// Use this field to request a specific page of the list results.
-	Page *int `json:"-" url:"page,omitempty"`
-	// The maximum number of results to be returned by the server in single response. 20 by default
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Optional. When true, return only installed actions. When false, return only custom actions. Returns all actions by default.
-	Installed *bool `json:"-" url:"installed,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListActionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetTriggerID sets the TriggerID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionsRequestParameters) SetTriggerID(triggerID *ActionTriggerTypeEnum) {
-	l.TriggerID = triggerID
-	l.require(listActionsRequestParametersFieldTriggerID)
-}
-
-// SetActionName sets the ActionName field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionsRequestParameters) SetActionName(actionName *string) {
-	l.ActionName = actionName
-	l.require(listActionsRequestParametersFieldActionName)
-}
-
-// SetDeployed sets the Deployed field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionsRequestParameters) SetDeployed(deployed *bool) {
-	l.Deployed = deployed
-	l.require(listActionsRequestParametersFieldDeployed)
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listActionsRequestParametersFieldPage)
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listActionsRequestParametersFieldPerPage)
-}
-
-// SetInstalled sets the Installed field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionsRequestParameters) SetInstalled(installed *bool) {
-	l.Installed = installed
-	l.require(listActionsRequestParametersFieldInstalled)
-}
-
-var (
 	listOrganizationMemberRoleSourceGroupsRequestParametersFieldFrom   = big.NewInt(1 << 0)
 	listOrganizationMemberRoleSourceGroupsRequestParametersFieldTake   = big.NewInt(1 << 1)
 	listOrganizationMemberRoleSourceGroupsRequestParametersFieldRoleID = big.NewInt(1 << 2)
@@ -9026,59 +9138,27 @@ func (l *ListOrganizationMemberRoleSourceGroupsRequestParameters) SetRoleID(role
 }
 
 var (
-	getUserConnectedAccountsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	getUserConnectedAccountsRequestParametersFieldTake = big.NewInt(1 << 1)
+	listCustomDomainsRequestParametersFieldQ             = big.NewInt(1 << 0)
+	listCustomDomainsRequestParametersFieldFields        = big.NewInt(1 << 1)
+	listCustomDomainsRequestParametersFieldIncludeFields = big.NewInt(1 << 2)
+	listCustomDomainsRequestParametersFieldSort          = big.NewInt(1 << 3)
 )
 
-type GetUserConnectedAccountsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results to return.  Defaults to 10 with a maximum of 20
-	Take *int `json:"-" url:"take,omitempty"`
+type ListCustomDomainsRequestParameters struct {
+	// Query in <a href ="https://lucene.apache.org/core/2_9_4/queryparsersyntax.html">Lucene query string syntax</a>.
+	Q *string `json:"-" url:"q,omitempty"`
+	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are to be included (true) or excluded (false).
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+	// Field to sort by. Only <code>domain:1</code> (ascending order by domain) is supported at this time.
+	Sort *string `json:"-" url:"sort,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (g *GetUserConnectedAccountsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
-	}
-	next.Or(next, field)
-	g.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserConnectedAccountsRequestParameters) SetFrom(from *string) {
-	g.From = from
-	g.require(getUserConnectedAccountsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetUserConnectedAccountsRequestParameters) SetTake(take *int) {
-	g.Take = take
-	g.require(getUserConnectedAccountsRequestParametersFieldTake)
-}
-
-var (
-	listConnectionProfileRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listConnectionProfileRequestParametersFieldTake = big.NewInt(1 << 1)
-)
-
-type ListConnectionProfileRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 5.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListConnectionProfileRequestParameters) require(field *big.Int) {
+func (l *ListCustomDomainsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -9087,66 +9167,32 @@ func (l *ListConnectionProfileRequestParameters) require(field *big.Int) {
 	l.explicitFields = next
 }
 
-// SetFrom sets the From field and marks it as non-optional;
+// SetQ sets the Q field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionProfileRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listConnectionProfileRequestParametersFieldFrom)
+func (l *ListCustomDomainsRequestParameters) SetQ(q *string) {
+	l.Q = q
+	l.require(listCustomDomainsRequestParametersFieldQ)
 }
 
-// SetTake sets the Take field and marks it as non-optional;
+// SetFields sets the Fields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListConnectionProfileRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listConnectionProfileRequestParametersFieldTake)
+func (l *ListCustomDomainsRequestParameters) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listCustomDomainsRequestParametersFieldFields)
 }
 
-var (
-	listSelfServiceProfilesRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listSelfServiceProfilesRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listSelfServiceProfilesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-)
-
-type ListSelfServiceProfilesRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListSelfServiceProfilesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPage sets the Page field and marks it as non-optional;
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSelfServiceProfilesRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listSelfServiceProfilesRequestParametersFieldPage)
+func (l *ListCustomDomainsRequestParameters) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listCustomDomainsRequestParametersFieldIncludeFields)
 }
 
-// SetPerPage sets the PerPage field and marks it as non-optional;
+// SetSort sets the Sort field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSelfServiceProfilesRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listSelfServiceProfilesRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSelfServiceProfilesRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listSelfServiceProfilesRequestParametersFieldIncludeTotals)
+func (l *ListCustomDomainsRequestParameters) SetSort(sort *string) {
+	l.Sort = sort
+	l.require(listCustomDomainsRequestParametersFieldSort)
 }
 
 var (
@@ -9188,6 +9234,44 @@ func (l *ListOrganizationMemberEffectiveRolesRequestParameters) SetTake(take *in
 }
 
 var (
+	getUserConnectedAccountsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	getUserConnectedAccountsRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type GetUserConnectedAccountsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results to return.  Defaults to 10 with a maximum of 20
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (g *GetUserConnectedAccountsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
+	}
+	next.Or(next, field)
+	g.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserConnectedAccountsRequestParameters) SetFrom(from *string) {
+	g.From = from
+	g.require(getUserConnectedAccountsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetUserConnectedAccountsRequestParameters) SetTake(take *int) {
+	g.Take = take
+	g.require(getUserConnectedAccountsRequestParametersFieldTake)
+}
+
+var (
 	getActionModuleVersionsRequestParametersFieldPage    = big.NewInt(1 << 0)
 	getActionModuleVersionsRequestParametersFieldPerPage = big.NewInt(1 << 1)
 )
@@ -9226,403 +9310,6 @@ func (g *GetActionModuleVersionsRequestParameters) SetPerPage(perPage *int) {
 }
 
 var (
-	listUserEffectivePermissionsRequestParametersFieldFrom                     = big.NewInt(1 << 0)
-	listUserEffectivePermissionsRequestParametersFieldTake                     = big.NewInt(1 << 1)
-	listUserEffectivePermissionsRequestParametersFieldResourceServerIdentifier = big.NewInt(1 << 2)
-)
-
-type ListUserEffectivePermissionsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// The identifier of the resource server for which to calculate user permissions.
-	ResourceServerIdentifier string `json:"-" url:"resource_server_identifier"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListUserEffectivePermissionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectivePermissionsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listUserEffectivePermissionsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectivePermissionsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listUserEffectivePermissionsRequestParametersFieldTake)
-}
-
-// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectivePermissionsRequestParameters) SetResourceServerIdentifier(resourceServerIdentifier string) {
-	l.ResourceServerIdentifier = resourceServerIdentifier
-	l.require(listUserEffectivePermissionsRequestParametersFieldResourceServerIdentifier)
-}
-
-var (
-	listRulesRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listRulesRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listRulesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-	listRulesRequestParametersFieldEnabled       = big.NewInt(1 << 3)
-	listRulesRequestParametersFieldFields        = big.NewInt(1 << 4)
-	listRulesRequestParametersFieldIncludeFields = big.NewInt(1 << 5)
-)
-
-type ListRulesRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Optional filter on whether a rule is enabled (true) or disabled (false).
-	Enabled *bool `json:"-" url:"enabled,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListRulesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRulesRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listRulesRequestParametersFieldPage)
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRulesRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listRulesRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRulesRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listRulesRequestParametersFieldIncludeTotals)
-}
-
-// SetEnabled sets the Enabled field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRulesRequestParameters) SetEnabled(enabled *bool) {
-	l.Enabled = enabled
-	l.require(listRulesRequestParametersFieldEnabled)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRulesRequestParameters) SetFields(fields *string) {
-	l.Fields = fields
-	l.require(listRulesRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRulesRequestParameters) SetIncludeFields(includeFields *bool) {
-	l.IncludeFields = includeFields
-	l.require(listRulesRequestParametersFieldIncludeFields)
-}
-
-var (
-	listUserBlocksRequestParametersFieldConsiderBruteForceEnablement = big.NewInt(1 << 0)
-)
-
-type ListUserBlocksRequestParameters struct {
-	//	If true, returns only blocks that are currently enforced (e.g. subject to protection status, IP allowlist, etc.).
-	//	If false or omitted, returns all blocks regardless of enforcement state.
-	ConsiderBruteForceEnablement *bool `json:"-" url:"consider_brute_force_enablement,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListUserBlocksRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetConsiderBruteForceEnablement sets the ConsiderBruteForceEnablement field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserBlocksRequestParameters) SetConsiderBruteForceEnablement(considerBruteForceEnablement *bool) {
-	l.ConsiderBruteForceEnablement = considerBruteForceEnablement
-	l.require(listUserBlocksRequestParametersFieldConsiderBruteForceEnablement)
-}
-
-var (
-	listRoleUsersRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
-	listRoleUsersRequestParametersFieldFrom          = big.NewInt(1 << 1)
-	listRoleUsersRequestParametersFieldTake          = big.NewInt(1 << 2)
-)
-
-type ListRoleUsersRequestParameters struct {
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListRoleUsersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRoleUsersRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listRoleUsersRequestParametersFieldIncludeTotals)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRoleUsersRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listRoleUsersRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRoleUsersRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listRoleUsersRequestParametersFieldTake)
-}
-
-var (
-	listUserEffectivePermissionRoleSourceRequestParametersFieldFrom                     = big.NewInt(1 << 0)
-	listUserEffectivePermissionRoleSourceRequestParametersFieldTake                     = big.NewInt(1 << 1)
-	listUserEffectivePermissionRoleSourceRequestParametersFieldResourceServerIdentifier = big.NewInt(1 << 2)
-	listUserEffectivePermissionRoleSourceRequestParametersFieldPermissionName           = big.NewInt(1 << 3)
-)
-
-type ListUserEffectivePermissionRoleSourceRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// The identifier of the resource server for which to calculate user permissions.
-	ResourceServerIdentifier string `json:"-" url:"resource_server_identifier"`
-	// Name of this permission
-	PermissionName string `json:"-" url:"permission_name"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListUserEffectivePermissionRoleSourceRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldTake)
-}
-
-// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetResourceServerIdentifier(resourceServerIdentifier string) {
-	l.ResourceServerIdentifier = resourceServerIdentifier
-	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldResourceServerIdentifier)
-}
-
-// SetPermissionName sets the PermissionName field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetPermissionName(permissionName string) {
-	l.PermissionName = permissionName
-	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldPermissionName)
-}
-
-var (
-	listDeviceCredentialsRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listDeviceCredentialsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listDeviceCredentialsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-	listDeviceCredentialsRequestParametersFieldFields        = big.NewInt(1 << 3)
-	listDeviceCredentialsRequestParametersFieldIncludeFields = big.NewInt(1 << 4)
-	listDeviceCredentialsRequestParametersFieldUserID        = big.NewInt(1 << 5)
-	listDeviceCredentialsRequestParametersFieldClientID      = big.NewInt(1 << 6)
-	listDeviceCredentialsRequestParametersFieldType          = big.NewInt(1 << 7)
-)
-
-type ListDeviceCredentialsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page.  There is a maximum of 1000 results allowed from this endpoint.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false).
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// user_id of the devices to retrieve.
-	UserID *string `json:"-" url:"user_id,omitempty"`
-	// client_id of the devices to retrieve.
-	ClientID *string `json:"-" url:"client_id,omitempty"`
-	// Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. If none is provided a combined list of `refresh_tokens` and `public_keys` will be returned (and no `rotating_refresh_token`), in this case `page`, `per_page` and `include_totals` will be ignored.
-	Type *DeviceCredentialTypeEnum `json:"-" url:"type,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListDeviceCredentialsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listDeviceCredentialsRequestParametersFieldPage)
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listDeviceCredentialsRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listDeviceCredentialsRequestParametersFieldIncludeTotals)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetFields(fields *string) {
-	l.Fields = fields
-	l.require(listDeviceCredentialsRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetIncludeFields(includeFields *bool) {
-	l.IncludeFields = includeFields
-	l.require(listDeviceCredentialsRequestParametersFieldIncludeFields)
-}
-
-// SetUserID sets the UserID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetUserID(userID *string) {
-	l.UserID = userID
-	l.require(listDeviceCredentialsRequestParametersFieldUserID)
-}
-
-// SetClientID sets the ClientID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetClientID(clientID *string) {
-	l.ClientID = clientID
-	l.require(listDeviceCredentialsRequestParametersFieldClientID)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListDeviceCredentialsRequestParameters) SetType(type_ *DeviceCredentialTypeEnum) {
-	l.Type = type_
-	l.require(listDeviceCredentialsRequestParametersFieldType)
-}
-
-var (
-	listEventStreamsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listEventStreamsRequestParametersFieldTake = big.NewInt(1 << 1)
-)
-
-type ListEventStreamsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListEventStreamsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listEventStreamsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listEventStreamsRequestParametersFieldTake)
-}
-
-var (
 	listActionTriggerBindingsRequestParametersFieldPage    = big.NewInt(1 << 0)
 	listActionTriggerBindingsRequestParametersFieldPerPage = big.NewInt(1 << 1)
 )
@@ -9658,112 +9345,6 @@ func (l *ListActionTriggerBindingsRequestParameters) SetPage(page *int) {
 func (l *ListActionTriggerBindingsRequestParameters) SetPerPage(perPage *int) {
 	l.PerPage = perPage
 	l.require(listActionTriggerBindingsRequestParametersFieldPerPage)
-}
-
-var (
-	listFeatureFlagsRequestParametersFieldFrom   = big.NewInt(1 << 0)
-	listFeatureFlagsRequestParametersFieldTake   = big.NewInt(1 << 1)
-	listFeatureFlagsRequestParametersFieldType   = big.NewInt(1 << 2)
-	listFeatureFlagsRequestParametersFieldStatus = big.NewInt(1 << 3)
-)
-
-type ListFeatureFlagsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of feature flags to return per page. Defaults to 25, maximum 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// Filter by type. Exact match.
-	Type *FeatureFlagTypeEnum `json:"-" url:"type,omitempty"`
-	// Filter by status. Exact match.
-	Status *FeatureFlagStatusEnum `json:"-" url:"status,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListFeatureFlagsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFeatureFlagsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listFeatureFlagsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFeatureFlagsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listFeatureFlagsRequestParametersFieldTake)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFeatureFlagsRequestParameters) SetType(type_ *FeatureFlagTypeEnum) {
-	l.Type = type_
-	l.require(listFeatureFlagsRequestParametersFieldType)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListFeatureFlagsRequestParameters) SetStatus(status *FeatureFlagStatusEnum) {
-	l.Status = status
-	l.require(listFeatureFlagsRequestParametersFieldStatus)
-}
-
-var (
-	listRolePermissionsRequestParametersFieldPerPage       = big.NewInt(1 << 0)
-	listRolePermissionsRequestParametersFieldPage          = big.NewInt(1 << 1)
-	listRolePermissionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-)
-
-type ListRolePermissionsRequestParameters struct {
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListRolePermissionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolePermissionsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listRolePermissionsRequestParametersFieldPerPage)
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolePermissionsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listRolePermissionsRequestParametersFieldPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolePermissionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listRolePermissionsRequestParametersFieldIncludeTotals)
 }
 
 var (
@@ -9832,6 +9413,54 @@ func (l *ListOrganizationMembersRequestParameters) SetFields(fields *string) {
 func (l *ListOrganizationMembersRequestParameters) SetIncludeFields(includeFields *bool) {
 	l.IncludeFields = includeFields
 	l.require(listOrganizationMembersRequestParametersFieldIncludeFields)
+}
+
+var (
+	listSelfServiceProfilesRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listSelfServiceProfilesRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listSelfServiceProfilesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+)
+
+type ListSelfServiceProfilesRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page. Defaults to 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListSelfServiceProfilesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSelfServiceProfilesRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listSelfServiceProfilesRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSelfServiceProfilesRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listSelfServiceProfilesRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSelfServiceProfilesRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listSelfServiceProfilesRequestParametersFieldIncludeTotals)
 }
 
 var (
@@ -9953,6 +9582,547 @@ func (l *ListUsersRequestParameters) SetPrimaryOrder(primaryOrder *bool) {
 }
 
 var (
+	listActionVersionsRequestParametersFieldPage    = big.NewInt(1 << 0)
+	listActionVersionsRequestParametersFieldPerPage = big.NewInt(1 << 1)
+)
+
+type ListActionVersionsRequestParameters struct {
+	// Use this field to request a specific page of the list results.
+	Page *int `json:"-" url:"page,omitempty"`
+	// This field specify the maximum number of results to be returned by the server. 20 by default
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListActionVersionsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionVersionsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listActionVersionsRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionVersionsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listActionVersionsRequestParametersFieldPerPage)
+}
+
+var (
+	listExperimentsRequestParametersFieldFrom               = big.NewInt(1 << 0)
+	listExperimentsRequestParametersFieldTake               = big.NewInt(1 << 1)
+	listExperimentsRequestParametersFieldStatus             = big.NewInt(1 << 2)
+	listExperimentsRequestParametersFieldAuthenticationFlow = big.NewInt(1 << 3)
+	listExperimentsRequestParametersFieldFeatureFlagID      = big.NewInt(1 << 4)
+)
+
+type ListExperimentsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of experiments to return per page. Defaults to 25, maximum 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// Filter by status. Exact match.
+	Status *ExperimentStatusEnum `json:"-" url:"status,omitempty"`
+	// Filter by authentication flow. Exact match.
+	AuthenticationFlow *string `json:"-" url:"authentication_flow,omitempty"`
+	// Filter by feature flag ID. Exact match.
+	FeatureFlagID *string `json:"-" url:"feature_flag_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListExperimentsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListExperimentsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listExperimentsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListExperimentsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listExperimentsRequestParametersFieldTake)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListExperimentsRequestParameters) SetStatus(status *ExperimentStatusEnum) {
+	l.Status = status
+	l.require(listExperimentsRequestParametersFieldStatus)
+}
+
+// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListExperimentsRequestParameters) SetAuthenticationFlow(authenticationFlow *string) {
+	l.AuthenticationFlow = authenticationFlow
+	l.require(listExperimentsRequestParametersFieldAuthenticationFlow)
+}
+
+// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListExperimentsRequestParameters) SetFeatureFlagID(featureFlagID *string) {
+	l.FeatureFlagID = featureFlagID
+	l.require(listExperimentsRequestParametersFieldFeatureFlagID)
+}
+
+var (
+	listOrganizationInvitationsRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listOrganizationInvitationsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listOrganizationInvitationsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+	listOrganizationInvitationsRequestParametersFieldFields        = big.NewInt(1 << 3)
+	listOrganizationInvitationsRequestParametersFieldIncludeFields = big.NewInt(1 << 4)
+	listOrganizationInvitationsRequestParametersFieldSort          = big.NewInt(1 << 5)
+)
+
+type ListOrganizationInvitationsRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page. Defaults to 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// When true, return results inside an object that also contains the start and limit.  When false (default), a direct array of results is returned.  We do not yet support returning the total invitations count.
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are to be included (true) or excluded (false). Defaults to true.
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+	// Field to sort by. Use field:order where order is 1 for ascending and -1 for descending Defaults to created_at:-1.
+	Sort *string `json:"-" url:"sort,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListOrganizationInvitationsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listOrganizationInvitationsRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listOrganizationInvitationsRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listOrganizationInvitationsRequestParametersFieldIncludeTotals)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsRequestParameters) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listOrganizationInvitationsRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsRequestParameters) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listOrganizationInvitationsRequestParametersFieldIncludeFields)
+}
+
+// SetSort sets the Sort field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationInvitationsRequestParameters) SetSort(sort *string) {
+	l.Sort = sort
+	l.require(listOrganizationInvitationsRequestParametersFieldSort)
+}
+
+var (
+	listRulesRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listRulesRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listRulesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+	listRulesRequestParametersFieldEnabled       = big.NewInt(1 << 3)
+	listRulesRequestParametersFieldFields        = big.NewInt(1 << 4)
+	listRulesRequestParametersFieldIncludeFields = big.NewInt(1 << 5)
+)
+
+type ListRulesRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Optional filter on whether a rule is enabled (true) or disabled (false).
+	Enabled *bool `json:"-" url:"enabled,omitempty"`
+	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are to be included (true) or excluded (false).
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListRulesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listRulesRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listRulesRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listRulesRequestParametersFieldIncludeTotals)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesRequestParameters) SetEnabled(enabled *bool) {
+	l.Enabled = enabled
+	l.require(listRulesRequestParametersFieldEnabled)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesRequestParameters) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listRulesRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRulesRequestParameters) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listRulesRequestParametersFieldIncludeFields)
+}
+
+var (
+	listAgentsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listAgentsRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListAgentsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListAgentsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAgentsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listAgentsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListAgentsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listAgentsRequestParametersFieldTake)
+}
+
+var (
+	listActionsRequestParametersFieldTriggerID  = big.NewInt(1 << 0)
+	listActionsRequestParametersFieldActionName = big.NewInt(1 << 1)
+	listActionsRequestParametersFieldDeployed   = big.NewInt(1 << 2)
+	listActionsRequestParametersFieldPage       = big.NewInt(1 << 3)
+	listActionsRequestParametersFieldPerPage    = big.NewInt(1 << 4)
+	listActionsRequestParametersFieldInstalled  = big.NewInt(1 << 5)
+)
+
+type ListActionsRequestParameters struct {
+	// An actions extensibility point.
+	TriggerID *ActionTriggerTypeEnum `json:"-" url:"triggerId,omitempty"`
+	// The name of the action to retrieve.
+	ActionName *string `json:"-" url:"actionName,omitempty"`
+	// Optional filter to only retrieve actions that are deployed.
+	Deployed *bool `json:"-" url:"deployed,omitempty"`
+	// Use this field to request a specific page of the list results.
+	Page *int `json:"-" url:"page,omitempty"`
+	// The maximum number of results to be returned by the server in single response. 20 by default
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Optional. When true, return only installed actions. When false, return only custom actions. Returns all actions by default.
+	Installed *bool `json:"-" url:"installed,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListActionsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetTriggerID sets the TriggerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsRequestParameters) SetTriggerID(triggerID *ActionTriggerTypeEnum) {
+	l.TriggerID = triggerID
+	l.require(listActionsRequestParametersFieldTriggerID)
+}
+
+// SetActionName sets the ActionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsRequestParameters) SetActionName(actionName *string) {
+	l.ActionName = actionName
+	l.require(listActionsRequestParametersFieldActionName)
+}
+
+// SetDeployed sets the Deployed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsRequestParameters) SetDeployed(deployed *bool) {
+	l.Deployed = deployed
+	l.require(listActionsRequestParametersFieldDeployed)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listActionsRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listActionsRequestParametersFieldPerPage)
+}
+
+// SetInstalled sets the Installed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListActionsRequestParameters) SetInstalled(installed *bool) {
+	l.Installed = installed
+	l.require(listActionsRequestParametersFieldInstalled)
+}
+
+var (
+	listRoleUsersRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
+	listRoleUsersRequestParametersFieldFrom          = big.NewInt(1 << 1)
+	listRoleUsersRequestParametersFieldTake          = big.NewInt(1 << 2)
+)
+
+type ListRoleUsersRequestParameters struct {
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListRoleUsersRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listRoleUsersRequestParametersFieldIncludeTotals)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listRoleUsersRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRoleUsersRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listRoleUsersRequestParametersFieldTake)
+}
+
+var (
+	listUserBlocksRequestParametersFieldConsiderBruteForceEnablement = big.NewInt(1 << 0)
+)
+
+type ListUserBlocksRequestParameters struct {
+	//	If true, returns only blocks that are currently enforced (e.g. subject to protection status, IP allowlist, etc.).
+	//	If false or omitted, returns all blocks regardless of enforcement state.
+	ConsiderBruteForceEnablement *bool `json:"-" url:"consider_brute_force_enablement,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUserBlocksRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetConsiderBruteForceEnablement sets the ConsiderBruteForceEnablement field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserBlocksRequestParameters) SetConsiderBruteForceEnablement(considerBruteForceEnablement *bool) {
+	l.ConsiderBruteForceEnablement = considerBruteForceEnablement
+	l.require(listUserBlocksRequestParametersFieldConsiderBruteForceEnablement)
+}
+
+var (
+	listUserRolesRequestParametersFieldPerPage       = big.NewInt(1 << 0)
+	listUserRolesRequestParametersFieldPage          = big.NewInt(1 << 1)
+	listUserRolesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+)
+
+type ListUserRolesRequestParameters struct {
+	// Number of results per page.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUserRolesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRolesRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUserRolesRequestParametersFieldPerPage)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRolesRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listUserRolesRequestParametersFieldPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserRolesRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listUserRolesRequestParametersFieldIncludeTotals)
+}
+
+var (
+	listOrganizationGroupRolesRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listOrganizationGroupRolesRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListOrganizationGroupRolesRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListOrganizationGroupRolesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationGroupRolesRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listOrganizationGroupRolesRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationGroupRolesRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listOrganizationGroupRolesRequestParametersFieldTake)
+}
+
+var (
 	listClientsRequestParametersFieldFields           = big.NewInt(1 << 0)
 	listClientsRequestParametersFieldIncludeFields    = big.NewInt(1 << 1)
 	listClientsRequestParametersFieldPage             = big.NewInt(1 << 2)
@@ -10071,21 +10241,24 @@ func (l *ListClientsRequestParameters) SetQ(q *string) {
 }
 
 var (
-	listActionVersionsRequestParametersFieldPage    = big.NewInt(1 << 0)
-	listActionVersionsRequestParametersFieldPerPage = big.NewInt(1 << 1)
+	listUserEffectivePermissionsRequestParametersFieldFrom                     = big.NewInt(1 << 0)
+	listUserEffectivePermissionsRequestParametersFieldTake                     = big.NewInt(1 << 1)
+	listUserEffectivePermissionsRequestParametersFieldResourceServerIdentifier = big.NewInt(1 << 2)
 )
 
-type ListActionVersionsRequestParameters struct {
-	// Use this field to request a specific page of the list results.
-	Page *int `json:"-" url:"page,omitempty"`
-	// This field specify the maximum number of results to be returned by the server. 20 by default
-	PerPage *int `json:"-" url:"per_page,omitempty"`
+type ListUserEffectivePermissionsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// The identifier of the resource server for which to calculate user permissions.
+	ResourceServerIdentifier string `json:"-" url:"resource_server_identifier"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListActionVersionsRequestParameters) require(field *big.Int) {
+func (l *ListUserEffectivePermissionsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -10094,39 +10267,43 @@ func (l *ListActionVersionsRequestParameters) require(field *big.Int) {
 	l.explicitFields = next
 }
 
-// SetPage sets the Page field and marks it as non-optional;
+// SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionVersionsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listActionVersionsRequestParametersFieldPage)
+func (l *ListUserEffectivePermissionsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listUserEffectivePermissionsRequestParametersFieldFrom)
 }
 
-// SetPerPage sets the PerPage field and marks it as non-optional;
+// SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListActionVersionsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listActionVersionsRequestParametersFieldPerPage)
+func (l *ListUserEffectivePermissionsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listUserEffectivePermissionsRequestParametersFieldTake)
+}
+
+// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionsRequestParameters) SetResourceServerIdentifier(resourceServerIdentifier string) {
+	l.ResourceServerIdentifier = resourceServerIdentifier
+	l.require(listUserEffectivePermissionsRequestParametersFieldResourceServerIdentifier)
 }
 
 var (
-	listEncryptionKeysRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listEncryptionKeysRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listEncryptionKeysRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+	listClientProfilesRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listClientProfilesRequestParametersFieldTake = big.NewInt(1 << 1)
 )
 
-type ListEncryptionKeysRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Default value is 50, maximum value is 100.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+type ListClientProfilesRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListEncryptionKeysRequestParameters) require(field *big.Int) {
+func (l *ListClientProfilesRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -10135,25 +10312,18 @@ func (l *ListEncryptionKeysRequestParameters) require(field *big.Int) {
 	l.explicitFields = next
 }
 
-// SetPage sets the Page field and marks it as non-optional;
+// SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEncryptionKeysRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listEncryptionKeysRequestParametersFieldPage)
+func (l *ListClientProfilesRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listClientProfilesRequestParametersFieldFrom)
 }
 
-// SetPerPage sets the PerPage field and marks it as non-optional;
+// SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEncryptionKeysRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listEncryptionKeysRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEncryptionKeysRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listEncryptionKeysRequestParametersFieldIncludeTotals)
+func (l *ListClientProfilesRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listClientProfilesRequestParametersFieldTake)
 }
 
 var (
@@ -10205,99 +10375,21 @@ func (l *ListClientGrantOrganizationsRequestParameters) SetTake(take *int) {
 }
 
 var (
-	listOrganizationInvitationsRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listOrganizationInvitationsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listOrganizationInvitationsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-	listOrganizationInvitationsRequestParametersFieldFields        = big.NewInt(1 << 3)
-	listOrganizationInvitationsRequestParametersFieldIncludeFields = big.NewInt(1 << 4)
-	listOrganizationInvitationsRequestParametersFieldSort          = big.NewInt(1 << 5)
+	listUserAttributeProfileRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listUserAttributeProfileRequestParametersFieldTake = big.NewInt(1 << 1)
 )
 
-type ListOrganizationInvitationsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// When true, return results inside an object that also contains the start and limit.  When false (default), a direct array of results is returned.  We do not yet support returning the total invitations count.
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Whether specified fields are to be included (true) or excluded (false). Defaults to true.
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Field to sort by. Use field:order where order is 1 for ascending and -1 for descending Defaults to created_at:-1.
-	Sort *string `json:"-" url:"sort,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListOrganizationInvitationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationInvitationsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listOrganizationInvitationsRequestParametersFieldPage)
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationInvitationsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listOrganizationInvitationsRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationInvitationsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listOrganizationInvitationsRequestParametersFieldIncludeTotals)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationInvitationsRequestParameters) SetFields(fields *string) {
-	l.Fields = fields
-	l.require(listOrganizationInvitationsRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationInvitationsRequestParameters) SetIncludeFields(includeFields *bool) {
-	l.IncludeFields = includeFields
-	l.require(listOrganizationInvitationsRequestParametersFieldIncludeFields)
-}
-
-// SetSort sets the Sort field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationInvitationsRequestParameters) SetSort(sort *string) {
-	l.Sort = sort
-	l.require(listOrganizationInvitationsRequestParametersFieldSort)
-}
-
-var (
-	listUserEffectiveRolesRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listUserEffectiveRolesRequestParametersFieldTake = big.NewInt(1 << 1)
-)
-
-type ListUserEffectiveRolesRequestParameters struct {
+type ListUserAttributeProfileRequestParameters struct {
 	// Optional Id from which to start selection.
 	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
+	// Number of results per page. Defaults to 5.
 	Take *int `json:"-" url:"take,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListUserEffectiveRolesRequestParameters) require(field *big.Int) {
+func (l *ListUserAttributeProfileRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -10308,16 +10400,278 @@ func (l *ListUserEffectiveRolesRequestParameters) require(field *big.Int) {
 
 // SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectiveRolesRequestParameters) SetFrom(from *string) {
+func (l *ListUserAttributeProfileRequestParameters) SetFrom(from *string) {
 	l.From = from
-	l.require(listUserEffectiveRolesRequestParametersFieldFrom)
+	l.require(listUserAttributeProfileRequestParametersFieldFrom)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserEffectiveRolesRequestParameters) SetTake(take *int) {
+func (l *ListUserAttributeProfileRequestParameters) SetTake(take *int) {
 	l.Take = take
-	l.require(listUserEffectiveRolesRequestParametersFieldTake)
+	l.require(listUserAttributeProfileRequestParametersFieldTake)
+}
+
+var (
+	listEncryptionKeysRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listEncryptionKeysRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listEncryptionKeysRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+)
+
+type ListEncryptionKeysRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page. Default value is 50, maximum value is 100.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListEncryptionKeysRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEncryptionKeysRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listEncryptionKeysRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEncryptionKeysRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listEncryptionKeysRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEncryptionKeysRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listEncryptionKeysRequestParametersFieldIncludeTotals)
+}
+
+var (
+	listUserEffectivePermissionRoleSourceRequestParametersFieldFrom                     = big.NewInt(1 << 0)
+	listUserEffectivePermissionRoleSourceRequestParametersFieldTake                     = big.NewInt(1 << 1)
+	listUserEffectivePermissionRoleSourceRequestParametersFieldResourceServerIdentifier = big.NewInt(1 << 2)
+	listUserEffectivePermissionRoleSourceRequestParametersFieldPermissionName           = big.NewInt(1 << 3)
+)
+
+type ListUserEffectivePermissionRoleSourceRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// The identifier of the resource server for which to calculate user permissions.
+	ResourceServerIdentifier string `json:"-" url:"resource_server_identifier"`
+	// Name of this permission
+	PermissionName string `json:"-" url:"permission_name"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUserEffectivePermissionRoleSourceRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldTake)
+}
+
+// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetResourceServerIdentifier(resourceServerIdentifier string) {
+	l.ResourceServerIdentifier = resourceServerIdentifier
+	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldResourceServerIdentifier)
+}
+
+// SetPermissionName sets the PermissionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectivePermissionRoleSourceRequestParameters) SetPermissionName(permissionName string) {
+	l.PermissionName = permissionName
+	l.require(listUserEffectivePermissionRoleSourceRequestParametersFieldPermissionName)
+}
+
+var (
+	listEventStreamDeliveriesRequestParametersFieldStatuses   = big.NewInt(1 << 0)
+	listEventStreamDeliveriesRequestParametersFieldEventTypes = big.NewInt(1 << 1)
+	listEventStreamDeliveriesRequestParametersFieldDateFrom   = big.NewInt(1 << 2)
+	listEventStreamDeliveriesRequestParametersFieldDateTo     = big.NewInt(1 << 3)
+	listEventStreamDeliveriesRequestParametersFieldFrom       = big.NewInt(1 << 4)
+	listEventStreamDeliveriesRequestParametersFieldTake       = big.NewInt(1 << 5)
+)
+
+type ListEventStreamDeliveriesRequestParameters struct {
+	// Comma-separated list of statuses by which to filter
+	Statuses *string `json:"-" url:"statuses,omitempty"`
+	// Comma-separated list of event types by which to filter
+	EventTypes *string `json:"-" url:"event_types,omitempty"`
+	// An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
+	DateFrom *string `json:"-" url:"date_from,omitempty"`
+	// An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
+	DateTo *string `json:"-" url:"date_to,omitempty"`
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListEventStreamDeliveriesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetStatuses sets the Statuses field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesRequestParameters) SetStatuses(statuses *string) {
+	l.Statuses = statuses
+	l.require(listEventStreamDeliveriesRequestParametersFieldStatuses)
+}
+
+// SetEventTypes sets the EventTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesRequestParameters) SetEventTypes(eventTypes *string) {
+	l.EventTypes = eventTypes
+	l.require(listEventStreamDeliveriesRequestParametersFieldEventTypes)
+}
+
+// SetDateFrom sets the DateFrom field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesRequestParameters) SetDateFrom(dateFrom *string) {
+	l.DateFrom = dateFrom
+	l.require(listEventStreamDeliveriesRequestParametersFieldDateFrom)
+}
+
+// SetDateTo sets the DateTo field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesRequestParameters) SetDateTo(dateTo *string) {
+	l.DateTo = dateTo
+	l.require(listEventStreamDeliveriesRequestParametersFieldDateTo)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listEventStreamDeliveriesRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamDeliveriesRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listEventStreamDeliveriesRequestParametersFieldTake)
+}
+
+var (
+	listRolesRequestParametersFieldPerPage       = big.NewInt(1 << 0)
+	listRolesRequestParametersFieldPage          = big.NewInt(1 << 1)
+	listRolesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+	listRolesRequestParametersFieldNameFilter    = big.NewInt(1 << 3)
+	listRolesRequestParametersFieldType          = big.NewInt(1 << 4)
+	listRolesRequestParametersFieldOwnerID       = big.NewInt(1 << 5)
+)
+
+type ListRolesRequestParameters struct {
+	// Number of results per page. Defaults to 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Optional filter on name (case-insensitive).
+	NameFilter *string `json:"-" url:"name_filter,omitempty"`
+	// Optional filter on the type of the role
+	Type *RoleTypeEnum `json:"-" url:"type,omitempty"`
+	// Filter organization-level roles by owner ID. Use an organization ID to filter that organization's roles, or "auth0" to retrieve Auth0-managed System Roles. Required when type is "organization".
+	OwnerID *RoleOwnerIDFilter `json:"-" url:"owner_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListRolesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listRolesRequestParametersFieldPerPage)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listRolesRequestParametersFieldPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listRolesRequestParametersFieldIncludeTotals)
+}
+
+// SetNameFilter sets the NameFilter field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesRequestParameters) SetNameFilter(nameFilter *string) {
+	l.NameFilter = nameFilter
+	l.require(listRolesRequestParametersFieldNameFilter)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesRequestParameters) SetType(type_ *RoleTypeEnum) {
+	l.Type = type_
+	l.require(listRolesRequestParametersFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolesRequestParameters) SetOwnerID(ownerID *RoleOwnerIDFilter) {
+	l.OwnerID = ownerID
+	l.require(listRolesRequestParametersFieldOwnerID)
 }
 
 var (
@@ -10557,6 +10911,208 @@ func (l *ListNetworkACLsRequestParameters) SetIncludeTotals(includeTotals *bool)
 }
 
 var (
+	listUserEffectiveRolesRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listUserEffectiveRolesRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListUserEffectiveRolesRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUserEffectiveRolesRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectiveRolesRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listUserEffectiveRolesRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserEffectiveRolesRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listUserEffectiveRolesRequestParametersFieldTake)
+}
+
+var (
+	listRefreshTokensRequestParametersFieldIncludeTotals = big.NewInt(1 << 0)
+	listRefreshTokensRequestParametersFieldFrom          = big.NewInt(1 << 1)
+	listRefreshTokensRequestParametersFieldTake          = big.NewInt(1 << 2)
+)
+
+type ListRefreshTokensRequestParameters struct {
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// An optional cursor from which to start the selection (exclusive).
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListRefreshTokensRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRefreshTokensRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listRefreshTokensRequestParametersFieldIncludeTotals)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRefreshTokensRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listRefreshTokensRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRefreshTokensRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listRefreshTokensRequestParametersFieldTake)
+}
+
+var (
+	listRolePermissionsRequestParametersFieldPerPage       = big.NewInt(1 << 0)
+	listRolePermissionsRequestParametersFieldPage          = big.NewInt(1 << 1)
+	listRolePermissionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+)
+
+type ListRolePermissionsRequestParameters struct {
+	// Number of results per page. Defaults to 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListRolePermissionsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolePermissionsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listRolePermissionsRequestParametersFieldPerPage)
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolePermissionsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listRolePermissionsRequestParametersFieldPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListRolePermissionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listRolePermissionsRequestParametersFieldIncludeTotals)
+}
+
+var (
+	listOrganizationsRequestParametersFieldIncludeTotals               = big.NewInt(1 << 0)
+	listOrganizationsRequestParametersFieldFrom                        = big.NewInt(1 << 1)
+	listOrganizationsRequestParametersFieldTake                        = big.NewInt(1 << 2)
+	listOrganizationsRequestParametersFieldSort                        = big.NewInt(1 << 3)
+	listOrganizationsRequestParametersFieldIncludeClientAssociationFor = big.NewInt(1 << 4)
+)
+
+type ListOrganizationsRequestParameters struct {
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>. We currently support sorting by the following fields: <code>name</code>, <code>display_name</code> and <code>created_at</code>.
+	Sort *string `json:"-" url:"sort,omitempty"`
+	// Client ID. When set, each returned organization that has an association with this client gains a <code>client</code> object describing it; organizations without one omit the field.
+	IncludeClientAssociationFor *string `json:"-" url:"include_client_association_for,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListOrganizationsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listOrganizationsRequestParametersFieldIncludeTotals)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listOrganizationsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listOrganizationsRequestParametersFieldTake)
+}
+
+// SetSort sets the Sort field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsRequestParameters) SetSort(sort *string) {
+	l.Sort = sort
+	l.require(listOrganizationsRequestParametersFieldSort)
+}
+
+// SetIncludeClientAssociationFor sets the IncludeClientAssociationFor field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationsRequestParameters) SetIncludeClientAssociationFor(includeClientAssociationFor *string) {
+	l.IncludeClientAssociationFor = includeClientAssociationFor
+	l.require(listOrganizationsRequestParametersFieldIncludeClientAssociationFor)
+}
+
+var (
 	listUserRoleSourceGroupsRequestParametersFieldRoleID = big.NewInt(1 << 0)
 	listUserRoleSourceGroupsRequestParametersFieldFrom   = big.NewInt(1 << 1)
 	listUserRoleSourceGroupsRequestParametersFieldTake   = big.NewInt(1 << 2)
@@ -10605,21 +11161,24 @@ func (l *ListUserRoleSourceGroupsRequestParameters) SetTake(take *int) {
 }
 
 var (
-	listAgentsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listAgentsRequestParametersFieldTake = big.NewInt(1 << 1)
+	listOrganizationConnectionsRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listOrganizationConnectionsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listOrganizationConnectionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
 )
 
-type ListAgentsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
+type ListOrganizationConnectionsRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
 	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (l *ListAgentsRequestParameters) require(field *big.Int) {
+func (l *ListOrganizationConnectionsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if l.explicitFields != nil {
 		next.Set(l.explicitFields)
@@ -10628,18 +11187,25 @@ func (l *ListAgentsRequestParameters) require(field *big.Int) {
 	l.explicitFields = next
 }
 
-// SetFrom sets the From field and marks it as non-optional;
+// SetPage sets the Page field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListAgentsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listAgentsRequestParametersFieldFrom)
+func (l *ListOrganizationConnectionsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listOrganizationConnectionsRequestParametersFieldPage)
 }
 
-// SetTake sets the Take field and marks it as non-optional;
+// SetPerPage sets the PerPage field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListAgentsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listAgentsRequestParametersFieldTake)
+func (l *ListOrganizationConnectionsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listOrganizationConnectionsRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationConnectionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listOrganizationConnectionsRequestParametersFieldIncludeTotals)
 }
 
 var (
@@ -10718,228 +11284,6 @@ func (l *ListUserGrantsRequestParameters) SetClientID(clientID *string) {
 func (l *ListUserGrantsRequestParameters) SetAudience(audience *string) {
 	l.Audience = audience
 	l.require(listUserGrantsRequestParametersFieldAudience)
-}
-
-var (
-	listOrganizationsRequestParametersFieldIncludeTotals               = big.NewInt(1 << 0)
-	listOrganizationsRequestParametersFieldFrom                        = big.NewInt(1 << 1)
-	listOrganizationsRequestParametersFieldTake                        = big.NewInt(1 << 2)
-	listOrganizationsRequestParametersFieldSort                        = big.NewInt(1 << 3)
-	listOrganizationsRequestParametersFieldIncludeClientAssociationFor = big.NewInt(1 << 4)
-)
-
-type ListOrganizationsRequestParameters struct {
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// Field to sort by. Use <code>field:order</code> where order is <code>1</code> for ascending and <code>-1</code> for descending. e.g. <code>created_at:1</code>. We currently support sorting by the following fields: <code>name</code>, <code>display_name</code> and <code>created_at</code>.
-	Sort *string `json:"-" url:"sort,omitempty"`
-	// Client ID. When set, each returned organization that has an association with this client gains a <code>client</code> object describing it; organizations without one omit the field.
-	IncludeClientAssociationFor *string `json:"-" url:"include_client_association_for,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListOrganizationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listOrganizationsRequestParametersFieldIncludeTotals)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listOrganizationsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listOrganizationsRequestParametersFieldTake)
-}
-
-// SetSort sets the Sort field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationsRequestParameters) SetSort(sort *string) {
-	l.Sort = sort
-	l.require(listOrganizationsRequestParametersFieldSort)
-}
-
-// SetIncludeClientAssociationFor sets the IncludeClientAssociationFor field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationsRequestParameters) SetIncludeClientAssociationFor(includeClientAssociationFor *string) {
-	l.IncludeClientAssociationFor = includeClientAssociationFor
-	l.require(listOrganizationsRequestParametersFieldIncludeClientAssociationFor)
-}
-
-var (
-	listExperimentsRequestParametersFieldFrom               = big.NewInt(1 << 0)
-	listExperimentsRequestParametersFieldTake               = big.NewInt(1 << 1)
-	listExperimentsRequestParametersFieldStatus             = big.NewInt(1 << 2)
-	listExperimentsRequestParametersFieldAuthenticationFlow = big.NewInt(1 << 3)
-	listExperimentsRequestParametersFieldFeatureFlagID      = big.NewInt(1 << 4)
-)
-
-type ListExperimentsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of experiments to return per page. Defaults to 25, maximum 50.
-	Take *int `json:"-" url:"take,omitempty"`
-	// Filter by status. Exact match.
-	Status *ExperimentStatusEnum `json:"-" url:"status,omitempty"`
-	// Filter by authentication flow. Exact match.
-	AuthenticationFlow *string `json:"-" url:"authentication_flow,omitempty"`
-	// Filter by feature flag ID. Exact match.
-	FeatureFlagID *string `json:"-" url:"feature_flag_id,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListExperimentsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListExperimentsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listExperimentsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListExperimentsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listExperimentsRequestParametersFieldTake)
-}
-
-// SetStatus sets the Status field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListExperimentsRequestParameters) SetStatus(status *ExperimentStatusEnum) {
-	l.Status = status
-	l.require(listExperimentsRequestParametersFieldStatus)
-}
-
-// SetAuthenticationFlow sets the AuthenticationFlow field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListExperimentsRequestParameters) SetAuthenticationFlow(authenticationFlow *string) {
-	l.AuthenticationFlow = authenticationFlow
-	l.require(listExperimentsRequestParametersFieldAuthenticationFlow)
-}
-
-// SetFeatureFlagID sets the FeatureFlagID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListExperimentsRequestParameters) SetFeatureFlagID(featureFlagID *string) {
-	l.FeatureFlagID = featureFlagID
-	l.require(listExperimentsRequestParametersFieldFeatureFlagID)
-}
-
-var (
-	listUserRolesRequestParametersFieldPerPage       = big.NewInt(1 << 0)
-	listUserRolesRequestParametersFieldPage          = big.NewInt(1 << 1)
-	listUserRolesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-)
-
-type ListUserRolesRequestParameters struct {
-	// Number of results per page.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListUserRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserRolesRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listUserRolesRequestParametersFieldPerPage)
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserRolesRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listUserRolesRequestParametersFieldPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserRolesRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listUserRolesRequestParametersFieldIncludeTotals)
-}
-
-var (
-	listOrganizationGroupRolesRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listOrganizationGroupRolesRequestParametersFieldTake = big.NewInt(1 << 1)
-)
-
-type ListOrganizationGroupRolesRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListOrganizationGroupRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationGroupRolesRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listOrganizationGroupRolesRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationGroupRolesRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listOrganizationGroupRolesRequestParametersFieldTake)
 }
 
 var (
@@ -11087,6 +11431,104 @@ func (l *ListOrganizationClientsRequestParameters) SetTake(take *int) {
 }
 
 var (
+	listDeviceCredentialsRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listDeviceCredentialsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listDeviceCredentialsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+	listDeviceCredentialsRequestParametersFieldFields        = big.NewInt(1 << 3)
+	listDeviceCredentialsRequestParametersFieldIncludeFields = big.NewInt(1 << 4)
+	listDeviceCredentialsRequestParametersFieldUserID        = big.NewInt(1 << 5)
+	listDeviceCredentialsRequestParametersFieldClientID      = big.NewInt(1 << 6)
+	listDeviceCredentialsRequestParametersFieldType          = big.NewInt(1 << 7)
+)
+
+type ListDeviceCredentialsRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page.  There is a maximum of 1000 results allowed from this endpoint.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+	// Comma-separated list of fields to include or exclude (based on value provided for include_fields) in the result. Leave empty to retrieve all fields.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Whether specified fields are to be included (true) or excluded (false).
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+	// user_id of the devices to retrieve.
+	UserID *string `json:"-" url:"user_id,omitempty"`
+	// client_id of the devices to retrieve.
+	ClientID *string `json:"-" url:"client_id,omitempty"`
+	// Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. If none is provided a combined list of `refresh_tokens` and `public_keys` will be returned (and no `rotating_refresh_token`), in this case `page`, `per_page` and `include_totals` will be ignored.
+	Type *DeviceCredentialTypeEnum `json:"-" url:"type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListDeviceCredentialsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listDeviceCredentialsRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listDeviceCredentialsRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listDeviceCredentialsRequestParametersFieldIncludeTotals)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetFields(fields *string) {
+	l.Fields = fields
+	l.require(listDeviceCredentialsRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetIncludeFields(includeFields *bool) {
+	l.IncludeFields = includeFields
+	l.require(listDeviceCredentialsRequestParametersFieldIncludeFields)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetUserID(userID *string) {
+	l.UserID = userID
+	l.require(listDeviceCredentialsRequestParametersFieldUserID)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetClientID(clientID *string) {
+	l.ClientID = clientID
+	l.require(listDeviceCredentialsRequestParametersFieldClientID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListDeviceCredentialsRequestParameters) SetType(type_ *DeviceCredentialTypeEnum) {
+	l.Type = type_
+	l.require(listDeviceCredentialsRequestParametersFieldType)
+}
+
+var (
 	listUserLogsRequestParametersFieldPage          = big.NewInt(1 << 0)
 	listUserLogsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
 	listUserLogsRequestParametersFieldSort          = big.NewInt(1 << 2)
@@ -11142,54 +11584,6 @@ func (l *ListUserLogsRequestParameters) SetSort(sort *string) {
 func (l *ListUserLogsRequestParameters) SetIncludeTotals(includeTotals *bool) {
 	l.IncludeTotals = includeTotals
 	l.require(listUserLogsRequestParametersFieldIncludeTotals)
-}
-
-var (
-	listUserOrganizationsRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listUserOrganizationsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listUserOrganizationsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-)
-
-type ListUserOrganizationsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListUserOrganizationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserOrganizationsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listUserOrganizationsRequestParametersFieldPage)
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserOrganizationsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listUserOrganizationsRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListUserOrganizationsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listUserOrganizationsRequestParametersFieldIncludeTotals)
 }
 
 var (
@@ -11279,6 +11673,130 @@ func (l *ListOrganizationAllConnectionsRequestParameters) SetIsEnabled(isEnabled
 }
 
 var (
+	listUserOrganizationsRequestParametersFieldPage          = big.NewInt(1 << 0)
+	listUserOrganizationsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
+	listUserOrganizationsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
+)
+
+type ListUserOrganizationsRequestParameters struct {
+	// Page index of the results to return. First page is 0.
+	Page *int `json:"-" url:"page,omitempty"`
+	// Number of results per page. Defaults to 50.
+	PerPage *int `json:"-" url:"per_page,omitempty"`
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListUserOrganizationsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetPage sets the Page field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsRequestParameters) SetPage(page *int) {
+	l.Page = page
+	l.require(listUserOrganizationsRequestParametersFieldPage)
+}
+
+// SetPerPage sets the PerPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsRequestParameters) SetPerPage(perPage *int) {
+	l.PerPage = perPage
+	l.require(listUserOrganizationsRequestParametersFieldPerPage)
+}
+
+// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserOrganizationsRequestParameters) SetIncludeTotals(includeTotals *bool) {
+	l.IncludeTotals = includeTotals
+	l.require(listUserOrganizationsRequestParametersFieldIncludeTotals)
+}
+
+var (
+	listEventStreamsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listEventStreamsRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListEventStreamsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListEventStreamsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listEventStreamsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListEventStreamsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listEventStreamsRequestParametersFieldTake)
+}
+
+var (
+	listOrganizationDiscoveryDomainsRequestParametersFieldFrom = big.NewInt(1 << 0)
+	listOrganizationDiscoveryDomainsRequestParametersFieldTake = big.NewInt(1 << 1)
+)
+
+type ListOrganizationDiscoveryDomainsRequestParameters struct {
+	// Optional Id from which to start selection.
+	From *string `json:"-" url:"from,omitempty"`
+	// Number of results per page. Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (l *ListOrganizationDiscoveryDomainsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationDiscoveryDomainsRequestParameters) SetFrom(from *string) {
+	l.From = from
+	l.require(listOrganizationDiscoveryDomainsRequestParametersFieldFrom)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListOrganizationDiscoveryDomainsRequestParameters) SetTake(take *int) {
+	l.Take = take
+	l.require(listOrganizationDiscoveryDomainsRequestParametersFieldTake)
+}
+
+var (
 	listUserPermissionsRequestParametersFieldPerPage       = big.NewInt(1 << 0)
 	listUserPermissionsRequestParametersFieldPage          = big.NewInt(1 << 1)
 	listUserPermissionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
@@ -11324,324 +11842,6 @@ func (l *ListUserPermissionsRequestParameters) SetPage(page *int) {
 func (l *ListUserPermissionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
 	l.IncludeTotals = includeTotals
 	l.require(listUserPermissionsRequestParametersFieldIncludeTotals)
-}
-
-var (
-	listRolesRequestParametersFieldPerPage       = big.NewInt(1 << 0)
-	listRolesRequestParametersFieldPage          = big.NewInt(1 << 1)
-	listRolesRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-	listRolesRequestParametersFieldNameFilter    = big.NewInt(1 << 3)
-	listRolesRequestParametersFieldType          = big.NewInt(1 << 4)
-	listRolesRequestParametersFieldOwnerID       = big.NewInt(1 << 5)
-)
-
-type ListRolesRequestParameters struct {
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-	// Optional filter on name (case-insensitive).
-	NameFilter *string `json:"-" url:"name_filter,omitempty"`
-	// Optional filter on the type of the role
-	Type *RoleTypeEnum `json:"-" url:"type,omitempty"`
-	// Filter organization-level roles by owner ID. Use an organization ID to filter that organization's roles, or "auth0" to retrieve Auth0-managed System Roles. Required when type is "organization".
-	OwnerID *RoleOwnerIDFilter `json:"-" url:"owner_id,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listRolesRequestParametersFieldPerPage)
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listRolesRequestParametersFieldPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listRolesRequestParametersFieldIncludeTotals)
-}
-
-// SetNameFilter sets the NameFilter field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesRequestParameters) SetNameFilter(nameFilter *string) {
-	l.NameFilter = nameFilter
-	l.require(listRolesRequestParametersFieldNameFilter)
-}
-
-// SetType sets the Type field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesRequestParameters) SetType(type_ *RoleTypeEnum) {
-	l.Type = type_
-	l.require(listRolesRequestParametersFieldType)
-}
-
-// SetOwnerID sets the OwnerID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListRolesRequestParameters) SetOwnerID(ownerID *RoleOwnerIDFilter) {
-	l.OwnerID = ownerID
-	l.require(listRolesRequestParametersFieldOwnerID)
-}
-
-var (
-	listOrganizationDiscoveryDomainsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listOrganizationDiscoveryDomainsRequestParametersFieldTake = big.NewInt(1 << 1)
-)
-
-type ListOrganizationDiscoveryDomainsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListOrganizationDiscoveryDomainsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationDiscoveryDomainsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listOrganizationDiscoveryDomainsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationDiscoveryDomainsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listOrganizationDiscoveryDomainsRequestParametersFieldTake)
-}
-
-var (
-	listOrganizationGroupsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listOrganizationGroupsRequestParametersFieldTake = big.NewInt(1 << 1)
-)
-
-type ListOrganizationGroupsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListOrganizationGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationGroupsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listOrganizationGroupsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationGroupsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listOrganizationGroupsRequestParametersFieldTake)
-}
-
-var (
-	listEventStreamDeliveriesRequestParametersFieldStatuses   = big.NewInt(1 << 0)
-	listEventStreamDeliveriesRequestParametersFieldEventTypes = big.NewInt(1 << 1)
-	listEventStreamDeliveriesRequestParametersFieldDateFrom   = big.NewInt(1 << 2)
-	listEventStreamDeliveriesRequestParametersFieldDateTo     = big.NewInt(1 << 3)
-	listEventStreamDeliveriesRequestParametersFieldFrom       = big.NewInt(1 << 4)
-	listEventStreamDeliveriesRequestParametersFieldTake       = big.NewInt(1 << 5)
-)
-
-type ListEventStreamDeliveriesRequestParameters struct {
-	// Comma-separated list of statuses by which to filter
-	Statuses *string `json:"-" url:"statuses,omitempty"`
-	// Comma-separated list of event types by which to filter
-	EventTypes *string `json:"-" url:"event_types,omitempty"`
-	// An RFC-3339 date-time for redelivery start, inclusive. Does not allow sub-second precision.
-	DateFrom *string `json:"-" url:"date_from,omitempty"`
-	// An RFC-3339 date-time for redelivery end, exclusive. Does not allow sub-second precision.
-	DateTo *string `json:"-" url:"date_to,omitempty"`
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListEventStreamDeliveriesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetStatuses sets the Statuses field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamDeliveriesRequestParameters) SetStatuses(statuses *string) {
-	l.Statuses = statuses
-	l.require(listEventStreamDeliveriesRequestParametersFieldStatuses)
-}
-
-// SetEventTypes sets the EventTypes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamDeliveriesRequestParameters) SetEventTypes(eventTypes *string) {
-	l.EventTypes = eventTypes
-	l.require(listEventStreamDeliveriesRequestParametersFieldEventTypes)
-}
-
-// SetDateFrom sets the DateFrom field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamDeliveriesRequestParameters) SetDateFrom(dateFrom *string) {
-	l.DateFrom = dateFrom
-	l.require(listEventStreamDeliveriesRequestParametersFieldDateFrom)
-}
-
-// SetDateTo sets the DateTo field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamDeliveriesRequestParameters) SetDateTo(dateTo *string) {
-	l.DateTo = dateTo
-	l.require(listEventStreamDeliveriesRequestParametersFieldDateTo)
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamDeliveriesRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listEventStreamDeliveriesRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListEventStreamDeliveriesRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listEventStreamDeliveriesRequestParametersFieldTake)
-}
-
-var (
-	listOrganizationConnectionsRequestParametersFieldPage          = big.NewInt(1 << 0)
-	listOrganizationConnectionsRequestParametersFieldPerPage       = big.NewInt(1 << 1)
-	listOrganizationConnectionsRequestParametersFieldIncludeTotals = big.NewInt(1 << 2)
-)
-
-type ListOrganizationConnectionsRequestParameters struct {
-	// Page index of the results to return. First page is 0.
-	Page *int `json:"-" url:"page,omitempty"`
-	// Number of results per page. Defaults to 50.
-	PerPage *int `json:"-" url:"per_page,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
-	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListOrganizationConnectionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetPage sets the Page field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationConnectionsRequestParameters) SetPage(page *int) {
-	l.Page = page
-	l.require(listOrganizationConnectionsRequestParametersFieldPage)
-}
-
-// SetPerPage sets the PerPage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationConnectionsRequestParameters) SetPerPage(perPage *int) {
-	l.PerPage = perPage
-	l.require(listOrganizationConnectionsRequestParametersFieldPerPage)
-}
-
-// SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListOrganizationConnectionsRequestParameters) SetIncludeTotals(includeTotals *bool) {
-	l.IncludeTotals = includeTotals
-	l.require(listOrganizationConnectionsRequestParametersFieldIncludeTotals)
-}
-
-var (
-	listSCIMConfigurationsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listSCIMConfigurationsRequestParametersFieldTake = big.NewInt(1 << 1)
-)
-
-type ListSCIMConfigurationsRequestParameters struct {
-	// Optional Id from which to start selection.
-	From *string `json:"-" url:"from,omitempty"`
-	// Number of results per page. Defaults to 50.
-	Take *int `json:"-" url:"take,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (l *ListSCIMConfigurationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
-	}
-	next.Or(next, field)
-	l.explicitFields = next
-}
-
-// SetFrom sets the From field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSCIMConfigurationsRequestParameters) SetFrom(from *string) {
-	l.From = from
-	l.require(listSCIMConfigurationsRequestParametersFieldFrom)
-}
-
-// SetTake sets the Take field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (l *ListSCIMConfigurationsRequestParameters) SetTake(take *int) {
-	l.Take = take
-	l.require(listSCIMConfigurationsRequestParametersFieldTake)
 }
 
 var (
@@ -12200,30 +12400,36 @@ func (r *RollbackActionModuleRequestParameters) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	searchOrganizationsRequestParametersFieldQ      = big.NewInt(1 << 0)
-	searchOrganizationsRequestParametersFieldParser = big.NewInt(1 << 1)
-	searchOrganizationsRequestParametersFieldTake   = big.NewInt(1 << 2)
-	searchOrganizationsRequestParametersFieldFrom   = big.NewInt(1 << 3)
-	searchOrganizationsRequestParametersFieldSort   = big.NewInt(1 << 4)
+	searchClientsRequestParametersFieldQ             = big.NewInt(1 << 0)
+	searchClientsRequestParametersFieldParser        = big.NewInt(1 << 1)
+	searchClientsRequestParametersFieldFields        = big.NewInt(1 << 2)
+	searchClientsRequestParametersFieldIncludeFields = big.NewInt(1 << 3)
+	searchClientsRequestParametersFieldTake          = big.NewInt(1 << 4)
+	searchClientsRequestParametersFieldFrom          = big.NewInt(1 << 5)
+	searchClientsRequestParametersFieldSort          = big.NewInt(1 << 6)
 )
 
-type SearchOrganizationsRequestParameters struct {
-	// Filter expression in SCIM or Lucene syntax (depending on parser parameter, default: Lucene). Lucene examples: `name:acme*`, `display_name:*auth*`. SCIM examples: `name eq "Auth0"`, `display_name sw "auth" and created_at gt "2024-01-01"`. SCIM operators: eq, ne, sw, ew, co, pr, gt, ge, lt, le, and, or. <br /><br /><b>Supported Fields</b>:<ul><li><i>id</i> - Organization ID (case-sensitive, exact match)</li><li><i>name</i> - Organization name (supports contains, starts-with, ends-with operators; sortable)</li><li><i>display_name</i> - Organization display name (supports contains, starts-with, ends-with operators; sortable)</li><li><i>created_at</i> - Creation timestamp (supports date range operators; sortable)</li><li><i>metadata.{key}</i> - Filter by organization metadata key-value pairs</li></ul>Maximum 5 filter operations per query. Results are eventually consistent and may not reflect recent updates.
+type SearchClientsRequestParameters struct {
+	// Filter expression in SCIM or Lucene syntax (depending on parser parameter). SCIM examples: `name eq "Auth0"`, `name sw "auth" and app_type eq "spa"`. SCIM operators: eq, ne, sw, ew, co, pr, gt, ge, lt, le, and, or. <br /><br /><b>Supported Fields</b>:<br /><ul><li><i>client_id</i> - Auth0 client ID (case-sensitive, exact match)</li><li><i>external_client_id</i> - URL of the Client ID Metadata Document (CIMD); case-sensitive, exact match</li><li><i>name</i> - Client name (supports contains, starts-with, ends-with operators; sortable)</li><li><i>app_type</i> - Application type (e.g. "spa", "native", "non_interactive")</li><li><i>is_first_party</i> - Whether the client is first-party (boolean)</li><li><i>updated_at</i> - Last update timestamp (supports date range operators; sortable)</li><li><i>metadata.{key}</i> - Filter by client metadata key-value pairs (max 2-level key depth, values indexed up to 64 characters)</li><li><i>client_grant.organization_id</i> - Filter by associated organization ID</li><li><i>client_grant.allow_any_organization</i> - Filter by allow any organization setting</li></ul>Maximum 5 filter operations per query. Results are eventually consistent and may not reflect recent updates.
 	Q *string `json:"-" url:"q,omitempty"`
 	// Query parser to use for the filter expression. Use "scim" for SCIM filter syntax or "lucene" for Lucene query syntax (default).
 	Parser *SearchParserEnum `json:"-" url:"parser,omitempty"`
+	// Comma-separated list of fields to include or exclude in the response. Works with the include_fields parameter to control projection mode. Maximum 50 fields.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Controls field projection mode. Set to true to include only fields specified in the fields parameter. Set to false to exclude fields specified in the fields parameter. Defaults to true if not specified.
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
 	// Maximum number of results to return per page (1-100). Defaults to 50.
 	Take *int `json:"-" url:"take,omitempty"`
 	// Cursor for the next page of results. Use the value from the next field in the previous response.
 	From *string `json:"-" url:"from,omitempty"`
-	// Field name to sort results by in ascending order only. Defaults to insertion order (oldest first) if not provided.
-	Sort *OrganizationSortFieldEnum `json:"-" url:"sort,omitempty"`
+	// Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
+	Sort *ClientSortFieldEnum `json:"-" url:"sort,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *SearchOrganizationsRequestParameters) require(field *big.Int) {
+func (s *SearchClientsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if s.explicitFields != nil {
 		next.Set(s.explicitFields)
@@ -12234,37 +12440,139 @@ func (s *SearchOrganizationsRequestParameters) require(field *big.Int) {
 
 // SetQ sets the Q field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchOrganizationsRequestParameters) SetQ(q *string) {
+func (s *SearchClientsRequestParameters) SetQ(q *string) {
 	s.Q = q
-	s.require(searchOrganizationsRequestParametersFieldQ)
+	s.require(searchClientsRequestParametersFieldQ)
 }
 
 // SetParser sets the Parser field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchOrganizationsRequestParameters) SetParser(parser *SearchParserEnum) {
+func (s *SearchClientsRequestParameters) SetParser(parser *SearchParserEnum) {
 	s.Parser = parser
-	s.require(searchOrganizationsRequestParametersFieldParser)
+	s.require(searchClientsRequestParametersFieldParser)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientsRequestParameters) SetFields(fields *string) {
+	s.Fields = fields
+	s.require(searchClientsRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientsRequestParameters) SetIncludeFields(includeFields *bool) {
+	s.IncludeFields = includeFields
+	s.require(searchClientsRequestParametersFieldIncludeFields)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchOrganizationsRequestParameters) SetTake(take *int) {
+func (s *SearchClientsRequestParameters) SetTake(take *int) {
 	s.Take = take
-	s.require(searchOrganizationsRequestParametersFieldTake)
+	s.require(searchClientsRequestParametersFieldTake)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchOrganizationsRequestParameters) SetFrom(from *string) {
+func (s *SearchClientsRequestParameters) SetFrom(from *string) {
 	s.From = from
-	s.require(searchOrganizationsRequestParametersFieldFrom)
+	s.require(searchClientsRequestParametersFieldFrom)
 }
 
 // SetSort sets the Sort field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchOrganizationsRequestParameters) SetSort(sort *OrganizationSortFieldEnum) {
+func (s *SearchClientsRequestParameters) SetSort(sort *ClientSortFieldEnum) {
 	s.Sort = sort
-	s.require(searchOrganizationsRequestParametersFieldSort)
+	s.require(searchClientsRequestParametersFieldSort)
+}
+
+var (
+	searchClientGrantsRequestParametersFieldQ             = big.NewInt(1 << 0)
+	searchClientGrantsRequestParametersFieldParser        = big.NewInt(1 << 1)
+	searchClientGrantsRequestParametersFieldFields        = big.NewInt(1 << 2)
+	searchClientGrantsRequestParametersFieldIncludeFields = big.NewInt(1 << 3)
+	searchClientGrantsRequestParametersFieldTake          = big.NewInt(1 << 4)
+	searchClientGrantsRequestParametersFieldFrom          = big.NewInt(1 << 5)
+	searchClientGrantsRequestParametersFieldSort          = big.NewInt(1 << 6)
+)
+
+type SearchClientGrantsRequestParameters struct {
+	// Filter expression in SCIM or Lucene syntax (depending on parser parameter). SCIM examples: `audience eq "https://api.example.com"`, `client_id eq "cli_abc"`, `subject_type eq "client"`, `allow_any_organization eq true`, `default_for eq "third_party_clients"`, `audience co "example" and organization_id eq "org_123"`. SCIM operators: eq, ne, sw, ew, co, pr, gt, ge, lt, le, and, or. <br /><br /><b>Supported Fields</b>:<ul><li><i>audience</i> - Filter by audience (eq, ne, sw, co, ew, pr)</li><li><i>client_id</i> - Filter by client ID (eq, ne, sw, pr)</li><li><i>subject_type</i> - Filter by subject type (eq, ne, sw, pr)</li><li><i>allow_any_organization</i> - Filter by allow_any_organization (eq, ne, pr)</li><li><i>organization_id</i> - Filter by organization ID (eq, ne, sw, pr)</li><li><i>updated_at</i> - Filter by last update date (eq, ne, gt, ge, lt, le, pr)</li><li><i>default_for</i> - Filter by default grant group (eq, ne, sw, pr)</li></ul>Maximum 5 filter operations per query. Results are eventually consistent and may not reflect recent updates.
+	Q *string `json:"-" url:"q,omitempty"`
+	// Query parser to use for the filter expression. Use "scim" for SCIM filter syntax or "lucene" for Lucene query syntax (default).
+	Parser *SearchParserEnum `json:"-" url:"parser,omitempty"`
+	// Comma-separated list of fields to include or exclude in the response. Works with the include_fields parameter to control projection mode.
+	Fields *string `json:"-" url:"fields,omitempty"`
+	// Controls field projection mode. Set to true to include only fields specified in the fields parameter. Set to false to exclude fields specified in the fields parameter. Defaults to true if not specified.
+	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
+	// Maximum number of results to return per page (1-100). Defaults to 50.
+	Take *int `json:"-" url:"take,omitempty"`
+	// Cursor for the next page of results. Use the value from the next field in the previous response.
+	From *string `json:"-" url:"from,omitempty"`
+	// Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
+	Sort *ClientGrantSortFieldEnum `json:"-" url:"sort,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SearchClientGrantsRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetQ sets the Q field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsRequestParameters) SetQ(q *string) {
+	s.Q = q
+	s.require(searchClientGrantsRequestParametersFieldQ)
+}
+
+// SetParser sets the Parser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsRequestParameters) SetParser(parser *SearchParserEnum) {
+	s.Parser = parser
+	s.require(searchClientGrantsRequestParametersFieldParser)
+}
+
+// SetFields sets the Fields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsRequestParameters) SetFields(fields *string) {
+	s.Fields = fields
+	s.require(searchClientGrantsRequestParametersFieldFields)
+}
+
+// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsRequestParameters) SetIncludeFields(includeFields *bool) {
+	s.IncludeFields = includeFields
+	s.require(searchClientGrantsRequestParametersFieldIncludeFields)
+}
+
+// SetTake sets the Take field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsRequestParameters) SetTake(take *int) {
+	s.Take = take
+	s.require(searchClientGrantsRequestParametersFieldTake)
+}
+
+// SetFrom sets the From field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsRequestParameters) SetFrom(from *string) {
+	s.From = from
+	s.require(searchClientGrantsRequestParametersFieldFrom)
+}
+
+// SetSort sets the Sort field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsRequestParameters) SetSort(sort *ClientGrantSortFieldEnum) {
+	s.Sort = sort
+	s.require(searchClientGrantsRequestParametersFieldSort)
 }
 
 var (
@@ -12356,36 +12664,30 @@ func (s *SearchResourceServersRequestParameters) SetSort(sort *ResourceServerSor
 }
 
 var (
-	searchClientsRequestParametersFieldQ             = big.NewInt(1 << 0)
-	searchClientsRequestParametersFieldParser        = big.NewInt(1 << 1)
-	searchClientsRequestParametersFieldFields        = big.NewInt(1 << 2)
-	searchClientsRequestParametersFieldIncludeFields = big.NewInt(1 << 3)
-	searchClientsRequestParametersFieldTake          = big.NewInt(1 << 4)
-	searchClientsRequestParametersFieldFrom          = big.NewInt(1 << 5)
-	searchClientsRequestParametersFieldSort          = big.NewInt(1 << 6)
+	searchOrganizationsRequestParametersFieldQ      = big.NewInt(1 << 0)
+	searchOrganizationsRequestParametersFieldParser = big.NewInt(1 << 1)
+	searchOrganizationsRequestParametersFieldTake   = big.NewInt(1 << 2)
+	searchOrganizationsRequestParametersFieldFrom   = big.NewInt(1 << 3)
+	searchOrganizationsRequestParametersFieldSort   = big.NewInt(1 << 4)
 )
 
-type SearchClientsRequestParameters struct {
-	// Filter expression in SCIM or Lucene syntax (depending on parser parameter). SCIM examples: `name eq "Auth0"`, `name sw "auth" and app_type eq "spa"`. SCIM operators: eq, ne, sw, ew, co, pr, gt, ge, lt, le, and, or. <br /><br /><b>Supported Fields</b>:<br /><ul><li><i>client_id</i> - Auth0 client ID (case-sensitive, exact match)</li><li><i>external_client_id</i> - URL of the Client ID Metadata Document (CIMD); case-sensitive, exact match</li><li><i>name</i> - Client name (supports contains, starts-with, ends-with operators; sortable)</li><li><i>app_type</i> - Application type (e.g. "spa", "native", "non_interactive")</li><li><i>is_first_party</i> - Whether the client is first-party (boolean)</li><li><i>updated_at</i> - Last update timestamp (supports date range operators; sortable)</li><li><i>metadata.{key}</i> - Filter by client metadata key-value pairs (max 2-level key depth, values indexed up to 64 characters)</li><li><i>client_grant.organization_id</i> - Filter by associated organization ID</li><li><i>client_grant.allow_any_organization</i> - Filter by allow any organization setting</li></ul>Maximum 5 filter operations per query. Results are eventually consistent and may not reflect recent updates.
+type SearchOrganizationsRequestParameters struct {
+	// Filter expression in SCIM or Lucene syntax (depending on parser parameter, default: Lucene). Lucene examples: `name:acme*`, `display_name:*auth*`. SCIM examples: `name eq "Auth0"`, `display_name sw "auth" and created_at gt "2024-01-01"`. SCIM operators: eq, ne, sw, ew, co, pr, gt, ge, lt, le, and, or. <br /><br /><b>Supported Fields</b>:<ul><li><i>id</i> - Organization ID (case-sensitive, exact match)</li><li><i>name</i> - Organization name (supports contains, starts-with, ends-with operators; sortable)</li><li><i>display_name</i> - Organization display name (supports contains, starts-with, ends-with operators; sortable)</li><li><i>created_at</i> - Creation timestamp (supports date range operators; sortable)</li><li><i>metadata.{key}</i> - Filter by organization metadata key-value pairs</li></ul>Maximum 5 filter operations per query. Results are eventually consistent and may not reflect recent updates.
 	Q *string `json:"-" url:"q,omitempty"`
 	// Query parser to use for the filter expression. Use "scim" for SCIM filter syntax or "lucene" for Lucene query syntax (default).
 	Parser *SearchParserEnum `json:"-" url:"parser,omitempty"`
-	// Comma-separated list of fields to include or exclude in the response. Works with the include_fields parameter to control projection mode. Maximum 50 fields.
-	Fields *string `json:"-" url:"fields,omitempty"`
-	// Controls field projection mode. Set to true to include only fields specified in the fields parameter. Set to false to exclude fields specified in the fields parameter. Defaults to true if not specified.
-	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
 	// Maximum number of results to return per page (1-100). Defaults to 50.
 	Take *int `json:"-" url:"take,omitempty"`
 	// Cursor for the next page of results. Use the value from the next field in the previous response.
 	From *string `json:"-" url:"from,omitempty"`
-	// Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
-	Sort *ClientSortFieldEnum `json:"-" url:"sort,omitempty"`
+	// Field name to sort results by in ascending order only. Defaults to insertion order (oldest first) if not provided.
+	Sort *OrganizationSortFieldEnum `json:"-" url:"sort,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *SearchClientsRequestParameters) require(field *big.Int) {
+func (s *SearchOrganizationsRequestParameters) require(field *big.Int) {
 	next := new(big.Int)
 	if s.explicitFields != nil {
 		next.Set(s.explicitFields)
@@ -12396,117 +12698,37 @@ func (s *SearchClientsRequestParameters) require(field *big.Int) {
 
 // SetQ sets the Q field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchClientsRequestParameters) SetQ(q *string) {
+func (s *SearchOrganizationsRequestParameters) SetQ(q *string) {
 	s.Q = q
-	s.require(searchClientsRequestParametersFieldQ)
+	s.require(searchOrganizationsRequestParametersFieldQ)
 }
 
 // SetParser sets the Parser field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchClientsRequestParameters) SetParser(parser *SearchParserEnum) {
+func (s *SearchOrganizationsRequestParameters) SetParser(parser *SearchParserEnum) {
 	s.Parser = parser
-	s.require(searchClientsRequestParametersFieldParser)
-}
-
-// SetFields sets the Fields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchClientsRequestParameters) SetFields(fields *string) {
-	s.Fields = fields
-	s.require(searchClientsRequestParametersFieldFields)
-}
-
-// SetIncludeFields sets the IncludeFields field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchClientsRequestParameters) SetIncludeFields(includeFields *bool) {
-	s.IncludeFields = includeFields
-	s.require(searchClientsRequestParametersFieldIncludeFields)
+	s.require(searchOrganizationsRequestParametersFieldParser)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchClientsRequestParameters) SetTake(take *int) {
+func (s *SearchOrganizationsRequestParameters) SetTake(take *int) {
 	s.Take = take
-	s.require(searchClientsRequestParametersFieldTake)
+	s.require(searchOrganizationsRequestParametersFieldTake)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchClientsRequestParameters) SetFrom(from *string) {
+func (s *SearchOrganizationsRequestParameters) SetFrom(from *string) {
 	s.From = from
-	s.require(searchClientsRequestParametersFieldFrom)
+	s.require(searchOrganizationsRequestParametersFieldFrom)
 }
 
 // SetSort sets the Sort field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SearchClientsRequestParameters) SetSort(sort *ClientSortFieldEnum) {
+func (s *SearchOrganizationsRequestParameters) SetSort(sort *OrganizationSortFieldEnum) {
 	s.Sort = sort
-	s.require(searchClientsRequestParametersFieldSort)
-}
-
-var (
-	setGuardianFactorDuoSettingsRequestContentFieldIkey = big.NewInt(1 << 0)
-	setGuardianFactorDuoSettingsRequestContentFieldSkey = big.NewInt(1 << 1)
-	setGuardianFactorDuoSettingsRequestContentFieldHost = big.NewInt(1 << 2)
-)
-
-type SetGuardianFactorDuoSettingsRequestContent struct {
-	Ikey *string `json:"ikey,omitempty" url:"-"`
-	Skey *string `json:"skey,omitempty" url:"-"`
-	Host *string `json:"host,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *SetGuardianFactorDuoSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
-	}
-	next.Or(next, field)
-	s.explicitFields = next
-}
-
-// SetIkey sets the Ikey field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorDuoSettingsRequestContent) SetIkey(ikey *string) {
-	s.Ikey = ikey
-	s.require(setGuardianFactorDuoSettingsRequestContentFieldIkey)
-}
-
-// SetSkey sets the Skey field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorDuoSettingsRequestContent) SetSkey(skey *string) {
-	s.Skey = skey
-	s.require(setGuardianFactorDuoSettingsRequestContentFieldSkey)
-}
-
-// SetHost sets the Host field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorDuoSettingsRequestContent) SetHost(host *string) {
-	s.Host = host
-	s.require(setGuardianFactorDuoSettingsRequestContentFieldHost)
-}
-
-func (s *SetGuardianFactorDuoSettingsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianFactorDuoSettingsRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = SetGuardianFactorDuoSettingsRequestContent(body)
-	return nil
-}
-
-func (s *SetGuardianFactorDuoSettingsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianFactorDuoSettingsRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
+	s.require(searchOrganizationsRequestParametersFieldSort)
 }
 
 var (
@@ -12559,6 +12781,181 @@ func (s *SetPhoneFactorSettingsRequestContent) UnmarshalJSON(data []byte) error 
 
 func (s *SetPhoneFactorSettingsRequestContent) MarshalJSON() ([]byte, error) {
 	type embed SetPhoneFactorSettingsRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setGuardianFactorRequestContentFieldEnabled = big.NewInt(1 << 0)
+)
+
+type SetGuardianFactorRequestContent struct {
+	// Whether this factor is enabled (true) or disabled (false).
+	Enabled bool `json:"enabled" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetGuardianFactorRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianFactorRequestContent) SetEnabled(enabled bool) {
+	s.Enabled = enabled
+	s.require(setGuardianFactorRequestContentFieldEnabled)
+}
+
+func (s *SetGuardianFactorRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetGuardianFactorRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetGuardianFactorRequestContent(body)
+	return nil
+}
+
+func (s *SetGuardianFactorRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetGuardianFactorRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setNetworkACLRequestContentFieldDescription = big.NewInt(1 << 0)
+	setNetworkACLRequestContentFieldActive      = big.NewInt(1 << 1)
+	setNetworkACLRequestContentFieldPriority    = big.NewInt(1 << 2)
+	setNetworkACLRequestContentFieldRule        = big.NewInt(1 << 3)
+)
+
+type SetNetworkACLRequestContent struct {
+	Description string `json:"description" url:"-"`
+	// Indicates whether or not this access control list is actively being used
+	Active bool `json:"active" url:"-"`
+	// Indicates the order in which the ACL will be evaluated relative to other ACL rules.
+	Priority *float64        `json:"priority,omitempty" url:"-"`
+	Rule     *NetworkACLRule `json:"rule" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetNetworkACLRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkACLRequestContent) SetDescription(description string) {
+	s.Description = description
+	s.require(setNetworkACLRequestContentFieldDescription)
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkACLRequestContent) SetActive(active bool) {
+	s.Active = active
+	s.require(setNetworkACLRequestContentFieldActive)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkACLRequestContent) SetPriority(priority *float64) {
+	s.Priority = priority
+	s.require(setNetworkACLRequestContentFieldPriority)
+}
+
+// SetRule sets the Rule field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetNetworkACLRequestContent) SetRule(rule *NetworkACLRule) {
+	s.Rule = rule
+	s.require(setNetworkACLRequestContentFieldRule)
+}
+
+func (s *SetNetworkACLRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetNetworkACLRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetNetworkACLRequestContent(body)
+	return nil
+}
+
+func (s *SetNetworkACLRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetNetworkACLRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setCustomSigningKeysRequestContentFieldKeys = big.NewInt(1 << 0)
+)
+
+type SetCustomSigningKeysRequestContent struct {
+	// An array of custom public signing keys.
+	Keys []*CustomSigningKeyJwk `json:"keys" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetCustomSigningKeysRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetKeys sets the Keys field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetCustomSigningKeysRequestContent) SetKeys(keys []*CustomSigningKeyJwk) {
+	s.Keys = keys
+	s.require(setCustomSigningKeysRequestContentFieldKeys)
+}
+
+func (s *SetCustomSigningKeysRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetCustomSigningKeysRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetCustomSigningKeysRequestContent(body)
+	return nil
+}
+
+func (s *SetCustomSigningKeysRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetCustomSigningKeysRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -12628,18 +13025,21 @@ func (s *SetEmailFactorSettingsRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	setRulesConfigRequestContentFieldValue = big.NewInt(1 << 0)
+	setGuardianFactorDuoSettingsRequestContentFieldIkey = big.NewInt(1 << 0)
+	setGuardianFactorDuoSettingsRequestContentFieldSkey = big.NewInt(1 << 1)
+	setGuardianFactorDuoSettingsRequestContentFieldHost = big.NewInt(1 << 2)
 )
 
-type SetRulesConfigRequestContent struct {
-	// Value for a rules config variable.
-	Value string `json:"value" url:"-"`
+type SetGuardianFactorDuoSettingsRequestContent struct {
+	Ikey *string `json:"ikey,omitempty" url:"-"`
+	Skey *string `json:"skey,omitempty" url:"-"`
+	Host *string `json:"host,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (s *SetRulesConfigRequestContent) require(field *big.Int) {
+func (s *SetGuardianFactorDuoSettingsRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if s.explicitFields != nil {
 		next.Set(s.explicitFields)
@@ -12648,202 +13048,39 @@ func (s *SetRulesConfigRequestContent) require(field *big.Int) {
 	s.explicitFields = next
 }
 
-// SetValue sets the Value field and marks it as non-optional;
+// SetIkey sets the Ikey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetRulesConfigRequestContent) SetValue(value string) {
-	s.Value = value
-	s.require(setRulesConfigRequestContentFieldValue)
+func (s *SetGuardianFactorDuoSettingsRequestContent) SetIkey(ikey *string) {
+	s.Ikey = ikey
+	s.require(setGuardianFactorDuoSettingsRequestContentFieldIkey)
 }
 
-func (s *SetRulesConfigRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetRulesConfigRequestContent
+// SetSkey sets the Skey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianFactorDuoSettingsRequestContent) SetSkey(skey *string) {
+	s.Skey = skey
+	s.require(setGuardianFactorDuoSettingsRequestContentFieldSkey)
+}
+
+// SetHost sets the Host field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianFactorDuoSettingsRequestContent) SetHost(host *string) {
+	s.Host = host
+	s.require(setGuardianFactorDuoSettingsRequestContentFieldHost)
+}
+
+func (s *SetGuardianFactorDuoSettingsRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetGuardianFactorDuoSettingsRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*s = SetRulesConfigRequestContent(body)
+	*s = SetGuardianFactorDuoSettingsRequestContent(body)
 	return nil
 }
 
-func (s *SetRulesConfigRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetRulesConfigRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	setGuardianFactorRequestContentFieldEnabled = big.NewInt(1 << 0)
-)
-
-type SetGuardianFactorRequestContent struct {
-	// Whether this factor is enabled (true) or disabled (false).
-	Enabled bool `json:"enabled" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *SetGuardianFactorRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
-	}
-	next.Or(next, field)
-	s.explicitFields = next
-}
-
-// SetEnabled sets the Enabled field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorRequestContent) SetEnabled(enabled bool) {
-	s.Enabled = enabled
-	s.require(setGuardianFactorRequestContentFieldEnabled)
-}
-
-func (s *SetGuardianFactorRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianFactorRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = SetGuardianFactorRequestContent(body)
-	return nil
-}
-
-func (s *SetGuardianFactorRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianFactorRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	setGuardianSettingsRequestContentFieldDisplayRememberMeCheckbox   = big.NewInt(1 << 0)
-	setGuardianSettingsRequestContentFieldRememberMeDefaultValue      = big.NewInt(1 << 1)
-	setGuardianSettingsRequestContentFieldMfaSessionInactivityTimeout = big.NewInt(1 << 2)
-	setGuardianSettingsRequestContentFieldMfaSessionOverallTimeout    = big.NewInt(1 << 3)
-)
-
-type SetGuardianSettingsRequestContent struct {
-	// Determines whether to display the "Remember Me" checkbox on the MFA prompt in Universal Login.
-	DisplayRememberMeCheckbox bool `json:"display_remember_me_checkbox" url:"-"`
-	// Determines the default state of the "Remember Me" checkbox on the MFA prompt in Universal Login.
-	RememberMeDefaultValue bool `json:"remember_me_default_value" url:"-"`
-	// Duration of inactivity after which the user will be prompted for MFA. Represented as seconds. Minimum duration is 1 hour, maximum is 30 days, and cannot exceed the overall timeout.
-	MfaSessionInactivityTimeout int `json:"mfa_session_inactivity_timeout" url:"-"`
-	// Maximum duration after which the user will be prompted for MFA regardless of activity. Represented as seconds. Minimum duration is 1 hour, maximum is 90 days.
-	MfaSessionOverallTimeout int `json:"mfa_session_overall_timeout" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *SetGuardianSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
-	}
-	next.Or(next, field)
-	s.explicitFields = next
-}
-
-// SetDisplayRememberMeCheckbox sets the DisplayRememberMeCheckbox field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianSettingsRequestContent) SetDisplayRememberMeCheckbox(displayRememberMeCheckbox bool) {
-	s.DisplayRememberMeCheckbox = displayRememberMeCheckbox
-	s.require(setGuardianSettingsRequestContentFieldDisplayRememberMeCheckbox)
-}
-
-// SetRememberMeDefaultValue sets the RememberMeDefaultValue field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianSettingsRequestContent) SetRememberMeDefaultValue(rememberMeDefaultValue bool) {
-	s.RememberMeDefaultValue = rememberMeDefaultValue
-	s.require(setGuardianSettingsRequestContentFieldRememberMeDefaultValue)
-}
-
-// SetMfaSessionInactivityTimeout sets the MfaSessionInactivityTimeout field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianSettingsRequestContent) SetMfaSessionInactivityTimeout(mfaSessionInactivityTimeout int) {
-	s.MfaSessionInactivityTimeout = mfaSessionInactivityTimeout
-	s.require(setGuardianSettingsRequestContentFieldMfaSessionInactivityTimeout)
-}
-
-// SetMfaSessionOverallTimeout sets the MfaSessionOverallTimeout field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianSettingsRequestContent) SetMfaSessionOverallTimeout(mfaSessionOverallTimeout int) {
-	s.MfaSessionOverallTimeout = mfaSessionOverallTimeout
-	s.require(setGuardianSettingsRequestContentFieldMfaSessionOverallTimeout)
-}
-
-func (s *SetGuardianSettingsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianSettingsRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = SetGuardianSettingsRequestContent(body)
-	return nil
-}
-
-func (s *SetGuardianSettingsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianSettingsRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	setCustomSigningKeysRequestContentFieldKeys = big.NewInt(1 << 0)
-)
-
-type SetCustomSigningKeysRequestContent struct {
-	// An array of custom public signing keys.
-	Keys []*CustomSigningKeyJwk `json:"keys" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *SetCustomSigningKeysRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
-	}
-	next.Or(next, field)
-	s.explicitFields = next
-}
-
-// SetKeys sets the Keys field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetCustomSigningKeysRequestContent) SetKeys(keys []*CustomSigningKeyJwk) {
-	s.Keys = keys
-	s.require(setCustomSigningKeysRequestContentFieldKeys)
-}
-
-func (s *SetCustomSigningKeysRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetCustomSigningKeysRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = SetCustomSigningKeysRequestContent(body)
-	return nil
-}
-
-func (s *SetCustomSigningKeysRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetCustomSigningKeysRequestContent
+func (s *SetGuardianFactorDuoSettingsRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetGuardianFactorDuoSettingsRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -12982,6 +13219,134 @@ func (s *SetEmailTemplateRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	setRulesConfigRequestContentFieldValue = big.NewInt(1 << 0)
+)
+
+type SetRulesConfigRequestContent struct {
+	// Value for a rules config variable.
+	Value string `json:"value" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetRulesConfigRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetValue sets the Value field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetRulesConfigRequestContent) SetValue(value string) {
+	s.Value = value
+	s.require(setRulesConfigRequestContentFieldValue)
+}
+
+func (s *SetRulesConfigRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetRulesConfigRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetRulesConfigRequestContent(body)
+	return nil
+}
+
+func (s *SetRulesConfigRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetRulesConfigRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setGuardianSettingsRequestContentFieldDisplayRememberMeCheckbox   = big.NewInt(1 << 0)
+	setGuardianSettingsRequestContentFieldRememberMeDefaultValue      = big.NewInt(1 << 1)
+	setGuardianSettingsRequestContentFieldMfaSessionInactivityTimeout = big.NewInt(1 << 2)
+	setGuardianSettingsRequestContentFieldMfaSessionOverallTimeout    = big.NewInt(1 << 3)
+)
+
+type SetGuardianSettingsRequestContent struct {
+	// Determines whether to display the "Remember Me" checkbox on the MFA prompt in Universal Login.
+	DisplayRememberMeCheckbox bool `json:"display_remember_me_checkbox" url:"-"`
+	// Determines the default state of the "Remember Me" checkbox on the MFA prompt in Universal Login.
+	RememberMeDefaultValue bool `json:"remember_me_default_value" url:"-"`
+	// Duration of inactivity after which the user will be prompted for MFA. Represented as seconds. Minimum duration is 1 hour, maximum is 30 days, and cannot exceed the overall timeout.
+	MfaSessionInactivityTimeout int `json:"mfa_session_inactivity_timeout" url:"-"`
+	// Maximum duration after which the user will be prompted for MFA regardless of activity. Represented as seconds. Minimum duration is 1 hour, maximum is 90 days.
+	MfaSessionOverallTimeout int `json:"mfa_session_overall_timeout" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetGuardianSettingsRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetDisplayRememberMeCheckbox sets the DisplayRememberMeCheckbox field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianSettingsRequestContent) SetDisplayRememberMeCheckbox(displayRememberMeCheckbox bool) {
+	s.DisplayRememberMeCheckbox = displayRememberMeCheckbox
+	s.require(setGuardianSettingsRequestContentFieldDisplayRememberMeCheckbox)
+}
+
+// SetRememberMeDefaultValue sets the RememberMeDefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianSettingsRequestContent) SetRememberMeDefaultValue(rememberMeDefaultValue bool) {
+	s.RememberMeDefaultValue = rememberMeDefaultValue
+	s.require(setGuardianSettingsRequestContentFieldRememberMeDefaultValue)
+}
+
+// SetMfaSessionInactivityTimeout sets the MfaSessionInactivityTimeout field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianSettingsRequestContent) SetMfaSessionInactivityTimeout(mfaSessionInactivityTimeout int) {
+	s.MfaSessionInactivityTimeout = mfaSessionInactivityTimeout
+	s.require(setGuardianSettingsRequestContentFieldMfaSessionInactivityTimeout)
+}
+
+// SetMfaSessionOverallTimeout sets the MfaSessionOverallTimeout field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianSettingsRequestContent) SetMfaSessionOverallTimeout(mfaSessionOverallTimeout int) {
+	s.MfaSessionOverallTimeout = mfaSessionOverallTimeout
+	s.require(setGuardianSettingsRequestContentFieldMfaSessionOverallTimeout)
+}
+
+func (s *SetGuardianSettingsRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetGuardianSettingsRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetGuardianSettingsRequestContent(body)
+	return nil
+}
+
+func (s *SetGuardianSettingsRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetGuardianSettingsRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	replaceSynchronizedGroupsRequestContentFieldGroups = big.NewInt(1 << 0)
 )
 
@@ -13027,83 +13392,6 @@ func (r *ReplaceSynchronizedGroupsRequestContent) MarshalJSON() ([]byte, error) 
 		embed: embed(*r),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	setNetworkACLRequestContentFieldDescription = big.NewInt(1 << 0)
-	setNetworkACLRequestContentFieldActive      = big.NewInt(1 << 1)
-	setNetworkACLRequestContentFieldPriority    = big.NewInt(1 << 2)
-	setNetworkACLRequestContentFieldRule        = big.NewInt(1 << 3)
-)
-
-type SetNetworkACLRequestContent struct {
-	Description string `json:"description" url:"-"`
-	// Indicates whether or not this access control list is actively being used
-	Active bool `json:"active" url:"-"`
-	// Indicates the order in which the ACL will be evaluated relative to other ACL rules.
-	Priority *float64        `json:"priority,omitempty" url:"-"`
-	Rule     *NetworkACLRule `json:"rule" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *SetNetworkACLRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
-	}
-	next.Or(next, field)
-	s.explicitFields = next
-}
-
-// SetDescription sets the Description field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetNetworkACLRequestContent) SetDescription(description string) {
-	s.Description = description
-	s.require(setNetworkACLRequestContentFieldDescription)
-}
-
-// SetActive sets the Active field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetNetworkACLRequestContent) SetActive(active bool) {
-	s.Active = active
-	s.require(setNetworkACLRequestContentFieldActive)
-}
-
-// SetPriority sets the Priority field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetNetworkACLRequestContent) SetPriority(priority *float64) {
-	s.Priority = priority
-	s.require(setNetworkACLRequestContentFieldPriority)
-}
-
-// SetRule sets the Rule field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetNetworkACLRequestContent) SetRule(rule *NetworkACLRule) {
-	s.Rule = rule
-	s.require(setNetworkACLRequestContentFieldRule)
-}
-
-func (s *SetNetworkACLRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetNetworkACLRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = SetNetworkACLRequestContent(body)
-	return nil
-}
-
-func (s *SetNetworkACLRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetNetworkACLRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -13416,54 +13704,6 @@ func (s *SetGuardianFactorsProviderSmsRequestContent) MarshalJSON() ([]byte, err
 }
 
 var (
-	setGuardianFactorsProviderPushNotificationRequestContentFieldProvider = big.NewInt(1 << 0)
-)
-
-type SetGuardianFactorsProviderPushNotificationRequestContent struct {
-	Provider GuardianFactorsProviderPushNotificationProviderDataEnum `json:"provider" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
-	}
-	next.Or(next, field)
-	s.explicitFields = next
-}
-
-// SetProvider sets the Provider field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorsProviderPushNotificationRequestContent) SetProvider(provider GuardianFactorsProviderPushNotificationProviderDataEnum) {
-	s.Provider = provider
-	s.require(setGuardianFactorsProviderPushNotificationRequestContentFieldProvider)
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianFactorsProviderPushNotificationRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = SetGuardianFactorsProviderPushNotificationRequestContent(body)
-	return nil
-}
-
-func (s *SetGuardianFactorsProviderPushNotificationRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianFactorsProviderPushNotificationRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	setGuardianFactorsProviderPhoneRequestContentFieldProvider = big.NewInt(1 << 0)
 )
 
@@ -13502,6 +13742,54 @@ func (s *SetGuardianFactorsProviderPhoneRequestContent) UnmarshalJSON(data []byt
 
 func (s *SetGuardianFactorsProviderPhoneRequestContent) MarshalJSON() ([]byte, error) {
 	type embed SetGuardianFactorsProviderPhoneRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setGuardianFactorsProviderPushNotificationRequestContentFieldProvider = big.NewInt(1 << 0)
+)
+
+type SetGuardianFactorsProviderPushNotificationRequestContent struct {
+	Provider GuardianFactorsProviderPushNotificationProviderDataEnum `json:"provider" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetGuardianFactorsProviderPushNotificationRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetProvider sets the Provider field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianFactorsProviderPushNotificationRequestContent) SetProvider(provider GuardianFactorsProviderPushNotificationProviderDataEnum) {
+	s.Provider = provider
+	s.require(setGuardianFactorsProviderPushNotificationRequestContentFieldProvider)
+}
+
+func (s *SetGuardianFactorsProviderPushNotificationRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetGuardianFactorsProviderPushNotificationRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetGuardianFactorsProviderPushNotificationRequestContent(body)
+	return nil
+}
+
+func (s *SetGuardianFactorsProviderPushNotificationRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetGuardianFactorsProviderPushNotificationRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -13596,65 +13884,6 @@ func (s *SetGuardianFactorsProviderPushNotificationSnsRequestContent) MarshalJSO
 }
 
 var (
-	setGuardianFactorPhoneTemplatesRequestContentFieldEnrollmentMessage   = big.NewInt(1 << 0)
-	setGuardianFactorPhoneTemplatesRequestContentFieldVerificationMessage = big.NewInt(1 << 1)
-)
-
-type SetGuardianFactorPhoneTemplatesRequestContent struct {
-	// Message sent to the user when they are invited to enroll with a phone number.
-	EnrollmentMessage string `json:"enrollment_message" url:"-"`
-	// Message sent to the user when they are prompted to verify their account.
-	VerificationMessage string `json:"verification_message" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (s *SetGuardianFactorPhoneTemplatesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
-	}
-	next.Or(next, field)
-	s.explicitFields = next
-}
-
-// SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorPhoneTemplatesRequestContent) SetEnrollmentMessage(enrollmentMessage string) {
-	s.EnrollmentMessage = enrollmentMessage
-	s.require(setGuardianFactorPhoneTemplatesRequestContentFieldEnrollmentMessage)
-}
-
-// SetVerificationMessage sets the VerificationMessage field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (s *SetGuardianFactorPhoneTemplatesRequestContent) SetVerificationMessage(verificationMessage string) {
-	s.VerificationMessage = verificationMessage
-	s.require(setGuardianFactorPhoneTemplatesRequestContentFieldVerificationMessage)
-}
-
-func (s *SetGuardianFactorPhoneTemplatesRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler SetGuardianFactorPhoneTemplatesRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*s = SetGuardianFactorPhoneTemplatesRequestContent(body)
-	return nil
-}
-
-func (s *SetGuardianFactorPhoneTemplatesRequestContent) MarshalJSON() ([]byte, error) {
-	type embed SetGuardianFactorPhoneTemplatesRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*s),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	setGuardianFactorSmsTemplatesRequestContentFieldEnrollmentMessage   = big.NewInt(1 << 0)
 	setGuardianFactorSmsTemplatesRequestContentFieldVerificationMessage = big.NewInt(1 << 1)
 )
@@ -13704,6 +13933,65 @@ func (s *SetGuardianFactorSmsTemplatesRequestContent) UnmarshalJSON(data []byte)
 
 func (s *SetGuardianFactorSmsTemplatesRequestContent) MarshalJSON() ([]byte, error) {
 	type embed SetGuardianFactorSmsTemplatesRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	setGuardianFactorPhoneTemplatesRequestContentFieldEnrollmentMessage   = big.NewInt(1 << 0)
+	setGuardianFactorPhoneTemplatesRequestContentFieldVerificationMessage = big.NewInt(1 << 1)
+)
+
+type SetGuardianFactorPhoneTemplatesRequestContent struct {
+	// Message sent to the user when they are invited to enroll with a phone number.
+	EnrollmentMessage string `json:"enrollment_message" url:"-"`
+	// Message sent to the user when they are prompted to verify their account.
+	VerificationMessage string `json:"verification_message" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (s *SetGuardianFactorPhoneTemplatesRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianFactorPhoneTemplatesRequestContent) SetEnrollmentMessage(enrollmentMessage string) {
+	s.EnrollmentMessage = enrollmentMessage
+	s.require(setGuardianFactorPhoneTemplatesRequestContentFieldEnrollmentMessage)
+}
+
+// SetVerificationMessage sets the VerificationMessage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SetGuardianFactorPhoneTemplatesRequestContent) SetVerificationMessage(verificationMessage string) {
+	s.VerificationMessage = verificationMessage
+	s.require(setGuardianFactorPhoneTemplatesRequestContentFieldVerificationMessage)
+}
+
+func (s *SetGuardianFactorPhoneTemplatesRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SetGuardianFactorPhoneTemplatesRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*s = SetGuardianFactorPhoneTemplatesRequestContent(body)
+	return nil
+}
+
+func (s *SetGuardianFactorPhoneTemplatesRequestContent) MarshalJSON() ([]byte, error) {
+	type embed SetGuardianFactorPhoneTemplatesRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -13920,19 +14208,68 @@ func (s *SubscribeEventsRequestParameters) SetEventType(eventType []*EventStream
 }
 
 var (
-	createEventStreamTestEventRequestContentFieldEventType = big.NewInt(1 << 0)
-	createEventStreamTestEventRequestContentFieldData      = big.NewInt(1 << 1)
+	testActionRequestContentFieldPayload = big.NewInt(1 << 0)
 )
 
-type CreateEventStreamTestEventRequestContent struct {
-	EventType EventStreamTestEventTypeEnum `json:"event_type" url:"-"`
-	Data      *TestEventDataContent        `json:"data,omitempty" url:"-"`
+type TestActionRequestContent struct {
+	Payload TestActionPayload `json:"payload" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreateEventStreamTestEventRequestContent) require(field *big.Int) {
+func (t *TestActionRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
+	}
+	next.Or(next, field)
+	t.explicitFields = next
+}
+
+// SetPayload sets the Payload field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (t *TestActionRequestContent) SetPayload(payload TestActionPayload) {
+	t.Payload = payload
+	t.require(testActionRequestContentFieldPayload)
+}
+
+func (t *TestActionRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler TestActionRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*t = TestActionRequestContent(body)
+	return nil
+}
+
+func (t *TestActionRequestContent) MarshalJSON() ([]byte, error) {
+	type embed TestActionRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*t),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	createPhoneProviderSendTestRequestContentFieldTo             = big.NewInt(1 << 0)
+	createPhoneProviderSendTestRequestContentFieldDeliveryMethod = big.NewInt(1 << 1)
+)
+
+type CreatePhoneProviderSendTestRequestContent struct {
+	// The recipient phone number to receive a given notification.
+	To             string                           `json:"to" url:"-"`
+	DeliveryMethod *PhoneProviderDeliveryMethodEnum `json:"delivery_method,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (c *CreatePhoneProviderSendTestRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -13941,32 +14278,32 @@ func (c *CreateEventStreamTestEventRequestContent) require(field *big.Int) {
 	c.explicitFields = next
 }
 
-// SetEventType sets the EventType field and marks it as non-optional;
+// SetTo sets the To field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamTestEventRequestContent) SetEventType(eventType EventStreamTestEventTypeEnum) {
-	c.EventType = eventType
-	c.require(createEventStreamTestEventRequestContentFieldEventType)
+func (c *CreatePhoneProviderSendTestRequestContent) SetTo(to string) {
+	c.To = to
+	c.require(createPhoneProviderSendTestRequestContentFieldTo)
 }
 
-// SetData sets the Data field and marks it as non-optional;
+// SetDeliveryMethod sets the DeliveryMethod field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreateEventStreamTestEventRequestContent) SetData(data *TestEventDataContent) {
-	c.Data = data
-	c.require(createEventStreamTestEventRequestContentFieldData)
+func (c *CreatePhoneProviderSendTestRequestContent) SetDeliveryMethod(deliveryMethod *PhoneProviderDeliveryMethodEnum) {
+	c.DeliveryMethod = deliveryMethod
+	c.require(createPhoneProviderSendTestRequestContentFieldDeliveryMethod)
 }
 
-func (c *CreateEventStreamTestEventRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreateEventStreamTestEventRequestContent
+func (c *CreatePhoneProviderSendTestRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreatePhoneProviderSendTestRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateEventStreamTestEventRequestContent(body)
+	*c = CreatePhoneProviderSendTestRequestContent(body)
 	return nil
 }
 
-func (c *CreateEventStreamTestEventRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreateEventStreamTestEventRequestContent
+func (c *CreatePhoneProviderSendTestRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreatePhoneProviderSendTestRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -14036,20 +14373,19 @@ func (c *CreatePhoneTemplateTestNotificationRequestContent) MarshalJSON() ([]byt
 }
 
 var (
-	createPhoneProviderSendTestRequestContentFieldTo             = big.NewInt(1 << 0)
-	createPhoneProviderSendTestRequestContentFieldDeliveryMethod = big.NewInt(1 << 1)
+	createEventStreamTestEventRequestContentFieldEventType = big.NewInt(1 << 0)
+	createEventStreamTestEventRequestContentFieldData      = big.NewInt(1 << 1)
 )
 
-type CreatePhoneProviderSendTestRequestContent struct {
-	// The recipient phone number to receive a given notification.
-	To             string                           `json:"to" url:"-"`
-	DeliveryMethod *PhoneProviderDeliveryMethodEnum `json:"delivery_method,omitempty" url:"-"`
+type CreateEventStreamTestEventRequestContent struct {
+	EventType EventStreamTestEventTypeEnum `json:"event_type" url:"-"`
+	Data      *TestEventDataContent        `json:"data,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (c *CreatePhoneProviderSendTestRequestContent) require(field *big.Int) {
+func (c *CreateEventStreamTestEventRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if c.explicitFields != nil {
 		next.Set(c.explicitFields)
@@ -14058,86 +14394,38 @@ func (c *CreatePhoneProviderSendTestRequestContent) require(field *big.Int) {
 	c.explicitFields = next
 }
 
-// SetTo sets the To field and marks it as non-optional;
+// SetEventType sets the EventType field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePhoneProviderSendTestRequestContent) SetTo(to string) {
-	c.To = to
-	c.require(createPhoneProviderSendTestRequestContentFieldTo)
+func (c *CreateEventStreamTestEventRequestContent) SetEventType(eventType EventStreamTestEventTypeEnum) {
+	c.EventType = eventType
+	c.require(createEventStreamTestEventRequestContentFieldEventType)
 }
 
-// SetDeliveryMethod sets the DeliveryMethod field and marks it as non-optional;
+// SetData sets the Data field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (c *CreatePhoneProviderSendTestRequestContent) SetDeliveryMethod(deliveryMethod *PhoneProviderDeliveryMethodEnum) {
-	c.DeliveryMethod = deliveryMethod
-	c.require(createPhoneProviderSendTestRequestContentFieldDeliveryMethod)
+func (c *CreateEventStreamTestEventRequestContent) SetData(data *TestEventDataContent) {
+	c.Data = data
+	c.require(createEventStreamTestEventRequestContentFieldData)
 }
 
-func (c *CreatePhoneProviderSendTestRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler CreatePhoneProviderSendTestRequestContent
+func (c *CreateEventStreamTestEventRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateEventStreamTestEventRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreatePhoneProviderSendTestRequestContent(body)
+	*c = CreateEventStreamTestEventRequestContent(body)
 	return nil
 }
 
-func (c *CreatePhoneProviderSendTestRequestContent) MarshalJSON() ([]byte, error) {
-	type embed CreatePhoneProviderSendTestRequestContent
+func (c *CreateEventStreamTestEventRequestContent) MarshalJSON() ([]byte, error) {
+	type embed CreateEventStreamTestEventRequestContent
 	var marshaler = struct {
 		embed
 	}{
 		embed: embed(*c),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	testActionRequestContentFieldPayload = big.NewInt(1 << 0)
-)
-
-type TestActionRequestContent struct {
-	Payload TestActionPayload `json:"payload" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (t *TestActionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
-	}
-	next.Or(next, field)
-	t.explicitFields = next
-}
-
-// SetPayload sets the Payload field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TestActionRequestContent) SetPayload(payload TestActionPayload) {
-	t.Payload = payload
-	t.require(testActionRequestContentFieldPayload)
-}
-
-func (t *TestActionRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler TestActionRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*t = TestActionRequestContent(body)
-	return nil
-}
-
-func (t *TestActionRequestContent) MarshalJSON() ([]byte, error) {
-	type embed TestActionRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*t),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, t.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -14201,24 +14489,66 @@ func (u *UpdateTokenExchangeProfileRequestContent) MarshalJSON() ([]byte, error)
 }
 
 var (
-	updateOrganizationConnectionRequestContentFieldAssignMembershipOnLogin = big.NewInt(1 << 0)
-	updateOrganizationConnectionRequestContentFieldIsSignupEnabled         = big.NewInt(1 << 1)
-	updateOrganizationConnectionRequestContentFieldShowAsButton            = big.NewInt(1 << 2)
+	updateResourceServerRequestContentFieldName                                      = big.NewInt(1 << 0)
+	updateResourceServerRequestContentFieldScopes                                    = big.NewInt(1 << 1)
+	updateResourceServerRequestContentFieldSigningAlg                                = big.NewInt(1 << 2)
+	updateResourceServerRequestContentFieldSigningSecret                             = big.NewInt(1 << 3)
+	updateResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 4)
+	updateResourceServerRequestContentFieldAllowOfflineAccess                        = big.NewInt(1 << 5)
+	updateResourceServerRequestContentFieldAllowOnlineAccess                         = big.NewInt(1 << 6)
+	updateResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 7)
+	updateResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 8)
+	updateResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 9)
+	updateResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
+	updateResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
+	updateResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 12)
+	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 13)
+	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 14)
+	updateResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 15)
+	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
+	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 17)
+	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
+	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
 )
 
-type UpdateOrganizationConnectionRequestContent struct {
-	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
-	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"-"`
-	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty" url:"-"`
-	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
-	ShowAsButton *bool `json:"show_as_button,omitempty" url:"-"`
+type UpdateResourceServerRequestContent struct {
+	// Friendly name for this resource server. Can not contain `<` or `>` characters.
+	Name *string `json:"name,omitempty" url:"-"`
+	// List of permissions (scopes) that this API uses.
+	Scopes     []*ResourceServerScope `json:"scopes,omitempty" url:"-"`
+	SigningAlg *SigningAlgorithmEnum  `json:"signing_alg,omitempty" url:"-"`
+	// Secret used to sign tokens when using symmetric algorithms (HS256).
+	SigningSecret *string `json:"signing_secret,omitempty" url:"-"`
+	// Whether to skip user consent for applications flagged as first party (true) or not (false).
+	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
+	// Whether refresh tokens can be issued for this API (true) or not (false).
+	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
+	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
+	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"-"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"-"`
+	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
+	TokenLifetime *int `json:"token_lifetime,omitempty" url:"-"`
+	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
+	TokenLifetimeForAnonymousAccessTokens *int                                  `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"-"`
+	TokenDialect                          *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
+	// Whether authorization policies are enforced (true) or not enforced (false).
+	EnforcePolicies *bool                            `json:"enforce_policies,omitempty" url:"-"`
+	AccessToken     *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
+	TokenEncryption *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
+	ConsentPolicy   *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"-"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"-"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateOrganizationConnectionRequestContent) require(field *big.Int) {
+func (u *UpdateResourceServerRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -14227,39 +14557,158 @@ func (u *UpdateOrganizationConnectionRequestContent) require(field *big.Int) {
 	u.explicitFields = next
 }
 
-// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
-	u.AssignMembershipOnLogin = assignMembershipOnLogin
-	u.require(updateOrganizationConnectionRequestContentFieldAssignMembershipOnLogin)
+func (u *UpdateResourceServerRequestContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateResourceServerRequestContentFieldName)
 }
 
-// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// SetScopes sets the Scopes field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestContent) SetIsSignupEnabled(isSignupEnabled *bool) {
-	u.IsSignupEnabled = isSignupEnabled
-	u.require(updateOrganizationConnectionRequestContentFieldIsSignupEnabled)
+func (u *UpdateResourceServerRequestContent) SetScopes(scopes []*ResourceServerScope) {
+	u.Scopes = scopes
+	u.require(updateResourceServerRequestContentFieldScopes)
 }
 
-// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestContent) SetShowAsButton(showAsButton *bool) {
-	u.ShowAsButton = showAsButton
-	u.require(updateOrganizationConnectionRequestContentFieldShowAsButton)
+func (u *UpdateResourceServerRequestContent) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
+	u.SigningAlg = signingAlg
+	u.require(updateResourceServerRequestContentFieldSigningAlg)
 }
 
-func (u *UpdateOrganizationConnectionRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateOrganizationConnectionRequestContent
+// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetSigningSecret(signingSecret *string) {
+	u.SigningSecret = signingSecret
+	u.require(updateResourceServerRequestContentFieldSigningSecret)
+}
+
+// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
+	u.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
+	u.require(updateResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients)
+}
+
+// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAllowOfflineAccess(allowOfflineAccess *bool) {
+	u.AllowOfflineAccess = allowOfflineAccess
+	u.require(updateResourceServerRequestContentFieldAllowOfflineAccess)
+}
+
+// SetAllowOnlineAccess sets the AllowOnlineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
+	u.AllowOnlineAccess = allowOnlineAccess
+	u.require(updateResourceServerRequestContentFieldAllowOnlineAccess)
+}
+
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	u.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	u.require(updateResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetTokenLifetime(tokenLifetime *int) {
+	u.TokenLifetime = tokenLifetime
+	u.require(updateResourceServerRequestContentFieldTokenLifetime)
+}
+
+// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
+	u.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
+	u.require(updateResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens)
+}
+
+// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectSchemaEnum) {
+	u.TokenDialect = tokenDialect
+	u.require(updateResourceServerRequestContentFieldTokenDialect)
+}
+
+// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
+	u.EnforcePolicies = enforcePolicies
+	u.require(updateResourceServerRequestContentFieldEnforcePolicies)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	u.AccessToken = accessToken
+	u.require(updateResourceServerRequestContentFieldAccessToken)
+}
+
+// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
+	u.TokenEncryption = tokenEncryption
+	u.require(updateResourceServerRequestContentFieldTokenEncryption)
+}
+
+// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
+	u.ConsentPolicy = consentPolicy
+	u.require(updateResourceServerRequestContentFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	u.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	u.require(updateResourceServerRequestContentFieldRequireConsentNonRepudiation)
+}
+
+// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAuthorizationDetails(authorizationDetails []any) {
+	u.AuthorizationDetails = authorizationDetails
+	u.require(updateResourceServerRequestContentFieldAuthorizationDetails)
+}
+
+// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
+	u.ProofOfPossession = proofOfPossession
+	u.require(updateResourceServerRequestContentFieldProofOfPossession)
+}
+
+// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
+	u.SubjectTypeAuthorization = subjectTypeAuthorization
+	u.require(updateResourceServerRequestContentFieldSubjectTypeAuthorization)
+}
+
+// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
+	u.AuthorizationPolicy = authorizationPolicy
+	u.require(updateResourceServerRequestContentFieldAuthorizationPolicy)
+}
+
+func (u *UpdateResourceServerRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateResourceServerRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateOrganizationConnectionRequestContent(body)
+	*u = UpdateResourceServerRequestContent(body)
 	return nil
 }
 
-func (u *UpdateOrganizationConnectionRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateOrganizationConnectionRequestContent
+func (u *UpdateResourceServerRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateResourceServerRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -14366,104 +14815,26 @@ func (u *UpdateLogStreamRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateNetworkACLRequestContentFieldDescription = big.NewInt(1 << 0)
-	updateNetworkACLRequestContentFieldActive      = big.NewInt(1 << 1)
-	updateNetworkACLRequestContentFieldPriority    = big.NewInt(1 << 2)
-	updateNetworkACLRequestContentFieldRule        = big.NewInt(1 << 3)
+	updateHookRequestContentFieldName         = big.NewInt(1 << 0)
+	updateHookRequestContentFieldScript       = big.NewInt(1 << 1)
+	updateHookRequestContentFieldEnabled      = big.NewInt(1 << 2)
+	updateHookRequestContentFieldDependencies = big.NewInt(1 << 3)
 )
 
-type UpdateNetworkACLRequestContent struct {
-	Description *string `json:"description,omitempty" url:"-"`
-	// Indicates whether or not this access control list is actively being used
-	Active *bool `json:"active,omitempty" url:"-"`
-	// Indicates the order in which the ACL will be evaluated relative to other ACL rules.
-	Priority *float64        `json:"priority,omitempty" url:"-"`
-	Rule     *NetworkACLRule `json:"rule,omitempty" url:"-"`
+type UpdateHookRequestContent struct {
+	// Name of this hook.
+	Name *string `json:"name,omitempty" url:"-"`
+	// Code to be executed when this hook runs.
+	Script *string `json:"script,omitempty" url:"-"`
+	// Whether this hook will be executed (true) or ignored (false).
+	Enabled      *bool             `json:"enabled,omitempty" url:"-"`
+	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateNetworkACLRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetDescription sets the Description field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateNetworkACLRequestContent) SetDescription(description *string) {
-	u.Description = description
-	u.require(updateNetworkACLRequestContentFieldDescription)
-}
-
-// SetActive sets the Active field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateNetworkACLRequestContent) SetActive(active *bool) {
-	u.Active = active
-	u.require(updateNetworkACLRequestContentFieldActive)
-}
-
-// SetPriority sets the Priority field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateNetworkACLRequestContent) SetPriority(priority *float64) {
-	u.Priority = priority
-	u.require(updateNetworkACLRequestContentFieldPriority)
-}
-
-// SetRule sets the Rule field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateNetworkACLRequestContent) SetRule(rule *NetworkACLRule) {
-	u.Rule = rule
-	u.require(updateNetworkACLRequestContentFieldRule)
-}
-
-func (u *UpdateNetworkACLRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateNetworkACLRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateNetworkACLRequestContent(body)
-	return nil
-}
-
-func (u *UpdateNetworkACLRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateNetworkACLRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	updateVerifiableCredentialTemplateRequestContentFieldName                    = big.NewInt(1 << 0)
-	updateVerifiableCredentialTemplateRequestContentFieldType                    = big.NewInt(1 << 1)
-	updateVerifiableCredentialTemplateRequestContentFieldDialect                 = big.NewInt(1 << 2)
-	updateVerifiableCredentialTemplateRequestContentFieldPresentation            = big.NewInt(1 << 3)
-	updateVerifiableCredentialTemplateRequestContentFieldWellKnownTrustedIssuers = big.NewInt(1 << 4)
-	updateVerifiableCredentialTemplateRequestContentFieldVersion                 = big.NewInt(1 << 5)
-)
-
-type UpdateVerifiableCredentialTemplateRequestContent struct {
-	Name                    *string                 `json:"name,omitempty" url:"-"`
-	Type                    *string                 `json:"type,omitempty" url:"-"`
-	Dialect                 *string                 `json:"dialect,omitempty" url:"-"`
-	Presentation            *MdlPresentationRequest `json:"presentation,omitempty" url:"-"`
-	WellKnownTrustedIssuers *string                 `json:"well_known_trusted_issuers,omitempty" url:"-"`
-	Version                 *float64                `json:"version,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateVerifiableCredentialTemplateRequestContent) require(field *big.Int) {
+func (u *UpdateHookRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -14474,58 +14845,44 @@ func (u *UpdateVerifiableCredentialTemplateRequestContent) require(field *big.In
 
 // SetName sets the Name field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateVerifiableCredentialTemplateRequestContent) SetName(name *string) {
+func (u *UpdateHookRequestContent) SetName(name *string) {
 	u.Name = name
-	u.require(updateVerifiableCredentialTemplateRequestContentFieldName)
+	u.require(updateHookRequestContentFieldName)
 }
 
-// SetType sets the Type field and marks it as non-optional;
+// SetScript sets the Script field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateVerifiableCredentialTemplateRequestContent) SetType(type_ *string) {
-	u.Type = type_
-	u.require(updateVerifiableCredentialTemplateRequestContentFieldType)
+func (u *UpdateHookRequestContent) SetScript(script *string) {
+	u.Script = script
+	u.require(updateHookRequestContentFieldScript)
 }
 
-// SetDialect sets the Dialect field and marks it as non-optional;
+// SetEnabled sets the Enabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateVerifiableCredentialTemplateRequestContent) SetDialect(dialect *string) {
-	u.Dialect = dialect
-	u.require(updateVerifiableCredentialTemplateRequestContentFieldDialect)
+func (u *UpdateHookRequestContent) SetEnabled(enabled *bool) {
+	u.Enabled = enabled
+	u.require(updateHookRequestContentFieldEnabled)
 }
 
-// SetPresentation sets the Presentation field and marks it as non-optional;
+// SetDependencies sets the Dependencies field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateVerifiableCredentialTemplateRequestContent) SetPresentation(presentation *MdlPresentationRequest) {
-	u.Presentation = presentation
-	u.require(updateVerifiableCredentialTemplateRequestContentFieldPresentation)
+func (u *UpdateHookRequestContent) SetDependencies(dependencies *HookDependencies) {
+	u.Dependencies = dependencies
+	u.require(updateHookRequestContentFieldDependencies)
 }
 
-// SetWellKnownTrustedIssuers sets the WellKnownTrustedIssuers field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateVerifiableCredentialTemplateRequestContent) SetWellKnownTrustedIssuers(wellKnownTrustedIssuers *string) {
-	u.WellKnownTrustedIssuers = wellKnownTrustedIssuers
-	u.require(updateVerifiableCredentialTemplateRequestContentFieldWellKnownTrustedIssuers)
-}
-
-// SetVersion sets the Version field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateVerifiableCredentialTemplateRequestContent) SetVersion(version *float64) {
-	u.Version = version
-	u.require(updateVerifiableCredentialTemplateRequestContentFieldVersion)
-}
-
-func (u *UpdateVerifiableCredentialTemplateRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateVerifiableCredentialTemplateRequestContent
+func (u *UpdateHookRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateHookRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateVerifiableCredentialTemplateRequestContent(body)
+	*u = UpdateHookRequestContent(body)
 	return nil
 }
 
-func (u *UpdateVerifiableCredentialTemplateRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateVerifiableCredentialTemplateRequestContent
+func (u *UpdateHookRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateHookRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -14631,6 +14988,393 @@ func (u *UpdateOrganizationRequestContent) UnmarshalJSON(data []byte) error {
 
 func (u *UpdateOrganizationRequestContent) MarshalJSON() ([]byte, error) {
 	type embed UpdateOrganizationRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateOrganizationClientRequestContentFieldUseForMemberAccess = big.NewInt(1 << 0)
+)
+
+type UpdateOrganizationClientRequestContent struct {
+	// Whether this client is used for member access to the organization.
+	UseForMemberAccess *bool `json:"use_for_member_access,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateOrganizationClientRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationClientRequestContent) SetUseForMemberAccess(useForMemberAccess *bool) {
+	u.UseForMemberAccess = useForMemberAccess
+	u.require(updateOrganizationClientRequestContentFieldUseForMemberAccess)
+}
+
+func (u *UpdateOrganizationClientRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationClientRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateOrganizationClientRequestContent(body)
+	return nil
+}
+
+func (u *UpdateOrganizationClientRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationClientRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateOrganizationConnectionRequestParametersFieldOrganizationConnectionName    = big.NewInt(1 << 0)
+	updateOrganizationConnectionRequestParametersFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
+	updateOrganizationConnectionRequestParametersFieldShowAsButton                  = big.NewInt(1 << 2)
+	updateOrganizationConnectionRequestParametersFieldIsSignupEnabled               = big.NewInt(1 << 3)
+	updateOrganizationConnectionRequestParametersFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
+	updateOrganizationConnectionRequestParametersFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
+	updateOrganizationConnectionRequestParametersFieldIsEnabled                     = big.NewInt(1 << 6)
+)
+
+type UpdateOrganizationConnectionRequestParameters struct {
+	// Name of the connection in the scope of this organization.
+	OrganizationConnectionName *string `json:"organization_connection_name,omitempty" url:"-"`
+	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
+	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"-"`
+	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
+	ShowAsButton *bool `json:"show_as_button,omitempty" url:"-"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled               *bool                                      `json:"is_signup_enabled,omitempty" url:"-"`
+	OrganizationAccessLevel       *OrganizationAccessLevelEnumWithNull       `json:"organization_access_level,omitempty" url:"-"`
+	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnumWithNull `json:"organization_member_access_level,omitempty" url:"-"`
+	// Whether the connection is enabled for the organization.
+	IsEnabled *bool `json:"is_enabled,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateOrganizationConnectionRequestParameters) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationConnectionName(organizationConnectionName *string) {
+	u.OrganizationConnectionName = organizationConnectionName
+	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationConnectionName)
+}
+
+// SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+	u.AssignMembershipOnLogin = assignMembershipOnLogin
+	u.require(updateOrganizationConnectionRequestParametersFieldAssignMembershipOnLogin)
+}
+
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetShowAsButton(showAsButton *bool) {
+	u.ShowAsButton = showAsButton
+	u.require(updateOrganizationConnectionRequestParametersFieldShowAsButton)
+}
+
+// SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetIsSignupEnabled(isSignupEnabled *bool) {
+	u.IsSignupEnabled = isSignupEnabled
+	u.require(updateOrganizationConnectionRequestParametersFieldIsSignupEnabled)
+}
+
+// SetOrganizationAccessLevel sets the OrganizationAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnumWithNull) {
+	u.OrganizationAccessLevel = organizationAccessLevel
+	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationAccessLevel)
+}
+
+// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnumWithNull) {
+	u.OrganizationMemberAccessLevel = organizationMemberAccessLevel
+	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationMemberAccessLevel)
+}
+
+// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationConnectionRequestParameters) SetIsEnabled(isEnabled *bool) {
+	u.IsEnabled = isEnabled
+	u.require(updateOrganizationConnectionRequestParametersFieldIsEnabled)
+}
+
+func (u *UpdateOrganizationConnectionRequestParameters) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationConnectionRequestParameters
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateOrganizationConnectionRequestParameters(body)
+	return nil
+}
+
+func (u *UpdateOrganizationConnectionRequestParameters) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationConnectionRequestParameters
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateVerifiableCredentialTemplateRequestContentFieldName                    = big.NewInt(1 << 0)
+	updateVerifiableCredentialTemplateRequestContentFieldType                    = big.NewInt(1 << 1)
+	updateVerifiableCredentialTemplateRequestContentFieldDialect                 = big.NewInt(1 << 2)
+	updateVerifiableCredentialTemplateRequestContentFieldPresentation            = big.NewInt(1 << 3)
+	updateVerifiableCredentialTemplateRequestContentFieldWellKnownTrustedIssuers = big.NewInt(1 << 4)
+	updateVerifiableCredentialTemplateRequestContentFieldVersion                 = big.NewInt(1 << 5)
+)
+
+type UpdateVerifiableCredentialTemplateRequestContent struct {
+	Name                    *string                 `json:"name,omitempty" url:"-"`
+	Type                    *string                 `json:"type,omitempty" url:"-"`
+	Dialect                 *string                 `json:"dialect,omitempty" url:"-"`
+	Presentation            *MdlPresentationRequest `json:"presentation,omitempty" url:"-"`
+	WellKnownTrustedIssuers *string                 `json:"well_known_trusted_issuers,omitempty" url:"-"`
+	Version                 *float64                `json:"version,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateVerifiableCredentialTemplateRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVerifiableCredentialTemplateRequestContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateVerifiableCredentialTemplateRequestContentFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVerifiableCredentialTemplateRequestContent) SetType(type_ *string) {
+	u.Type = type_
+	u.require(updateVerifiableCredentialTemplateRequestContentFieldType)
+}
+
+// SetDialect sets the Dialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVerifiableCredentialTemplateRequestContent) SetDialect(dialect *string) {
+	u.Dialect = dialect
+	u.require(updateVerifiableCredentialTemplateRequestContentFieldDialect)
+}
+
+// SetPresentation sets the Presentation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVerifiableCredentialTemplateRequestContent) SetPresentation(presentation *MdlPresentationRequest) {
+	u.Presentation = presentation
+	u.require(updateVerifiableCredentialTemplateRequestContentFieldPresentation)
+}
+
+// SetWellKnownTrustedIssuers sets the WellKnownTrustedIssuers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVerifiableCredentialTemplateRequestContent) SetWellKnownTrustedIssuers(wellKnownTrustedIssuers *string) {
+	u.WellKnownTrustedIssuers = wellKnownTrustedIssuers
+	u.require(updateVerifiableCredentialTemplateRequestContentFieldWellKnownTrustedIssuers)
+}
+
+// SetVersion sets the Version field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateVerifiableCredentialTemplateRequestContent) SetVersion(version *float64) {
+	u.Version = version
+	u.require(updateVerifiableCredentialTemplateRequestContentFieldVersion)
+}
+
+func (u *UpdateVerifiableCredentialTemplateRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateVerifiableCredentialTemplateRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateVerifiableCredentialTemplateRequestContent(body)
+	return nil
+}
+
+func (u *UpdateVerifiableCredentialTemplateRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateVerifiableCredentialTemplateRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateRoleRequestContentFieldName        = big.NewInt(1 << 0)
+	updateRoleRequestContentFieldDescription = big.NewInt(1 << 1)
+)
+
+type UpdateRoleRequestContent struct {
+	// Name of this role.
+	Name *string `json:"name,omitempty" url:"-"`
+	// Description of this role.
+	Description *string `json:"description,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateRoleRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRoleRequestContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateRoleRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRoleRequestContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateRoleRequestContentFieldDescription)
+}
+
+func (u *UpdateRoleRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateRoleRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateRoleRequestContent(body)
+	return nil
+}
+
+func (u *UpdateRoleRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateRoleRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateRuleRequestContentFieldScript  = big.NewInt(1 << 0)
+	updateRuleRequestContentFieldName    = big.NewInt(1 << 1)
+	updateRuleRequestContentFieldOrder   = big.NewInt(1 << 2)
+	updateRuleRequestContentFieldEnabled = big.NewInt(1 << 3)
+)
+
+type UpdateRuleRequestContent struct {
+	// Code to be executed when this rule runs.
+	Script *string `json:"script,omitempty" url:"-"`
+	// Name of this rule.
+	Name *string `json:"name,omitempty" url:"-"`
+	// Order that this rule should execute in relative to other rules. Lower-valued rules execute first.
+	Order *float64 `json:"order,omitempty" url:"-"`
+	// Whether the rule is enabled (true), or disabled (false).
+	Enabled *bool `json:"enabled,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateRuleRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetScript sets the Script field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleRequestContent) SetScript(script *string) {
+	u.Script = script
+	u.require(updateRuleRequestContentFieldScript)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleRequestContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateRuleRequestContentFieldName)
+}
+
+// SetOrder sets the Order field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleRequestContent) SetOrder(order *float64) {
+	u.Order = order
+	u.require(updateRuleRequestContentFieldOrder)
+}
+
+// SetEnabled sets the Enabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRuleRequestContent) SetEnabled(enabled *bool) {
+	u.Enabled = enabled
+	u.require(updateRuleRequestContentFieldEnabled)
+}
+
+func (u *UpdateRuleRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateRuleRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateRuleRequestContent(body)
+	return nil
+}
+
+func (u *UpdateRuleRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateRuleRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -14750,100 +15494,72 @@ func (u *UpdateActionRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateRuleRequestContentFieldScript  = big.NewInt(1 << 0)
-	updateRuleRequestContentFieldName    = big.NewInt(1 << 1)
-	updateRuleRequestContentFieldOrder   = big.NewInt(1 << 2)
-	updateRuleRequestContentFieldEnabled = big.NewInt(1 << 3)
+	patchRateLimitPolicyRequestContentFieldConfiguration = big.NewInt(1 << 0)
 )
 
-type UpdateRuleRequestContent struct {
-	// Code to be executed when this rule runs.
-	Script *string `json:"script,omitempty" url:"-"`
-	// Name of this rule.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Order that this rule should execute in relative to other rules. Lower-valued rules execute first.
-	Order *float64 `json:"order,omitempty" url:"-"`
-	// Whether the rule is enabled (true), or disabled (false).
-	Enabled *bool `json:"enabled,omitempty" url:"-"`
+type PatchRateLimitPolicyRequestContent struct {
+	Configuration *PatchRateLimitPolicyConfigurationRequestContent `json:"configuration" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateRuleRequestContent) require(field *big.Int) {
+func (p *PatchRateLimitPolicyRequestContent) require(field *big.Int) {
 	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
 	next.Or(next, field)
-	u.explicitFields = next
+	p.explicitFields = next
 }
 
-// SetScript sets the Script field and marks it as non-optional;
+// SetConfiguration sets the Configuration field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRuleRequestContent) SetScript(script *string) {
-	u.Script = script
-	u.require(updateRuleRequestContentFieldScript)
+func (p *PatchRateLimitPolicyRequestContent) SetConfiguration(configuration *PatchRateLimitPolicyConfigurationRequestContent) {
+	p.Configuration = configuration
+	p.require(patchRateLimitPolicyRequestContentFieldConfiguration)
 }
 
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRuleRequestContent) SetName(name *string) {
-	u.Name = name
-	u.require(updateRuleRequestContentFieldName)
-}
-
-// SetOrder sets the Order field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRuleRequestContent) SetOrder(order *float64) {
-	u.Order = order
-	u.require(updateRuleRequestContentFieldOrder)
-}
-
-// SetEnabled sets the Enabled field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRuleRequestContent) SetEnabled(enabled *bool) {
-	u.Enabled = enabled
-	u.require(updateRuleRequestContentFieldEnabled)
-}
-
-func (u *UpdateRuleRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateRuleRequestContent
+func (p *PatchRateLimitPolicyRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler PatchRateLimitPolicyRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateRuleRequestContent(body)
+	*p = PatchRateLimitPolicyRequestContent(body)
 	return nil
 }
 
-func (u *UpdateRuleRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateRuleRequestContent
+func (p *PatchRateLimitPolicyRequestContent) MarshalJSON() ([]byte, error) {
+	type embed PatchRateLimitPolicyRequestContent
 	var marshaler = struct {
 		embed
 	}{
-		embed: embed(*u),
+		embed: embed(*p),
 	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
 var (
-	updateRoleRequestContentFieldName        = big.NewInt(1 << 0)
-	updateRoleRequestContentFieldDescription = big.NewInt(1 << 1)
+	updateActionModuleRequestContentFieldCode         = big.NewInt(1 << 0)
+	updateActionModuleRequestContentFieldSecrets      = big.NewInt(1 << 1)
+	updateActionModuleRequestContentFieldDependencies = big.NewInt(1 << 2)
 )
 
-type UpdateRoleRequestContent struct {
-	// Name of this role.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Description of this role.
-	Description *string `json:"description,omitempty" url:"-"`
+type UpdateActionModuleRequestContent struct {
+	// The source code of the action module.
+	Code *string `json:"code,omitempty" url:"-"`
+	// The secrets to associate with the action module.
+	Secrets []*ActionModuleSecretRequest `json:"secrets,omitempty" url:"-"`
+	// The npm dependencies of the action module.
+	Dependencies []*ActionModuleDependencyRequest `json:"dependencies,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateRoleRequestContent) require(field *big.Int) {
+func (u *UpdateActionModuleRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -14852,130 +15568,39 @@ func (u *UpdateRoleRequestContent) require(field *big.Int) {
 	u.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetCode sets the Code field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRoleRequestContent) SetName(name *string) {
-	u.Name = name
-	u.require(updateRoleRequestContentFieldName)
+func (u *UpdateActionModuleRequestContent) SetCode(code *string) {
+	u.Code = code
+	u.require(updateActionModuleRequestContentFieldCode)
 }
 
-// SetDescription sets the Description field and marks it as non-optional;
+// SetSecrets sets the Secrets field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRoleRequestContent) SetDescription(description *string) {
-	u.Description = description
-	u.require(updateRoleRequestContentFieldDescription)
+func (u *UpdateActionModuleRequestContent) SetSecrets(secrets []*ActionModuleSecretRequest) {
+	u.Secrets = secrets
+	u.require(updateActionModuleRequestContentFieldSecrets)
 }
 
-func (u *UpdateRoleRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateRoleRequestContent
+// SetDependencies sets the Dependencies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateActionModuleRequestContent) SetDependencies(dependencies []*ActionModuleDependencyRequest) {
+	u.Dependencies = dependencies
+	u.require(updateActionModuleRequestContentFieldDependencies)
+}
+
+func (u *UpdateActionModuleRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateActionModuleRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateRoleRequestContent(body)
+	*u = UpdateActionModuleRequestContent(body)
 	return nil
 }
 
-func (u *UpdateRoleRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateRoleRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	updateRefreshTokenRequestContentFieldRefreshTokenMetadata = big.NewInt(1 << 0)
-)
-
-type UpdateRefreshTokenRequestContent struct {
-	// Metadata associated with the refresh token. Pass null or {} to remove all metadata.
-	RefreshTokenMetadata *RefreshTokenMetadata `json:"refresh_token_metadata,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateRefreshTokenRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetRefreshTokenMetadata sets the RefreshTokenMetadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRefreshTokenRequestContent) SetRefreshTokenMetadata(refreshTokenMetadata *RefreshTokenMetadata) {
-	u.RefreshTokenMetadata = refreshTokenMetadata
-	u.require(updateRefreshTokenRequestContentFieldRefreshTokenMetadata)
-}
-
-func (u *UpdateRefreshTokenRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateRefreshTokenRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateRefreshTokenRequestContent(body)
-	return nil
-}
-
-func (u *UpdateRefreshTokenRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateRefreshTokenRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	updateOrganizationClientRequestContentFieldUseForMemberAccess = big.NewInt(1 << 0)
-)
-
-type UpdateOrganizationClientRequestContent struct {
-	// Whether this client is used for member access to the organization.
-	UseForMemberAccess *bool `json:"use_for_member_access,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateOrganizationClientRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationClientRequestContent) SetUseForMemberAccess(useForMemberAccess *bool) {
-	u.UseForMemberAccess = useForMemberAccess
-	u.require(updateOrganizationClientRequestContentFieldUseForMemberAccess)
-}
-
-func (u *UpdateOrganizationClientRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateOrganizationClientRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateOrganizationClientRequestContent(body)
-	return nil
-}
-
-func (u *UpdateOrganizationClientRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateOrganizationClientRequestContent
+func (u *UpdateActionModuleRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateActionModuleRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -15082,24 +15707,20 @@ func (u *UpdateSelfServiceProfileRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateActionModuleRequestContentFieldCode         = big.NewInt(1 << 0)
-	updateActionModuleRequestContentFieldSecrets      = big.NewInt(1 << 1)
-	updateActionModuleRequestContentFieldDependencies = big.NewInt(1 << 2)
+	updateOrganizationDiscoveryDomainRequestContentFieldStatus                      = big.NewInt(1 << 0)
+	updateOrganizationDiscoveryDomainRequestContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 1)
 )
 
-type UpdateActionModuleRequestContent struct {
-	// The source code of the action module.
-	Code *string `json:"code,omitempty" url:"-"`
-	// The secrets to associate with the action module.
-	Secrets []*ActionModuleSecretRequest `json:"secrets,omitempty" url:"-"`
-	// The npm dependencies of the action module.
-	Dependencies []*ActionModuleDependencyRequest `json:"dependencies,omitempty" url:"-"`
+type UpdateOrganizationDiscoveryDomainRequestContent struct {
+	Status *OrganizationDiscoveryDomainStatus `json:"status,omitempty" url:"-"`
+	// Indicates whether this domain should be used for organization discovery.
+	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateActionModuleRequestContent) require(field *big.Int) {
+func (u *UpdateOrganizationDiscoveryDomainRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -15108,39 +15729,32 @@ func (u *UpdateActionModuleRequestContent) require(field *big.Int) {
 	u.explicitFields = next
 }
 
-// SetCode sets the Code field and marks it as non-optional;
+// SetStatus sets the Status field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateActionModuleRequestContent) SetCode(code *string) {
-	u.Code = code
-	u.require(updateActionModuleRequestContentFieldCode)
+func (u *UpdateOrganizationDiscoveryDomainRequestContent) SetStatus(status *OrganizationDiscoveryDomainStatus) {
+	u.Status = status
+	u.require(updateOrganizationDiscoveryDomainRequestContentFieldStatus)
 }
 
-// SetSecrets sets the Secrets field and marks it as non-optional;
+// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateActionModuleRequestContent) SetSecrets(secrets []*ActionModuleSecretRequest) {
-	u.Secrets = secrets
-	u.require(updateActionModuleRequestContentFieldSecrets)
+func (u *UpdateOrganizationDiscoveryDomainRequestContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
+	u.UseForOrganizationDiscovery = useForOrganizationDiscovery
+	u.require(updateOrganizationDiscoveryDomainRequestContentFieldUseForOrganizationDiscovery)
 }
 
-// SetDependencies sets the Dependencies field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateActionModuleRequestContent) SetDependencies(dependencies []*ActionModuleDependencyRequest) {
-	u.Dependencies = dependencies
-	u.require(updateActionModuleRequestContentFieldDependencies)
-}
-
-func (u *UpdateActionModuleRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateActionModuleRequestContent
+func (u *UpdateOrganizationDiscoveryDomainRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationDiscoveryDomainRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateActionModuleRequestContent(body)
+	*u = UpdateOrganizationDiscoveryDomainRequestContent(body)
 	return nil
 }
 
-func (u *UpdateActionModuleRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateActionModuleRequestContent
+func (u *UpdateOrganizationDiscoveryDomainRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationDiscoveryDomainRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -15200,34 +15814,24 @@ func (u *UpdateSessionRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateOrganizationConnectionRequestParametersFieldOrganizationConnectionName    = big.NewInt(1 << 0)
-	updateOrganizationConnectionRequestParametersFieldAssignMembershipOnLogin       = big.NewInt(1 << 1)
-	updateOrganizationConnectionRequestParametersFieldShowAsButton                  = big.NewInt(1 << 2)
-	updateOrganizationConnectionRequestParametersFieldIsSignupEnabled               = big.NewInt(1 << 3)
-	updateOrganizationConnectionRequestParametersFieldOrganizationAccessLevel       = big.NewInt(1 << 4)
-	updateOrganizationConnectionRequestParametersFieldOrganizationMemberAccessLevel = big.NewInt(1 << 5)
-	updateOrganizationConnectionRequestParametersFieldIsEnabled                     = big.NewInt(1 << 6)
+	updateOrganizationConnectionRequestContentFieldAssignMembershipOnLogin = big.NewInt(1 << 0)
+	updateOrganizationConnectionRequestContentFieldIsSignupEnabled         = big.NewInt(1 << 1)
+	updateOrganizationConnectionRequestContentFieldShowAsButton            = big.NewInt(1 << 2)
 )
 
-type UpdateOrganizationConnectionRequestParameters struct {
-	// Name of the connection in the scope of this organization.
-	OrganizationConnectionName *string `json:"organization_connection_name,omitempty" url:"-"`
+type UpdateOrganizationConnectionRequestContent struct {
 	// When true, all users that log in with this connection will be automatically granted membership in the organization. When false, users must be granted membership in the organization before logging in with this connection.
 	AssignMembershipOnLogin *bool `json:"assign_membership_on_login,omitempty" url:"-"`
+	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
+	IsSignupEnabled *bool `json:"is_signup_enabled,omitempty" url:"-"`
 	// Determines whether a connection should be displayed on this organization’s login prompt. Only applicable for enterprise connections. Default: true.
 	ShowAsButton *bool `json:"show_as_button,omitempty" url:"-"`
-	// Determines whether organization signup should be enabled for this organization connection. Only applicable for database connections. Default: false.
-	IsSignupEnabled               *bool                                      `json:"is_signup_enabled,omitempty" url:"-"`
-	OrganizationAccessLevel       *OrganizationAccessLevelEnumWithNull       `json:"organization_access_level,omitempty" url:"-"`
-	OrganizationMemberAccessLevel *OrganizationMemberAccessLevelEnumWithNull `json:"organization_member_access_level,omitempty" url:"-"`
-	// Whether the connection is enabled for the organization.
-	IsEnabled *bool `json:"is_enabled,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateOrganizationConnectionRequestParameters) require(field *big.Int) {
+func (u *UpdateOrganizationConnectionRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -15236,67 +15840,39 @@ func (u *UpdateOrganizationConnectionRequestParameters) require(field *big.Int) 
 	u.explicitFields = next
 }
 
-// SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationConnectionName(organizationConnectionName *string) {
-	u.OrganizationConnectionName = organizationConnectionName
-	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationConnectionName)
-}
-
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestParameters) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
+func (u *UpdateOrganizationConnectionRequestContent) SetAssignMembershipOnLogin(assignMembershipOnLogin *bool) {
 	u.AssignMembershipOnLogin = assignMembershipOnLogin
-	u.require(updateOrganizationConnectionRequestParametersFieldAssignMembershipOnLogin)
-}
-
-// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestParameters) SetShowAsButton(showAsButton *bool) {
-	u.ShowAsButton = showAsButton
-	u.require(updateOrganizationConnectionRequestParametersFieldShowAsButton)
+	u.require(updateOrganizationConnectionRequestContentFieldAssignMembershipOnLogin)
 }
 
 // SetIsSignupEnabled sets the IsSignupEnabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestParameters) SetIsSignupEnabled(isSignupEnabled *bool) {
+func (u *UpdateOrganizationConnectionRequestContent) SetIsSignupEnabled(isSignupEnabled *bool) {
 	u.IsSignupEnabled = isSignupEnabled
-	u.require(updateOrganizationConnectionRequestParametersFieldIsSignupEnabled)
+	u.require(updateOrganizationConnectionRequestContentFieldIsSignupEnabled)
 }
 
-// SetOrganizationAccessLevel sets the OrganizationAccessLevel field and marks it as non-optional;
+// SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationAccessLevel(organizationAccessLevel *OrganizationAccessLevelEnumWithNull) {
-	u.OrganizationAccessLevel = organizationAccessLevel
-	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationAccessLevel)
+func (u *UpdateOrganizationConnectionRequestContent) SetShowAsButton(showAsButton *bool) {
+	u.ShowAsButton = showAsButton
+	u.require(updateOrganizationConnectionRequestContentFieldShowAsButton)
 }
 
-// SetOrganizationMemberAccessLevel sets the OrganizationMemberAccessLevel field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestParameters) SetOrganizationMemberAccessLevel(organizationMemberAccessLevel *OrganizationMemberAccessLevelEnumWithNull) {
-	u.OrganizationMemberAccessLevel = organizationMemberAccessLevel
-	u.require(updateOrganizationConnectionRequestParametersFieldOrganizationMemberAccessLevel)
-}
-
-// SetIsEnabled sets the IsEnabled field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationConnectionRequestParameters) SetIsEnabled(isEnabled *bool) {
-	u.IsEnabled = isEnabled
-	u.require(updateOrganizationConnectionRequestParametersFieldIsEnabled)
-}
-
-func (u *UpdateOrganizationConnectionRequestParameters) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateOrganizationConnectionRequestParameters
+func (u *UpdateOrganizationConnectionRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateOrganizationConnectionRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateOrganizationConnectionRequestParameters(body)
+	*u = UpdateOrganizationConnectionRequestContent(body)
 	return nil
 }
 
-func (u *UpdateOrganizationConnectionRequestParameters) MarshalJSON() ([]byte, error) {
-	type embed UpdateOrganizationConnectionRequestParameters
+func (u *UpdateOrganizationConnectionRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateOrganizationConnectionRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -15356,18 +15932,21 @@ func (u *UpdateRiskAssessmentsSettingsNewDeviceRequestContent) MarshalJSON() ([]
 }
 
 var (
-	updateRiskAssessmentsSettingsRequestContentFieldEnabled = big.NewInt(1 << 0)
+	updateGuardianFactorDuoSettingsRequestContentFieldIkey = big.NewInt(1 << 0)
+	updateGuardianFactorDuoSettingsRequestContentFieldSkey = big.NewInt(1 << 1)
+	updateGuardianFactorDuoSettingsRequestContentFieldHost = big.NewInt(1 << 2)
 )
 
-type UpdateRiskAssessmentsSettingsRequestContent struct {
-	// Whether or not risk assessment is enabled.
-	Enabled bool `json:"enabled" url:"-"`
+type UpdateGuardianFactorDuoSettingsRequestContent struct {
+	Ikey *string `json:"ikey,omitempty" url:"-"`
+	Skey *string `json:"skey,omitempty" url:"-"`
+	Host *string `json:"host,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateRiskAssessmentsSettingsRequestContent) require(field *big.Int) {
+func (u *UpdateGuardianFactorDuoSettingsRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -15376,25 +15955,39 @@ func (u *UpdateRiskAssessmentsSettingsRequestContent) require(field *big.Int) {
 	u.explicitFields = next
 }
 
-// SetEnabled sets the Enabled field and marks it as non-optional;
+// SetIkey sets the Ikey field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateRiskAssessmentsSettingsRequestContent) SetEnabled(enabled bool) {
-	u.Enabled = enabled
-	u.require(updateRiskAssessmentsSettingsRequestContentFieldEnabled)
+func (u *UpdateGuardianFactorDuoSettingsRequestContent) SetIkey(ikey *string) {
+	u.Ikey = ikey
+	u.require(updateGuardianFactorDuoSettingsRequestContentFieldIkey)
 }
 
-func (u *UpdateRiskAssessmentsSettingsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateRiskAssessmentsSettingsRequestContent
+// SetSkey sets the Skey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateGuardianFactorDuoSettingsRequestContent) SetSkey(skey *string) {
+	u.Skey = skey
+	u.require(updateGuardianFactorDuoSettingsRequestContentFieldSkey)
+}
+
+// SetHost sets the Host field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateGuardianFactorDuoSettingsRequestContent) SetHost(host *string) {
+	u.Host = host
+	u.require(updateGuardianFactorDuoSettingsRequestContentFieldHost)
+}
+
+func (u *UpdateGuardianFactorDuoSettingsRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateGuardianFactorDuoSettingsRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateRiskAssessmentsSettingsRequestContent(body)
+	*u = UpdateGuardianFactorDuoSettingsRequestContent(body)
 	return nil
 }
 
-func (u *UpdateRiskAssessmentsSettingsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateRiskAssessmentsSettingsRequestContent
+func (u *UpdateGuardianFactorDuoSettingsRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateGuardianFactorDuoSettingsRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -15405,51 +15998,52 @@ func (u *UpdateRiskAssessmentsSettingsRequestContent) MarshalJSON() ([]byte, err
 }
 
 var (
-	updateTenantSettingsRequestContentFieldChangePassword                                 = big.NewInt(1 << 0)
-	updateTenantSettingsRequestContentFieldDeviceFlow                                     = big.NewInt(1 << 1)
-	updateTenantSettingsRequestContentFieldGuardianMfaPage                                = big.NewInt(1 << 2)
-	updateTenantSettingsRequestContentFieldDefaultAudience                                = big.NewInt(1 << 3)
-	updateTenantSettingsRequestContentFieldDefaultDirectory                               = big.NewInt(1 << 4)
-	updateTenantSettingsRequestContentFieldErrorPage                                      = big.NewInt(1 << 5)
-	updateTenantSettingsRequestContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
-	updateTenantSettingsRequestContentFieldFlags                                          = big.NewInt(1 << 7)
-	updateTenantSettingsRequestContentFieldFriendlyName                                   = big.NewInt(1 << 8)
-	updateTenantSettingsRequestContentFieldPictureURL                                     = big.NewInt(1 << 9)
-	updateTenantSettingsRequestContentFieldSupportEmail                                   = big.NewInt(1 << 10)
-	updateTenantSettingsRequestContentFieldSupportURL                                     = big.NewInt(1 << 11)
-	updateTenantSettingsRequestContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
-	updateTenantSettingsRequestContentFieldSessionLifetime                                = big.NewInt(1 << 13)
-	updateTenantSettingsRequestContentFieldSessionLifetimeInMinutes                       = big.NewInt(1 << 14)
-	updateTenantSettingsRequestContentFieldIdleSessionLifetime                            = big.NewInt(1 << 15)
-	updateTenantSettingsRequestContentFieldIdleSessionLifetimeInMinutes                   = big.NewInt(1 << 16)
-	updateTenantSettingsRequestContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 17)
-	updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 18)
-	updateTenantSettingsRequestContentFieldEphemeralSessionLifetimeInMinutes              = big.NewInt(1 << 19)
-	updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetimeInMinutes          = big.NewInt(1 << 20)
-	updateTenantSettingsRequestContentFieldSandboxVersion                                 = big.NewInt(1 << 21)
-	updateTenantSettingsRequestContentFieldLegacySandboxVersion                           = big.NewInt(1 << 22)
-	updateTenantSettingsRequestContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 23)
-	updateTenantSettingsRequestContentFieldEnabledLocales                                 = big.NewInt(1 << 24)
-	updateTenantSettingsRequestContentFieldAccessToken                                    = big.NewInt(1 << 25)
-	updateTenantSettingsRequestContentFieldSecurityHeaders                                = big.NewInt(1 << 26)
-	updateTenantSettingsRequestContentFieldSessionCookie                                  = big.NewInt(1 << 27)
-	updateTenantSettingsRequestContentFieldSessions                                       = big.NewInt(1 << 28)
-	updateTenantSettingsRequestContentFieldOidcLogout                                     = big.NewInt(1 << 29)
-	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 30)
-	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 31)
-	updateTenantSettingsRequestContentFieldAcrValuesSupported                             = big.NewInt(1 << 32)
-	updateTenantSettingsRequestContentFieldMtls                                           = big.NewInt(1 << 33)
-	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 34)
-	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 35)
-	updateTenantSettingsRequestContentFieldDpopStrictRefreshTokenBinding                  = big.NewInt(1 << 36)
-	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 37)
-	updateTenantSettingsRequestContentFieldResourceParameterProfile                       = big.NewInt(1 << 38)
-	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 39)
-	updateTenantSettingsRequestContentFieldEnableAiGuide                                  = big.NewInt(1 << 40)
-	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 41)
-	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 42)
-	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 43)
-	updateTenantSettingsRequestContentFieldCountryCodes                                   = big.NewInt(1 << 44)
+	updateTenantSettingsRequestContentFieldChangePassword                                       = big.NewInt(1 << 0)
+	updateTenantSettingsRequestContentFieldDeviceFlow                                           = big.NewInt(1 << 1)
+	updateTenantSettingsRequestContentFieldGuardianMfaPage                                      = big.NewInt(1 << 2)
+	updateTenantSettingsRequestContentFieldDefaultAudience                                      = big.NewInt(1 << 3)
+	updateTenantSettingsRequestContentFieldDefaultDirectory                                     = big.NewInt(1 << 4)
+	updateTenantSettingsRequestContentFieldErrorPage                                            = big.NewInt(1 << 5)
+	updateTenantSettingsRequestContentFieldDefaultTokenQuota                                    = big.NewInt(1 << 6)
+	updateTenantSettingsRequestContentFieldFlags                                                = big.NewInt(1 << 7)
+	updateTenantSettingsRequestContentFieldFriendlyName                                         = big.NewInt(1 << 8)
+	updateTenantSettingsRequestContentFieldPictureURL                                           = big.NewInt(1 << 9)
+	updateTenantSettingsRequestContentFieldSupportEmail                                         = big.NewInt(1 << 10)
+	updateTenantSettingsRequestContentFieldSupportURL                                           = big.NewInt(1 << 11)
+	updateTenantSettingsRequestContentFieldAllowedLogoutURLs                                    = big.NewInt(1 << 12)
+	updateTenantSettingsRequestContentFieldSessionLifetime                                      = big.NewInt(1 << 13)
+	updateTenantSettingsRequestContentFieldSessionLifetimeInMinutes                             = big.NewInt(1 << 14)
+	updateTenantSettingsRequestContentFieldIdleSessionLifetime                                  = big.NewInt(1 << 15)
+	updateTenantSettingsRequestContentFieldIdleSessionLifetimeInMinutes                         = big.NewInt(1 << 16)
+	updateTenantSettingsRequestContentFieldEphemeralSessionLifetime                             = big.NewInt(1 << 17)
+	updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetime                         = big.NewInt(1 << 18)
+	updateTenantSettingsRequestContentFieldEphemeralSessionLifetimeInMinutes                    = big.NewInt(1 << 19)
+	updateTenantSettingsRequestContentFieldIdleEphemeralSessionLifetimeInMinutes                = big.NewInt(1 << 20)
+	updateTenantSettingsRequestContentFieldSandboxVersion                                       = big.NewInt(1 << 21)
+	updateTenantSettingsRequestContentFieldLegacySandboxVersion                                 = big.NewInt(1 << 22)
+	updateTenantSettingsRequestContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 23)
+	updateTenantSettingsRequestContentFieldEnabledLocales                                       = big.NewInt(1 << 24)
+	updateTenantSettingsRequestContentFieldAccessToken                                          = big.NewInt(1 << 25)
+	updateTenantSettingsRequestContentFieldSecurityHeaders                                      = big.NewInt(1 << 26)
+	updateTenantSettingsRequestContentFieldSessionCookie                                        = big.NewInt(1 << 27)
+	updateTenantSettingsRequestContentFieldSessions                                             = big.NewInt(1 << 28)
+	updateTenantSettingsRequestContentFieldOidcLogout                                           = big.NewInt(1 << 29)
+	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 30)
+	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 31)
+	updateTenantSettingsRequestContentFieldAcrValuesSupported                                   = big.NewInt(1 << 32)
+	updateTenantSettingsRequestContentFieldMtls                                                 = big.NewInt(1 << 33)
+	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 34)
+	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 35)
+	updateTenantSettingsRequestContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 36)
+	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 37)
+	updateTenantSettingsRequestContentFieldResourceParameterProfile                             = big.NewInt(1 << 38)
+	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 39)
+	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 40)
+	updateTenantSettingsRequestContentFieldEnableAiGuide                                        = big.NewInt(1 << 41)
+	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 42)
+	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 43)
+	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 44)
+	updateTenantSettingsRequestContentFieldCountryCodes                                         = big.NewInt(1 << 45)
 )
 
 type UpdateTenantSettingsRequestContent struct {
@@ -15523,6 +16117,8 @@ type UpdateTenantSettingsRequestContent struct {
 	ResourceParameterProfile                       *TenantSettingsResourceParameterProfile `json:"resource_parameter_profile,omitempty" url:"-"`
 	// Whether the authorization server supports retrieving client metadata from a client_id URL.
 	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty" url:"-"`
+	// Whether the authorization server supports registering clients dynamically from a client_id URL. Requires client_id_metadata_document_supported to be enabled.
+	ClientIDMetadataDocumentDynamicRegistrationSupported *bool `json:"client_id_metadata_document_dynamic_registration_supported,omitempty" url:"-"`
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
 	EnableAiGuide *bool `json:"enable_ai_guide,omitempty" url:"-"`
 	// Whether Phone Consolidated Experience is enabled for this tenant.
@@ -15825,6 +16421,13 @@ func (u *UpdateTenantSettingsRequestContent) SetClientIDMetadataDocumentSupporte
 	u.require(updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported)
 }
 
+// SetClientIDMetadataDocumentDynamicRegistrationSupported sets the ClientIDMetadataDocumentDynamicRegistrationSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetClientIDMetadataDocumentDynamicRegistrationSupported(clientIDMetadataDocumentDynamicRegistrationSupported *bool) {
+	u.ClientIDMetadataDocumentDynamicRegistrationSupported = clientIDMetadataDocumentDynamicRegistrationSupported
+	u.require(updateTenantSettingsRequestContentFieldClientIDMetadataDocumentDynamicRegistrationSupported)
+}
+
 // SetEnableAiGuide sets the EnableAiGuide field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateTenantSettingsRequestContent) SetEnableAiGuide(enableAiGuide *bool) {
@@ -15941,302 +16544,6 @@ func (p *PatchAgentRequestParameters) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateResourceServerRequestContentFieldName                                      = big.NewInt(1 << 0)
-	updateResourceServerRequestContentFieldScopes                                    = big.NewInt(1 << 1)
-	updateResourceServerRequestContentFieldSigningAlg                                = big.NewInt(1 << 2)
-	updateResourceServerRequestContentFieldSigningSecret                             = big.NewInt(1 << 3)
-	updateResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 4)
-	updateResourceServerRequestContentFieldAllowOfflineAccess                        = big.NewInt(1 << 5)
-	updateResourceServerRequestContentFieldAllowOnlineAccess                         = big.NewInt(1 << 6)
-	updateResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 7)
-	updateResourceServerRequestContentFieldTokenLifetime                             = big.NewInt(1 << 8)
-	updateResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 9)
-	updateResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
-	updateResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
-	updateResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 12)
-	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 13)
-	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 14)
-	updateResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 15)
-	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
-	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 17)
-	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
-)
-
-type UpdateResourceServerRequestContent struct {
-	// Friendly name for this resource server. Can not contain `<` or `>` characters.
-	Name *string `json:"name,omitempty" url:"-"`
-	// List of permissions (scopes) that this API uses.
-	Scopes     []*ResourceServerScope `json:"scopes,omitempty" url:"-"`
-	SigningAlg *SigningAlgorithmEnum  `json:"signing_alg,omitempty" url:"-"`
-	// Secret used to sign tokens when using symmetric algorithms (HS256).
-	SigningSecret *string `json:"signing_secret,omitempty" url:"-"`
-	// Whether to skip user consent for applications flagged as first party (true) or not (false).
-	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
-	// Whether refresh tokens can be issued for this API (true) or not (false).
-	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"-"`
-	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
-	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"-"`
-	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
-	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"-"`
-	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
-	TokenLifetime *int `json:"token_lifetime,omitempty" url:"-"`
-	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
-	TokenLifetimeForAnonymousAccessTokens *int                                  `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"-"`
-	TokenDialect                          *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
-	// Whether authorization policies are enforced (true) or not enforced (false).
-	EnforcePolicies *bool                            `json:"enforce_policies,omitempty" url:"-"`
-	AccessToken     *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
-	TokenEncryption *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy   *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
-	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
-	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"-"`
-	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"-"`
-	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
-	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
-	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateResourceServerRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetName(name *string) {
-	u.Name = name
-	u.require(updateResourceServerRequestContentFieldName)
-}
-
-// SetScopes sets the Scopes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetScopes(scopes []*ResourceServerScope) {
-	u.Scopes = scopes
-	u.require(updateResourceServerRequestContentFieldScopes)
-}
-
-// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
-	u.SigningAlg = signingAlg
-	u.require(updateResourceServerRequestContentFieldSigningAlg)
-}
-
-// SetSigningSecret sets the SigningSecret field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetSigningSecret(signingSecret *string) {
-	u.SigningSecret = signingSecret
-	u.require(updateResourceServerRequestContentFieldSigningSecret)
-}
-
-// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
-	u.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
-	u.require(updateResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients)
-}
-
-// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetAllowOfflineAccess(allowOfflineAccess *bool) {
-	u.AllowOfflineAccess = allowOfflineAccess
-	u.require(updateResourceServerRequestContentFieldAllowOfflineAccess)
-}
-
-// SetAllowOnlineAccess sets the AllowOnlineAccess field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetAllowOnlineAccess(allowOnlineAccess *bool) {
-	u.AllowOnlineAccess = allowOnlineAccess
-	u.require(updateResourceServerRequestContentFieldAllowOnlineAccess)
-}
-
-// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
-	u.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
-	u.require(updateResourceServerRequestContentFieldAllowOnlineAccessWithEphemeralSessions)
-}
-
-// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetTokenLifetime(tokenLifetime *int) {
-	u.TokenLifetime = tokenLifetime
-	u.require(updateResourceServerRequestContentFieldTokenLifetime)
-}
-
-// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
-	u.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
-	u.require(updateResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens)
-}
-
-// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectSchemaEnum) {
-	u.TokenDialect = tokenDialect
-	u.require(updateResourceServerRequestContentFieldTokenDialect)
-}
-
-// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
-	u.EnforcePolicies = enforcePolicies
-	u.require(updateResourceServerRequestContentFieldEnforcePolicies)
-}
-
-// SetAccessToken sets the AccessToken field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
-	u.AccessToken = accessToken
-	u.require(updateResourceServerRequestContentFieldAccessToken)
-}
-
-// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
-	u.TokenEncryption = tokenEncryption
-	u.require(updateResourceServerRequestContentFieldTokenEncryption)
-}
-
-// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
-	u.ConsentPolicy = consentPolicy
-	u.require(updateResourceServerRequestContentFieldConsentPolicy)
-}
-
-// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
-	u.RequireConsentNonRepudiation = requireConsentNonRepudiation
-	u.require(updateResourceServerRequestContentFieldRequireConsentNonRepudiation)
-}
-
-// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetAuthorizationDetails(authorizationDetails []any) {
-	u.AuthorizationDetails = authorizationDetails
-	u.require(updateResourceServerRequestContentFieldAuthorizationDetails)
-}
-
-// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
-	u.ProofOfPossession = proofOfPossession
-	u.require(updateResourceServerRequestContentFieldProofOfPossession)
-}
-
-// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
-	u.SubjectTypeAuthorization = subjectTypeAuthorization
-	u.require(updateResourceServerRequestContentFieldSubjectTypeAuthorization)
-}
-
-// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateResourceServerRequestContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
-	u.AuthorizationPolicy = authorizationPolicy
-	u.require(updateResourceServerRequestContentFieldAuthorizationPolicy)
-}
-
-func (u *UpdateResourceServerRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateResourceServerRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateResourceServerRequestContent(body)
-	return nil
-}
-
-func (u *UpdateResourceServerRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateResourceServerRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	updateGuardianFactorDuoSettingsRequestContentFieldIkey = big.NewInt(1 << 0)
-	updateGuardianFactorDuoSettingsRequestContentFieldSkey = big.NewInt(1 << 1)
-	updateGuardianFactorDuoSettingsRequestContentFieldHost = big.NewInt(1 << 2)
-)
-
-type UpdateGuardianFactorDuoSettingsRequestContent struct {
-	Ikey *string `json:"ikey,omitempty" url:"-"`
-	Skey *string `json:"skey,omitempty" url:"-"`
-	Host *string `json:"host,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateGuardianFactorDuoSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetIkey sets the Ikey field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateGuardianFactorDuoSettingsRequestContent) SetIkey(ikey *string) {
-	u.Ikey = ikey
-	u.require(updateGuardianFactorDuoSettingsRequestContentFieldIkey)
-}
-
-// SetSkey sets the Skey field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateGuardianFactorDuoSettingsRequestContent) SetSkey(skey *string) {
-	u.Skey = skey
-	u.require(updateGuardianFactorDuoSettingsRequestContentFieldSkey)
-}
-
-// SetHost sets the Host field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateGuardianFactorDuoSettingsRequestContent) SetHost(host *string) {
-	u.Host = host
-	u.require(updateGuardianFactorDuoSettingsRequestContentFieldHost)
-}
-
-func (u *UpdateGuardianFactorDuoSettingsRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateGuardianFactorDuoSettingsRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateGuardianFactorDuoSettingsRequestContent(body)
-	return nil
-}
-
-func (u *UpdateGuardianFactorDuoSettingsRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateGuardianFactorDuoSettingsRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	updateFormRequestContentFieldName         = big.NewInt(1 << 0)
 	updateFormRequestContentFieldMessages     = big.NewInt(1 << 1)
 	updateFormRequestContentFieldLanguages    = big.NewInt(1 << 2)
@@ -16344,54 +16651,6 @@ func (u *UpdateFormRequestContent) MarshalJSON() ([]byte, error) {
 		embed: embed(*u),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	patchRateLimitPolicyRequestContentFieldConfiguration = big.NewInt(1 << 0)
-)
-
-type PatchRateLimitPolicyRequestContent struct {
-	Configuration *PatchRateLimitPolicyConfigurationRequestContent `json:"configuration" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (p *PatchRateLimitPolicyRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
-	}
-	next.Or(next, field)
-	p.explicitFields = next
-}
-
-// SetConfiguration sets the Configuration field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PatchRateLimitPolicyRequestContent) SetConfiguration(configuration *PatchRateLimitPolicyConfigurationRequestContent) {
-	p.Configuration = configuration
-	p.require(patchRateLimitPolicyRequestContentFieldConfiguration)
-}
-
-func (p *PatchRateLimitPolicyRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler PatchRateLimitPolicyRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*p = PatchRateLimitPolicyRequestContent(body)
-	return nil
-}
-
-func (p *PatchRateLimitPolicyRequestContent) MarshalJSON() ([]byte, error) {
-	type embed PatchRateLimitPolicyRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*p),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -16511,21 +16770,18 @@ func (u *UpdateFlowRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateUserAttributeProfileRequestContentFieldName           = big.NewInt(1 << 0)
-	updateUserAttributeProfileRequestContentFieldUserID         = big.NewInt(1 << 1)
-	updateUserAttributeProfileRequestContentFieldUserAttributes = big.NewInt(1 << 2)
+	updateRefreshTokenRequestContentFieldRefreshTokenMetadata = big.NewInt(1 << 0)
 )
 
-type UpdateUserAttributeProfileRequestContent struct {
-	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"-"`
-	UserID         *UserAttributeProfilePatchUserID    `json:"user_id,omitempty" url:"-"`
-	UserAttributes *UserAttributeProfileUserAttributes `json:"user_attributes,omitempty" url:"-"`
+type UpdateRefreshTokenRequestContent struct {
+	// Metadata associated with the refresh token. Pass null or {} to remove all metadata.
+	RefreshTokenMetadata *RefreshTokenMetadata `json:"refresh_token_metadata,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateUserAttributeProfileRequestContent) require(field *big.Int) {
+func (u *UpdateRefreshTokenRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -16534,39 +16790,25 @@ func (u *UpdateUserAttributeProfileRequestContent) require(field *big.Int) {
 	u.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetRefreshTokenMetadata sets the RefreshTokenMetadata field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAttributeProfileRequestContent) SetName(name *UserAttributeProfileName) {
-	u.Name = name
-	u.require(updateUserAttributeProfileRequestContentFieldName)
+func (u *UpdateRefreshTokenRequestContent) SetRefreshTokenMetadata(refreshTokenMetadata *RefreshTokenMetadata) {
+	u.RefreshTokenMetadata = refreshTokenMetadata
+	u.require(updateRefreshTokenRequestContentFieldRefreshTokenMetadata)
 }
 
-// SetUserID sets the UserID field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAttributeProfileRequestContent) SetUserID(userID *UserAttributeProfilePatchUserID) {
-	u.UserID = userID
-	u.require(updateUserAttributeProfileRequestContentFieldUserID)
-}
-
-// SetUserAttributes sets the UserAttributes field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAttributeProfileRequestContent) SetUserAttributes(userAttributes *UserAttributeProfileUserAttributes) {
-	u.UserAttributes = userAttributes
-	u.require(updateUserAttributeProfileRequestContentFieldUserAttributes)
-}
-
-func (u *UpdateUserAttributeProfileRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateUserAttributeProfileRequestContent
+func (u *UpdateRefreshTokenRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateRefreshTokenRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateUserAttributeProfileRequestContent(body)
+	*u = UpdateRefreshTokenRequestContent(body)
 	return nil
 }
 
-func (u *UpdateUserAttributeProfileRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateUserAttributeProfileRequestContent
+func (u *UpdateRefreshTokenRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateRefreshTokenRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -16714,6 +16956,72 @@ func (u *UpdateVariationRequestContent) UnmarshalJSON(data []byte) error {
 
 func (u *UpdateVariationRequestContent) MarshalJSON() ([]byte, error) {
 	type embed UpdateVariationRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateUserAttributeProfileRequestContentFieldName           = big.NewInt(1 << 0)
+	updateUserAttributeProfileRequestContentFieldUserID         = big.NewInt(1 << 1)
+	updateUserAttributeProfileRequestContentFieldUserAttributes = big.NewInt(1 << 2)
+)
+
+type UpdateUserAttributeProfileRequestContent struct {
+	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"-"`
+	UserID         *UserAttributeProfilePatchUserID    `json:"user_id,omitempty" url:"-"`
+	UserAttributes *UserAttributeProfileUserAttributes `json:"user_attributes,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateUserAttributeProfileRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAttributeProfileRequestContent) SetName(name *UserAttributeProfileName) {
+	u.Name = name
+	u.require(updateUserAttributeProfileRequestContentFieldName)
+}
+
+// SetUserID sets the UserID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAttributeProfileRequestContent) SetUserID(userID *UserAttributeProfilePatchUserID) {
+	u.UserID = userID
+	u.require(updateUserAttributeProfileRequestContentFieldUserID)
+}
+
+// SetUserAttributes sets the UserAttributes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAttributeProfileRequestContent) SetUserAttributes(userAttributes *UserAttributeProfileUserAttributes) {
+	u.UserAttributes = userAttributes
+	u.require(updateUserAttributeProfileRequestContentFieldUserAttributes)
+}
+
+func (u *UpdateUserAttributeProfileRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateUserAttributeProfileRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateUserAttributeProfileRequestContent(body)
+	return nil
+}
+
+func (u *UpdateUserAttributeProfileRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateUserAttributeProfileRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -16910,20 +17218,18 @@ func (u *UpdateExperimentRequestParameters) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateOrganizationDiscoveryDomainRequestContentFieldStatus                      = big.NewInt(1 << 0)
-	updateOrganizationDiscoveryDomainRequestContentFieldUseForOrganizationDiscovery = big.NewInt(1 << 1)
+	updateRiskAssessmentsSettingsRequestContentFieldEnabled = big.NewInt(1 << 0)
 )
 
-type UpdateOrganizationDiscoveryDomainRequestContent struct {
-	Status *OrganizationDiscoveryDomainStatus `json:"status,omitempty" url:"-"`
-	// Indicates whether this domain should be used for organization discovery.
-	UseForOrganizationDiscovery *bool `json:"use_for_organization_discovery,omitempty" url:"-"`
+type UpdateRiskAssessmentsSettingsRequestContent struct {
+	// Whether or not risk assessment is enabled.
+	Enabled bool `json:"enabled" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateOrganizationDiscoveryDomainRequestContent) require(field *big.Int) {
+func (u *UpdateRiskAssessmentsSettingsRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -16932,32 +17238,25 @@ func (u *UpdateOrganizationDiscoveryDomainRequestContent) require(field *big.Int
 	u.explicitFields = next
 }
 
-// SetStatus sets the Status field and marks it as non-optional;
+// SetEnabled sets the Enabled field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationDiscoveryDomainRequestContent) SetStatus(status *OrganizationDiscoveryDomainStatus) {
-	u.Status = status
-	u.require(updateOrganizationDiscoveryDomainRequestContentFieldStatus)
+func (u *UpdateRiskAssessmentsSettingsRequestContent) SetEnabled(enabled bool) {
+	u.Enabled = enabled
+	u.require(updateRiskAssessmentsSettingsRequestContentFieldEnabled)
 }
 
-// SetUseForOrganizationDiscovery sets the UseForOrganizationDiscovery field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateOrganizationDiscoveryDomainRequestContent) SetUseForOrganizationDiscovery(useForOrganizationDiscovery *bool) {
-	u.UseForOrganizationDiscovery = useForOrganizationDiscovery
-	u.require(updateOrganizationDiscoveryDomainRequestContentFieldUseForOrganizationDiscovery)
-}
-
-func (u *UpdateOrganizationDiscoveryDomainRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateOrganizationDiscoveryDomainRequestContent
+func (u *UpdateRiskAssessmentsSettingsRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateRiskAssessmentsSettingsRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateOrganizationDiscoveryDomainRequestContent(body)
+	*u = UpdateRiskAssessmentsSettingsRequestContent(body)
 	return nil
 }
 
-func (u *UpdateOrganizationDiscoveryDomainRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateOrganizationDiscoveryDomainRequestContent
+func (u *UpdateRiskAssessmentsSettingsRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateRiskAssessmentsSettingsRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -16968,26 +17267,25 @@ func (u *UpdateOrganizationDiscoveryDomainRequestContent) MarshalJSON() ([]byte,
 }
 
 var (
-	updateHookRequestContentFieldName         = big.NewInt(1 << 0)
-	updateHookRequestContentFieldScript       = big.NewInt(1 << 1)
-	updateHookRequestContentFieldEnabled      = big.NewInt(1 << 2)
-	updateHookRequestContentFieldDependencies = big.NewInt(1 << 3)
+	updateNetworkACLRequestContentFieldDescription = big.NewInt(1 << 0)
+	updateNetworkACLRequestContentFieldActive      = big.NewInt(1 << 1)
+	updateNetworkACLRequestContentFieldPriority    = big.NewInt(1 << 2)
+	updateNetworkACLRequestContentFieldRule        = big.NewInt(1 << 3)
 )
 
-type UpdateHookRequestContent struct {
-	// Name of this hook.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Code to be executed when this hook runs.
-	Script *string `json:"script,omitempty" url:"-"`
-	// Whether this hook will be executed (true) or ignored (false).
-	Enabled      *bool             `json:"enabled,omitempty" url:"-"`
-	Dependencies *HookDependencies `json:"dependencies,omitempty" url:"-"`
+type UpdateNetworkACLRequestContent struct {
+	Description *string `json:"description,omitempty" url:"-"`
+	// Indicates whether or not this access control list is actively being used
+	Active *bool `json:"active,omitempty" url:"-"`
+	// Indicates the order in which the ACL will be evaluated relative to other ACL rules.
+	Priority *float64        `json:"priority,omitempty" url:"-"`
+	Rule     *NetworkACLRule `json:"rule,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 }
 
-func (u *UpdateHookRequestContent) require(field *big.Int) {
+func (u *UpdateNetworkACLRequestContent) require(field *big.Int) {
 	next := new(big.Int)
 	if u.explicitFields != nil {
 		next.Set(u.explicitFields)
@@ -16996,46 +17294,46 @@ func (u *UpdateHookRequestContent) require(field *big.Int) {
 	u.explicitFields = next
 }
 
-// SetName sets the Name field and marks it as non-optional;
+// SetDescription sets the Description field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateHookRequestContent) SetName(name *string) {
-	u.Name = name
-	u.require(updateHookRequestContentFieldName)
+func (u *UpdateNetworkACLRequestContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateNetworkACLRequestContentFieldDescription)
 }
 
-// SetScript sets the Script field and marks it as non-optional;
+// SetActive sets the Active field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateHookRequestContent) SetScript(script *string) {
-	u.Script = script
-	u.require(updateHookRequestContentFieldScript)
+func (u *UpdateNetworkACLRequestContent) SetActive(active *bool) {
+	u.Active = active
+	u.require(updateNetworkACLRequestContentFieldActive)
 }
 
-// SetEnabled sets the Enabled field and marks it as non-optional;
+// SetPriority sets the Priority field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateHookRequestContent) SetEnabled(enabled *bool) {
-	u.Enabled = enabled
-	u.require(updateHookRequestContentFieldEnabled)
+func (u *UpdateNetworkACLRequestContent) SetPriority(priority *float64) {
+	u.Priority = priority
+	u.require(updateNetworkACLRequestContentFieldPriority)
 }
 
-// SetDependencies sets the Dependencies field and marks it as non-optional;
+// SetRule sets the Rule field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateHookRequestContent) SetDependencies(dependencies *HookDependencies) {
-	u.Dependencies = dependencies
-	u.require(updateHookRequestContentFieldDependencies)
+func (u *UpdateNetworkACLRequestContent) SetRule(rule *NetworkACLRule) {
+	u.Rule = rule
+	u.require(updateNetworkACLRequestContentFieldRule)
 }
 
-func (u *UpdateHookRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateHookRequestContent
+func (u *UpdateNetworkACLRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateNetworkACLRequestContent
 	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*u = UpdateHookRequestContent(body)
+	*u = UpdateNetworkACLRequestContent(body)
 	return nil
 }
 
-func (u *UpdateHookRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateHookRequestContent
+func (u *UpdateNetworkACLRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateNetworkACLRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -17337,6 +17635,142 @@ func (u *UpdateEmailTemplateRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
+	updateCustomDomainRequestContentFieldTLSPolicy              = big.NewInt(1 << 0)
+	updateCustomDomainRequestContentFieldCustomClientIPHeader   = big.NewInt(1 << 1)
+	updateCustomDomainRequestContentFieldDomainMetadata         = big.NewInt(1 << 2)
+	updateCustomDomainRequestContentFieldRelyingPartyIdentifier = big.NewInt(1 << 3)
+)
+
+type UpdateCustomDomainRequestContent struct {
+	// recommended includes TLS 1.2
+	TLSPolicy            *CustomDomainTLSPolicyEnum        `json:"tls_policy,omitempty" url:"-"`
+	CustomClientIPHeader *CustomDomainCustomClientIPHeader `json:"custom_client_ip_header,omitempty" url:"-"`
+	DomainMetadata       *DomainMetadata                   `json:"domain_metadata,omitempty" url:"-"`
+	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. Set to null to remove the rpId and fall back to using the full domain.
+	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateCustomDomainRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetTLSPolicy sets the TLSPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainRequestContent) SetTLSPolicy(tlsPolicy *CustomDomainTLSPolicyEnum) {
+	u.TLSPolicy = tlsPolicy
+	u.require(updateCustomDomainRequestContentFieldTLSPolicy)
+}
+
+// SetCustomClientIPHeader sets the CustomClientIPHeader field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainRequestContent) SetCustomClientIPHeader(customClientIPHeader *CustomDomainCustomClientIPHeader) {
+	u.CustomClientIPHeader = customClientIPHeader
+	u.require(updateCustomDomainRequestContentFieldCustomClientIPHeader)
+}
+
+// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainRequestContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
+	u.DomainMetadata = domainMetadata
+	u.require(updateCustomDomainRequestContentFieldDomainMetadata)
+}
+
+// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateCustomDomainRequestContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
+	u.RelyingPartyIdentifier = relyingPartyIdentifier
+	u.require(updateCustomDomainRequestContentFieldRelyingPartyIdentifier)
+}
+
+func (u *UpdateCustomDomainRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateCustomDomainRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateCustomDomainRequestContent(body)
+	return nil
+}
+
+func (u *UpdateCustomDomainRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateCustomDomainRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateSCIMConfigurationRequestContentFieldUserIDAttribute = big.NewInt(1 << 0)
+	updateSCIMConfigurationRequestContentFieldMapping         = big.NewInt(1 << 1)
+)
+
+type UpdateSCIMConfigurationRequestContent struct {
+	// User ID attribute for generating unique user ids
+	UserIDAttribute string `json:"user_id_attribute" url:"-"`
+	// The mapping between auth0 and SCIM
+	Mapping []*SCIMMappingItem `json:"mapping" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateSCIMConfigurationRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationRequestContent) SetUserIDAttribute(userIDAttribute string) {
+	u.UserIDAttribute = userIDAttribute
+	u.require(updateSCIMConfigurationRequestContentFieldUserIDAttribute)
+}
+
+// SetMapping sets the Mapping field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateSCIMConfigurationRequestContent) SetMapping(mapping []*SCIMMappingItem) {
+	u.Mapping = mapping
+	u.require(updateSCIMConfigurationRequestContentFieldMapping)
+}
+
+func (u *UpdateSCIMConfigurationRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateSCIMConfigurationRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateSCIMConfigurationRequestContent(body)
+	return nil
+}
+
+func (u *UpdateSCIMConfigurationRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateSCIMConfigurationRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
 	updateUserRequestContentFieldBlocked           = big.NewInt(1 << 0)
 	updateUserRequestContentFieldEmailVerified     = big.NewInt(1 << 1)
 	updateUserRequestContentFieldEmail             = big.NewInt(1 << 2)
@@ -17556,142 +17990,6 @@ func (u *UpdateUserRequestContent) MarshalJSON() ([]byte, error) {
 }
 
 var (
-	updateCustomDomainRequestContentFieldTLSPolicy              = big.NewInt(1 << 0)
-	updateCustomDomainRequestContentFieldCustomClientIPHeader   = big.NewInt(1 << 1)
-	updateCustomDomainRequestContentFieldDomainMetadata         = big.NewInt(1 << 2)
-	updateCustomDomainRequestContentFieldRelyingPartyIdentifier = big.NewInt(1 << 3)
-)
-
-type UpdateCustomDomainRequestContent struct {
-	// recommended includes TLS 1.2
-	TLSPolicy            *CustomDomainTLSPolicyEnum        `json:"tls_policy,omitempty" url:"-"`
-	CustomClientIPHeader *CustomDomainCustomClientIPHeader `json:"custom_client_ip_header,omitempty" url:"-"`
-	DomainMetadata       *DomainMetadata                   `json:"domain_metadata,omitempty" url:"-"`
-	// Relying Party ID (rpId) to be used for Passkeys on this custom domain. Set to null to remove the rpId and fall back to using the full domain.
-	RelyingPartyIdentifier *string `json:"relying_party_identifier,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateCustomDomainRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetTLSPolicy sets the TLSPolicy field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateCustomDomainRequestContent) SetTLSPolicy(tlsPolicy *CustomDomainTLSPolicyEnum) {
-	u.TLSPolicy = tlsPolicy
-	u.require(updateCustomDomainRequestContentFieldTLSPolicy)
-}
-
-// SetCustomClientIPHeader sets the CustomClientIPHeader field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateCustomDomainRequestContent) SetCustomClientIPHeader(customClientIPHeader *CustomDomainCustomClientIPHeader) {
-	u.CustomClientIPHeader = customClientIPHeader
-	u.require(updateCustomDomainRequestContentFieldCustomClientIPHeader)
-}
-
-// SetDomainMetadata sets the DomainMetadata field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateCustomDomainRequestContent) SetDomainMetadata(domainMetadata *DomainMetadata) {
-	u.DomainMetadata = domainMetadata
-	u.require(updateCustomDomainRequestContentFieldDomainMetadata)
-}
-
-// SetRelyingPartyIdentifier sets the RelyingPartyIdentifier field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateCustomDomainRequestContent) SetRelyingPartyIdentifier(relyingPartyIdentifier *string) {
-	u.RelyingPartyIdentifier = relyingPartyIdentifier
-	u.require(updateCustomDomainRequestContentFieldRelyingPartyIdentifier)
-}
-
-func (u *UpdateCustomDomainRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateCustomDomainRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateCustomDomainRequestContent(body)
-	return nil
-}
-
-func (u *UpdateCustomDomainRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateCustomDomainRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	updateSCIMConfigurationRequestContentFieldUserIDAttribute = big.NewInt(1 << 0)
-	updateSCIMConfigurationRequestContentFieldMapping         = big.NewInt(1 << 1)
-)
-
-type UpdateSCIMConfigurationRequestContent struct {
-	// User ID attribute for generating unique user ids
-	UserIDAttribute string `json:"user_id_attribute" url:"-"`
-	// The mapping between auth0 and SCIM
-	Mapping []*SCIMMappingItem `json:"mapping" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateSCIMConfigurationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSCIMConfigurationRequestContent) SetUserIDAttribute(userIDAttribute string) {
-	u.UserIDAttribute = userIDAttribute
-	u.require(updateSCIMConfigurationRequestContentFieldUserIDAttribute)
-}
-
-// SetMapping sets the Mapping field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateSCIMConfigurationRequestContent) SetMapping(mapping []*SCIMMappingItem) {
-	u.Mapping = mapping
-	u.require(updateSCIMConfigurationRequestContentFieldMapping)
-}
-
-func (u *UpdateSCIMConfigurationRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateSCIMConfigurationRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateSCIMConfigurationRequestContent(body)
-	return nil
-}
-
-func (u *UpdateSCIMConfigurationRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateSCIMConfigurationRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
 	updateConnectionRequestContentFieldDisplayName                 = big.NewInt(1 << 0)
 	updateConnectionRequestContentFieldOptions                     = big.NewInt(1 << 1)
 	updateConnectionRequestContentFieldEnabledClients              = big.NewInt(1 << 2)
@@ -17825,65 +18123,6 @@ func (u *UpdateConnectionRequestContent) UnmarshalJSON(data []byte) error {
 
 func (u *UpdateConnectionRequestContent) MarshalJSON() ([]byte, error) {
 	type embed UpdateConnectionRequestContent
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*u),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-var (
-	updateUserAuthenticationMethodRequestContentFieldName                          = big.NewInt(1 << 0)
-	updateUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 1)
-)
-
-type UpdateUserAuthenticationMethodRequestContent struct {
-	// A human-readable label to identify the authentication method.
-	Name *string `json:"name,omitempty" url:"-"`
-	// Preferred phone authentication method
-	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"-"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-}
-
-func (u *UpdateUserAuthenticationMethodRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
-	}
-	next.Or(next, field)
-	u.explicitFields = next
-}
-
-// SetName sets the Name field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAuthenticationMethodRequestContent) SetName(name *string) {
-	u.Name = name
-	u.require(updateUserAuthenticationMethodRequestContentFieldName)
-}
-
-// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateUserAuthenticationMethodRequestContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
-	u.PreferredAuthenticationMethod = preferredAuthenticationMethod
-	u.require(updateUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod)
-}
-
-func (u *UpdateUserAuthenticationMethodRequestContent) UnmarshalJSON(data []byte) error {
-	type unmarshaler UpdateUserAuthenticationMethodRequestContent
-	var body unmarshaler
-	if err := json.Unmarshal(data, &body); err != nil {
-		return err
-	}
-	*u = UpdateUserAuthenticationMethodRequestContent(body)
-	return nil
-}
-
-func (u *UpdateUserAuthenticationMethodRequestContent) MarshalJSON() ([]byte, error) {
-	type embed UpdateUserAuthenticationMethodRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -18058,6 +18297,65 @@ func (p *PatchClientCredentialRequestContent) MarshalJSON() ([]byte, error) {
 		ExpiresAt: internal.NewOptionalDateTime(p.ExpiresAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, p.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateUserAuthenticationMethodRequestContentFieldName                          = big.NewInt(1 << 0)
+	updateUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod = big.NewInt(1 << 1)
+)
+
+type UpdateUserAuthenticationMethodRequestContent struct {
+	// A human-readable label to identify the authentication method.
+	Name *string `json:"name,omitempty" url:"-"`
+	// Preferred phone authentication method
+	PreferredAuthenticationMethod *PreferredAuthenticationMethodEnum `json:"preferred_authentication_method,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateUserAuthenticationMethodRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodRequestContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateUserAuthenticationMethodRequestContentFieldName)
+}
+
+// SetPreferredAuthenticationMethod sets the PreferredAuthenticationMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateUserAuthenticationMethodRequestContent) SetPreferredAuthenticationMethod(preferredAuthenticationMethod *PreferredAuthenticationMethodEnum) {
+	u.PreferredAuthenticationMethod = preferredAuthenticationMethod
+	u.require(updateUserAuthenticationMethodRequestContentFieldPreferredAuthenticationMethod)
+}
+
+func (u *UpdateUserAuthenticationMethodRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateUserAuthenticationMethodRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateUserAuthenticationMethodRequestContent(body)
+	return nil
+}
+
+func (u *UpdateUserAuthenticationMethodRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateUserAuthenticationMethodRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
 	return json.Marshal(explicitMarshaler)
 }
 
@@ -18664,6 +18962,81 @@ func (u *UpdateClientRequestContent) UnmarshalJSON(data []byte) error {
 
 func (u *UpdateClientRequestContent) MarshalJSON() ([]byte, error) {
 	type embed UpdateClientRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateClientProfileRequestContentFieldName                = big.NewInt(1 << 0)
+	updateClientProfileRequestContentFieldDescription         = big.NewInt(1 << 1)
+	updateClientProfileRequestContentFieldClientConfiguration = big.NewInt(1 << 2)
+	updateClientProfileRequestContentFieldApplyPolicy         = big.NewInt(1 << 3)
+)
+
+type UpdateClientProfileRequestContent struct {
+	Name                *ClientProfileName                `json:"name,omitempty" url:"-"`
+	Description         *ClientProfileDescription         `json:"description,omitempty" url:"-"`
+	ClientConfiguration *ClientProfileClientConfiguration `json:"client_configuration,omitempty" url:"-"`
+	ApplyPolicy         *ClientProfileApplyPolicy         `json:"apply_policy,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateClientProfileRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientProfileRequestContent) SetName(name *ClientProfileName) {
+	u.Name = name
+	u.require(updateClientProfileRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientProfileRequestContent) SetDescription(description *ClientProfileDescription) {
+	u.Description = description
+	u.require(updateClientProfileRequestContentFieldDescription)
+}
+
+// SetClientConfiguration sets the ClientConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientProfileRequestContent) SetClientConfiguration(clientConfiguration *ClientProfileClientConfiguration) {
+	u.ClientConfiguration = clientConfiguration
+	u.require(updateClientProfileRequestContentFieldClientConfiguration)
+}
+
+// SetApplyPolicy sets the ApplyPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientProfileRequestContent) SetApplyPolicy(applyPolicy *ClientProfileApplyPolicy) {
+	u.ApplyPolicy = applyPolicy
+	u.require(updateClientProfileRequestContentFieldApplyPolicy)
+}
+
+func (u *UpdateClientProfileRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateClientProfileRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateClientProfileRequestContent(body)
+	return nil
+}
+
+func (u *UpdateClientProfileRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateClientProfileRequestContent
 	var marshaler = struct {
 		embed
 	}{
@@ -19335,6 +19708,93 @@ func (u *UpdateSuspiciousIPThrottlingSettingsRequestContent) UnmarshalJSON(data 
 
 func (u *UpdateSuspiciousIPThrottlingSettingsRequestContent) MarshalJSON() ([]byte, error) {
 	type embed UpdateSuspiciousIPThrottlingSettingsRequestContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+var (
+	updateAttackProtectionCaptchaPolicyRequestContentFieldName        = big.NewInt(1 << 0)
+	updateAttackProtectionCaptchaPolicyRequestContentFieldDescription = big.NewInt(1 << 1)
+	updateAttackProtectionCaptchaPolicyRequestContentFieldPriority    = big.NewInt(1 << 2)
+	updateAttackProtectionCaptchaPolicyRequestContentFieldMatch       = big.NewInt(1 << 3)
+	updateAttackProtectionCaptchaPolicyRequestContentFieldAction      = big.NewInt(1 << 4)
+)
+
+type UpdateAttackProtectionCaptchaPolicyRequestContent struct {
+	// Human-readable policy name.
+	Name *string `json:"name,omitempty" url:"-"`
+	// Description of the policy's purpose.
+	Description *string `json:"description,omitempty" url:"-"`
+	// Conflict resolution order. Lower number takes higher precedence. Must be unique per tenant.
+	Priority *int                                      `json:"priority,omitempty" url:"-"`
+	Match    *AttackProtectionCaptchaPolicyMatch       `json:"match,omitempty" url:"-"`
+	Action   *AttackProtectionCaptchaPolicyActionInput `json:"action,omitempty" url:"-"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+}
+
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) SetName(name *string) {
+	u.Name = name
+	u.require(updateAttackProtectionCaptchaPolicyRequestContentFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) SetDescription(description *string) {
+	u.Description = description
+	u.require(updateAttackProtectionCaptchaPolicyRequestContentFieldDescription)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) SetPriority(priority *int) {
+	u.Priority = priority
+	u.require(updateAttackProtectionCaptchaPolicyRequestContentFieldPriority)
+}
+
+// SetMatch sets the Match field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) SetMatch(match *AttackProtectionCaptchaPolicyMatch) {
+	u.Match = match
+	u.require(updateAttackProtectionCaptchaPolicyRequestContentFieldMatch)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) SetAction(action *AttackProtectionCaptchaPolicyActionInput) {
+	u.Action = action
+	u.require(updateAttackProtectionCaptchaPolicyRequestContentFieldAction)
+}
+
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateAttackProtectionCaptchaPolicyRequestContent
+	var body unmarshaler
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	*u = UpdateAttackProtectionCaptchaPolicyRequestContent(body)
+	return nil
+}
+
+func (u *UpdateAttackProtectionCaptchaPolicyRequestContent) MarshalJSON() ([]byte, error) {
+	type embed UpdateAttackProtectionCaptchaPolicyRequestContent
 	var marshaler = struct {
 		embed
 	}{

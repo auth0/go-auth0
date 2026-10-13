@@ -2372,6 +2372,14 @@ func TestSettersClient(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetExternalMetadataStatus", func(t *testing.T) {
+		obj := &Client{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+		assert.Equal(t, fernTestValueExternalMetadataStatus, obj.ExternalMetadataStatus)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetExternalClientID", func(t *testing.T) {
 		obj := &Client{}
 		var fernTestValueExternalClientID *string
@@ -4661,6 +4669,40 @@ func TestGettersClient(t *testing.T) {
 		_ = obj.GetExternalMetadataCreatedBy() // Should return zero value
 	})
 
+	t.Run("GetExternalMetadataStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var value ClientExternalMetadataStatusEnum
+		obj.ExternalMetadataStatus = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetExternalMetadataStatus(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		obj.ExternalMetadataStatus = nil
+		var expectedZero ClientExternalMetadataStatusEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetExternalMetadataStatus(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Client
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetExternalMetadataStatus() // Should return zero value
+	})
+
 	t.Run("GetExternalClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -6786,6 +6828,37 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 
 		// Act
 		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetExternalMetadataStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+
+		// Act
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21066,6 +21139,14 @@ func TestSettersClientSearchResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetExternalMetadataStatus", func(t *testing.T) {
+		obj := &ClientSearchResponse{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+		assert.Equal(t, fernTestValueExternalMetadataStatus, obj.ExternalMetadataStatus)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetExternalClientID", func(t *testing.T) {
 		obj := &ClientSearchResponse{}
 		var fernTestValueExternalClientID *string
@@ -23219,6 +23300,40 @@ func TestGettersClientSearchResponse(t *testing.T) {
 		_ = obj.GetExternalMetadataCreatedBy() // Should return zero value
 	})
 
+	t.Run("GetExternalMetadataStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var value ClientExternalMetadataStatusEnum
+		obj.ExternalMetadataStatus = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetExternalMetadataStatus(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		obj.ExternalMetadataStatus = nil
+		var expectedZero ClientExternalMetadataStatusEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetExternalMetadataStatus(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetExternalMetadataStatus() // Should return zero value
+	})
+
 	t.Run("GetExternalClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -25220,6 +25335,37 @@ func TestSettersMarkExplicitClientSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetExternalMetadataStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+
+		// Act
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -27808,6 +27954,14 @@ func TestSettersCreateClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetExternalMetadataStatus", func(t *testing.T) {
+		obj := &CreateClientResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+		assert.Equal(t, fernTestValueExternalMetadataStatus, obj.ExternalMetadataStatus)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetExternalClientID", func(t *testing.T) {
 		obj := &CreateClientResponseContent{}
 		var fernTestValueExternalClientID *string
@@ -30097,6 +30251,40 @@ func TestGettersCreateClientResponseContent(t *testing.T) {
 		_ = obj.GetExternalMetadataCreatedBy() // Should return zero value
 	})
 
+	t.Run("GetExternalMetadataStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var value ClientExternalMetadataStatusEnum
+		obj.ExternalMetadataStatus = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetExternalMetadataStatus(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		obj.ExternalMetadataStatus = nil
+		var expectedZero ClientExternalMetadataStatusEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetExternalMetadataStatus(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetExternalMetadataStatus() // Should return zero value
+	})
+
 	t.Run("GetExternalClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -32222,6 +32410,37 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetExternalMetadataStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+
+		// Act
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -34489,6 +34708,14 @@ func TestSettersGetClientResponseContent(t *testing.T) {
 		var fernTestValueExternalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum
 		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
 		assert.Equal(t, fernTestValueExternalMetadataCreatedBy, obj.ExternalMetadataCreatedBy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetExternalMetadataStatus", func(t *testing.T) {
+		obj := &GetClientResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+		assert.Equal(t, fernTestValueExternalMetadataStatus, obj.ExternalMetadataStatus)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -36781,6 +37008,40 @@ func TestGettersGetClientResponseContent(t *testing.T) {
 		_ = obj.GetExternalMetadataCreatedBy() // Should return zero value
 	})
 
+	t.Run("GetExternalMetadataStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var value ClientExternalMetadataStatusEnum
+		obj.ExternalMetadataStatus = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetExternalMetadataStatus(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		obj.ExternalMetadataStatus = nil
+		var expectedZero ClientExternalMetadataStatusEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetExternalMetadataStatus(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetExternalMetadataStatus() // Should return zero value
+	})
+
 	t.Run("GetExternalClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -38929,6 +39190,37 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetExternalMetadataStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+
+		// Act
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetExternalClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -40392,6 +40684,14 @@ func TestSettersPreviewCimdMetadataResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetExternalMetadataCreatedBy", func(t *testing.T) {
+		obj := &PreviewCimdMetadataResponseContent{}
+		var fernTestValueExternalMetadataCreatedBy *CimdExternalMetadataCreatedByEnum
+		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
+		assert.Equal(t, fernTestValueExternalMetadataCreatedBy, obj.ExternalMetadataCreatedBy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetErrors", func(t *testing.T) {
 		obj := &PreviewCimdMetadataResponseContent{}
 		var fernTestValueErrors []string
@@ -40451,6 +40751,40 @@ func TestGettersPreviewCimdMetadataResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetClientID() // Should return zero value
+	})
+
+	t.Run("GetExternalMetadataCreatedBy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PreviewCimdMetadataResponseContent{}
+		var value CimdExternalMetadataCreatedByEnum
+		obj.ExternalMetadataCreatedBy = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetExternalMetadataCreatedBy(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetExternalMetadataCreatedBy_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PreviewCimdMetadataResponseContent{}
+		obj.ExternalMetadataCreatedBy = nil
+		var expectedZero CimdExternalMetadataCreatedByEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetExternalMetadataCreatedBy(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetExternalMetadataCreatedBy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *PreviewCimdMetadataResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetExternalMetadataCreatedBy() // Should return zero value
 	})
 
 	t.Run("GetErrors", func(t *testing.T) {
@@ -40565,6 +40899,37 @@ func TestSettersMarkExplicitPreviewCimdMetadataResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetClientID(fernTestValueClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetExternalMetadataCreatedBy_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PreviewCimdMetadataResponseContent{}
+		var fernTestValueExternalMetadataCreatedBy *CimdExternalMetadataCreatedByEnum
+
+		// Act
+		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -41930,6 +42295,14 @@ func TestSettersRotateClientSecretResponseContent(t *testing.T) {
 		var fernTestValueExternalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum
 		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
 		assert.Equal(t, fernTestValueExternalMetadataCreatedBy, obj.ExternalMetadataCreatedBy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetExternalMetadataStatus", func(t *testing.T) {
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+		assert.Equal(t, fernTestValueExternalMetadataStatus, obj.ExternalMetadataStatus)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -44222,6 +44595,40 @@ func TestGettersRotateClientSecretResponseContent(t *testing.T) {
 		_ = obj.GetExternalMetadataCreatedBy() // Should return zero value
 	})
 
+	t.Run("GetExternalMetadataStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var value ClientExternalMetadataStatusEnum
+		obj.ExternalMetadataStatus = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetExternalMetadataStatus(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		obj.ExternalMetadataStatus = nil
+		var expectedZero ClientExternalMetadataStatusEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetExternalMetadataStatus(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateClientSecretResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetExternalMetadataStatus() // Should return zero value
+	})
+
 	t.Run("GetExternalClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -46370,6 +46777,37 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetExternalMetadataStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+
+		// Act
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetExternalClientID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -47336,6 +47774,14 @@ func TestSettersUpdateClientResponseContent(t *testing.T) {
 		var fernTestValueExternalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum
 		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
 		assert.Equal(t, fernTestValueExternalMetadataCreatedBy, obj.ExternalMetadataCreatedBy)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetExternalMetadataStatus", func(t *testing.T) {
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
+		assert.Equal(t, fernTestValueExternalMetadataStatus, obj.ExternalMetadataStatus)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -49628,6 +50074,40 @@ func TestGettersUpdateClientResponseContent(t *testing.T) {
 		_ = obj.GetExternalMetadataCreatedBy() // Should return zero value
 	})
 
+	t.Run("GetExternalMetadataStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var value ClientExternalMetadataStatusEnum
+		obj.ExternalMetadataStatus = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetExternalMetadataStatus(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		obj.ExternalMetadataStatus = nil
+		var expectedZero ClientExternalMetadataStatusEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetExternalMetadataStatus(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetExternalMetadataStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetExternalMetadataStatus() // Should return zero value
+	})
+
 	t.Run("GetExternalClientID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -51753,6 +52233,37 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetExternalMetadataCreatedBy(fernTestValueExternalMetadataCreatedBy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetExternalMetadataStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueExternalMetadataStatus *ClientExternalMetadataStatusEnum
+
+		// Act
+		obj.SetExternalMetadataStatus(fernTestValueExternalMetadataStatus)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -57768,6 +58279,35 @@ func TestEnumCertificateSubjectDnCredentialTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumCimdExternalMetadataCreatedByEnum(t *testing.T) {
+	t.Run("NewFromString_admin", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCimdExternalMetadataCreatedByEnumFromString("admin")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CimdExternalMetadataCreatedByEnum("admin"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_client", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCimdExternalMetadataCreatedByEnumFromString("client")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CimdExternalMetadataCreatedByEnum("client"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewCimdExternalMetadataCreatedByEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewCimdExternalMetadataCreatedByEnumFromString("admin")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumClientAnonymousSessionTransferNetworkBindingEnum(t *testing.T) {
 	t.Run("NewFromString_ip", func(t *testing.T) {
 		t.Parallel()
@@ -58088,6 +58628,35 @@ func TestEnumClientExternalMetadataCreatedByEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewClientExternalMetadataCreatedByEnumFromString("admin")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumClientExternalMetadataStatusEnum(t *testing.T) {
+	t.Run("NewFromString_available", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientExternalMetadataStatusEnumFromString("available")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientExternalMetadataStatusEnum("available"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_unavailable", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientExternalMetadataStatusEnumFromString("unavailable")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientExternalMetadataStatusEnum("unavailable"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewClientExternalMetadataStatusEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewClientExternalMetadataStatusEnumFromString("available")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

@@ -12,6 +12,7 @@ import (
 	attackprotectionclient "github.com/auth0/go-auth0/v3/management/attackprotection/client"
 	brandingclient "github.com/auth0/go-auth0/v3/management/branding/client"
 	clientgrantsclient "github.com/auth0/go-auth0/v3/management/clientgrants/client"
+	clientprofiles "github.com/auth0/go-auth0/v3/management/clientprofiles"
 	clientsclient "github.com/auth0/go-auth0/v3/management/clients/client"
 	connectionprofiles "github.com/auth0/go-auth0/v3/management/connectionprofiles"
 	connectionsclient "github.com/auth0/go-auth0/v3/management/connections/client"
@@ -63,6 +64,7 @@ type Management struct {
 	Agents                *agents.Client
 	Branding              *brandingclient.Client
 	ClientGrants          *clientgrantsclient.Client
+	ClientProfiles        *clientprofiles.Client
 	Clients               *clientsclient.Client
 	ConnectionProfiles    *connectionprofiles.Client
 	Connections           *connectionsclient.Client
@@ -132,6 +134,7 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Agents:                agents.NewClient(options),
 		Branding:              brandingclient.NewClient(options),
 		ClientGrants:          clientgrantsclient.NewClient(options),
+		ClientProfiles:        clientprofiles.NewClient(options),
 		Clients:               clientsclient.NewClient(options),
 		ConnectionProfiles:    connectionprofiles.NewClient(options),
 		Connections:           connectionsclient.NewClient(options),

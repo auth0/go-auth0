@@ -409,6 +409,29 @@ func (c CertificateSubjectDnCredentialTypeEnum) Ptr() *CertificateSubjectDnCrede
 	return &c
 }
 
+// Indicates who created the client. The value <code>admin</code> indicates the client was registered via the Management API. The value <code>client</code> indicates the client was registered dynamically.
+type CimdExternalMetadataCreatedByEnum string
+
+const (
+	CimdExternalMetadataCreatedByEnumAdmin  CimdExternalMetadataCreatedByEnum = "admin"
+	CimdExternalMetadataCreatedByEnumClient CimdExternalMetadataCreatedByEnum = "client"
+)
+
+func NewCimdExternalMetadataCreatedByEnumFromString(s string) (CimdExternalMetadataCreatedByEnum, error) {
+	switch s {
+	case "admin":
+		return CimdExternalMetadataCreatedByEnumAdmin, nil
+	case "client":
+		return CimdExternalMetadataCreatedByEnumClient, nil
+	}
+	var t CimdExternalMetadataCreatedByEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CimdExternalMetadataCreatedByEnum) Ptr() *CimdExternalMetadataCreatedByEnum {
+	return &c
+}
+
 var (
 	cimdMappedClientAuthenticationMethodsFieldPrivateKeyJwt = big.NewInt(1 << 0)
 )
@@ -1160,8 +1183,9 @@ var (
 	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
 	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
 	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
 )
 
 // clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
@@ -1280,6 +1304,7 @@ type Client struct {
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -1760,6 +1785,13 @@ func (c *Client) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByE
 		return ""
 	}
 	return *c.ExternalMetadataCreatedBy
+}
+
+func (c *Client) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
 }
 
 func (c *Client) GetExternalClientID() string {
@@ -2259,6 +2291,13 @@ func (c *Client) SetExternalMetadataType(externalMetadataType *ClientExternalMet
 func (c *Client) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
 	c.ExternalMetadataCreatedBy = externalMetadataCreatedBy
 	c.require(clientFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	c.ExternalMetadataStatus = externalMetadataStatus
+	c.require(clientFieldExternalMetadataStatus)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -7331,6 +7370,29 @@ func (c ClientExternalMetadataCreatedByEnum) Ptr() *ClientExternalMetadataCreate
 	return &c
 }
 
+// Indicates whether the Client ID Metadata Document at <code>external_client_id</code> is currently reachable. For clients with <code>external_metadata_created_by</code> set to <code>client</code> the status is calculated from the document; for <code>admin</code> it is always <code>available</code>. When absent, the status is assumed to be <code>available</code>.
+type ClientExternalMetadataStatusEnum string
+
+const (
+	ClientExternalMetadataStatusEnumAvailable   ClientExternalMetadataStatusEnum = "available"
+	ClientExternalMetadataStatusEnumUnavailable ClientExternalMetadataStatusEnum = "unavailable"
+)
+
+func NewClientExternalMetadataStatusEnumFromString(s string) (ClientExternalMetadataStatusEnum, error) {
+	switch s {
+	case "available":
+		return ClientExternalMetadataStatusEnumAvailable, nil
+	case "unavailable":
+		return ClientExternalMetadataStatusEnumUnavailable, nil
+	}
+	var t ClientExternalMetadataStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientExternalMetadataStatusEnum) Ptr() *ClientExternalMetadataStatusEnum {
+	return &c
+}
+
 // Indicates the type of external metadata used to register the client. This field is omitted for regular clients. The value <code>cimd</code> identifies clients registered via a Client ID Metadata Document. The value <code>dcr</code> identifies clients registered via Dynamic Client Registration.
 type ClientExternalMetadataTypeEnum string
 
@@ -9862,8 +9924,9 @@ var (
 	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
 	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 61)
 	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
-	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 65)
 )
 
 // clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
@@ -9975,6 +10038,7 @@ type ClientSearchResponse struct {
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -10427,6 +10491,13 @@ func (c *ClientSearchResponse) GetExternalMetadataCreatedBy() ClientExternalMeta
 		return ""
 	}
 	return *c.ExternalMetadataCreatedBy
+}
+
+func (c *ClientSearchResponse) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
 }
 
 func (c *ClientSearchResponse) GetExternalClientID() string {
@@ -10898,6 +10969,13 @@ func (c *ClientSearchResponse) SetExternalMetadataType(externalMetadataType *Cli
 func (c *ClientSearchResponse) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
 	c.ExternalMetadataCreatedBy = externalMetadataCreatedBy
 	c.require(clientSearchResponseFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	c.ExternalMetadataStatus = externalMetadataStatus
+	c.require(clientSearchResponseFieldExternalMetadataStatus)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -12466,8 +12544,9 @@ var (
 	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
 	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
 	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
 )
 
 // createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -12586,6 +12665,7 @@ type CreateClientResponseContent struct {
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -13066,6 +13146,13 @@ func (c *CreateClientResponseContent) GetExternalMetadataCreatedBy() ClientExter
 		return ""
 	}
 	return *c.ExternalMetadataCreatedBy
+}
+
+func (c *CreateClientResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
 }
 
 func (c *CreateClientResponseContent) GetExternalClientID() string {
@@ -13565,6 +13652,13 @@ func (c *CreateClientResponseContent) SetExternalMetadataType(externalMetadataTy
 func (c *CreateClientResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
 	c.ExternalMetadataCreatedBy = externalMetadataCreatedBy
 	c.require(createClientResponseContentFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	c.ExternalMetadataStatus = externalMetadataStatus
+	c.require(createClientResponseContentFieldExternalMetadataStatus)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -14695,8 +14789,9 @@ var (
 	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
 	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
 	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
 )
 
 // getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -14815,6 +14910,7 @@ type GetClientResponseContent struct {
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -15295,6 +15391,13 @@ func (g *GetClientResponseContent) GetExternalMetadataCreatedBy() ClientExternal
 		return ""
 	}
 	return *g.ExternalMetadataCreatedBy
+}
+
+func (g *GetClientResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if g == nil || g.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *g.ExternalMetadataStatus
 }
 
 func (g *GetClientResponseContent) GetExternalClientID() string {
@@ -15794,6 +15897,13 @@ func (g *GetClientResponseContent) SetExternalMetadataType(externalMetadataType 
 func (g *GetClientResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
 	g.ExternalMetadataCreatedBy = externalMetadataCreatedBy
 	g.require(getClientResponseContentFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	g.ExternalMetadataStatus = externalMetadataStatus
+	g.require(getClientResponseContentFieldExternalMetadataStatus)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -16962,15 +17072,17 @@ func (n *NativeSocialLoginPatch) String() string {
 }
 
 var (
-	previewCimdMetadataResponseContentFieldClientID     = big.NewInt(1 << 0)
-	previewCimdMetadataResponseContentFieldErrors       = big.NewInt(1 << 1)
-	previewCimdMetadataResponseContentFieldValidation   = big.NewInt(1 << 2)
-	previewCimdMetadataResponseContentFieldMappedFields = big.NewInt(1 << 3)
+	previewCimdMetadataResponseContentFieldClientID                  = big.NewInt(1 << 0)
+	previewCimdMetadataResponseContentFieldExternalMetadataCreatedBy = big.NewInt(1 << 1)
+	previewCimdMetadataResponseContentFieldErrors                    = big.NewInt(1 << 2)
+	previewCimdMetadataResponseContentFieldValidation                = big.NewInt(1 << 3)
+	previewCimdMetadataResponseContentFieldMappedFields              = big.NewInt(1 << 4)
 )
 
 type PreviewCimdMetadataResponseContent struct {
 	// The client_id of an existing client registered with this external_client_id, if one exists.
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID                  *string                            `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ExternalMetadataCreatedBy *CimdExternalMetadataCreatedByEnum `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	// Array of retrieval errors (populated when the metadata document could not be fetched). When present, validation is omitted.
 	Errors       []string                `json:"errors,omitempty" url:"errors,omitempty"`
 	Validation   *CimdValidationResult   `json:"validation,omitempty" url:"validation,omitempty"`
@@ -16989,6 +17101,13 @@ func (p *PreviewCimdMetadataResponseContent) GetClientID() string {
 		return ""
 	}
 	return *p.ClientID
+}
+
+func (p *PreviewCimdMetadataResponseContent) GetExternalMetadataCreatedBy() CimdExternalMetadataCreatedByEnum {
+	if p == nil || p.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *p.ExternalMetadataCreatedBy
 }
 
 func (p *PreviewCimdMetadataResponseContent) GetErrors() []string {
@@ -17033,6 +17152,13 @@ func (p *PreviewCimdMetadataResponseContent) require(field *big.Int) {
 func (p *PreviewCimdMetadataResponseContent) SetClientID(clientID *string) {
 	p.ClientID = clientID
 	p.require(previewCimdMetadataResponseContentFieldClientID)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PreviewCimdMetadataResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *CimdExternalMetadataCreatedByEnum) {
+	p.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	p.require(previewCimdMetadataResponseContentFieldExternalMetadataCreatedBy)
 }
 
 // SetErrors sets the Errors field and marks it as non-optional;
@@ -17556,8 +17682,9 @@ var (
 	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
 	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
 	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
 )
 
 // rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
@@ -17676,6 +17803,7 @@ type RotateClientSecretResponseContent struct {
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -18156,6 +18284,13 @@ func (r *RotateClientSecretResponseContent) GetExternalMetadataCreatedBy() Clien
 		return ""
 	}
 	return *r.ExternalMetadataCreatedBy
+}
+
+func (r *RotateClientSecretResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if r == nil || r.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *r.ExternalMetadataStatus
 }
 
 func (r *RotateClientSecretResponseContent) GetExternalClientID() string {
@@ -18657,6 +18792,13 @@ func (r *RotateClientSecretResponseContent) SetExternalMetadataCreatedBy(externa
 	r.require(rotateClientSecretResponseContentFieldExternalMetadataCreatedBy)
 }
 
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	r.ExternalMetadataStatus = externalMetadataStatus
+	r.require(rotateClientSecretResponseContentFieldExternalMetadataStatus)
+}
+
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetExternalClientID(externalClientID *string) {
@@ -19096,8 +19238,9 @@ var (
 	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
 	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
 	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
 )
 
 // updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -19216,6 +19359,7 @@ type UpdateClientResponseContent struct {
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -19696,6 +19840,13 @@ func (u *UpdateClientResponseContent) GetExternalMetadataCreatedBy() ClientExter
 		return ""
 	}
 	return *u.ExternalMetadataCreatedBy
+}
+
+func (u *UpdateClientResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if u == nil || u.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *u.ExternalMetadataStatus
 }
 
 func (u *UpdateClientResponseContent) GetExternalClientID() string {
@@ -20195,6 +20346,13 @@ func (u *UpdateClientResponseContent) SetExternalMetadataType(externalMetadataTy
 func (u *UpdateClientResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
 	u.ExternalMetadataCreatedBy = externalMetadataCreatedBy
 	u.require(updateClientResponseContentFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	u.ExternalMetadataStatus = externalMetadataStatus
+	u.require(updateClientResponseContentFieldExternalMetadataStatus)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
