@@ -1,5 +1,17 @@
 # Change Log
 
+## [v3.9.0](https://github.com/auth0/go-auth0/tree/v3.9.0) (2026-10-14)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.8.0...v3.9.0)
+
+**Added**
+- feat: add `ClientProfiles` for managing client profiles with `List`, `Create`, `Get`, `Update`, and `Delete`, along with the `ClientProfile`, `ClientProfileApplyPolicy`, and `ClientProfileClientConfiguration` types [\#898](https://github.com/auth0/go-auth0/pull/898) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `AttackProtection.CaptchaPolicies` for managing captcha policies with `List`, `Create`, `Get`, `Update`, and `Delete`, along with the `CaptchaPolicyAction` types and `CaptchaActiveProviderEnum` [\#898](https://github.com/auth0/go-auth0/pull/898) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ClientGrants.Search` with the `SearchClientGrantsRequestParameters`, `SearchClientGrantsResponseContent`, and `ClientGrantSortFieldEnum` types [\#898](https://github.com/auth0/go-auth0/pull/898) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Clients.PreviewCimdMetadata` for previewing a Client ID Metadata Document, along with `ExternalMetadataStatus` on client responses and `ClientIDMetadataDocumentDynamicRegistrationSupported` on the tenant settings request and response types [\#898](https://github.com/auth0/go-auth0/pull/898) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Fixed**
+- fix: redact `Proxy-Authorization` headers in debug dumps, which were previously logged in plain text [\#896](https://github.com/auth0/go-auth0/pull/896) ([developerkunal](https://github.com/developerkunal))
+
 ## [v3.8.0](https://github.com/auth0/go-auth0/tree/v3.8.0) (2026-10-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.7.0...v3.8.0)
 
