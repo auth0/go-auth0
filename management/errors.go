@@ -193,7 +193,7 @@ func (g *GoneError) GetBody() any {
 	return g.Body
 }
 
-// An internal server error occurred.
+// An internal server error occurred
 type InternalServerError struct {
 	*core.APIError
 	Body any

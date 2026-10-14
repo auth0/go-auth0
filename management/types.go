@@ -7081,6 +7081,726 @@ func (a *AttackProtectionCaptchaHcaptchaResponseContent) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+var (
+	attackProtectionCaptchaPolicyFieldID          = big.NewInt(1 << 0)
+	attackProtectionCaptchaPolicyFieldName        = big.NewInt(1 << 1)
+	attackProtectionCaptchaPolicyFieldDescription = big.NewInt(1 << 2)
+	attackProtectionCaptchaPolicyFieldPriority    = big.NewInt(1 << 3)
+	attackProtectionCaptchaPolicyFieldMatch       = big.NewInt(1 << 4)
+	attackProtectionCaptchaPolicyFieldAction      = big.NewInt(1 << 5)
+	attackProtectionCaptchaPolicyFieldCreatedAt   = big.NewInt(1 << 6)
+	attackProtectionCaptchaPolicyFieldUpdatedAt   = big.NewInt(1 << 7)
+)
+
+// An attack protection policy override for CAPTCHA.
+type AttackProtectionCaptchaPolicy struct {
+	// System-generated identifier for the policy.
+	ID string `json:"id" url:"id"`
+	// Human-readable policy name.
+	Name string `json:"name" url:"name"`
+	// Description of the policy's purpose.
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Conflict resolution order. Lower number takes higher precedence.
+	Priority int                                  `json:"priority" url:"priority"`
+	Match    *AttackProtectionCaptchaPolicyMatch  `json:"match" url:"match"`
+	Action   *AttackProtectionCaptchaPolicyAction `json:"action" url:"action"`
+	// ISO 8601 timestamp when the policy was created.
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// ISO 8601 timestamp when the policy was last updated.
+	UpdatedAt time.Time `json:"updated_at" url:"updated_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetID() string {
+	if a == nil {
+		return ""
+	}
+	return a.ID
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetName() string {
+	if a == nil {
+		return ""
+	}
+	return a.Name
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetDescription() string {
+	if a == nil || a.Description == nil {
+		return ""
+	}
+	return *a.Description
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetPriority() int {
+	if a == nil {
+		return 0
+	}
+	return a.Priority
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetMatch() *AttackProtectionCaptchaPolicyMatch {
+	if a == nil {
+		return nil
+	}
+	return a.Match
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetAction() *AttackProtectionCaptchaPolicyAction {
+	if a == nil {
+		return nil
+	}
+	return a.Action
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetCreatedAt() time.Time {
+	if a == nil {
+		return time.Time{}
+	}
+	return a.CreatedAt
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetUpdatedAt() time.Time {
+	if a == nil {
+		return time.Time{}
+	}
+	return a.UpdatedAt
+}
+
+func (a *AttackProtectionCaptchaPolicy) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AttackProtectionCaptchaPolicy) require(field *big.Int) {
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
+	}
+	next.Or(next, field)
+	a.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetID(id string) {
+	a.ID = id
+	a.require(attackProtectionCaptchaPolicyFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetName(name string) {
+	a.Name = name
+	a.require(attackProtectionCaptchaPolicyFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetDescription(description *string) {
+	a.Description = description
+	a.require(attackProtectionCaptchaPolicyFieldDescription)
+}
+
+// SetPriority sets the Priority field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetPriority(priority int) {
+	a.Priority = priority
+	a.require(attackProtectionCaptchaPolicyFieldPriority)
+}
+
+// SetMatch sets the Match field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetMatch(match *AttackProtectionCaptchaPolicyMatch) {
+	a.Match = match
+	a.require(attackProtectionCaptchaPolicyFieldMatch)
+}
+
+// SetAction sets the Action field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetAction(action *AttackProtectionCaptchaPolicyAction) {
+	a.Action = action
+	a.require(attackProtectionCaptchaPolicyFieldAction)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetCreatedAt(createdAt time.Time) {
+	a.CreatedAt = createdAt
+	a.require(attackProtectionCaptchaPolicyFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicy) SetUpdatedAt(updatedAt time.Time) {
+	a.UpdatedAt = updatedAt
+	a.require(attackProtectionCaptchaPolicyFieldUpdatedAt)
+}
+
+func (a *AttackProtectionCaptchaPolicy) UnmarshalJSON(data []byte) error {
+	type embed AttackProtectionCaptchaPolicy
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed: embed(*a),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaPolicy(unmarshaler.embed)
+	a.CreatedAt = unmarshaler.CreatedAt.Time()
+	a.UpdatedAt = unmarshaler.UpdatedAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaPolicy) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaPolicy
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		UpdatedAt *internal.DateTime `json:"updated_at"`
+	}{
+		embed:     embed(*a),
+		CreatedAt: internal.NewDateTime(a.CreatedAt),
+		UpdatedAt: internal.NewDateTime(a.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionCaptchaPolicy) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaPolicyActionFieldActiveProviderID    = big.NewInt(1 << 0)
+	attackProtectionCaptchaPolicyActionFieldSimpleCaptcha       = big.NewInt(1 << 1)
+	attackProtectionCaptchaPolicyActionFieldAuthChallenge       = big.NewInt(1 << 2)
+	attackProtectionCaptchaPolicyActionFieldRecaptchaV2         = big.NewInt(1 << 3)
+	attackProtectionCaptchaPolicyActionFieldRecaptchaEnterprise = big.NewInt(1 << 4)
+	attackProtectionCaptchaPolicyActionFieldHcaptcha            = big.NewInt(1 << 5)
+	attackProtectionCaptchaPolicyActionFieldFriendlyCaptcha     = big.NewInt(1 << 6)
+	attackProtectionCaptchaPolicyActionFieldArkose              = big.NewInt(1 << 7)
+)
+
+// CAPTCHA configuration override stored for this policy.
+type AttackProtectionCaptchaPolicyAction struct {
+	ActiveProviderID    *CaptchaActiveProviderEnum              `json:"active_provider_id,omitempty" url:"active_provider_id,omitempty"`
+	SimpleCaptcha       *CaptchaPolicyActionSimpleCaptcha       `json:"simple_captcha,omitempty" url:"simple_captcha,omitempty"`
+	AuthChallenge       *CaptchaPolicyActionAuthChallenge       `json:"auth_challenge,omitempty" url:"auth_challenge,omitempty"`
+	RecaptchaV2         *CaptchaPolicyActionRecaptchaV2         `json:"recaptcha_v2,omitempty" url:"recaptcha_v2,omitempty"`
+	RecaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterprise `json:"recaptcha_enterprise,omitempty" url:"recaptcha_enterprise,omitempty"`
+	Hcaptcha            *CaptchaPolicyActionHcaptcha            `json:"hcaptcha,omitempty" url:"hcaptcha,omitempty"`
+	FriendlyCaptcha     *CaptchaPolicyActionFriendlyCaptcha     `json:"friendly_captcha,omitempty" url:"friendly_captcha,omitempty"`
+	Arkose              *CaptchaPolicyActionArkose              `json:"arkose,omitempty" url:"arkose,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetActiveProviderID() CaptchaActiveProviderEnum {
+	if a == nil || a.ActiveProviderID == nil {
+		return ""
+	}
+	return *a.ActiveProviderID
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetSimpleCaptcha() CaptchaPolicyActionSimpleCaptcha {
+	if a == nil || a.SimpleCaptcha == nil {
+		return CaptchaPolicyActionSimpleCaptcha{}
+	}
+	return *a.SimpleCaptcha
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetAuthChallenge() CaptchaPolicyActionAuthChallenge {
+	if a == nil || a.AuthChallenge == nil {
+		return CaptchaPolicyActionAuthChallenge{}
+	}
+	return *a.AuthChallenge
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetRecaptchaV2() CaptchaPolicyActionRecaptchaV2 {
+	if a == nil || a.RecaptchaV2 == nil {
+		return CaptchaPolicyActionRecaptchaV2{}
+	}
+	return *a.RecaptchaV2
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetRecaptchaEnterprise() CaptchaPolicyActionRecaptchaEnterprise {
+	if a == nil || a.RecaptchaEnterprise == nil {
+		return CaptchaPolicyActionRecaptchaEnterprise{}
+	}
+	return *a.RecaptchaEnterprise
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetHcaptcha() CaptchaPolicyActionHcaptcha {
+	if a == nil || a.Hcaptcha == nil {
+		return CaptchaPolicyActionHcaptcha{}
+	}
+	return *a.Hcaptcha
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetFriendlyCaptcha() CaptchaPolicyActionFriendlyCaptcha {
+	if a == nil || a.FriendlyCaptcha == nil {
+		return CaptchaPolicyActionFriendlyCaptcha{}
+	}
+	return *a.FriendlyCaptcha
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetArkose() CaptchaPolicyActionArkose {
+	if a == nil || a.Arkose == nil {
+		return CaptchaPolicyActionArkose{}
+	}
+	return *a.Arkose
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) require(field *big.Int) {
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
+	}
+	next.Or(next, field)
+	a.explicitFields = next
+}
+
+// SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetActiveProviderID(activeProviderID *CaptchaActiveProviderEnum) {
+	a.ActiveProviderID = activeProviderID
+	a.require(attackProtectionCaptchaPolicyActionFieldActiveProviderID)
+}
+
+// SetSimpleCaptcha sets the SimpleCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetSimpleCaptcha(simpleCaptcha *CaptchaPolicyActionSimpleCaptcha) {
+	a.SimpleCaptcha = simpleCaptcha
+	a.require(attackProtectionCaptchaPolicyActionFieldSimpleCaptcha)
+}
+
+// SetAuthChallenge sets the AuthChallenge field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetAuthChallenge(authChallenge *CaptchaPolicyActionAuthChallenge) {
+	a.AuthChallenge = authChallenge
+	a.require(attackProtectionCaptchaPolicyActionFieldAuthChallenge)
+}
+
+// SetRecaptchaV2 sets the RecaptchaV2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetRecaptchaV2(recaptchaV2 *CaptchaPolicyActionRecaptchaV2) {
+	a.RecaptchaV2 = recaptchaV2
+	a.require(attackProtectionCaptchaPolicyActionFieldRecaptchaV2)
+}
+
+// SetRecaptchaEnterprise sets the RecaptchaEnterprise field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetRecaptchaEnterprise(recaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterprise) {
+	a.RecaptchaEnterprise = recaptchaEnterprise
+	a.require(attackProtectionCaptchaPolicyActionFieldRecaptchaEnterprise)
+}
+
+// SetHcaptcha sets the Hcaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetHcaptcha(hcaptcha *CaptchaPolicyActionHcaptcha) {
+	a.Hcaptcha = hcaptcha
+	a.require(attackProtectionCaptchaPolicyActionFieldHcaptcha)
+}
+
+// SetFriendlyCaptcha sets the FriendlyCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetFriendlyCaptcha(friendlyCaptcha *CaptchaPolicyActionFriendlyCaptcha) {
+	a.FriendlyCaptcha = friendlyCaptcha
+	a.require(attackProtectionCaptchaPolicyActionFieldFriendlyCaptcha)
+}
+
+// SetArkose sets the Arkose field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyAction) SetArkose(arkose *CaptchaPolicyActionArkose) {
+	a.Arkose = arkose
+	a.require(attackProtectionCaptchaPolicyActionFieldArkose)
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionCaptchaPolicyAction
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaPolicyAction(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaPolicyAction
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionCaptchaPolicyAction) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaPolicyActionInputFieldActiveProviderID    = big.NewInt(1 << 0)
+	attackProtectionCaptchaPolicyActionInputFieldSimpleCaptcha       = big.NewInt(1 << 1)
+	attackProtectionCaptchaPolicyActionInputFieldAuthChallenge       = big.NewInt(1 << 2)
+	attackProtectionCaptchaPolicyActionInputFieldRecaptchaV2         = big.NewInt(1 << 3)
+	attackProtectionCaptchaPolicyActionInputFieldRecaptchaEnterprise = big.NewInt(1 << 4)
+	attackProtectionCaptchaPolicyActionInputFieldHcaptcha            = big.NewInt(1 << 5)
+	attackProtectionCaptchaPolicyActionInputFieldFriendlyCaptcha     = big.NewInt(1 << 6)
+	attackProtectionCaptchaPolicyActionInputFieldArkose              = big.NewInt(1 << 7)
+)
+
+// CAPTCHA configuration override for this policy.
+type AttackProtectionCaptchaPolicyActionInput struct {
+	ActiveProviderID    *CaptchaActiveProviderEnum                   `json:"active_provider_id,omitempty" url:"active_provider_id,omitempty"`
+	SimpleCaptcha       *CaptchaPolicyActionSimpleCaptcha            `json:"simple_captcha,omitempty" url:"simple_captcha,omitempty"`
+	AuthChallenge       *CaptchaPolicyActionAuthChallenge            `json:"auth_challenge,omitempty" url:"auth_challenge,omitempty"`
+	RecaptchaV2         *CaptchaPolicyActionRecaptchaV2Input         `json:"recaptcha_v2,omitempty" url:"recaptcha_v2,omitempty"`
+	RecaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterpriseInput `json:"recaptcha_enterprise,omitempty" url:"recaptcha_enterprise,omitempty"`
+	Hcaptcha            *CaptchaPolicyActionHcaptchaInput            `json:"hcaptcha,omitempty" url:"hcaptcha,omitempty"`
+	FriendlyCaptcha     *CaptchaPolicyActionFriendlyCaptchaInput     `json:"friendly_captcha,omitempty" url:"friendly_captcha,omitempty"`
+	Arkose              *CaptchaPolicyActionArkoseInput              `json:"arkose,omitempty" url:"arkose,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetActiveProviderID() CaptchaActiveProviderEnum {
+	if a == nil || a.ActiveProviderID == nil {
+		return ""
+	}
+	return *a.ActiveProviderID
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetSimpleCaptcha() CaptchaPolicyActionSimpleCaptcha {
+	if a == nil || a.SimpleCaptcha == nil {
+		return CaptchaPolicyActionSimpleCaptcha{}
+	}
+	return *a.SimpleCaptcha
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetAuthChallenge() CaptchaPolicyActionAuthChallenge {
+	if a == nil || a.AuthChallenge == nil {
+		return CaptchaPolicyActionAuthChallenge{}
+	}
+	return *a.AuthChallenge
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetRecaptchaV2() CaptchaPolicyActionRecaptchaV2Input {
+	if a == nil || a.RecaptchaV2 == nil {
+		return CaptchaPolicyActionRecaptchaV2Input{}
+	}
+	return *a.RecaptchaV2
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetRecaptchaEnterprise() CaptchaPolicyActionRecaptchaEnterpriseInput {
+	if a == nil || a.RecaptchaEnterprise == nil {
+		return CaptchaPolicyActionRecaptchaEnterpriseInput{}
+	}
+	return *a.RecaptchaEnterprise
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetHcaptcha() CaptchaPolicyActionHcaptchaInput {
+	if a == nil || a.Hcaptcha == nil {
+		return CaptchaPolicyActionHcaptchaInput{}
+	}
+	return *a.Hcaptcha
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetFriendlyCaptcha() CaptchaPolicyActionFriendlyCaptchaInput {
+	if a == nil || a.FriendlyCaptcha == nil {
+		return CaptchaPolicyActionFriendlyCaptchaInput{}
+	}
+	return *a.FriendlyCaptcha
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetArkose() CaptchaPolicyActionArkoseInput {
+	if a == nil || a.Arkose == nil {
+		return CaptchaPolicyActionArkoseInput{}
+	}
+	return *a.Arkose
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) require(field *big.Int) {
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
+	}
+	next.Or(next, field)
+	a.explicitFields = next
+}
+
+// SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetActiveProviderID(activeProviderID *CaptchaActiveProviderEnum) {
+	a.ActiveProviderID = activeProviderID
+	a.require(attackProtectionCaptchaPolicyActionInputFieldActiveProviderID)
+}
+
+// SetSimpleCaptcha sets the SimpleCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetSimpleCaptcha(simpleCaptcha *CaptchaPolicyActionSimpleCaptcha) {
+	a.SimpleCaptcha = simpleCaptcha
+	a.require(attackProtectionCaptchaPolicyActionInputFieldSimpleCaptcha)
+}
+
+// SetAuthChallenge sets the AuthChallenge field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetAuthChallenge(authChallenge *CaptchaPolicyActionAuthChallenge) {
+	a.AuthChallenge = authChallenge
+	a.require(attackProtectionCaptchaPolicyActionInputFieldAuthChallenge)
+}
+
+// SetRecaptchaV2 sets the RecaptchaV2 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetRecaptchaV2(recaptchaV2 *CaptchaPolicyActionRecaptchaV2Input) {
+	a.RecaptchaV2 = recaptchaV2
+	a.require(attackProtectionCaptchaPolicyActionInputFieldRecaptchaV2)
+}
+
+// SetRecaptchaEnterprise sets the RecaptchaEnterprise field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetRecaptchaEnterprise(recaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterpriseInput) {
+	a.RecaptchaEnterprise = recaptchaEnterprise
+	a.require(attackProtectionCaptchaPolicyActionInputFieldRecaptchaEnterprise)
+}
+
+// SetHcaptcha sets the Hcaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetHcaptcha(hcaptcha *CaptchaPolicyActionHcaptchaInput) {
+	a.Hcaptcha = hcaptcha
+	a.require(attackProtectionCaptchaPolicyActionInputFieldHcaptcha)
+}
+
+// SetFriendlyCaptcha sets the FriendlyCaptcha field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetFriendlyCaptcha(friendlyCaptcha *CaptchaPolicyActionFriendlyCaptchaInput) {
+	a.FriendlyCaptcha = friendlyCaptcha
+	a.require(attackProtectionCaptchaPolicyActionInputFieldFriendlyCaptcha)
+}
+
+// SetArkose sets the Arkose field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyActionInput) SetArkose(arkose *CaptchaPolicyActionArkoseInput) {
+	a.Arkose = arkose
+	a.require(attackProtectionCaptchaPolicyActionInputFieldArkose)
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionCaptchaPolicyActionInput
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaPolicyActionInput(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaPolicyActionInput
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionCaptchaPolicyActionInput) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
+var (
+	attackProtectionCaptchaPolicyMatchFieldAuth0Managed    = big.NewInt(1 << 0)
+	attackProtectionCaptchaPolicyMatchFieldGeoCountryCodes = big.NewInt(1 << 1)
+)
+
+// Traffic matching criteria for the policy. Exactly one of auth0_managed or geo_country_codes must be specified.
+type AttackProtectionCaptchaPolicyMatch struct {
+	// Match by Auth0-managed traffic identifiers.
+	Auth0Managed []string `json:"auth0_managed,omitempty" url:"auth0_managed,omitempty"`
+	// Match by ISO 3166-1 alpha-2 country codes.
+	GeoCountryCodes []string `json:"geo_country_codes,omitempty" url:"geo_country_codes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AttackProtectionCaptchaPolicyMatch) GetAuth0Managed() []string {
+	if a == nil || a.Auth0Managed == nil {
+		return nil
+	}
+	return a.Auth0Managed
+}
+
+func (a *AttackProtectionCaptchaPolicyMatch) GetGeoCountryCodes() []string {
+	if a == nil || a.GeoCountryCodes == nil {
+		return nil
+	}
+	return a.GeoCountryCodes
+}
+
+func (a *AttackProtectionCaptchaPolicyMatch) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AttackProtectionCaptchaPolicyMatch) require(field *big.Int) {
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
+	}
+	next.Or(next, field)
+	a.explicitFields = next
+}
+
+// SetAuth0Managed sets the Auth0Managed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyMatch) SetAuth0Managed(auth0Managed []string) {
+	a.Auth0Managed = auth0Managed
+	a.require(attackProtectionCaptchaPolicyMatchFieldAuth0Managed)
+}
+
+// SetGeoCountryCodes sets the GeoCountryCodes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AttackProtectionCaptchaPolicyMatch) SetGeoCountryCodes(geoCountryCodes []string) {
+	a.GeoCountryCodes = geoCountryCodes
+	a.require(attackProtectionCaptchaPolicyMatchFieldGeoCountryCodes)
+}
+
+func (a *AttackProtectionCaptchaPolicyMatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler AttackProtectionCaptchaPolicyMatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AttackProtectionCaptchaPolicyMatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AttackProtectionCaptchaPolicyMatch) MarshalJSON() ([]byte, error) {
+	type embed AttackProtectionCaptchaPolicyMatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AttackProtectionCaptchaPolicyMatch) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
 // The id of the active provider for the CAPTCHA.
 type AttackProtectionCaptchaProviderID string
 
@@ -11090,6 +11810,1301 @@ func (b *BulkUpdateAculResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", b)
+}
+
+// The CAPTCHA provider type.
+type CaptchaActiveProviderEnum string
+
+const (
+	CaptchaActiveProviderEnumSimpleCaptcha       CaptchaActiveProviderEnum = "simple_captcha"
+	CaptchaActiveProviderEnumAuthChallenge       CaptchaActiveProviderEnum = "auth_challenge"
+	CaptchaActiveProviderEnumRecaptchaV2         CaptchaActiveProviderEnum = "recaptcha_v2"
+	CaptchaActiveProviderEnumRecaptchaEnterprise CaptchaActiveProviderEnum = "recaptcha_enterprise"
+	CaptchaActiveProviderEnumHcaptcha            CaptchaActiveProviderEnum = "hcaptcha"
+	CaptchaActiveProviderEnumFriendlyCaptcha     CaptchaActiveProviderEnum = "friendly_captcha"
+	CaptchaActiveProviderEnumArkose              CaptchaActiveProviderEnum = "arkose"
+)
+
+func NewCaptchaActiveProviderEnumFromString(s string) (CaptchaActiveProviderEnum, error) {
+	switch s {
+	case "simple_captcha":
+		return CaptchaActiveProviderEnumSimpleCaptcha, nil
+	case "auth_challenge":
+		return CaptchaActiveProviderEnumAuthChallenge, nil
+	case "recaptcha_v2":
+		return CaptchaActiveProviderEnumRecaptchaV2, nil
+	case "recaptcha_enterprise":
+		return CaptchaActiveProviderEnumRecaptchaEnterprise, nil
+	case "hcaptcha":
+		return CaptchaActiveProviderEnumHcaptcha, nil
+	case "friendly_captcha":
+		return CaptchaActiveProviderEnumFriendlyCaptcha, nil
+	case "arkose":
+		return CaptchaActiveProviderEnumArkose, nil
+	}
+	var t CaptchaActiveProviderEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CaptchaActiveProviderEnum) Ptr() *CaptchaActiveProviderEnum {
+	return &c
+}
+
+var (
+	captchaPolicyActionArkoseFieldSiteKey         = big.NewInt(1 << 0)
+	captchaPolicyActionArkoseFieldClientSubdomain = big.NewInt(1 << 1)
+	captchaPolicyActionArkoseFieldVerifySubdomain = big.NewInt(1 << 2)
+	captchaPolicyActionArkoseFieldFailOpen        = big.NewInt(1 << 3)
+)
+
+// Arkose Labs provider configuration.
+type CaptchaPolicyActionArkose struct {
+	// The Arkose Labs site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The Arkose Labs client subdomain.
+	ClientSubdomain *string `json:"client_subdomain,omitempty" url:"client_subdomain,omitempty"`
+	// The Arkose Labs verify subdomain.
+	VerifySubdomain *string `json:"verify_subdomain,omitempty" url:"verify_subdomain,omitempty"`
+	// Whether to allow access when Arkose Labs is unavailable.
+	FailOpen *bool `json:"fail_open,omitempty" url:"fail_open,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionArkose) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionArkose) GetClientSubdomain() string {
+	if c == nil || c.ClientSubdomain == nil {
+		return ""
+	}
+	return *c.ClientSubdomain
+}
+
+func (c *CaptchaPolicyActionArkose) GetVerifySubdomain() string {
+	if c == nil || c.VerifySubdomain == nil {
+		return ""
+	}
+	return *c.VerifySubdomain
+}
+
+func (c *CaptchaPolicyActionArkose) GetFailOpen() bool {
+	if c == nil || c.FailOpen == nil {
+		return false
+	}
+	return *c.FailOpen
+}
+
+func (c *CaptchaPolicyActionArkose) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionArkose) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkose) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionArkoseFieldSiteKey)
+}
+
+// SetClientSubdomain sets the ClientSubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkose) SetClientSubdomain(clientSubdomain *string) {
+	c.ClientSubdomain = clientSubdomain
+	c.require(captchaPolicyActionArkoseFieldClientSubdomain)
+}
+
+// SetVerifySubdomain sets the VerifySubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkose) SetVerifySubdomain(verifySubdomain *string) {
+	c.VerifySubdomain = verifySubdomain
+	c.require(captchaPolicyActionArkoseFieldVerifySubdomain)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkose) SetFailOpen(failOpen *bool) {
+	c.FailOpen = failOpen
+	c.require(captchaPolicyActionArkoseFieldFailOpen)
+}
+
+func (c *CaptchaPolicyActionArkose) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionArkose
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionArkose(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionArkose) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionArkose
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionArkose) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionArkoseInputFieldSiteKey         = big.NewInt(1 << 0)
+	captchaPolicyActionArkoseInputFieldSecret          = big.NewInt(1 << 1)
+	captchaPolicyActionArkoseInputFieldClientSubdomain = big.NewInt(1 << 2)
+	captchaPolicyActionArkoseInputFieldVerifySubdomain = big.NewInt(1 << 3)
+	captchaPolicyActionArkoseInputFieldFailOpen        = big.NewInt(1 << 4)
+)
+
+// Arkose Labs provider configuration.
+type CaptchaPolicyActionArkoseInput struct {
+	// The Arkose Labs site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The Arkose Labs private key. Encrypted at rest.
+	Secret *string `json:"secret,omitempty" url:"secret,omitempty"`
+	// The Arkose Labs client subdomain.
+	ClientSubdomain *string `json:"client_subdomain,omitempty" url:"client_subdomain,omitempty"`
+	// The Arkose Labs verify subdomain.
+	VerifySubdomain *string `json:"verify_subdomain,omitempty" url:"verify_subdomain,omitempty"`
+	// Whether to allow access when Arkose Labs is unavailable.
+	FailOpen *bool `json:"fail_open,omitempty" url:"fail_open,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionArkoseInput) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionArkoseInput) GetSecret() string {
+	if c == nil || c.Secret == nil {
+		return ""
+	}
+	return *c.Secret
+}
+
+func (c *CaptchaPolicyActionArkoseInput) GetClientSubdomain() string {
+	if c == nil || c.ClientSubdomain == nil {
+		return ""
+	}
+	return *c.ClientSubdomain
+}
+
+func (c *CaptchaPolicyActionArkoseInput) GetVerifySubdomain() string {
+	if c == nil || c.VerifySubdomain == nil {
+		return ""
+	}
+	return *c.VerifySubdomain
+}
+
+func (c *CaptchaPolicyActionArkoseInput) GetFailOpen() bool {
+	if c == nil || c.FailOpen == nil {
+		return false
+	}
+	return *c.FailOpen
+}
+
+func (c *CaptchaPolicyActionArkoseInput) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionArkoseInput) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkoseInput) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionArkoseInputFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkoseInput) SetSecret(secret *string) {
+	c.Secret = secret
+	c.require(captchaPolicyActionArkoseInputFieldSecret)
+}
+
+// SetClientSubdomain sets the ClientSubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkoseInput) SetClientSubdomain(clientSubdomain *string) {
+	c.ClientSubdomain = clientSubdomain
+	c.require(captchaPolicyActionArkoseInputFieldClientSubdomain)
+}
+
+// SetVerifySubdomain sets the VerifySubdomain field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkoseInput) SetVerifySubdomain(verifySubdomain *string) {
+	c.VerifySubdomain = verifySubdomain
+	c.require(captchaPolicyActionArkoseInputFieldVerifySubdomain)
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionArkoseInput) SetFailOpen(failOpen *bool) {
+	c.FailOpen = failOpen
+	c.require(captchaPolicyActionArkoseInputFieldFailOpen)
+}
+
+func (c *CaptchaPolicyActionArkoseInput) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionArkoseInput
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionArkoseInput(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionArkoseInput) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionArkoseInput
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionArkoseInput) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionAuthChallengeFieldFailOpen = big.NewInt(1 << 0)
+)
+
+// Auth Challenge CAPTCHA provider configuration.
+type CaptchaPolicyActionAuthChallenge struct {
+	// Whether to allow access when the challenge provider is unavailable.
+	FailOpen *bool `json:"fail_open,omitempty" url:"fail_open,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionAuthChallenge) GetFailOpen() bool {
+	if c == nil || c.FailOpen == nil {
+		return false
+	}
+	return *c.FailOpen
+}
+
+func (c *CaptchaPolicyActionAuthChallenge) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionAuthChallenge) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetFailOpen sets the FailOpen field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionAuthChallenge) SetFailOpen(failOpen *bool) {
+	c.FailOpen = failOpen
+	c.require(captchaPolicyActionAuthChallengeFieldFailOpen)
+}
+
+func (c *CaptchaPolicyActionAuthChallenge) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionAuthChallenge
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionAuthChallenge(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionAuthChallenge) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionAuthChallenge
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionAuthChallenge) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionFriendlyCaptchaFieldSiteKey = big.NewInt(1 << 0)
+)
+
+// Friendly Captcha provider configuration.
+type CaptchaPolicyActionFriendlyCaptcha struct {
+	// The Friendly Captcha site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptcha) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptcha) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptcha) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionFriendlyCaptcha) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionFriendlyCaptchaFieldSiteKey)
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptcha) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionFriendlyCaptcha
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionFriendlyCaptcha(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptcha) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionFriendlyCaptcha
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptcha) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionFriendlyCaptchaInputFieldSiteKey = big.NewInt(1 << 0)
+	captchaPolicyActionFriendlyCaptchaInputFieldSecret  = big.NewInt(1 << 1)
+)
+
+// Friendly Captcha provider configuration.
+type CaptchaPolicyActionFriendlyCaptchaInput struct {
+	// The Friendly Captcha site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The Friendly Captcha secret key. Encrypted at rest.
+	Secret *string `json:"secret,omitempty" url:"secret,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) GetSecret() string {
+	if c == nil || c.Secret == nil {
+		return ""
+	}
+	return *c.Secret
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionFriendlyCaptchaInputFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) SetSecret(secret *string) {
+	c.Secret = secret
+	c.require(captchaPolicyActionFriendlyCaptchaInputFieldSecret)
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionFriendlyCaptchaInput
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionFriendlyCaptchaInput(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionFriendlyCaptchaInput
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionFriendlyCaptchaInput) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionHcaptchaFieldSiteKey = big.NewInt(1 << 0)
+)
+
+// hCaptcha provider configuration.
+type CaptchaPolicyActionHcaptcha struct {
+	// The hCaptcha site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionHcaptcha) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionHcaptcha) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionHcaptcha) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionHcaptcha) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionHcaptchaFieldSiteKey)
+}
+
+func (c *CaptchaPolicyActionHcaptcha) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionHcaptcha
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionHcaptcha(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionHcaptcha) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionHcaptcha
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionHcaptcha) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionHcaptchaInputFieldSiteKey = big.NewInt(1 << 0)
+	captchaPolicyActionHcaptchaInputFieldSecret  = big.NewInt(1 << 1)
+)
+
+// hCaptcha provider configuration.
+type CaptchaPolicyActionHcaptchaInput struct {
+	// The hCaptcha site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The hCaptcha secret key. Encrypted at rest.
+	Secret *string `json:"secret,omitempty" url:"secret,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionHcaptchaInput) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionHcaptchaInput) GetSecret() string {
+	if c == nil || c.Secret == nil {
+		return ""
+	}
+	return *c.Secret
+}
+
+func (c *CaptchaPolicyActionHcaptchaInput) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionHcaptchaInput) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionHcaptchaInput) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionHcaptchaInputFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionHcaptchaInput) SetSecret(secret *string) {
+	c.Secret = secret
+	c.require(captchaPolicyActionHcaptchaInputFieldSecret)
+}
+
+func (c *CaptchaPolicyActionHcaptchaInput) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionHcaptchaInput
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionHcaptchaInput(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionHcaptchaInput) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionHcaptchaInput
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionHcaptchaInput) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionRecaptchaEnterpriseFieldSiteKey   = big.NewInt(1 << 0)
+	captchaPolicyActionRecaptchaEnterpriseFieldProjectID = big.NewInt(1 << 1)
+)
+
+// reCAPTCHA Enterprise provider configuration.
+type CaptchaPolicyActionRecaptchaEnterprise struct {
+	// The reCAPTCHA Enterprise site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The Google Cloud project ID.
+	ProjectID *string `json:"project_id,omitempty" url:"project_id,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterprise) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterprise) GetProjectID() string {
+	if c == nil || c.ProjectID == nil {
+		return ""
+	}
+	return *c.ProjectID
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterprise) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterprise) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaEnterprise) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionRecaptchaEnterpriseFieldSiteKey)
+}
+
+// SetProjectID sets the ProjectID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaEnterprise) SetProjectID(projectID *string) {
+	c.ProjectID = projectID
+	c.require(captchaPolicyActionRecaptchaEnterpriseFieldProjectID)
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterprise) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionRecaptchaEnterprise
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionRecaptchaEnterprise(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterprise) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionRecaptchaEnterprise
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterprise) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionRecaptchaEnterpriseInputFieldSiteKey   = big.NewInt(1 << 0)
+	captchaPolicyActionRecaptchaEnterpriseInputFieldProjectID = big.NewInt(1 << 1)
+	captchaPolicyActionRecaptchaEnterpriseInputFieldAPIKey    = big.NewInt(1 << 2)
+)
+
+// reCAPTCHA Enterprise provider configuration.
+type CaptchaPolicyActionRecaptchaEnterpriseInput struct {
+	// The reCAPTCHA Enterprise site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The Google Cloud project ID.
+	ProjectID *string `json:"project_id,omitempty" url:"project_id,omitempty"`
+	// The reCAPTCHA Enterprise API key. Encrypted at rest.
+	APIKey *string `json:"api_key,omitempty" url:"api_key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) GetProjectID() string {
+	if c == nil || c.ProjectID == nil {
+		return ""
+	}
+	return *c.ProjectID
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) GetAPIKey() string {
+	if c == nil || c.APIKey == nil {
+		return ""
+	}
+	return *c.APIKey
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionRecaptchaEnterpriseInputFieldSiteKey)
+}
+
+// SetProjectID sets the ProjectID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) SetProjectID(projectID *string) {
+	c.ProjectID = projectID
+	c.require(captchaPolicyActionRecaptchaEnterpriseInputFieldProjectID)
+}
+
+// SetAPIKey sets the APIKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) SetAPIKey(apiKey *string) {
+	c.APIKey = apiKey
+	c.require(captchaPolicyActionRecaptchaEnterpriseInputFieldAPIKey)
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionRecaptchaEnterpriseInput
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionRecaptchaEnterpriseInput(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionRecaptchaEnterpriseInput
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionRecaptchaEnterpriseInput) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionRecaptchaV2FieldSiteKey = big.NewInt(1 << 0)
+)
+
+// reCAPTCHA v2 provider configuration.
+type CaptchaPolicyActionRecaptchaV2 struct {
+	// The reCAPTCHA v2 site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaV2) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionRecaptchaV2FieldSiteKey)
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionRecaptchaV2
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionRecaptchaV2(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionRecaptchaV2
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	captchaPolicyActionRecaptchaV2InputFieldSiteKey = big.NewInt(1 << 0)
+	captchaPolicyActionRecaptchaV2InputFieldSecret  = big.NewInt(1 << 1)
+)
+
+// reCAPTCHA v2 provider configuration.
+type CaptchaPolicyActionRecaptchaV2Input struct {
+	// The reCAPTCHA v2 site key.
+	SiteKey *string `json:"site_key,omitempty" url:"site_key,omitempty"`
+	// The reCAPTCHA v2 secret key. Encrypted at rest.
+	Secret *string `json:"secret,omitempty" url:"secret,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2Input) GetSiteKey() string {
+	if c == nil || c.SiteKey == nil {
+		return ""
+	}
+	return *c.SiteKey
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2Input) GetSecret() string {
+	if c == nil || c.Secret == nil {
+		return ""
+	}
+	return *c.Secret
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2Input) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2Input) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSiteKey sets the SiteKey field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaV2Input) SetSiteKey(siteKey *string) {
+	c.SiteKey = siteKey
+	c.require(captchaPolicyActionRecaptchaV2InputFieldSiteKey)
+}
+
+// SetSecret sets the Secret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CaptchaPolicyActionRecaptchaV2Input) SetSecret(secret *string) {
+	c.Secret = secret
+	c.require(captchaPolicyActionRecaptchaV2InputFieldSecret)
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2Input) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionRecaptchaV2Input
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionRecaptchaV2Input(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2Input) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionRecaptchaV2Input
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionRecaptchaV2Input) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Simple CAPTCHA provider configuration.
+type CaptchaPolicyActionSimpleCaptcha struct {
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CaptchaPolicyActionSimpleCaptcha) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CaptchaPolicyActionSimpleCaptcha) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+func (c *CaptchaPolicyActionSimpleCaptcha) UnmarshalJSON(data []byte) error {
+	type unmarshaler CaptchaPolicyActionSimpleCaptcha
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CaptchaPolicyActionSimpleCaptcha(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CaptchaPolicyActionSimpleCaptcha) MarshalJSON() ([]byte, error) {
+	type embed CaptchaPolicyActionSimpleCaptcha
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CaptchaPolicyActionSimpleCaptcha) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
 }
 
 var (
@@ -97045,48 +99060,49 @@ func (g *GetSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	getTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
-	getTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
-	getTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
-	getTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
-	getTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
-	getTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
-	getTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
-	getTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
-	getTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
-	getTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
-	getTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
-	getTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
-	getTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
-	getTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
-	getTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
-	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
-	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
-	getTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
-	getTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
-	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
-	getTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
-	getTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
-	getTenantSettingsResponseContentFieldAccessToken                                    = big.NewInt(1 << 22)
-	getTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 23)
-	getTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 24)
-	getTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 25)
-	getTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 26)
-	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 27)
-	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 28)
-	getTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 29)
-	getTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 30)
-	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 31)
-	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 32)
-	getTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                  = big.NewInt(1 << 33)
-	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 34)
-	getTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 35)
-	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 36)
-	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 37)
-	getTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 38)
-	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 39)
-	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 40)
-	getTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 41)
+	getTenantSettingsResponseContentFieldChangePassword                                       = big.NewInt(1 << 0)
+	getTenantSettingsResponseContentFieldGuardianMfaPage                                      = big.NewInt(1 << 1)
+	getTenantSettingsResponseContentFieldDefaultAudience                                      = big.NewInt(1 << 2)
+	getTenantSettingsResponseContentFieldDefaultDirectory                                     = big.NewInt(1 << 3)
+	getTenantSettingsResponseContentFieldErrorPage                                            = big.NewInt(1 << 4)
+	getTenantSettingsResponseContentFieldDeviceFlow                                           = big.NewInt(1 << 5)
+	getTenantSettingsResponseContentFieldDefaultTokenQuota                                    = big.NewInt(1 << 6)
+	getTenantSettingsResponseContentFieldFlags                                                = big.NewInt(1 << 7)
+	getTenantSettingsResponseContentFieldFriendlyName                                         = big.NewInt(1 << 8)
+	getTenantSettingsResponseContentFieldPictureURL                                           = big.NewInt(1 << 9)
+	getTenantSettingsResponseContentFieldSupportEmail                                         = big.NewInt(1 << 10)
+	getTenantSettingsResponseContentFieldSupportURL                                           = big.NewInt(1 << 11)
+	getTenantSettingsResponseContentFieldAllowedLogoutURLs                                    = big.NewInt(1 << 12)
+	getTenantSettingsResponseContentFieldSessionLifetime                                      = big.NewInt(1 << 13)
+	getTenantSettingsResponseContentFieldIdleSessionLifetime                                  = big.NewInt(1 << 14)
+	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                             = big.NewInt(1 << 15)
+	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                         = big.NewInt(1 << 16)
+	getTenantSettingsResponseContentFieldSandboxVersion                                       = big.NewInt(1 << 17)
+	getTenantSettingsResponseContentFieldLegacySandboxVersion                                 = big.NewInt(1 << 18)
+	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                             = big.NewInt(1 << 19)
+	getTenantSettingsResponseContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 20)
+	getTenantSettingsResponseContentFieldEnabledLocales                                       = big.NewInt(1 << 21)
+	getTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 22)
+	getTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 23)
+	getTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 24)
+	getTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 25)
+	getTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 26)
+	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 27)
+	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 28)
+	getTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 29)
+	getTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 31)
+	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 32)
+	getTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 33)
+	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 34)
+	getTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 35)
+	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 36)
+	getTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 37)
+	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 38)
+	getTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 39)
+	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
+	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
+	getTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
 )
 
 // getTenantSettingsResponseContentNullableFields maps the wire names of GetTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
@@ -97171,6 +99187,8 @@ type GetTenantSettingsResponseContent struct {
 	ResourceParameterProfile                       *TenantSettingsResourceParameterProfile `json:"resource_parameter_profile,omitempty" url:"resource_parameter_profile,omitempty"`
 	// Whether the authorization server supports retrieving client metadata from a client_id URL.
 	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty" url:"client_id_metadata_document_supported,omitempty"`
+	// Whether the authorization server supports registering clients dynamically from a client_id URL. Requires client_id_metadata_document_supported to be enabled.
+	ClientIDMetadataDocumentDynamicRegistrationSupported *bool `json:"client_id_metadata_document_dynamic_registration_supported,omitempty" url:"client_id_metadata_document_dynamic_registration_supported,omitempty"`
 	// Whether Phone Consolidated Experience is enabled for this tenant.
 	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty" url:"phone_consolidated_experience,omitempty"`
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
@@ -97444,6 +99462,13 @@ func (g *GetTenantSettingsResponseContent) GetClientIDMetadataDocumentSupported(
 		return false
 	}
 	return *g.ClientIDMetadataDocumentSupported
+}
+
+func (g *GetTenantSettingsResponseContent) GetClientIDMetadataDocumentDynamicRegistrationSupported() bool {
+	if g == nil || g.ClientIDMetadataDocumentDynamicRegistrationSupported == nil {
+		return false
+	}
+	return *g.ClientIDMetadataDocumentDynamicRegistrationSupported
 }
 
 func (g *GetTenantSettingsResponseContent) GetPhoneConsolidatedExperience() bool {
@@ -97754,6 +99779,13 @@ func (g *GetTenantSettingsResponseContent) SetResourceParameterProfile(resourceP
 func (g *GetTenantSettingsResponseContent) SetClientIDMetadataDocumentSupported(clientIDMetadataDocumentSupported *bool) {
 	g.ClientIDMetadataDocumentSupported = clientIDMetadataDocumentSupported
 	g.require(getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported)
+}
+
+// SetClientIDMetadataDocumentDynamicRegistrationSupported sets the ClientIDMetadataDocumentDynamicRegistrationSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTenantSettingsResponseContent) SetClientIDMetadataDocumentDynamicRegistrationSupported(clientIDMetadataDocumentDynamicRegistrationSupported *bool) {
+	g.ClientIDMetadataDocumentDynamicRegistrationSupported = clientIDMetadataDocumentDynamicRegistrationSupported
+	g.require(getTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported)
 }
 
 // SetPhoneConsolidatedExperience sets the PhoneConsolidatedExperience field and marks it as non-optional;
@@ -102152,6 +104184,9 @@ func (l *ListAculsResponseContentItem) String() string {
 	}
 	return fmt.Sprintf("%#v", l)
 }
+
+// List of CAPTCHA attack protection policies for the tenant, sorted by priority ascending.
+type ListAttackProtectionCaptchaPoliciesResponseContent = []*AttackProtectionCaptchaPolicy
 
 var (
 	listBrandingPhoneProvidersResponseContentFieldProviders = big.NewInt(1 << 0)
@@ -109560,6 +111595,14 @@ const (
 	OauthScopeUpdateVdcsTemplates OauthScope = "update:vdcs_templates"
 	// Delete Vdcs Templates
 	OauthScopeDeleteVdcsTemplates OauthScope = "delete:vdcs_templates"
+	// Create Client Profiles
+	OauthScopeCreateClientProfiles OauthScope = "create:client_profiles"
+	// Read Client Profiles
+	OauthScopeReadClientProfiles OauthScope = "read:client_profiles"
+	// Update Client Profiles
+	OauthScopeUpdateClientProfiles OauthScope = "update:client_profiles"
+	// Delete Client Profiles
+	OauthScopeDeleteClientProfiles OauthScope = "delete:client_profiles"
 	// Create Organization Client Associations
 	OauthScopeCreateOrganizationClients OauthScope = "create:organization_clients"
 	// Read Organization Client Associations
@@ -110066,6 +112109,14 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateVdcsTemplates, nil
 	case "delete:vdcs_templates":
 		return OauthScopeDeleteVdcsTemplates, nil
+	case "create:client_profiles":
+		return OauthScopeCreateClientProfiles, nil
+	case "read:client_profiles":
+		return OauthScopeReadClientProfiles, nil
+	case "update:client_profiles":
+		return OauthScopeUpdateClientProfiles, nil
+	case "delete:client_profiles":
+		return OauthScopeDeleteClientProfiles, nil
 	case "create:organization_clients":
 		return OauthScopeCreateOrganizationClients, nil
 	case "read:organization_clients":
@@ -144114,48 +146165,49 @@ func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	updateTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
-	updateTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
-	updateTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
-	updateTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
-	updateTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
-	updateTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
-	updateTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
-	updateTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
-	updateTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
-	updateTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
-	updateTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
-	updateTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
-	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
-	updateTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
-	updateTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
-	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
-	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
-	updateTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
-	updateTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
-	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
-	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
-	updateTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
-	updateTenantSettingsResponseContentFieldAccessToken                                    = big.NewInt(1 << 22)
-	updateTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 23)
-	updateTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 24)
-	updateTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 25)
-	updateTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 26)
-	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 27)
-	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 28)
-	updateTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 29)
-	updateTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 30)
-	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 31)
-	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 32)
-	updateTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                  = big.NewInt(1 << 33)
-	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 34)
-	updateTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 35)
-	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 36)
-	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 37)
-	updateTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 38)
-	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 39)
-	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 40)
-	updateTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 41)
+	updateTenantSettingsResponseContentFieldChangePassword                                       = big.NewInt(1 << 0)
+	updateTenantSettingsResponseContentFieldGuardianMfaPage                                      = big.NewInt(1 << 1)
+	updateTenantSettingsResponseContentFieldDefaultAudience                                      = big.NewInt(1 << 2)
+	updateTenantSettingsResponseContentFieldDefaultDirectory                                     = big.NewInt(1 << 3)
+	updateTenantSettingsResponseContentFieldErrorPage                                            = big.NewInt(1 << 4)
+	updateTenantSettingsResponseContentFieldDeviceFlow                                           = big.NewInt(1 << 5)
+	updateTenantSettingsResponseContentFieldDefaultTokenQuota                                    = big.NewInt(1 << 6)
+	updateTenantSettingsResponseContentFieldFlags                                                = big.NewInt(1 << 7)
+	updateTenantSettingsResponseContentFieldFriendlyName                                         = big.NewInt(1 << 8)
+	updateTenantSettingsResponseContentFieldPictureURL                                           = big.NewInt(1 << 9)
+	updateTenantSettingsResponseContentFieldSupportEmail                                         = big.NewInt(1 << 10)
+	updateTenantSettingsResponseContentFieldSupportURL                                           = big.NewInt(1 << 11)
+	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                                    = big.NewInt(1 << 12)
+	updateTenantSettingsResponseContentFieldSessionLifetime                                      = big.NewInt(1 << 13)
+	updateTenantSettingsResponseContentFieldIdleSessionLifetime                                  = big.NewInt(1 << 14)
+	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                             = big.NewInt(1 << 15)
+	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                         = big.NewInt(1 << 16)
+	updateTenantSettingsResponseContentFieldSandboxVersion                                       = big.NewInt(1 << 17)
+	updateTenantSettingsResponseContentFieldLegacySandboxVersion                                 = big.NewInt(1 << 18)
+	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                             = big.NewInt(1 << 19)
+	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 20)
+	updateTenantSettingsResponseContentFieldEnabledLocales                                       = big.NewInt(1 << 21)
+	updateTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 22)
+	updateTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 23)
+	updateTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 24)
+	updateTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 25)
+	updateTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 26)
+	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 27)
+	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 28)
+	updateTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 29)
+	updateTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 31)
+	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 32)
+	updateTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 33)
+	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 34)
+	updateTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 35)
+	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 36)
+	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 37)
+	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 38)
+	updateTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 39)
+	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
+	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
+	updateTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
 )
 
 // updateTenantSettingsResponseContentNullableFields maps the wire names of UpdateTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
@@ -144240,6 +146292,8 @@ type UpdateTenantSettingsResponseContent struct {
 	ResourceParameterProfile                       *TenantSettingsResourceParameterProfile `json:"resource_parameter_profile,omitempty" url:"resource_parameter_profile,omitempty"`
 	// Whether the authorization server supports retrieving client metadata from a client_id URL.
 	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty" url:"client_id_metadata_document_supported,omitempty"`
+	// Whether the authorization server supports registering clients dynamically from a client_id URL. Requires client_id_metadata_document_supported to be enabled.
+	ClientIDMetadataDocumentDynamicRegistrationSupported *bool `json:"client_id_metadata_document_dynamic_registration_supported,omitempty" url:"client_id_metadata_document_dynamic_registration_supported,omitempty"`
 	// Whether Phone Consolidated Experience is enabled for this tenant.
 	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty" url:"phone_consolidated_experience,omitempty"`
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
@@ -144513,6 +146567,13 @@ func (u *UpdateTenantSettingsResponseContent) GetClientIDMetadataDocumentSupport
 		return false
 	}
 	return *u.ClientIDMetadataDocumentSupported
+}
+
+func (u *UpdateTenantSettingsResponseContent) GetClientIDMetadataDocumentDynamicRegistrationSupported() bool {
+	if u == nil || u.ClientIDMetadataDocumentDynamicRegistrationSupported == nil {
+		return false
+	}
+	return *u.ClientIDMetadataDocumentDynamicRegistrationSupported
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetPhoneConsolidatedExperience() bool {
@@ -144823,6 +146884,13 @@ func (u *UpdateTenantSettingsResponseContent) SetResourceParameterProfile(resour
 func (u *UpdateTenantSettingsResponseContent) SetClientIDMetadataDocumentSupported(clientIDMetadataDocumentSupported *bool) {
 	u.ClientIDMetadataDocumentSupported = clientIDMetadataDocumentSupported
 	u.require(updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported)
+}
+
+// SetClientIDMetadataDocumentDynamicRegistrationSupported sets the ClientIDMetadataDocumentDynamicRegistrationSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsResponseContent) SetClientIDMetadataDocumentDynamicRegistrationSupported(clientIDMetadataDocumentDynamicRegistrationSupported *bool) {
+	u.ClientIDMetadataDocumentDynamicRegistrationSupported = clientIDMetadataDocumentDynamicRegistrationSupported
+	u.require(updateTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported)
 }
 
 // SetPhoneConsolidatedExperience sets the PhoneConsolidatedExperience field and marks it as non-optional;

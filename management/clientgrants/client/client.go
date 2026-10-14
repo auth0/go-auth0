@@ -161,6 +161,99 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Search client grants using SCIM or Lucene filter syntax with low-latency, eventually consistent results. Use the parser parameter to specify "scim" or "lucene" syntax (default: "lucene"). This endpoint provides an alternative to the standard GET /client-grants endpoint with better performance for complex queries.
+// Results may not reflect recent updates immediately.
+//
+// Example:
+//
+//	request := &management.SearchClientGrantsRequestParameters{
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	    Parser: management.SearchParserEnumSCIM.Ptr(),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Sort: management.ClientGrantSortFieldEnumAudience.Ptr(),
+//	}
+//	client.ClientGrants.Search(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) Search(
+	ctx context.Context,
+	request *management.SearchClientGrantsRequestParameters,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *management.ClientGrantResponseContent, *management.SearchClientGrantsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/client-grants/search"
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.SearchClientGrantsResponseContent) *core.PageResponse[*string, *management.ClientGrantResponseContent, *management.SearchClientGrantsResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.ClientGrants
+		return &core.PageResponse[*string, *management.ClientGrantResponseContent, *management.SearchClientGrantsResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
+}
+
 // Retrieve a single [client grant](https://auth0.com/docs/get-started/applications/application-access-to-apis-client-grants), including the
 // scopes associated with the application/API pair.
 //
