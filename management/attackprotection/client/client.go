@@ -7,6 +7,7 @@ import (
 	breachedpassworddetection "github.com/auth0/go-auth0/v3/management/attackprotection/breachedpassworddetection"
 	bruteforceprotection "github.com/auth0/go-auth0/v3/management/attackprotection/bruteforceprotection"
 	captcha "github.com/auth0/go-auth0/v3/management/attackprotection/captcha"
+	captchapolicies "github.com/auth0/go-auth0/v3/management/attackprotection/captchapolicies"
 	phoneproviderprotection "github.com/auth0/go-auth0/v3/management/attackprotection/phoneproviderprotection"
 	suspiciousipthrottling "github.com/auth0/go-auth0/v3/management/attackprotection/suspiciousipthrottling"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -18,6 +19,7 @@ type Client struct {
 	BreachedPasswordDetection *breachedpassworddetection.Client
 	BruteForceProtection      *bruteforceprotection.Client
 	Captcha                   *captcha.Client
+	CaptchaPolicies           *captchapolicies.Client
 	PhoneProviderProtection   *phoneproviderprotection.Client
 	SuspiciousIPThrottling    *suspiciousipthrottling.Client
 
@@ -32,6 +34,7 @@ func NewClient(options *core.RequestOptions) *Client {
 		BreachedPasswordDetection: breachedpassworddetection.NewClient(options),
 		BruteForceProtection:      bruteforceprotection.NewClient(options),
 		Captcha:                   captcha.NewClient(options),
+		CaptchaPolicies:           captchapolicies.NewClient(options),
 		PhoneProviderProtection:   phoneproviderprotection.NewClient(options),
 		SuspiciousIPThrottling:    suspiciousipthrottling.NewClient(options),
 		options:                   options,

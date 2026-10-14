@@ -14166,6 +14166,1881 @@ func TestSettersMarkExplicitAttackProtectionCaptchaHcaptchaResponseContent(t *te
 
 }
 
+func TestSettersAttackProtectionCaptchaPolicy(t *testing.T) {
+	t.Run("SetID", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueID string
+		obj.SetID(fernTestValueID)
+		assert.Equal(t, fernTestValueID, obj.ID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetName", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueName string
+		obj.SetName(fernTestValueName)
+		assert.Equal(t, fernTestValueName, obj.Name)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDescription", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueDescription *string
+		obj.SetDescription(fernTestValueDescription)
+		assert.Equal(t, fernTestValueDescription, obj.Description)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPriority", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValuePriority int
+		obj.SetPriority(fernTestValuePriority)
+		assert.Equal(t, fernTestValuePriority, obj.Priority)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMatch", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueMatch *AttackProtectionCaptchaPolicyMatch
+		obj.SetMatch(fernTestValueMatch)
+		assert.Equal(t, fernTestValueMatch, obj.Match)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueAction *AttackProtectionCaptchaPolicyAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCreatedAt", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueCreatedAt time.Time
+		obj.SetCreatedAt(fernTestValueCreatedAt)
+		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetUpdatedAt", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueUpdatedAt time.Time
+		obj.SetUpdatedAt(fernTestValueUpdatedAt)
+		assert.Equal(t, fernTestValueUpdatedAt, obj.UpdatedAt)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAttackProtectionCaptchaPolicy(t *testing.T) {
+	t.Run("GetID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var expected string
+		obj.ID = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetID(), "getter should return the property value")
+	})
+
+	t.Run("GetID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetID() // Should return zero value
+	})
+
+	t.Run("GetName", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var expected string
+		obj.Name = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetName(), "getter should return the property value")
+	})
+
+	t.Run("GetName_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetDescription", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var value string
+		obj.Description = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDescription(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDescription_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		obj.Description = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDescription(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDescription_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDescription() // Should return zero value
+	})
+
+	t.Run("GetPriority", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var expected int
+		obj.Priority = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPriority(), "getter should return the property value")
+	})
+
+	t.Run("GetPriority_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPriority() // Should return zero value
+	})
+
+	t.Run("GetMatch", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var expected *AttackProtectionCaptchaPolicyMatch
+		obj.Match = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMatch(), "getter should return the property value")
+	})
+
+	t.Run("GetMatch_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		obj.Match = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetMatch(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetMatch_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMatch() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var expected *AttackProtectionCaptchaPolicyAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		obj.Action = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAction(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
+	})
+
+	t.Run("GetCreatedAt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var expected time.Time
+		obj.CreatedAt = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetCreatedAt(), "getter should return the property value")
+	})
+
+	t.Run("GetCreatedAt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCreatedAt() // Should return zero value
+	})
+
+	t.Run("GetUpdatedAt", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var expected time.Time
+		obj.UpdatedAt = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetUpdatedAt(), "getter should return the property value")
+	})
+
+	t.Run("GetUpdatedAt_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUpdatedAt() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAttackProtectionCaptchaPolicy(t *testing.T) {
+	t.Run("SetID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueID string
+
+		// Act
+		obj.SetID(fernTestValueID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetName_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueName string
+
+		// Act
+		obj.SetName(fernTestValueName)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDescription_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueDescription *string
+
+		// Act
+		obj.SetDescription(fernTestValueDescription)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPriority_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValuePriority int
+
+		// Act
+		obj.SetPriority(fernTestValuePriority)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMatch_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueMatch *AttackProtectionCaptchaPolicyMatch
+
+		// Act
+		obj.SetMatch(fernTestValueMatch)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueAction *AttackProtectionCaptchaPolicyAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCreatedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueCreatedAt time.Time
+
+		// Act
+		obj.SetCreatedAt(fernTestValueCreatedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUpdatedAt_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+		var fernTestValueUpdatedAt time.Time
+
+		// Act
+		obj.SetUpdatedAt(fernTestValueUpdatedAt)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAttackProtectionCaptchaPolicyAction(t *testing.T) {
+	t.Run("SetActiveProviderID", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueActiveProviderID *CaptchaActiveProviderEnum
+		obj.SetActiveProviderID(fernTestValueActiveProviderID)
+		assert.Equal(t, fernTestValueActiveProviderID, obj.ActiveProviderID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSimpleCaptcha", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueSimpleCaptcha *CaptchaPolicyActionSimpleCaptcha
+		obj.SetSimpleCaptcha(fernTestValueSimpleCaptcha)
+		assert.Equal(t, fernTestValueSimpleCaptcha, obj.SimpleCaptcha)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAuthChallenge", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueAuthChallenge *CaptchaPolicyActionAuthChallenge
+		obj.SetAuthChallenge(fernTestValueAuthChallenge)
+		assert.Equal(t, fernTestValueAuthChallenge, obj.AuthChallenge)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRecaptchaV2", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueRecaptchaV2 *CaptchaPolicyActionRecaptchaV2
+		obj.SetRecaptchaV2(fernTestValueRecaptchaV2)
+		assert.Equal(t, fernTestValueRecaptchaV2, obj.RecaptchaV2)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRecaptchaEnterprise", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueRecaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterprise
+		obj.SetRecaptchaEnterprise(fernTestValueRecaptchaEnterprise)
+		assert.Equal(t, fernTestValueRecaptchaEnterprise, obj.RecaptchaEnterprise)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHcaptcha", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueHcaptcha *CaptchaPolicyActionHcaptcha
+		obj.SetHcaptcha(fernTestValueHcaptcha)
+		assert.Equal(t, fernTestValueHcaptcha, obj.Hcaptcha)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFriendlyCaptcha", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueFriendlyCaptcha *CaptchaPolicyActionFriendlyCaptcha
+		obj.SetFriendlyCaptcha(fernTestValueFriendlyCaptcha)
+		assert.Equal(t, fernTestValueFriendlyCaptcha, obj.FriendlyCaptcha)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetArkose", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueArkose *CaptchaPolicyActionArkose
+		obj.SetArkose(fernTestValueArkose)
+		assert.Equal(t, fernTestValueArkose, obj.Arkose)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAttackProtectionCaptchaPolicyAction(t *testing.T) {
+	t.Run("GetActiveProviderID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaActiveProviderEnum
+		obj.ActiveProviderID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetActiveProviderID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetActiveProviderID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.ActiveProviderID = nil
+		var expectedZero CaptchaActiveProviderEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetActiveProviderID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetActiveProviderID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActiveProviderID() // Should return zero value
+	})
+
+	t.Run("GetSimpleCaptcha", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaPolicyActionSimpleCaptcha
+		obj.SimpleCaptcha = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSimpleCaptcha(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSimpleCaptcha_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.SimpleCaptcha = nil
+		var expectedZero CaptchaPolicyActionSimpleCaptcha
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSimpleCaptcha(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSimpleCaptcha_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSimpleCaptcha() // Should return zero value
+	})
+
+	t.Run("GetAuthChallenge", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaPolicyActionAuthChallenge
+		obj.AuthChallenge = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAuthChallenge(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAuthChallenge_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.AuthChallenge = nil
+		var expectedZero CaptchaPolicyActionAuthChallenge
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAuthChallenge(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAuthChallenge_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAuthChallenge() // Should return zero value
+	})
+
+	t.Run("GetRecaptchaV2", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaPolicyActionRecaptchaV2
+		obj.RecaptchaV2 = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRecaptchaV2(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRecaptchaV2_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.RecaptchaV2 = nil
+		var expectedZero CaptchaPolicyActionRecaptchaV2
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRecaptchaV2(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRecaptchaV2_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRecaptchaV2() // Should return zero value
+	})
+
+	t.Run("GetRecaptchaEnterprise", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaPolicyActionRecaptchaEnterprise
+		obj.RecaptchaEnterprise = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRecaptchaEnterprise(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRecaptchaEnterprise_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.RecaptchaEnterprise = nil
+		var expectedZero CaptchaPolicyActionRecaptchaEnterprise
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRecaptchaEnterprise(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRecaptchaEnterprise_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRecaptchaEnterprise() // Should return zero value
+	})
+
+	t.Run("GetHcaptcha", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaPolicyActionHcaptcha
+		obj.Hcaptcha = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetHcaptcha(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetHcaptcha_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.Hcaptcha = nil
+		var expectedZero CaptchaPolicyActionHcaptcha
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetHcaptcha(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetHcaptcha_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHcaptcha() // Should return zero value
+	})
+
+	t.Run("GetFriendlyCaptcha", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaPolicyActionFriendlyCaptcha
+		obj.FriendlyCaptcha = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFriendlyCaptcha(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFriendlyCaptcha_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.FriendlyCaptcha = nil
+		var expectedZero CaptchaPolicyActionFriendlyCaptcha
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFriendlyCaptcha(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFriendlyCaptcha_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFriendlyCaptcha() // Should return zero value
+	})
+
+	t.Run("GetArkose", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var value CaptchaPolicyActionArkose
+		obj.Arkose = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetArkose(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetArkose_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		obj.Arkose = nil
+		var expectedZero CaptchaPolicyActionArkose
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetArkose(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetArkose_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetArkose() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAttackProtectionCaptchaPolicyAction(t *testing.T) {
+	t.Run("SetActiveProviderID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueActiveProviderID *CaptchaActiveProviderEnum
+
+		// Act
+		obj.SetActiveProviderID(fernTestValueActiveProviderID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSimpleCaptcha_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueSimpleCaptcha *CaptchaPolicyActionSimpleCaptcha
+
+		// Act
+		obj.SetSimpleCaptcha(fernTestValueSimpleCaptcha)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAuthChallenge_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueAuthChallenge *CaptchaPolicyActionAuthChallenge
+
+		// Act
+		obj.SetAuthChallenge(fernTestValueAuthChallenge)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRecaptchaV2_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueRecaptchaV2 *CaptchaPolicyActionRecaptchaV2
+
+		// Act
+		obj.SetRecaptchaV2(fernTestValueRecaptchaV2)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRecaptchaEnterprise_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueRecaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterprise
+
+		// Act
+		obj.SetRecaptchaEnterprise(fernTestValueRecaptchaEnterprise)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHcaptcha_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueHcaptcha *CaptchaPolicyActionHcaptcha
+
+		// Act
+		obj.SetHcaptcha(fernTestValueHcaptcha)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFriendlyCaptcha_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueFriendlyCaptcha *CaptchaPolicyActionFriendlyCaptcha
+
+		// Act
+		obj.SetFriendlyCaptcha(fernTestValueFriendlyCaptcha)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetArkose_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		var fernTestValueArkose *CaptchaPolicyActionArkose
+
+		// Act
+		obj.SetArkose(fernTestValueArkose)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAttackProtectionCaptchaPolicyActionInput(t *testing.T) {
+	t.Run("SetActiveProviderID", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueActiveProviderID *CaptchaActiveProviderEnum
+		obj.SetActiveProviderID(fernTestValueActiveProviderID)
+		assert.Equal(t, fernTestValueActiveProviderID, obj.ActiveProviderID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSimpleCaptcha", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueSimpleCaptcha *CaptchaPolicyActionSimpleCaptcha
+		obj.SetSimpleCaptcha(fernTestValueSimpleCaptcha)
+		assert.Equal(t, fernTestValueSimpleCaptcha, obj.SimpleCaptcha)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAuthChallenge", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueAuthChallenge *CaptchaPolicyActionAuthChallenge
+		obj.SetAuthChallenge(fernTestValueAuthChallenge)
+		assert.Equal(t, fernTestValueAuthChallenge, obj.AuthChallenge)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRecaptchaV2", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueRecaptchaV2 *CaptchaPolicyActionRecaptchaV2Input
+		obj.SetRecaptchaV2(fernTestValueRecaptchaV2)
+		assert.Equal(t, fernTestValueRecaptchaV2, obj.RecaptchaV2)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetRecaptchaEnterprise", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueRecaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterpriseInput
+		obj.SetRecaptchaEnterprise(fernTestValueRecaptchaEnterprise)
+		assert.Equal(t, fernTestValueRecaptchaEnterprise, obj.RecaptchaEnterprise)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetHcaptcha", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueHcaptcha *CaptchaPolicyActionHcaptchaInput
+		obj.SetHcaptcha(fernTestValueHcaptcha)
+		assert.Equal(t, fernTestValueHcaptcha, obj.Hcaptcha)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFriendlyCaptcha", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueFriendlyCaptcha *CaptchaPolicyActionFriendlyCaptchaInput
+		obj.SetFriendlyCaptcha(fernTestValueFriendlyCaptcha)
+		assert.Equal(t, fernTestValueFriendlyCaptcha, obj.FriendlyCaptcha)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetArkose", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueArkose *CaptchaPolicyActionArkoseInput
+		obj.SetArkose(fernTestValueArkose)
+		assert.Equal(t, fernTestValueArkose, obj.Arkose)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAttackProtectionCaptchaPolicyActionInput(t *testing.T) {
+	t.Run("GetActiveProviderID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaActiveProviderEnum
+		obj.ActiveProviderID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetActiveProviderID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetActiveProviderID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.ActiveProviderID = nil
+		var expectedZero CaptchaActiveProviderEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetActiveProviderID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetActiveProviderID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetActiveProviderID() // Should return zero value
+	})
+
+	t.Run("GetSimpleCaptcha", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaPolicyActionSimpleCaptcha
+		obj.SimpleCaptcha = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSimpleCaptcha(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSimpleCaptcha_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.SimpleCaptcha = nil
+		var expectedZero CaptchaPolicyActionSimpleCaptcha
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSimpleCaptcha(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSimpleCaptcha_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSimpleCaptcha() // Should return zero value
+	})
+
+	t.Run("GetAuthChallenge", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaPolicyActionAuthChallenge
+		obj.AuthChallenge = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAuthChallenge(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAuthChallenge_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.AuthChallenge = nil
+		var expectedZero CaptchaPolicyActionAuthChallenge
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAuthChallenge(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAuthChallenge_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAuthChallenge() // Should return zero value
+	})
+
+	t.Run("GetRecaptchaV2", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaPolicyActionRecaptchaV2Input
+		obj.RecaptchaV2 = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRecaptchaV2(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRecaptchaV2_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.RecaptchaV2 = nil
+		var expectedZero CaptchaPolicyActionRecaptchaV2Input
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRecaptchaV2(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRecaptchaV2_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRecaptchaV2() // Should return zero value
+	})
+
+	t.Run("GetRecaptchaEnterprise", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaPolicyActionRecaptchaEnterpriseInput
+		obj.RecaptchaEnterprise = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetRecaptchaEnterprise(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetRecaptchaEnterprise_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.RecaptchaEnterprise = nil
+		var expectedZero CaptchaPolicyActionRecaptchaEnterpriseInput
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetRecaptchaEnterprise(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetRecaptchaEnterprise_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetRecaptchaEnterprise() // Should return zero value
+	})
+
+	t.Run("GetHcaptcha", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaPolicyActionHcaptchaInput
+		obj.Hcaptcha = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetHcaptcha(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetHcaptcha_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.Hcaptcha = nil
+		var expectedZero CaptchaPolicyActionHcaptchaInput
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetHcaptcha(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetHcaptcha_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetHcaptcha() // Should return zero value
+	})
+
+	t.Run("GetFriendlyCaptcha", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaPolicyActionFriendlyCaptchaInput
+		obj.FriendlyCaptcha = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFriendlyCaptcha(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFriendlyCaptcha_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.FriendlyCaptcha = nil
+		var expectedZero CaptchaPolicyActionFriendlyCaptchaInput
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFriendlyCaptcha(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFriendlyCaptcha_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFriendlyCaptcha() // Should return zero value
+	})
+
+	t.Run("GetArkose", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var value CaptchaPolicyActionArkoseInput
+		obj.Arkose = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetArkose(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetArkose_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		obj.Arkose = nil
+		var expectedZero CaptchaPolicyActionArkoseInput
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetArkose(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetArkose_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetArkose() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAttackProtectionCaptchaPolicyActionInput(t *testing.T) {
+	t.Run("SetActiveProviderID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueActiveProviderID *CaptchaActiveProviderEnum
+
+		// Act
+		obj.SetActiveProviderID(fernTestValueActiveProviderID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSimpleCaptcha_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueSimpleCaptcha *CaptchaPolicyActionSimpleCaptcha
+
+		// Act
+		obj.SetSimpleCaptcha(fernTestValueSimpleCaptcha)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAuthChallenge_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueAuthChallenge *CaptchaPolicyActionAuthChallenge
+
+		// Act
+		obj.SetAuthChallenge(fernTestValueAuthChallenge)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRecaptchaV2_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueRecaptchaV2 *CaptchaPolicyActionRecaptchaV2Input
+
+		// Act
+		obj.SetRecaptchaV2(fernTestValueRecaptchaV2)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetRecaptchaEnterprise_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueRecaptchaEnterprise *CaptchaPolicyActionRecaptchaEnterpriseInput
+
+		// Act
+		obj.SetRecaptchaEnterprise(fernTestValueRecaptchaEnterprise)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetHcaptcha_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueHcaptcha *CaptchaPolicyActionHcaptchaInput
+
+		// Act
+		obj.SetHcaptcha(fernTestValueHcaptcha)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFriendlyCaptcha_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueFriendlyCaptcha *CaptchaPolicyActionFriendlyCaptchaInput
+
+		// Act
+		obj.SetFriendlyCaptcha(fernTestValueFriendlyCaptcha)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetArkose_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		var fernTestValueArkose *CaptchaPolicyActionArkoseInput
+
+		// Act
+		obj.SetArkose(fernTestValueArkose)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersAttackProtectionCaptchaPolicyMatch(t *testing.T) {
+	t.Run("SetAuth0Managed", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		var fernTestValueAuth0Managed []string
+		obj.SetAuth0Managed(fernTestValueAuth0Managed)
+		assert.Equal(t, fernTestValueAuth0Managed, obj.Auth0Managed)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetGeoCountryCodes", func(t *testing.T) {
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		var fernTestValueGeoCountryCodes []string
+		obj.SetGeoCountryCodes(fernTestValueGeoCountryCodes)
+		assert.Equal(t, fernTestValueGeoCountryCodes, obj.GeoCountryCodes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersAttackProtectionCaptchaPolicyMatch(t *testing.T) {
+	t.Run("GetAuth0Managed", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		var expected []string
+		obj.Auth0Managed = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAuth0Managed(), "getter should return the property value")
+	})
+
+	t.Run("GetAuth0Managed_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		obj.Auth0Managed = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAuth0Managed(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAuth0Managed_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAuth0Managed() // Should return zero value
+	})
+
+	t.Run("GetGeoCountryCodes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		var expected []string
+		obj.GeoCountryCodes = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetGeoCountryCodes(), "getter should return the property value")
+	})
+
+	t.Run("GetGeoCountryCodes_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		obj.GeoCountryCodes = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetGeoCountryCodes(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetGeoCountryCodes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyMatch
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGeoCountryCodes() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitAttackProtectionCaptchaPolicyMatch(t *testing.T) {
+	t.Run("SetAuth0Managed_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		var fernTestValueAuth0Managed []string
+
+		// Act
+		obj.SetAuth0Managed(fernTestValueAuth0Managed)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGeoCountryCodes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		var fernTestValueGeoCountryCodes []string
+
+		// Act
+		obj.SetGeoCountryCodes(fernTestValueGeoCountryCodes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersAttackProtectionCaptchaRecaptchaEnterpriseResponseContent(t *testing.T) {
 	t.Run("SetSiteKey", func(t *testing.T) {
 		obj := &AttackProtectionCaptchaRecaptchaEnterpriseResponseContent{}
@@ -20044,6 +21919,1857 @@ func TestSettersMarkExplicitBulkUpdateAculResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetConfigs(fernTestValueConfigs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionArkose(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetClientSubdomain", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueClientSubdomain *string
+		obj.SetClientSubdomain(fernTestValueClientSubdomain)
+		assert.Equal(t, fernTestValueClientSubdomain, obj.ClientSubdomain)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetVerifySubdomain", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueVerifySubdomain *string
+		obj.SetVerifySubdomain(fernTestValueVerifySubdomain)
+		assert.Equal(t, fernTestValueVerifySubdomain, obj.VerifySubdomain)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFailOpen", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueFailOpen *bool
+		obj.SetFailOpen(fernTestValueFailOpen)
+		assert.Equal(t, fernTestValueFailOpen, obj.FailOpen)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionArkose(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkose
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+	t.Run("GetClientSubdomain", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var value string
+		obj.ClientSubdomain = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientSubdomain(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientSubdomain_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		obj.ClientSubdomain = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientSubdomain(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientSubdomain_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkose
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientSubdomain() // Should return zero value
+	})
+
+	t.Run("GetVerifySubdomain", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var value string
+		obj.VerifySubdomain = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetVerifySubdomain(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetVerifySubdomain_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		obj.VerifySubdomain = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetVerifySubdomain(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetVerifySubdomain_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkose
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetVerifySubdomain() // Should return zero value
+	})
+
+	t.Run("GetFailOpen", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var value bool
+		obj.FailOpen = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFailOpen(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFailOpen_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		obj.FailOpen = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFailOpen(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFailOpen_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkose
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFailOpen() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionArkose(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientSubdomain_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueClientSubdomain *string
+
+		// Act
+		obj.SetClientSubdomain(fernTestValueClientSubdomain)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetVerifySubdomain_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueVerifySubdomain *string
+
+		// Act
+		obj.SetVerifySubdomain(fernTestValueVerifySubdomain)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFailOpen_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+		var fernTestValueFailOpen *bool
+
+		// Act
+		obj.SetFailOpen(fernTestValueFailOpen)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionArkoseInput(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSecret", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueSecret *string
+		obj.SetSecret(fernTestValueSecret)
+		assert.Equal(t, fernTestValueSecret, obj.Secret)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetClientSubdomain", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueClientSubdomain *string
+		obj.SetClientSubdomain(fernTestValueClientSubdomain)
+		assert.Equal(t, fernTestValueClientSubdomain, obj.ClientSubdomain)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetVerifySubdomain", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueVerifySubdomain *string
+		obj.SetVerifySubdomain(fernTestValueVerifySubdomain)
+		assert.Equal(t, fernTestValueVerifySubdomain, obj.VerifySubdomain)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetFailOpen", func(t *testing.T) {
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueFailOpen *bool
+		obj.SetFailOpen(fernTestValueFailOpen)
+		assert.Equal(t, fernTestValueFailOpen, obj.FailOpen)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionArkoseInput(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkoseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+	t.Run("GetSecret", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var value string
+		obj.Secret = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSecret(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSecret_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		obj.Secret = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSecret(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSecret_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkoseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSecret() // Should return zero value
+	})
+
+	t.Run("GetClientSubdomain", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var value string
+		obj.ClientSubdomain = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientSubdomain(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientSubdomain_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		obj.ClientSubdomain = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientSubdomain(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientSubdomain_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkoseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientSubdomain() // Should return zero value
+	})
+
+	t.Run("GetVerifySubdomain", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var value string
+		obj.VerifySubdomain = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetVerifySubdomain(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetVerifySubdomain_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		obj.VerifySubdomain = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetVerifySubdomain(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetVerifySubdomain_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkoseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetVerifySubdomain() // Should return zero value
+	})
+
+	t.Run("GetFailOpen", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var value bool
+		obj.FailOpen = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFailOpen(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFailOpen_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		obj.FailOpen = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFailOpen(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFailOpen_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkoseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFailOpen() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionArkoseInput(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSecret_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueSecret *string
+
+		// Act
+		obj.SetSecret(fernTestValueSecret)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientSubdomain_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueClientSubdomain *string
+
+		// Act
+		obj.SetClientSubdomain(fernTestValueClientSubdomain)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetVerifySubdomain_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueVerifySubdomain *string
+
+		// Act
+		obj.SetVerifySubdomain(fernTestValueVerifySubdomain)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetFailOpen_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+		var fernTestValueFailOpen *bool
+
+		// Act
+		obj.SetFailOpen(fernTestValueFailOpen)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionAuthChallenge(t *testing.T) {
+	t.Run("SetFailOpen", func(t *testing.T) {
+		obj := &CaptchaPolicyActionAuthChallenge{}
+		var fernTestValueFailOpen *bool
+		obj.SetFailOpen(fernTestValueFailOpen)
+		assert.Equal(t, fernTestValueFailOpen, obj.FailOpen)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionAuthChallenge(t *testing.T) {
+	t.Run("GetFailOpen", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionAuthChallenge{}
+		var value bool
+		obj.FailOpen = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetFailOpen(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetFailOpen_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionAuthChallenge{}
+		obj.FailOpen = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetFailOpen(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetFailOpen_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionAuthChallenge
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetFailOpen() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionAuthChallenge(t *testing.T) {
+	t.Run("SetFailOpen_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionAuthChallenge{}
+		var fernTestValueFailOpen *bool
+
+		// Act
+		obj.SetFailOpen(fernTestValueFailOpen)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionFriendlyCaptcha(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionFriendlyCaptcha{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionFriendlyCaptcha(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptcha{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptcha{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionFriendlyCaptcha
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionFriendlyCaptcha(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptcha{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionFriendlyCaptchaInput(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSecret", func(t *testing.T) {
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		var fernTestValueSecret *string
+		obj.SetSecret(fernTestValueSecret)
+		assert.Equal(t, fernTestValueSecret, obj.Secret)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionFriendlyCaptchaInput(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionFriendlyCaptchaInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+	t.Run("GetSecret", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		var value string
+		obj.Secret = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSecret(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSecret_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		obj.Secret = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSecret(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSecret_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionFriendlyCaptchaInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSecret() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionFriendlyCaptchaInput(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSecret_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		var fernTestValueSecret *string
+
+		// Act
+		obj.SetSecret(fernTestValueSecret)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionHcaptcha(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionHcaptcha{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionHcaptcha(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptcha{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptcha{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionHcaptcha
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionHcaptcha(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptcha{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionHcaptchaInput(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSecret", func(t *testing.T) {
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		var fernTestValueSecret *string
+		obj.SetSecret(fernTestValueSecret)
+		assert.Equal(t, fernTestValueSecret, obj.Secret)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionHcaptchaInput(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionHcaptchaInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+	t.Run("GetSecret", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		var value string
+		obj.Secret = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSecret(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSecret_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		obj.Secret = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSecret(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSecret_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionHcaptchaInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSecret() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionHcaptchaInput(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSecret_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		var fernTestValueSecret *string
+
+		// Act
+		obj.SetSecret(fernTestValueSecret)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionRecaptchaEnterprise(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetProjectID", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		var fernTestValueProjectID *string
+		obj.SetProjectID(fernTestValueProjectID)
+		assert.Equal(t, fernTestValueProjectID, obj.ProjectID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionRecaptchaEnterprise(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterprise
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+	t.Run("GetProjectID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		var value string
+		obj.ProjectID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProjectID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProjectID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		obj.ProjectID = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProjectID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProjectID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterprise
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProjectID() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionRecaptchaEnterprise(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetProjectID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		var fernTestValueProjectID *string
+
+		// Act
+		obj.SetProjectID(fernTestValueProjectID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionRecaptchaEnterpriseInput(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetProjectID", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var fernTestValueProjectID *string
+		obj.SetProjectID(fernTestValueProjectID)
+		assert.Equal(t, fernTestValueProjectID, obj.ProjectID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAPIKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var fernTestValueAPIKey *string
+		obj.SetAPIKey(fernTestValueAPIKey)
+		assert.Equal(t, fernTestValueAPIKey, obj.APIKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionRecaptchaEnterpriseInput(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterpriseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+	t.Run("GetProjectID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var value string
+		obj.ProjectID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProjectID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProjectID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		obj.ProjectID = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProjectID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProjectID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterpriseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProjectID() // Should return zero value
+	})
+
+	t.Run("GetAPIKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var value string
+		obj.APIKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAPIKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAPIKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		obj.APIKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAPIKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAPIKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterpriseInput
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAPIKey() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionRecaptchaEnterpriseInput(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetProjectID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var fernTestValueProjectID *string
+
+		// Act
+		obj.SetProjectID(fernTestValueProjectID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAPIKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		var fernTestValueAPIKey *string
+
+		// Act
+		obj.SetAPIKey(fernTestValueAPIKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionRecaptchaV2(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaV2{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionRecaptchaV2(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaV2
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionRecaptchaV2(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersCaptchaPolicyActionRecaptchaV2Input(t *testing.T) {
+	t.Run("SetSiteKey", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		var fernTestValueSiteKey *string
+		obj.SetSiteKey(fernTestValueSiteKey)
+		assert.Equal(t, fernTestValueSiteKey, obj.SiteKey)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetSecret", func(t *testing.T) {
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		var fernTestValueSecret *string
+		obj.SetSecret(fernTestValueSecret)
+		assert.Equal(t, fernTestValueSecret, obj.Secret)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersCaptchaPolicyActionRecaptchaV2Input(t *testing.T) {
+	t.Run("GetSiteKey", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		var value string
+		obj.SiteKey = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSiteKey(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSiteKey_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		obj.SiteKey = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSiteKey(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSiteKey_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaV2Input
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSiteKey() // Should return zero value
+	})
+
+	t.Run("GetSecret", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		var value string
+		obj.Secret = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSecret(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSecret_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		obj.Secret = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSecret(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSecret_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaV2Input
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSecret() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitCaptchaPolicyActionRecaptchaV2Input(t *testing.T) {
+	t.Run("SetSiteKey_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		var fernTestValueSiteKey *string
+
+		// Act
+		obj.SetSiteKey(fernTestValueSiteKey)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetSecret_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		var fernTestValueSecret *string
+
+		// Act
+		obj.SetSecret(fernTestValueSecret)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -230420,6 +234146,14 @@ func TestSettersGetTenantSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		obj := &GetTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.Equal(t, fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported, obj.ClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetPhoneConsolidatedExperience", func(t *testing.T) {
 		obj := &GetTenantSettingsResponseContent{}
 		var fernTestValuePhoneConsolidatedExperience *bool
@@ -231715,6 +235449,40 @@ func TestGettersGetTenantSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetClientIDMetadataDocumentSupported() // Should return zero value
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		var value bool
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetTenantSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientIDMetadataDocumentDynamicRegistrationSupported() // Should return zero value
 	})
 
 	t.Run("GetPhoneConsolidatedExperience", func(t *testing.T) {
@@ -233014,6 +236782,37 @@ func TestSettersMarkExplicitGetTenantSettingsResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetClientIDMetadataDocumentSupported(fernTestValueClientIDMetadataDocumentSupported)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+
+		// Act
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -326592,6 +330391,14 @@ func TestSettersUpdateTenantSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		obj := &UpdateTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.Equal(t, fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported, obj.ClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetPhoneConsolidatedExperience", func(t *testing.T) {
 		obj := &UpdateTenantSettingsResponseContent{}
 		var fernTestValuePhoneConsolidatedExperience *bool
@@ -327887,6 +331694,40 @@ func TestGettersUpdateTenantSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetClientIDMetadataDocumentSupported() // Should return zero value
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		var value bool
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateTenantSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientIDMetadataDocumentDynamicRegistrationSupported() // Should return zero value
 	})
 
 	t.Run("GetPhoneConsolidatedExperience", func(t *testing.T) {
@@ -329186,6 +333027,37 @@ func TestSettersMarkExplicitUpdateTenantSettingsResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetClientIDMetadataDocumentSupported(fernTestValueClientIDMetadataDocumentSupported)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+
+		// Act
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -340559,6 +344431,138 @@ func TestJSONMarshalingAttackProtectionCaptchaHcaptchaResponseContent(t *testing
 	})
 }
 
+func TestJSONMarshalingAttackProtectionCaptchaPolicy(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicy{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AttackProtectionCaptchaPolicy
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicy
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicy
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAttackProtectionCaptchaPolicyAction(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyAction{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AttackProtectionCaptchaPolicyAction
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicyAction
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicyAction
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAttackProtectionCaptchaPolicyActionInput(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AttackProtectionCaptchaPolicyActionInput
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicyActionInput
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicyActionInput
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingAttackProtectionCaptchaPolicyMatch(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled AttackProtectionCaptchaPolicyMatch
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicyMatch
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj AttackProtectionCaptchaPolicyMatch
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingAttackProtectionCaptchaRecaptchaEnterpriseResponseContent(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -341379,6 +345383,402 @@ func TestJSONMarshalingBulkUpdateAculResponseContent(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj BulkUpdateAculResponseContent
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionArkose(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkose{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionArkose
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionArkose
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionArkose
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionArkoseInput(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionArkoseInput{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionArkoseInput
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionArkoseInput
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionArkoseInput
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionAuthChallenge(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionAuthChallenge{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionAuthChallenge
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionAuthChallenge
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionAuthChallenge
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionFriendlyCaptcha(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptcha{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionFriendlyCaptcha
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionFriendlyCaptcha
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionFriendlyCaptcha
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionFriendlyCaptchaInput(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionFriendlyCaptchaInput
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionFriendlyCaptchaInput
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionFriendlyCaptchaInput
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionHcaptcha(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptcha{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionHcaptcha
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionHcaptcha
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionHcaptcha
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionHcaptchaInput(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionHcaptchaInput
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionHcaptchaInput
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionHcaptchaInput
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionRecaptchaEnterprise(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionRecaptchaEnterprise
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaEnterprise
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaEnterprise
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionRecaptchaEnterpriseInput(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionRecaptchaEnterpriseInput
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaEnterpriseInput
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaEnterpriseInput
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionRecaptchaV2(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionRecaptchaV2
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaV2
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaV2
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionRecaptchaV2Input(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionRecaptchaV2Input
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaV2Input
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionRecaptchaV2Input
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingCaptchaPolicyActionSimpleCaptcha(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CaptchaPolicyActionSimpleCaptcha{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled CaptchaPolicyActionSimpleCaptcha
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionSimpleCaptcha
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj CaptchaPolicyActionSimpleCaptcha
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -369274,6 +373674,70 @@ func TestStringAttackProtectionCaptchaHcaptchaResponseContent(t *testing.T) {
 	})
 }
 
+func TestStringAttackProtectionCaptchaPolicy(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicy{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAttackProtectionCaptchaPolicyAction(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAttackProtectionCaptchaPolicyActionInput(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringAttackProtectionCaptchaPolicyMatch(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyMatch
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringAttackProtectionCaptchaRecaptchaEnterpriseResponseContent(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -369669,6 +374133,198 @@ func TestStringBulkUpdateAculResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *BulkUpdateAculResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionArkose(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionArkose{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkose
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionArkoseInput(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionArkoseInput{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkoseInput
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionAuthChallenge(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionAuthChallenge{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionAuthChallenge
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionFriendlyCaptcha(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionFriendlyCaptcha{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionFriendlyCaptcha
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionFriendlyCaptchaInput(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionFriendlyCaptchaInput
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionHcaptcha(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionHcaptcha{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionHcaptcha
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionHcaptchaInput(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionHcaptchaInput
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionRecaptchaEnterprise(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterprise
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionRecaptchaEnterpriseInput(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterpriseInput
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionRecaptchaV2(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaV2{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaV2
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionRecaptchaV2Input(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaV2Input
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringCaptchaPolicyActionSimpleCaptcha(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionSimpleCaptcha{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionSimpleCaptcha
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -382386,6 +387042,70 @@ func TestEnumBruteForceProtectionShieldsEnum(t *testing.T) {
 	})
 }
 
+func TestEnumCaptchaActiveProviderEnum(t *testing.T) {
+	t.Run("NewFromString_simple_captcha", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCaptchaActiveProviderEnumFromString("simple_captcha")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CaptchaActiveProviderEnum("simple_captcha"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_auth_challenge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCaptchaActiveProviderEnumFromString("auth_challenge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CaptchaActiveProviderEnum("auth_challenge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_recaptcha_v2", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCaptchaActiveProviderEnumFromString("recaptcha_v2")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CaptchaActiveProviderEnum("recaptcha_v2"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_recaptcha_enterprise", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCaptchaActiveProviderEnumFromString("recaptcha_enterprise")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CaptchaActiveProviderEnum("recaptcha_enterprise"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_hcaptcha", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCaptchaActiveProviderEnumFromString("hcaptcha")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CaptchaActiveProviderEnum("hcaptcha"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_friendly_captcha", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCaptchaActiveProviderEnumFromString("friendly_captcha")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CaptchaActiveProviderEnum("friendly_captcha"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_arkose", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewCaptchaActiveProviderEnumFromString("arkose")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, CaptchaActiveProviderEnum("arkose"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewCaptchaActiveProviderEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewCaptchaActiveProviderEnumFromString("simple_captcha")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumClientCredentialAlgorithmEnum(t *testing.T) {
 	t.Run("NewFromString_RS256", func(t *testing.T) {
 		t.Parallel()
@@ -391436,6 +396156,34 @@ func TestEnumOauthScope(t *testing.T) {
 		assert.Equal(t, OauthScope("delete:vdcs_templates"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_create_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("create:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("create:client_profiles"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_read_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("read:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("read:client_profiles"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_update_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("update:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("update:client_profiles"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_delete_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("delete:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("delete:client_profiles"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_create_organization_clients", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewOauthScopeFromString("create:organization_clients")
@@ -397360,6 +402108,98 @@ func TestExtraPropertiesAttackProtectionCaptchaHcaptchaResponseContent(t *testin
 	})
 }
 
+func TestExtraPropertiesAttackProtectionCaptchaPolicy(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicy{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicy
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAttackProtectionCaptchaPolicyAction(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicyAction{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyAction
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAttackProtectionCaptchaPolicyActionInput(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicyActionInput{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyActionInput
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesAttackProtectionCaptchaPolicyMatch(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &AttackProtectionCaptchaPolicyMatch{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *AttackProtectionCaptchaPolicyMatch
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesAttackProtectionCaptchaRecaptchaEnterpriseResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -397930,6 +402770,282 @@ func TestExtraPropertiesBulkUpdateAculResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *BulkUpdateAculResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionArkose(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionArkose{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkose
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionArkoseInput(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionArkoseInput{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionArkoseInput
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionAuthChallenge(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionAuthChallenge{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionAuthChallenge
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionFriendlyCaptcha(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionFriendlyCaptcha{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionFriendlyCaptcha
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionFriendlyCaptchaInput(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionFriendlyCaptchaInput{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionFriendlyCaptchaInput
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionHcaptcha(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionHcaptcha{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionHcaptcha
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionHcaptchaInput(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionHcaptchaInput{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionHcaptchaInput
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionRecaptchaEnterprise(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaEnterprise{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterprise
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionRecaptchaEnterpriseInput(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaEnterpriseInput{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaEnterpriseInput
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionRecaptchaV2(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaV2{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaV2
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionRecaptchaV2Input(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionRecaptchaV2Input{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionRecaptchaV2Input
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesCaptchaPolicyActionSimpleCaptcha(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &CaptchaPolicyActionSimpleCaptcha{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CaptchaPolicyActionSimpleCaptcha
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
