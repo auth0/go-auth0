@@ -131,6 +131,7 @@ func (c *Client) List(
 //	    Name: "name",
 //	    FeatureFlagID: "feature_flag_id",
 //	    AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
+//	    AllocationStrategy: management.AllocationStrategyEnumPercentage,
 //	}
 //	client.Experimentation.Experiments.Create(
 //	    context.TODO(),

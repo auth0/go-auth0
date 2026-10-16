@@ -80105,10 +80105,11 @@ func (e EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum) Ptr()
 }
 
 var (
-	eventStreamCloudEventContextFieldClient     = big.NewInt(1 << 0)
-	eventStreamCloudEventContextFieldConnection = big.NewInt(1 << 1)
-	eventStreamCloudEventContextFieldRequest    = big.NewInt(1 << 2)
-	eventStreamCloudEventContextFieldTenant     = big.NewInt(1 << 3)
+	eventStreamCloudEventContextFieldClient      = big.NewInt(1 << 0)
+	eventStreamCloudEventContextFieldConnection  = big.NewInt(1 << 1)
+	eventStreamCloudEventContextFieldRequest     = big.NewInt(1 << 2)
+	eventStreamCloudEventContextFieldTenant      = big.NewInt(1 << 3)
+	eventStreamCloudEventContextFieldTransaction = big.NewInt(1 << 4)
 )
 
 // Information about the context in which the event was produced. This may include things like
@@ -80117,10 +80118,11 @@ var (
 // Note: This field may not be present on all events, depending on the event type and the
 // context in which it was generated.
 type EventStreamCloudEventContext struct {
-	Client     *EventStreamCloudEventContextClient     `json:"client,omitempty" url:"client,omitempty"`
-	Connection *EventStreamCloudEventContextConnection `json:"connection,omitempty" url:"connection,omitempty"`
-	Request    *EventStreamCloudEventContextRequest    `json:"request,omitempty" url:"request,omitempty"`
-	Tenant     *EventStreamCloudEventContextTenant     `json:"tenant" url:"tenant"`
+	Client      *EventStreamCloudEventContextClient      `json:"client,omitempty" url:"client,omitempty"`
+	Connection  *EventStreamCloudEventContextConnection  `json:"connection,omitempty" url:"connection,omitempty"`
+	Request     *EventStreamCloudEventContextRequest     `json:"request,omitempty" url:"request,omitempty"`
+	Tenant      *EventStreamCloudEventContextTenant      `json:"tenant" url:"tenant"`
+	Transaction *EventStreamCloudEventContextTransaction `json:"transaction,omitempty" url:"transaction,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -80155,6 +80157,13 @@ func (e *EventStreamCloudEventContext) GetTenant() *EventStreamCloudEventContext
 		return nil
 	}
 	return e.Tenant
+}
+
+func (e *EventStreamCloudEventContext) GetTransaction() EventStreamCloudEventContextTransaction {
+	if e == nil || e.Transaction == nil {
+		return EventStreamCloudEventContextTransaction{}
+	}
+	return *e.Transaction
 }
 
 func (e *EventStreamCloudEventContext) GetExtraProperties() map[string]interface{} {
@@ -80199,6 +80208,13 @@ func (e *EventStreamCloudEventContext) SetRequest(request *EventStreamCloudEvent
 func (e *EventStreamCloudEventContext) SetTenant(tenant *EventStreamCloudEventContextTenant) {
 	e.Tenant = tenant
 	e.require(eventStreamCloudEventContextFieldTenant)
+}
+
+// SetTransaction sets the Transaction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContext) SetTransaction(transaction *EventStreamCloudEventContextTransaction) {
+	e.Transaction = transaction
+	e.require(eventStreamCloudEventContextFieldTransaction)
 }
 
 func (e *EventStreamCloudEventContext) UnmarshalJSON(data []byte) error {
@@ -80971,6 +80987,376 @@ func (e *EventStreamCloudEventContextTenant) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+var (
+	eventStreamCloudEventContextTransactionFieldAcrValues       = big.NewInt(1 << 0)
+	eventStreamCloudEventContextTransactionFieldLocale          = big.NewInt(1 << 1)
+	eventStreamCloudEventContextTransactionFieldLoginHint       = big.NewInt(1 << 2)
+	eventStreamCloudEventContextTransactionFieldPrompt          = big.NewInt(1 << 3)
+	eventStreamCloudEventContextTransactionFieldProtocol        = big.NewInt(1 << 4)
+	eventStreamCloudEventContextTransactionFieldRedirectURI     = big.NewInt(1 << 5)
+	eventStreamCloudEventContextTransactionFieldRequestedScopes = big.NewInt(1 << 6)
+	eventStreamCloudEventContextTransactionFieldResponseMode    = big.NewInt(1 << 7)
+	eventStreamCloudEventContextTransactionFieldResponseType    = big.NewInt(1 << 8)
+	eventStreamCloudEventContextTransactionFieldState           = big.NewInt(1 << 9)
+	eventStreamCloudEventContextTransactionFieldUILocales       = big.NewInt(1 << 10)
+)
+
+// An auth transaction.
+type EventStreamCloudEventContextTransaction struct {
+	// acr_values in the request.
+	AcrValues []string `json:"acr_values" url:"acr_values"`
+	// The locale used for this transaction.
+	Locale string `json:"locale" url:"locale"`
+	// Hint about the login identifier the user might use in this transaction.
+	LoginHint *string `json:"login_hint,omitempty" url:"login_hint,omitempty"`
+	// Instructions indicating whether the user may be prompted for re-authentication and consent.
+	Prompt   []string                                             `json:"prompt,omitempty" url:"prompt,omitempty"`
+	Protocol *EventStreamCloudEventContextTransactionProtocolEnum `json:"protocol,omitempty" url:"protocol,omitempty"`
+	// The URL to which the client will be redirected when the transaction completes.
+	RedirectURI *string `json:"redirect_uri,omitempty" url:"redirect_uri,omitempty"`
+	// The scopes requested.
+	RequestedScopes []string                                                 `json:"requested_scopes" url:"requested_scopes"`
+	ResponseMode    *EventStreamCloudEventContextTransactionResponseModeEnum `json:"response_mode,omitempty" url:"response_mode,omitempty"`
+	// The kind of credential issued by this transaction.
+	ResponseType []EventStreamCloudEventContextTransactionResponseTypeItemEnum `json:"response_type,omitempty" url:"response_type,omitempty"`
+	// The OAuth state parameter for this transaction.
+	State *string `json:"state,omitempty" url:"state,omitempty"`
+	// The ui_locales requested for this transaction.
+	UILocales []string `json:"ui_locales" url:"ui_locales"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetAcrValues() []string {
+	if e == nil {
+		return nil
+	}
+	return e.AcrValues
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetLocale() string {
+	if e == nil {
+		return ""
+	}
+	return e.Locale
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetLoginHint() string {
+	if e == nil || e.LoginHint == nil {
+		return ""
+	}
+	return *e.LoginHint
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetPrompt() []string {
+	if e == nil || e.Prompt == nil {
+		return nil
+	}
+	return e.Prompt
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetProtocol() EventStreamCloudEventContextTransactionProtocolEnum {
+	if e == nil || e.Protocol == nil {
+		return ""
+	}
+	return *e.Protocol
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetRedirectURI() string {
+	if e == nil || e.RedirectURI == nil {
+		return ""
+	}
+	return *e.RedirectURI
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetRequestedScopes() []string {
+	if e == nil {
+		return nil
+	}
+	return e.RequestedScopes
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetResponseMode() EventStreamCloudEventContextTransactionResponseModeEnum {
+	if e == nil || e.ResponseMode == nil {
+		return ""
+	}
+	return *e.ResponseMode
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetResponseType() []EventStreamCloudEventContextTransactionResponseTypeItemEnum {
+	if e == nil || e.ResponseType == nil {
+		return nil
+	}
+	return e.ResponseType
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetState() string {
+	if e == nil || e.State == nil {
+		return ""
+	}
+	return *e.State
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetUILocales() []string {
+	if e == nil {
+		return nil
+	}
+	return e.UILocales
+}
+
+func (e *EventStreamCloudEventContextTransaction) GetExtraProperties() map[string]interface{} {
+	if e == nil {
+		return nil
+	}
+	return e.extraProperties
+}
+
+func (e *EventStreamCloudEventContextTransaction) require(field *big.Int) {
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
+	}
+	next.Or(next, field)
+	e.explicitFields = next
+}
+
+// SetAcrValues sets the AcrValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetAcrValues(acrValues []string) {
+	e.AcrValues = acrValues
+	e.require(eventStreamCloudEventContextTransactionFieldAcrValues)
+}
+
+// SetLocale sets the Locale field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetLocale(locale string) {
+	e.Locale = locale
+	e.require(eventStreamCloudEventContextTransactionFieldLocale)
+}
+
+// SetLoginHint sets the LoginHint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetLoginHint(loginHint *string) {
+	e.LoginHint = loginHint
+	e.require(eventStreamCloudEventContextTransactionFieldLoginHint)
+}
+
+// SetPrompt sets the Prompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetPrompt(prompt []string) {
+	e.Prompt = prompt
+	e.require(eventStreamCloudEventContextTransactionFieldPrompt)
+}
+
+// SetProtocol sets the Protocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetProtocol(protocol *EventStreamCloudEventContextTransactionProtocolEnum) {
+	e.Protocol = protocol
+	e.require(eventStreamCloudEventContextTransactionFieldProtocol)
+}
+
+// SetRedirectURI sets the RedirectURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetRedirectURI(redirectURI *string) {
+	e.RedirectURI = redirectURI
+	e.require(eventStreamCloudEventContextTransactionFieldRedirectURI)
+}
+
+// SetRequestedScopes sets the RequestedScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetRequestedScopes(requestedScopes []string) {
+	e.RequestedScopes = requestedScopes
+	e.require(eventStreamCloudEventContextTransactionFieldRequestedScopes)
+}
+
+// SetResponseMode sets the ResponseMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetResponseMode(responseMode *EventStreamCloudEventContextTransactionResponseModeEnum) {
+	e.ResponseMode = responseMode
+	e.require(eventStreamCloudEventContextTransactionFieldResponseMode)
+}
+
+// SetResponseType sets the ResponseType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetResponseType(responseType []EventStreamCloudEventContextTransactionResponseTypeItemEnum) {
+	e.ResponseType = responseType
+	e.require(eventStreamCloudEventContextTransactionFieldResponseType)
+}
+
+// SetState sets the State field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetState(state *string) {
+	e.State = state
+	e.require(eventStreamCloudEventContextTransactionFieldState)
+}
+
+// SetUILocales sets the UILocales field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamCloudEventContextTransaction) SetUILocales(uiLocales []string) {
+	e.UILocales = uiLocales
+	e.require(eventStreamCloudEventContextTransactionFieldUILocales)
+}
+
+func (e *EventStreamCloudEventContextTransaction) UnmarshalJSON(data []byte) error {
+	type unmarshaler EventStreamCloudEventContextTransaction
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*e = EventStreamCloudEventContextTransaction(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *e)
+	if err != nil {
+		return err
+	}
+	e.extraProperties = extraProperties
+	e.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (e *EventStreamCloudEventContextTransaction) MarshalJSON() ([]byte, error) {
+	type embed EventStreamCloudEventContextTransaction
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*e),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, e.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (e *EventStreamCloudEventContextTransaction) String() string {
+	if e == nil {
+		return "<nil>"
+	}
+	if len(e.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(e.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(e); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", e)
+}
+
+// The protocol used for this transaction.
+type EventStreamCloudEventContextTransactionProtocolEnum string
+
+const (
+	EventStreamCloudEventContextTransactionProtocolEnumOidcBasicProfile             EventStreamCloudEventContextTransactionProtocolEnum = "oidc-basic-profile"
+	EventStreamCloudEventContextTransactionProtocolEnumOidcImplicitProfile          EventStreamCloudEventContextTransactionProtocolEnum = "oidc-implicit-profile"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2DeviceCode             EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-device-code"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2ResourceOwner          EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-resource-owner"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2ResourceOwnerJwtBearer EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-resource-owner-jwt-bearer"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2Password               EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-password"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2Webauthn               EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-webauthn"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2AccessToken            EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-access-token"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2RefreshToken           EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-refresh-token"
+	EventStreamCloudEventContextTransactionProtocolEnumOauth2TokenExchange          EventStreamCloudEventContextTransactionProtocolEnum = "oauth2-token-exchange"
+	EventStreamCloudEventContextTransactionProtocolEnumOidcHybridProfile            EventStreamCloudEventContextTransactionProtocolEnum = "oidc-hybrid-profile"
+	EventStreamCloudEventContextTransactionProtocolEnumSamlp                        EventStreamCloudEventContextTransactionProtocolEnum = "samlp"
+	EventStreamCloudEventContextTransactionProtocolEnumWsfed                        EventStreamCloudEventContextTransactionProtocolEnum = "wsfed"
+	EventStreamCloudEventContextTransactionProtocolEnumWstrustUsernamemixed         EventStreamCloudEventContextTransactionProtocolEnum = "wstrust-usernamemixed"
+)
+
+func NewEventStreamCloudEventContextTransactionProtocolEnumFromString(s string) (EventStreamCloudEventContextTransactionProtocolEnum, error) {
+	switch s {
+	case "oidc-basic-profile":
+		return EventStreamCloudEventContextTransactionProtocolEnumOidcBasicProfile, nil
+	case "oidc-implicit-profile":
+		return EventStreamCloudEventContextTransactionProtocolEnumOidcImplicitProfile, nil
+	case "oauth2-device-code":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2DeviceCode, nil
+	case "oauth2-resource-owner":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2ResourceOwner, nil
+	case "oauth2-resource-owner-jwt-bearer":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2ResourceOwnerJwtBearer, nil
+	case "oauth2-password":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2Password, nil
+	case "oauth2-webauthn":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2Webauthn, nil
+	case "oauth2-access-token":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2AccessToken, nil
+	case "oauth2-refresh-token":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2RefreshToken, nil
+	case "oauth2-token-exchange":
+		return EventStreamCloudEventContextTransactionProtocolEnumOauth2TokenExchange, nil
+	case "oidc-hybrid-profile":
+		return EventStreamCloudEventContextTransactionProtocolEnumOidcHybridProfile, nil
+	case "samlp":
+		return EventStreamCloudEventContextTransactionProtocolEnumSamlp, nil
+	case "wsfed":
+		return EventStreamCloudEventContextTransactionProtocolEnumWsfed, nil
+	case "wstrust-usernamemixed":
+		return EventStreamCloudEventContextTransactionProtocolEnumWstrustUsernamemixed, nil
+	}
+	var t EventStreamCloudEventContextTransactionProtocolEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventContextTransactionProtocolEnum) Ptr() *EventStreamCloudEventContextTransactionProtocolEnum {
+	return &e
+}
+
+// This transaction's method for returning parameters from the Authorization Endpoint.
+type EventStreamCloudEventContextTransactionResponseModeEnum string
+
+const (
+	EventStreamCloudEventContextTransactionResponseModeEnumQuery      EventStreamCloudEventContextTransactionResponseModeEnum = "query"
+	EventStreamCloudEventContextTransactionResponseModeEnumFragment   EventStreamCloudEventContextTransactionResponseModeEnum = "fragment"
+	EventStreamCloudEventContextTransactionResponseModeEnumFormPost   EventStreamCloudEventContextTransactionResponseModeEnum = "form_post"
+	EventStreamCloudEventContextTransactionResponseModeEnumWebMessage EventStreamCloudEventContextTransactionResponseModeEnum = "web_message"
+)
+
+func NewEventStreamCloudEventContextTransactionResponseModeEnumFromString(s string) (EventStreamCloudEventContextTransactionResponseModeEnum, error) {
+	switch s {
+	case "query":
+		return EventStreamCloudEventContextTransactionResponseModeEnumQuery, nil
+	case "fragment":
+		return EventStreamCloudEventContextTransactionResponseModeEnumFragment, nil
+	case "form_post":
+		return EventStreamCloudEventContextTransactionResponseModeEnumFormPost, nil
+	case "web_message":
+		return EventStreamCloudEventContextTransactionResponseModeEnumWebMessage, nil
+	}
+	var t EventStreamCloudEventContextTransactionResponseModeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventContextTransactionResponseModeEnum) Ptr() *EventStreamCloudEventContextTransactionResponseModeEnum {
+	return &e
+}
+
+// OAuth/OIDC response types.
+type EventStreamCloudEventContextTransactionResponseTypeItemEnum string
+
+const (
+	EventStreamCloudEventContextTransactionResponseTypeItemEnumCode    EventStreamCloudEventContextTransactionResponseTypeItemEnum = "code"
+	EventStreamCloudEventContextTransactionResponseTypeItemEnumToken   EventStreamCloudEventContextTransactionResponseTypeItemEnum = "token"
+	EventStreamCloudEventContextTransactionResponseTypeItemEnumIDToken EventStreamCloudEventContextTransactionResponseTypeItemEnum = "id_token"
+)
+
+func NewEventStreamCloudEventContextTransactionResponseTypeItemEnumFromString(s string) (EventStreamCloudEventContextTransactionResponseTypeItemEnum, error) {
+	switch s {
+	case "code":
+		return EventStreamCloudEventContextTransactionResponseTypeItemEnumCode, nil
+	case "token":
+		return EventStreamCloudEventContextTransactionResponseTypeItemEnumToken, nil
+	case "id_token":
+		return EventStreamCloudEventContextTransactionResponseTypeItemEnumIDToken, nil
+	}
+	var t EventStreamCloudEventContextTransactionResponseTypeItemEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventContextTransactionResponseTypeItemEnum) Ptr() *EventStreamCloudEventContextTransactionResponseTypeItemEnum {
+	return &e
 }
 
 // Machine-readable error code.
