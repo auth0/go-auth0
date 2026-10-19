@@ -1,5 +1,20 @@
 # Change Log
 
+## [v3.10.0](https://github.com/auth0/go-auth0/tree/v3.10.0) (2026-10-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.9.0...v3.10.0)
+
+**Breaking Changes**
+- Removed the CAPTCHA policies API (`AttackProtection.CaptchaPolicies`) and its related types, as it is not part of the supported API surface. This covers the `List`, `Create`, `Get`, `Update`, and `Delete` methods, the `AttackProtectionCaptchaPolicy*` and `CaptchaPolicyAction*` types, `CaptchaActiveProviderEnum`, and the create and update request types [\#901](https://github.com/auth0/go-auth0/pull/901) ([fern-api[bot]](https://github.com/apps/fern-api))
+- `attackprotection.ErrorCodes` no longer maps `409` to `ConflictError`, as it was only used by these endpoints [\#901](https://github.com/auth0/go-auth0/pull/901) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add a `Transaction` field to `EventStreamCloudEventContext`, with the new `EventStreamCloudEventContextTransaction` type (`acr_values`, `locale`, `login_hint`, `prompt`, `protocol`, `redirect_uri`, `requested_scopes`, `response_mode`, `response_type`, `state`, `ui_locales`) and its getters and setter [\#901](https://github.com/auth0/go-auth0/pull/901) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `EventStreamCloudEventContextTransactionProtocolEnum`, `EventStreamCloudEventContextTransactionResponseModeEnum`, and `EventStreamCloudEventContextTransactionResponseTypeItemEnum` enums [\#901](https://github.com/auth0/go-auth0/pull/901) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `GuardianFactorNameEnumPasskey` (`"passkey"`) as a valid Guardian factor name [\#901](https://github.com/auth0/go-auth0/pull/901) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Fixed**
+- fix: mark `allocation_strategy` as required on `CreateExperimentRequestContent`, matching the API. `AllocationStrategy` is now a plain `AllocationStrategyEnum` instead of a pointer, and `SetAllocationStrategy` takes the value [\#901](https://github.com/auth0/go-auth0/pull/901) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.9.0](https://github.com/auth0/go-auth0/tree/v3.9.0) (2026-10-14)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.8.0...v3.9.0)
 
