@@ -130,6 +130,7 @@ func TestExperimentationExperimentsCreateWithWireMock(
 		Name:               "name",
 		FeatureFlagID:      "feature_flag_id",
 		AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
+		AllocationStrategy: management.AllocationStrategyEnumPercentage,
 	}
 	_, invocationErr := client.Experimentation.Experiments.Create(
 		context.TODO(),

@@ -230420,6 +230420,14 @@ func TestSettersGetTenantSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		obj := &GetTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.Equal(t, fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported, obj.ClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetPhoneConsolidatedExperience", func(t *testing.T) {
 		obj := &GetTenantSettingsResponseContent{}
 		var fernTestValuePhoneConsolidatedExperience *bool
@@ -231715,6 +231723,40 @@ func TestGettersGetTenantSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetClientIDMetadataDocumentSupported() // Should return zero value
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		var value bool
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetTenantSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientIDMetadataDocumentDynamicRegistrationSupported() // Should return zero value
 	})
 
 	t.Run("GetPhoneConsolidatedExperience", func(t *testing.T) {
@@ -233014,6 +233056,37 @@ func TestSettersMarkExplicitGetTenantSettingsResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetClientIDMetadataDocumentSupported(fernTestValueClientIDMetadataDocumentSupported)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+
+		// Act
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -326592,6 +326665,14 @@ func TestSettersUpdateTenantSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		obj := &UpdateTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.Equal(t, fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported, obj.ClientIDMetadataDocumentDynamicRegistrationSupported)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetPhoneConsolidatedExperience", func(t *testing.T) {
 		obj := &UpdateTenantSettingsResponseContent{}
 		var fernTestValuePhoneConsolidatedExperience *bool
@@ -327887,6 +327968,40 @@ func TestGettersUpdateTenantSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetClientIDMetadataDocumentSupported() // Should return zero value
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		var value bool
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		obj.ClientIDMetadataDocumentDynamicRegistrationSupported = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientIDMetadataDocumentDynamicRegistrationSupported(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientIDMetadataDocumentDynamicRegistrationSupported_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateTenantSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientIDMetadataDocumentDynamicRegistrationSupported() // Should return zero value
 	})
 
 	t.Run("GetPhoneConsolidatedExperience", func(t *testing.T) {
@@ -329186,6 +329301,37 @@ func TestSettersMarkExplicitUpdateTenantSettingsResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetClientIDMetadataDocumentSupported(fernTestValueClientIDMetadataDocumentSupported)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientIDMetadataDocumentDynamicRegistrationSupported_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		var fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported *bool
+
+		// Act
+		obj.SetClientIDMetadataDocumentDynamicRegistrationSupported(fernTestValueClientIDMetadataDocumentDynamicRegistrationSupported)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -389002,6 +389148,13 @@ func TestEnumGuardianFactorNameEnum(t *testing.T) {
 		assert.Equal(t, GuardianFactorNameEnum("recovery-code"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_passkey", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewGuardianFactorNameEnumFromString("passkey")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, GuardianFactorNameEnum("passkey"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewGuardianFactorNameEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
@@ -391434,6 +391587,34 @@ func TestEnumOauthScope(t *testing.T) {
 		val, err := NewOauthScopeFromString("delete:vdcs_templates")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, OauthScope("delete:vdcs_templates"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_create_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("create:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("create:client_profiles"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_read_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("read:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("read:client_profiles"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_update_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("update:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("update:client_profiles"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_delete_client_profiles", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewOauthScopeFromString("delete:client_profiles")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, OauthScope("delete:client_profiles"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_create_organization_clients", func(t *testing.T) {

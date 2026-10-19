@@ -148,6 +148,48 @@ func TestClientGrantsCreateWithWireMock(
 	VerifyRequestCount(t, "TestClientGrantsCreateWithWireMock", "POST", "/client-grants", nil, 1)
 }
 
+func TestClientGrantsSearchWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.SearchClientGrantsRequestParameters{
+		Q: management.String(
+			"q",
+		),
+		Parser: management.SearchParserEnumSCIM.Ptr(),
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+		Take: management.Int(
+			1,
+		),
+		From: management.String(
+			"from",
+		),
+		Sort: management.ClientGrantSortFieldEnumAudience.Ptr(),
+	}
+	_, invocationErr := client.ClientGrants.Search(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestClientGrantsSearchWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestClientGrantsSearchWithWireMock", "GET", "/client-grants/search", map[string]interface{}{"q": "q", "parser": "scim", "fields": "fields", "include_fields": "true", "take": "1", "from": "from", "sort": "audience"}, 1)
+}
+
 func TestClientGrantsGetWithWireMock(
 	t *testing.T,
 ) {

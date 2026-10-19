@@ -1338,6 +1338,131 @@ client.ClientGrants.Create(
 </dl>
 </details>
 
+<details><summary><code>client.ClientGrants.Search() -> *management.SearchClientGrantsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Search client grants using SCIM or Lucene filter syntax with low-latency, eventually consistent results. Use the parser parameter to specify "scim" or "lucene" syntax (default: "lucene"). This endpoint provides an alternative to the standard GET /client-grants endpoint with better performance for complex queries.
+Results may not reflect recent updates immediately.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.SearchClientGrantsRequestParameters{
+    Q: management.String(
+        "q",
+    ),
+    Parser: management.SearchParserEnumSCIM.Ptr(),
+    Fields: management.String(
+        "fields",
+    ),
+    IncludeFields: management.Bool(
+        true,
+    ),
+    Take: management.Int(
+        1,
+    ),
+    From: management.String(
+        "from",
+    ),
+    Sort: management.ClientGrantSortFieldEnumAudience.Ptr(),
+}
+client.ClientGrants.Search(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**q:** `*string` — Filter expression in SCIM or Lucene syntax (depending on parser parameter). SCIM examples: `audience eq "https://api.example.com"`, `client_id eq "cli_abc"`, `subject_type eq "client"`, `allow_any_organization eq true`, `default_for eq "third_party_clients"`, `audience co "example" and organization_id eq "org_123"`. SCIM operators: eq, ne, sw, ew, co, pr, gt, ge, lt, le, and, or. <br /><br /><b>Supported Fields</b>:<ul><li><i>audience</i> - Filter by audience (eq, ne, sw, co, ew, pr)</li><li><i>client_id</i> - Filter by client ID (eq, ne, sw, pr)</li><li><i>subject_type</i> - Filter by subject type (eq, ne, sw, pr)</li><li><i>allow_any_organization</i> - Filter by allow_any_organization (eq, ne, pr)</li><li><i>organization_id</i> - Filter by organization ID (eq, ne, sw, pr)</li><li><i>updated_at</i> - Filter by last update date (eq, ne, gt, ge, lt, le, pr)</li><li><i>default_for</i> - Filter by default grant group (eq, ne, sw, pr)</li></ul>Maximum 5 filter operations per query. Results are eventually consistent and may not reflect recent updates.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**parser:** `*management.SearchParserEnum` — Query parser to use for the filter expression. Use "scim" for SCIM filter syntax or "lucene" for Lucene query syntax (default).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**fields:** `*string` — Comma-separated list of fields to include or exclude in the response. Works with the include_fields parameter to control projection mode.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**includeFields:** `*bool` — Controls field projection mode. Set to true to include only fields specified in the fields parameter. Set to false to exclude fields specified in the fields parameter. Defaults to true if not specified.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Maximum number of results to return per page (1-100). Defaults to 50.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**from:** `*string` — Cursor for the next page of results. Use the value from the next field in the previous response.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**sort:** `*management.ClientGrantSortFieldEnum` — Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.ClientGrants.Get(ID) -> *management.GetClientGrantResponseContent</code></summary>
 <dl>
 <dd>
@@ -1541,6 +1666,374 @@ client.ClientGrants.Update(
 <dd>
 
 **allowAllScopes:** `*bool` — If enabled, all scopes configured on the resource server are allowed for this grant.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## ClientProfiles
+<details><summary><code>client.ClientProfiles.List() -> *management.ListClientProfilesPaginatedResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a paginated list of client profiles for the tenant. Uses checkpoint pagination: pass the <code>next</code> cursor from a previous response as the <code>from</code> query parameter to retrieve the following page.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.ListClientProfilesRequestParameters{
+    From: management.String(
+        "from",
+    ),
+    Take: management.Int(
+        1,
+    ),
+}
+client.ClientProfiles.List(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**from:** `*string` — Optional Id from which to start selection.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**take:** `*int` — Number of results per page. Defaults to 50.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ClientProfiles.Create(request) -> *management.ClientProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a client profile. At most one profile is allowed per tenant in this release; attempting to create a second returns <code>409 Conflict</code>. The profile governs Dynamic CIMD clients matched by its <code>apply_policy</code> at runtime.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreateClientProfileRequestContent{
+    Name: "name",
+    ClientConfiguration: &management.ClientProfileClientConfiguration{},
+    ApplyPolicy: &management.ClientProfileApplyPolicy{
+        ExternalMetadataType: management.ClientProfileApplyPolicyExternalMetadataTypeEnumCimd,
+        ExternalMetadataCreatedBy: management.ClientProfileApplyPolicyExternalMetadataCreatedByEnumClient,
+    },
+}
+client.ClientProfiles.Create(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**name:** `management.ClientProfileName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*management.ClientProfileDescription` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientConfiguration:** `*management.ClientProfileClientConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**applyPolicy:** `*management.ClientProfileApplyPolicy` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ClientProfiles.Get(ID) -> *management.ClientProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a single client profile by its identifier. Returns <code>404</code> if no profile with the given ID exists for the tenant.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.ClientProfiles.Get(
+    context.TODO(),
+    "id",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.ClientProfileID` — ID of the client profile.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ClientProfiles.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Delete a client profile. Idempotent: returns <code>204 No Content</code> whether or not a profile with the given ID existed. Deleting the profile removes fleet governance for matched clients immediately.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.ClientProfiles.Delete(
+    context.TODO(),
+    "id",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.ClientProfileID` — ID of the client profile.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.ClientProfiles.Update(ID, request) -> *management.ClientProfile</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update a client profile. Supports partial updates at the top level (JSON Merge Patch); omitted top-level fields remain unchanged. Nested objects such as <code>client_configuration</code> must be supplied in full.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdateClientProfileRequestContent{}
+client.ClientProfiles.Update(
+    context.TODO(),
+    "id",
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.ClientProfileID` — ID of the client profile.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*management.ClientProfileName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**description:** `*management.ClientProfileDescription` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientConfiguration:** `*management.ClientProfileClientConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**applyPolicy:** `*management.ClientProfileApplyPolicy` 
     
 </dd>
 </dl>
@@ -22893,6 +23386,7 @@ request := &management.CreateExperimentRequestContent{
     Name: "name",
     FeatureFlagID: "feature_flag_id",
     AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
+    AllocationStrategy: management.AllocationStrategyEnumPercentage,
 }
 client.Experimentation.Experiments.Create(
     context.TODO(),
@@ -22952,7 +23446,7 @@ client.Experimentation.Experiments.Create(
 <dl>
 <dd>
 
-**allocationStrategy:** `*management.AllocationStrategyEnum` — The traffic allocation strategy for this experiment
+**allocationStrategy:** `management.AllocationStrategyEnum` — The traffic allocation strategy for this experiment
     
 </dd>
 </dl>
@@ -25554,7 +26048,7 @@ client.Guardian.Factors.Set(
 <dl>
 <dd>
 
-**name:** `*management.GuardianFactorNameEnum` — Factor name. Can be `sms`, `push-notification`, `email`, `duo` `otp` `webauthn-roaming`, `webauthn-platform`, or `recovery-code`.
+**name:** `*management.GuardianFactorNameEnum` — Factor name. Can be `sms`, `push-notification`, `email`, `duo`, `otp`, `webauthn-roaming`, `webauthn-platform`, `recovery-code`, or `passkey`.
     
 </dd>
 </dl>
@@ -35015,6 +35509,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **clientIDMetadataDocumentSupported:** `*bool` — Whether the authorization server supports retrieving client metadata from a client_id URL.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**clientIDMetadataDocumentDynamicRegistrationSupported:** `*bool` — Whether the authorization server supports registering clients dynamically from a client_id URL. Requires client_id_metadata_document_supported to be enabled.
     
 </dd>
 </dl>

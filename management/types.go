@@ -64014,18 +64014,19 @@ var createExperimentResponseContentNullableFields = map[string]*big.Int{
 }
 
 type CreateExperimentResponseContent struct {
-	ID                  string                 `json:"id" url:"id"`
-	Name                string                 `json:"name" url:"name"`
-	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
-	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
-	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
-	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
-	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
-	Status              ExperimentStatusEnum   `json:"status" url:"status"`
-	IsValid             bool                   `json:"is_valid" url:"is_valid"`
-	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
-	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
-	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	ID                 string                 `json:"id" url:"id"`
+	Name               string                 `json:"name" url:"name"`
+	Description        *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID      string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName    *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status             ExperimentStatusEnum   `json:"status" url:"status"`
+	// Whether the experiment is valid and ready to activate, as of its last update. It can lag changes made later to related entities. Call POST /experiments/{id}/validate for the current result.
+	IsValid             bool               `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any     `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem  `json:"allocations" url:"allocations"`
 	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
 	EditableFields []string `json:"editable_fields" url:"editable_fields"`
 	// Ramp experiment levels configuration.
@@ -82537,18 +82538,19 @@ var experimentListItemNullableFields = map[string]*big.Int{
 }
 
 type ExperimentListItem struct {
-	ID                  string                 `json:"id" url:"id"`
-	Name                string                 `json:"name" url:"name"`
-	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
-	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
-	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
-	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
-	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
-	Status              ExperimentStatusEnum   `json:"status" url:"status"`
-	IsValid             bool                   `json:"is_valid" url:"is_valid"`
-	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
-	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
-	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	ID                 string                 `json:"id" url:"id"`
+	Name               string                 `json:"name" url:"name"`
+	Description        *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID      string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName    *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status             ExperimentStatusEnum   `json:"status" url:"status"`
+	// Whether the experiment is valid and ready to activate, as of its last update. It can lag changes made later to related entities. Call POST /experiments/{id}/validate for the current result.
+	IsValid             bool               `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any     `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem  `json:"allocations" url:"allocations"`
 	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
 	EditableFields []string `json:"editable_fields" url:"editable_fields"`
 	// Ramp experiment levels configuration.
@@ -91346,18 +91348,19 @@ var getExperimentResponseContentNullableFields = map[string]*big.Int{
 }
 
 type GetExperimentResponseContent struct {
-	ID                  string                 `json:"id" url:"id"`
-	Name                string                 `json:"name" url:"name"`
-	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
-	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
-	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
-	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
-	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
-	Status              ExperimentStatusEnum   `json:"status" url:"status"`
-	IsValid             bool                   `json:"is_valid" url:"is_valid"`
-	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
-	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
-	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	ID                 string                 `json:"id" url:"id"`
+	Name               string                 `json:"name" url:"name"`
+	Description        *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID      string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName    *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status             ExperimentStatusEnum   `json:"status" url:"status"`
+	// Whether the experiment is valid and ready to activate, as of its last update. It can lag changes made later to related entities. Call POST /experiments/{id}/validate for the current result.
+	IsValid             bool               `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any     `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem  `json:"allocations" url:"allocations"`
 	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
 	EditableFields []string `json:"editable_fields" url:"editable_fields"`
 	// Ramp experiment levels configuration.
@@ -97045,48 +97048,49 @@ func (g *GetSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	getTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
-	getTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
-	getTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
-	getTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
-	getTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
-	getTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
-	getTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
-	getTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
-	getTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
-	getTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
-	getTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
-	getTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
-	getTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
-	getTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
-	getTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
-	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
-	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
-	getTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
-	getTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
-	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
-	getTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
-	getTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
-	getTenantSettingsResponseContentFieldAccessToken                                    = big.NewInt(1 << 22)
-	getTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 23)
-	getTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 24)
-	getTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 25)
-	getTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 26)
-	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 27)
-	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 28)
-	getTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 29)
-	getTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 30)
-	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 31)
-	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 32)
-	getTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                  = big.NewInt(1 << 33)
-	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 34)
-	getTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 35)
-	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 36)
-	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 37)
-	getTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 38)
-	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 39)
-	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 40)
-	getTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 41)
+	getTenantSettingsResponseContentFieldChangePassword                                       = big.NewInt(1 << 0)
+	getTenantSettingsResponseContentFieldGuardianMfaPage                                      = big.NewInt(1 << 1)
+	getTenantSettingsResponseContentFieldDefaultAudience                                      = big.NewInt(1 << 2)
+	getTenantSettingsResponseContentFieldDefaultDirectory                                     = big.NewInt(1 << 3)
+	getTenantSettingsResponseContentFieldErrorPage                                            = big.NewInt(1 << 4)
+	getTenantSettingsResponseContentFieldDeviceFlow                                           = big.NewInt(1 << 5)
+	getTenantSettingsResponseContentFieldDefaultTokenQuota                                    = big.NewInt(1 << 6)
+	getTenantSettingsResponseContentFieldFlags                                                = big.NewInt(1 << 7)
+	getTenantSettingsResponseContentFieldFriendlyName                                         = big.NewInt(1 << 8)
+	getTenantSettingsResponseContentFieldPictureURL                                           = big.NewInt(1 << 9)
+	getTenantSettingsResponseContentFieldSupportEmail                                         = big.NewInt(1 << 10)
+	getTenantSettingsResponseContentFieldSupportURL                                           = big.NewInt(1 << 11)
+	getTenantSettingsResponseContentFieldAllowedLogoutURLs                                    = big.NewInt(1 << 12)
+	getTenantSettingsResponseContentFieldSessionLifetime                                      = big.NewInt(1 << 13)
+	getTenantSettingsResponseContentFieldIdleSessionLifetime                                  = big.NewInt(1 << 14)
+	getTenantSettingsResponseContentFieldEphemeralSessionLifetime                             = big.NewInt(1 << 15)
+	getTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                         = big.NewInt(1 << 16)
+	getTenantSettingsResponseContentFieldSandboxVersion                                       = big.NewInt(1 << 17)
+	getTenantSettingsResponseContentFieldLegacySandboxVersion                                 = big.NewInt(1 << 18)
+	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                             = big.NewInt(1 << 19)
+	getTenantSettingsResponseContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 20)
+	getTenantSettingsResponseContentFieldEnabledLocales                                       = big.NewInt(1 << 21)
+	getTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 22)
+	getTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 23)
+	getTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 24)
+	getTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 25)
+	getTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 26)
+	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 27)
+	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 28)
+	getTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 29)
+	getTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 31)
+	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 32)
+	getTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 33)
+	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 34)
+	getTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 35)
+	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 36)
+	getTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 37)
+	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 38)
+	getTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 39)
+	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
+	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
+	getTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
 )
 
 // getTenantSettingsResponseContentNullableFields maps the wire names of GetTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
@@ -97171,6 +97175,8 @@ type GetTenantSettingsResponseContent struct {
 	ResourceParameterProfile                       *TenantSettingsResourceParameterProfile `json:"resource_parameter_profile,omitempty" url:"resource_parameter_profile,omitempty"`
 	// Whether the authorization server supports retrieving client metadata from a client_id URL.
 	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty" url:"client_id_metadata_document_supported,omitempty"`
+	// Whether the authorization server supports registering clients dynamically from a client_id URL. Requires client_id_metadata_document_supported to be enabled.
+	ClientIDMetadataDocumentDynamicRegistrationSupported *bool `json:"client_id_metadata_document_dynamic_registration_supported,omitempty" url:"client_id_metadata_document_dynamic_registration_supported,omitempty"`
 	// Whether Phone Consolidated Experience is enabled for this tenant.
 	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty" url:"phone_consolidated_experience,omitempty"`
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
@@ -97444,6 +97450,13 @@ func (g *GetTenantSettingsResponseContent) GetClientIDMetadataDocumentSupported(
 		return false
 	}
 	return *g.ClientIDMetadataDocumentSupported
+}
+
+func (g *GetTenantSettingsResponseContent) GetClientIDMetadataDocumentDynamicRegistrationSupported() bool {
+	if g == nil || g.ClientIDMetadataDocumentDynamicRegistrationSupported == nil {
+		return false
+	}
+	return *g.ClientIDMetadataDocumentDynamicRegistrationSupported
 }
 
 func (g *GetTenantSettingsResponseContent) GetPhoneConsolidatedExperience() bool {
@@ -97754,6 +97767,13 @@ func (g *GetTenantSettingsResponseContent) SetResourceParameterProfile(resourceP
 func (g *GetTenantSettingsResponseContent) SetClientIDMetadataDocumentSupported(clientIDMetadataDocumentSupported *bool) {
 	g.ClientIDMetadataDocumentSupported = clientIDMetadataDocumentSupported
 	g.require(getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported)
+}
+
+// SetClientIDMetadataDocumentDynamicRegistrationSupported sets the ClientIDMetadataDocumentDynamicRegistrationSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTenantSettingsResponseContent) SetClientIDMetadataDocumentDynamicRegistrationSupported(clientIDMetadataDocumentDynamicRegistrationSupported *bool) {
+	g.ClientIDMetadataDocumentDynamicRegistrationSupported = clientIDMetadataDocumentDynamicRegistrationSupported
+	g.require(getTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported)
 }
 
 // SetPhoneConsolidatedExperience sets the PhoneConsolidatedExperience field and marks it as non-optional;
@@ -99660,7 +99680,7 @@ func (g *GuardianFactor) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
-// Factor name. Can be `sms`, `push-notification`, `email`, `duo` `otp` `webauthn-roaming`, `webauthn-platform`, or `recovery-code`.
+// Factor name. Can be `sms`, `push-notification`, `email`, `duo`, `otp`, `webauthn-roaming`, `webauthn-platform`, `recovery-code`, or `passkey`.
 type GuardianFactorNameEnum string
 
 const (
@@ -99672,6 +99692,7 @@ const (
 	GuardianFactorNameEnumWebauthnRoaming  GuardianFactorNameEnum = "webauthn-roaming"
 	GuardianFactorNameEnumWebauthnPlatform GuardianFactorNameEnum = "webauthn-platform"
 	GuardianFactorNameEnumRecoveryCode     GuardianFactorNameEnum = "recovery-code"
+	GuardianFactorNameEnumPasskey          GuardianFactorNameEnum = "passkey"
 )
 
 func NewGuardianFactorNameEnumFromString(s string) (GuardianFactorNameEnum, error) {
@@ -99692,6 +99713,8 @@ func NewGuardianFactorNameEnumFromString(s string) (GuardianFactorNameEnum, erro
 		return GuardianFactorNameEnumWebauthnPlatform, nil
 	case "recovery-code":
 		return GuardianFactorNameEnumRecoveryCode, nil
+	case "passkey":
+		return GuardianFactorNameEnumPasskey, nil
 	}
 	var t GuardianFactorNameEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -109560,6 +109583,14 @@ const (
 	OauthScopeUpdateVdcsTemplates OauthScope = "update:vdcs_templates"
 	// Delete Vdcs Templates
 	OauthScopeDeleteVdcsTemplates OauthScope = "delete:vdcs_templates"
+	// Create Client Profiles
+	OauthScopeCreateClientProfiles OauthScope = "create:client_profiles"
+	// Read Client Profiles
+	OauthScopeReadClientProfiles OauthScope = "read:client_profiles"
+	// Update Client Profiles
+	OauthScopeUpdateClientProfiles OauthScope = "update:client_profiles"
+	// Delete Client Profiles
+	OauthScopeDeleteClientProfiles OauthScope = "delete:client_profiles"
 	// Create Organization Client Associations
 	OauthScopeCreateOrganizationClients OauthScope = "create:organization_clients"
 	// Read Organization Client Associations
@@ -110066,6 +110097,14 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateVdcsTemplates, nil
 	case "delete:vdcs_templates":
 		return OauthScopeDeleteVdcsTemplates, nil
+	case "create:client_profiles":
+		return OauthScopeCreateClientProfiles, nil
+	case "read:client_profiles":
+		return OauthScopeReadClientProfiles, nil
+	case "update:client_profiles":
+		return OauthScopeUpdateClientProfiles, nil
+	case "delete:client_profiles":
+		return OauthScopeDeleteClientProfiles, nil
 	case "create:organization_clients":
 		return OauthScopeCreateOrganizationClients, nil
 	case "read:organization_clients":
@@ -140682,18 +140721,19 @@ var updateExperimentResponseContentNullableFields = map[string]*big.Int{
 }
 
 type UpdateExperimentResponseContent struct {
-	ID                  string                 `json:"id" url:"id"`
-	Name                string                 `json:"name" url:"name"`
-	Description         *string                `json:"description,omitempty" url:"description,omitempty"`
-	FeatureFlagID       string                 `json:"feature_flag_id" url:"feature_flag_id"`
-	FeatureFlagName     *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
-	AuthenticationFlow  string                 `json:"authentication_flow" url:"authentication_flow"`
-	AllocationStrategy  AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
-	Status              ExperimentStatusEnum   `json:"status" url:"status"`
-	IsValid             bool                   `json:"is_valid" url:"is_valid"`
-	DefaultConfig       *DefaultConfigEnum     `json:"default_config,omitempty" url:"default_config,omitempty"`
-	FeatureFlagSnapshot map[string]any         `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
-	Allocations         []*AllocationItem      `json:"allocations" url:"allocations"`
+	ID                 string                 `json:"id" url:"id"`
+	Name               string                 `json:"name" url:"name"`
+	Description        *string                `json:"description,omitempty" url:"description,omitempty"`
+	FeatureFlagID      string                 `json:"feature_flag_id" url:"feature_flag_id"`
+	FeatureFlagName    *string                `json:"feature_flag_name,omitempty" url:"feature_flag_name,omitempty"`
+	AuthenticationFlow string                 `json:"authentication_flow" url:"authentication_flow"`
+	AllocationStrategy AllocationStrategyEnum `json:"allocation_strategy" url:"allocation_strategy"`
+	Status             ExperimentStatusEnum   `json:"status" url:"status"`
+	// Whether the experiment is valid and ready to activate, as of its last update. It can lag changes made later to related entities. Call POST /experiments/{id}/validate for the current result.
+	IsValid             bool               `json:"is_valid" url:"is_valid"`
+	DefaultConfig       *DefaultConfigEnum `json:"default_config,omitempty" url:"default_config,omitempty"`
+	FeatureFlagSnapshot map[string]any     `json:"feature_flag_snapshot,omitempty" url:"feature_flag_snapshot,omitempty"`
+	Allocations         []*AllocationItem  `json:"allocations" url:"allocations"`
 	// Fields that may be mutated given the experiment's current status. Computed at response time; always current with the API's enforcement logic.
 	EditableFields []string `json:"editable_fields" url:"editable_fields"`
 	// Ramp experiment levels configuration.
@@ -144114,48 +144154,49 @@ func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) String() string {
 }
 
 var (
-	updateTenantSettingsResponseContentFieldChangePassword                                 = big.NewInt(1 << 0)
-	updateTenantSettingsResponseContentFieldGuardianMfaPage                                = big.NewInt(1 << 1)
-	updateTenantSettingsResponseContentFieldDefaultAudience                                = big.NewInt(1 << 2)
-	updateTenantSettingsResponseContentFieldDefaultDirectory                               = big.NewInt(1 << 3)
-	updateTenantSettingsResponseContentFieldErrorPage                                      = big.NewInt(1 << 4)
-	updateTenantSettingsResponseContentFieldDeviceFlow                                     = big.NewInt(1 << 5)
-	updateTenantSettingsResponseContentFieldDefaultTokenQuota                              = big.NewInt(1 << 6)
-	updateTenantSettingsResponseContentFieldFlags                                          = big.NewInt(1 << 7)
-	updateTenantSettingsResponseContentFieldFriendlyName                                   = big.NewInt(1 << 8)
-	updateTenantSettingsResponseContentFieldPictureURL                                     = big.NewInt(1 << 9)
-	updateTenantSettingsResponseContentFieldSupportEmail                                   = big.NewInt(1 << 10)
-	updateTenantSettingsResponseContentFieldSupportURL                                     = big.NewInt(1 << 11)
-	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 12)
-	updateTenantSettingsResponseContentFieldSessionLifetime                                = big.NewInt(1 << 13)
-	updateTenantSettingsResponseContentFieldIdleSessionLifetime                            = big.NewInt(1 << 14)
-	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                       = big.NewInt(1 << 15)
-	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                   = big.NewInt(1 << 16)
-	updateTenantSettingsResponseContentFieldSandboxVersion                                 = big.NewInt(1 << 17)
-	updateTenantSettingsResponseContentFieldLegacySandboxVersion                           = big.NewInt(1 << 18)
-	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                       = big.NewInt(1 << 19)
-	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                          = big.NewInt(1 << 20)
-	updateTenantSettingsResponseContentFieldEnabledLocales                                 = big.NewInt(1 << 21)
-	updateTenantSettingsResponseContentFieldAccessToken                                    = big.NewInt(1 << 22)
-	updateTenantSettingsResponseContentFieldSecurityHeaders                                = big.NewInt(1 << 23)
-	updateTenantSettingsResponseContentFieldSessionCookie                                  = big.NewInt(1 << 24)
-	updateTenantSettingsResponseContentFieldSessions                                       = big.NewInt(1 << 25)
-	updateTenantSettingsResponseContentFieldOidcLogout                                     = big.NewInt(1 << 26)
-	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI       = big.NewInt(1 << 27)
-	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                  = big.NewInt(1 << 28)
-	updateTenantSettingsResponseContentFieldAcrValuesSupported                             = big.NewInt(1 << 29)
-	updateTenantSettingsResponseContentFieldMtls                                           = big.NewInt(1 << 30)
-	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported           = big.NewInt(1 << 31)
-	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported     = big.NewInt(1 << 32)
-	updateTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                  = big.NewInt(1 << 33)
-	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 34)
-	updateTenantSettingsResponseContentFieldResourceParameterProfile                       = big.NewInt(1 << 35)
-	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported              = big.NewInt(1 << 36)
-	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                    = big.NewInt(1 << 37)
-	updateTenantSettingsResponseContentFieldEnableAiGuide                                  = big.NewInt(1 << 38)
-	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs             = big.NewInt(1 << 39)
-	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode          = big.NewInt(1 << 40)
-	updateTenantSettingsResponseContentFieldCountryCodes                                   = big.NewInt(1 << 41)
+	updateTenantSettingsResponseContentFieldChangePassword                                       = big.NewInt(1 << 0)
+	updateTenantSettingsResponseContentFieldGuardianMfaPage                                      = big.NewInt(1 << 1)
+	updateTenantSettingsResponseContentFieldDefaultAudience                                      = big.NewInt(1 << 2)
+	updateTenantSettingsResponseContentFieldDefaultDirectory                                     = big.NewInt(1 << 3)
+	updateTenantSettingsResponseContentFieldErrorPage                                            = big.NewInt(1 << 4)
+	updateTenantSettingsResponseContentFieldDeviceFlow                                           = big.NewInt(1 << 5)
+	updateTenantSettingsResponseContentFieldDefaultTokenQuota                                    = big.NewInt(1 << 6)
+	updateTenantSettingsResponseContentFieldFlags                                                = big.NewInt(1 << 7)
+	updateTenantSettingsResponseContentFieldFriendlyName                                         = big.NewInt(1 << 8)
+	updateTenantSettingsResponseContentFieldPictureURL                                           = big.NewInt(1 << 9)
+	updateTenantSettingsResponseContentFieldSupportEmail                                         = big.NewInt(1 << 10)
+	updateTenantSettingsResponseContentFieldSupportURL                                           = big.NewInt(1 << 11)
+	updateTenantSettingsResponseContentFieldAllowedLogoutURLs                                    = big.NewInt(1 << 12)
+	updateTenantSettingsResponseContentFieldSessionLifetime                                      = big.NewInt(1 << 13)
+	updateTenantSettingsResponseContentFieldIdleSessionLifetime                                  = big.NewInt(1 << 14)
+	updateTenantSettingsResponseContentFieldEphemeralSessionLifetime                             = big.NewInt(1 << 15)
+	updateTenantSettingsResponseContentFieldIdleEphemeralSessionLifetime                         = big.NewInt(1 << 16)
+	updateTenantSettingsResponseContentFieldSandboxVersion                                       = big.NewInt(1 << 17)
+	updateTenantSettingsResponseContentFieldLegacySandboxVersion                                 = big.NewInt(1 << 18)
+	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                             = big.NewInt(1 << 19)
+	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 20)
+	updateTenantSettingsResponseContentFieldEnabledLocales                                       = big.NewInt(1 << 21)
+	updateTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 22)
+	updateTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 23)
+	updateTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 24)
+	updateTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 25)
+	updateTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 26)
+	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 27)
+	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 28)
+	updateTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 29)
+	updateTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 31)
+	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 32)
+	updateTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 33)
+	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 34)
+	updateTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 35)
+	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 36)
+	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 37)
+	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 38)
+	updateTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 39)
+	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
+	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
+	updateTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
 )
 
 // updateTenantSettingsResponseContentNullableFields maps the wire names of UpdateTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
@@ -144240,6 +144281,8 @@ type UpdateTenantSettingsResponseContent struct {
 	ResourceParameterProfile                       *TenantSettingsResourceParameterProfile `json:"resource_parameter_profile,omitempty" url:"resource_parameter_profile,omitempty"`
 	// Whether the authorization server supports retrieving client metadata from a client_id URL.
 	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty" url:"client_id_metadata_document_supported,omitempty"`
+	// Whether the authorization server supports registering clients dynamically from a client_id URL. Requires client_id_metadata_document_supported to be enabled.
+	ClientIDMetadataDocumentDynamicRegistrationSupported *bool `json:"client_id_metadata_document_dynamic_registration_supported,omitempty" url:"client_id_metadata_document_dynamic_registration_supported,omitempty"`
 	// Whether Phone Consolidated Experience is enabled for this tenant.
 	PhoneConsolidatedExperience *bool `json:"phone_consolidated_experience,omitempty" url:"phone_consolidated_experience,omitempty"`
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
@@ -144513,6 +144556,13 @@ func (u *UpdateTenantSettingsResponseContent) GetClientIDMetadataDocumentSupport
 		return false
 	}
 	return *u.ClientIDMetadataDocumentSupported
+}
+
+func (u *UpdateTenantSettingsResponseContent) GetClientIDMetadataDocumentDynamicRegistrationSupported() bool {
+	if u == nil || u.ClientIDMetadataDocumentDynamicRegistrationSupported == nil {
+		return false
+	}
+	return *u.ClientIDMetadataDocumentDynamicRegistrationSupported
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetPhoneConsolidatedExperience() bool {
@@ -144823,6 +144873,13 @@ func (u *UpdateTenantSettingsResponseContent) SetResourceParameterProfile(resour
 func (u *UpdateTenantSettingsResponseContent) SetClientIDMetadataDocumentSupported(clientIDMetadataDocumentSupported *bool) {
 	u.ClientIDMetadataDocumentSupported = clientIDMetadataDocumentSupported
 	u.require(updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported)
+}
+
+// SetClientIDMetadataDocumentDynamicRegistrationSupported sets the ClientIDMetadataDocumentDynamicRegistrationSupported field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsResponseContent) SetClientIDMetadataDocumentDynamicRegistrationSupported(clientIDMetadataDocumentDynamicRegistrationSupported *bool) {
+	u.ClientIDMetadataDocumentDynamicRegistrationSupported = clientIDMetadataDocumentDynamicRegistrationSupported
+	u.require(updateTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported)
 }
 
 // SetPhoneConsolidatedExperience sets the PhoneConsolidatedExperience field and marks it as non-optional;
@@ -145473,7 +145530,7 @@ func (u *UpdateUserAuthenticationMethodResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// Configuration overrides for this variation; keys must exist in the parent flag parameters. Empty {} is the baseline (control) variation that overrides nothing.
+// Top-level keys merge into the stored overrides. Set a key to `null` to remove it. Set `overrides` to `null` or `{}` to clear all. Keys must exist in the parent flag parameters.
 type UpdateVariationOverridesMap = map[string]any
 
 var (

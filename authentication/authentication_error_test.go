@@ -1,6 +1,7 @@
 package authentication
 
 import (
+	"encoding/json"
 	"errors"
 	"io"
 	"net/http"
@@ -156,6 +157,19 @@ func Test_newError(t *testing.T) {
 			assert.Equal(t, testCase.expectedValidationErrors, actualError.GetValidationErrors())
 		})
 	}
+}
+
+func FuzzErrorUnmarshalJSON(f *testing.F) {
+	f.Add([]byte(`{"statusCode":400,"error":"invalid_scope","error_description":"Scope must be an array or a string"}`))
+	f.Add([]byte(`{"error":"mfa_required","error_description":"Multifactor authentication required","mfa_token":"abc","mfa_requirements":{"challenge":[{"type":"otp"}],"enroll":[{"type":"phone"}]}}`))
+	f.Add([]byte(`{"name":"PasswordStrengthError","code":"invalid_password","description":{"rules":[{"message":"At least %d characters in length","format":[8],"code":"lengthAtLeast","verified":true}],"verified":false},"statusCode":400}`))
+	f.Add([]byte(``))
+
+	f.Fuzz(func(_ *testing.T, data []byte) {
+		var e Error
+
+		_ = json.Unmarshal(data, &e)
+	})
 }
 
 func TestError_NilSafeGetters(t *testing.T) {
