@@ -241,6 +241,27 @@ type Client struct {
 	// Only present for CIMD-registered clients.
 	ExternalClientID *string `json:"external_client_id,omitempty"`
 
+	// AgentID is the identifier of the agent this client is linked to (Early Access).
+	// This feature may be unavailable on your tenant.
+	//
+	// A client can be linked to at most one agent. Sending a different agent ID on update
+	// moves the link to that agent. Deleting an agent does not clear this field.
+	//
+	// To list the clients linked to an agent, pass `management.Parameter("agent_id", id)` to
+	// ClientManager.List. This cannot be combined with the `q` parameter.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/clients/{id}
+	//
+	// {
+	//	 "agent_id": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	AgentID *string `json:"agent_id,omitempty"`
+
 	// ExternalMetadataType is the type of external metadata.
 	// Value is "cimd" for CIMD-registered clients.
 	ExternalMetadataType *string `json:"external_metadata_type,omitempty"`

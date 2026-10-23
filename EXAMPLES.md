@@ -303,3 +303,23 @@ log.Fatalf("error was %+v", err)
 
 log.Printf("Tenant %+v", tenant)
 ```
+
+### Linking a client to an agent (Early Access)
+
+`Client.AgentID` links a client to an agent. This feature is in Early Access and may be unavailable on your tenant.
+
+```go
+// Link on create (or move the link on update by setting a different AgentID).
+client := &management.Client{
+	Name:    auth0.String("My Agent Client"),
+	AgentID: auth0.String("agt_123"),
+}
+err := auth0API.Client.Create(context.Background(), client)
+
+// Unlink using a custom request, since a nil pointer is omitted from the payload.
+unlink := map[string]interface{}{"agent_id": nil}
+err = auth0API.Request(context.Background(), http.MethodPatch, auth0API.URI("clients", client.GetClientID()), unlink)
+
+// List the clients linked to an agent. This cannot be combined with the `q` parameter.
+list, err := auth0API.Client.List(context.Background(), management.Parameter("agent_id", "agt_123"))
+```
