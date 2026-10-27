@@ -272,6 +272,148 @@ func (r *RawClient) Update(
 	}, nil
 }
 
+func (r *RawClient) ListConsentSigningKeys(
+	ctx context.Context,
+	// The ID of the user.
+	id string,
+	opts ...option.RequestOption,
+) (*core.Response[management.ListUserConsentSigningKeysResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/users/%v/consent-signing-keys",
+		id,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response management.ListUserConsentSigningKeysResponseContent
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[management.ListUserConsentSigningKeysResponseContent]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) GetConsentSigningKey(
+	ctx context.Context,
+	// The ID of the user.
+	id string,
+	// The key identifier of the consent signing key.
+	kid string,
+	opts ...option.RequestOption,
+) (*core.Response[*management.ConsentSigningKey], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/users/%v/consent-signing-keys/%v",
+		id,
+		kid,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	var response *management.ConsentSigningKey
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        &response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[*management.ConsentSigningKey]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       response,
+	}, nil
+}
+
+func (r *RawClient) DeleteConsentSigningKey(
+	ctx context.Context,
+	// The ID of the user.
+	id string,
+	// The key identifier of the consent signing key.
+	kid string,
+	opts ...option.RequestOption,
+) (*core.Response[any], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		r.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/users/%v/consent-signing-keys/%v",
+		id,
+		kid,
+	)
+	headers := internal.MergeHeaders(
+		r.options.ToHeader(),
+		options.ToHeader(),
+	)
+	raw, err := r.caller.Call(
+		ctx,
+		&internal.CallParams{
+			URL:             endpointURL,
+			Method:          http.MethodDelete,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	return &core.Response[any]{
+		StatusCode: raw.StatusCode,
+		Header:     raw.Header,
+		Body:       nil,
+	}, nil
+}
+
 func (r *RawClient) RegenerateRecoveryCode(
 	ctx context.Context,
 	// ID of the user to regenerate a multi-factor authentication recovery code for.

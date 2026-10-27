@@ -210,6 +210,14 @@ func TestSettersCreateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueType *ResourceServerTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersCreateResourceServerResponseContent(t *testing.T) {
@@ -1061,6 +1069,40 @@ func TestGettersCreateResourceServerResponseContent(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var value ResourceServerTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		obj.Type = nil
+		var expectedZero ResourceServerTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
@@ -1839,6 +1881,37 @@ func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueType *ResourceServerTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersGetResourceServerResponseContent(t *testing.T) {
@@ -2039,6 +2112,14 @@ func TestSettersGetResourceServerResponseContent(t *testing.T) {
 		var fernTestValueClientID *string
 		obj.SetClientID(fernTestValueClientID)
 		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetType", func(t *testing.T) {
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueType *ResourceServerTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2893,6 +2974,40 @@ func TestGettersGetResourceServerResponseContent(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var value ResourceServerTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		obj.Type = nil
+		var expectedZero ResourceServerTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
@@ -3671,6 +3786,37 @@ func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueType *ResourceServerTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersListResourceServerOffsetPaginatedResponseContent(t *testing.T) {
@@ -4171,6 +4317,14 @@ func TestSettersResourceServer(t *testing.T) {
 		var fernTestValueClientID *string
 		obj.SetClientID(fernTestValueClientID)
 		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetType", func(t *testing.T) {
+		obj := &ResourceServer{}
+		var fernTestValueType *ResourceServerTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -5025,6 +5179,40 @@ func TestGettersResourceServer(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var value ResourceServerTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		obj.Type = nil
+		var expectedZero ResourceServerTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitResourceServer(t *testing.T) {
@@ -5803,6 +5991,37 @@ func TestSettersMarkExplicitResourceServer(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var fernTestValueType *ResourceServerTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersResourceServerAuthorizationPolicy(t *testing.T) {
@@ -6416,6 +6635,14 @@ func TestSettersResourceServerSearchResponse(t *testing.T) {
 		var fernTestValueClientID *string
 		obj.SetClientID(fernTestValueClientID)
 		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetType", func(t *testing.T) {
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueType *ResourceServerTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -7236,6 +7463,40 @@ func TestGettersResourceServerSearchResponse(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var value ResourceServerTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		obj.Type = nil
+		var expectedZero ResourceServerTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServerSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitResourceServerSearchResponse(t *testing.T) {
@@ -7960,6 +8221,37 @@ func TestSettersMarkExplicitResourceServerSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetClientID(fernTestValueClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueType *ResourceServerTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -9236,6 +9528,14 @@ func TestSettersUpdateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueType *ResourceServerTypeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
@@ -10087,6 +10387,40 @@ func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var value ResourceServerTypeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		obj.Type = nil
+		var expectedZero ResourceServerTypeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
@@ -10865,6 +11199,37 @@ func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueType *ResourceServerTypeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestJSONMarshalingCreateResourceServerResponseContent(t *testing.T) {
@@ -11403,6 +11768,7 @@ func TestOptionalNullableRoundTripCreateResourceServerResponseContent(t *testing
 		"authorization_details",
 		"proof_of_possession",
 		"authorization_policy",
+		"type",
 	}
 	marshalToMap := func(t *testing.T, obj *CreateResourceServerResponseContent) map[string]json.RawMessage {
 		data, err := json.Marshal(obj)
@@ -11415,7 +11781,7 @@ func TestOptionalNullableRoundTripCreateResourceServerResponseContent(t *testing
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj CreateResourceServerResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null,"type":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -11451,6 +11817,7 @@ func TestOptionalNullableRoundTripGetResourceServerResponseContent(t *testing.T)
 		"authorization_details",
 		"proof_of_possession",
 		"authorization_policy",
+		"type",
 	}
 	marshalToMap := func(t *testing.T, obj *GetResourceServerResponseContent) map[string]json.RawMessage {
 		data, err := json.Marshal(obj)
@@ -11463,7 +11830,7 @@ func TestOptionalNullableRoundTripGetResourceServerResponseContent(t *testing.T)
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj GetResourceServerResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null,"type":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -11499,6 +11866,7 @@ func TestOptionalNullableRoundTripResourceServer(t *testing.T) {
 		"authorization_details",
 		"proof_of_possession",
 		"authorization_policy",
+		"type",
 	}
 	marshalToMap := func(t *testing.T, obj *ResourceServer) map[string]json.RawMessage {
 		data, err := json.Marshal(obj)
@@ -11511,7 +11879,7 @@ func TestOptionalNullableRoundTripResourceServer(t *testing.T) {
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj ResourceServer
-		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null,"type":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -11547,6 +11915,7 @@ func TestOptionalNullableRoundTripResourceServerSearchResponse(t *testing.T) {
 		"authorization_details",
 		"proof_of_possession",
 		"authorization_policy",
+		"type",
 	}
 	marshalToMap := func(t *testing.T, obj *ResourceServerSearchResponse) map[string]json.RawMessage {
 		data, err := json.Marshal(obj)
@@ -11559,7 +11928,7 @@ func TestOptionalNullableRoundTripResourceServerSearchResponse(t *testing.T) {
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj ResourceServerSearchResponse
-		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null,"type":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -11595,6 +11964,7 @@ func TestOptionalNullableRoundTripUpdateResourceServerResponseContent(t *testing
 		"authorization_details",
 		"proof_of_possession",
 		"authorization_policy",
+		"type",
 	}
 	marshalToMap := func(t *testing.T, obj *UpdateResourceServerResponseContent) map[string]json.RawMessage {
 		data, err := json.Marshal(obj)
@@ -11607,7 +11977,7 @@ func TestOptionalNullableRoundTripUpdateResourceServerResponseContent(t *testing
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj UpdateResourceServerResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"access_token":null,"token_encryption":null,"consent_policy":null,"authorization_details":null,"proof_of_possession":null,"authorization_policy":null,"type":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -12238,6 +12608,28 @@ func TestEnumResourceServerTokenEncryptionFormatEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewResourceServerTokenEncryptionFormatEnumFromString("compact-nested-jwe")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumResourceServerTypeEnum(t *testing.T) {
+	t.Run("NewFromString_universal_commerce_protocol_server", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewResourceServerTypeEnumFromString("universal_commerce_protocol_server")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ResourceServerTypeEnum("universal_commerce_protocol_server"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewResourceServerTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewResourceServerTypeEnumFromString("universal_commerce_protocol_server")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

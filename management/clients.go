@@ -1178,14 +1178,15 @@ var (
 	clientFieldAnonymousSessions                              = big.NewInt(1 << 59)
 	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
 	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	clientFieldRedirectionPolicy                              = big.NewInt(1 << 62)
-	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	clientFieldOidcSupport                                    = big.NewInt(1 << 62)
+	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
 )
 
 // clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
@@ -1298,6 +1299,7 @@ type Client struct {
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
 	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
 	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
@@ -1750,6 +1752,13 @@ func (c *Client) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
 		return ""
 	}
 	return *c.ThirdPartySecurityMode
+}
+
+func (c *Client) GetOidcSupport() ClientOidcSupport {
+	if c == nil || c.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *c.OidcSupport
 }
 
 func (c *Client) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -2256,6 +2265,13 @@ func (c *Client) SetEnforceAnonSessionTransferNetworkBinding(enforceAnonSessionT
 func (c *Client) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	c.ThirdPartySecurityMode = thirdPartySecurityMode
 	c.require(clientFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	c.OidcSupport = oidcSupport
+	c.require(clientFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -9123,6 +9139,130 @@ func (c *ClientOidcBackchannelLogoutSettings) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	clientOidcSupportFieldIsAllowed      = big.NewInt(1 << 0)
+	clientOidcSupportFieldAllowAllScopes = big.NewInt(1 << 1)
+	clientOidcSupportFieldAllowedScopes  = big.NewInt(1 << 2)
+)
+
+// OIDC support configuration for this client.
+type ClientOidcSupport struct {
+	IsAllowed      *bool                                `json:"is_allowed,omitempty" url:"is_allowed,omitempty"`
+	AllowAllScopes *bool                                `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	AllowedScopes  []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ClientOidcSupport) GetIsAllowed() bool {
+	if c == nil || c.IsAllowed == nil {
+		return false
+	}
+	return *c.IsAllowed
+}
+
+func (c *ClientOidcSupport) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
+func (c *ClientOidcSupport) GetAllowedScopes() []ClientOidcSupportAllowedScopesEnum {
+	if c == nil || c.AllowedScopes == nil {
+		return nil
+	}
+	return c.AllowedScopes
+}
+
+func (c *ClientOidcSupport) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ClientOidcSupport) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetIsAllowed sets the IsAllowed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupport) SetIsAllowed(isAllowed *bool) {
+	c.IsAllowed = isAllowed
+	c.require(clientOidcSupportFieldIsAllowed)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupport) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(clientOidcSupportFieldAllowAllScopes)
+}
+
+// SetAllowedScopes sets the AllowedScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupport) SetAllowedScopes(allowedScopes []ClientOidcSupportAllowedScopesEnum) {
+	c.AllowedScopes = allowedScopes
+	c.require(clientOidcSupportFieldAllowedScopes)
+}
+
+func (c *ClientOidcSupport) UnmarshalJSON(data []byte) error {
+	type embed ClientOidcSupport
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ClientOidcSupport(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientOidcSupport) MarshalJSON() ([]byte, error) {
+	type embed ClientOidcSupport
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ClientOidcSupport) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 type ClientOidcSupportAllowedScopesEnum string
 
 const (
@@ -9919,14 +10059,15 @@ var (
 	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 55)
 	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 56)
 	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
-	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
-	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 61)
-	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
-	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 58)
+	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 59)
+	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 60)
+	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 61)
+	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 62)
+	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 66)
 )
 
 // clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
@@ -10032,6 +10173,7 @@ type ClientSearchResponse struct {
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
 	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
 	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
@@ -10456,6 +10598,13 @@ func (c *ClientSearchResponse) GetThirdPartySecurityMode() ClientThirdPartySecur
 		return ""
 	}
 	return *c.ThirdPartySecurityMode
+}
+
+func (c *ClientSearchResponse) GetOidcSupport() ClientOidcSupport {
+	if c == nil || c.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *c.OidcSupport
 }
 
 func (c *ClientSearchResponse) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -10934,6 +11083,13 @@ func (c *ClientSearchResponse) SetEnforceAnonSessionTransferNetworkBinding(enfor
 func (c *ClientSearchResponse) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	c.ThirdPartySecurityMode = thirdPartySecurityMode
 	c.require(clientSearchResponseFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	c.OidcSupport = oidcSupport
+	c.require(clientSearchResponseFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -12539,14 +12695,15 @@ var (
 	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
 	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
 	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 62)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	createClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
 )
 
 // createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -12659,6 +12816,7 @@ type CreateClientResponseContent struct {
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
 	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
 	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
@@ -13111,6 +13269,13 @@ func (c *CreateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPar
 		return ""
 	}
 	return *c.ThirdPartySecurityMode
+}
+
+func (c *CreateClientResponseContent) GetOidcSupport() ClientOidcSupport {
+	if c == nil || c.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *c.OidcSupport
 }
 
 func (c *CreateClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -13617,6 +13782,13 @@ func (c *CreateClientResponseContent) SetEnforceAnonSessionTransferNetworkBindin
 func (c *CreateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	c.ThirdPartySecurityMode = thirdPartySecurityMode
 	c.require(createClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	c.OidcSupport = oidcSupport
+	c.require(createClientResponseContentFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -14784,14 +14956,15 @@ var (
 	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
 	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
 	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 62)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	getClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
 )
 
 // getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -14904,6 +15077,7 @@ type GetClientResponseContent struct {
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
 	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
 	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
@@ -15356,6 +15530,13 @@ func (g *GetClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartyS
 		return ""
 	}
 	return *g.ThirdPartySecurityMode
+}
+
+func (g *GetClientResponseContent) GetOidcSupport() ClientOidcSupport {
+	if g == nil || g.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *g.OidcSupport
 }
 
 func (g *GetClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -15862,6 +16043,13 @@ func (g *GetClientResponseContent) SetEnforceAnonSessionTransferNetworkBinding(e
 func (g *GetClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	g.ThirdPartySecurityMode = thirdPartySecurityMode
 	g.require(getClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	g.OidcSupport = oidcSupport
+	g.require(getClientResponseContentFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -17677,14 +17865,15 @@ var (
 	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
 	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
 	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 62)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
 )
 
 // rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
@@ -17797,6 +17986,7 @@ type RotateClientSecretResponseContent struct {
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
 	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
 	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
@@ -18249,6 +18439,13 @@ func (r *RotateClientSecretResponseContent) GetThirdPartySecurityMode() ClientTh
 		return ""
 	}
 	return *r.ThirdPartySecurityMode
+}
+
+func (r *RotateClientSecretResponseContent) GetOidcSupport() ClientOidcSupport {
+	if r == nil || r.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *r.OidcSupport
 }
 
 func (r *RotateClientSecretResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -18757,6 +18954,13 @@ func (r *RotateClientSecretResponseContent) SetThirdPartySecurityMode(thirdParty
 	r.require(rotateClientSecretResponseContentFieldThirdPartySecurityMode)
 }
 
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	r.OidcSupport = oidcSupport
+	r.require(rotateClientSecretResponseContentFieldOidcSupport)
+}
+
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
@@ -19233,14 +19437,15 @@ var (
 	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
 	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
 	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 62)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
 )
 
 // updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -19353,6 +19558,7 @@ type UpdateClientResponseContent struct {
 	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
 	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
 	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
 	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
@@ -19805,6 +20011,13 @@ func (u *UpdateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPar
 		return ""
 	}
 	return *u.ThirdPartySecurityMode
+}
+
+func (u *UpdateClientResponseContent) GetOidcSupport() ClientOidcSupport {
+	if u == nil || u.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *u.OidcSupport
 }
 
 func (u *UpdateClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -20311,6 +20524,13 @@ func (u *UpdateClientResponseContent) SetEnforceAnonSessionTransferNetworkBindin
 func (u *UpdateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	u.ThirdPartySecurityMode = thirdPartySecurityMode
 	u.require(updateClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	u.OidcSupport = oidcSupport
+	u.require(updateClientResponseContentFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;

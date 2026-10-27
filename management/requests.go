@@ -4228,6 +4228,7 @@ var (
 	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 18)
 	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
 	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
+	createResourceServerRequestContentFieldType                                      = big.NewInt(1 << 21)
 )
 
 type CreateResourceServerRequestContent struct {
@@ -4264,6 +4265,7 @@ type CreateResourceServerRequestContent struct {
 	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"-"`
+	Type                         *ResourceServerTypeEnum                 `json:"type,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -4423,6 +4425,13 @@ func (c *CreateResourceServerRequestContent) SetSubjectTypeAuthorization(subject
 func (c *CreateResourceServerRequestContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
 	c.AuthorizationPolicy = authorizationPolicy
 	c.require(createResourceServerRequestContentFieldAuthorizationPolicy)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetType(type_ *ResourceServerTypeEnum) {
+	c.Type = type_
+	c.require(createResourceServerRequestContentFieldType)
 }
 
 func (c *CreateResourceServerRequestContent) UnmarshalJSON(data []byte) error {
@@ -7919,9 +7928,10 @@ func (l *ListFlowsVaultConnectionsRequestParameters) SetIncludeTotals(includeTot
 }
 
 var (
-	listSegmentsRequestParametersFieldFrom = big.NewInt(1 << 0)
-	listSegmentsRequestParametersFieldTake = big.NewInt(1 << 1)
-	listSegmentsRequestParametersFieldType = big.NewInt(1 << 2)
+	listSegmentsRequestParametersFieldFrom   = big.NewInt(1 << 0)
+	listSegmentsRequestParametersFieldTake   = big.NewInt(1 << 1)
+	listSegmentsRequestParametersFieldType   = big.NewInt(1 << 2)
+	listSegmentsRequestParametersFieldStatus = big.NewInt(1 << 3)
 )
 
 type ListSegmentsRequestParameters struct {
@@ -7931,6 +7941,8 @@ type ListSegmentsRequestParameters struct {
 	Take *int `json:"-" url:"take,omitempty"`
 	// Filter by type. Exact match.
 	Type *SegmentTypeFilterEnum `json:"-" url:"type,omitempty"`
+	// Filter by status. Exact match.
+	Status *SegmentStatusEnum `json:"-" url:"status,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7964,6 +7976,13 @@ func (l *ListSegmentsRequestParameters) SetTake(take *int) {
 func (l *ListSegmentsRequestParameters) SetType(type_ *SegmentTypeFilterEnum) {
 	l.Type = type_
 	l.require(listSegmentsRequestParametersFieldType)
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListSegmentsRequestParameters) SetStatus(status *SegmentStatusEnum) {
+	l.Status = status
+	l.require(listSegmentsRequestParametersFieldStatus)
 }
 
 var (
@@ -19034,6 +19053,7 @@ var (
 	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 17)
 	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
 	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
+	updateResourceServerRequestContentFieldType                                      = big.NewInt(1 << 20)
 )
 
 type UpdateResourceServerRequestContent struct {
@@ -19068,6 +19088,7 @@ type UpdateResourceServerRequestContent struct {
 	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"-"`
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"-"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"-"`
+	Type                         *ResourceServerTypeEnum                 `json:"type,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -19220,6 +19241,13 @@ func (u *UpdateResourceServerRequestContent) SetSubjectTypeAuthorization(subject
 func (u *UpdateResourceServerRequestContent) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
 	u.AuthorizationPolicy = authorizationPolicy
 	u.require(updateResourceServerRequestContentFieldAuthorizationPolicy)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetType(type_ *ResourceServerTypeEnum) {
+	u.Type = type_
+	u.require(updateResourceServerRequestContentFieldType)
 }
 
 func (u *UpdateResourceServerRequestContent) UnmarshalJSON(data []byte) error {
@@ -19746,8 +19774,8 @@ var (
 	updateBruteForceSettingsRequestContentFieldShields            = big.NewInt(1 << 1)
 	updateBruteForceSettingsRequestContentFieldAllowlist          = big.NewInt(1 << 2)
 	updateBruteForceSettingsRequestContentFieldMode               = big.NewInt(1 << 3)
-	updateBruteForceSettingsRequestContentFieldMaxAttempts        = big.NewInt(1 << 4)
-	updateBruteForceSettingsRequestContentFieldFormSubmissionMode = big.NewInt(1 << 5)
+	updateBruteForceSettingsRequestContentFieldFormSubmissionMode = big.NewInt(1 << 4)
+	updateBruteForceSettingsRequestContentFieldMaxAttempts        = big.NewInt(1 << 5)
 )
 
 type UpdateBruteForceSettingsRequestContent struct {
@@ -19758,11 +19786,11 @@ type UpdateBruteForceSettingsRequestContent struct {
 	//	Possible values: <code>block</code>, <code>user_notification</code>.
 	Shields []BruteForceProtectionShieldsEnum `json:"shields,omitempty" url:"-"`
 	// List of trusted IP addresses that will not have attack protection enforced against them.
-	Allowlist []string                      `json:"allowlist,omitempty" url:"-"`
-	Mode      *BruteForceProtectionModeEnum `json:"mode,omitempty" url:"-"`
-	// Maximum number of unsuccessful attempts.
-	MaxAttempts        *int                                        `json:"max_attempts,omitempty" url:"-"`
+	Allowlist          []string                                    `json:"allowlist,omitempty" url:"-"`
+	Mode               *BruteForceProtectionModeEnum               `json:"mode,omitempty" url:"-"`
 	FormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum `json:"form_submission_mode,omitempty" url:"-"`
+	// Maximum number of unsuccessful attempts.
+	MaxAttempts *int `json:"max_attempts,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -19805,18 +19833,18 @@ func (u *UpdateBruteForceSettingsRequestContent) SetMode(mode *BruteForceProtect
 	u.require(updateBruteForceSettingsRequestContentFieldMode)
 }
 
-// SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBruteForceSettingsRequestContent) SetMaxAttempts(maxAttempts *int) {
-	u.MaxAttempts = maxAttempts
-	u.require(updateBruteForceSettingsRequestContentFieldMaxAttempts)
-}
-
 // SetFormSubmissionMode sets the FormSubmissionMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateBruteForceSettingsRequestContent) SetFormSubmissionMode(formSubmissionMode *BruteForceProtectionFormSubmissionModeEnum) {
 	u.FormSubmissionMode = formSubmissionMode
 	u.require(updateBruteForceSettingsRequestContentFieldFormSubmissionMode)
+}
+
+// SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBruteForceSettingsRequestContent) SetMaxAttempts(maxAttempts *int) {
+	u.MaxAttempts = maxAttempts
+	u.require(updateBruteForceSettingsRequestContentFieldMaxAttempts)
 }
 
 func (u *UpdateBruteForceSettingsRequestContent) UnmarshalJSON(data []byte) error {

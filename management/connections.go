@@ -1191,6 +1191,214 @@ func (c ConnectionIdentityProviderEnum) Ptr() *ConnectionIdentityProviderEnum {
 }
 
 var (
+	connectionOtpChannelSettingsFieldOtpLength = big.NewInt(1 << 0)
+	connectionOtpChannelSettingsFieldOtpExpiry = big.NewInt(1 << 1)
+)
+
+// OTP settings for a delivery channel.
+type ConnectionOtpChannelSettings struct {
+	// Number of digits in the generated one-time password.
+	OtpLength *int `json:"otp_length,omitempty" url:"otp_length,omitempty"`
+	// Number of seconds before the one-time password expires.
+	OtpExpiry *int `json:"otp_expiry,omitempty" url:"otp_expiry,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionOtpChannelSettings) GetOtpLength() int {
+	if c == nil || c.OtpLength == nil {
+		return 0
+	}
+	return *c.OtpLength
+}
+
+func (c *ConnectionOtpChannelSettings) GetOtpExpiry() int {
+	if c == nil || c.OtpExpiry == nil {
+		return 0
+	}
+	return *c.OtpExpiry
+}
+
+func (c *ConnectionOtpChannelSettings) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionOtpChannelSettings) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetOtpLength sets the OtpLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpChannelSettings) SetOtpLength(otpLength *int) {
+	c.OtpLength = otpLength
+	c.require(connectionOtpChannelSettingsFieldOtpLength)
+}
+
+// SetOtpExpiry sets the OtpExpiry field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpChannelSettings) SetOtpExpiry(otpExpiry *int) {
+	c.OtpExpiry = otpExpiry
+	c.require(connectionOtpChannelSettingsFieldOtpExpiry)
+}
+
+func (c *ConnectionOtpChannelSettings) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionOtpChannelSettings
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionOtpChannelSettings(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionOtpChannelSettings) MarshalJSON() ([]byte, error) {
+	type embed ConnectionOtpChannelSettings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionOtpChannelSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	connectionOtpSettingsFieldEmail = big.NewInt(1 << 0)
+	connectionOtpSettingsFieldPhone = big.NewInt(1 << 1)
+)
+
+// One-time password settings, configurable per delivery channel.
+type ConnectionOtpSettings struct {
+	Email *ConnectionOtpChannelSettings `json:"email,omitempty" url:"email,omitempty"`
+	Phone *ConnectionOtpChannelSettings `json:"phone,omitempty" url:"phone,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionOtpSettings) GetEmail() ConnectionOtpChannelSettings {
+	if c == nil || c.Email == nil {
+		return ConnectionOtpChannelSettings{}
+	}
+	return *c.Email
+}
+
+func (c *ConnectionOtpSettings) GetPhone() ConnectionOtpChannelSettings {
+	if c == nil || c.Phone == nil {
+		return ConnectionOtpChannelSettings{}
+	}
+	return *c.Phone
+}
+
+func (c *ConnectionOtpSettings) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionOtpSettings) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpSettings) SetEmail(email *ConnectionOtpChannelSettings) {
+	c.Email = email
+	c.require(connectionOtpSettingsFieldEmail)
+}
+
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpSettings) SetPhone(phone *ConnectionOtpChannelSettings) {
+	c.Phone = phone
+	c.require(connectionOtpSettingsFieldPhone)
+}
+
+func (c *ConnectionOtpSettings) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionOtpSettings
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionOtpSettings(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionOtpSettings) MarshalJSON() ([]byte, error) {
+	type embed ConnectionOtpSettings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionOtpSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	connectionPasskeyAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
 )
 
@@ -2692,41 +2900,42 @@ var (
 	connectionPropertiesOptionsFieldImportMode                         = big.NewInt(1 << 6)
 	connectionPropertiesOptionsFieldConfiguration                      = big.NewInt(1 << 7)
 	connectionPropertiesOptionsFieldCustomScripts                      = big.NewInt(1 << 8)
-	connectionPropertiesOptionsFieldAuthenticationMethods              = big.NewInt(1 << 9)
-	connectionPropertiesOptionsFieldPasskeyOptions                     = big.NewInt(1 << 10)
-	connectionPropertiesOptionsFieldPasswordPolicy                     = big.NewInt(1 << 11)
-	connectionPropertiesOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 12)
-	connectionPropertiesOptionsFieldPasswordHistory                    = big.NewInt(1 << 13)
-	connectionPropertiesOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 14)
-	connectionPropertiesOptionsFieldPasswordDictionary                 = big.NewInt(1 << 15)
-	connectionPropertiesOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 16)
-	connectionPropertiesOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 17)
-	connectionPropertiesOptionsFieldBasicProfile                       = big.NewInt(1 << 18)
-	connectionPropertiesOptionsFieldExtAdmin                           = big.NewInt(1 << 19)
-	connectionPropertiesOptionsFieldExtIsSuspended                     = big.NewInt(1 << 20)
-	connectionPropertiesOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 21)
-	connectionPropertiesOptionsFieldExtGroups                          = big.NewInt(1 << 22)
-	connectionPropertiesOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 23)
-	connectionPropertiesOptionsFieldExtProfile                         = big.NewInt(1 << 24)
-	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 25)
-	connectionPropertiesOptionsFieldUpstreamParams                     = big.NewInt(1 << 26)
-	connectionPropertiesOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 27)
-	connectionPropertiesOptionsFieldGatewayAuthentication              = big.NewInt(1 << 28)
-	connectionPropertiesOptionsFieldPasswordOptions                    = big.NewInt(1 << 29)
-	connectionPropertiesOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 30)
-	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 31)
-	connectionPropertiesOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 32)
-	connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 33)
-	connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 34)
-	connectionPropertiesOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 35)
-	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 36)
-	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 37)
-	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 38)
-	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 39)
-	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 40)
-	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 41)
-	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 42)
-	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 43)
+	connectionPropertiesOptionsFieldOtpSettings                        = big.NewInt(1 << 9)
+	connectionPropertiesOptionsFieldAuthenticationMethods              = big.NewInt(1 << 10)
+	connectionPropertiesOptionsFieldPasskeyOptions                     = big.NewInt(1 << 11)
+	connectionPropertiesOptionsFieldPasswordPolicy                     = big.NewInt(1 << 12)
+	connectionPropertiesOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 13)
+	connectionPropertiesOptionsFieldPasswordHistory                    = big.NewInt(1 << 14)
+	connectionPropertiesOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 15)
+	connectionPropertiesOptionsFieldPasswordDictionary                 = big.NewInt(1 << 16)
+	connectionPropertiesOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 17)
+	connectionPropertiesOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 18)
+	connectionPropertiesOptionsFieldBasicProfile                       = big.NewInt(1 << 19)
+	connectionPropertiesOptionsFieldExtAdmin                           = big.NewInt(1 << 20)
+	connectionPropertiesOptionsFieldExtIsSuspended                     = big.NewInt(1 << 21)
+	connectionPropertiesOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 22)
+	connectionPropertiesOptionsFieldExtGroups                          = big.NewInt(1 << 23)
+	connectionPropertiesOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 24)
+	connectionPropertiesOptionsFieldExtProfile                         = big.NewInt(1 << 25)
+	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 26)
+	connectionPropertiesOptionsFieldUpstreamParams                     = big.NewInt(1 << 27)
+	connectionPropertiesOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 28)
+	connectionPropertiesOptionsFieldGatewayAuthentication              = big.NewInt(1 << 29)
+	connectionPropertiesOptionsFieldPasswordOptions                    = big.NewInt(1 << 30)
+	connectionPropertiesOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 31)
+	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 32)
+	connectionPropertiesOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 33)
+	connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 35)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 36)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 37)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
+	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
+	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
+	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
+	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 43)
+	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
 )
 
 // connectionPropertiesOptionsNullableFields maps the wire names of ConnectionPropertiesOptions's nullable fields (required or optional) to their field bits.
@@ -2767,6 +2976,7 @@ type ConnectionPropertiesOptions struct {
 	// Stores encrypted string only configurations for connections
 	Configuration                      map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
 	CustomScripts                      *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	OtpSettings                        *ConnectionOtpSettings                         `json:"otp_settings,omitempty" url:"otp_settings,omitempty"`
 	AuthenticationMethods              *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PasskeyOptions                     *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
 	PasswordPolicy                     *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
@@ -2872,6 +3082,13 @@ func (c *ConnectionPropertiesOptions) GetCustomScripts() ConnectionCustomScripts
 		return ConnectionCustomScripts{}
 	}
 	return *c.CustomScripts
+}
+
+func (c *ConnectionPropertiesOptions) GetOtpSettings() ConnectionOtpSettings {
+	if c == nil || c.OtpSettings == nil {
+		return ConnectionOtpSettings{}
+	}
+	return *c.OtpSettings
 }
 
 func (c *ConnectionPropertiesOptions) GetAuthenticationMethods() ConnectionAuthenticationMethods {
@@ -3196,6 +3413,13 @@ func (c *ConnectionPropertiesOptions) SetConfiguration(configuration map[string]
 func (c *ConnectionPropertiesOptions) SetCustomScripts(customScripts *ConnectionCustomScripts) {
 	c.CustomScripts = customScripts
 	c.require(connectionPropertiesOptionsFieldCustomScripts)
+}
+
+// SetOtpSettings sets the OtpSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetOtpSettings(otpSettings *ConnectionOtpSettings) {
+	c.OtpSettings = otpSettings
+	c.require(connectionPropertiesOptionsFieldOtpSettings)
 }
 
 // SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
@@ -6673,41 +6897,42 @@ var (
 	updateConnectionOptionsFieldImportMode                         = big.NewInt(1 << 6)
 	updateConnectionOptionsFieldConfiguration                      = big.NewInt(1 << 7)
 	updateConnectionOptionsFieldCustomScripts                      = big.NewInt(1 << 8)
-	updateConnectionOptionsFieldAuthenticationMethods              = big.NewInt(1 << 9)
-	updateConnectionOptionsFieldPasskeyOptions                     = big.NewInt(1 << 10)
-	updateConnectionOptionsFieldPasswordPolicy                     = big.NewInt(1 << 11)
-	updateConnectionOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 12)
-	updateConnectionOptionsFieldPasswordHistory                    = big.NewInt(1 << 13)
-	updateConnectionOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 14)
-	updateConnectionOptionsFieldPasswordDictionary                 = big.NewInt(1 << 15)
-	updateConnectionOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 16)
-	updateConnectionOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 17)
-	updateConnectionOptionsFieldBasicProfile                       = big.NewInt(1 << 18)
-	updateConnectionOptionsFieldExtAdmin                           = big.NewInt(1 << 19)
-	updateConnectionOptionsFieldExtIsSuspended                     = big.NewInt(1 << 20)
-	updateConnectionOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 21)
-	updateConnectionOptionsFieldExtGroups                          = big.NewInt(1 << 22)
-	updateConnectionOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 23)
-	updateConnectionOptionsFieldExtProfile                         = big.NewInt(1 << 24)
-	updateConnectionOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 25)
-	updateConnectionOptionsFieldUpstreamParams                     = big.NewInt(1 << 26)
-	updateConnectionOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 27)
-	updateConnectionOptionsFieldGatewayAuthentication              = big.NewInt(1 << 28)
-	updateConnectionOptionsFieldPasswordOptions                    = big.NewInt(1 << 29)
-	updateConnectionOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 30)
-	updateConnectionOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 31)
-	updateConnectionOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 32)
-	updateConnectionOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 33)
-	updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 34)
-	updateConnectionOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 35)
-	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 36)
-	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 37)
-	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 38)
-	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 39)
-	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 40)
-	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 41)
-	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 42)
-	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 43)
+	updateConnectionOptionsFieldOtpSettings                        = big.NewInt(1 << 9)
+	updateConnectionOptionsFieldAuthenticationMethods              = big.NewInt(1 << 10)
+	updateConnectionOptionsFieldPasskeyOptions                     = big.NewInt(1 << 11)
+	updateConnectionOptionsFieldPasswordPolicy                     = big.NewInt(1 << 12)
+	updateConnectionOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 13)
+	updateConnectionOptionsFieldPasswordHistory                    = big.NewInt(1 << 14)
+	updateConnectionOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 15)
+	updateConnectionOptionsFieldPasswordDictionary                 = big.NewInt(1 << 16)
+	updateConnectionOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 17)
+	updateConnectionOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 18)
+	updateConnectionOptionsFieldBasicProfile                       = big.NewInt(1 << 19)
+	updateConnectionOptionsFieldExtAdmin                           = big.NewInt(1 << 20)
+	updateConnectionOptionsFieldExtIsSuspended                     = big.NewInt(1 << 21)
+	updateConnectionOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 22)
+	updateConnectionOptionsFieldExtGroups                          = big.NewInt(1 << 23)
+	updateConnectionOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 24)
+	updateConnectionOptionsFieldExtProfile                         = big.NewInt(1 << 25)
+	updateConnectionOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 26)
+	updateConnectionOptionsFieldUpstreamParams                     = big.NewInt(1 << 27)
+	updateConnectionOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 28)
+	updateConnectionOptionsFieldGatewayAuthentication              = big.NewInt(1 << 29)
+	updateConnectionOptionsFieldPasswordOptions                    = big.NewInt(1 << 30)
+	updateConnectionOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 31)
+	updateConnectionOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 32)
+	updateConnectionOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 33)
+	updateConnectionOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 35)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 36)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 37)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
+	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
+	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
+	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
+	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 43)
+	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
 )
 
 // updateConnectionOptionsNullableFields maps the wire names of UpdateConnectionOptions's nullable fields (required or optional) to their field bits.
@@ -6748,6 +6973,7 @@ type UpdateConnectionOptions struct {
 	// Stores encrypted string only configurations for connections
 	Configuration                      map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
 	CustomScripts                      *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	OtpSettings                        *ConnectionOtpSettings                         `json:"otp_settings,omitempty" url:"otp_settings,omitempty"`
 	AuthenticationMethods              *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
 	PasskeyOptions                     *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
 	PasswordPolicy                     *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
@@ -6853,6 +7079,13 @@ func (u *UpdateConnectionOptions) GetCustomScripts() ConnectionCustomScripts {
 		return ConnectionCustomScripts{}
 	}
 	return *u.CustomScripts
+}
+
+func (u *UpdateConnectionOptions) GetOtpSettings() ConnectionOtpSettings {
+	if u == nil || u.OtpSettings == nil {
+		return ConnectionOtpSettings{}
+	}
+	return *u.OtpSettings
 }
 
 func (u *UpdateConnectionOptions) GetAuthenticationMethods() ConnectionAuthenticationMethods {
@@ -7177,6 +7410,13 @@ func (u *UpdateConnectionOptions) SetConfiguration(configuration map[string]*str
 func (u *UpdateConnectionOptions) SetCustomScripts(customScripts *ConnectionCustomScripts) {
 	u.CustomScripts = customScripts
 	u.require(updateConnectionOptionsFieldCustomScripts)
+}
+
+// SetOtpSettings sets the OtpSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetOtpSettings(otpSettings *ConnectionOtpSettings) {
+	u.OtpSettings = otpSettings
+	u.require(updateConnectionOptionsFieldOtpSettings)
 }
 
 // SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
