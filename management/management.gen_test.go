@@ -2456,6 +2456,16 @@ func TestClient_GetExternalMetadataCreatedBy(tt *testing.T) {
 	c.GetExternalMetadataCreatedBy()
 }
 
+func TestClient_GetExternalMetadataStatus(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ExternalMetadataStatus: &zeroValue}
+	c.GetExternalMetadataStatus()
+	c = &Client{}
+	c.GetExternalMetadataStatus()
+	c = nil
+	c.GetExternalMetadataStatus()
+}
+
 func TestClient_GetExternalMetadataType(tt *testing.T) {
 	var zeroValue string
 	c := &Client{ExternalMetadataType: &zeroValue}
@@ -17821,6 +17831,16 @@ func TestTenant_GetChangePassword(tt *testing.T) {
 	t.GetChangePassword()
 	t = nil
 	t.GetChangePassword()
+}
+
+func TestTenant_GetClientIDMetadataDocumentDynamicRegistrationSupported(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{ClientIDMetadataDocumentDynamicRegistrationSupported: &zeroValue}
+	t.GetClientIDMetadataDocumentDynamicRegistrationSupported()
+	t = &Tenant{}
+	t.GetClientIDMetadataDocumentDynamicRegistrationSupported()
+	t = nil
+	t.GetClientIDMetadataDocumentDynamicRegistrationSupported()
 }
 
 func TestTenant_GetClientIDMetadataDocumentSupported(tt *testing.T) {
