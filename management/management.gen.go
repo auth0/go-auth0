@@ -1942,6 +1942,14 @@ func (c *Client) GetExternalMetadataCreatedBy() string {
 	return *c.ExternalMetadataCreatedBy
 }
 
+// GetExternalMetadataStatus returns the ExternalMetadataStatus field if it's non-nil, zero value otherwise.
+func (c *Client) GetExternalMetadataStatus() string {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
+}
+
 // GetExternalMetadataType returns the ExternalMetadataType field if it's non-nil, zero value otherwise.
 func (c *Client) GetExternalMetadataType() string {
 	if c == nil || c.ExternalMetadataType == nil {
@@ -14202,6 +14210,14 @@ func (t *Tenant) GetChangePassword() *TenantChangePassword {
 		return nil
 	}
 	return t.ChangePassword
+}
+
+// GetClientIDMetadataDocumentDynamicRegistrationSupported returns the ClientIDMetadataDocumentDynamicRegistrationSupported field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetClientIDMetadataDocumentDynamicRegistrationSupported() bool {
+	if t == nil || t.ClientIDMetadataDocumentDynamicRegistrationSupported == nil {
+		return false
+	}
+	return *t.ClientIDMetadataDocumentDynamicRegistrationSupported
 }
 
 // GetClientIDMetadataDocumentSupported returns the ClientIDMetadataDocumentSupported field if it's non-nil, zero value otherwise.
