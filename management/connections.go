@@ -3839,7 +3839,7 @@ func (c ConnectionTokenEndpointAuthSigningAlgEnum) Ptr() *ConnectionTokenEndpoin
 	return &c
 }
 
-// Specifies the format of the aud (audience) claim included in the JWT used for client authentication at the token endpoint. Accepted values are: 'issuer' (the aud claim is set to the OIDC issuer URL) or 'token_endpoint' (the aud claim is set to the token endpoint URL).
+// Specifies the format of the aud (audience) claim included in the JWT used for client authentication at the token endpoint. Accepted values are: 'issuer' (the aud claim is set to the identity provider's issuer URL) or 'token_endpoint' (the aud claim is set to the token endpoint URL).
 type ConnectionTokenEndpointJwtcaAudFormatEnumOidc string
 
 const (
