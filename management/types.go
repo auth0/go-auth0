@@ -12244,6 +12244,9 @@ type ConnectionClientIDPaypal = string
 // The OAuth 2.0 client identifier
 type ConnectionClientIDSalesforce = string
 
+// OIDC client identifier issued by the identity provider during application registration. Used to authenticate your Auth0 connection when exchanging SAML Assertions for Refresh Tokens.
+type ConnectionClientIDSamlxaaRequestingApp = ConnectionClientIDOidc
+
 // OAuth 2.0 client identifier issued by the identity provider during application registration. This value identifies your Auth0 connection to the identity provider.
 type ConnectionClientIDWindowsLive = string
 
@@ -12294,6 +12297,9 @@ type ConnectionClientSecretPaypal = string
 
 // The OAuth 2.0 client secret
 type ConnectionClientSecretSalesforce = string
+
+// OAuth 2.0 client secret issued by the identity provider during application registration. Used to authenticate your Auth0 connection when exchanging authorization codes for tokens. May be null for public clients.
+type ConnectionClientSecretSamlxaaRequestingApp = string
 
 // OAuth 2.0 client secret issued by the identity provider during application registration. Used to authenticate your Auth0 connection when exchanging authorization codes for tokens. May be null for public clients.
 type ConnectionClientSecretWindowsLive = string
@@ -15835,17 +15841,18 @@ var (
 	connectionOptionsAuth0FieldEnabledDatabaseCustomization     = big.NewInt(1 << 9)
 	connectionOptionsAuth0FieldImportMode                       = big.NewInt(1 << 10)
 	connectionOptionsAuth0FieldMfa                              = big.NewInt(1 << 11)
-	connectionOptionsAuth0FieldPasskeyOptions                   = big.NewInt(1 << 12)
-	connectionOptionsAuth0FieldPasswordPolicy                   = big.NewInt(1 << 13)
-	connectionOptionsAuth0FieldPasswordComplexityOptions        = big.NewInt(1 << 14)
-	connectionOptionsAuth0FieldPasswordDictionary               = big.NewInt(1 << 15)
-	connectionOptionsAuth0FieldPasswordHistory                  = big.NewInt(1 << 16)
-	connectionOptionsAuth0FieldPasswordNoPersonalInfo           = big.NewInt(1 << 17)
-	connectionOptionsAuth0FieldPasswordOptions                  = big.NewInt(1 << 18)
-	connectionOptionsAuth0FieldPrecedence                       = big.NewInt(1 << 19)
-	connectionOptionsAuth0FieldRealmFallback                    = big.NewInt(1 << 20)
-	connectionOptionsAuth0FieldRequiresUsername                 = big.NewInt(1 << 21)
-	connectionOptionsAuth0FieldValidation                       = big.NewInt(1 << 22)
+	connectionOptionsAuth0FieldOtpSettings                      = big.NewInt(1 << 12)
+	connectionOptionsAuth0FieldPasskeyOptions                   = big.NewInt(1 << 13)
+	connectionOptionsAuth0FieldPasswordPolicy                   = big.NewInt(1 << 14)
+	connectionOptionsAuth0FieldPasswordComplexityOptions        = big.NewInt(1 << 15)
+	connectionOptionsAuth0FieldPasswordDictionary               = big.NewInt(1 << 16)
+	connectionOptionsAuth0FieldPasswordHistory                  = big.NewInt(1 << 17)
+	connectionOptionsAuth0FieldPasswordNoPersonalInfo           = big.NewInt(1 << 18)
+	connectionOptionsAuth0FieldPasswordOptions                  = big.NewInt(1 << 19)
+	connectionOptionsAuth0FieldPrecedence                       = big.NewInt(1 << 20)
+	connectionOptionsAuth0FieldRealmFallback                    = big.NewInt(1 << 21)
+	connectionOptionsAuth0FieldRequiresUsername                 = big.NewInt(1 << 22)
+	connectionOptionsAuth0FieldValidation                       = big.NewInt(1 << 23)
 )
 
 // connectionOptionsAuth0NullableFields maps the wire names of ConnectionOptionsAuth0's nullable fields (required or optional) to their field bits.
@@ -15874,6 +15881,7 @@ type ConnectionOptionsAuth0 struct {
 	EnabledDatabaseCustomization     *ConnectionEnabledDatabaseCustomization     `json:"enabledDatabaseCustomization,omitempty" url:"enabledDatabaseCustomization,omitempty"`
 	ImportMode                       *ConnectionImportMode                       `json:"import_mode,omitempty" url:"import_mode,omitempty"`
 	Mfa                              *ConnectionMfa                              `json:"mfa,omitempty" url:"mfa,omitempty"`
+	OtpSettings                      *ConnectionOtpSettings                      `json:"otp_settings,omitempty" url:"otp_settings,omitempty"`
 	PasskeyOptions                   *ConnectionPasskeyOptions                   `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
 	PasswordPolicy                   *ConnectionPasswordPolicyEnum               `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
 	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions        `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
@@ -15976,6 +15984,13 @@ func (c *ConnectionOptionsAuth0) GetMfa() ConnectionMfa {
 		return ConnectionMfa{}
 	}
 	return *c.Mfa
+}
+
+func (c *ConnectionOptionsAuth0) GetOtpSettings() ConnectionOtpSettings {
+	if c == nil || c.OtpSettings == nil {
+		return ConnectionOtpSettings{}
+	}
+	return *c.OtpSettings
 }
 
 func (c *ConnectionOptionsAuth0) GetPasskeyOptions() ConnectionPasskeyOptions {
@@ -16153,6 +16168,13 @@ func (c *ConnectionOptionsAuth0) SetImportMode(importMode *ConnectionImportMode)
 func (c *ConnectionOptionsAuth0) SetMfa(mfa *ConnectionMfa) {
 	c.Mfa = mfa
 	c.require(connectionOptionsAuth0FieldMfa)
+}
+
+// SetOtpSettings sets the OtpSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsAuth0) SetOtpSettings(otpSettings *ConnectionOtpSettings) {
+	c.OtpSettings = otpSettings
+	c.require(connectionOptionsAuth0FieldOtpSettings)
 }
 
 // SetPasskeyOptions sets the PasskeyOptions field and marks it as non-optional;
@@ -28955,23 +28977,25 @@ var (
 	connectionOptionsSAMLFieldThumbprintsSha384           = big.NewInt(1 << 15)
 	connectionOptionsSAMLFieldUpstreamParams              = big.NewInt(1 << 16)
 	connectionOptionsSAMLFieldNonPersistentAttrs          = big.NewInt(1 << 17)
-	connectionOptionsSAMLFieldDebug                       = big.NewInt(1 << 18)
-	connectionOptionsSAMLFieldDeflate                     = big.NewInt(1 << 19)
-	connectionOptionsSAMLFieldDestinationURL              = big.NewInt(1 << 20)
-	connectionOptionsSAMLFieldDisableSignout              = big.NewInt(1 << 21)
-	connectionOptionsSAMLFieldDiscoveryURL                = big.NewInt(1 << 22)
-	connectionOptionsSAMLFieldFieldsMap                   = big.NewInt(1 << 23)
-	connectionOptionsSAMLFieldGlobalTokenRevocationJwtIss = big.NewInt(1 << 24)
-	connectionOptionsSAMLFieldGlobalTokenRevocationJwtSub = big.NewInt(1 << 25)
-	connectionOptionsSAMLFieldMetadataURL                 = big.NewInt(1 << 26)
-	connectionOptionsSAMLFieldMetadataXML                 = big.NewInt(1 << 27)
-	connectionOptionsSAMLFieldOidcMetadata                = big.NewInt(1 << 28)
-	connectionOptionsSAMLFieldRecipientURL                = big.NewInt(1 << 29)
-	connectionOptionsSAMLFieldRequestTemplate             = big.NewInt(1 << 30)
-	connectionOptionsSAMLFieldSigningCert                 = big.NewInt(1 << 31)
-	connectionOptionsSAMLFieldSigningKey                  = big.NewInt(1 << 32)
-	connectionOptionsSAMLFieldSignOutEndpoint             = big.NewInt(1 << 33)
-	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 34)
+	connectionOptionsSAMLFieldClientID                    = big.NewInt(1 << 18)
+	connectionOptionsSAMLFieldClientSecret                = big.NewInt(1 << 19)
+	connectionOptionsSAMLFieldDebug                       = big.NewInt(1 << 20)
+	connectionOptionsSAMLFieldDeflate                     = big.NewInt(1 << 21)
+	connectionOptionsSAMLFieldDestinationURL              = big.NewInt(1 << 22)
+	connectionOptionsSAMLFieldDisableSignout              = big.NewInt(1 << 23)
+	connectionOptionsSAMLFieldDiscoveryURL                = big.NewInt(1 << 24)
+	connectionOptionsSAMLFieldFieldsMap                   = big.NewInt(1 << 25)
+	connectionOptionsSAMLFieldGlobalTokenRevocationJwtIss = big.NewInt(1 << 26)
+	connectionOptionsSAMLFieldGlobalTokenRevocationJwtSub = big.NewInt(1 << 27)
+	connectionOptionsSAMLFieldMetadataURL                 = big.NewInt(1 << 28)
+	connectionOptionsSAMLFieldMetadataXML                 = big.NewInt(1 << 29)
+	connectionOptionsSAMLFieldOidcMetadata                = big.NewInt(1 << 30)
+	connectionOptionsSAMLFieldRecipientURL                = big.NewInt(1 << 31)
+	connectionOptionsSAMLFieldRequestTemplate             = big.NewInt(1 << 32)
+	connectionOptionsSAMLFieldSigningCert                 = big.NewInt(1 << 33)
+	connectionOptionsSAMLFieldSigningKey                  = big.NewInt(1 << 34)
+	connectionOptionsSAMLFieldSignOutEndpoint             = big.NewInt(1 << 35)
+	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 36)
 )
 
 // connectionOptionsSAMLNullableFields maps the wire names of ConnectionOptionsSAML's nullable fields (required or optional) to their field bits.
@@ -28981,27 +29005,29 @@ var connectionOptionsSAMLNullableFields = map[string]*big.Int{
 
 // Options for the 'samlp' connection
 type ConnectionOptionsSAML struct {
-	AssertionDecryptionSettings *ConnectionAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
-	Cert                        *ConnectionSigningCertificateDerSAML   `json:"cert,omitempty" url:"cert,omitempty"`
-	DecryptionKey               *ConnectionDecryptionKeySAML           `json:"decryptionKey,omitempty" url:"decryptionKey,omitempty"`
-	DigestAlgorithm             *ConnectionDigestAlgorithmSAML         `json:"digestAlgorithm,omitempty" url:"digestAlgorithm,omitempty"`
-	DomainAliases               *ConnectionDomainAliasesSAML           `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
-	EntityID                    *ConnectionEntityIdSaml                `json:"entityId,omitempty" url:"entityId,omitempty"`
-	IconURL                     *ConnectionIconUrlSaml                 `json:"icon_url,omitempty" url:"icon_url,omitempty"`
-	Idpinitiated                *ConnectionOptionsIdpinitiatedSAML     `json:"idpinitiated,omitempty" url:"idpinitiated,omitempty"`
-	ProtocolBinding             *ConnectionProtocolBindingSAML         `json:"protocolBinding,omitempty" url:"protocolBinding,omitempty"`
-	SetUserRootAttributes       *ConnectionSetUserRootAttributesEnum   `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	SignInEndpoint              *ConnectionSignInEndpointSAML          `json:"signInEndpoint,omitempty" url:"signInEndpoint,omitempty"`
-	SignSAMLRequest             *ConnectionSignSAMLRequestSAML         `json:"signSAMLRequest,omitempty" url:"signSAMLRequest,omitempty"`
-	SignatureAlgorithm          *ConnectionSignatureAlgorithmSAML      `json:"signatureAlgorithm,omitempty" url:"signatureAlgorithm,omitempty"`
-	TenantDomain                *ConnectionTenantDomainSAML            `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
-	Thumbprints                 *ConnectionThumbprintsSAML             `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
-	ThumbprintsSha384           *ConnectionThumbprintsSha384SAML       `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
-	UpstreamParams              *ConnectionUpstreamParams              `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	NonPersistentAttrs          *ConnectionNonPersistentAttrs          `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
-	Debug                       *ConnectionDebugSAML                   `json:"debug,omitempty" url:"debug,omitempty"`
-	Deflate                     *ConnectionOptionsDeflateSAML          `json:"deflate,omitempty" url:"deflate,omitempty"`
-	DestinationURL              *ConnectionDestinationUrlSaml          `json:"destinationUrl,omitempty" url:"destinationUrl,omitempty"`
+	AssertionDecryptionSettings *ConnectionAssertionDecryptionSettings      `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
+	Cert                        *ConnectionSigningCertificateDerSAML        `json:"cert,omitempty" url:"cert,omitempty"`
+	DecryptionKey               *ConnectionDecryptionKeySAML                `json:"decryptionKey,omitempty" url:"decryptionKey,omitempty"`
+	DigestAlgorithm             *ConnectionDigestAlgorithmSAML              `json:"digestAlgorithm,omitempty" url:"digestAlgorithm,omitempty"`
+	DomainAliases               *ConnectionDomainAliasesSAML                `json:"domain_aliases,omitempty" url:"domain_aliases,omitempty"`
+	EntityID                    *ConnectionEntityIdSaml                     `json:"entityId,omitempty" url:"entityId,omitempty"`
+	IconURL                     *ConnectionIconUrlSaml                      `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	Idpinitiated                *ConnectionOptionsIdpinitiatedSAML          `json:"idpinitiated,omitempty" url:"idpinitiated,omitempty"`
+	ProtocolBinding             *ConnectionProtocolBindingSAML              `json:"protocolBinding,omitempty" url:"protocolBinding,omitempty"`
+	SetUserRootAttributes       *ConnectionSetUserRootAttributesEnum        `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	SignInEndpoint              *ConnectionSignInEndpointSAML               `json:"signInEndpoint,omitempty" url:"signInEndpoint,omitempty"`
+	SignSAMLRequest             *ConnectionSignSAMLRequestSAML              `json:"signSAMLRequest,omitempty" url:"signSAMLRequest,omitempty"`
+	SignatureAlgorithm          *ConnectionSignatureAlgorithmSAML           `json:"signatureAlgorithm,omitempty" url:"signatureAlgorithm,omitempty"`
+	TenantDomain                *ConnectionTenantDomainSAML                 `json:"tenant_domain,omitempty" url:"tenant_domain,omitempty"`
+	Thumbprints                 *ConnectionThumbprintsSAML                  `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384           *ConnectionThumbprintsSha384SAML            `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
+	UpstreamParams              *ConnectionUpstreamParams                   `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	NonPersistentAttrs          *ConnectionNonPersistentAttrs               `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
+	ClientID                    *ConnectionClientIDSamlxaaRequestingApp     `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientSecret                *ConnectionClientSecretSamlxaaRequestingApp `json:"client_secret,omitempty" url:"client_secret,omitempty"`
+	Debug                       *ConnectionDebugSAML                        `json:"debug,omitempty" url:"debug,omitempty"`
+	Deflate                     *ConnectionOptionsDeflateSAML               `json:"deflate,omitempty" url:"deflate,omitempty"`
+	DestinationURL              *ConnectionDestinationUrlSaml               `json:"destinationUrl,omitempty" url:"destinationUrl,omitempty"`
 	// When true, disables sending SAML logout requests (SingleLogoutService) to the identity provider during user sign-out. The user will be logged out of Auth0 but will remain logged into the identity provider. Defaults to false (federated logout enabled).
 	DisableSignout              *bool                                      `json:"disableSignout,omitempty" url:"disableSignout,omitempty"`
 	DiscoveryURL                *ConnectionDiscoveryURL                    `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
@@ -29150,6 +29176,20 @@ func (c *ConnectionOptionsSAML) GetNonPersistentAttrs() ConnectionNonPersistentA
 		return nil
 	}
 	return *c.NonPersistentAttrs
+}
+
+func (c *ConnectionOptionsSAML) GetClientID() ConnectionClientIDSamlxaaRequestingApp {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+func (c *ConnectionOptionsSAML) GetClientSecret() ConnectionClientSecretSamlxaaRequestingApp {
+	if c == nil || c.ClientSecret == nil {
+		return ""
+	}
+	return *c.ClientSecret
 }
 
 func (c *ConnectionOptionsSAML) GetDebug() ConnectionDebugSAML {
@@ -29411,6 +29451,20 @@ func (c *ConnectionOptionsSAML) SetUpstreamParams(upstreamParams *ConnectionUpst
 func (c *ConnectionOptionsSAML) SetNonPersistentAttrs(nonPersistentAttrs *ConnectionNonPersistentAttrs) {
 	c.NonPersistentAttrs = nonPersistentAttrs
 	c.require(connectionOptionsSAMLFieldNonPersistentAttrs)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetClientID(clientID *ConnectionClientIDSamlxaaRequestingApp) {
+	c.ClientID = clientID
+	c.require(connectionOptionsSAMLFieldClientID)
+}
+
+// SetClientSecret sets the ClientSecret field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetClientSecret(clientSecret *ConnectionClientSecretSamlxaaRequestingApp) {
+	c.ClientSecret = clientSecret
+	c.require(connectionOptionsSAMLFieldClientSecret)
 }
 
 // SetDebug sets the Debug field and marks it as non-optional;
@@ -44804,20 +44858,21 @@ func (c ConnectionResponseContentSalesforceStrategy) Ptr() *ConnectionResponseCo
 }
 
 var (
-	connectionResponseContentSAMLFieldAuthentication            = big.NewInt(1 << 0)
-	connectionResponseContentSAMLFieldConnectedAccounts         = big.NewInt(1 << 1)
-	connectionResponseContentSAMLFieldDisplayName               = big.NewInt(1 << 2)
-	connectionResponseContentSAMLFieldID                        = big.NewInt(1 << 3)
-	connectionResponseContentSAMLFieldRealms                    = big.NewInt(1 << 4)
-	connectionResponseContentSAMLFieldName                      = big.NewInt(1 << 5)
-	connectionResponseContentSAMLFieldEnabledClients            = big.NewInt(1 << 6)
-	connectionResponseContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 7)
-	connectionResponseContentSAMLFieldMetadata                  = big.NewInt(1 << 8)
-	connectionResponseContentSAMLFieldStrategy                  = big.NewInt(1 << 9)
-	connectionResponseContentSAMLFieldCrossAppAccessResourceApp = big.NewInt(1 << 10)
-	connectionResponseContentSAMLFieldOptions                   = big.NewInt(1 << 11)
-	connectionResponseContentSAMLFieldProvisioningTicketURL     = big.NewInt(1 << 12)
-	connectionResponseContentSAMLFieldShowAsButton              = big.NewInt(1 << 13)
+	connectionResponseContentSAMLFieldAuthentication              = big.NewInt(1 << 0)
+	connectionResponseContentSAMLFieldConnectedAccounts           = big.NewInt(1 << 1)
+	connectionResponseContentSAMLFieldDisplayName                 = big.NewInt(1 << 2)
+	connectionResponseContentSAMLFieldID                          = big.NewInt(1 << 3)
+	connectionResponseContentSAMLFieldRealms                      = big.NewInt(1 << 4)
+	connectionResponseContentSAMLFieldName                        = big.NewInt(1 << 5)
+	connectionResponseContentSAMLFieldEnabledClients              = big.NewInt(1 << 6)
+	connectionResponseContentSAMLFieldIsDomainConnection          = big.NewInt(1 << 7)
+	connectionResponseContentSAMLFieldMetadata                    = big.NewInt(1 << 8)
+	connectionResponseContentSAMLFieldStrategy                    = big.NewInt(1 << 9)
+	connectionResponseContentSAMLFieldCrossAppAccessRequestingApp = big.NewInt(1 << 10)
+	connectionResponseContentSAMLFieldCrossAppAccessResourceApp   = big.NewInt(1 << 11)
+	connectionResponseContentSAMLFieldOptions                     = big.NewInt(1 << 12)
+	connectionResponseContentSAMLFieldProvisioningTicketURL       = big.NewInt(1 << 13)
+	connectionResponseContentSAMLFieldShowAsButton                = big.NewInt(1 << 14)
 )
 
 // connectionResponseContentSAMLNullableFields maps the wire names of ConnectionResponseContentSAML's nullable fields (required or optional) to their field bits.
@@ -44834,14 +44889,15 @@ type ConnectionResponseContentSAML struct {
 	Realms            *ConnectionRealms                   `json:"realms,omitempty" url:"realms,omitempty"`
 	Name              ConnectionName                      `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
-	EnabledClients            []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	IsDomainConnection        *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
-	Metadata                  *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Strategy                  ConnectionResponseContentSAMLStrategy `json:"strategy" url:"strategy"`
-	CrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp  `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
-	Options                   *ConnectionOptionsSAML                `json:"options,omitempty" url:"options,omitempty"`
-	ProvisioningTicketURL     *ConnectionProvisioningTicketURL      `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
-	ShowAsButton              *ConnectionShowAsButton               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	EnabledClients              []string                              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection          *ConnectionIsDomainConnection         `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	Metadata                    *ConnectionsMetadata                  `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Strategy                    ConnectionResponseContentSAMLStrategy `json:"strategy" url:"strategy"`
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp          `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
+	CrossAppAccessResourceApp   *ConnectionCrossAppAccessResourceApp  `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
+	Options                     *ConnectionOptionsSAML                `json:"options,omitempty" url:"options,omitempty"`
+	ProvisioningTicketURL       *ConnectionProvisioningTicketURL      `json:"provisioning_ticket_url,omitempty" url:"provisioning_ticket_url,omitempty"`
+	ShowAsButton                *ConnectionShowAsButton               `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -44918,6 +44974,13 @@ func (c *ConnectionResponseContentSAML) GetStrategy() ConnectionResponseContentS
 		return ""
 	}
 	return c.Strategy
+}
+
+func (c *ConnectionResponseContentSAML) GetCrossAppAccessRequestingApp() CrossAppAccessRequestingApp {
+	if c == nil || c.CrossAppAccessRequestingApp == nil {
+		return CrossAppAccessRequestingApp{}
+	}
+	return *c.CrossAppAccessRequestingApp
 }
 
 func (c *ConnectionResponseContentSAML) GetCrossAppAccessResourceApp() ConnectionCrossAppAccessResourceApp {
@@ -45032,6 +45095,13 @@ func (c *ConnectionResponseContentSAML) SetMetadata(metadata *ConnectionsMetadat
 func (c *ConnectionResponseContentSAML) SetStrategy(strategy ConnectionResponseContentSAMLStrategy) {
 	c.Strategy = strategy
 	c.require(connectionResponseContentSAMLFieldStrategy)
+}
+
+// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionResponseContentSAML) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
+	c.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
+	c.require(connectionResponseContentSAMLFieldCrossAppAccessRequestingApp)
 }
 
 // SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
@@ -59689,15 +59759,16 @@ func (c CreateConnectionRequestContentSalesforceStrategy) Ptr() *CreateConnectio
 }
 
 var (
-	createConnectionRequestContentSAMLFieldName                      = big.NewInt(1 << 0)
-	createConnectionRequestContentSAMLFieldEnabledClients            = big.NewInt(1 << 1)
-	createConnectionRequestContentSAMLFieldDisplayName               = big.NewInt(1 << 2)
-	createConnectionRequestContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 3)
-	createConnectionRequestContentSAMLFieldMetadata                  = big.NewInt(1 << 4)
-	createConnectionRequestContentSAMLFieldStrategy                  = big.NewInt(1 << 5)
-	createConnectionRequestContentSAMLFieldCrossAppAccessResourceApp = big.NewInt(1 << 6)
-	createConnectionRequestContentSAMLFieldOptions                   = big.NewInt(1 << 7)
-	createConnectionRequestContentSAMLFieldShowAsButton              = big.NewInt(1 << 8)
+	createConnectionRequestContentSAMLFieldName                        = big.NewInt(1 << 0)
+	createConnectionRequestContentSAMLFieldEnabledClients              = big.NewInt(1 << 1)
+	createConnectionRequestContentSAMLFieldDisplayName                 = big.NewInt(1 << 2)
+	createConnectionRequestContentSAMLFieldIsDomainConnection          = big.NewInt(1 << 3)
+	createConnectionRequestContentSAMLFieldMetadata                    = big.NewInt(1 << 4)
+	createConnectionRequestContentSAMLFieldStrategy                    = big.NewInt(1 << 5)
+	createConnectionRequestContentSAMLFieldCrossAppAccessRequestingApp = big.NewInt(1 << 6)
+	createConnectionRequestContentSAMLFieldCrossAppAccessResourceApp   = big.NewInt(1 << 7)
+	createConnectionRequestContentSAMLFieldOptions                     = big.NewInt(1 << 8)
+	createConnectionRequestContentSAMLFieldShowAsButton                = big.NewInt(1 << 9)
 )
 
 // createConnectionRequestContentSAMLNullableFields maps the wire names of CreateConnectionRequestContentSAML's nullable fields (required or optional) to their field bits.
@@ -59709,14 +59780,15 @@ var createConnectionRequestContentSAMLNullableFields = map[string]*big.Int{
 type CreateConnectionRequestContentSAML struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
-	EnabledClients            []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	DisplayName               *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
-	IsDomainConnection        *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
-	Metadata                  *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Strategy                  CreateConnectionRequestContentSAMLStrategy `json:"strategy" url:"strategy"`
-	CrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp       `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
-	Options                   *ConnectionOptionsSAML                     `json:"options,omitempty" url:"options,omitempty"`
-	ShowAsButton              *ConnectionShowAsButton                    `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	EnabledClients              []string                                   `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	DisplayName                 *ConnectionDisplayName                     `json:"display_name,omitempty" url:"display_name,omitempty"`
+	IsDomainConnection          *ConnectionIsDomainConnection              `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	Metadata                    *ConnectionsMetadata                       `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Strategy                    CreateConnectionRequestContentSAMLStrategy `json:"strategy" url:"strategy"`
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp               `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
+	CrossAppAccessResourceApp   *ConnectionCrossAppAccessResourceApp       `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
+	Options                     *ConnectionOptionsSAML                     `json:"options,omitempty" url:"options,omitempty"`
+	ShowAsButton                *ConnectionShowAsButton                    `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -59765,6 +59837,13 @@ func (c *CreateConnectionRequestContentSAML) GetStrategy() CreateConnectionReque
 		return ""
 	}
 	return c.Strategy
+}
+
+func (c *CreateConnectionRequestContentSAML) GetCrossAppAccessRequestingApp() CrossAppAccessRequestingApp {
+	if c == nil || c.CrossAppAccessRequestingApp == nil {
+		return CrossAppAccessRequestingApp{}
+	}
+	return *c.CrossAppAccessRequestingApp
 }
 
 func (c *CreateConnectionRequestContentSAML) GetCrossAppAccessResourceApp() ConnectionCrossAppAccessResourceApp {
@@ -59844,6 +59923,13 @@ func (c *CreateConnectionRequestContentSAML) SetMetadata(metadata *ConnectionsMe
 func (c *CreateConnectionRequestContentSAML) SetStrategy(strategy CreateConnectionRequestContentSAMLStrategy) {
 	c.Strategy = strategy
 	c.require(createConnectionRequestContentSAMLFieldStrategy)
+}
+
+// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionRequestContentSAML) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
+	c.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
+	c.require(createConnectionRequestContentSAMLFieldCrossAppAccessRequestingApp)
 }
 
 // SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
@@ -89698,8 +89784,8 @@ var (
 	getBruteForceSettingsResponseContentFieldShields            = big.NewInt(1 << 1)
 	getBruteForceSettingsResponseContentFieldAllowlist          = big.NewInt(1 << 2)
 	getBruteForceSettingsResponseContentFieldMode               = big.NewInt(1 << 3)
-	getBruteForceSettingsResponseContentFieldMaxAttempts        = big.NewInt(1 << 4)
-	getBruteForceSettingsResponseContentFieldFormSubmissionMode = big.NewInt(1 << 5)
+	getBruteForceSettingsResponseContentFieldFormSubmissionMode = big.NewInt(1 << 4)
+	getBruteForceSettingsResponseContentFieldMaxAttempts        = big.NewInt(1 << 5)
 )
 
 type GetBruteForceSettingsResponseContent struct {
@@ -89710,11 +89796,11 @@ type GetBruteForceSettingsResponseContent struct {
 	//	Possible values: <code>block</code>, <code>user_notification</code>.
 	Shields []BruteForceProtectionShieldsEnum `json:"shields,omitempty" url:"shields,omitempty"`
 	// List of trusted IP addresses that will not have attack protection enforced against them.
-	Allowlist []string                      `json:"allowlist,omitempty" url:"allowlist,omitempty"`
-	Mode      *BruteForceProtectionModeEnum `json:"mode,omitempty" url:"mode,omitempty"`
-	// Maximum number of unsuccessful attempts.
-	MaxAttempts        *int                                        `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
+	Allowlist          []string                                    `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+	Mode               *BruteForceProtectionModeEnum               `json:"mode,omitempty" url:"mode,omitempty"`
 	FormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum `json:"form_submission_mode,omitempty" url:"form_submission_mode,omitempty"`
+	// Maximum number of unsuccessful attempts.
+	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -89751,18 +89837,18 @@ func (g *GetBruteForceSettingsResponseContent) GetMode() BruteForceProtectionMod
 	return *g.Mode
 }
 
-func (g *GetBruteForceSettingsResponseContent) GetMaxAttempts() int {
-	if g == nil || g.MaxAttempts == nil {
-		return 0
-	}
-	return *g.MaxAttempts
-}
-
 func (g *GetBruteForceSettingsResponseContent) GetFormSubmissionMode() BruteForceProtectionFormSubmissionModeEnum {
 	if g == nil || g.FormSubmissionMode == nil {
 		return ""
 	}
 	return *g.FormSubmissionMode
+}
+
+func (g *GetBruteForceSettingsResponseContent) GetMaxAttempts() int {
+	if g == nil || g.MaxAttempts == nil {
+		return 0
+	}
+	return *g.MaxAttempts
 }
 
 func (g *GetBruteForceSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -89809,18 +89895,18 @@ func (g *GetBruteForceSettingsResponseContent) SetMode(mode *BruteForceProtectio
 	g.require(getBruteForceSettingsResponseContentFieldMode)
 }
 
-// SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (g *GetBruteForceSettingsResponseContent) SetMaxAttempts(maxAttempts *int) {
-	g.MaxAttempts = maxAttempts
-	g.require(getBruteForceSettingsResponseContentFieldMaxAttempts)
-}
-
 // SetFormSubmissionMode sets the FormSubmissionMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetBruteForceSettingsResponseContent) SetFormSubmissionMode(formSubmissionMode *BruteForceProtectionFormSubmissionModeEnum) {
 	g.FormSubmissionMode = formSubmissionMode
 	g.require(getBruteForceSettingsResponseContentFieldFormSubmissionMode)
+}
+
+// SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetBruteForceSettingsResponseContent) SetMaxAttempts(maxAttempts *int) {
+	g.MaxAttempts = maxAttempts
+	g.require(getBruteForceSettingsResponseContentFieldMaxAttempts)
 }
 
 func (g *GetBruteForceSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -120432,6 +120518,7 @@ func (s *SegmentStartsWithExpression) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Filter by status. Exact match.
 type SegmentStatusEnum string
 
 const (
@@ -127152,7 +127239,7 @@ type TenantSettingsFlags struct {
 	RevokeRefreshTokenGrant *bool `json:"revoke_refresh_token_grant,omitempty" url:"revoke_refresh_token_grant,omitempty"`
 	// Enables beta access to log streaming changes
 	DashboardLogStreamsNext *bool `json:"dashboard_log_streams_next,omitempty" url:"dashboard_log_streams_next,omitempty"`
-	// Enables new insights activity page view
+	// Deprecated. This flag has no effect and is retained only for backward compatibility
 	DashboardInsightsView *bool `json:"dashboard_insights_view,omitempty" url:"dashboard_insights_view,omitempty"`
 	// Disables SAML fields map fix for bad mappings with repeated attributes
 	DisableFieldsMapFix *bool `json:"disable_fields_map_fix,omitempty" url:"disable_fields_map_fix,omitempty"`
@@ -131113,8 +131200,8 @@ var (
 	updateBruteForceSettingsResponseContentFieldShields            = big.NewInt(1 << 1)
 	updateBruteForceSettingsResponseContentFieldAllowlist          = big.NewInt(1 << 2)
 	updateBruteForceSettingsResponseContentFieldMode               = big.NewInt(1 << 3)
-	updateBruteForceSettingsResponseContentFieldMaxAttempts        = big.NewInt(1 << 4)
-	updateBruteForceSettingsResponseContentFieldFormSubmissionMode = big.NewInt(1 << 5)
+	updateBruteForceSettingsResponseContentFieldFormSubmissionMode = big.NewInt(1 << 4)
+	updateBruteForceSettingsResponseContentFieldMaxAttempts        = big.NewInt(1 << 5)
 )
 
 type UpdateBruteForceSettingsResponseContent struct {
@@ -131125,11 +131212,11 @@ type UpdateBruteForceSettingsResponseContent struct {
 	//	Possible values: <code>block</code>, <code>user_notification</code>.
 	Shields []BruteForceProtectionShieldsEnum `json:"shields,omitempty" url:"shields,omitempty"`
 	// List of trusted IP addresses that will not have attack protection enforced against them.
-	Allowlist []string                      `json:"allowlist,omitempty" url:"allowlist,omitempty"`
-	Mode      *BruteForceProtectionModeEnum `json:"mode,omitempty" url:"mode,omitempty"`
-	// Maximum number of unsuccessful attempts.
-	MaxAttempts        *int                                        `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
+	Allowlist          []string                                    `json:"allowlist,omitempty" url:"allowlist,omitempty"`
+	Mode               *BruteForceProtectionModeEnum               `json:"mode,omitempty" url:"mode,omitempty"`
 	FormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum `json:"form_submission_mode,omitempty" url:"form_submission_mode,omitempty"`
+	// Maximum number of unsuccessful attempts.
+	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -131166,18 +131253,18 @@ func (u *UpdateBruteForceSettingsResponseContent) GetMode() BruteForceProtection
 	return *u.Mode
 }
 
-func (u *UpdateBruteForceSettingsResponseContent) GetMaxAttempts() int {
-	if u == nil || u.MaxAttempts == nil {
-		return 0
-	}
-	return *u.MaxAttempts
-}
-
 func (u *UpdateBruteForceSettingsResponseContent) GetFormSubmissionMode() BruteForceProtectionFormSubmissionModeEnum {
 	if u == nil || u.FormSubmissionMode == nil {
 		return ""
 	}
 	return *u.FormSubmissionMode
+}
+
+func (u *UpdateBruteForceSettingsResponseContent) GetMaxAttempts() int {
+	if u == nil || u.MaxAttempts == nil {
+		return 0
+	}
+	return *u.MaxAttempts
 }
 
 func (u *UpdateBruteForceSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -131224,18 +131311,18 @@ func (u *UpdateBruteForceSettingsResponseContent) SetMode(mode *BruteForceProtec
 	u.require(updateBruteForceSettingsResponseContentFieldMode)
 }
 
-// SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (u *UpdateBruteForceSettingsResponseContent) SetMaxAttempts(maxAttempts *int) {
-	u.MaxAttempts = maxAttempts
-	u.require(updateBruteForceSettingsResponseContentFieldMaxAttempts)
-}
-
 // SetFormSubmissionMode sets the FormSubmissionMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateBruteForceSettingsResponseContent) SetFormSubmissionMode(formSubmissionMode *BruteForceProtectionFormSubmissionModeEnum) {
 	u.FormSubmissionMode = formSubmissionMode
 	u.require(updateBruteForceSettingsResponseContentFieldFormSubmissionMode)
+}
+
+// SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateBruteForceSettingsResponseContent) SetMaxAttempts(maxAttempts *int) {
+	u.MaxAttempts = maxAttempts
+	u.require(updateBruteForceSettingsResponseContentFieldMaxAttempts)
 }
 
 func (u *UpdateBruteForceSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -137685,13 +137772,14 @@ func (u *UpdateConnectionRequestContentSalesforceSandbox) String() string {
 }
 
 var (
-	updateConnectionRequestContentSAMLFieldDisplayName               = big.NewInt(1 << 0)
-	updateConnectionRequestContentSAMLFieldEnabledClients            = big.NewInt(1 << 1)
-	updateConnectionRequestContentSAMLFieldIsDomainConnection        = big.NewInt(1 << 2)
-	updateConnectionRequestContentSAMLFieldMetadata                  = big.NewInt(1 << 3)
-	updateConnectionRequestContentSAMLFieldOptions                   = big.NewInt(1 << 4)
-	updateConnectionRequestContentSAMLFieldCrossAppAccessResourceApp = big.NewInt(1 << 5)
-	updateConnectionRequestContentSAMLFieldShowAsButton              = big.NewInt(1 << 6)
+	updateConnectionRequestContentSAMLFieldDisplayName                 = big.NewInt(1 << 0)
+	updateConnectionRequestContentSAMLFieldEnabledClients              = big.NewInt(1 << 1)
+	updateConnectionRequestContentSAMLFieldIsDomainConnection          = big.NewInt(1 << 2)
+	updateConnectionRequestContentSAMLFieldMetadata                    = big.NewInt(1 << 3)
+	updateConnectionRequestContentSAMLFieldOptions                     = big.NewInt(1 << 4)
+	updateConnectionRequestContentSAMLFieldCrossAppAccessRequestingApp = big.NewInt(1 << 5)
+	updateConnectionRequestContentSAMLFieldCrossAppAccessResourceApp   = big.NewInt(1 << 6)
+	updateConnectionRequestContentSAMLFieldShowAsButton                = big.NewInt(1 << 7)
 )
 
 // updateConnectionRequestContentSAMLNullableFields maps the wire names of UpdateConnectionRequestContentSAML's nullable fields (required or optional) to their field bits.
@@ -137701,13 +137789,14 @@ var updateConnectionRequestContentSAMLNullableFields = map[string]*big.Int{
 
 // Update a connection with strategy=samlp
 type UpdateConnectionRequestContentSAML struct {
-	DisplayName               *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
-	EnabledClients            *ConnectionEnabledClients            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
-	IsDomainConnection        *ConnectionIsDomainConnection        `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
-	Metadata                  *ConnectionsMetadata                 `json:"metadata,omitempty" url:"metadata,omitempty"`
-	Options                   *ConnectionOptionsSAML               `json:"options,omitempty" url:"options,omitempty"`
-	CrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
-	ShowAsButton              *ConnectionShowAsButton              `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
+	DisplayName                 *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
+	EnabledClients              *ConnectionEnabledClients            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
+	IsDomainConnection          *ConnectionIsDomainConnection        `json:"is_domain_connection,omitempty" url:"is_domain_connection,omitempty"`
+	Metadata                    *ConnectionsMetadata                 `json:"metadata,omitempty" url:"metadata,omitempty"`
+	Options                     *ConnectionOptionsSAML               `json:"options,omitempty" url:"options,omitempty"`
+	CrossAppAccessRequestingApp *CrossAppAccessRequestingApp         `json:"cross_app_access_requesting_app,omitempty" url:"cross_app_access_requesting_app,omitempty"`
+	CrossAppAccessResourceApp   *ConnectionCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
+	ShowAsButton                *ConnectionShowAsButton              `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -137749,6 +137838,13 @@ func (u *UpdateConnectionRequestContentSAML) GetOptions() ConnectionOptionsSAML 
 		return ConnectionOptionsSAML{}
 	}
 	return *u.Options
+}
+
+func (u *UpdateConnectionRequestContentSAML) GetCrossAppAccessRequestingApp() CrossAppAccessRequestingApp {
+	if u == nil || u.CrossAppAccessRequestingApp == nil {
+		return CrossAppAccessRequestingApp{}
+	}
+	return *u.CrossAppAccessRequestingApp
 }
 
 func (u *UpdateConnectionRequestContentSAML) GetCrossAppAccessResourceApp() ConnectionCrossAppAccessResourceApp {
@@ -137814,6 +137910,13 @@ func (u *UpdateConnectionRequestContentSAML) SetMetadata(metadata *ConnectionsMe
 func (u *UpdateConnectionRequestContentSAML) SetOptions(options *ConnectionOptionsSAML) {
 	u.Options = options
 	u.require(updateConnectionRequestContentSAMLFieldOptions)
+}
+
+// SetCrossAppAccessRequestingApp sets the CrossAppAccessRequestingApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionRequestContentSAML) SetCrossAppAccessRequestingApp(crossAppAccessRequestingApp *CrossAppAccessRequestingApp) {
+	u.CrossAppAccessRequestingApp = crossAppAccessRequestingApp
+	u.require(updateConnectionRequestContentSAMLFieldCrossAppAccessRequestingApp)
 }
 
 // SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;

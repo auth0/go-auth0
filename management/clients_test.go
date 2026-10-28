@@ -2332,6 +2332,14 @@ func TestSettersClient(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &Client{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetRedirectionPolicy", func(t *testing.T) {
 		obj := &Client{}
 		var fernTestValueRedirectionPolicy *ClientRedirectionPolicyEnum
@@ -4497,6 +4505,40 @@ func TestGettersClient(t *testing.T) {
 			}
 		}()
 		_ = obj.GetThirdPartySecurityMode() // Should return zero value
+	})
+
+	t.Run("GetOidcSupport", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var value ClientOidcSupport
+		obj.OidcSupport = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOidcSupport(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOidcSupport_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		obj.OidcSupport = nil
+		var expectedZero ClientOidcSupport
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOidcSupport(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOidcSupport_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Client
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOidcSupport() // Should return zero value
 	})
 
 	t.Run("GetRedirectionPolicy", func(t *testing.T) {
@@ -6673,6 +6715,37 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 
 		// Act
 		obj.SetThirdPartySecurityMode(fernTestValueThirdPartySecurityMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -19489,6 +19562,233 @@ func TestSettersMarkExplicitClientOidcBackchannelLogoutSettings(t *testing.T) {
 
 }
 
+func TestSettersClientOidcSupport(t *testing.T) {
+	t.Run("SetIsAllowed", func(t *testing.T) {
+		obj := &ClientOidcSupport{}
+		var fernTestValueIsAllowed *bool
+		obj.SetIsAllowed(fernTestValueIsAllowed)
+		assert.Equal(t, fernTestValueIsAllowed, obj.IsAllowed)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowAllScopes", func(t *testing.T) {
+		obj := &ClientOidcSupport{}
+		var fernTestValueAllowAllScopes *bool
+		obj.SetAllowAllScopes(fernTestValueAllowAllScopes)
+		assert.Equal(t, fernTestValueAllowAllScopes, obj.AllowAllScopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowedScopes", func(t *testing.T) {
+		obj := &ClientOidcSupport{}
+		var fernTestValueAllowedScopes []ClientOidcSupportAllowedScopesEnum
+		obj.SetAllowedScopes(fernTestValueAllowedScopes)
+		assert.Equal(t, fernTestValueAllowedScopes, obj.AllowedScopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersClientOidcSupport(t *testing.T) {
+	t.Run("GetIsAllowed", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		var value bool
+		obj.IsAllowed = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetIsAllowed(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetIsAllowed_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		obj.IsAllowed = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetIsAllowed(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetIsAllowed_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupport
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIsAllowed() // Should return zero value
+	})
+
+	t.Run("GetAllowAllScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		var value bool
+		obj.AllowAllScopes = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowAllScopes(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowAllScopes_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		obj.AllowAllScopes = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowAllScopes(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowAllScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupport
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowAllScopes() // Should return zero value
+	})
+
+	t.Run("GetAllowedScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		var expected []ClientOidcSupportAllowedScopesEnum
+		obj.AllowedScopes = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAllowedScopes(), "getter should return the property value")
+	})
+
+	t.Run("GetAllowedScopes_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		obj.AllowedScopes = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAllowedScopes(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAllowedScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupport
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowedScopes() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitClientOidcSupport(t *testing.T) {
+	t.Run("SetIsAllowed_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		var fernTestValueIsAllowed *bool
+
+		// Act
+		obj.SetIsAllowed(fernTestValueIsAllowed)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowAllScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		var fernTestValueAllowAllScopes *bool
+
+		// Act
+		obj.SetAllowAllScopes(fernTestValueAllowAllScopes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowedScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+		var fernTestValueAllowedScopes []ClientOidcSupportAllowedScopesEnum
+
+		// Act
+		obj.SetAllowedScopes(fernTestValueAllowedScopes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersClientOidcSupportPatch(t *testing.T) {
 	t.Run("SetIsAllowed", func(t *testing.T) {
 		obj := &ClientOidcSupportPatch{}
@@ -21096,6 +21396,14 @@ func TestSettersClientSearchResponse(t *testing.T) {
 		var fernTestValueThirdPartySecurityMode *ClientThirdPartySecurityModeEnum
 		obj.SetThirdPartySecurityMode(fernTestValueThirdPartySecurityMode)
 		assert.Equal(t, fernTestValueThirdPartySecurityMode, obj.ThirdPartySecurityMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &ClientSearchResponse{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -23128,6 +23436,40 @@ func TestGettersClientSearchResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetThirdPartySecurityMode() // Should return zero value
+	})
+
+	t.Run("GetOidcSupport", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var value ClientOidcSupport
+		obj.OidcSupport = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOidcSupport(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOidcSupport_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		obj.OidcSupport = nil
+		var expectedZero ClientOidcSupport
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOidcSupport(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOidcSupport_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOidcSupport() // Should return zero value
 	})
 
 	t.Run("GetRedirectionPolicy", func(t *testing.T) {
@@ -25180,6 +25522,37 @@ func TestSettersMarkExplicitClientSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetThirdPartySecurityMode(fernTestValueThirdPartySecurityMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -27914,6 +28287,14 @@ func TestSettersCreateClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &CreateClientResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetRedirectionPolicy", func(t *testing.T) {
 		obj := &CreateClientResponseContent{}
 		var fernTestValueRedirectionPolicy *ClientRedirectionPolicyEnum
@@ -30079,6 +30460,40 @@ func TestGettersCreateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetThirdPartySecurityMode() // Should return zero value
+	})
+
+	t.Run("GetOidcSupport", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var value ClientOidcSupport
+		obj.OidcSupport = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOidcSupport(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOidcSupport_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		obj.OidcSupport = nil
+		var expectedZero ClientOidcSupport
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOidcSupport(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOidcSupport_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOidcSupport() // Should return zero value
 	})
 
 	t.Run("GetRedirectionPolicy", func(t *testing.T) {
@@ -32255,6 +32670,37 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetThirdPartySecurityMode(fernTestValueThirdPartySecurityMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -34671,6 +35117,14 @@ func TestSettersGetClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &GetClientResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetRedirectionPolicy", func(t *testing.T) {
 		obj := &GetClientResponseContent{}
 		var fernTestValueRedirectionPolicy *ClientRedirectionPolicyEnum
@@ -36836,6 +37290,40 @@ func TestGettersGetClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetThirdPartySecurityMode() // Should return zero value
+	})
+
+	t.Run("GetOidcSupport", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var value ClientOidcSupport
+		obj.OidcSupport = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOidcSupport(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOidcSupport_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		obj.OidcSupport = nil
+		var expectedZero ClientOidcSupport
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOidcSupport(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOidcSupport_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOidcSupport() // Should return zero value
 	})
 
 	t.Run("GetRedirectionPolicy", func(t *testing.T) {
@@ -39012,6 +39500,37 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetThirdPartySecurityMode(fernTestValueThirdPartySecurityMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -42258,6 +42777,14 @@ func TestSettersRotateClientSecretResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetRedirectionPolicy", func(t *testing.T) {
 		obj := &RotateClientSecretResponseContent{}
 		var fernTestValueRedirectionPolicy *ClientRedirectionPolicyEnum
@@ -44423,6 +44950,40 @@ func TestGettersRotateClientSecretResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetThirdPartySecurityMode() // Should return zero value
+	})
+
+	t.Run("GetOidcSupport", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var value ClientOidcSupport
+		obj.OidcSupport = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOidcSupport(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOidcSupport_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		obj.OidcSupport = nil
+		var expectedZero ClientOidcSupport
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOidcSupport(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOidcSupport_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateClientSecretResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOidcSupport() // Should return zero value
 	})
 
 	t.Run("GetRedirectionPolicy", func(t *testing.T) {
@@ -46622,6 +47183,37 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetRedirectionPolicy_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -47734,6 +48326,14 @@ func TestSettersUpdateClientResponseContent(t *testing.T) {
 		var fernTestValueThirdPartySecurityMode *ClientThirdPartySecurityModeEnum
 		obj.SetThirdPartySecurityMode(fernTestValueThirdPartySecurityMode)
 		assert.Equal(t, fernTestValueThirdPartySecurityMode, obj.ThirdPartySecurityMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -49902,6 +50502,40 @@ func TestGettersUpdateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetThirdPartySecurityMode() // Should return zero value
+	})
+
+	t.Run("GetOidcSupport", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var value ClientOidcSupport
+		obj.OidcSupport = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOidcSupport(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOidcSupport_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		obj.OidcSupport = nil
+		var expectedZero ClientOidcSupport
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOidcSupport(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOidcSupport_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOidcSupport() // Should return zero value
 	})
 
 	t.Run("GetRedirectionPolicy", func(t *testing.T) {
@@ -52078,6 +52712,37 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetThirdPartySecurityMode(fernTestValueThirdPartySecurityMode)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueOidcSupport *ClientOidcSupport
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -54438,6 +55103,39 @@ func TestJSONMarshalingClientOidcBackchannelLogoutSettings(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj ClientOidcBackchannelLogoutSettings
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingClientOidcSupport(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientOidcSupport{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ClientOidcSupport
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientOidcSupport
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientOidcSupport
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -57428,6 +58126,22 @@ func TestStringClientOidcBackchannelLogoutSettings(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ClientOidcBackchannelLogoutSettings
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringClientOidcSupport(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientOidcSupport{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupport
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -60804,6 +61518,29 @@ func TestExtraPropertiesClientOidcBackchannelLogoutSettings(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ClientOidcBackchannelLogoutSettings
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesClientOidcSupport(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientOidcSupport{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientOidcSupport
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -30030,6 +30030,14 @@ func TestSettersConnectionOptionsAuth0(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOtpSettings", func(t *testing.T) {
+		obj := &ConnectionOptionsAuth0{}
+		var fernTestValueOtpSettings *ConnectionOtpSettings
+		obj.SetOtpSettings(fernTestValueOtpSettings)
+		assert.Equal(t, fernTestValueOtpSettings, obj.OtpSettings)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetPasskeyOptions", func(t *testing.T) {
 		obj := &ConnectionOptionsAuth0{}
 		var fernTestValuePasskeyOptions *ConnectionPasskeyOptions
@@ -30527,6 +30535,40 @@ func TestGettersConnectionOptionsAuth0(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMfa() // Should return zero value
+	})
+
+	t.Run("GetOtpSettings", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsAuth0{}
+		var value ConnectionOtpSettings
+		obj.OtpSettings = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOtpSettings(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOtpSettings_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsAuth0{}
+		obj.OtpSettings = nil
+		var expectedZero ConnectionOtpSettings
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOtpSettings(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOtpSettings_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOptionsAuth0
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOtpSettings() // Should return zero value
 	})
 
 	t.Run("GetPasskeyOptions", func(t *testing.T) {
@@ -31255,6 +31297,37 @@ func TestSettersMarkExplicitConnectionOptionsAuth0(t *testing.T) {
 
 		// Act
 		obj.SetMfa(fernTestValueMfa)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOtpSettings_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsAuth0{}
+		var fernTestValueOtpSettings *ConnectionOtpSettings
+
+		// Act
+		obj.SetOtpSettings(fernTestValueOtpSettings)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -74087,6 +74160,22 @@ func TestSettersConnectionOptionsSAML(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetClientID", func(t *testing.T) {
+		obj := &ConnectionOptionsSAML{}
+		var fernTestValueClientID *ConnectionClientIDSamlxaaRequestingApp
+		obj.SetClientID(fernTestValueClientID)
+		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetClientSecret", func(t *testing.T) {
+		obj := &ConnectionOptionsSAML{}
+		var fernTestValueClientSecret *ConnectionClientSecretSamlxaaRequestingApp
+		obj.SetClientSecret(fernTestValueClientSecret)
+		assert.Equal(t, fernTestValueClientSecret, obj.ClientSecret)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetDebug", func(t *testing.T) {
 		obj := &ConnectionOptionsSAML{}
 		var fernTestValueDebug *ConnectionDebugSAML
@@ -74836,6 +74925,74 @@ func TestGettersConnectionOptionsSAML(t *testing.T) {
 			}
 		}()
 		_ = obj.GetNonPersistentAttrs() // Should return zero value
+	})
+
+	t.Run("GetClientID", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsSAML{}
+		var value ConnectionClientIDSamlxaaRequestingApp
+		obj.ClientID = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientID(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientID_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsSAML{}
+		obj.ClientID = nil
+		var expectedZero ConnectionClientIDSamlxaaRequestingApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientID(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientID_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOptionsSAML
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientID() // Should return zero value
+	})
+
+	t.Run("GetClientSecret", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsSAML{}
+		var value ConnectionClientSecretSamlxaaRequestingApp
+		obj.ClientSecret = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetClientSecret(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetClientSecret_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsSAML{}
+		obj.ClientSecret = nil
+		var expectedZero ConnectionClientSecretSamlxaaRequestingApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetClientSecret(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetClientSecret_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOptionsSAML
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetClientSecret() // Should return zero value
 	})
 
 	t.Run("GetDebug", func(t *testing.T) {
@@ -75954,6 +76111,68 @@ func TestSettersMarkExplicitConnectionOptionsSAML(t *testing.T) {
 
 		// Act
 		obj.SetNonPersistentAttrs(fernTestValueNonPersistentAttrs)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientID_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsSAML{}
+		var fernTestValueClientID *ConnectionClientIDSamlxaaRequestingApp
+
+		// Act
+		obj.SetClientID(fernTestValueClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetClientSecret_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOptionsSAML{}
+		var fernTestValueClientSecret *ConnectionClientSecretSamlxaaRequestingApp
+
+		// Act
+		obj.SetClientSecret(fernTestValueClientSecret)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -120955,6 +121174,14 @@ func TestSettersConnectionResponseContentSAML(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCrossAppAccessRequestingApp", func(t *testing.T) {
+		obj := &ConnectionResponseContentSAML{}
+		var fernTestValueCrossAppAccessRequestingApp *CrossAppAccessRequestingApp
+		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
+		assert.Equal(t, fernTestValueCrossAppAccessRequestingApp, obj.CrossAppAccessRequestingApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
 		obj := &ConnectionResponseContentSAML{}
 		var fernTestValueCrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp
@@ -121283,6 +121510,40 @@ func TestGettersConnectionResponseContentSAML(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionResponseContentSAML{}
+		var value CrossAppAccessRequestingApp
+		obj.CrossAppAccessRequestingApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessRequestingApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionResponseContentSAML{}
+		obj.CrossAppAccessRequestingApp = nil
+		var expectedZero CrossAppAccessRequestingApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessRequestingApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionResponseContentSAML
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessRequestingApp() // Should return zero value
 	})
 
 	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
@@ -121711,6 +121972,37 @@ func TestSettersMarkExplicitConnectionResponseContentSAML(t *testing.T) {
 
 		// Act
 		obj.SetStrategy(fernTestValueStrategy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessRequestingApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionResponseContentSAML{}
+		var fernTestValueCrossAppAccessRequestingApp *CrossAppAccessRequestingApp
+
+		// Act
+		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -158033,6 +158325,14 @@ func TestSettersCreateConnectionRequestContentSAML(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCrossAppAccessRequestingApp", func(t *testing.T) {
+		obj := &CreateConnectionRequestContentSAML{}
+		var fernTestValueCrossAppAccessRequestingApp *CrossAppAccessRequestingApp
+		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
+		assert.Equal(t, fernTestValueCrossAppAccessRequestingApp, obj.CrossAppAccessRequestingApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
 		obj := &CreateConnectionRequestContentSAML{}
 		var fernTestValueCrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp
@@ -158239,6 +158539,40 @@ func TestGettersCreateConnectionRequestContentSAML(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionRequestContentSAML{}
+		var value CrossAppAccessRequestingApp
+		obj.CrossAppAccessRequestingApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessRequestingApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionRequestContentSAML{}
+		obj.CrossAppAccessRequestingApp = nil
+		var expectedZero CrossAppAccessRequestingApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessRequestingApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateConnectionRequestContentSAML
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessRequestingApp() // Should return zero value
 	})
 
 	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
@@ -158509,6 +158843,37 @@ func TestSettersMarkExplicitCreateConnectionRequestContentSAML(t *testing.T) {
 
 		// Act
 		obj.SetStrategy(fernTestValueStrategy)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessRequestingApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionRequestContentSAML{}
+		var fernTestValueCrossAppAccessRequestingApp *CrossAppAccessRequestingApp
+
+		// Act
+		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -213879,19 +214244,19 @@ func TestSettersGetBruteForceSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetMaxAttempts", func(t *testing.T) {
-		obj := &GetBruteForceSettingsResponseContent{}
-		var fernTestValueMaxAttempts *int
-		obj.SetMaxAttempts(fernTestValueMaxAttempts)
-		assert.Equal(t, fernTestValueMaxAttempts, obj.MaxAttempts)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetFormSubmissionMode", func(t *testing.T) {
 		obj := &GetBruteForceSettingsResponseContent{}
 		var fernTestValueFormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum
 		obj.SetFormSubmissionMode(fernTestValueFormSubmissionMode)
 		assert.Equal(t, fernTestValueFormSubmissionMode, obj.FormSubmissionMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMaxAttempts", func(t *testing.T) {
+		obj := &GetBruteForceSettingsResponseContent{}
+		var fernTestValueMaxAttempts *int
+		obj.SetMaxAttempts(fernTestValueMaxAttempts)
+		assert.Equal(t, fernTestValueMaxAttempts, obj.MaxAttempts)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -214032,40 +214397,6 @@ func TestGettersGetBruteForceSettingsResponseContent(t *testing.T) {
 		_ = obj.GetMode() // Should return zero value
 	})
 
-	t.Run("GetMaxAttempts", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &GetBruteForceSettingsResponseContent{}
-		var value int
-		obj.MaxAttempts = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetMaxAttempts(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetMaxAttempts_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &GetBruteForceSettingsResponseContent{}
-		obj.MaxAttempts = nil
-		var expectedZero int
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetMaxAttempts(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetMaxAttempts_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *GetBruteForceSettingsResponseContent
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMaxAttempts() // Should return zero value
-	})
-
 	t.Run("GetFormSubmissionMode", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -214098,6 +214429,40 @@ func TestGettersGetBruteForceSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetFormSubmissionMode() // Should return zero value
+	})
+
+	t.Run("GetMaxAttempts", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetBruteForceSettingsResponseContent{}
+		var value int
+		obj.MaxAttempts = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMaxAttempts(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMaxAttempts_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetBruteForceSettingsResponseContent{}
+		obj.MaxAttempts = nil
+		var expectedZero int
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMaxAttempts(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMaxAttempts_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetBruteForceSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMaxAttempts() // Should return zero value
 	})
 
 }
@@ -214227,14 +214592,14 @@ func TestSettersMarkExplicitGetBruteForceSettingsResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetMaxAttempts_MarksExplicit", func(t *testing.T) {
+	t.Run("SetFormSubmissionMode_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetBruteForceSettingsResponseContent{}
-		var fernTestValueMaxAttempts *int
+		var fernTestValueFormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum
 
 		// Act
-		obj.SetMaxAttempts(fernTestValueMaxAttempts)
+		obj.SetFormSubmissionMode(fernTestValueFormSubmissionMode)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -214258,14 +214623,14 @@ func TestSettersMarkExplicitGetBruteForceSettingsResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetFormSubmissionMode_MarksExplicit", func(t *testing.T) {
+	t.Run("SetMaxAttempts_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetBruteForceSettingsResponseContent{}
-		var fernTestValueFormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum
+		var fernTestValueMaxAttempts *int
 
 		// Act
-		obj.SetFormSubmissionMode(fernTestValueFormSubmissionMode)
+		obj.SetMaxAttempts(fernTestValueMaxAttempts)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -294559,19 +294924,19 @@ func TestSettersUpdateBruteForceSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetMaxAttempts", func(t *testing.T) {
-		obj := &UpdateBruteForceSettingsResponseContent{}
-		var fernTestValueMaxAttempts *int
-		obj.SetMaxAttempts(fernTestValueMaxAttempts)
-		assert.Equal(t, fernTestValueMaxAttempts, obj.MaxAttempts)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetFormSubmissionMode", func(t *testing.T) {
 		obj := &UpdateBruteForceSettingsResponseContent{}
 		var fernTestValueFormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum
 		obj.SetFormSubmissionMode(fernTestValueFormSubmissionMode)
 		assert.Equal(t, fernTestValueFormSubmissionMode, obj.FormSubmissionMode)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMaxAttempts", func(t *testing.T) {
+		obj := &UpdateBruteForceSettingsResponseContent{}
+		var fernTestValueMaxAttempts *int
+		obj.SetMaxAttempts(fernTestValueMaxAttempts)
+		assert.Equal(t, fernTestValueMaxAttempts, obj.MaxAttempts)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -294712,40 +295077,6 @@ func TestGettersUpdateBruteForceSettingsResponseContent(t *testing.T) {
 		_ = obj.GetMode() // Should return zero value
 	})
 
-	t.Run("GetMaxAttempts", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UpdateBruteForceSettingsResponseContent{}
-		var value int
-		obj.MaxAttempts = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetMaxAttempts(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetMaxAttempts_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UpdateBruteForceSettingsResponseContent{}
-		obj.MaxAttempts = nil
-		var expectedZero int
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetMaxAttempts(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetMaxAttempts_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *UpdateBruteForceSettingsResponseContent
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMaxAttempts() // Should return zero value
-	})
-
 	t.Run("GetFormSubmissionMode", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -294778,6 +295109,40 @@ func TestGettersUpdateBruteForceSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetFormSubmissionMode() // Should return zero value
+	})
+
+	t.Run("GetMaxAttempts", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateBruteForceSettingsResponseContent{}
+		var value int
+		obj.MaxAttempts = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMaxAttempts(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMaxAttempts_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateBruteForceSettingsResponseContent{}
+		obj.MaxAttempts = nil
+		var expectedZero int
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMaxAttempts(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMaxAttempts_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateBruteForceSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMaxAttempts() // Should return zero value
 	})
 
 }
@@ -294907,14 +295272,14 @@ func TestSettersMarkExplicitUpdateBruteForceSettingsResponseContent(t *testing.T
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetMaxAttempts_MarksExplicit", func(t *testing.T) {
+	t.Run("SetFormSubmissionMode_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateBruteForceSettingsResponseContent{}
-		var fernTestValueMaxAttempts *int
+		var fernTestValueFormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum
 
 		// Act
-		obj.SetMaxAttempts(fernTestValueMaxAttempts)
+		obj.SetFormSubmissionMode(fernTestValueFormSubmissionMode)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -294938,14 +295303,14 @@ func TestSettersMarkExplicitUpdateBruteForceSettingsResponseContent(t *testing.T
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetFormSubmissionMode_MarksExplicit", func(t *testing.T) {
+	t.Run("SetMaxAttempts_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateBruteForceSettingsResponseContent{}
-		var fernTestValueFormSubmissionMode *BruteForceProtectionFormSubmissionModeEnum
+		var fernTestValueMaxAttempts *int
 
 		// Act
-		obj.SetFormSubmissionMode(fernTestValueFormSubmissionMode)
+		obj.SetMaxAttempts(fernTestValueMaxAttempts)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -311578,6 +311943,14 @@ func TestSettersUpdateConnectionRequestContentSAML(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetCrossAppAccessRequestingApp", func(t *testing.T) {
+		obj := &UpdateConnectionRequestContentSAML{}
+		var fernTestValueCrossAppAccessRequestingApp *CrossAppAccessRequestingApp
+		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
+		assert.Equal(t, fernTestValueCrossAppAccessRequestingApp, obj.CrossAppAccessRequestingApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
 		obj := &UpdateConnectionRequestContentSAML{}
 		var fernTestValueCrossAppAccessResourceApp *ConnectionCrossAppAccessResourceApp
@@ -311765,6 +312138,40 @@ func TestGettersUpdateConnectionRequestContentSAML(t *testing.T) {
 			}
 		}()
 		_ = obj.GetOptions() // Should return zero value
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionRequestContentSAML{}
+		var value CrossAppAccessRequestingApp
+		obj.CrossAppAccessRequestingApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessRequestingApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionRequestContentSAML{}
+		obj.CrossAppAccessRequestingApp = nil
+		var expectedZero CrossAppAccessRequestingApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessRequestingApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessRequestingApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionRequestContentSAML
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessRequestingApp() // Should return zero value
 	})
 
 	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
@@ -311970,6 +312377,37 @@ func TestSettersMarkExplicitUpdateConnectionRequestContentSAML(t *testing.T) {
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessRequestingApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionRequestContentSAML{}
+		var fernTestValueCrossAppAccessRequestingApp *CrossAppAccessRequestingApp
+
+		// Act
+		obj.SetCrossAppAccessRequestingApp(fernTestValueCrossAppAccessRequestingApp)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

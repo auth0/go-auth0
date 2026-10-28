@@ -47,6 +47,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //	        1,
 //	    ),
 //	    Type: management.SegmentTypeFilterEnumAuth0.Ptr(),
+//	    Status: management.SegmentStatusEnumActive.Ptr(),
 //	}
 //	client.Experimentation.Segments.List(
 //	    context.TODO(),

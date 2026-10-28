@@ -1770,6 +1770,316 @@ func TestSettersMarkExplicitConnectionGatewayAuthentication(t *testing.T) {
 
 }
 
+func TestSettersConnectionOtpChannelSettings(t *testing.T) {
+	t.Run("SetOtpLength", func(t *testing.T) {
+		obj := &ConnectionOtpChannelSettings{}
+		var fernTestValueOtpLength *int
+		obj.SetOtpLength(fernTestValueOtpLength)
+		assert.Equal(t, fernTestValueOtpLength, obj.OtpLength)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOtpExpiry", func(t *testing.T) {
+		obj := &ConnectionOtpChannelSettings{}
+		var fernTestValueOtpExpiry *int
+		obj.SetOtpExpiry(fernTestValueOtpExpiry)
+		assert.Equal(t, fernTestValueOtpExpiry, obj.OtpExpiry)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionOtpChannelSettings(t *testing.T) {
+	t.Run("GetOtpLength", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpChannelSettings{}
+		var value int
+		obj.OtpLength = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOtpLength(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOtpLength_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpChannelSettings{}
+		obj.OtpLength = nil
+		var expectedZero int
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOtpLength(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOtpLength_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpChannelSettings
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOtpLength() // Should return zero value
+	})
+
+	t.Run("GetOtpExpiry", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpChannelSettings{}
+		var value int
+		obj.OtpExpiry = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOtpExpiry(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOtpExpiry_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpChannelSettings{}
+		obj.OtpExpiry = nil
+		var expectedZero int
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOtpExpiry(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOtpExpiry_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpChannelSettings
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOtpExpiry() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionOtpChannelSettings(t *testing.T) {
+	t.Run("SetOtpLength_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpChannelSettings{}
+		var fernTestValueOtpLength *int
+
+		// Act
+		obj.SetOtpLength(fernTestValueOtpLength)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOtpExpiry_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpChannelSettings{}
+		var fernTestValueOtpExpiry *int
+
+		// Act
+		obj.SetOtpExpiry(fernTestValueOtpExpiry)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionOtpSettings(t *testing.T) {
+	t.Run("SetEmail", func(t *testing.T) {
+		obj := &ConnectionOtpSettings{}
+		var fernTestValueEmail *ConnectionOtpChannelSettings
+		obj.SetEmail(fernTestValueEmail)
+		assert.Equal(t, fernTestValueEmail, obj.Email)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPhone", func(t *testing.T) {
+		obj := &ConnectionOtpSettings{}
+		var fernTestValuePhone *ConnectionOtpChannelSettings
+		obj.SetPhone(fernTestValuePhone)
+		assert.Equal(t, fernTestValuePhone, obj.Phone)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionOtpSettings(t *testing.T) {
+	t.Run("GetEmail", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpSettings{}
+		var value ConnectionOtpChannelSettings
+		obj.Email = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetEmail(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetEmail_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpSettings{}
+		obj.Email = nil
+		var expectedZero ConnectionOtpChannelSettings
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetEmail(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetEmail_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpSettings
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetEmail() // Should return zero value
+	})
+
+	t.Run("GetPhone", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpSettings{}
+		var value ConnectionOtpChannelSettings
+		obj.Phone = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetPhone(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetPhone_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpSettings{}
+		obj.Phone = nil
+		var expectedZero ConnectionOtpChannelSettings
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetPhone(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetPhone_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpSettings
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPhone() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionOtpSettings(t *testing.T) {
+	t.Run("SetEmail_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpSettings{}
+		var fernTestValueEmail *ConnectionOtpChannelSettings
+
+		// Act
+		obj.SetEmail(fernTestValueEmail)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPhone_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpSettings{}
+		var fernTestValuePhone *ConnectionOtpChannelSettings
+
+		// Act
+		obj.SetPhone(fernTestValuePhone)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersConnectionPasskeyAuthenticationMethod(t *testing.T) {
 	t.Run("SetEnabled", func(t *testing.T) {
 		obj := &ConnectionPasskeyAuthenticationMethod{}
@@ -4186,6 +4496,14 @@ func TestSettersConnectionPropertiesOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOtpSettings", func(t *testing.T) {
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueOtpSettings *ConnectionOtpSettings
+		obj.SetOtpSettings(fernTestValueOtpSettings)
+		assert.Equal(t, fernTestValueOtpSettings, obj.OtpSettings)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAuthenticationMethods", func(t *testing.T) {
 		obj := &ConnectionPropertiesOptions{}
 		var fernTestValueAuthenticationMethods *ConnectionAuthenticationMethods
@@ -4770,6 +5088,40 @@ func TestGettersConnectionPropertiesOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCustomScripts() // Should return zero value
+	})
+
+	t.Run("GetOtpSettings", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var value ConnectionOtpSettings
+		obj.OtpSettings = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOtpSettings(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOtpSettings_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		obj.OtpSettings = nil
+		var expectedZero ConnectionOtpSettings
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOtpSettings(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOtpSettings_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionPropertiesOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOtpSettings() // Should return zero value
 	})
 
 	t.Run("GetAuthenticationMethods", func(t *testing.T) {
@@ -6221,6 +6573,37 @@ func TestSettersMarkExplicitConnectionPropertiesOptions(t *testing.T) {
 
 		// Act
 		obj.SetCustomScripts(fernTestValueCustomScripts)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOtpSettings_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionPropertiesOptions{}
+		var fernTestValueOtpSettings *ConnectionOtpSettings
+
+		// Act
+		obj.SetOtpSettings(fernTestValueOtpSettings)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -14199,6 +14582,14 @@ func TestSettersUpdateConnectionOptions(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOtpSettings", func(t *testing.T) {
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueOtpSettings *ConnectionOtpSettings
+		obj.SetOtpSettings(fernTestValueOtpSettings)
+		assert.Equal(t, fernTestValueOtpSettings, obj.OtpSettings)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAuthenticationMethods", func(t *testing.T) {
 		obj := &UpdateConnectionOptions{}
 		var fernTestValueAuthenticationMethods *ConnectionAuthenticationMethods
@@ -14783,6 +15174,40 @@ func TestGettersUpdateConnectionOptions(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCustomScripts() // Should return zero value
+	})
+
+	t.Run("GetOtpSettings", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var value ConnectionOtpSettings
+		obj.OtpSettings = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOtpSettings(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOtpSettings_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		obj.OtpSettings = nil
+		var expectedZero ConnectionOtpSettings
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOtpSettings(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOtpSettings_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionOptions
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOtpSettings() // Should return zero value
 	})
 
 	t.Run("GetAuthenticationMethods", func(t *testing.T) {
@@ -16234,6 +16659,37 @@ func TestSettersMarkExplicitUpdateConnectionOptions(t *testing.T) {
 
 		// Act
 		obj.SetCustomScripts(fernTestValueCustomScripts)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOtpSettings_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionOptions{}
+		var fernTestValueOtpSettings *ConnectionOtpSettings
+
+		// Act
+		obj.SetOtpSettings(fernTestValueOtpSettings)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -19408,6 +19864,72 @@ func TestJSONMarshalingConnectionGatewayAuthentication(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingConnectionOtpChannelSettings(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpChannelSettings{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionOtpChannelSettings
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionOtpChannelSettings
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionOtpChannelSettings
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionOtpSettings(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionOtpSettings{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionOtpSettings
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionOtpSettings
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionOtpSettings
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingConnectionPasskeyAuthenticationMethod(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -20925,6 +21447,38 @@ func TestStringConnectionGatewayAuthentication(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionGatewayAuthentication
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionOtpChannelSettings(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionOtpChannelSettings{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpChannelSettings
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionOtpSettings(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionOtpSettings{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpSettings
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -22995,6 +23549,52 @@ func TestExtraPropertiesConnectionGatewayAuthentication(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionGatewayAuthentication
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionOtpChannelSettings(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionOtpChannelSettings{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpChannelSettings
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionOtpSettings(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionOtpSettings{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionOtpSettings
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
