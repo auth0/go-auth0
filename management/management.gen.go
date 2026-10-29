@@ -1766,6 +1766,14 @@ func (c *Client) GetAllowedOrigins() []string {
 	return *c.AllowedOrigins
 }
 
+// GetAnonymousSessions returns the AnonymousSessions field.
+func (c *Client) GetAnonymousSessions() *ClientAnonymousSessions {
+	if c == nil {
+		return nil
+	}
+	return c.AnonymousSessions
+}
+
 // GetAppType returns the AppType field if it's non-nil, zero value otherwise.
 func (c *Client) GetAppType() string {
 	if c == nil || c.AppType == nil {
@@ -2469,6 +2477,19 @@ func (c *ClientAddons) GetZoom() *ZoomClientAddon {
 
 // String returns a string representation of ClientAddons.
 func (c *ClientAddons) String() string {
+	return Stringify(c)
+}
+
+// GetActive returns the Active field if it's non-nil, zero value otherwise.
+func (c *ClientAnonymousSessions) GetActive() bool {
+	if c == nil || c.Active == nil {
+		return false
+	}
+	return *c.Active
+}
+
+// String returns a string representation of ClientAnonymousSessions.
+func (c *ClientAnonymousSessions) String() string {
 	return Stringify(c)
 }
 
@@ -10544,6 +10565,22 @@ func (m *MyOrganizationConfiguration) GetConnectionProfileID() string {
 	return *m.ConnectionProfileID
 }
 
+// GetEnforcePermissionCeiling returns the EnforcePermissionCeiling field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetEnforcePermissionCeiling() bool {
+	if m == nil || m.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *m.EnforcePermissionCeiling
+}
+
+// GetEnforceSelfAssignmentRestriction returns the EnforceSelfAssignmentRestriction field if it's non-nil, zero value otherwise.
+func (m *MyOrganizationConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if m == nil || m.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *m.EnforceSelfAssignmentRestriction
+}
+
 // GetInvitationLandingClientID returns the InvitationLandingClientID field if it's non-nil, zero value otherwise.
 func (m *MyOrganizationConfiguration) GetInvitationLandingClientID() string {
 	if m == nil || m.InvitationLandingClientID == nil {
@@ -12094,6 +12131,14 @@ func (r *RefreshTokenResourceServer) String() string {
 	return Stringify(r)
 }
 
+// GetAccessToken returns the AccessToken field.
+func (r *ResourceServer) GetAccessToken() *ResourceServerAccessToken {
+	if r == nil {
+		return nil
+	}
+	return r.AccessToken
+}
+
 // GetAllowOfflineAccess returns the AllowOfflineAccess field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetAllowOfflineAccess() bool {
 	if r == nil || r.AllowOfflineAccess == nil {
@@ -12206,6 +12251,14 @@ func (r *ResourceServer) GetProofOfPossession() *ResourceServerProofOfPossession
 	return r.ProofOfPossession
 }
 
+// GetRequireConsentNonRepudiation returns the RequireConsentNonRepudiation field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetRequireConsentNonRepudiation() bool {
+	if r == nil || r.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *r.RequireConsentNonRepudiation
+}
+
 // GetScopes returns the Scopes field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetScopes() []ResourceServerScope {
 	if r == nil || r.Scopes == nil {
@@ -12270,6 +12323,14 @@ func (r *ResourceServer) GetTokenLifetime() int {
 	return *r.TokenLifetime
 }
 
+// GetTokenLifetimeForAnonymousAccessTokens returns the TokenLifetimeForAnonymousAccessTokens field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetTokenLifetimeForAnonymousAccessTokens() int {
+	if r == nil || r.TokenLifetimeForAnonymousAccessTokens == nil {
+		return 0
+	}
+	return *r.TokenLifetimeForAnonymousAccessTokens
+}
+
 // GetTokenLifetimeForWeb returns the TokenLifetimeForWeb field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetTokenLifetimeForWeb() int {
 	if r == nil || r.TokenLifetimeForWeb == nil {
@@ -12288,6 +12349,53 @@ func (r *ResourceServer) GetVerificationLocation() string {
 
 // String returns a string representation of ResourceServer.
 func (r *ResourceServer) String() string {
+	return Stringify(r)
+}
+
+// GetClaimsMapping returns the ClaimsMapping field.
+func (r *ResourceServerAccessToken) GetClaimsMapping() *ResourceServerAccessTokenClaimsMapping {
+	if r == nil {
+		return nil
+	}
+	return r.ClaimsMapping
+}
+
+// String returns a string representation of ResourceServerAccessToken.
+func (r *ResourceServerAccessToken) String() string {
+	return Stringify(r)
+}
+
+// GetCustomClaims returns the CustomClaims field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAccessTokenClaimsMapping) GetCustomClaims() []ResourceServerAccessTokenCustomClaimsMappingRule {
+	if r == nil || r.CustomClaims == nil {
+		return nil
+	}
+	return *r.CustomClaims
+}
+
+// String returns a string representation of ResourceServerAccessTokenClaimsMapping.
+func (r *ResourceServerAccessTokenClaimsMapping) String() string {
+	return Stringify(r)
+}
+
+// GetExpression returns the Expression field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetExpression() string {
+	if r == nil || r.Expression == nil {
+		return ""
+	}
+	return *r.Expression
+}
+
+// GetName returns the Name field if it's non-nil, zero value otherwise.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
+	}
+	return *r.Name
+}
+
+// String returns a string representation of ResourceServerAccessTokenCustomClaimsMappingRule.
+func (r *ResourceServerAccessTokenCustomClaimsMappingRule) String() string {
 	return Stringify(r)
 }
 
@@ -12372,6 +12480,14 @@ func (r *ResourceServerScope) String() string {
 	return Stringify(r)
 }
 
+// GetAnonymousUser returns the AnonymousUser field.
+func (r *ResourceServerSubjectTypeAuthorization) GetAnonymousUser() *ResourceServerSubjectTypeAuthorizationAnonymousUser {
+	if r == nil {
+		return nil
+	}
+	return r.AnonymousUser
+}
+
 // GetClient returns the Client field.
 func (r *ResourceServerSubjectTypeAuthorization) GetClient() *ResourceServerSubjectTypeAuthorizationClient {
 	if r == nil {
@@ -12390,6 +12506,19 @@ func (r *ResourceServerSubjectTypeAuthorization) GetUser() *ResourceServerSubjec
 
 // String returns a string representation of ResourceServerSubjectTypeAuthorization.
 func (r *ResourceServerSubjectTypeAuthorization) String() string {
+	return Stringify(r)
+}
+
+// GetPolicy returns the Policy field if it's non-nil, zero value otherwise.
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) GetPolicy() string {
+	if r == nil || r.Policy == nil {
+		return ""
+	}
+	return *r.Policy
+}
+
+// String returns a string representation of ResourceServerSubjectTypeAuthorizationAnonymousUser.
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) String() string {
 	return Stringify(r)
 }
 
@@ -14772,6 +14901,14 @@ func (t *TenantSessionCookie) String() string {
 	return Stringify(t)
 }
 
+// GetAnonymous returns the Anonymous field.
+func (t *TenantSessions) GetAnonymous() *TenantSessionsAnonymous {
+	if t == nil {
+		return nil
+	}
+	return t.Anonymous
+}
+
 // GetOIDCLogoutPromptEnabled returns the OIDCLogoutPromptEnabled field if it's non-nil, zero value otherwise.
 func (t *TenantSessions) GetOIDCLogoutPromptEnabled() bool {
 	if t == nil || t.OIDCLogoutPromptEnabled == nil {
@@ -14782,6 +14919,27 @@ func (t *TenantSessions) GetOIDCLogoutPromptEnabled() bool {
 
 // String returns a string representation of TenantSessions.
 func (t *TenantSessions) String() string {
+	return Stringify(t)
+}
+
+// GetActivateCookie returns the ActivateCookie field if it's non-nil, zero value otherwise.
+func (t *TenantSessionsAnonymous) GetActivateCookie() bool {
+	if t == nil || t.ActivateCookie == nil {
+		return false
+	}
+	return *t.ActivateCookie
+}
+
+// GetLifetimeInMinutes returns the LifetimeInMinutes field if it's non-nil, zero value otherwise.
+func (t *TenantSessionsAnonymous) GetLifetimeInMinutes() int {
+	if t == nil || t.LifetimeInMinutes == nil {
+		return 0
+	}
+	return *t.LifetimeInMinutes
+}
+
+// String returns a string representation of TenantSessionsAnonymous.
+func (t *TenantSessionsAnonymous) String() string {
 	return Stringify(t)
 }
 

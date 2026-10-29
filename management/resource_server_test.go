@@ -251,6 +251,58 @@ func TestResourceServer_List(t *testing.T) {
 	assert.Contains(t, resourceServerList.ResourceServers, &ResourceServer{ID: expectedResourceServer.ID, Identifier: expectedResourceServer.Identifier})
 }
 
+func TestResourceServer_RequireConsentNonRepudiation(t *testing.T) {
+	t.Run("Should_Set_RequireConsentNonRepudiation_True_On_Create", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := &ResourceServer{
+			Name:                         auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
+			Identifier:                   auth0.String("https://api.example-nrep.com/"),
+			SigningAlgorithm:             auth0.String("RS256"),
+			TokenLifetime:                auth0.Int(7200),
+			TokenLifetimeForWeb:          auth0.Int(3600),
+			RequireConsentNonRepudiation: auth0.Bool(true),
+		}
+
+		err := api.ResourceServer.Create(context.Background(), rs)
+		assert.NoError(t, err)
+		assert.True(t, rs.GetRequireConsentNonRepudiation())
+
+		t.Cleanup(func() {
+			cleanupResourceServer(t, rs.GetID())
+		})
+	})
+
+	t.Run("Should_Update_RequireConsentNonRepudiation_To_False", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := &ResourceServer{
+			Name:                         auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
+			Identifier:                   auth0.String("https://api.example-nrep2.com/"),
+			SigningAlgorithm:             auth0.String("RS256"),
+			TokenLifetime:                auth0.Int(7200),
+			TokenLifetimeForWeb:          auth0.Int(3600),
+			RequireConsentNonRepudiation: auth0.Bool(true),
+		}
+
+		err := api.ResourceServer.Create(context.Background(), rs)
+		require.NoError(t, err)
+
+		rsID := rs.GetID()
+
+		t.Cleanup(func() {
+			cleanupResourceServer(t, rsID)
+		})
+
+		rs.ID = nil
+		rs.Identifier = nil
+		rs.RequireConsentNonRepudiation = auth0.Bool(false)
+
+		err = api.ResourceServer.Update(context.Background(), rsID, rs)
+		assert.NoError(t, err)
+	})
+}
+
 func givenAResourceServer(t *testing.T) *ResourceServer {
 	t.Helper()
 

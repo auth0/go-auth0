@@ -39,7 +39,7 @@ func (m *RuleConfigManager) Read(ctx context.Context, key string, opts ...Reques
 		}
 	}
 
-	return nil, &managementError{404, "Not Found", "Rule config not found"}
+	return nil, &managementError{404, "Not Found", "Rule config not found", ""}
 }
 
 // Delete a rule configuration variable identified by its key.

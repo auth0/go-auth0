@@ -2251,6 +2251,13 @@ func TestClient_GetAllowedOrigins(tt *testing.T) {
 	c.GetAllowedOrigins()
 }
 
+func TestClient_GetAnonymousSessions(tt *testing.T) {
+	c := &Client{}
+	c.GetAnonymousSessions()
+	c = nil
+	c.GetAnonymousSessions()
+}
+
 func TestClient_GetAppType(tt *testing.T) {
 	var zeroValue string
 	c := &Client{AppType: &zeroValue}
@@ -2991,6 +2998,24 @@ func TestClientAddons_GetZoom(tt *testing.T) {
 func TestClientAddons_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientAddons{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientAnonymousSessions_GetActive(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientAnonymousSessions{Active: &zeroValue}
+	c.GetActive()
+	c = &ClientAnonymousSessions{}
+	c.GetActive()
+	c = nil
+	c.GetActive()
+}
+
+func TestClientAnonymousSessions_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientAnonymousSessions{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -13180,6 +13205,26 @@ func TestMyOrganizationConfiguration_GetConnectionProfileID(tt *testing.T) {
 	m.GetConnectionProfileID()
 }
 
+func TestMyOrganizationConfiguration_GetEnforcePermissionCeiling(tt *testing.T) {
+	var zeroValue bool
+	m := &MyOrganizationConfiguration{EnforcePermissionCeiling: &zeroValue}
+	m.GetEnforcePermissionCeiling()
+	m = &MyOrganizationConfiguration{}
+	m.GetEnforcePermissionCeiling()
+	m = nil
+	m.GetEnforcePermissionCeiling()
+}
+
+func TestMyOrganizationConfiguration_GetEnforceSelfAssignmentRestriction(tt *testing.T) {
+	var zeroValue bool
+	m := &MyOrganizationConfiguration{EnforceSelfAssignmentRestriction: &zeroValue}
+	m.GetEnforceSelfAssignmentRestriction()
+	m = &MyOrganizationConfiguration{}
+	m.GetEnforceSelfAssignmentRestriction()
+	m = nil
+	m.GetEnforceSelfAssignmentRestriction()
+}
+
 func TestMyOrganizationConfiguration_GetInvitationLandingClientID(tt *testing.T) {
 	var zeroValue string
 	m := &MyOrganizationConfiguration{InvitationLandingClientID: &zeroValue}
@@ -15146,6 +15191,13 @@ func TestRefreshTokenResourceServer_String(t *testing.T) {
 	}
 }
 
+func TestResourceServer_GetAccessToken(tt *testing.T) {
+	r := &ResourceServer{}
+	r.GetAccessToken()
+	r = nil
+	r.GetAccessToken()
+}
+
 func TestResourceServer_GetAllowOfflineAccess(tt *testing.T) {
 	var zeroValue bool
 	r := &ResourceServer{AllowOfflineAccess: &zeroValue}
@@ -15280,6 +15332,16 @@ func TestResourceServer_GetProofOfPossession(tt *testing.T) {
 	r.GetProofOfPossession()
 }
 
+func TestResourceServer_GetRequireConsentNonRepudiation(tt *testing.T) {
+	var zeroValue bool
+	r := &ResourceServer{RequireConsentNonRepudiation: &zeroValue}
+	r.GetRequireConsentNonRepudiation()
+	r = &ResourceServer{}
+	r.GetRequireConsentNonRepudiation()
+	r = nil
+	r.GetRequireConsentNonRepudiation()
+}
+
 func TestResourceServer_GetScopes(tt *testing.T) {
 	var zeroValue []ResourceServerScope
 	r := &ResourceServer{Scopes: &zeroValue}
@@ -15354,6 +15416,16 @@ func TestResourceServer_GetTokenLifetime(tt *testing.T) {
 	r.GetTokenLifetime()
 }
 
+func TestResourceServer_GetTokenLifetimeForAnonymousAccessTokens(tt *testing.T) {
+	var zeroValue int
+	r := &ResourceServer{TokenLifetimeForAnonymousAccessTokens: &zeroValue}
+	r.GetTokenLifetimeForAnonymousAccessTokens()
+	r = &ResourceServer{}
+	r.GetTokenLifetimeForAnonymousAccessTokens()
+	r = nil
+	r.GetTokenLifetimeForAnonymousAccessTokens()
+}
+
 func TestResourceServer_GetTokenLifetimeForWeb(tt *testing.T) {
 	var zeroValue int
 	r := &ResourceServer{TokenLifetimeForWeb: &zeroValue}
@@ -15377,6 +15449,67 @@ func TestResourceServer_GetVerificationLocation(tt *testing.T) {
 func TestResourceServer_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ResourceServer{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerAccessToken_GetClaimsMapping(tt *testing.T) {
+	r := &ResourceServerAccessToken{}
+	r.GetClaimsMapping()
+	r = nil
+	r.GetClaimsMapping()
+}
+
+func TestResourceServerAccessToken_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerAccessToken{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerAccessTokenClaimsMapping_GetCustomClaims(tt *testing.T) {
+	var zeroValue []ResourceServerAccessTokenCustomClaimsMappingRule
+	r := &ResourceServerAccessTokenClaimsMapping{CustomClaims: &zeroValue}
+	r.GetCustomClaims()
+	r = &ResourceServerAccessTokenClaimsMapping{}
+	r.GetCustomClaims()
+	r = nil
+	r.GetCustomClaims()
+}
+
+func TestResourceServerAccessTokenClaimsMapping_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerAccessTokenClaimsMapping{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerAccessTokenCustomClaimsMappingRule_GetExpression(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerAccessTokenCustomClaimsMappingRule{Expression: &zeroValue}
+	r.GetExpression()
+	r = &ResourceServerAccessTokenCustomClaimsMappingRule{}
+	r.GetExpression()
+	r = nil
+	r.GetExpression()
+}
+
+func TestResourceServerAccessTokenCustomClaimsMappingRule_GetName(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerAccessTokenCustomClaimsMappingRule{Name: &zeroValue}
+	r.GetName()
+	r = &ResourceServerAccessTokenCustomClaimsMappingRule{}
+	r.GetName()
+	r = nil
+	r.GetName()
+}
+
+func TestResourceServerAccessTokenCustomClaimsMappingRule_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerAccessTokenCustomClaimsMappingRule{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -15492,6 +15625,13 @@ func TestResourceServerScope_String(t *testing.T) {
 	}
 }
 
+func TestResourceServerSubjectTypeAuthorization_GetAnonymousUser(tt *testing.T) {
+	r := &ResourceServerSubjectTypeAuthorization{}
+	r.GetAnonymousUser()
+	r = nil
+	r.GetAnonymousUser()
+}
+
 func TestResourceServerSubjectTypeAuthorization_GetClient(tt *testing.T) {
 	r := &ResourceServerSubjectTypeAuthorization{}
 	r.GetClient()
@@ -15509,6 +15649,24 @@ func TestResourceServerSubjectTypeAuthorization_GetUser(tt *testing.T) {
 func TestResourceServerSubjectTypeAuthorization_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ResourceServerSubjectTypeAuthorization{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestResourceServerSubjectTypeAuthorizationAnonymousUser_GetPolicy(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServerSubjectTypeAuthorizationAnonymousUser{Policy: &zeroValue}
+	r.GetPolicy()
+	r = &ResourceServerSubjectTypeAuthorizationAnonymousUser{}
+	r.GetPolicy()
+	r = nil
+	r.GetPolicy()
+}
+
+func TestResourceServerSubjectTypeAuthorizationAnonymousUser_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ResourceServerSubjectTypeAuthorizationAnonymousUser{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -18511,6 +18669,13 @@ func TestTenantSessionCookie_String(t *testing.T) {
 	}
 }
 
+func TestTenantSessions_GetAnonymous(tt *testing.T) {
+	t := &TenantSessions{}
+	t.GetAnonymous()
+	t = nil
+	t.GetAnonymous()
+}
+
 func TestTenantSessions_GetOIDCLogoutPromptEnabled(tt *testing.T) {
 	var zeroValue bool
 	t := &TenantSessions{OIDCLogoutPromptEnabled: &zeroValue}
@@ -18524,6 +18689,34 @@ func TestTenantSessions_GetOIDCLogoutPromptEnabled(tt *testing.T) {
 func TestTenantSessions_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &TenantSessions{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestTenantSessionsAnonymous_GetActivateCookie(tt *testing.T) {
+	var zeroValue bool
+	t := &TenantSessionsAnonymous{ActivateCookie: &zeroValue}
+	t.GetActivateCookie()
+	t = &TenantSessionsAnonymous{}
+	t.GetActivateCookie()
+	t = nil
+	t.GetActivateCookie()
+}
+
+func TestTenantSessionsAnonymous_GetLifetimeInMinutes(tt *testing.T) {
+	var zeroValue int
+	t := &TenantSessionsAnonymous{LifetimeInMinutes: &zeroValue}
+	t.GetLifetimeInMinutes()
+	t = &TenantSessionsAnonymous{}
+	t.GetLifetimeInMinutes()
+	t = nil
+	t.GetLifetimeInMinutes()
+}
+
+func TestTenantSessionsAnonymous_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &TenantSessionsAnonymous{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
