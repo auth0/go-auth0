@@ -11939,6 +11939,14 @@ client.ResourceServers.Create(
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**type_:** `*management.ResourceServerTypeEnum` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -12410,6 +12418,14 @@ client.ResourceServers.Update(
 <dd>
 
 **authorizationPolicy:** `*management.ResourceServerAuthorizationPolicy` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type_:** `*management.ResourceServerTypeEnum` 
     
 </dd>
 </dl>
@@ -16499,6 +16515,195 @@ client.Users.Update(
 </dl>
 </details>
 
+<details><summary><code>client.Users.ListConsentSigningKeys(ID) -> management.ListUserConsentSigningKeysResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve all consent signing keys registered for a user. Returns an empty array when the user has no keys registered.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.ListConsentSigningKeys(
+    context.TODO(),
+    "id",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the user.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.GetConsentSigningKey(ID, Kid) -> *management.ConsentSigningKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Retrieve a single consent signing key for a user by its key identifier (kid). Returns 404 if the key does not exist.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.GetConsentSigningKey(
+    context.TODO(),
+    "id",
+    "kid",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kid:** `string` — The key identifier of the consent signing key.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Users.DeleteConsentSigningKey(ID, Kid) -> error</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove a single consent signing key for a user by its key identifier (kid). The operation is idempotent and returns 204 whether or not the key existed.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Users.DeleteConsentSigningKey(
+    context.TODO(),
+    "id",
+    "kid",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `string` — The ID of the user.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**kid:** `string` — The key identifier of the consent signing key.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.Users.RegenerateRecoveryCode(ID) -> *management.RegenerateUsersRecoveryCodeResponseContent</code></summary>
 <dl>
 <dd>
@@ -18351,7 +18556,7 @@ Action to take when a brute force protection threshold is violated.
 <dl>
 <dd>
 
-**maxAttempts:** `*int` — Maximum number of unsuccessful attempts.
+**formSubmissionMode:** `*management.BruteForceProtectionFormSubmissionModeEnum` 
     
 </dd>
 </dl>
@@ -18359,7 +18564,7 @@ Action to take when a brute force protection threshold is violated.
 <dl>
 <dd>
 
-**formSubmissionMode:** `*management.BruteForceProtectionFormSubmissionModeEnum` 
+**maxAttempts:** `*int` — Maximum number of unsuccessful attempts.
     
 </dd>
 </dl>
@@ -24239,6 +24444,7 @@ request := &management.ListSegmentsRequestParameters{
         1,
     ),
     Type: management.SegmentTypeFilterEnumAuth0.Ptr(),
+    Status: management.SegmentStatusEnumActive.Ptr(),
 }
 client.Experimentation.Segments.List(
     context.TODO(),
@@ -24275,6 +24481,14 @@ client.Experimentation.Segments.List(
 <dd>
 
 **type_:** `*management.SegmentTypeFilterEnum` — Filter by type. Exact match.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**status:** `*management.SegmentStatusEnum` — Filter by status. Exact match.
     
 </dd>
 </dl>

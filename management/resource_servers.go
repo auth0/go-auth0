@@ -35,6 +35,7 @@ var (
 	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
+	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 25)
 )
 
 // createResourceServerResponseContentNullableFields maps the wire names of CreateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -45,6 +46,7 @@ var createResourceServerResponseContentNullableFields = map[string]*big.Int{
 	"authorization_details": createResourceServerResponseContentFieldAuthorizationDetails,
 	"proof_of_possession":   createResourceServerResponseContentFieldProofOfPossession,
 	"authorization_policy":  createResourceServerResponseContentFieldAuthorizationPolicy,
+	"type":                  createResourceServerResponseContentFieldType,
 }
 
 type CreateResourceServerResponseContent struct {
@@ -88,7 +90,8 @@ type CreateResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
+	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -270,6 +273,13 @@ func (c *CreateResourceServerResponseContent) GetClientID() string {
 		return ""
 	}
 	return *c.ClientID
+}
+
+func (c *CreateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
+	if c == nil || c.Type == nil {
+		return ""
+	}
+	return *c.Type
 }
 
 func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
@@ -463,6 +473,13 @@ func (c *CreateResourceServerResponseContent) SetClientID(clientID *string) {
 	c.require(createResourceServerResponseContentFieldClientID)
 }
 
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
+	c.Type = type_
+	c.require(createResourceServerResponseContentFieldType)
+}
+
 func (c *CreateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateResourceServerResponseContent
 	var value unmarshaler
@@ -538,6 +555,7 @@ var (
 	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
+	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 25)
 )
 
 // getResourceServerResponseContentNullableFields maps the wire names of GetResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -548,6 +566,7 @@ var getResourceServerResponseContentNullableFields = map[string]*big.Int{
 	"authorization_details": getResourceServerResponseContentFieldAuthorizationDetails,
 	"proof_of_possession":   getResourceServerResponseContentFieldProofOfPossession,
 	"authorization_policy":  getResourceServerResponseContentFieldAuthorizationPolicy,
+	"type":                  getResourceServerResponseContentFieldType,
 }
 
 type GetResourceServerResponseContent struct {
@@ -591,7 +610,8 @@ type GetResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
+	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -773,6 +793,13 @@ func (g *GetResourceServerResponseContent) GetClientID() string {
 		return ""
 	}
 	return *g.ClientID
+}
+
+func (g *GetResourceServerResponseContent) GetType() ResourceServerTypeEnum {
+	if g == nil || g.Type == nil {
+		return ""
+	}
+	return *g.Type
 }
 
 func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
@@ -964,6 +991,13 @@ func (g *GetResourceServerResponseContent) SetAuthorizationPolicy(authorizationP
 func (g *GetResourceServerResponseContent) SetClientID(clientID *string) {
 	g.ClientID = clientID
 	g.require(getResourceServerResponseContentFieldClientID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
+	g.Type = type_
+	g.require(getResourceServerResponseContentFieldType)
 }
 
 func (g *GetResourceServerResponseContent) UnmarshalJSON(data []byte) error {
@@ -1175,6 +1209,7 @@ var (
 	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	resourceServerFieldClientID                                  = big.NewInt(1 << 24)
+	resourceServerFieldType                                      = big.NewInt(1 << 25)
 )
 
 // resourceServerNullableFields maps the wire names of ResourceServer's nullable fields (required or optional) to their field bits.
@@ -1185,6 +1220,7 @@ var resourceServerNullableFields = map[string]*big.Int{
 	"authorization_details": resourceServerFieldAuthorizationDetails,
 	"proof_of_possession":   resourceServerFieldProofOfPossession,
 	"authorization_policy":  resourceServerFieldAuthorizationPolicy,
+	"type":                  resourceServerFieldType,
 }
 
 type ResourceServer struct {
@@ -1228,7 +1264,8 @@ type ResourceServer struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
+	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1410,6 +1447,13 @@ func (r *ResourceServer) GetClientID() string {
 		return ""
 	}
 	return *r.ClientID
+}
+
+func (r *ResourceServer) GetType() ResourceServerTypeEnum {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
 }
 
 func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
@@ -1601,6 +1645,13 @@ func (r *ResourceServer) SetAuthorizationPolicy(authorizationPolicy *ResourceSer
 func (r *ResourceServer) SetClientID(clientID *string) {
 	r.ClientID = clientID
 	r.require(resourceServerFieldClientID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetType(type_ *ResourceServerTypeEnum) {
+	r.Type = type_
+	r.require(resourceServerFieldType)
 }
 
 func (r *ResourceServer) UnmarshalJSON(data []byte) error {
@@ -2054,6 +2105,7 @@ var (
 	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
 	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
 	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 23)
+	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 24)
 )
 
 // resourceServerSearchResponseNullableFields maps the wire names of ResourceServerSearchResponse's nullable fields (required or optional) to their field bits.
@@ -2064,6 +2116,7 @@ var resourceServerSearchResponseNullableFields = map[string]*big.Int{
 	"authorization_details": resourceServerSearchResponseFieldAuthorizationDetails,
 	"proof_of_possession":   resourceServerSearchResponseFieldProofOfPossession,
 	"authorization_policy":  resourceServerSearchResponseFieldAuthorizationPolicy,
+	"type":                  resourceServerSearchResponseFieldType,
 }
 
 type ResourceServerSearchResponse struct {
@@ -2105,7 +2158,8 @@ type ResourceServerSearchResponse struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
+	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2280,6 +2334,13 @@ func (r *ResourceServerSearchResponse) GetClientID() string {
 		return ""
 	}
 	return *r.ClientID
+}
+
+func (r *ResourceServerSearchResponse) GetType() ResourceServerTypeEnum {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
 }
 
 func (r *ResourceServerSearchResponse) GetExtraProperties() map[string]interface{} {
@@ -2464,6 +2525,13 @@ func (r *ResourceServerSearchResponse) SetAuthorizationPolicy(authorizationPolic
 func (r *ResourceServerSearchResponse) SetClientID(clientID *string) {
 	r.ClientID = clientID
 	r.require(resourceServerSearchResponseFieldClientID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetType(type_ *ResourceServerTypeEnum) {
+	r.Type = type_
+	r.require(resourceServerSearchResponseFieldType)
 }
 
 func (r *ResourceServerSearchResponse) UnmarshalJSON(data []byte) error {
@@ -3351,6 +3419,26 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+// The type of the resource server.
+type ResourceServerTypeEnum string
+
+const (
+	ResourceServerTypeEnumUniversalCommerceProtocolServer ResourceServerTypeEnum = "universal_commerce_protocol_server"
+)
+
+func NewResourceServerTypeEnumFromString(s string) (ResourceServerTypeEnum, error) {
+	switch s {
+	case "universal_commerce_protocol_server":
+		return ResourceServerTypeEnumUniversalCommerceProtocolServer, nil
+	}
+	var t ResourceServerTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerTypeEnum) Ptr() *ResourceServerTypeEnum {
+	return &r
+}
+
 var (
 	searchResourceServersResponseContentFieldResourceServers = big.NewInt(1 << 0)
 	searchResourceServersResponseContentFieldNext            = big.NewInt(1 << 1)
@@ -3481,6 +3569,7 @@ var (
 	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
+	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 25)
 )
 
 // updateResourceServerResponseContentNullableFields maps the wire names of UpdateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -3491,6 +3580,7 @@ var updateResourceServerResponseContentNullableFields = map[string]*big.Int{
 	"authorization_details": updateResourceServerResponseContentFieldAuthorizationDetails,
 	"proof_of_possession":   updateResourceServerResponseContentFieldProofOfPossession,
 	"authorization_policy":  updateResourceServerResponseContentFieldAuthorizationPolicy,
+	"type":                  updateResourceServerResponseContentFieldType,
 }
 
 type UpdateResourceServerResponseContent struct {
@@ -3534,7 +3624,8 @@ type UpdateResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
+	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3716,6 +3807,13 @@ func (u *UpdateResourceServerResponseContent) GetClientID() string {
 		return ""
 	}
 	return *u.ClientID
+}
+
+func (u *UpdateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
+	if u == nil || u.Type == nil {
+		return ""
+	}
+	return *u.Type
 }
 
 func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
@@ -3907,6 +4005,13 @@ func (u *UpdateResourceServerResponseContent) SetAuthorizationPolicy(authorizati
 func (u *UpdateResourceServerResponseContent) SetClientID(clientID *string) {
 	u.ClientID = clientID
 	u.require(updateResourceServerResponseContentFieldClientID)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
+	u.Type = type_
+	u.require(updateResourceServerResponseContentFieldType)
 }
 
 func (u *UpdateResourceServerResponseContent) UnmarshalJSON(data []byte) error {

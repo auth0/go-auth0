@@ -463,6 +463,89 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
+// Retrieve all consent signing keys registered for a user. Returns an empty array when the user has no keys registered.
+//
+// Example:
+//
+//	client.Users.ListConsentSigningKeys(
+//	    context.TODO(),
+//	    "id",
+//	)
+func (c *Client) ListConsentSigningKeys(
+	ctx context.Context,
+	// The ID of the user.
+	id string,
+	opts ...option.RequestOption,
+) (management.ListUserConsentSigningKeysResponseContent, error) {
+	response, err := c.WithRawResponse.ListConsentSigningKeys(
+		ctx,
+		id,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Retrieve a single consent signing key for a user by its key identifier (kid). Returns 404 if the key does not exist.
+//
+// Example:
+//
+//	client.Users.GetConsentSigningKey(
+//	    context.TODO(),
+//	    "id",
+//	    "kid",
+//	)
+func (c *Client) GetConsentSigningKey(
+	ctx context.Context,
+	// The ID of the user.
+	id string,
+	// The key identifier of the consent signing key.
+	kid string,
+	opts ...option.RequestOption,
+) (*management.ConsentSigningKey, error) {
+	response, err := c.WithRawResponse.GetConsentSigningKey(
+		ctx,
+		id,
+		kid,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Remove a single consent signing key for a user by its key identifier (kid). The operation is idempotent and returns 204 whether or not the key existed.
+//
+// Example:
+//
+//	client.Users.DeleteConsentSigningKey(
+//	    context.TODO(),
+//	    "id",
+//	    "kid",
+//	)
+func (c *Client) DeleteConsentSigningKey(
+	ctx context.Context,
+	// The ID of the user.
+	id string,
+	// The key identifier of the consent signing key.
+	kid string,
+	opts ...option.RequestOption,
+) error {
+	_, err := c.WithRawResponse.DeleteConsentSigningKey(
+		ctx,
+		id,
+		kid,
+		opts...,
+	)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 // Remove an existing multi-factor authentication (MFA) [recovery code](https://auth0.com/docs/secure/multi-factor-authentication/reset-user-mfa) and generate a new one. If a user cannot access the original device or account used for MFA enrollment, they can use a recovery code to authenticate.
 //
 // Example:
