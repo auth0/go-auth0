@@ -9,7 +9,15 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      go-modules:
+        patterns:
+          - "*"
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'daily'
+    groups:
+      github-actions:
+        patterns:
+          - "*"
