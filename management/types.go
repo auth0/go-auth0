@@ -28995,12 +28995,17 @@ var (
 	connectionOptionsSAMLFieldSigningCert                 = big.NewInt(1 << 33)
 	connectionOptionsSAMLFieldSigningKey                  = big.NewInt(1 << 34)
 	connectionOptionsSAMLFieldSignOutEndpoint             = big.NewInt(1 << 35)
-	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 36)
+	connectionOptionsSAMLFieldTokenEndpointAuthMethod     = big.NewInt(1 << 36)
+	connectionOptionsSAMLFieldTokenEndpointAuthSigningAlg = big.NewInt(1 << 37)
+	connectionOptionsSAMLFieldTokenEndpointJwtcaAudFormat = big.NewInt(1 << 38)
+	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 39)
 )
 
 // connectionOptionsSAMLNullableFields maps the wire names of ConnectionOptionsSAML's nullable fields (required or optional) to their field bits.
 var connectionOptionsSAMLNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsSAMLFieldUpstreamParams,
+	"upstream_params":                 connectionOptionsSAMLFieldUpstreamParams,
+	"token_endpoint_auth_method":      connectionOptionsSAMLFieldTokenEndpointAuthMethod,
+	"token_endpoint_auth_signing_alg": connectionOptionsSAMLFieldTokenEndpointAuthSigningAlg,
 }
 
 // Options for the 'samlp' connection
@@ -29029,20 +29034,23 @@ type ConnectionOptionsSAML struct {
 	Deflate                     *ConnectionOptionsDeflateSAML               `json:"deflate,omitempty" url:"deflate,omitempty"`
 	DestinationURL              *ConnectionDestinationUrlSaml               `json:"destinationUrl,omitempty" url:"destinationUrl,omitempty"`
 	// When true, disables sending SAML logout requests (SingleLogoutService) to the identity provider during user sign-out. The user will be logged out of Auth0 but will remain logged into the identity provider. Defaults to false (federated logout enabled).
-	DisableSignout              *bool                                      `json:"disableSignout,omitempty" url:"disableSignout,omitempty"`
-	DiscoveryURL                *ConnectionDiscoveryURL                    `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	FieldsMap                   *ConnectionFieldsMapSAML                   `json:"fieldsMap,omitempty" url:"fieldsMap,omitempty"`
-	GlobalTokenRevocationJwtIss *ConnectionGlobalTokenRevocationJwtIssSAML `json:"global_token_revocation_jwt_iss,omitempty" url:"global_token_revocation_jwt_iss,omitempty"`
-	GlobalTokenRevocationJwtSub *ConnectionGlobalTokenRevocationJwtSubSAML `json:"global_token_revocation_jwt_sub,omitempty" url:"global_token_revocation_jwt_sub,omitempty"`
-	MetadataURL                 *ConnectionMetadataUrlSaml                 `json:"metadataUrl,omitempty" url:"metadataUrl,omitempty"`
-	MetadataXML                 *ConnectionMetadataXmlSaml                 `json:"metadataXml,omitempty" url:"metadataXml,omitempty"`
-	OidcMetadata                *ConnectionOptionsOidcMetadata             `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	RecipientURL                *ConnectionRecipientUrlSaml                `json:"recipientUrl,omitempty" url:"recipientUrl,omitempty"`
-	RequestTemplate             *ConnectionRequestTemplateSAML             `json:"requestTemplate,omitempty" url:"requestTemplate,omitempty"`
-	SigningCert                 *ConnectionSigningCertSAML                 `json:"signingCert,omitempty" url:"signingCert,omitempty"`
-	SigningKey                  *ConnectionSigningKeySAML                  `json:"signing_key,omitempty" url:"signing_key,omitempty"`
-	SignOutEndpoint             *ConnectionSignOutEndpointSAML             `json:"signOutEndpoint,omitempty" url:"signOutEndpoint,omitempty"`
-	UserIDAttribute             *ConnectionUserIDAttributeSAML             `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
+	DisableSignout              *bool                                          `json:"disableSignout,omitempty" url:"disableSignout,omitempty"`
+	DiscoveryURL                *ConnectionDiscoveryURL                        `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	FieldsMap                   *ConnectionFieldsMapSAML                       `json:"fieldsMap,omitempty" url:"fieldsMap,omitempty"`
+	GlobalTokenRevocationJwtIss *ConnectionGlobalTokenRevocationJwtIssSAML     `json:"global_token_revocation_jwt_iss,omitempty" url:"global_token_revocation_jwt_iss,omitempty"`
+	GlobalTokenRevocationJwtSub *ConnectionGlobalTokenRevocationJwtSubSAML     `json:"global_token_revocation_jwt_sub,omitempty" url:"global_token_revocation_jwt_sub,omitempty"`
+	MetadataURL                 *ConnectionMetadataUrlSaml                     `json:"metadataUrl,omitempty" url:"metadataUrl,omitempty"`
+	MetadataXML                 *ConnectionMetadataXmlSaml                     `json:"metadataXml,omitempty" url:"metadataXml,omitempty"`
+	OidcMetadata                *ConnectionOptionsOidcMetadata                 `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	RecipientURL                *ConnectionRecipientUrlSaml                    `json:"recipientUrl,omitempty" url:"recipientUrl,omitempty"`
+	RequestTemplate             *ConnectionRequestTemplateSAML                 `json:"requestTemplate,omitempty" url:"requestTemplate,omitempty"`
+	SigningCert                 *ConnectionSigningCertSAML                     `json:"signingCert,omitempty" url:"signingCert,omitempty"`
+	SigningKey                  *ConnectionSigningKeySAML                      `json:"signing_key,omitempty" url:"signing_key,omitempty"`
+	SignOutEndpoint             *ConnectionSignOutEndpointSAML                 `json:"signOutEndpoint,omitempty" url:"signOutEndpoint,omitempty"`
+	TokenEndpointAuthMethod     *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	UserIDAttribute             *ConnectionUserIDAttributeSAML                 `json:"user_id_attribute,omitempty" url:"user_id_attribute,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -29302,6 +29310,27 @@ func (c *ConnectionOptionsSAML) GetSignOutEndpoint() ConnectionSignOutEndpointSA
 		return ""
 	}
 	return *c.SignOutEndpoint
+}
+
+func (c *ConnectionOptionsSAML) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+func (c *ConnectionOptionsSAML) GetTokenEndpointAuthSigningAlg() ConnectionTokenEndpointAuthSigningAlgEnum {
+	if c == nil || c.TokenEndpointAuthSigningAlg == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthSigningAlg
+}
+
+func (c *ConnectionOptionsSAML) GetTokenEndpointJwtcaAudFormat() ConnectionTokenEndpointJwtcaAudFormatEnumOidc {
+	if c == nil || c.TokenEndpointJwtcaAudFormat == nil {
+		return ""
+	}
+	return *c.TokenEndpointJwtcaAudFormat
 }
 
 func (c *ConnectionOptionsSAML) GetUserIDAttribute() ConnectionUserIDAttributeSAML {
@@ -29577,6 +29606,27 @@ func (c *ConnectionOptionsSAML) SetSigningKey(signingKey *ConnectionSigningKeySA
 func (c *ConnectionOptionsSAML) SetSignOutEndpoint(signOutEndpoint *ConnectionSignOutEndpointSAML) {
 	c.SignOutEndpoint = signOutEndpoint
 	c.require(connectionOptionsSAMLFieldSignOutEndpoint)
+}
+
+// SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum) {
+	c.TokenEndpointAuthMethod = tokenEndpointAuthMethod
+	c.require(connectionOptionsSAMLFieldTokenEndpointAuthMethod)
+}
+
+// SetTokenEndpointAuthSigningAlg sets the TokenEndpointAuthSigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetTokenEndpointAuthSigningAlg(tokenEndpointAuthSigningAlg *ConnectionTokenEndpointAuthSigningAlgEnum) {
+	c.TokenEndpointAuthSigningAlg = tokenEndpointAuthSigningAlg
+	c.require(connectionOptionsSAMLFieldTokenEndpointAuthSigningAlg)
+}
+
+// SetTokenEndpointJwtcaAudFormat sets the TokenEndpointJwtcaAudFormat field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsSAML) SetTokenEndpointJwtcaAudFormat(tokenEndpointJwtcaAudFormat *ConnectionTokenEndpointJwtcaAudFormatEnumOidc) {
+	c.TokenEndpointJwtcaAudFormat = tokenEndpointJwtcaAudFormat
+	c.require(connectionOptionsSAMLFieldTokenEndpointJwtcaAudFormat)
 }
 
 // SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
@@ -101499,6 +101549,143 @@ func (i *IntegrationSemVer) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
+var (
+	internalServerErrorBodyFieldMessage    = big.NewInt(1 << 0)
+	internalServerErrorBodyFieldStatusCode = big.NewInt(1 << 1)
+	internalServerErrorBodyFieldError      = big.NewInt(1 << 2)
+)
+
+type InternalServerErrorBody struct {
+	Message    string                       `json:"message" url:"message"`
+	StatusCode string                       `json:"statusCode" url:"statusCode"`
+	Error      InternalServerErrorBodyError `json:"error" url:"error"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (i *InternalServerErrorBody) GetMessage() string {
+	if i == nil {
+		return ""
+	}
+	return i.Message
+}
+
+func (i *InternalServerErrorBody) GetStatusCode() string {
+	if i == nil {
+		return ""
+	}
+	return i.StatusCode
+}
+
+func (i *InternalServerErrorBody) GetError() InternalServerErrorBodyError {
+	if i == nil {
+		return ""
+	}
+	return i.Error
+}
+
+func (i *InternalServerErrorBody) GetExtraProperties() map[string]interface{} {
+	if i == nil {
+		return nil
+	}
+	return i.extraProperties
+}
+
+func (i *InternalServerErrorBody) require(field *big.Int) {
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
+	}
+	next.Or(next, field)
+	i.explicitFields = next
+}
+
+// SetMessage sets the Message field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *InternalServerErrorBody) SetMessage(message string) {
+	i.Message = message
+	i.require(internalServerErrorBodyFieldMessage)
+}
+
+// SetStatusCode sets the StatusCode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *InternalServerErrorBody) SetStatusCode(statusCode string) {
+	i.StatusCode = statusCode
+	i.require(internalServerErrorBodyFieldStatusCode)
+}
+
+// SetError sets the Error field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (i *InternalServerErrorBody) SetError(error_ InternalServerErrorBodyError) {
+	i.Error = error_
+	i.require(internalServerErrorBodyFieldError)
+}
+
+func (i *InternalServerErrorBody) UnmarshalJSON(data []byte) error {
+	type unmarshaler InternalServerErrorBody
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*i = InternalServerErrorBody(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *i)
+	if err != nil {
+		return err
+	}
+	i.extraProperties = extraProperties
+	i.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (i *InternalServerErrorBody) MarshalJSON() ([]byte, error) {
+	type embed InternalServerErrorBody
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*i),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, i.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (i *InternalServerErrorBody) String() string {
+	if i == nil {
+		return "<nil>"
+	}
+	if len(i.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(i.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(i); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", i)
+}
+
+type InternalServerErrorBodyError string
+
+const (
+	InternalServerErrorBodyErrorInternalServerError InternalServerErrorBodyError = "Internal Server Error"
+)
+
+func NewInternalServerErrorBodyErrorFromString(s string) (InternalServerErrorBodyError, error) {
+	switch s {
+	case "Internal Server Error":
+		return InternalServerErrorBodyErrorInternalServerError, nil
+	}
+	var t InternalServerErrorBodyError
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (i InternalServerErrorBodyError) Ptr() *InternalServerErrorBodyError {
+	return &i
+}
+
 // Format of the file. Must be `json` or `csv`.
 type JobFileFormatEnum string
 
@@ -109685,6 +109872,14 @@ const (
 	OauthScopeUpdateOrganizationClients OauthScope = "update:organization_clients"
 	// Delete Organization Client Associations
 	OauthScopeDeleteOrganizationClients OauthScope = "delete:organization_clients"
+	// Create Universal Portals
+	OauthScopeCreatePortals OauthScope = "create:portals"
+	// Read Universal Portals
+	OauthScopeReadPortals OauthScope = "read:portals"
+	// Update Universal Portals
+	OauthScopeUpdatePortals OauthScope = "update:portals"
+	// Delete Universal Portals
+	OauthScopeDeletePortals OauthScope = "delete:portals"
 	// Create Network ACL Keys
 	OauthScopeCreateNetworkACLKeys OauthScope = "create:network_acl_keys"
 	// Read Network ACL Keys
@@ -110199,6 +110394,14 @@ func NewOauthScopeFromString(s string) (OauthScope, error) {
 		return OauthScopeUpdateOrganizationClients, nil
 	case "delete:organization_clients":
 		return OauthScopeDeleteOrganizationClients, nil
+	case "create:portals":
+		return OauthScopeCreatePortals, nil
+	case "read:portals":
+		return OauthScopeReadPortals, nil
+	case "update:portals":
+		return OauthScopeUpdatePortals, nil
+	case "delete:portals":
+		return OauthScopeDeletePortals, nil
 	case "create:network_acl_keys":
 		return OauthScopeCreateNetworkACLKeys, nil
 	case "read:network_acl_keys":

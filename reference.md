@@ -10812,6 +10812,305 @@ client.Organizations.Update(
 </dl>
 </details>
 
+## Portals
+<details><summary><code>client.Portals.List() -> *management.ListPortalsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Portals.List(
+    context.TODO(),
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Create(request) -> *management.Portal</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreatePortalRequestContent{
+    Slug: "slug",
+    Name: "name",
+    Client: &management.PortalClientSecretPostRequest{
+        TokenEndpointAuthMethod: management.PortalClientSecretPostRequestTokenEndpointAuthMethodClientSecretPost,
+        ClientID: "client_id",
+        ClientSecret: "client_secret",
+    },
+}
+client.Portals.Create(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `management.PortalSlug` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `management.PortalName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client:** `*management.PortalClientSecretPostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**navigation:** `*management.PortalNavigation` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pages:** `*management.PortalPagesByType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customCode:** `*management.PortalCustomCode` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Get(ID) -> *management.Portal</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Portals.Get(
+    context.TODO(),
+    "id",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.PortalID` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Portals.Delete(
+    context.TODO(),
+    "id",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.PortalID` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Update(ID, request) -> *management.Portal</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdatePortalRequestContent{}
+client.Portals.Update(
+    context.TODO(),
+    "id",
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.PortalID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `*management.PortalSlug` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*management.PortalName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client:** `*management.PortalClientSecretPostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**navigation:** `*management.PortalNavigationNullable` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pages:** `*management.PortalPagesByTypeNullable` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customCode:** `*management.PortalCustomCodeNullable` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Prompts
 <details><summary><code>client.Prompts.GetSettings() -> *management.GetSettingsResponseContent</code></summary>
 <dl>
@@ -22303,7 +22602,7 @@ client.Connections.Clients.Update(
 <dl>
 <dd>
 
-Gets the connection keys for the Okta or OIDC connection strategy.
+Gets the connection keys for the Okta, OIDC, or SAML (samlp) connection strategy.
 </dd>
 </dl>
 </dd>
@@ -22360,7 +22659,7 @@ client.Connections.Keys.Get(
 <dl>
 <dd>
 
-Provision initial connection keys for Okta or OIDC connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
+Provision initial connection keys for Okta, OIDC, or SAML (samlp) connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
 </dd>
 </dl>
 </dd>
@@ -22427,7 +22726,7 @@ client.Connections.Keys.Create(
 <dl>
 <dd>
 
-Rotates the connection keys for the Okta or OIDC connection strategies.
+Rotates the connection keys for the Okta, OIDC, or SAML (samlp) connection strategies.
 </dd>
 </dl>
 </dd>
