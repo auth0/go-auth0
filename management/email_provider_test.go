@@ -147,6 +147,18 @@ func TestEmailProviderJSON(t *testing.T) {
 			json: `{"name":"ms365","enabled":true,"default_from_address":"accounts@example.com","credentials":{"tenantId":"ms365_tenant_id","clientId":"ms365_client_id","clientSecret":"ms365_client_secret"}}`,
 		},
 		{
+			name: "it can %s a resend email provider",
+			emailProvider: &EmailProvider{
+				Name:               auth0.String("resend"),
+				Enabled:            auth0.Bool(true),
+				DefaultFromAddress: auth0.String("accounts@example.com"),
+				Credentials: &EmailProviderCredentialsResend{
+					APIKey: auth0.String("resend_api_key"),
+				},
+			},
+			json: `{"name":"resend","enabled":true,"default_from_address":"accounts@example.com","credentials":{"api_key":"resend_api_key"}}`,
+		},
+		{
 			name: "it can %s a custom email provider",
 			emailProvider: &EmailProvider{
 				Name:               auth0.String("custom"),
