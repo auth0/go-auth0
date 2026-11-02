@@ -303,6 +303,156 @@ func TestResourceServer_RequireConsentNonRepudiation(t *testing.T) {
 	})
 }
 
+func TestResourceServer_Type(t *testing.T) {
+	newServer := func(identifier string) *ResourceServer {
+		return &ResourceServer{
+			Name:                auth0.Stringf("Test Resource Server (%s)", time.Now().Format(time.StampMilli)),
+			Identifier:          auth0.String(identifier),
+			SigningAlgorithm:    auth0.String("RS256"),
+			TokenLifetime:       auth0.Int(7200),
+			TokenLifetimeForWeb: auth0.Int(3600),
+		}
+	}
+
+	// createTyped creates a typed resource server with a dev.ucp scope and registers its cleanup.
+	createTyped := func(t *testing.T, identifier string) *ResourceServer {
+		t.Helper()
+
+		rs := newServer(identifier)
+		rs.Type = auth0.String(ResourceServerTypeUniversalCommerceProtocolServer)
+		rs.Scopes = &[]ResourceServerScope{
+			{Value: auth0.String("dev.ucp.checkout"), Description: auth0.String("UCP checkout")},
+		}
+
+		require.NoError(t, api.ResourceServer.Create(context.Background(), rs))
+		t.Cleanup(func() {
+			cleanupResourceServer(t, rs.GetID())
+		})
+
+		return rs
+	}
+
+	t.Run("Should_Create_Typed_And_Read_Back", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := createTyped(t, "https://api.example-ucp-typed.com/")
+		assert.Equal(t, ResourceServerTypeUniversalCommerceProtocolServer, rs.GetType())
+
+		actual, err := api.ResourceServer.Read(context.Background(), rs.GetID())
+		require.NoError(t, err)
+		assert.Equal(t, ResourceServerTypeUniversalCommerceProtocolServer, actual.GetType())
+	})
+
+	t.Run("Should_Create_Untyped_With_Empty_Type", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := newServer("https://api.example-ucp-untyped.com/")
+		require.NoError(t, api.ResourceServer.Create(context.Background(), rs))
+		t.Cleanup(func() {
+			cleanupResourceServer(t, rs.GetID())
+		})
+
+		assert.Empty(t, rs.GetType())
+	})
+
+	t.Run("Should_Keep_Type_On_Update_When_Type_Is_Nil", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := createTyped(t, "https://api.example-ucp-keep.com/")
+		rsID := rs.GetID()
+
+		update := &ResourceServer{TokenLifetime: auth0.Int(3600)}
+		require.NoError(t, api.ResourceServer.Update(context.Background(), rsID, update))
+
+		actual, err := api.ResourceServer.Read(context.Background(), rsID)
+		require.NoError(t, err)
+		assert.Equal(t, ResourceServerTypeUniversalCommerceProtocolServer, actual.GetType())
+		assert.Equal(t, 3600, actual.GetTokenLifetime())
+	})
+
+	t.Run("Should_Set_Type_On_Update_Of_Untyped_Server", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := newServer("https://api.example-ucp-set.com/")
+		require.NoError(t, api.ResourceServer.Create(context.Background(), rs))
+		rsID := rs.GetID()
+
+		t.Cleanup(func() {
+			cleanupResourceServer(t, rsID)
+		})
+
+		update := &ResourceServer{Type: auth0.String(ResourceServerTypeUniversalCommerceProtocolServer)}
+		require.NoError(t, api.ResourceServer.Update(context.Background(), rsID, update))
+		assert.Equal(t, ResourceServerTypeUniversalCommerceProtocolServer, update.GetType())
+	})
+
+	t.Run("Should_Reject_Unknown_Type", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := newServer("https://api.example-ucp-invalid.com/")
+		rs.Type = auth0.String("universal_commerce_protocol")
+
+		err := api.ResourceServer.Create(context.Background(), rs)
+		require.Error(t, err)
+
+		var mgmtErr Error
+
+		require.ErrorAs(t, err, &mgmtErr)
+		assert.Equal(t, http.StatusBadRequest, mgmtErr.Status())
+	})
+
+	t.Run("Should_Reject_UCP_Scope_On_Untyped_Server", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := newServer("https://api.example-ucp-scope.com/")
+		rs.Scopes = &[]ResourceServerScope{
+			{Value: auth0.String("dev.ucp.checkout"), Description: auth0.String("UCP checkout")},
+		}
+
+		err := api.ResourceServer.Create(context.Background(), rs)
+		require.Error(t, err)
+
+		var mgmtErr Error
+
+		require.ErrorAs(t, err, &mgmtErr)
+		assert.Equal(t, http.StatusBadRequest, mgmtErr.Status())
+	})
+
+	t.Run("Should_Reject_Second_Typed_Server", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		createTyped(t, "https://api.example-ucp-first.com/")
+
+		second := newServer("https://api.example-ucp-second.com/")
+		second.Type = auth0.String(ResourceServerTypeUniversalCommerceProtocolServer)
+
+		err := api.ResourceServer.Create(context.Background(), second)
+		require.Error(t, err)
+
+		var mgmtErr Error
+
+		require.ErrorAs(t, err, &mgmtErr)
+		assert.Equal(t, http.StatusConflict, mgmtErr.Status())
+	})
+
+	t.Run("Should_Clear_Type_With_Null_Patch", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		rs := createTyped(t, "https://api.example-ucp-clear.com/")
+		rsID := rs.GetID()
+
+		patch := map[string]interface{}{
+			"type":   nil,
+			"scopes": []ResourceServerScope{},
+		}
+		require.NoError(t, api.Request(context.Background(), http.MethodPatch, api.URI("resource-servers", rsID), patch))
+
+		actual, err := api.ResourceServer.Read(context.Background(), rsID)
+		require.NoError(t, err)
+		assert.Empty(t, actual.GetType())
+	})
+}
+
 func givenAResourceServer(t *testing.T) *ResourceServer {
 	t.Helper()
 
