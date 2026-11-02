@@ -7878,6 +7878,13 @@ func TestConnectionOptionsPingFederate_GetAPIEnableUsers(tt *testing.T) {
 	c.GetAPIEnableUsers()
 }
 
+func TestConnectionOptionsPingFederate_GetAssertionDecryptionSettings(tt *testing.T) {
+	c := &ConnectionOptionsPingFederate{}
+	c.GetAssertionDecryptionSettings()
+	c = nil
+	c.GetAssertionDecryptionSettings()
+}
+
 func TestConnectionOptionsPingFederate_GetBindingMethod(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsPingFederate{BindingMethod: &zeroValue}
@@ -8315,6 +8322,13 @@ func TestConnectionOptionsSAML_GetAgentVersion(tt *testing.T) {
 	c.GetAgentVersion()
 }
 
+func TestConnectionOptionsSAML_GetAssertionDecryptionSettings(tt *testing.T) {
+	c := &ConnectionOptionsSAML{}
+	c.GetAssertionDecryptionSettings()
+	c = nil
+	c.GetAssertionDecryptionSettings()
+}
+
 func TestConnectionOptionsSAML_GetBindingMethod(tt *testing.T) {
 	var zeroValue string
 	c := &ConnectionOptionsSAML{BindingMethod: &zeroValue}
@@ -8689,6 +8703,34 @@ func TestConnectionOptionsSAML_GetUserIDAttribute(tt *testing.T) {
 func TestConnectionOptionsSAML_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsSAML{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsSAMLAssertionDecryptionSettings_GetAlgorithmExceptions(tt *testing.T) {
+	var zeroValue []string
+	c := &ConnectionOptionsSAMLAssertionDecryptionSettings{AlgorithmExceptions: &zeroValue}
+	c.GetAlgorithmExceptions()
+	c = &ConnectionOptionsSAMLAssertionDecryptionSettings{}
+	c.GetAlgorithmExceptions()
+	c = nil
+	c.GetAlgorithmExceptions()
+}
+
+func TestConnectionOptionsSAMLAssertionDecryptionSettings_GetAlgorithmProfile(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAMLAssertionDecryptionSettings{AlgorithmProfile: &zeroValue}
+	c.GetAlgorithmProfile()
+	c = &ConnectionOptionsSAMLAssertionDecryptionSettings{}
+	c.GetAlgorithmProfile()
+	c = nil
+	c.GetAlgorithmProfile()
+}
+
+func TestConnectionOptionsSAMLAssertionDecryptionSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsSAMLAssertionDecryptionSettings{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
