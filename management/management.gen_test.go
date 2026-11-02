@@ -10194,6 +10194,24 @@ func TestEmailProviderCredentialsMS365_String(t *testing.T) {
 	}
 }
 
+func TestEmailProviderCredentialsResend_GetAPIKey(tt *testing.T) {
+	var zeroValue string
+	e := &EmailProviderCredentialsResend{APIKey: &zeroValue}
+	e.GetAPIKey()
+	e = &EmailProviderCredentialsResend{}
+	e.GetAPIKey()
+	e = nil
+	e.GetAPIKey()
+}
+
+func TestEmailProviderCredentialsResend_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &EmailProviderCredentialsResend{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
 func TestEmailProviderCredentialsSendGrid_GetAPIKey(tt *testing.T) {
 	var zeroValue string
 	e := &EmailProviderCredentialsSendGrid{APIKey: &zeroValue}

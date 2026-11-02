@@ -8222,6 +8222,19 @@ func (e *EmailProviderCredentialsMS365) String() string {
 }
 
 // GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
+func (e *EmailProviderCredentialsResend) GetAPIKey() string {
+	if e == nil || e.APIKey == nil {
+		return ""
+	}
+	return *e.APIKey
+}
+
+// String returns a string representation of EmailProviderCredentialsResend.
+func (e *EmailProviderCredentialsResend) String() string {
+	return Stringify(e)
+}
+
+// GetAPIKey returns the APIKey field if it's non-nil, zero value otherwise.
 func (e *EmailProviderCredentialsSendGrid) GetAPIKey() string {
 	if e == nil || e.APIKey == nil {
 		return ""
