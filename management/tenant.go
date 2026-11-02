@@ -161,6 +161,16 @@ type Tenant struct {
 	// Whether the tenant supports Client ID Metadata Document (CIMD) for client registration.
 	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty"`
 
+	// Whether the tenant lets applications register themselves at runtime from their
+	// Client ID Metadata Document URL.
+	//
+	// It can only be enabled when ClientIDMetadataDocumentSupported is true, and
+	// ClientIDMetadataDocumentSupported cannot be disabled while this setting is true.
+	// To disable both, disable this setting first or set both to false in the same request.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	ClientIDMetadataDocumentDynamicRegistrationSupported *bool `json:"client_id_metadata_document_dynamic_registration_supported,omitempty"`
+
 	// ResourceParameterProfile determines how the protected resource identity is specified in OAuth
 	// endpoints. Values: "audience" (default) or "compatibility".
 	ResourceParameterProfile *string `json:"resource_parameter_profile,omitempty"`

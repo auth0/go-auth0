@@ -249,6 +249,14 @@ type Client struct {
 	// Values: "admin" (via Management API), "client" (self-registered), or "unknown".
 	ExternalMetadataCreatedBy *string `json:"external_metadata_created_by,omitempty"`
 
+	// ExternalMetadataStatus indicates whether Auth0 can currently resolve the Client ID Metadata
+	// Document, from its cache or from the document URL. Values: "available" or "unavailable".
+	//
+	// This field is read-only and is only present for CIMD-registered clients.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	ExternalMetadataStatus *string `json:"external_metadata_status,omitempty"`
+
 	// JwksURI is the URL for the JSON Web Key Set (JWKS) containing the public keys
 	// used for private_key_jwt authentication. Only present for CIMD clients.
 	JwksURI *string `json:"jwks_uri,omitempty"`
