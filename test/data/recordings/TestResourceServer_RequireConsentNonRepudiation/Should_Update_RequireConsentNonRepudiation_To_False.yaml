@@ -13,13 +13,13 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Resource Server (Oct  1 10:42:25.108)","identifier":"https://api.example-nrep2.com/","signing_alg":"RS256","token_lifetime":7200,"token_lifetime_for_web":3600,"require_consent_non_repudiation":true}
+            {"name":"Test Resource Server (Nov  2 10:59:29.750)","identifier":"https://api.example-nrep2.com/","signing_alg":"RS256","token_lifetime":7200,"token_lifetime_for_web":3600,"require_consent_non_repudiation":true}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.50.0
+                - Go-Auth0/1.51.0
         url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers
         method: POST
       response:
@@ -30,13 +30,13 @@ interactions:
         trailer: {}
         content_length: 433
         uncompressed: false
-        body: '{"id":"6abdebb923c2e908e6299a92","name":"Test Resource Server (Oct  1 10:42:25.108)","identifier":"https://api.example-nrep2.com/","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":true,"subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
+        body: '{"id":"6ae81fb9b49a635133b3c8a0","name":"Test Resource Server (Nov  2 10:59:29.750)","identifier":"https://api.example-nrep2.com/","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":true,"subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 201 Created
         code: 201
-        duration: 316.94575ms
+        duration: 312.228125ms
     - id: 1
       request:
         proto: HTTP/1.1
@@ -49,14 +49,14 @@ interactions:
         remote_addr: ""
         request_uri: ""
         body: |
-            {"name":"Test Resource Server (Oct  1 10:42:25.108)","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":false,"subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}
+            {"name":"Test Resource Server (Nov  2 10:59:29.750)","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":false,"subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}
         form: {}
         headers:
             Content-Type:
                 - application/json
             User-Agent:
-                - Go-Auth0/1.50.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6abdebb923c2e908e6299a92
+                - Go-Auth0/1.51.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6ae81fb9b49a635133b3c8a0
         method: PATCH
       response:
         proto: HTTP/2.0
@@ -66,13 +66,13 @@ interactions:
         trailer: {}
         content_length: -1
         uncompressed: true
-        body: '{"id":"6abdebb923c2e908e6299a92","name":"Test Resource Server (Oct  1 10:42:25.108)","identifier":"https://api.example-nrep2.com/","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":false,"subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
+        body: '{"id":"6ae81fb9b49a635133b3c8a0","name":"Test Resource Server (Nov  2 10:59:29.750)","identifier":"https://api.example-nrep2.com/","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":false,"subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
         headers:
             Content-Type:
                 - application/json; charset=utf-8
         status: 200 OK
         code: 200
-        duration: 491.652541ms
+        duration: 293.045458ms
     - id: 2
       request:
         proto: HTTP/1.1
@@ -88,8 +88,8 @@ interactions:
         form: {}
         headers:
             User-Agent:
-                - Go-Auth0/1.50.0
-        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6abdebb923c2e908e6299a92
+                - Go-Auth0/1.51.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6ae81fb9b49a635133b3c8a0
         method: DELETE
       response:
         proto: HTTP/2.0
@@ -105,4 +105,4 @@ interactions:
                 - application/json; charset=utf-8
         status: 204 No Content
         code: 204
-        duration: 336.142667ms
+        duration: 296.413084ms
