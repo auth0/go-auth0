@@ -2,6 +2,13 @@ package management
 
 import "context"
 
+const (
+	// ResourceServerTypeUniversalCommerceProtocolServer is the type of a resource
+	// server acting as a Universal Commerce Protocol (UCP) server.
+	//
+	ResourceServerTypeUniversalCommerceProtocolServer = "universal_commerce_protocol_server"
+)
+
 // ResourceServer is an entity that represents an external resource, capable of
 // accepting and responding to protected resource requests made by applications.
 type ResourceServer struct {
@@ -103,6 +110,27 @@ type ResourceServer struct {
 	//
 	// This is an Early Access feature and requires it to be enabled for your tenant.
 	RequireConsentNonRepudiation *bool `json:"require_consent_non_repudiation,omitempty"`
+
+	// Type is the type of the resource server. The only supported value is
+	// [ResourceServerTypeUniversalCommerceProtocolServer].
+	//
+	// Only one typed resource server is allowed per tenant. Scopes starting with
+	// "dev.ucp" are only accepted on a typed resource server. When omitted on update,
+	// the existing type is kept; the empty string is invalid and is never sent.
+	//
+	// To unset the type (set to null), send a PATCH request with a custom body, after
+	// removing any "dev.ucp" scopes:
+	//
+	// PATCH /api/v2/resource-servers/{id}
+	//
+	// {
+	//   "type": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	//
+	Type *string `json:"type,omitempty"`
 
 	// The list of authorization details for the resource server.
 	//
