@@ -540,11 +540,41 @@ type ConnectionOptions struct {
 
 	// The action to be triggered for Universal Custom Password
 	CustomPasswordHash *CustomPasswordHash `json:"custom_password_hash,omitempty"`
+
+	// OTPSettings configures one-time password settings per delivery channel.
+	// This is an Early Access feature for auth0 (database) strategy connections.
+	// A PATCH replaces all connection options, so include every channel and field
+	// to retain; omitting OTPSettings from patched options removes it.
+	OTPSettings *ConnectionOptionsOTPSettings `json:"otp_settings,omitempty"`
 }
 
 // CustomPasswordHash defines the structure of custom password hash options.
 type CustomPasswordHash struct {
 	ActionID *string `json:"action_id,omitempty"`
+}
+
+// ConnectionOptionsOTPSettings configures one-time password settings for a
+// database (auth0 strategy) connection, per delivery channel. Early Access only.
+// Unlike ConnectionOptionsOTP, this configures database email and phone channels,
+// not the totp option on email or SMS strategy connections.
+type ConnectionOptionsOTPSettings struct {
+	// Email holds the OTP settings for the email delivery channel.
+	Email *ConnectionOptionsOTPChannelSettings `json:"email,omitempty"`
+
+	// Phone holds the OTP settings for the phone delivery channel.
+	Phone *ConnectionOptionsOTPChannelSettings `json:"phone,omitempty"`
+}
+
+// ConnectionOptionsOTPChannelSettings configures the one-time password settings
+// for a single delivery channel of a ConnectionOptionsOTPSettings. Early Access only.
+type ConnectionOptionsOTPChannelSettings struct {
+	// OTPLength is the number of digits in the generated one-time password
+	// (min 4, max 48; defaults to 6 when unset).
+	OTPLength *int `json:"otp_length,omitempty"`
+
+	// OTPExpiry is the number of seconds before the one-time password expires
+	// (min 60, max 86400; defaults to 900 when unset).
+	OTPExpiry *int `json:"otp_expiry,omitempty"`
 }
 
 // ConnectionOptionsAttributes defines the structure for attribute configurations.
