@@ -12339,6 +12339,14 @@ func (r *ResourceServer) GetTokenLifetimeForWeb() int {
 	return *r.TokenLifetimeForWeb
 }
 
+// GetType returns the Type field if it's non-nil, zero value otherwise.
+func (r *ResourceServer) GetType() string {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
+}
+
 // GetVerificationLocation returns the VerificationLocation field if it's non-nil, zero value otherwise.
 func (r *ResourceServer) GetVerificationLocation() string {
 	if r == nil || r.VerificationLocation == nil {

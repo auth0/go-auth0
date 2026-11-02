@@ -15436,6 +15436,16 @@ func TestResourceServer_GetTokenLifetimeForWeb(tt *testing.T) {
 	r.GetTokenLifetimeForWeb()
 }
 
+func TestResourceServer_GetType(tt *testing.T) {
+	var zeroValue string
+	r := &ResourceServer{Type: &zeroValue}
+	r.GetType()
+	r = &ResourceServer{}
+	r.GetType()
+	r = nil
+	r.GetType()
+}
+
 func TestResourceServer_GetVerificationLocation(tt *testing.T) {
 	var zeroValue string
 	r := &ResourceServer{VerificationLocation: &zeroValue}
