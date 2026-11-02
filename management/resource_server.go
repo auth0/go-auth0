@@ -6,8 +6,6 @@ const (
 	// ResourceServerTypeUniversalCommerceProtocolServer is the type of a resource
 	// server acting as a Universal Commerce Protocol (UCP) server.
 	//
-	// Note that this differs from the value shown in the UCP specification
-	// ("universal_commerce_protocol"), which the API rejects.
 	ResourceServerTypeUniversalCommerceProtocolServer = "universal_commerce_protocol_server"
 )
 
@@ -132,8 +130,6 @@ type ResourceServer struct {
 	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	//
-	// This is an Early Access feature and requires the "universal_commerce_protocol"
-	// flag to be enabled for your tenant.
 	Type *string `json:"type,omitempty"`
 
 	// The list of authorization details for the resource server.
