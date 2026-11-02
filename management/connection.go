@@ -1732,6 +1732,9 @@ type ConnectionOptionsPingFederate struct {
 	AgentMode                *bool                               `json:"agentMode,omitempty"`
 	ExtGroups                *bool                               `json:"ext_groups,omitempty" scope:"ext_groups"`
 	ExtProfile               *bool                               `json:"ext_profile,omitempty" scope:"ext_profile"`
+
+	// AssertionDecryptionSettings configures the algorithms allowed to decrypt SAML assertions.
+	AssertionDecryptionSettings *ConnectionOptionsSAMLAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsPingFederate.
@@ -1795,6 +1798,9 @@ type ConnectionOptionsSAML struct {
 	DiscoveryURL *string `json:"discovery_url,omitempty"`
 	// OIDCMetadata is the OIDC discovery document. Auto-populated from DiscoveryURL when absent, or preserved as uploaded. Honoured for SAML connections acting as a Cross-App Access resource application.
 	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
+
+	// AssertionDecryptionSettings configures the algorithms allowed to decrypt SAML assertions.
+	AssertionDecryptionSettings *ConnectionOptionsSAMLAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty"`
 }
 
 // ConnectionOptionsSAMLIdpInitiated is used to configure the
@@ -1821,6 +1827,16 @@ type ConnectionOptionsSAMLSigningKey struct {
 type ConnectionOptionsSAMLDecryptionKey struct {
 	Key  *string `json:"key,omitempty"`
 	Cert *string `json:"cert,omitempty"`
+}
+
+// ConnectionOptionsSAMLAssertionDecryptionSettings is used to configure the
+// AssertionDecryptionSettings on a ConnectionOptionsSAML or ConnectionOptionsPingFederate.
+type ConnectionOptionsSAMLAssertionDecryptionSettings struct {
+	// AlgorithmProfile is the algorithm profile used to decrypt SAML assertions. Possible values: "v2026-1".
+	AlgorithmProfile *string `json:"algorithm_profile,omitempty"`
+
+	// AlgorithmExceptions is a list of insecure algorithms to allow, in addition to the profile, for SAML assertion decryption.
+	AlgorithmExceptions *[]string `json:"algorithm_exceptions,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsSAML.
