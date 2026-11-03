@@ -2221,6 +2221,16 @@ func TestClient_GetAddons(tt *testing.T) {
 	c.GetAddons()
 }
 
+func TestClient_GetAgentID(tt *testing.T) {
+	var zeroValue string
+	c := &Client{AgentID: &zeroValue}
+	c.GetAgentID()
+	c = &Client{}
+	c.GetAgentID()
+	c = nil
+	c.GetAgentID()
+}
+
 func TestClient_GetAllowedClients(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{AllowedClients: &zeroValue}

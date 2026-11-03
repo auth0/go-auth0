@@ -1742,6 +1742,14 @@ func (c *Client) GetAddons() *ClientAddons {
 	return c.Addons
 }
 
+// GetAgentID returns the AgentID field if it's non-nil, zero value otherwise.
+func (c *Client) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
+}
+
 // GetAllowedClients returns the AllowedClients field if it's non-nil, zero value otherwise.
 func (c *Client) GetAllowedClients() []string {
 	if c == nil || c.AllowedClients == nil {

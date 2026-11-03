@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+**Added**
+- feat: add `AgentID` field to `Client`, linking a client to an agent (Early Access)
+
 ## [v1.51.0](https://github.com/auth0/go-auth0/tree/v1.51.0) (2026-10-07)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.50.0...v1.51.0)
 
