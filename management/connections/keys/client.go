@@ -34,7 +34,7 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Gets the connection keys for the Okta or OIDC connection strategy.
+// Gets the connection keys for the Okta, OIDC, or SAML (samlp) connection strategy.
 //
 // Example:
 //
@@ -59,7 +59,7 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Provision initial connection keys for Okta or OIDC connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
+// Provision initial connection keys for Okta, OIDC, or SAML (samlp) connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
 //
 // Example:
 //
@@ -88,7 +88,7 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Rotates the connection keys for the Okta or OIDC connection strategies.
+// Rotates the connection keys for the Okta, OIDC, or SAML (samlp) connection strategies.
 //
 // Example:
 //

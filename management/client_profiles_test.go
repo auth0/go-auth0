@@ -680,6 +680,14 @@ func TestSettersClientProfileClientConfiguration(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOidcSupport", func(t *testing.T) {
+		obj := &ClientProfileClientConfiguration{}
+		var fernTestValueOidcSupport *ClientProfileClientConfigurationOidcSupport
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+		assert.Equal(t, fernTestValueOidcSupport, obj.OidcSupport)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersClientProfileClientConfiguration(t *testing.T) {
@@ -853,6 +861,40 @@ func TestGettersClientProfileClientConfiguration(t *testing.T) {
 		_ = obj.GetRequireProofOfPossession() // Should return zero value
 	})
 
+	t.Run("GetOidcSupport", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfiguration{}
+		var value ClientProfileClientConfigurationOidcSupport
+		obj.OidcSupport = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOidcSupport(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOidcSupport_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfiguration{}
+		obj.OidcSupport = nil
+		var expectedZero ClientProfileClientConfigurationOidcSupport
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOidcSupport(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOidcSupport_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOidcSupport() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitClientProfileClientConfiguration(t *testing.T) {
@@ -988,6 +1030,334 @@ func TestSettersMarkExplicitClientProfileClientConfiguration(t *testing.T) {
 
 		// Act
 		obj.SetRequireProofOfPossession(fernTestValueRequireProofOfPossession)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOidcSupport_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfiguration{}
+		var fernTestValueOidcSupport *ClientProfileClientConfigurationOidcSupport
+
+		// Act
+		obj.SetOidcSupport(fernTestValueOidcSupport)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersClientProfileClientConfigurationOidcSupport(t *testing.T) {
+	t.Run("SetDefaultValue", func(t *testing.T) {
+		obj := &ClientProfileClientConfigurationOidcSupport{}
+		var fernTestValueDefaultValue *ClientProfileClientConfigurationOidcSupportDefaultValue
+		obj.SetDefaultValue(fernTestValueDefaultValue)
+		assert.Equal(t, fernTestValueDefaultValue, obj.DefaultValue)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersClientProfileClientConfigurationOidcSupport(t *testing.T) {
+	t.Run("GetDefaultValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupport{}
+		var expected *ClientProfileClientConfigurationOidcSupportDefaultValue
+		obj.DefaultValue = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDefaultValue(), "getter should return the property value")
+	})
+
+	t.Run("GetDefaultValue_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupport{}
+		obj.DefaultValue = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetDefaultValue(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetDefaultValue_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupport
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultValue() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitClientProfileClientConfigurationOidcSupport(t *testing.T) {
+	t.Run("SetDefaultValue_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupport{}
+		var fernTestValueDefaultValue *ClientProfileClientConfigurationOidcSupportDefaultValue
+
+		// Act
+		obj.SetDefaultValue(fernTestValueDefaultValue)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersClientProfileClientConfigurationOidcSupportDefaultValue(t *testing.T) {
+	t.Run("SetIsAllowed", func(t *testing.T) {
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var fernTestValueIsAllowed bool
+		obj.SetIsAllowed(fernTestValueIsAllowed)
+		assert.Equal(t, fernTestValueIsAllowed, obj.IsAllowed)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowAllScopes", func(t *testing.T) {
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var fernTestValueAllowAllScopes *bool
+		obj.SetAllowAllScopes(fernTestValueAllowAllScopes)
+		assert.Equal(t, fernTestValueAllowAllScopes, obj.AllowAllScopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowedScopes", func(t *testing.T) {
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var fernTestValueAllowedScopes []ClientProfileClientConfigurationOidcSupportAllowedScopesEnum
+		obj.SetAllowedScopes(fernTestValueAllowedScopes)
+		assert.Equal(t, fernTestValueAllowedScopes, obj.AllowedScopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersClientProfileClientConfigurationOidcSupportDefaultValue(t *testing.T) {
+	t.Run("GetIsAllowed", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var expected bool
+		obj.IsAllowed = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetIsAllowed(), "getter should return the property value")
+	})
+
+	t.Run("GetIsAllowed_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupportDefaultValue
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetIsAllowed() // Should return zero value
+	})
+
+	t.Run("GetAllowAllScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var value bool
+		obj.AllowAllScopes = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowAllScopes(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowAllScopes_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		obj.AllowAllScopes = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowAllScopes(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowAllScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupportDefaultValue
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowAllScopes() // Should return zero value
+	})
+
+	t.Run("GetAllowedScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var expected []ClientProfileClientConfigurationOidcSupportAllowedScopesEnum
+		obj.AllowedScopes = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAllowedScopes(), "getter should return the property value")
+	})
+
+	t.Run("GetAllowedScopes_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		obj.AllowedScopes = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetAllowedScopes(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetAllowedScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupportDefaultValue
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowedScopes() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitClientProfileClientConfigurationOidcSupportDefaultValue(t *testing.T) {
+	t.Run("SetIsAllowed_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var fernTestValueIsAllowed bool
+
+		// Act
+		obj.SetIsAllowed(fernTestValueIsAllowed)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowAllScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var fernTestValueAllowAllScopes *bool
+
+		// Act
+		obj.SetAllowAllScopes(fernTestValueAllowAllScopes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowedScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		var fernTestValueAllowedScopes []ClientProfileClientConfigurationOidcSupportAllowedScopesEnum
+
+		// Act
+		obj.SetAllowedScopes(fernTestValueAllowedScopes)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2067,6 +2437,72 @@ func TestJSONMarshalingClientProfileClientConfiguration(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingClientProfileClientConfigurationOidcSupport(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupport{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ClientProfileClientConfigurationOidcSupport
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientProfileClientConfigurationOidcSupport
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientProfileClientConfigurationOidcSupport
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingClientProfileClientConfigurationOidcSupportDefaultValue(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ClientProfileClientConfigurationOidcSupportDefaultValue
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientProfileClientConfigurationOidcSupportDefaultValue
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ClientProfileClientConfigurationOidcSupportDefaultValue
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingClientProfileClientConfigurationOrganizationDiscoveryMethods(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -2455,6 +2891,38 @@ func TestStringClientProfileClientConfiguration(t *testing.T) {
 	})
 }
 
+func TestStringClientProfileClientConfigurationOidcSupport(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientProfileClientConfigurationOidcSupport{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupport
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringClientProfileClientConfigurationOidcSupportDefaultValue(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupportDefaultValue
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringClientProfileClientConfigurationOrganizationDiscoveryMethods(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -2643,6 +3111,49 @@ func TestEnumClientProfileApplyPolicyExternalMetadataTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumClientProfileClientConfigurationOidcSupportAllowedScopesEnum(t *testing.T) {
+	t.Run("NewFromString_profile", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientProfileClientConfigurationOidcSupportAllowedScopesEnumFromString("profile")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientProfileClientConfigurationOidcSupportAllowedScopesEnum("profile"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_email", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientProfileClientConfigurationOidcSupportAllowedScopesEnumFromString("email")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientProfileClientConfigurationOidcSupportAllowedScopesEnum("email"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_address", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientProfileClientConfigurationOidcSupportAllowedScopesEnumFromString("address")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientProfileClientConfigurationOidcSupportAllowedScopesEnum("address"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_phone", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientProfileClientConfigurationOidcSupportAllowedScopesEnumFromString("phone")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientProfileClientConfigurationOidcSupportAllowedScopesEnum("phone"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewClientProfileClientConfigurationOidcSupportAllowedScopesEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewClientProfileClientConfigurationOidcSupportAllowedScopesEnumFromString("profile")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumClientProfileClientConfigurationOrganizationDiscoveryMethodEnum(t *testing.T) {
 	t.Run("NewFromString_email", func(t *testing.T) {
 		t.Parallel()
@@ -2808,6 +3319,52 @@ func TestExtraPropertiesClientProfileClientConfiguration(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ClientProfileClientConfiguration
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesClientProfileClientConfigurationOidcSupport(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientProfileClientConfigurationOidcSupport{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupport
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesClientProfileClientConfigurationOidcSupportDefaultValue(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ClientProfileClientConfigurationOidcSupportDefaultValue{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientProfileClientConfigurationOidcSupportDefaultValue
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

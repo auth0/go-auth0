@@ -463,7 +463,7 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
-// Retrieve all consent signing keys registered for a user. Returns an empty array when the user has no keys registered.
+// Retrieve all consent signing keys registered for a user. Returns an empty `keys` array when the user has no keys registered.
 //
 // Example:
 //
@@ -476,7 +476,7 @@ func (c *Client) ListConsentSigningKeys(
 	// The ID of the user.
 	id string,
 	opts ...option.RequestOption,
-) (management.ListUserConsentSigningKeysResponseContent, error) {
+) (*management.ListUserConsentSigningKeysResponseContent, error) {
 	response, err := c.WithRawResponse.ListConsentSigningKeys(
 		ctx,
 		id,

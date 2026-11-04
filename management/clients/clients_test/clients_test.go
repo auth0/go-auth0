@@ -116,6 +116,9 @@ func TestClientsListWithWireMock(
 		ExternalClientID: management.String(
 			"external_client_id",
 		),
+		AgentID: management.String(
+			"agent_id",
+		),
 		Q: management.String(
 			"q",
 		),
@@ -129,7 +132,7 @@ func TestClientsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestClientsListWithWireMock", "GET", "/clients", map[string]interface{}{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "is_global": "true", "is_first_party": "true", "app_type": "app_type", "external_client_id": "external_client_id", "q": "q"}, 1)
+	VerifyRequestCount(t, "TestClientsListWithWireMock", "GET", "/clients", map[string]interface{}{"fields": "fields", "include_fields": "true", "page": "1", "per_page": "1", "include_totals": "true", "is_global": "true", "is_first_party": "true", "app_type": "app_type", "external_client_id": "external_client_id", "agent_id": "agent_id", "q": "q"}, 1)
 }
 
 func TestClientsCreateWithWireMock(

@@ -2125,6 +2125,9 @@ request := &management.ListClientsRequestParameters{
     ExternalClientID: management.String(
         "external_client_id",
     ),
+    AgentID: management.String(
+        "agent_id",
+    ),
     Q: management.String(
         "q",
     ),
@@ -2212,6 +2215,14 @@ client.Clients.List(
 <dd>
 
 **externalClientID:** `*string` — Optional filter by the <a href="https://drafts.oauth.net/draft-ietf-oauth-client-id-metadata-document/draft-ietf-oauth-client-id-metadata-document.html">Client ID Metadata Document</a> URI for CIMD-registered clients.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agentID:** `*string` — Optional filter by the agent associated with the client.<br /><b>Additional Restrictions</b>:<br /><ul><li>Cannot be used in combination with other filters</li><li>Only <i>fields</i>, <i>include_fields</i>, <i>page</i>, <i>per_page</i>, and <i>include_totals</i> are supported alongside it</li><li>Checkpoint pagination (<i>from</i>, <i>take</i>) is not supported</li></ul>
     
 </dd>
 </dl>
@@ -2761,6 +2772,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **asyncApprovalNotificationChannels:** `*management.ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agentID:** `*string` — ID of the agent to associate with this client.
     
 </dd>
 </dl>
@@ -3743,6 +3762,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 <dd>
 
 **redirectionPolicy:** `*management.ClientRedirectionPolicyEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agentID:** `*string` — ID of the agent to associate with this client, or null to remove the association.
     
 </dd>
 </dl>
@@ -10812,6 +10839,305 @@ client.Organizations.Update(
 </dl>
 </details>
 
+## Portals
+<details><summary><code>client.Portals.List() -> *management.ListPortalsResponseContent</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Portals.List(
+    context.TODO(),
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Create(request) -> *management.Portal</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.CreatePortalRequestContent{
+    Slug: "slug",
+    Name: "name",
+    Client: &management.PortalClientSecretPostRequest{
+        TokenEndpointAuthMethod: management.PortalClientSecretPostRequestTokenEndpointAuthMethodClientSecretPost,
+        ClientID: "client_id",
+        ClientSecret: "client_secret",
+    },
+}
+client.Portals.Create(
+    context.TODO(),
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**slug:** `management.PortalSlug` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `management.PortalName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client:** `*management.PortalClientSecretPostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**navigation:** `*management.PortalNavigation` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pages:** `*management.PortalPagesByType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customCode:** `*management.PortalCustomCode` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Get(ID) -> *management.Portal</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Portals.Get(
+    context.TODO(),
+    "id",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.PortalID` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Delete(ID) -> error</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+client.Portals.Delete(
+    context.TODO(),
+    "id",
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.PortalID` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.Portals.Update(ID, request) -> *management.Portal</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```go
+request := &management.UpdatePortalRequestContent{}
+client.Portals.Update(
+    context.TODO(),
+    "id",
+    request,
+)
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**id:** `management.PortalID` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `*management.PortalSlug` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**name:** `*management.PortalName` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**client:** `*management.PortalClientSecretPostRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**navigation:** `*management.PortalNavigationNullable` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**pages:** `*management.PortalPagesByTypeNullable` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**customCode:** `*management.PortalCustomCodeNullable` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Prompts
 <details><summary><code>client.Prompts.GetSettings() -> *management.GetSettingsResponseContent</code></summary>
 <dl>
@@ -11943,6 +12269,14 @@ client.ResourceServers.Create(
 <dl>
 <dd>
 
+**agentSubjectClaims:** `*management.ResourceServerAgentSubjectClaimsSchemaEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **type_:** `*management.ResourceServerTypeEnum` 
     
 </dd>
@@ -12418,6 +12752,14 @@ client.ResourceServers.Update(
 <dd>
 
 **authorizationPolicy:** `*management.ResourceServerAuthorizationPolicy` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**agentSubjectClaims:** `*management.ResourceServerAgentSubjectClaimsSchemaEnum` 
     
 </dd>
 </dl>
@@ -16515,7 +16857,7 @@ client.Users.Update(
 </dl>
 </details>
 
-<details><summary><code>client.Users.ListConsentSigningKeys(ID) -> management.ListUserConsentSigningKeysResponseContent</code></summary>
+<details><summary><code>client.Users.ListConsentSigningKeys(ID) -> *management.ListUserConsentSigningKeysResponseContent</code></summary>
 <dl>
 <dd>
 
@@ -16527,7 +16869,7 @@ client.Users.Update(
 <dl>
 <dd>
 
-Retrieve all consent signing keys registered for a user. Returns an empty array when the user has no keys registered.
+Retrieve all consent signing keys registered for a user. Returns an empty `keys` array when the user has no keys registered.
 </dd>
 </dl>
 </dd>
@@ -22303,7 +22645,7 @@ client.Connections.Clients.Update(
 <dl>
 <dd>
 
-Gets the connection keys for the Okta or OIDC connection strategy.
+Gets the connection keys for the Okta, OIDC, or SAML (samlp) connection strategy.
 </dd>
 </dl>
 </dd>
@@ -22360,7 +22702,7 @@ client.Connections.Keys.Get(
 <dl>
 <dd>
 
-Provision initial connection keys for Okta or OIDC connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
+Provision initial connection keys for Okta, OIDC, or SAML (samlp) connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
 </dd>
 </dl>
 </dd>
@@ -22427,7 +22769,7 @@ client.Connections.Keys.Create(
 <dl>
 <dd>
 
-Rotates the connection keys for the Okta or OIDC connection strategies.
+Rotates the connection keys for the Okta, OIDC, or SAML (samlp) connection strategies.
 </dd>
 </dl>
 </dd>

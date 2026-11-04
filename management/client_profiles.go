@@ -367,6 +367,7 @@ var (
 	clientProfileClientConfigurationFieldOrganizationRequireBehavior  = big.NewInt(1 << 2)
 	clientProfileClientConfigurationFieldOrganizationDiscoveryMethods = big.NewInt(1 << 3)
 	clientProfileClientConfigurationFieldRequireProofOfPossession     = big.NewInt(1 << 4)
+	clientProfileClientConfigurationFieldOidcSupport                  = big.NewInt(1 << 5)
 )
 
 // Runtime policy applied to matched clients. Omitted fields fall back to each client's own setting.
@@ -376,6 +377,7 @@ type ClientProfileClientConfiguration struct {
 	OrganizationRequireBehavior  *ClientProfileClientConfigurationOrganizationRequireBehavior  `json:"organization_require_behavior,omitempty" url:"organization_require_behavior,omitempty"`
 	OrganizationDiscoveryMethods *ClientProfileClientConfigurationOrganizationDiscoveryMethods `json:"organization_discovery_methods,omitempty" url:"organization_discovery_methods,omitempty"`
 	RequireProofOfPossession     *ClientProfileClientConfigurationRequireProofOfPossession     `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	OidcSupport                  *ClientProfileClientConfigurationOidcSupport                  `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -417,6 +419,13 @@ func (c *ClientProfileClientConfiguration) GetRequireProofOfPossession() ClientP
 		return ClientProfileClientConfigurationRequireProofOfPossession{}
 	}
 	return *c.RequireProofOfPossession
+}
+
+func (c *ClientProfileClientConfiguration) GetOidcSupport() ClientProfileClientConfigurationOidcSupport {
+	if c == nil || c.OidcSupport == nil {
+		return ClientProfileClientConfigurationOidcSupport{}
+	}
+	return *c.OidcSupport
 }
 
 func (c *ClientProfileClientConfiguration) GetExtraProperties() map[string]interface{} {
@@ -470,6 +479,13 @@ func (c *ClientProfileClientConfiguration) SetRequireProofOfPossession(requirePr
 	c.require(clientProfileClientConfigurationFieldRequireProofOfPossession)
 }
 
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientProfileClientConfiguration) SetOidcSupport(oidcSupport *ClientProfileClientConfigurationOidcSupport) {
+	c.OidcSupport = oidcSupport
+	c.require(clientProfileClientConfigurationFieldOidcSupport)
+}
+
 func (c *ClientProfileClientConfiguration) UnmarshalJSON(data []byte) error {
 	type unmarshaler ClientProfileClientConfiguration
 	var value unmarshaler
@@ -498,6 +514,244 @@ func (c *ClientProfileClientConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientProfileClientConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	clientProfileClientConfigurationOidcSupportFieldDefaultValue = big.NewInt(1 << 0)
+)
+
+// Default OIDC support applied to matched clients.
+type ClientProfileClientConfigurationOidcSupport struct {
+	DefaultValue *ClientProfileClientConfigurationOidcSupportDefaultValue `json:"default_value" url:"default_value"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientProfileClientConfigurationOidcSupport) GetDefaultValue() *ClientProfileClientConfigurationOidcSupportDefaultValue {
+	if c == nil {
+		return nil
+	}
+	return c.DefaultValue
+}
+
+func (c *ClientProfileClientConfigurationOidcSupport) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientProfileClientConfigurationOidcSupport) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientProfileClientConfigurationOidcSupport) SetDefaultValue(defaultValue *ClientProfileClientConfigurationOidcSupportDefaultValue) {
+	c.DefaultValue = defaultValue
+	c.require(clientProfileClientConfigurationOidcSupportFieldDefaultValue)
+}
+
+func (c *ClientProfileClientConfigurationOidcSupport) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientProfileClientConfigurationOidcSupport
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientProfileClientConfigurationOidcSupport(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientProfileClientConfigurationOidcSupport) MarshalJSON() ([]byte, error) {
+	type embed ClientProfileClientConfigurationOidcSupport
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientProfileClientConfigurationOidcSupport) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Optional OIDC scope that matched clients may be granted.
+type ClientProfileClientConfigurationOidcSupportAllowedScopesEnum string
+
+const (
+	ClientProfileClientConfigurationOidcSupportAllowedScopesEnumProfile ClientProfileClientConfigurationOidcSupportAllowedScopesEnum = "profile"
+	ClientProfileClientConfigurationOidcSupportAllowedScopesEnumEmail   ClientProfileClientConfigurationOidcSupportAllowedScopesEnum = "email"
+	ClientProfileClientConfigurationOidcSupportAllowedScopesEnumAddress ClientProfileClientConfigurationOidcSupportAllowedScopesEnum = "address"
+	ClientProfileClientConfigurationOidcSupportAllowedScopesEnumPhone   ClientProfileClientConfigurationOidcSupportAllowedScopesEnum = "phone"
+)
+
+func NewClientProfileClientConfigurationOidcSupportAllowedScopesEnumFromString(s string) (ClientProfileClientConfigurationOidcSupportAllowedScopesEnum, error) {
+	switch s {
+	case "profile":
+		return ClientProfileClientConfigurationOidcSupportAllowedScopesEnumProfile, nil
+	case "email":
+		return ClientProfileClientConfigurationOidcSupportAllowedScopesEnumEmail, nil
+	case "address":
+		return ClientProfileClientConfigurationOidcSupportAllowedScopesEnumAddress, nil
+	case "phone":
+		return ClientProfileClientConfigurationOidcSupportAllowedScopesEnumPhone, nil
+	}
+	var t ClientProfileClientConfigurationOidcSupportAllowedScopesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientProfileClientConfigurationOidcSupportAllowedScopesEnum) Ptr() *ClientProfileClientConfigurationOidcSupportAllowedScopesEnum {
+	return &c
+}
+
+var (
+	clientProfileClientConfigurationOidcSupportDefaultValueFieldIsAllowed      = big.NewInt(1 << 0)
+	clientProfileClientConfigurationOidcSupportDefaultValueFieldAllowAllScopes = big.NewInt(1 << 1)
+	clientProfileClientConfigurationOidcSupportDefaultValueFieldAllowedScopes  = big.NewInt(1 << 2)
+)
+
+// OIDC support settings applied to matched clients.
+type ClientProfileClientConfigurationOidcSupportDefaultValue struct {
+	// Whether matched clients may use OIDC.
+	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
+	// Whether matched clients may request all optional OIDC scopes. Cannot be combined with allowed_scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	// Optional OIDC scopes that matched clients may request.
+	AllowedScopes []ClientProfileClientConfigurationOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) GetIsAllowed() bool {
+	if c == nil {
+		return false
+	}
+	return c.IsAllowed
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) GetAllowedScopes() []ClientProfileClientConfigurationOidcSupportAllowedScopesEnum {
+	if c == nil || c.AllowedScopes == nil {
+		return nil
+	}
+	return c.AllowedScopes
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetIsAllowed sets the IsAllowed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) SetIsAllowed(isAllowed bool) {
+	c.IsAllowed = isAllowed
+	c.require(clientProfileClientConfigurationOidcSupportDefaultValueFieldIsAllowed)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(clientProfileClientConfigurationOidcSupportDefaultValueFieldAllowAllScopes)
+}
+
+// SetAllowedScopes sets the AllowedScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) SetAllowedScopes(allowedScopes []ClientProfileClientConfigurationOidcSupportAllowedScopesEnum) {
+	c.AllowedScopes = allowedScopes
+	c.require(clientProfileClientConfigurationOidcSupportDefaultValueFieldAllowedScopes)
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientProfileClientConfigurationOidcSupportDefaultValue
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientProfileClientConfigurationOidcSupportDefaultValue(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) MarshalJSON() ([]byte, error) {
+	type embed ClientProfileClientConfigurationOidcSupportDefaultValue
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) String() string {
 	if c == nil {
 		return "<nil>"
 	}

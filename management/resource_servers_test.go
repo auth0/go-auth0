@@ -210,6 +210,14 @@ func TestSettersCreateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAgentSubjectClaims", func(t *testing.T) {
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+		assert.Equal(t, fernTestValueAgentSubjectClaims, obj.AgentSubjectClaims)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetType", func(t *testing.T) {
 		obj := &CreateResourceServerResponseContent{}
 		var fernTestValueType *ResourceServerTypeEnum
@@ -1069,6 +1077,40 @@ func TestGettersCreateResourceServerResponseContent(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetAgentSubjectClaims", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var value ResourceServerAgentSubjectClaimsResponseEnum
+		obj.AgentSubjectClaims = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAgentSubjectClaims(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		obj.AgentSubjectClaims = nil
+		var expectedZero ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAgentSubjectClaims(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAgentSubjectClaims() // Should return zero value
+	})
+
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1881,6 +1923,37 @@ func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAgentSubjectClaims_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetType_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -2112,6 +2185,14 @@ func TestSettersGetResourceServerResponseContent(t *testing.T) {
 		var fernTestValueClientID *string
 		obj.SetClientID(fernTestValueClientID)
 		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAgentSubjectClaims", func(t *testing.T) {
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+		assert.Equal(t, fernTestValueAgentSubjectClaims, obj.AgentSubjectClaims)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2974,6 +3055,40 @@ func TestGettersGetResourceServerResponseContent(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetAgentSubjectClaims", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var value ResourceServerAgentSubjectClaimsResponseEnum
+		obj.AgentSubjectClaims = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAgentSubjectClaims(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		obj.AgentSubjectClaims = nil
+		var expectedZero ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAgentSubjectClaims(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAgentSubjectClaims() // Should return zero value
+	})
+
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3786,6 +3901,37 @@ func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAgentSubjectClaims_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetType_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -4317,6 +4463,14 @@ func TestSettersResourceServer(t *testing.T) {
 		var fernTestValueClientID *string
 		obj.SetClientID(fernTestValueClientID)
 		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAgentSubjectClaims", func(t *testing.T) {
+		obj := &ResourceServer{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+		assert.Equal(t, fernTestValueAgentSubjectClaims, obj.AgentSubjectClaims)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -5179,6 +5333,40 @@ func TestGettersResourceServer(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetAgentSubjectClaims", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var value ResourceServerAgentSubjectClaimsResponseEnum
+		obj.AgentSubjectClaims = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAgentSubjectClaims(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		obj.AgentSubjectClaims = nil
+		var expectedZero ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAgentSubjectClaims(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAgentSubjectClaims() // Should return zero value
+	})
+
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -5991,6 +6179,37 @@ func TestSettersMarkExplicitResourceServer(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAgentSubjectClaims_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetType_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -6635,6 +6854,14 @@ func TestSettersResourceServerSearchResponse(t *testing.T) {
 		var fernTestValueClientID *string
 		obj.SetClientID(fernTestValueClientID)
 		assert.Equal(t, fernTestValueClientID, obj.ClientID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAgentSubjectClaims", func(t *testing.T) {
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+		assert.Equal(t, fernTestValueAgentSubjectClaims, obj.AgentSubjectClaims)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -7463,6 +7690,40 @@ func TestGettersResourceServerSearchResponse(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetAgentSubjectClaims", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var value ResourceServerAgentSubjectClaimsResponseEnum
+		obj.AgentSubjectClaims = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAgentSubjectClaims(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		obj.AgentSubjectClaims = nil
+		var expectedZero ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAgentSubjectClaims(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServerSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAgentSubjectClaims() // Should return zero value
+	})
+
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -8221,6 +8482,37 @@ func TestSettersMarkExplicitResourceServerSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetClientID(fernTestValueClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAgentSubjectClaims_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -9528,6 +9820,14 @@ func TestSettersUpdateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAgentSubjectClaims", func(t *testing.T) {
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+		assert.Equal(t, fernTestValueAgentSubjectClaims, obj.AgentSubjectClaims)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetType", func(t *testing.T) {
 		obj := &UpdateResourceServerResponseContent{}
 		var fernTestValueType *ResourceServerTypeEnum
@@ -10387,6 +10687,40 @@ func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
 		_ = obj.GetClientID() // Should return zero value
 	})
 
+	t.Run("GetAgentSubjectClaims", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var value ResourceServerAgentSubjectClaimsResponseEnum
+		obj.AgentSubjectClaims = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAgentSubjectClaims(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		obj.AgentSubjectClaims = nil
+		var expectedZero ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAgentSubjectClaims(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAgentSubjectClaims_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAgentSubjectClaims() // Should return zero value
+	})
+
 	t.Run("GetType", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -11176,6 +11510,37 @@ func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetClientID(fernTestValueClientID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAgentSubjectClaims_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueAgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum
+
+		// Act
+		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -12258,6 +12623,64 @@ func TestStringUpdateResourceServerResponseContent(t *testing.T) {
 		var obj *UpdateResourceServerResponseContent
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestEnumResourceServerAgentSubjectClaimsResponseEnum(t *testing.T) {
+	t.Run("NewFromString_off", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewResourceServerAgentSubjectClaimsResponseEnumFromString("off")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ResourceServerAgentSubjectClaimsResponseEnum("off"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_auth0_v1", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewResourceServerAgentSubjectClaimsResponseEnumFromString("auth0-v1")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ResourceServerAgentSubjectClaimsResponseEnum("auth0-v1"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewResourceServerAgentSubjectClaimsResponseEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewResourceServerAgentSubjectClaimsResponseEnumFromString("off")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumResourceServerAgentSubjectClaimsSchemaEnum(t *testing.T) {
+	t.Run("NewFromString_off", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewResourceServerAgentSubjectClaimsSchemaEnumFromString("off")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ResourceServerAgentSubjectClaimsSchemaEnum("off"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_auth0_v1", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewResourceServerAgentSubjectClaimsSchemaEnumFromString("auth0-v1")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ResourceServerAgentSubjectClaimsSchemaEnum("auth0-v1"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewResourceServerAgentSubjectClaimsSchemaEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewResourceServerAgentSubjectClaimsSchemaEnumFromString("off")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
 	})
 }
 

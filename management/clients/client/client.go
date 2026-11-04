@@ -99,6 +99,9 @@ func NewClient(options *core.RequestOptions) *Client {
 //	    ExternalClientID: management.String(
 //	        "external_client_id",
 //	    ),
+//	    AgentID: management.String(
+//	        "agent_id",
+//	    ),
 //	    Q: management.String(
 //	        "q",
 //	    ),
