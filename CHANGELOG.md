@@ -1,5 +1,20 @@
 # Change Log
 
+## [v3.11.0](https://github.com/auth0/go-auth0/tree/v3.11.0) (2026-11-04)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.10.0...v3.11.0)
+
+**Added**
+- feat: add `Users.ListConsentSigningKeys`, `Users.GetConsentSigningKey`, and `Users.DeleteConsentSigningKey`, along with the `ConsentSigningKey` type [\#911](https://github.com/auth0/go-auth0/pull/911) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OidcSupport` (`ClientOidcSupport`) to the client types, and to the client search, create, get, update, and rotate secret responses [\#911](https://github.com/auth0/go-auth0/pull/911) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OtpSettings` (`ConnectionOtpSettings`, `ConnectionOtpChannelSettings`) to the connection options types [\#911](https://github.com/auth0/go-auth0/pull/911) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `CrossAppAccessRequestingApp` to the SAML connection types [\#911](https://github.com/auth0/go-auth0/pull/911) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `Type` (`ResourceServerTypeEnum`) to the resource server requests and responses, including `ResourceServerTypeEnumUniversalCommerceProtocolServer` [\#911](https://github.com/auth0/go-auth0/pull/911) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add a `Status` filter to `ListSegmentsRequestParameters` [\#911](https://github.com/auth0/go-auth0/pull/911) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add the `Portals` service with `List`, `Create`, `Get`, `Update`, and `Delete`, along with the portal page, navigation, sidebar, and custom code types [\#913](https://github.com/auth0/go-auth0/pull/913) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OidcSupport` (`ClientProfileClientConfigurationOidcSupport`) to `ClientProfileClientConfiguration` [\#913](https://github.com/auth0/go-auth0/pull/913) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `AgentID` to the client types, and an `AgentID` filter to `ListClientsRequestParameters` [\#913](https://github.com/auth0/go-auth0/pull/913) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `AgentSubjectClaims` to the resource server types [\#913](https://github.com/auth0/go-auth0/pull/913) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.10.0](https://github.com/auth0/go-auth0/tree/v3.10.0) (2026-10-19)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.9.0...v3.10.0)
 
