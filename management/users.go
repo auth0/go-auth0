@@ -1128,7 +1128,92 @@ func (g *GetUserResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
-type ListUserConsentSigningKeysResponseContent = []*ConsentSigningKey
+var (
+	listUserConsentSigningKeysResponseContentFieldKeys = big.NewInt(1 << 0)
+)
+
+type ListUserConsentSigningKeysResponseContent struct {
+	// The consent signing keys registered for the user.
+	Keys []*ConsentSigningKey `json:"keys" url:"keys"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) GetKeys() []*ConsentSigningKey {
+	if l == nil {
+		return nil
+	}
+	return l.Keys
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetKeys sets the Keys field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserConsentSigningKeysResponseContent) SetKeys(keys []*ConsentSigningKey) {
+	l.Keys = keys
+	l.require(listUserConsentSigningKeysResponseContentFieldKeys)
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserConsentSigningKeysResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserConsentSigningKeysResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserConsentSigningKeysResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
 
 var (
 	listUsersOffsetPaginatedResponseContentFieldStart  = big.NewInt(1 << 0)

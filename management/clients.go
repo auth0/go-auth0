@@ -1185,8 +1185,9 @@ var (
 	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
 	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
 	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
 
 // clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
@@ -1307,6 +1308,8 @@ type Client struct {
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -1801,6 +1804,13 @@ func (c *Client) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
 		return ""
 	}
 	return *c.ExternalMetadataStatus
+}
+
+func (c *Client) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
 }
 
 func (c *Client) GetExternalClientID() string {
@@ -2314,6 +2324,13 @@ func (c *Client) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientE
 func (c *Client) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
 	c.ExternalMetadataStatus = externalMetadataStatus
 	c.require(clientFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetAgentID(agentID *string) {
+	c.AgentID = agentID
+	c.require(clientFieldAgentID)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -10066,8 +10083,9 @@ var (
 	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 62)
 	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 63)
 	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 67)
 )
 
 // clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
@@ -10181,6 +10199,8 @@ type ClientSearchResponse struct {
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -10647,6 +10667,13 @@ func (c *ClientSearchResponse) GetExternalMetadataStatus() ClientExternalMetadat
 		return ""
 	}
 	return *c.ExternalMetadataStatus
+}
+
+func (c *ClientSearchResponse) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
 }
 
 func (c *ClientSearchResponse) GetExternalClientID() string {
@@ -11132,6 +11159,13 @@ func (c *ClientSearchResponse) SetExternalMetadataCreatedBy(externalMetadataCrea
 func (c *ClientSearchResponse) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
 	c.ExternalMetadataStatus = externalMetadataStatus
 	c.require(clientSearchResponseFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAgentID(agentID *string) {
+	c.AgentID = agentID
+	c.require(clientSearchResponseFieldAgentID)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -12702,8 +12736,9 @@ var (
 	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
 	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
 	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
 
 // createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -12824,6 +12859,8 @@ type CreateClientResponseContent struct {
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -13318,6 +13355,13 @@ func (c *CreateClientResponseContent) GetExternalMetadataStatus() ClientExternal
 		return ""
 	}
 	return *c.ExternalMetadataStatus
+}
+
+func (c *CreateClientResponseContent) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
 }
 
 func (c *CreateClientResponseContent) GetExternalClientID() string {
@@ -13831,6 +13875,13 @@ func (c *CreateClientResponseContent) SetExternalMetadataCreatedBy(externalMetad
 func (c *CreateClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
 	c.ExternalMetadataStatus = externalMetadataStatus
 	c.require(createClientResponseContentFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetAgentID(agentID *string) {
+	c.AgentID = agentID
+	c.require(createClientResponseContentFieldAgentID)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -14963,8 +15014,9 @@ var (
 	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
 	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
 	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
 
 // getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -15085,6 +15137,8 @@ type GetClientResponseContent struct {
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -15579,6 +15633,13 @@ func (g *GetClientResponseContent) GetExternalMetadataStatus() ClientExternalMet
 		return ""
 	}
 	return *g.ExternalMetadataStatus
+}
+
+func (g *GetClientResponseContent) GetAgentID() string {
+	if g == nil || g.AgentID == nil {
+		return ""
+	}
+	return *g.AgentID
 }
 
 func (g *GetClientResponseContent) GetExternalClientID() string {
@@ -16092,6 +16153,13 @@ func (g *GetClientResponseContent) SetExternalMetadataCreatedBy(externalMetadata
 func (g *GetClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
 	g.ExternalMetadataStatus = externalMetadataStatus
 	g.require(getClientResponseContentFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetAgentID(agentID *string) {
+	g.AgentID = agentID
+	g.require(getClientResponseContentFieldAgentID)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -17872,8 +17940,9 @@ var (
 	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
 	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
 	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
 
 // rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
@@ -17994,6 +18063,8 @@ type RotateClientSecretResponseContent struct {
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -18488,6 +18559,13 @@ func (r *RotateClientSecretResponseContent) GetExternalMetadataStatus() ClientEx
 		return ""
 	}
 	return *r.ExternalMetadataStatus
+}
+
+func (r *RotateClientSecretResponseContent) GetAgentID() string {
+	if r == nil || r.AgentID == nil {
+		return ""
+	}
+	return *r.AgentID
 }
 
 func (r *RotateClientSecretResponseContent) GetExternalClientID() string {
@@ -19003,6 +19081,13 @@ func (r *RotateClientSecretResponseContent) SetExternalMetadataStatus(externalMe
 	r.require(rotateClientSecretResponseContentFieldExternalMetadataStatus)
 }
 
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetAgentID(agentID *string) {
+	r.AgentID = agentID
+	r.require(rotateClientSecretResponseContentFieldAgentID)
+}
+
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetExternalClientID(externalClientID *string) {
@@ -19444,8 +19529,9 @@ var (
 	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
 	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
 	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
 
 // updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -19566,6 +19652,8 @@ type UpdateClientResponseContent struct {
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -20060,6 +20148,13 @@ func (u *UpdateClientResponseContent) GetExternalMetadataStatus() ClientExternal
 		return ""
 	}
 	return *u.ExternalMetadataStatus
+}
+
+func (u *UpdateClientResponseContent) GetAgentID() string {
+	if u == nil || u.AgentID == nil {
+		return ""
+	}
+	return *u.AgentID
 }
 
 func (u *UpdateClientResponseContent) GetExternalClientID() string {
@@ -20573,6 +20668,13 @@ func (u *UpdateClientResponseContent) SetExternalMetadataCreatedBy(externalMetad
 func (u *UpdateClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
 	u.ExternalMetadataStatus = externalMetadataStatus
 	u.require(updateClientResponseContentFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetAgentID(agentID *string) {
+	u.AgentID = agentID
+	u.require(updateClientResponseContentFieldAgentID)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;

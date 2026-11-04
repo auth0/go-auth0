@@ -277,7 +277,7 @@ func (r *RawClient) ListConsentSigningKeys(
 	// The ID of the user.
 	id string,
 	opts ...option.RequestOption,
-) (*core.Response[management.ListUserConsentSigningKeysResponseContent], error) {
+) (*core.Response[*management.ListUserConsentSigningKeysResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -292,7 +292,7 @@ func (r *RawClient) ListConsentSigningKeys(
 		r.options.ToHeader(),
 		options.ToHeader(),
 	)
-	var response management.ListUserConsentSigningKeysResponseContent
+	var response *management.ListUserConsentSigningKeysResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -311,7 +311,7 @@ func (r *RawClient) ListConsentSigningKeys(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[management.ListUserConsentSigningKeysResponseContent]{
+	return &core.Response[*management.ListUserConsentSigningKeysResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

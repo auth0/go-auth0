@@ -35,7 +35,8 @@ var (
 	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
-	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 25)
+	createResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
 )
 
 // createResourceServerResponseContentNullableFields maps the wire names of CreateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -90,8 +91,9 @@ type CreateResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
-	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -273,6 +275,13 @@ func (c *CreateResourceServerResponseContent) GetClientID() string {
 		return ""
 	}
 	return *c.ClientID
+}
+
+func (c *CreateResourceServerResponseContent) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if c == nil || c.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *c.AgentSubjectClaims
 }
 
 func (c *CreateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
@@ -473,6 +482,13 @@ func (c *CreateResourceServerResponseContent) SetClientID(clientID *string) {
 	c.require(createResourceServerResponseContentFieldClientID)
 }
 
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	c.AgentSubjectClaims = agentSubjectClaims
+	c.require(createResourceServerResponseContentFieldAgentSubjectClaims)
+}
+
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
@@ -555,7 +571,8 @@ var (
 	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
-	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 25)
+	getResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
 )
 
 // getResourceServerResponseContentNullableFields maps the wire names of GetResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -610,8 +627,9 @@ type GetResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
-	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -793,6 +811,13 @@ func (g *GetResourceServerResponseContent) GetClientID() string {
 		return ""
 	}
 	return *g.ClientID
+}
+
+func (g *GetResourceServerResponseContent) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if g == nil || g.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *g.AgentSubjectClaims
 }
 
 func (g *GetResourceServerResponseContent) GetType() ResourceServerTypeEnum {
@@ -991,6 +1016,13 @@ func (g *GetResourceServerResponseContent) SetAuthorizationPolicy(authorizationP
 func (g *GetResourceServerResponseContent) SetClientID(clientID *string) {
 	g.ClientID = clientID
 	g.require(getResourceServerResponseContentFieldClientID)
+}
+
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	g.AgentSubjectClaims = agentSubjectClaims
+	g.require(getResourceServerResponseContentFieldAgentSubjectClaims)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -1209,7 +1241,8 @@ var (
 	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	resourceServerFieldClientID                                  = big.NewInt(1 << 24)
-	resourceServerFieldType                                      = big.NewInt(1 << 25)
+	resourceServerFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	resourceServerFieldType                                      = big.NewInt(1 << 26)
 )
 
 // resourceServerNullableFields maps the wire names of ResourceServer's nullable fields (required or optional) to their field bits.
@@ -1264,8 +1297,9 @@ type ResourceServer struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
-	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1447,6 +1481,13 @@ func (r *ResourceServer) GetClientID() string {
 		return ""
 	}
 	return *r.ClientID
+}
+
+func (r *ResourceServer) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if r == nil || r.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *r.AgentSubjectClaims
 }
 
 func (r *ResourceServer) GetType() ResourceServerTypeEnum {
@@ -1647,6 +1688,13 @@ func (r *ResourceServer) SetClientID(clientID *string) {
 	r.require(resourceServerFieldClientID)
 }
 
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	r.AgentSubjectClaims = agentSubjectClaims
+	r.require(resourceServerFieldAgentSubjectClaims)
+}
+
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ResourceServer) SetType(type_ *ResourceServerTypeEnum) {
@@ -1701,6 +1749,52 @@ func (r *ResourceServer) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+// Controls whether access tokens issued for this API include agent subject claims. With <code>auth0-v1</code>, access tokens include additional claims that identify whether the subject is a <code>user</code>, <code>service</code>, or <code>ai_agent</code>. The <code>sub</code> claim can reference an agent ID, and the <code>@clients</code> suffix is no longer appended to client IDs. With <code>off</code>, these claims are not included and the <code>@clients</code> suffix is still appended. When not set, the API behaves as <code>off</code>.
+type ResourceServerAgentSubjectClaimsResponseEnum string
+
+const (
+	ResourceServerAgentSubjectClaimsResponseEnumOff     ResourceServerAgentSubjectClaimsResponseEnum = "off"
+	ResourceServerAgentSubjectClaimsResponseEnumAuth0V1 ResourceServerAgentSubjectClaimsResponseEnum = "auth0-v1"
+)
+
+func NewResourceServerAgentSubjectClaimsResponseEnumFromString(s string) (ResourceServerAgentSubjectClaimsResponseEnum, error) {
+	switch s {
+	case "off":
+		return ResourceServerAgentSubjectClaimsResponseEnumOff, nil
+	case "auth0-v1":
+		return ResourceServerAgentSubjectClaimsResponseEnumAuth0V1, nil
+	}
+	var t ResourceServerAgentSubjectClaimsResponseEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerAgentSubjectClaimsResponseEnum) Ptr() *ResourceServerAgentSubjectClaimsResponseEnum {
+	return &r
+}
+
+// Controls whether access tokens issued for this API include agent subject claims. With <code>auth0-v1</code>, access tokens include additional claims that identify whether the subject is a <code>user</code>, <code>service</code>, or <code>ai_agent</code>. The <code>sub</code> claim can reference an agent ID, and the <code>@clients</code> suffix is no longer appended to client IDs. With <code>off</code>, these claims are not included and the <code>@clients</code> suffix is still appended. When not set, the API behaves as <code>off</code>.
+type ResourceServerAgentSubjectClaimsSchemaEnum string
+
+const (
+	ResourceServerAgentSubjectClaimsSchemaEnumOff     ResourceServerAgentSubjectClaimsSchemaEnum = "off"
+	ResourceServerAgentSubjectClaimsSchemaEnumAuth0V1 ResourceServerAgentSubjectClaimsSchemaEnum = "auth0-v1"
+)
+
+func NewResourceServerAgentSubjectClaimsSchemaEnumFromString(s string) (ResourceServerAgentSubjectClaimsSchemaEnum, error) {
+	switch s {
+	case "off":
+		return ResourceServerAgentSubjectClaimsSchemaEnumOff, nil
+	case "auth0-v1":
+		return ResourceServerAgentSubjectClaimsSchemaEnumAuth0V1, nil
+	}
+	var t ResourceServerAgentSubjectClaimsSchemaEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerAgentSubjectClaimsSchemaEnum) Ptr() *ResourceServerAgentSubjectClaimsSchemaEnum {
+	return &r
 }
 
 var (
@@ -2105,7 +2199,8 @@ var (
 	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
 	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
 	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 23)
-	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 24)
+	resourceServerSearchResponseFieldAgentSubjectClaims                        = big.NewInt(1 << 24)
+	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 25)
 )
 
 // resourceServerSearchResponseNullableFields maps the wire names of ResourceServerSearchResponse's nullable fields (required or optional) to their field bits.
@@ -2158,8 +2253,9 @@ type ResourceServerSearchResponse struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
-	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2334,6 +2430,13 @@ func (r *ResourceServerSearchResponse) GetClientID() string {
 		return ""
 	}
 	return *r.ClientID
+}
+
+func (r *ResourceServerSearchResponse) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if r == nil || r.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *r.AgentSubjectClaims
 }
 
 func (r *ResourceServerSearchResponse) GetType() ResourceServerTypeEnum {
@@ -2525,6 +2628,13 @@ func (r *ResourceServerSearchResponse) SetAuthorizationPolicy(authorizationPolic
 func (r *ResourceServerSearchResponse) SetClientID(clientID *string) {
 	r.ClientID = clientID
 	r.require(resourceServerSearchResponseFieldClientID)
+}
+
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	r.AgentSubjectClaims = agentSubjectClaims
+	r.require(resourceServerSearchResponseFieldAgentSubjectClaims)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -3569,7 +3679,8 @@ var (
 	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
 	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
-	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 25)
+	updateResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
 )
 
 // updateResourceServerResponseContentNullableFields maps the wire names of UpdateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -3624,8 +3735,9 @@ type UpdateResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string                 `json:"client_id,omitempty" url:"client_id,omitempty"`
-	Type     *ResourceServerTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3807,6 +3919,13 @@ func (u *UpdateResourceServerResponseContent) GetClientID() string {
 		return ""
 	}
 	return *u.ClientID
+}
+
+func (u *UpdateResourceServerResponseContent) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if u == nil || u.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *u.AgentSubjectClaims
 }
 
 func (u *UpdateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
@@ -4005,6 +4124,13 @@ func (u *UpdateResourceServerResponseContent) SetAuthorizationPolicy(authorizati
 func (u *UpdateResourceServerResponseContent) SetClientID(clientID *string) {
 	u.ClientID = clientID
 	u.require(updateResourceServerResponseContentFieldClientID)
+}
+
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	u.AgentSubjectClaims = agentSubjectClaims
+	u.require(updateResourceServerResponseContentFieldAgentSubjectClaims)
 }
 
 // SetType sets the Type field and marks it as non-optional;
