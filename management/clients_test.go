@@ -1924,6 +1924,14 @@ func TestSettersClient(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &Client{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetOidcConformant", func(t *testing.T) {
 		obj := &Client{}
 		var fernTestValueOidcConformant *bool
@@ -2787,6 +2795,40 @@ func TestGettersClient(t *testing.T) {
 			}
 		}()
 		_ = obj.GetIsFirstParty() // Should return zero value
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var value bool
+		obj.AllowPersonalAgentBrowserJoin = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowPersonalAgentBrowserJoin(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		obj.AllowPersonalAgentBrowserJoin = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowPersonalAgentBrowserJoin(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Client
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowPersonalAgentBrowserJoin() // Should return zero value
 	})
 
 	t.Run("GetOidcConformant", func(t *testing.T) {
@@ -5176,6 +5218,37 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 
 		// Act
 		obj.SetIsFirstParty(fernTestValueIsFirstParty)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21088,6 +21161,14 @@ func TestSettersClientSearchResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &ClientSearchResponse{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetOidcConformant", func(t *testing.T) {
 		obj := &ClientSearchResponse{}
 		var fernTestValueOidcConformant *bool
@@ -21893,6 +21974,40 @@ func TestGettersClientSearchResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetIsFirstParty() // Should return zero value
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var value bool
+		obj.AllowPersonalAgentBrowserJoin = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowPersonalAgentBrowserJoin(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		obj.AllowPersonalAgentBrowserJoin = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowPersonalAgentBrowserJoin(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowPersonalAgentBrowserJoin() // Should return zero value
 	})
 
 	t.Run("GetOidcConformant", func(t *testing.T) {
@@ -24149,6 +24264,37 @@ func TestSettersMarkExplicitClientSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetIsFirstParty(fernTestValueIsFirstParty)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -28025,6 +28171,14 @@ func TestSettersCreateClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &CreateClientResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetOidcConformant", func(t *testing.T) {
 		obj := &CreateClientResponseContent{}
 		var fernTestValueOidcConformant *bool
@@ -28888,6 +29042,40 @@ func TestGettersCreateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetIsFirstParty() // Should return zero value
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var value bool
+		obj.AllowPersonalAgentBrowserJoin = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowPersonalAgentBrowserJoin(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		obj.AllowPersonalAgentBrowserJoin = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowPersonalAgentBrowserJoin(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowPersonalAgentBrowserJoin() // Should return zero value
 	})
 
 	t.Run("GetOidcConformant", func(t *testing.T) {
@@ -31277,6 +31465,37 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetIsFirstParty(fernTestValueIsFirstParty)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -34928,6 +35147,14 @@ func TestSettersGetClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &GetClientResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetOidcConformant", func(t *testing.T) {
 		obj := &GetClientResponseContent{}
 		var fernTestValueOidcConformant *bool
@@ -35791,6 +36018,40 @@ func TestGettersGetClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetIsFirstParty() // Should return zero value
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var value bool
+		obj.AllowPersonalAgentBrowserJoin = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowPersonalAgentBrowserJoin(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		obj.AllowPersonalAgentBrowserJoin = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowPersonalAgentBrowserJoin(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowPersonalAgentBrowserJoin() // Should return zero value
 	})
 
 	t.Run("GetOidcConformant", func(t *testing.T) {
@@ -38180,6 +38441,37 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetIsFirstParty(fernTestValueIsFirstParty)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -42661,6 +42953,14 @@ func TestSettersRotateClientSecretResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetOidcConformant", func(t *testing.T) {
 		obj := &RotateClientSecretResponseContent{}
 		var fernTestValueOidcConformant *bool
@@ -43524,6 +43824,40 @@ func TestGettersRotateClientSecretResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetIsFirstParty() // Should return zero value
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var value bool
+		obj.AllowPersonalAgentBrowserJoin = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowPersonalAgentBrowserJoin(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		obj.AllowPersonalAgentBrowserJoin = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowPersonalAgentBrowserJoin(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateClientSecretResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowPersonalAgentBrowserJoin() // Should return zero value
 	})
 
 	t.Run("GetOidcConformant", func(t *testing.T) {
@@ -45936,6 +46270,37 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetOidcConformant_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -48286,6 +48651,14 @@ func TestSettersUpdateClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetOidcConformant", func(t *testing.T) {
 		obj := &UpdateClientResponseContent{}
 		var fernTestValueOidcConformant *bool
@@ -49149,6 +49522,40 @@ func TestGettersUpdateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetIsFirstParty() // Should return zero value
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var value bool
+		obj.AllowPersonalAgentBrowserJoin = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowPersonalAgentBrowserJoin(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		obj.AllowPersonalAgentBrowserJoin = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowPersonalAgentBrowserJoin(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowPersonalAgentBrowserJoin_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowPersonalAgentBrowserJoin() // Should return zero value
 	})
 
 	t.Run("GetOidcConformant", func(t *testing.T) {
@@ -51538,6 +51945,37 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetIsFirstParty(fernTestValueIsFirstParty)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *bool
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

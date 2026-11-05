@@ -230884,6 +230884,14 @@ func TestSettersGetTenantSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetPersonalAgentProtocolCompanyDomains", func(t *testing.T) {
+		obj := &GetTenantSettingsResponseContent{}
+		var fernTestValuePersonalAgentProtocolCompanyDomains []string
+		obj.SetPersonalAgentProtocolCompanyDomains(fernTestValuePersonalAgentProtocolCompanyDomains)
+		assert.Equal(t, fernTestValuePersonalAgentProtocolCompanyDomains, obj.PersonalAgentProtocolCompanyDomains)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAccessToken", func(t *testing.T) {
 		obj := &GetTenantSettingsResponseContent{}
 		var fernTestValueAccessToken *ResourceServerAccessToken
@@ -231798,6 +231806,39 @@ func TestGettersGetTenantSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnabledLocales() // Should return zero value
+	})
+
+	t.Run("GetPersonalAgentProtocolCompanyDomains", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		var expected []string
+		obj.PersonalAgentProtocolCompanyDomains = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPersonalAgentProtocolCompanyDomains(), "getter should return the property value")
+	})
+
+	t.Run("GetPersonalAgentProtocolCompanyDomains_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		obj.PersonalAgentProtocolCompanyDomains = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPersonalAgentProtocolCompanyDomains(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPersonalAgentProtocolCompanyDomains_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetTenantSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPersonalAgentProtocolCompanyDomains() // Should return zero value
 	})
 
 	t.Run("GetAccessToken", func(t *testing.T) {
@@ -233175,6 +233216,37 @@ func TestSettersMarkExplicitGetTenantSettingsResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetEnabledLocales(fernTestValueEnabledLocales)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPersonalAgentProtocolCompanyDomains_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetTenantSettingsResponseContent{}
+		var fernTestValuePersonalAgentProtocolCompanyDomains []string
+
+		// Act
+		obj.SetPersonalAgentProtocolCompanyDomains(fernTestValuePersonalAgentProtocolCompanyDomains)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -327397,6 +327469,14 @@ func TestSettersUpdateTenantSettingsResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetPersonalAgentProtocolCompanyDomains", func(t *testing.T) {
+		obj := &UpdateTenantSettingsResponseContent{}
+		var fernTestValuePersonalAgentProtocolCompanyDomains []string
+		obj.SetPersonalAgentProtocolCompanyDomains(fernTestValuePersonalAgentProtocolCompanyDomains)
+		assert.Equal(t, fernTestValuePersonalAgentProtocolCompanyDomains, obj.PersonalAgentProtocolCompanyDomains)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAccessToken", func(t *testing.T) {
 		obj := &UpdateTenantSettingsResponseContent{}
 		var fernTestValueAccessToken *ResourceServerAccessToken
@@ -328311,6 +328391,39 @@ func TestGettersUpdateTenantSettingsResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnabledLocales() // Should return zero value
+	})
+
+	t.Run("GetPersonalAgentProtocolCompanyDomains", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		var expected []string
+		obj.PersonalAgentProtocolCompanyDomains = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetPersonalAgentProtocolCompanyDomains(), "getter should return the property value")
+	})
+
+	t.Run("GetPersonalAgentProtocolCompanyDomains_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		obj.PersonalAgentProtocolCompanyDomains = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetPersonalAgentProtocolCompanyDomains(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetPersonalAgentProtocolCompanyDomains_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateTenantSettingsResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetPersonalAgentProtocolCompanyDomains() // Should return zero value
 	})
 
 	t.Run("GetAccessToken", func(t *testing.T) {
@@ -329688,6 +329801,37 @@ func TestSettersMarkExplicitUpdateTenantSettingsResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetEnabledLocales(fernTestValueEnabledLocales)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPersonalAgentProtocolCompanyDomains_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsResponseContent{}
+		var fernTestValuePersonalAgentProtocolCompanyDomains []string
+
+		// Act
+		obj.SetPersonalAgentProtocolCompanyDomains(fernTestValuePersonalAgentProtocolCompanyDomains)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -368283,6 +368427,7 @@ func TestOptionalNullableRoundTripGetTenantSettingsResponseContent(t *testing.T)
 		"error_page",
 		"device_flow",
 		"default_token_quota",
+		"personal_agent_protocol_company_domains",
 		"access_token",
 		"security_headers",
 		"session_cookie",
@@ -368304,7 +368449,7 @@ func TestOptionalNullableRoundTripGetTenantSettingsResponseContent(t *testing.T)
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj GetTenantSettingsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"change_password":null,"guardian_mfa_page":null,"error_page":null,"device_flow":null,"default_token_quota":null,"access_token":null,"security_headers":null,"session_cookie":null,"sessions":null,"acr_values_supported":null,"mtls":null,"authorization_response_iss_parameter_supported":null,"dpop_strict_refresh_token_binding":null,"skip_non_verifiable_callback_uri_confirmation_prompt":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"change_password":null,"guardian_mfa_page":null,"error_page":null,"device_flow":null,"default_token_quota":null,"personal_agent_protocol_company_domains":null,"access_token":null,"security_headers":null,"session_cookie":null,"sessions":null,"acr_values_supported":null,"mtls":null,"authorization_response_iss_parameter_supported":null,"dpop_strict_refresh_token_binding":null,"skip_non_verifiable_callback_uri_confirmation_prompt":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -369498,6 +369643,7 @@ func TestOptionalNullableRoundTripUpdateTenantSettingsResponseContent(t *testing
 		"error_page",
 		"device_flow",
 		"default_token_quota",
+		"personal_agent_protocol_company_domains",
 		"access_token",
 		"security_headers",
 		"session_cookie",
@@ -369519,7 +369665,7 @@ func TestOptionalNullableRoundTripUpdateTenantSettingsResponseContent(t *testing
 	t.Run("NullPreserved", func(t *testing.T) {
 		t.Parallel()
 		var obj UpdateTenantSettingsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"change_password":null,"guardian_mfa_page":null,"error_page":null,"device_flow":null,"default_token_quota":null,"access_token":null,"security_headers":null,"session_cookie":null,"sessions":null,"acr_values_supported":null,"mtls":null,"authorization_response_iss_parameter_supported":null,"dpop_strict_refresh_token_binding":null,"skip_non_verifiable_callback_uri_confirmation_prompt":null}`), &obj))
+		require.NoError(t, json.Unmarshal([]byte(`{"change_password":null,"guardian_mfa_page":null,"error_page":null,"device_flow":null,"default_token_quota":null,"personal_agent_protocol_company_domains":null,"access_token":null,"security_headers":null,"session_cookie":null,"sessions":null,"acr_values_supported":null,"mtls":null,"authorization_response_iss_parameter_supported":null,"dpop_strict_refresh_token_binding":null,"skip_non_verifiable_callback_uri_confirmation_prompt":null}`), &obj))
 		result := marshalToMap(t, &obj)
 		for _, key := range optionalNullableKeys {
 			value, ok := result[key]
@@ -383457,6 +383603,20 @@ func TestEnumClientCredentialAlgorithmEnum(t *testing.T) {
 		assert.Equal(t, ClientCredentialAlgorithmEnum("PS256"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_ES256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientCredentialAlgorithmEnumFromString("ES256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientCredentialAlgorithmEnum("ES256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_PS384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientCredentialAlgorithmEnumFromString("PS384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientCredentialAlgorithmEnum("PS384"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
 		_, err := NewClientCredentialAlgorithmEnumFromString("invalid_value_that_does_not_exist")
 		assert.Error(t, err)
@@ -394502,6 +394662,13 @@ func TestEnumScreenGroupNameEnum(t *testing.T) {
 		val, err := NewScreenGroupNameEnumFromString("consent-tenant-scopes")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ScreenGroupNameEnum("consent-tenant-scopes"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_pending_consent", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("pending-consent")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("pending-consent"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_customized_consent", func(t *testing.T) {

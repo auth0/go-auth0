@@ -3668,50 +3668,51 @@ var (
 	createClientRequestContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 14)
 	createClientRequestContentFieldAppType                                        = big.NewInt(1 << 15)
 	createClientRequestContentFieldIsFirstParty                                   = big.NewInt(1 << 16)
-	createClientRequestContentFieldOidcConformant                                 = big.NewInt(1 << 17)
-	createClientRequestContentFieldJwtConfiguration                               = big.NewInt(1 << 18)
-	createClientRequestContentFieldEncryptionKey                                  = big.NewInt(1 << 19)
-	createClientRequestContentFieldSSO                                            = big.NewInt(1 << 20)
-	createClientRequestContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 21)
-	createClientRequestContentFieldCrossOriginLoc                                 = big.NewInt(1 << 22)
-	createClientRequestContentFieldSSODisabled                                    = big.NewInt(1 << 23)
-	createClientRequestContentFieldCustomLoginPageOn                              = big.NewInt(1 << 24)
-	createClientRequestContentFieldCustomLoginPage                                = big.NewInt(1 << 25)
-	createClientRequestContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 26)
-	createClientRequestContentFieldFormTemplate                                   = big.NewInt(1 << 27)
-	createClientRequestContentFieldAddons                                         = big.NewInt(1 << 28)
-	createClientRequestContentFieldClientMetadata                                 = big.NewInt(1 << 29)
-	createClientRequestContentFieldMobile                                         = big.NewInt(1 << 30)
-	createClientRequestContentFieldInitiateLoginURI                               = big.NewInt(1 << 31)
-	createClientRequestContentFieldNativeSocialLogin                              = big.NewInt(1 << 32)
-	createClientRequestContentFieldFedcmLogin                                     = big.NewInt(1 << 33)
-	createClientRequestContentFieldRefreshToken                                   = big.NewInt(1 << 34)
-	createClientRequestContentFieldDefaultOrganization                            = big.NewInt(1 << 35)
-	createClientRequestContentFieldOrganizationUsage                              = big.NewInt(1 << 36)
-	createClientRequestContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 37)
-	createClientRequestContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 38)
-	createClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 39)
-	createClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 40)
-	createClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 41)
-	createClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 42)
-	createClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 43)
-	createClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 44)
-	createClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 45)
-	createClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 46)
-	createClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
-	createClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	createClientRequestContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
-	createClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 50)
-	createClientRequestContentFieldAnonymousSessions                              = big.NewInt(1 << 51)
-	createClientRequestContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 52)
-	createClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 53)
-	createClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 54)
-	createClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	createClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	createClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	createClientRequestContentFieldAgentID                                        = big.NewInt(1 << 59)
-	createClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 60)
+	createClientRequestContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 17)
+	createClientRequestContentFieldOidcConformant                                 = big.NewInt(1 << 18)
+	createClientRequestContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
+	createClientRequestContentFieldEncryptionKey                                  = big.NewInt(1 << 20)
+	createClientRequestContentFieldSSO                                            = big.NewInt(1 << 21)
+	createClientRequestContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 22)
+	createClientRequestContentFieldCrossOriginLoc                                 = big.NewInt(1 << 23)
+	createClientRequestContentFieldSSODisabled                                    = big.NewInt(1 << 24)
+	createClientRequestContentFieldCustomLoginPageOn                              = big.NewInt(1 << 25)
+	createClientRequestContentFieldCustomLoginPage                                = big.NewInt(1 << 26)
+	createClientRequestContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 27)
+	createClientRequestContentFieldFormTemplate                                   = big.NewInt(1 << 28)
+	createClientRequestContentFieldAddons                                         = big.NewInt(1 << 29)
+	createClientRequestContentFieldClientMetadata                                 = big.NewInt(1 << 30)
+	createClientRequestContentFieldMobile                                         = big.NewInt(1 << 31)
+	createClientRequestContentFieldInitiateLoginURI                               = big.NewInt(1 << 32)
+	createClientRequestContentFieldNativeSocialLogin                              = big.NewInt(1 << 33)
+	createClientRequestContentFieldFedcmLogin                                     = big.NewInt(1 << 34)
+	createClientRequestContentFieldRefreshToken                                   = big.NewInt(1 << 35)
+	createClientRequestContentFieldDefaultOrganization                            = big.NewInt(1 << 36)
+	createClientRequestContentFieldOrganizationUsage                              = big.NewInt(1 << 37)
+	createClientRequestContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 38)
+	createClientRequestContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 39)
+	createClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 40)
+	createClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 41)
+	createClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 42)
+	createClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 43)
+	createClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 44)
+	createClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 45)
+	createClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
+	createClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 47)
+	createClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
+	createClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 49)
+	createClientRequestContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
+	createClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 51)
+	createClientRequestContentFieldAnonymousSessions                              = big.NewInt(1 << 52)
+	createClientRequestContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 53)
+	createClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	createClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
+	createClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	createClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	createClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	createClientRequestContentFieldAgentID                                        = big.NewInt(1 << 60)
+	createClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 61)
 )
 
 type CreateClientRequestContent struct {
@@ -3745,6 +3746,8 @@ type CreateClientRequestContent struct {
 	AppType                        *ClientAppTypeEnum `json:"app_type,omitempty" url:"-"`
 	// Whether this client a first party client or not
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"-"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"-"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
 	OidcConformant   *bool                   `json:"oidc_conformant,omitempty" url:"-"`
 	JwtConfiguration *ClientJwtConfiguration `json:"jwt_configuration,omitempty" url:"-"`
@@ -3939,6 +3942,13 @@ func (c *CreateClientRequestContent) SetAppType(appType *ClientAppTypeEnum) {
 func (c *CreateClientRequestContent) SetIsFirstParty(isFirstParty *bool) {
 	c.IsFirstParty = isFirstParty
 	c.require(createClientRequestContentFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientRequestContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(createClientRequestContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;
@@ -5231,16 +5241,17 @@ var (
 	createResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
 	createResourceServerRequestContentFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 11)
 	createResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	createResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 13)
-	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 14)
-	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 15)
-	createResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 16)
-	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
-	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 18)
-	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
-	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
-	createResourceServerRequestContentFieldAgentSubjectClaims                        = big.NewInt(1 << 21)
-	createResourceServerRequestContentFieldType                                      = big.NewInt(1 << 22)
+	createResourceServerRequestContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 13)
+	createResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 14)
+	createResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 15)
+	createResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 16)
+	createResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 17)
+	createResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 18)
+	createResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 19)
+	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 20)
+	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 21)
+	createResourceServerRequestContentFieldAgentSubjectClaims                        = big.NewInt(1 << 22)
+	createResourceServerRequestContentFieldType                                      = big.NewInt(1 << 23)
 )
 
 type CreateResourceServerRequestContent struct {
@@ -5267,10 +5278,12 @@ type CreateResourceServerRequestContent struct {
 	// Whether to skip user consent for applications flagged as first party (true) or not (false).
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"-"`
 	// Whether to enforce authorization policies (true) or to ignore them (false).
-	EnforcePolicies *bool                            `json:"enforce_policies,omitempty" url:"-"`
-	AccessToken     *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
-	TokenEncryption *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy   *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
+	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"-"`
+	// Whether to advertise this resource server for personal agents (the Poppy personal agent protocol).
+	UseForPersonalAgentProtocol *bool                            `json:"use_for_personal_agent_protocol,omitempty" url:"-"`
+	AccessToken                 *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
+	TokenEncryption             *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
+	ConsentPolicy               *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
 	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
 	RequireConsentNonRepudiation *bool                                       `json:"require_consent_non_repudiation,omitempty" url:"-"`
 	AuthorizationDetails         []any                                       `json:"authorization_details,omitempty" url:"-"`
@@ -5382,6 +5395,13 @@ func (c *CreateResourceServerRequestContent) SetSkipConsentForVerifiableFirstPar
 func (c *CreateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
 	c.EnforcePolicies = enforcePolicies
 	c.require(createResourceServerRequestContentFieldEnforcePolicies)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *bool) {
+	c.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	c.require(createResourceServerRequestContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;
@@ -15777,16 +15797,17 @@ var (
 	updateResourceServerRequestContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 9)
 	updateResourceServerRequestContentFieldTokenDialect                              = big.NewInt(1 << 10)
 	updateResourceServerRequestContentFieldEnforcePolicies                           = big.NewInt(1 << 11)
-	updateResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 12)
-	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 13)
-	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 14)
-	updateResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 15)
-	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 16)
-	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 17)
-	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
-	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
-	updateResourceServerRequestContentFieldAgentSubjectClaims                        = big.NewInt(1 << 20)
-	updateResourceServerRequestContentFieldType                                      = big.NewInt(1 << 21)
+	updateResourceServerRequestContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 12)
+	updateResourceServerRequestContentFieldAccessToken                               = big.NewInt(1 << 13)
+	updateResourceServerRequestContentFieldTokenEncryption                           = big.NewInt(1 << 14)
+	updateResourceServerRequestContentFieldConsentPolicy                             = big.NewInt(1 << 15)
+	updateResourceServerRequestContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 16)
+	updateResourceServerRequestContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
+	updateResourceServerRequestContentFieldProofOfPossession                         = big.NewInt(1 << 18)
+	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
+	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
+	updateResourceServerRequestContentFieldAgentSubjectClaims                        = big.NewInt(1 << 21)
+	updateResourceServerRequestContentFieldType                                      = big.NewInt(1 << 22)
 )
 
 type UpdateResourceServerRequestContent struct {
@@ -15811,10 +15832,12 @@ type UpdateResourceServerRequestContent struct {
 	TokenLifetimeForAnonymousAccessTokens *int                                  `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"-"`
 	TokenDialect                          *ResourceServerTokenDialectSchemaEnum `json:"token_dialect,omitempty" url:"-"`
 	// Whether authorization policies are enforced (true) or not enforced (false).
-	EnforcePolicies *bool                            `json:"enforce_policies,omitempty" url:"-"`
-	AccessToken     *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
-	TokenEncryption *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
-	ConsentPolicy   *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
+	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"-"`
+	// Whether to advertise this resource server for personal agents (the Poppy personal agent protocol).
+	UseForPersonalAgentProtocol *bool                            `json:"use_for_personal_agent_protocol,omitempty" url:"-"`
+	AccessToken                 *ResourceServerAccessToken       `json:"access_token,omitempty" url:"-"`
+	TokenEncryption             *ResourceServerTokenEncryption   `json:"token_encryption,omitempty" url:"-"`
+	ConsentPolicy               *ResourceServerConsentPolicyEnum `json:"consent_policy,omitempty" url:"-"`
 	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
 	RequireConsentNonRepudiation *bool                                       `json:"require_consent_non_repudiation,omitempty" url:"-"`
 	AuthorizationDetails         []any                                       `json:"authorization_details,omitempty" url:"-"`
@@ -15919,6 +15942,13 @@ func (u *UpdateResourceServerRequestContent) SetTokenDialect(tokenDialect *Resou
 func (u *UpdateResourceServerRequestContent) SetEnforcePolicies(enforcePolicies *bool) {
 	u.EnforcePolicies = enforcePolicies
 	u.require(updateResourceServerRequestContentFieldEnforcePolicies)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *bool) {
+	u.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	u.require(updateResourceServerRequestContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;
@@ -16134,27 +16164,28 @@ var (
 	updateTenantSettingsRequestContentFieldLegacySandboxVersion                                 = big.NewInt(1 << 22)
 	updateTenantSettingsRequestContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 23)
 	updateTenantSettingsRequestContentFieldEnabledLocales                                       = big.NewInt(1 << 24)
-	updateTenantSettingsRequestContentFieldAccessToken                                          = big.NewInt(1 << 25)
-	updateTenantSettingsRequestContentFieldSecurityHeaders                                      = big.NewInt(1 << 26)
-	updateTenantSettingsRequestContentFieldSessionCookie                                        = big.NewInt(1 << 27)
-	updateTenantSettingsRequestContentFieldSessions                                             = big.NewInt(1 << 28)
-	updateTenantSettingsRequestContentFieldOidcLogout                                           = big.NewInt(1 << 29)
-	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 30)
-	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 31)
-	updateTenantSettingsRequestContentFieldAcrValuesSupported                                   = big.NewInt(1 << 32)
-	updateTenantSettingsRequestContentFieldMtls                                                 = big.NewInt(1 << 33)
-	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 34)
-	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 35)
-	updateTenantSettingsRequestContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 36)
-	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 37)
-	updateTenantSettingsRequestContentFieldResourceParameterProfile                             = big.NewInt(1 << 38)
-	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 39)
-	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 40)
-	updateTenantSettingsRequestContentFieldEnableAiGuide                                        = big.NewInt(1 << 41)
-	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 42)
-	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 43)
-	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 44)
-	updateTenantSettingsRequestContentFieldCountryCodes                                         = big.NewInt(1 << 45)
+	updateTenantSettingsRequestContentFieldPersonalAgentProtocolCompanyDomains                  = big.NewInt(1 << 25)
+	updateTenantSettingsRequestContentFieldAccessToken                                          = big.NewInt(1 << 26)
+	updateTenantSettingsRequestContentFieldSecurityHeaders                                      = big.NewInt(1 << 27)
+	updateTenantSettingsRequestContentFieldSessionCookie                                        = big.NewInt(1 << 28)
+	updateTenantSettingsRequestContentFieldSessions                                             = big.NewInt(1 << 29)
+	updateTenantSettingsRequestContentFieldOidcLogout                                           = big.NewInt(1 << 30)
+	updateTenantSettingsRequestContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 31)
+	updateTenantSettingsRequestContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 32)
+	updateTenantSettingsRequestContentFieldAcrValuesSupported                                   = big.NewInt(1 << 33)
+	updateTenantSettingsRequestContentFieldMtls                                                 = big.NewInt(1 << 34)
+	updateTenantSettingsRequestContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 35)
+	updateTenantSettingsRequestContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 36)
+	updateTenantSettingsRequestContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 37)
+	updateTenantSettingsRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 38)
+	updateTenantSettingsRequestContentFieldResourceParameterProfile                             = big.NewInt(1 << 39)
+	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 40)
+	updateTenantSettingsRequestContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 41)
+	updateTenantSettingsRequestContentFieldEnableAiGuide                                        = big.NewInt(1 << 42)
+	updateTenantSettingsRequestContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 43)
+	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 44)
+	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 45)
+	updateTenantSettingsRequestContentFieldCountryCodes                                         = big.NewInt(1 << 46)
 )
 
 type UpdateTenantSettingsRequestContent struct {
@@ -16202,12 +16233,14 @@ type UpdateTenantSettingsRequestContent struct {
 	// The default absolute redirection uri, must be https
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"-"`
 	// Supported locales for the user interface
-	EnabledLocales  []TenantSettingsSupportedLocalesEnum   `json:"enabled_locales,omitempty" url:"-"`
-	AccessToken     *ResourceServerAccessToken             `json:"access_token,omitempty" url:"-"`
-	SecurityHeaders *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"-"`
-	SessionCookie   *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"-"`
-	Sessions        *TenantSettingsSessions                `json:"sessions,omitempty" url:"-"`
-	OidcLogout      *TenantOidcLogoutSettings              `json:"oidc_logout,omitempty" url:"-"`
+	EnabledLocales []TenantSettingsSupportedLocalesEnum `json:"enabled_locales,omitempty" url:"-"`
+	// Company domains advertised for the personal agent protocol (Poppy). Each value is an https origin of the form https://{domain}, with no path, port, or trailing slash. At most 5 entries.
+	PersonalAgentProtocolCompanyDomains []string                               `json:"personal_agent_protocol_company_domains,omitempty" url:"-"`
+	AccessToken                         *ResourceServerAccessToken             `json:"access_token,omitempty" url:"-"`
+	SecurityHeaders                     *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"-"`
+	SessionCookie                       *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"-"`
+	Sessions                            *TenantSettingsSessions                `json:"sessions,omitempty" url:"-"`
+	OidcLogout                          *TenantOidcLogoutSettings              `json:"oidc_logout,omitempty" url:"-"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
 	CustomizeMfaInPostloginAction *bool `json:"customize_mfa_in_postlogin_action,omitempty" url:"-"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
@@ -16425,6 +16458,13 @@ func (u *UpdateTenantSettingsRequestContent) SetDefaultRedirectionURI(defaultRed
 func (u *UpdateTenantSettingsRequestContent) SetEnabledLocales(enabledLocales []TenantSettingsSupportedLocalesEnum) {
 	u.EnabledLocales = enabledLocales
 	u.require(updateTenantSettingsRequestContentFieldEnabledLocales)
+}
+
+// SetPersonalAgentProtocolCompanyDomains sets the PersonalAgentProtocolCompanyDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetPersonalAgentProtocolCompanyDomains(personalAgentProtocolCompanyDomains []string) {
+	u.PersonalAgentProtocolCompanyDomains = personalAgentProtocolCompanyDomains
+	u.require(updateTenantSettingsRequestContentFieldPersonalAgentProtocolCompanyDomains)
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;
@@ -19174,42 +19214,43 @@ var (
 	updateClientRequestContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 22)
 	updateClientRequestContentFieldAppType                                        = big.NewInt(1 << 23)
 	updateClientRequestContentFieldIsFirstParty                                   = big.NewInt(1 << 24)
-	updateClientRequestContentFieldOidcConformant                                 = big.NewInt(1 << 25)
-	updateClientRequestContentFieldCustomLoginPage                                = big.NewInt(1 << 26)
-	updateClientRequestContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 27)
-	updateClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 28)
-	updateClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 29)
-	updateClientRequestContentFieldAnonymousSessions                              = big.NewInt(1 << 30)
-	updateClientRequestContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 31)
-	updateClientRequestContentFieldFormTemplate                                   = big.NewInt(1 << 32)
-	updateClientRequestContentFieldAddons                                         = big.NewInt(1 << 33)
-	updateClientRequestContentFieldClientMetadata                                 = big.NewInt(1 << 34)
-	updateClientRequestContentFieldMobile                                         = big.NewInt(1 << 35)
-	updateClientRequestContentFieldInitiateLoginURI                               = big.NewInt(1 << 36)
-	updateClientRequestContentFieldNativeSocialLogin                              = big.NewInt(1 << 37)
-	updateClientRequestContentFieldFedcmLogin                                     = big.NewInt(1 << 38)
-	updateClientRequestContentFieldRefreshToken                                   = big.NewInt(1 << 39)
-	updateClientRequestContentFieldDefaultOrganization                            = big.NewInt(1 << 40)
-	updateClientRequestContentFieldOrganizationUsage                              = big.NewInt(1 << 41)
-	updateClientRequestContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 42)
-	updateClientRequestContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 43)
-	updateClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 44)
-	updateClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 45)
-	updateClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 46)
-	updateClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 47)
-	updateClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 48)
-	updateClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 49)
-	updateClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 50)
-	updateClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 51)
-	updateClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 52)
-	updateClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	updateClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
-	updateClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 56)
-	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	updateClientRequestContentFieldAgentID                                        = big.NewInt(1 << 59)
-	updateClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 60)
+	updateClientRequestContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 25)
+	updateClientRequestContentFieldOidcConformant                                 = big.NewInt(1 << 26)
+	updateClientRequestContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
+	updateClientRequestContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
+	updateClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 29)
+	updateClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 30)
+	updateClientRequestContentFieldAnonymousSessions                              = big.NewInt(1 << 31)
+	updateClientRequestContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 32)
+	updateClientRequestContentFieldFormTemplate                                   = big.NewInt(1 << 33)
+	updateClientRequestContentFieldAddons                                         = big.NewInt(1 << 34)
+	updateClientRequestContentFieldClientMetadata                                 = big.NewInt(1 << 35)
+	updateClientRequestContentFieldMobile                                         = big.NewInt(1 << 36)
+	updateClientRequestContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
+	updateClientRequestContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
+	updateClientRequestContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
+	updateClientRequestContentFieldRefreshToken                                   = big.NewInt(1 << 40)
+	updateClientRequestContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
+	updateClientRequestContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
+	updateClientRequestContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
+	updateClientRequestContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
+	updateClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
+	updateClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
+	updateClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
+	updateClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
+	updateClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
+	updateClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 50)
+	updateClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
+	updateClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 52)
+	updateClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
+	updateClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 54)
+	updateClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 55)
+	updateClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 56)
+	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 58)
+	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 59)
+	updateClientRequestContentFieldAgentID                                        = big.NewInt(1 << 60)
+	updateClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 61)
 )
 
 type UpdateClientRequestContent struct {
@@ -19259,6 +19300,8 @@ type UpdateClientRequestContent struct {
 	AppType                        *ClientAppTypeEnum `json:"app_type,omitempty" url:"-"`
 	// Whether this client a first party client or not
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"-"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"-"`
 	// Whether this client will conform to strict OIDC specifications
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"-"`
 	// The content (HTML, CSS, JS) of the custom login page
@@ -19495,6 +19538,13 @@ func (u *UpdateClientRequestContent) SetAppType(appType *ClientAppTypeEnum) {
 func (u *UpdateClientRequestContent) SetIsFirstParty(isFirstParty *bool) {
 	u.IsFirstParty = isFirstParty
 	u.require(updateClientRequestContentFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientRequestContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	u.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	u.require(updateClientRequestContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;

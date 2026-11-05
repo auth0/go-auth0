@@ -122,6 +122,14 @@ func TestSettersCreateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol", func(t *testing.T) {
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+		assert.Equal(t, fernTestValueUseForPersonalAgentProtocol, obj.UseForPersonalAgentProtocol)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
 		obj := &CreateResourceServerResponseContent{}
 		var fernTestValueTokenLifetimeForAnonymousAccessTokens *int
@@ -702,6 +710,40 @@ func TestGettersCreateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnforcePolicies() // Should return zero value
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var value bool
+		obj.UseForPersonalAgentProtocol = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseForPersonalAgentProtocol(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		obj.UseForPersonalAgentProtocol = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseForPersonalAgentProtocol(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseForPersonalAgentProtocol() // Should return zero value
 	})
 
 	t.Run("GetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
@@ -1582,6 +1624,37 @@ func TestSettersMarkExplicitCreateResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerResponseContent{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+
+		// Act
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetTokenLifetimeForAnonymousAccessTokens_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -2097,6 +2170,14 @@ func TestSettersGetResourceServerResponseContent(t *testing.T) {
 		var fernTestValueEnforcePolicies *bool
 		obj.SetEnforcePolicies(fernTestValueEnforcePolicies)
 		assert.Equal(t, fernTestValueEnforcePolicies, obj.EnforcePolicies)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetUseForPersonalAgentProtocol", func(t *testing.T) {
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+		assert.Equal(t, fernTestValueUseForPersonalAgentProtocol, obj.UseForPersonalAgentProtocol)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2680,6 +2761,40 @@ func TestGettersGetResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnforcePolicies() // Should return zero value
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var value bool
+		obj.UseForPersonalAgentProtocol = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseForPersonalAgentProtocol(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		obj.UseForPersonalAgentProtocol = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseForPersonalAgentProtocol(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseForPersonalAgentProtocol() // Should return zero value
 	})
 
 	t.Run("GetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
@@ -3560,6 +3675,37 @@ func TestSettersMarkExplicitGetResourceServerResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetResourceServerResponseContent{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+
+		// Act
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetTokenLifetimeForAnonymousAccessTokens_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -4378,6 +4524,14 @@ func TestSettersResourceServer(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol", func(t *testing.T) {
+		obj := &ResourceServer{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+		assert.Equal(t, fernTestValueUseForPersonalAgentProtocol, obj.UseForPersonalAgentProtocol)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
 		obj := &ResourceServer{}
 		var fernTestValueTokenLifetimeForAnonymousAccessTokens *int
@@ -4958,6 +5112,40 @@ func TestGettersResourceServer(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnforcePolicies() // Should return zero value
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var value bool
+		obj.UseForPersonalAgentProtocol = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseForPersonalAgentProtocol(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		obj.UseForPersonalAgentProtocol = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseForPersonalAgentProtocol(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseForPersonalAgentProtocol() // Should return zero value
 	})
 
 	t.Run("GetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
@@ -5815,6 +6003,37 @@ func TestSettersMarkExplicitResourceServer(t *testing.T) {
 
 		// Act
 		obj.SetEnforcePolicies(fernTestValueEnforcePolicies)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUseForPersonalAgentProtocol_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServer{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+
+		// Act
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -6769,6 +6988,14 @@ func TestSettersResourceServerSearchResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol", func(t *testing.T) {
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+		assert.Equal(t, fernTestValueUseForPersonalAgentProtocol, obj.UseForPersonalAgentProtocol)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
 		obj := &ResourceServerSearchResponse{}
 		var fernTestValueTokenLifetimeForAnonymousAccessTokens *int
@@ -7315,6 +7542,40 @@ func TestGettersResourceServerSearchResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnforcePolicies() // Should return zero value
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var value bool
+		obj.UseForPersonalAgentProtocol = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseForPersonalAgentProtocol(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		obj.UseForPersonalAgentProtocol = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseForPersonalAgentProtocol(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ResourceServerSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseForPersonalAgentProtocol() // Should return zero value
 	})
 
 	t.Run("GetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
@@ -8141,6 +8402,37 @@ func TestSettersMarkExplicitResourceServerSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetEnforcePolicies(fernTestValueEnforcePolicies)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUseForPersonalAgentProtocol_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ResourceServerSearchResponse{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+
+		// Act
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -9732,6 +10024,14 @@ func TestSettersUpdateResourceServerResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol", func(t *testing.T) {
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+		assert.Equal(t, fernTestValueUseForPersonalAgentProtocol, obj.UseForPersonalAgentProtocol)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
 		obj := &UpdateResourceServerResponseContent{}
 		var fernTestValueTokenLifetimeForAnonymousAccessTokens *int
@@ -10312,6 +10612,40 @@ func TestGettersUpdateResourceServerResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetEnforcePolicies() // Should return zero value
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var value bool
+		obj.UseForPersonalAgentProtocol = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetUseForPersonalAgentProtocol(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		obj.UseForPersonalAgentProtocol = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetUseForPersonalAgentProtocol(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetUseForPersonalAgentProtocol_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateResourceServerResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetUseForPersonalAgentProtocol() // Should return zero value
 	})
 
 	t.Run("GetTokenLifetimeForAnonymousAccessTokens", func(t *testing.T) {
@@ -11169,6 +11503,37 @@ func TestSettersMarkExplicitUpdateResourceServerResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetEnforcePolicies(fernTestValueEnforcePolicies)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUseForPersonalAgentProtocol_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerResponseContent{}
+		var fernTestValueUseForPersonalAgentProtocol *bool
+
+		// Act
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

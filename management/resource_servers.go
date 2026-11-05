@@ -24,19 +24,20 @@ var (
 	createResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
 	createResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	createResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	createResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
-	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
-	createResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
-	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
-	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
-	createResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
-	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
-	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
-	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
-	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
-	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
-	createResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
+	createResourceServerResponseContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 14)
+	createResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 15)
+	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 16)
+	createResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 17)
+	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 18)
+	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 19)
+	createResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 20)
+	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 21)
+	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 22)
+	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 23)
+	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 24)
+	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 25)
+	createResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 26)
+	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 27)
 )
 
 // createResourceServerResponseContentNullableFields maps the wire names of CreateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -78,6 +79,8 @@ type CreateResourceServerResponseContent struct {
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
 	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Whether this resource server is advertised for personal agents (the Poppy personal agent protocol). An absent value behaves as false.
+	UseForPersonalAgentProtocol *bool `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
@@ -198,6 +201,13 @@ func (c *CreateResourceServerResponseContent) GetEnforcePolicies() bool {
 		return false
 	}
 	return *c.EnforcePolicies
+}
+
+func (c *CreateResourceServerResponseContent) GetUseForPersonalAgentProtocol() bool {
+	if c == nil || c.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *c.UseForPersonalAgentProtocol
 }
 
 func (c *CreateResourceServerResponseContent) GetTokenLifetimeForAnonymousAccessTokens() int {
@@ -405,6 +415,13 @@ func (c *CreateResourceServerResponseContent) SetEnforcePolicies(enforcePolicies
 	c.require(createResourceServerResponseContentFieldEnforcePolicies)
 }
 
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *bool) {
+	c.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	c.require(createResourceServerResponseContentFieldUseForPersonalAgentProtocol)
+}
+
 // SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
@@ -560,19 +577,20 @@ var (
 	getResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
 	getResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	getResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	getResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
-	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
-	getResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
-	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
-	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
-	getResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
-	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
-	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
-	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
-	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
-	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
-	getResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
+	getResourceServerResponseContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 14)
+	getResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 15)
+	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 16)
+	getResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 17)
+	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 18)
+	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 19)
+	getResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 20)
+	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 21)
+	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 22)
+	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 23)
+	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 24)
+	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 25)
+	getResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 26)
+	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 27)
 )
 
 // getResourceServerResponseContentNullableFields maps the wire names of GetResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -614,6 +632,8 @@ type GetResourceServerResponseContent struct {
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
 	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Whether this resource server is advertised for personal agents (the Poppy personal agent protocol). An absent value behaves as false.
+	UseForPersonalAgentProtocol *bool `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
@@ -734,6 +754,13 @@ func (g *GetResourceServerResponseContent) GetEnforcePolicies() bool {
 		return false
 	}
 	return *g.EnforcePolicies
+}
+
+func (g *GetResourceServerResponseContent) GetUseForPersonalAgentProtocol() bool {
+	if g == nil || g.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *g.UseForPersonalAgentProtocol
 }
 
 func (g *GetResourceServerResponseContent) GetTokenLifetimeForAnonymousAccessTokens() int {
@@ -939,6 +966,13 @@ func (g *GetResourceServerResponseContent) SetTokenLifetimeForWeb(tokenLifetimeF
 func (g *GetResourceServerResponseContent) SetEnforcePolicies(enforcePolicies *bool) {
 	g.EnforcePolicies = enforcePolicies
 	g.require(getResourceServerResponseContentFieldEnforcePolicies)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *bool) {
+	g.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	g.require(getResourceServerResponseContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
@@ -1230,19 +1264,20 @@ var (
 	resourceServerFieldTokenLifetime                             = big.NewInt(1 << 11)
 	resourceServerFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	resourceServerFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	resourceServerFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
-	resourceServerFieldTokenDialect                              = big.NewInt(1 << 15)
-	resourceServerFieldAccessToken                               = big.NewInt(1 << 16)
-	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 17)
-	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 18)
-	resourceServerFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
-	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 20)
-	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 21)
-	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
-	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
-	resourceServerFieldClientID                                  = big.NewInt(1 << 24)
-	resourceServerFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	resourceServerFieldType                                      = big.NewInt(1 << 26)
+	resourceServerFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 14)
+	resourceServerFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 15)
+	resourceServerFieldTokenDialect                              = big.NewInt(1 << 16)
+	resourceServerFieldAccessToken                               = big.NewInt(1 << 17)
+	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 18)
+	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 19)
+	resourceServerFieldRequireConsentNonRepudiation              = big.NewInt(1 << 20)
+	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 21)
+	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 22)
+	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 23)
+	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 24)
+	resourceServerFieldClientID                                  = big.NewInt(1 << 25)
+	resourceServerFieldAgentSubjectClaims                        = big.NewInt(1 << 26)
+	resourceServerFieldType                                      = big.NewInt(1 << 27)
 )
 
 // resourceServerNullableFields maps the wire names of ResourceServer's nullable fields (required or optional) to their field bits.
@@ -1284,6 +1319,8 @@ type ResourceServer struct {
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
 	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Whether this resource server is advertised for personal agents (the Poppy personal agent protocol). An absent value behaves as false.
+	UseForPersonalAgentProtocol *bool `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
@@ -1404,6 +1441,13 @@ func (r *ResourceServer) GetEnforcePolicies() bool {
 		return false
 	}
 	return *r.EnforcePolicies
+}
+
+func (r *ResourceServer) GetUseForPersonalAgentProtocol() bool {
+	if r == nil || r.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *r.UseForPersonalAgentProtocol
 }
 
 func (r *ResourceServer) GetTokenLifetimeForAnonymousAccessTokens() int {
@@ -1609,6 +1653,13 @@ func (r *ResourceServer) SetTokenLifetimeForWeb(tokenLifetimeForWeb *int) {
 func (r *ResourceServer) SetEnforcePolicies(enforcePolicies *bool) {
 	r.EnforcePolicies = enforcePolicies
 	r.require(resourceServerFieldEnforcePolicies)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *bool) {
+	r.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	r.require(resourceServerFieldUseForPersonalAgentProtocol)
 }
 
 // SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
@@ -2188,19 +2239,20 @@ var (
 	resourceServerSearchResponseFieldTokenLifetime                             = big.NewInt(1 << 10)
 	resourceServerSearchResponseFieldTokenLifetimeForWeb                       = big.NewInt(1 << 11)
 	resourceServerSearchResponseFieldEnforcePolicies                           = big.NewInt(1 << 12)
-	resourceServerSearchResponseFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 13)
-	resourceServerSearchResponseFieldTokenDialect                              = big.NewInt(1 << 14)
-	resourceServerSearchResponseFieldAccessToken                               = big.NewInt(1 << 15)
-	resourceServerSearchResponseFieldTokenEncryption                           = big.NewInt(1 << 16)
-	resourceServerSearchResponseFieldConsentPolicy                             = big.NewInt(1 << 17)
-	resourceServerSearchResponseFieldRequireConsentNonRepudiation              = big.NewInt(1 << 18)
-	resourceServerSearchResponseFieldAuthorizationDetails                      = big.NewInt(1 << 19)
-	resourceServerSearchResponseFieldProofOfPossession                         = big.NewInt(1 << 20)
-	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
-	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
-	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 23)
-	resourceServerSearchResponseFieldAgentSubjectClaims                        = big.NewInt(1 << 24)
-	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 25)
+	resourceServerSearchResponseFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 13)
+	resourceServerSearchResponseFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
+	resourceServerSearchResponseFieldTokenDialect                              = big.NewInt(1 << 15)
+	resourceServerSearchResponseFieldAccessToken                               = big.NewInt(1 << 16)
+	resourceServerSearchResponseFieldTokenEncryption                           = big.NewInt(1 << 17)
+	resourceServerSearchResponseFieldConsentPolicy                             = big.NewInt(1 << 18)
+	resourceServerSearchResponseFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	resourceServerSearchResponseFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	resourceServerSearchResponseFieldProofOfPossession                         = big.NewInt(1 << 21)
+	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 24)
+	resourceServerSearchResponseFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 26)
 )
 
 // resourceServerSearchResponseNullableFields maps the wire names of ResourceServerSearchResponse's nullable fields (required or optional) to their field bits.
@@ -2240,6 +2292,8 @@ type ResourceServerSearchResponse struct {
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
 	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Whether this resource server is advertised for personal agents (the Poppy personal agent protocol). An absent value behaves as false.
+	UseForPersonalAgentProtocol *bool `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
@@ -2353,6 +2407,13 @@ func (r *ResourceServerSearchResponse) GetEnforcePolicies() bool {
 		return false
 	}
 	return *r.EnforcePolicies
+}
+
+func (r *ResourceServerSearchResponse) GetUseForPersonalAgentProtocol() bool {
+	if r == nil || r.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *r.UseForPersonalAgentProtocol
 }
 
 func (r *ResourceServerSearchResponse) GetTokenLifetimeForAnonymousAccessTokens() int {
@@ -2551,6 +2612,13 @@ func (r *ResourceServerSearchResponse) SetTokenLifetimeForWeb(tokenLifetimeForWe
 func (r *ResourceServerSearchResponse) SetEnforcePolicies(enforcePolicies *bool) {
 	r.EnforcePolicies = enforcePolicies
 	r.require(resourceServerSearchResponseFieldEnforcePolicies)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *bool) {
+	r.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	r.require(resourceServerSearchResponseFieldUseForPersonalAgentProtocol)
 }
 
 // SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
@@ -3668,19 +3736,20 @@ var (
 	updateResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
 	updateResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	updateResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	updateResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
-	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
-	updateResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
-	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
-	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
-	updateResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
-	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
-	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
-	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
-	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
-	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
-	updateResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
+	updateResourceServerResponseContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 14)
+	updateResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 15)
+	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 16)
+	updateResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 17)
+	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 18)
+	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 19)
+	updateResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 20)
+	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 21)
+	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 22)
+	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 23)
+	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 24)
+	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 25)
+	updateResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 26)
+	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 27)
 )
 
 // updateResourceServerResponseContentNullableFields maps the wire names of UpdateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -3722,6 +3791,8 @@ type UpdateResourceServerResponseContent struct {
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
 	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Whether this resource server is advertised for personal agents (the Poppy personal agent protocol). An absent value behaves as false.
+	UseForPersonalAgentProtocol *bool `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
 	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
 	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
@@ -3842,6 +3913,13 @@ func (u *UpdateResourceServerResponseContent) GetEnforcePolicies() bool {
 		return false
 	}
 	return *u.EnforcePolicies
+}
+
+func (u *UpdateResourceServerResponseContent) GetUseForPersonalAgentProtocol() bool {
+	if u == nil || u.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *u.UseForPersonalAgentProtocol
 }
 
 func (u *UpdateResourceServerResponseContent) GetTokenLifetimeForAnonymousAccessTokens() int {
@@ -4047,6 +4125,13 @@ func (u *UpdateResourceServerResponseContent) SetTokenLifetimeForWeb(tokenLifeti
 func (u *UpdateResourceServerResponseContent) SetEnforcePolicies(enforcePolicies *bool) {
 	u.EnforcePolicies = enforcePolicies
 	u.require(updateResourceServerResponseContentFieldEnforcePolicies)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *bool) {
+	u.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	u.require(updateResourceServerResponseContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;

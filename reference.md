@@ -2439,6 +2439,14 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**allowPersonalAgentBrowserJoin:** `*bool` — Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **oidcConformant:** `*bool` — Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
     
 </dd>
@@ -3486,6 +3494,14 @@ client.Clients.Update(
 <dd>
 
 **isFirstParty:** `*bool` — Whether this client a first party client or not
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowPersonalAgentBrowserJoin:** `*bool` — Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients.
     
 </dd>
 </dl>
@@ -12205,6 +12221,14 @@ client.ResourceServers.Create(
 <dl>
 <dd>
 
+**useForPersonalAgentProtocol:** `*bool` — Whether to advertise this resource server for personal agents (the Poppy personal agent protocol).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **accessToken:** `*management.ResourceServerAccessToken` 
     
 </dd>
@@ -12688,6 +12712,14 @@ client.ResourceServers.Update(
 <dd>
 
 **enforcePolicies:** `*bool` — Whether authorization policies are enforced (true) or not enforced (false).
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForPersonalAgentProtocol:** `*bool` — Whether to advertise this resource server for personal agents (the Poppy personal agent protocol).
     
 </dd>
 </dl>
@@ -35941,6 +35973,14 @@ client.Tenants.Settings.Update(
 <dd>
 
 **enabledLocales:** `[]management.TenantSettingsSupportedLocalesEnum` — Supported locales for the user interface
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**personalAgentProtocolCompanyDomains:** `[]string` — Company domains advertised for the personal agent protocol (Poppy). Each value is an https origin of the form https://{domain}, with no path, port, or trailing slash. At most 5 entries.
     
 </dd>
 </dl>

@@ -11347,13 +11347,15 @@ func (c *ClientCredential) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Algorithm which will be used with the credential. Supported algorithms: RS256,RS384,PS256
+// Algorithm which will be used with the credential. Supported algorithms: RS256,RS384,PS256,ES256,PS384
 type ClientCredentialAlgorithmEnum string
 
 const (
 	ClientCredentialAlgorithmEnumRs256 ClientCredentialAlgorithmEnum = "RS256"
 	ClientCredentialAlgorithmEnumRs384 ClientCredentialAlgorithmEnum = "RS384"
 	ClientCredentialAlgorithmEnumPs256 ClientCredentialAlgorithmEnum = "PS256"
+	ClientCredentialAlgorithmEnumEs256 ClientCredentialAlgorithmEnum = "ES256"
+	ClientCredentialAlgorithmEnumPs384 ClientCredentialAlgorithmEnum = "PS384"
 )
 
 func NewClientCredentialAlgorithmEnumFromString(s string) (ClientCredentialAlgorithmEnum, error) {
@@ -11364,6 +11366,10 @@ func NewClientCredentialAlgorithmEnumFromString(s string) (ClientCredentialAlgor
 		return ClientCredentialAlgorithmEnumRs384, nil
 	case "PS256":
 		return ClientCredentialAlgorithmEnumPs256, nil
+	case "ES256":
+		return ClientCredentialAlgorithmEnumEs256, nil
+	case "PS384":
+		return ClientCredentialAlgorithmEnumPs384, nil
 	}
 	var t ClientCredentialAlgorithmEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -97206,36 +97212,38 @@ var (
 	getTenantSettingsResponseContentFieldSandboxVersionsAvailable                             = big.NewInt(1 << 19)
 	getTenantSettingsResponseContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 20)
 	getTenantSettingsResponseContentFieldEnabledLocales                                       = big.NewInt(1 << 21)
-	getTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 22)
-	getTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 23)
-	getTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 24)
-	getTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 25)
-	getTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 26)
-	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 27)
-	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 28)
-	getTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 29)
-	getTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 30)
-	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 31)
-	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 32)
-	getTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 33)
-	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 34)
-	getTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 35)
-	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 36)
-	getTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 37)
-	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 38)
-	getTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 39)
-	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
-	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
-	getTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
+	getTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains                  = big.NewInt(1 << 22)
+	getTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 23)
+	getTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 24)
+	getTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 25)
+	getTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 26)
+	getTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 27)
+	getTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 28)
+	getTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 29)
+	getTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 30)
+	getTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 31)
+	getTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 32)
+	getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 33)
+	getTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 34)
+	getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 35)
+	getTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 36)
+	getTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 37)
+	getTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 38)
+	getTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 39)
+	getTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 40)
+	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 41)
+	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 42)
+	getTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 43)
 )
 
 // getTenantSettingsResponseContentNullableFields maps the wire names of GetTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
 var getTenantSettingsResponseContentNullableFields = map[string]*big.Int{
-	"change_password":      getTenantSettingsResponseContentFieldChangePassword,
-	"guardian_mfa_page":    getTenantSettingsResponseContentFieldGuardianMfaPage,
-	"error_page":           getTenantSettingsResponseContentFieldErrorPage,
-	"device_flow":          getTenantSettingsResponseContentFieldDeviceFlow,
-	"default_token_quota":  getTenantSettingsResponseContentFieldDefaultTokenQuota,
+	"change_password":     getTenantSettingsResponseContentFieldChangePassword,
+	"guardian_mfa_page":   getTenantSettingsResponseContentFieldGuardianMfaPage,
+	"error_page":          getTenantSettingsResponseContentFieldErrorPage,
+	"device_flow":         getTenantSettingsResponseContentFieldDeviceFlow,
+	"default_token_quota": getTenantSettingsResponseContentFieldDefaultTokenQuota,
+	"personal_agent_protocol_company_domains": getTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains,
 	"access_token":         getTenantSettingsResponseContentFieldAccessToken,
 	"security_headers":     getTenantSettingsResponseContentFieldSecurityHeaders,
 	"session_cookie":       getTenantSettingsResponseContentFieldSessionCookie,
@@ -97285,12 +97293,14 @@ type GetTenantSettingsResponseContent struct {
 	// The default absolute redirection uri, must be https
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
 	// Supported locales for the user interface.
-	EnabledLocales  []SupportedLocales                     `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
-	AccessToken     *ResourceServerAccessToken             `json:"access_token,omitempty" url:"access_token,omitempty"`
-	SecurityHeaders *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"security_headers,omitempty"`
-	SessionCookie   *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
-	Sessions        *TenantSettingsSessions                `json:"sessions,omitempty" url:"sessions,omitempty"`
-	OidcLogout      *TenantOidcLogoutSettings              `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
+	EnabledLocales []SupportedLocales `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
+	// Company domains advertised for the personal agent protocol (Poppy). Each value is an https origin of the form https://{domain}, with no path, port, or trailing slash. At most 5 entries.
+	PersonalAgentProtocolCompanyDomains []string                               `json:"personal_agent_protocol_company_domains,omitempty" url:"personal_agent_protocol_company_domains,omitempty"`
+	AccessToken                         *ResourceServerAccessToken             `json:"access_token,omitempty" url:"access_token,omitempty"`
+	SecurityHeaders                     *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"security_headers,omitempty"`
+	SessionCookie                       *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
+	Sessions                            *TenantSettingsSessions                `json:"sessions,omitempty" url:"sessions,omitempty"`
+	OidcLogout                          *TenantOidcLogoutSettings              `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
 	AllowOrganizationNameInAuthenticationAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty" url:"allow_organization_name_in_authentication_api,omitempty"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
@@ -97481,6 +97491,13 @@ func (g *GetTenantSettingsResponseContent) GetEnabledLocales() []SupportedLocale
 		return nil
 	}
 	return g.EnabledLocales
+}
+
+func (g *GetTenantSettingsResponseContent) GetPersonalAgentProtocolCompanyDomains() []string {
+	if g == nil || g.PersonalAgentProtocolCompanyDomains == nil {
+		return nil
+	}
+	return g.PersonalAgentProtocolCompanyDomains
 }
 
 func (g *GetTenantSettingsResponseContent) GetAccessToken() ResourceServerAccessToken {
@@ -97798,6 +97815,13 @@ func (g *GetTenantSettingsResponseContent) SetDefaultRedirectionURI(defaultRedir
 func (g *GetTenantSettingsResponseContent) SetEnabledLocales(enabledLocales []SupportedLocales) {
 	g.EnabledLocales = enabledLocales
 	g.require(getTenantSettingsResponseContentFieldEnabledLocales)
+}
+
+// SetPersonalAgentProtocolCompanyDomains sets the PersonalAgentProtocolCompanyDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTenantSettingsResponseContent) SetPersonalAgentProtocolCompanyDomains(personalAgentProtocolCompanyDomains []string) {
+	g.PersonalAgentProtocolCompanyDomains = personalAgentProtocolCompanyDomains
+	g.require(getTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains)
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;
@@ -119093,6 +119117,7 @@ const (
 	ScreenGroupNameEnumCustomForm                                ScreenGroupNameEnum = "custom-form"
 	ScreenGroupNameEnumConsent                                   ScreenGroupNameEnum = "consent"
 	ScreenGroupNameEnumConsentTenantScopes                       ScreenGroupNameEnum = "consent-tenant-scopes"
+	ScreenGroupNameEnumPendingConsent                            ScreenGroupNameEnum = "pending-consent"
 	ScreenGroupNameEnumCustomizedConsent                         ScreenGroupNameEnum = "customized-consent"
 	ScreenGroupNameEnumLogout                                    ScreenGroupNameEnum = "logout"
 	ScreenGroupNameEnumLogoutComplete                            ScreenGroupNameEnum = "logout-complete"
@@ -119218,6 +119243,8 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 		return ScreenGroupNameEnumConsent, nil
 	case "consent-tenant-scopes":
 		return ScreenGroupNameEnumConsentTenantScopes, nil
+	case "pending-consent":
+		return ScreenGroupNameEnumPendingConsent, nil
 	case "customized-consent":
 		return ScreenGroupNameEnumCustomizedConsent, nil
 	case "logout":
@@ -144482,36 +144509,38 @@ var (
 	updateTenantSettingsResponseContentFieldSandboxVersionsAvailable                             = big.NewInt(1 << 19)
 	updateTenantSettingsResponseContentFieldDefaultRedirectionURI                                = big.NewInt(1 << 20)
 	updateTenantSettingsResponseContentFieldEnabledLocales                                       = big.NewInt(1 << 21)
-	updateTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 22)
-	updateTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 23)
-	updateTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 24)
-	updateTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 25)
-	updateTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 26)
-	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 27)
-	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 28)
-	updateTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 29)
-	updateTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 30)
-	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 31)
-	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 32)
-	updateTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 33)
-	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 34)
-	updateTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 35)
-	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 36)
-	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 37)
-	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 38)
-	updateTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 39)
-	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
-	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
-	updateTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
+	updateTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains                  = big.NewInt(1 << 22)
+	updateTenantSettingsResponseContentFieldAccessToken                                          = big.NewInt(1 << 23)
+	updateTenantSettingsResponseContentFieldSecurityHeaders                                      = big.NewInt(1 << 24)
+	updateTenantSettingsResponseContentFieldSessionCookie                                        = big.NewInt(1 << 25)
+	updateTenantSettingsResponseContentFieldSessions                                             = big.NewInt(1 << 26)
+	updateTenantSettingsResponseContentFieldOidcLogout                                           = big.NewInt(1 << 27)
+	updateTenantSettingsResponseContentFieldAllowOrganizationNameInAuthenticationAPI             = big.NewInt(1 << 28)
+	updateTenantSettingsResponseContentFieldCustomizeMfaInPostloginAction                        = big.NewInt(1 << 29)
+	updateTenantSettingsResponseContentFieldAcrValuesSupported                                   = big.NewInt(1 << 30)
+	updateTenantSettingsResponseContentFieldMtls                                                 = big.NewInt(1 << 31)
+	updateTenantSettingsResponseContentFieldPushedAuthorizationRequestsSupported                 = big.NewInt(1 << 32)
+	updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported           = big.NewInt(1 << 33)
+	updateTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding                        = big.NewInt(1 << 34)
+	updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt       = big.NewInt(1 << 35)
+	updateTenantSettingsResponseContentFieldResourceParameterProfile                             = big.NewInt(1 << 36)
+	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentSupported                    = big.NewInt(1 << 37)
+	updateTenantSettingsResponseContentFieldClientIDMetadataDocumentDynamicRegistrationSupported = big.NewInt(1 << 38)
+	updateTenantSettingsResponseContentFieldPhoneConsolidatedExperience                          = big.NewInt(1 << 39)
+	updateTenantSettingsResponseContentFieldEnableAiGuide                                        = big.NewInt(1 << 40)
+	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 41)
+	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 42)
+	updateTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 43)
 )
 
 // updateTenantSettingsResponseContentNullableFields maps the wire names of UpdateTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
 var updateTenantSettingsResponseContentNullableFields = map[string]*big.Int{
-	"change_password":      updateTenantSettingsResponseContentFieldChangePassword,
-	"guardian_mfa_page":    updateTenantSettingsResponseContentFieldGuardianMfaPage,
-	"error_page":           updateTenantSettingsResponseContentFieldErrorPage,
-	"device_flow":          updateTenantSettingsResponseContentFieldDeviceFlow,
-	"default_token_quota":  updateTenantSettingsResponseContentFieldDefaultTokenQuota,
+	"change_password":     updateTenantSettingsResponseContentFieldChangePassword,
+	"guardian_mfa_page":   updateTenantSettingsResponseContentFieldGuardianMfaPage,
+	"error_page":          updateTenantSettingsResponseContentFieldErrorPage,
+	"device_flow":         updateTenantSettingsResponseContentFieldDeviceFlow,
+	"default_token_quota": updateTenantSettingsResponseContentFieldDefaultTokenQuota,
+	"personal_agent_protocol_company_domains": updateTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains,
 	"access_token":         updateTenantSettingsResponseContentFieldAccessToken,
 	"security_headers":     updateTenantSettingsResponseContentFieldSecurityHeaders,
 	"session_cookie":       updateTenantSettingsResponseContentFieldSessionCookie,
@@ -144561,12 +144590,14 @@ type UpdateTenantSettingsResponseContent struct {
 	// The default absolute redirection uri, must be https
 	DefaultRedirectionURI *string `json:"default_redirection_uri,omitempty" url:"default_redirection_uri,omitempty"`
 	// Supported locales for the user interface.
-	EnabledLocales  []SupportedLocales                     `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
-	AccessToken     *ResourceServerAccessToken             `json:"access_token,omitempty" url:"access_token,omitempty"`
-	SecurityHeaders *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"security_headers,omitempty"`
-	SessionCookie   *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
-	Sessions        *TenantSettingsSessions                `json:"sessions,omitempty" url:"sessions,omitempty"`
-	OidcLogout      *TenantOidcLogoutSettings              `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
+	EnabledLocales []SupportedLocales `json:"enabled_locales,omitempty" url:"enabled_locales,omitempty"`
+	// Company domains advertised for the personal agent protocol (Poppy). Each value is an https origin of the form https://{domain}, with no path, port, or trailing slash. At most 5 entries.
+	PersonalAgentProtocolCompanyDomains []string                               `json:"personal_agent_protocol_company_domains,omitempty" url:"personal_agent_protocol_company_domains,omitempty"`
+	AccessToken                         *ResourceServerAccessToken             `json:"access_token,omitempty" url:"access_token,omitempty"`
+	SecurityHeaders                     *TenantSettingsNullableSecurityHeaders `json:"security_headers,omitempty" url:"security_headers,omitempty"`
+	SessionCookie                       *SessionCookieSchema                   `json:"session_cookie,omitempty" url:"session_cookie,omitempty"`
+	Sessions                            *TenantSettingsSessions                `json:"sessions,omitempty" url:"sessions,omitempty"`
+	OidcLogout                          *TenantOidcLogoutSettings              `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
 	// Whether to accept an organization name instead of an ID on auth endpoints
 	AllowOrganizationNameInAuthenticationAPI *bool `json:"allow_organization_name_in_authentication_api,omitempty" url:"allow_organization_name_in_authentication_api,omitempty"`
 	// Whether to enable flexible factors for MFA in the PostLogin action
@@ -144757,6 +144788,13 @@ func (u *UpdateTenantSettingsResponseContent) GetEnabledLocales() []SupportedLoc
 		return nil
 	}
 	return u.EnabledLocales
+}
+
+func (u *UpdateTenantSettingsResponseContent) GetPersonalAgentProtocolCompanyDomains() []string {
+	if u == nil || u.PersonalAgentProtocolCompanyDomains == nil {
+		return nil
+	}
+	return u.PersonalAgentProtocolCompanyDomains
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetAccessToken() ResourceServerAccessToken {
@@ -145074,6 +145112,13 @@ func (u *UpdateTenantSettingsResponseContent) SetDefaultRedirectionURI(defaultRe
 func (u *UpdateTenantSettingsResponseContent) SetEnabledLocales(enabledLocales []SupportedLocales) {
 	u.EnabledLocales = enabledLocales
 	u.require(updateTenantSettingsResponseContentFieldEnabledLocales)
+}
+
+// SetPersonalAgentProtocolCompanyDomains sets the PersonalAgentProtocolCompanyDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsResponseContent) SetPersonalAgentProtocolCompanyDomains(personalAgentProtocolCompanyDomains []string) {
+	u.PersonalAgentProtocolCompanyDomains = personalAgentProtocolCompanyDomains
+	u.require(updateTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains)
 }
 
 // SetAccessToken sets the AccessToken field and marks it as non-optional;

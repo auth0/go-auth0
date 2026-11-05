@@ -1127,67 +1127,68 @@ var (
 	clientFieldAppType                                        = big.NewInt(1 << 8)
 	clientFieldLogoURI                                        = big.NewInt(1 << 9)
 	clientFieldIsFirstParty                                   = big.NewInt(1 << 10)
-	clientFieldOidcConformant                                 = big.NewInt(1 << 11)
-	clientFieldCallbacks                                      = big.NewInt(1 << 12)
-	clientFieldAllowedOrigins                                 = big.NewInt(1 << 13)
-	clientFieldWebOrigins                                     = big.NewInt(1 << 14)
-	clientFieldClientAliases                                  = big.NewInt(1 << 15)
-	clientFieldAllowedClients                                 = big.NewInt(1 << 16)
-	clientFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
-	clientFieldSessionTransfer                                = big.NewInt(1 << 18)
-	clientFieldOidcLogout                                     = big.NewInt(1 << 19)
-	clientFieldGrantTypes                                     = big.NewInt(1 << 20)
-	clientFieldJwtConfiguration                               = big.NewInt(1 << 21)
-	clientFieldSigningKeys                                    = big.NewInt(1 << 22)
-	clientFieldEncryptionKey                                  = big.NewInt(1 << 23)
-	clientFieldSSO                                            = big.NewInt(1 << 24)
-	clientFieldSSODisabled                                    = big.NewInt(1 << 25)
-	clientFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
-	clientFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
-	clientFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
-	clientFieldCustomLoginPage                                = big.NewInt(1 << 29)
-	clientFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
-	clientFieldFormTemplate                                   = big.NewInt(1 << 31)
-	clientFieldAddons                                         = big.NewInt(1 << 32)
-	clientFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
-	clientFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
-	clientFieldClientMetadata                                 = big.NewInt(1 << 35)
-	clientFieldMobile                                         = big.NewInt(1 << 36)
-	clientFieldInitiateLoginURI                               = big.NewInt(1 << 37)
-	clientFieldNativeSocialLogin                              = big.NewInt(1 << 38)
-	clientFieldFedcmLogin                                     = big.NewInt(1 << 39)
-	clientFieldRefreshToken                                   = big.NewInt(1 << 40)
-	clientFieldDefaultOrganization                            = big.NewInt(1 << 41)
-	clientFieldOrganizationUsage                              = big.NewInt(1 << 42)
-	clientFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
-	clientFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
-	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
-	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
-	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	clientFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	clientFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	clientFieldComplianceLevel                                = big.NewInt(1 << 50)
-	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	clientFieldTokenExchange                                  = big.NewInt(1 << 52)
-	clientFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	clientFieldTokenQuota                                     = big.NewInt(1 << 54)
-	clientFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	clientFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	clientFieldOidcSupport                                    = big.NewInt(1 << 62)
-	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	clientFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 11)
+	clientFieldOidcConformant                                 = big.NewInt(1 << 12)
+	clientFieldCallbacks                                      = big.NewInt(1 << 13)
+	clientFieldAllowedOrigins                                 = big.NewInt(1 << 14)
+	clientFieldWebOrigins                                     = big.NewInt(1 << 15)
+	clientFieldClientAliases                                  = big.NewInt(1 << 16)
+	clientFieldAllowedClients                                 = big.NewInt(1 << 17)
+	clientFieldAllowedLogoutURLs                              = big.NewInt(1 << 18)
+	clientFieldSessionTransfer                                = big.NewInt(1 << 19)
+	clientFieldOidcLogout                                     = big.NewInt(1 << 20)
+	clientFieldGrantTypes                                     = big.NewInt(1 << 21)
+	clientFieldJwtConfiguration                               = big.NewInt(1 << 22)
+	clientFieldSigningKeys                                    = big.NewInt(1 << 23)
+	clientFieldEncryptionKey                                  = big.NewInt(1 << 24)
+	clientFieldSSO                                            = big.NewInt(1 << 25)
+	clientFieldSSODisabled                                    = big.NewInt(1 << 26)
+	clientFieldCrossOriginAuthentication                      = big.NewInt(1 << 27)
+	clientFieldCrossOriginLoc                                 = big.NewInt(1 << 28)
+	clientFieldCustomLoginPageOn                              = big.NewInt(1 << 29)
+	clientFieldCustomLoginPage                                = big.NewInt(1 << 30)
+	clientFieldCustomLoginPagePreview                         = big.NewInt(1 << 31)
+	clientFieldFormTemplate                                   = big.NewInt(1 << 32)
+	clientFieldAddons                                         = big.NewInt(1 << 33)
+	clientFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 34)
+	clientFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 35)
+	clientFieldClientMetadata                                 = big.NewInt(1 << 36)
+	clientFieldMobile                                         = big.NewInt(1 << 37)
+	clientFieldInitiateLoginURI                               = big.NewInt(1 << 38)
+	clientFieldNativeSocialLogin                              = big.NewInt(1 << 39)
+	clientFieldFedcmLogin                                     = big.NewInt(1 << 40)
+	clientFieldRefreshToken                                   = big.NewInt(1 << 41)
+	clientFieldDefaultOrganization                            = big.NewInt(1 << 42)
+	clientFieldOrganizationUsage                              = big.NewInt(1 << 43)
+	clientFieldOrganizationRequireBehavior                    = big.NewInt(1 << 44)
+	clientFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 45)
+	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 46)
+	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 47)
+	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 48)
+	clientFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	clientFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	clientFieldComplianceLevel                                = big.NewInt(1 << 51)
+	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	clientFieldTokenExchange                                  = big.NewInt(1 << 53)
+	clientFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	clientFieldTokenQuota                                     = big.NewInt(1 << 55)
+	clientFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	clientFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	clientFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
@@ -1224,6 +1225,8 @@ type Client struct {
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients. An absent or null value behaves as false.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
 	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
@@ -1398,6 +1401,13 @@ func (c *Client) GetIsFirstParty() bool {
 		return false
 	}
 	return *c.IsFirstParty
+}
+
+func (c *Client) GetAllowPersonalAgentBrowserJoin() bool {
+	if c == nil || c.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *c.AllowPersonalAgentBrowserJoin
 }
 
 func (c *Client) GetOidcConformant() bool {
@@ -1918,6 +1928,13 @@ func (c *Client) SetLogoURI(logoURI *string) {
 func (c *Client) SetIsFirstParty(isFirstParty *bool) {
 	c.IsFirstParty = isFirstParty
 	c.require(clientFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(clientFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;
@@ -10028,64 +10045,65 @@ var (
 	clientSearchResponseFieldAppType                                        = big.NewInt(1 << 7)
 	clientSearchResponseFieldLogoURI                                        = big.NewInt(1 << 8)
 	clientSearchResponseFieldIsFirstParty                                   = big.NewInt(1 << 9)
-	clientSearchResponseFieldOidcConformant                                 = big.NewInt(1 << 10)
-	clientSearchResponseFieldCallbacks                                      = big.NewInt(1 << 11)
-	clientSearchResponseFieldAllowedOrigins                                 = big.NewInt(1 << 12)
-	clientSearchResponseFieldWebOrigins                                     = big.NewInt(1 << 13)
-	clientSearchResponseFieldClientAliases                                  = big.NewInt(1 << 14)
-	clientSearchResponseFieldAllowedClients                                 = big.NewInt(1 << 15)
-	clientSearchResponseFieldAllowedLogoutURLs                              = big.NewInt(1 << 16)
-	clientSearchResponseFieldSessionTransfer                                = big.NewInt(1 << 17)
-	clientSearchResponseFieldOidcLogout                                     = big.NewInt(1 << 18)
-	clientSearchResponseFieldGrantTypes                                     = big.NewInt(1 << 19)
-	clientSearchResponseFieldJwtConfiguration                               = big.NewInt(1 << 20)
-	clientSearchResponseFieldSSO                                            = big.NewInt(1 << 21)
-	clientSearchResponseFieldSSODisabled                                    = big.NewInt(1 << 22)
-	clientSearchResponseFieldCrossOriginAuthentication                      = big.NewInt(1 << 23)
-	clientSearchResponseFieldCrossOriginLoc                                 = big.NewInt(1 << 24)
-	clientSearchResponseFieldCustomLoginPageOn                              = big.NewInt(1 << 25)
-	clientSearchResponseFieldCustomLoginPage                                = big.NewInt(1 << 26)
-	clientSearchResponseFieldCustomLoginPagePreview                         = big.NewInt(1 << 27)
-	clientSearchResponseFieldFormTemplate                                   = big.NewInt(1 << 28)
-	clientSearchResponseFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 29)
-	clientSearchResponseFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 30)
-	clientSearchResponseFieldClientMetadata                                 = big.NewInt(1 << 31)
-	clientSearchResponseFieldMobile                                         = big.NewInt(1 << 32)
-	clientSearchResponseFieldInitiateLoginURI                               = big.NewInt(1 << 33)
-	clientSearchResponseFieldNativeSocialLogin                              = big.NewInt(1 << 34)
-	clientSearchResponseFieldFedcmLogin                                     = big.NewInt(1 << 35)
-	clientSearchResponseFieldRefreshToken                                   = big.NewInt(1 << 36)
-	clientSearchResponseFieldDefaultOrganization                            = big.NewInt(1 << 37)
-	clientSearchResponseFieldOrganizationUsage                              = big.NewInt(1 << 38)
-	clientSearchResponseFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
-	clientSearchResponseFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
-	clientSearchResponseFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
-	clientSearchResponseFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
-	clientSearchResponseFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	clientSearchResponseFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	clientSearchResponseFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 45)
-	clientSearchResponseFieldComplianceLevel                                = big.NewInt(1 << 46)
-	clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 47)
-	clientSearchResponseFieldTokenExchange                                  = big.NewInt(1 << 48)
-	clientSearchResponseFieldParRequestExpiry                               = big.NewInt(1 << 49)
-	clientSearchResponseFieldTokenQuota                                     = big.NewInt(1 << 50)
-	clientSearchResponseFieldExpressConfiguration                           = big.NewInt(1 << 51)
-	clientSearchResponseFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 52)
-	clientSearchResponseFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 54)
-	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 55)
-	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 56)
-	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 58)
-	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 59)
-	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 60)
-	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 61)
-	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 62)
-	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientSearchResponseFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 10)
+	clientSearchResponseFieldOidcConformant                                 = big.NewInt(1 << 11)
+	clientSearchResponseFieldCallbacks                                      = big.NewInt(1 << 12)
+	clientSearchResponseFieldAllowedOrigins                                 = big.NewInt(1 << 13)
+	clientSearchResponseFieldWebOrigins                                     = big.NewInt(1 << 14)
+	clientSearchResponseFieldClientAliases                                  = big.NewInt(1 << 15)
+	clientSearchResponseFieldAllowedClients                                 = big.NewInt(1 << 16)
+	clientSearchResponseFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
+	clientSearchResponseFieldSessionTransfer                                = big.NewInt(1 << 18)
+	clientSearchResponseFieldOidcLogout                                     = big.NewInt(1 << 19)
+	clientSearchResponseFieldGrantTypes                                     = big.NewInt(1 << 20)
+	clientSearchResponseFieldJwtConfiguration                               = big.NewInt(1 << 21)
+	clientSearchResponseFieldSSO                                            = big.NewInt(1 << 22)
+	clientSearchResponseFieldSSODisabled                                    = big.NewInt(1 << 23)
+	clientSearchResponseFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
+	clientSearchResponseFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
+	clientSearchResponseFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
+	clientSearchResponseFieldCustomLoginPage                                = big.NewInt(1 << 27)
+	clientSearchResponseFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
+	clientSearchResponseFieldFormTemplate                                   = big.NewInt(1 << 29)
+	clientSearchResponseFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 30)
+	clientSearchResponseFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 31)
+	clientSearchResponseFieldClientMetadata                                 = big.NewInt(1 << 32)
+	clientSearchResponseFieldMobile                                         = big.NewInt(1 << 33)
+	clientSearchResponseFieldInitiateLoginURI                               = big.NewInt(1 << 34)
+	clientSearchResponseFieldNativeSocialLogin                              = big.NewInt(1 << 35)
+	clientSearchResponseFieldFedcmLogin                                     = big.NewInt(1 << 36)
+	clientSearchResponseFieldRefreshToken                                   = big.NewInt(1 << 37)
+	clientSearchResponseFieldDefaultOrganization                            = big.NewInt(1 << 38)
+	clientSearchResponseFieldOrganizationUsage                              = big.NewInt(1 << 39)
+	clientSearchResponseFieldOrganizationRequireBehavior                    = big.NewInt(1 << 40)
+	clientSearchResponseFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 41)
+	clientSearchResponseFieldClientAuthenticationMethods                    = big.NewInt(1 << 42)
+	clientSearchResponseFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 43)
+	clientSearchResponseFieldRequireProofOfPossession                       = big.NewInt(1 << 44)
+	clientSearchResponseFieldSignedRequestObject                            = big.NewInt(1 << 45)
+	clientSearchResponseFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 46)
+	clientSearchResponseFieldComplianceLevel                                = big.NewInt(1 << 47)
+	clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	clientSearchResponseFieldTokenExchange                                  = big.NewInt(1 << 49)
+	clientSearchResponseFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	clientSearchResponseFieldTokenQuota                                     = big.NewInt(1 << 51)
+	clientSearchResponseFieldExpressConfiguration                           = big.NewInt(1 << 52)
+	clientSearchResponseFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 53)
+	clientSearchResponseFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
+	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 56)
+	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 57)
+	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 58)
+	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 59)
+	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 60)
+	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 61)
+	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 62)
+	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
 )
 
 // clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
@@ -10118,6 +10136,8 @@ type ClientSearchResponse struct {
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients. An absent or null value behaves as false.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
 	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
@@ -10282,6 +10302,13 @@ func (c *ClientSearchResponse) GetIsFirstParty() bool {
 		return false
 	}
 	return *c.IsFirstParty
+}
+
+func (c *ClientSearchResponse) GetAllowPersonalAgentBrowserJoin() bool {
+	if c == nil || c.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *c.AllowPersonalAgentBrowserJoin
 }
 
 func (c *ClientSearchResponse) GetOidcConformant() bool {
@@ -10774,6 +10801,13 @@ func (c *ClientSearchResponse) SetLogoURI(logoURI *string) {
 func (c *ClientSearchResponse) SetIsFirstParty(isFirstParty *bool) {
 	c.IsFirstParty = isFirstParty
 	c.require(clientSearchResponseFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(clientSearchResponseFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;
@@ -12678,67 +12712,68 @@ var (
 	createClientResponseContentFieldAppType                                        = big.NewInt(1 << 8)
 	createClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
 	createClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
-	createClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
-	createClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
-	createClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
-	createClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
-	createClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
-	createClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
-	createClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
-	createClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
-	createClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
-	createClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
-	createClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
-	createClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
-	createClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
-	createClientResponseContentFieldSSO                                            = big.NewInt(1 << 24)
-	createClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
-	createClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
-	createClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
-	createClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
-	createClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
-	createClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
-	createClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
-	createClientResponseContentFieldAddons                                         = big.NewInt(1 << 32)
-	createClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
-	createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
-	createClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
-	createClientResponseContentFieldMobile                                         = big.NewInt(1 << 36)
-	createClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
-	createClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
-	createClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
-	createClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
-	createClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
-	createClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
-	createClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
-	createClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
-	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
-	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
-	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	createClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	createClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	createClientResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 11)
+	createClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 12)
+	createClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 13)
+	createClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 14)
+	createClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 15)
+	createClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 16)
+	createClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 17)
+	createClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 18)
+	createClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 19)
+	createClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 20)
+	createClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 21)
+	createClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 22)
+	createClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 23)
+	createClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 24)
+	createClientResponseContentFieldSSO                                            = big.NewInt(1 << 25)
+	createClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 26)
+	createClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 27)
+	createClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 28)
+	createClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 29)
+	createClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 30)
+	createClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 31)
+	createClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 32)
+	createClientResponseContentFieldAddons                                         = big.NewInt(1 << 33)
+	createClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 34)
+	createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 35)
+	createClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 36)
+	createClientResponseContentFieldMobile                                         = big.NewInt(1 << 37)
+	createClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 38)
+	createClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 39)
+	createClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 40)
+	createClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 41)
+	createClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 42)
+	createClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 43)
+	createClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 44)
+	createClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 45)
+	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 46)
+	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 47)
+	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 48)
+	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	createClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	createClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -12775,6 +12810,8 @@ type CreateClientResponseContent struct {
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients. An absent or null value behaves as false.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
 	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
@@ -12949,6 +12986,13 @@ func (c *CreateClientResponseContent) GetIsFirstParty() bool {
 		return false
 	}
 	return *c.IsFirstParty
+}
+
+func (c *CreateClientResponseContent) GetAllowPersonalAgentBrowserJoin() bool {
+	if c == nil || c.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *c.AllowPersonalAgentBrowserJoin
 }
 
 func (c *CreateClientResponseContent) GetOidcConformant() bool {
@@ -13469,6 +13513,13 @@ func (c *CreateClientResponseContent) SetLogoURI(logoURI *string) {
 func (c *CreateClientResponseContent) SetIsFirstParty(isFirstParty *bool) {
 	c.IsFirstParty = isFirstParty
 	c.require(createClientResponseContentFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(createClientResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;
@@ -14956,67 +15007,68 @@ var (
 	getClientResponseContentFieldAppType                                        = big.NewInt(1 << 8)
 	getClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
 	getClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
-	getClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
-	getClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
-	getClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
-	getClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
-	getClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
-	getClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
-	getClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
-	getClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
-	getClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
-	getClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
-	getClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
-	getClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
-	getClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
-	getClientResponseContentFieldSSO                                            = big.NewInt(1 << 24)
-	getClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
-	getClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
-	getClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
-	getClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
-	getClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
-	getClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
-	getClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
-	getClientResponseContentFieldAddons                                         = big.NewInt(1 << 32)
-	getClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
-	getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
-	getClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
-	getClientResponseContentFieldMobile                                         = big.NewInt(1 << 36)
-	getClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
-	getClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
-	getClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
-	getClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
-	getClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
-	getClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
-	getClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
-	getClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
-	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
-	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
-	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	getClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	getClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	getClientResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 11)
+	getClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 12)
+	getClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 13)
+	getClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 14)
+	getClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 15)
+	getClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 16)
+	getClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 17)
+	getClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 18)
+	getClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 19)
+	getClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 20)
+	getClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 21)
+	getClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 22)
+	getClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 23)
+	getClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 24)
+	getClientResponseContentFieldSSO                                            = big.NewInt(1 << 25)
+	getClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 26)
+	getClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 27)
+	getClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 28)
+	getClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 29)
+	getClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 30)
+	getClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 31)
+	getClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 32)
+	getClientResponseContentFieldAddons                                         = big.NewInt(1 << 33)
+	getClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 34)
+	getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 35)
+	getClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 36)
+	getClientResponseContentFieldMobile                                         = big.NewInt(1 << 37)
+	getClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 38)
+	getClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 39)
+	getClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 40)
+	getClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 41)
+	getClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 42)
+	getClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 43)
+	getClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 44)
+	getClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 45)
+	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 46)
+	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 47)
+	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 48)
+	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	getClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	getClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -15053,6 +15105,8 @@ type GetClientResponseContent struct {
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients. An absent or null value behaves as false.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
 	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
@@ -15227,6 +15281,13 @@ func (g *GetClientResponseContent) GetIsFirstParty() bool {
 		return false
 	}
 	return *g.IsFirstParty
+}
+
+func (g *GetClientResponseContent) GetAllowPersonalAgentBrowserJoin() bool {
+	if g == nil || g.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *g.AllowPersonalAgentBrowserJoin
 }
 
 func (g *GetClientResponseContent) GetOidcConformant() bool {
@@ -15747,6 +15808,13 @@ func (g *GetClientResponseContent) SetLogoURI(logoURI *string) {
 func (g *GetClientResponseContent) SetIsFirstParty(isFirstParty *bool) {
 	g.IsFirstParty = isFirstParty
 	g.require(getClientResponseContentFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	g.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	g.require(getClientResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;
@@ -17882,67 +17950,68 @@ var (
 	rotateClientSecretResponseContentFieldAppType                                        = big.NewInt(1 << 8)
 	rotateClientSecretResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
 	rotateClientSecretResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
-	rotateClientSecretResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
-	rotateClientSecretResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
-	rotateClientSecretResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
-	rotateClientSecretResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
-	rotateClientSecretResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
-	rotateClientSecretResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
-	rotateClientSecretResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
-	rotateClientSecretResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
-	rotateClientSecretResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
-	rotateClientSecretResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
-	rotateClientSecretResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
-	rotateClientSecretResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
-	rotateClientSecretResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
-	rotateClientSecretResponseContentFieldSSO                                            = big.NewInt(1 << 24)
-	rotateClientSecretResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
-	rotateClientSecretResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
-	rotateClientSecretResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
-	rotateClientSecretResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
-	rotateClientSecretResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
-	rotateClientSecretResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
-	rotateClientSecretResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
-	rotateClientSecretResponseContentFieldAddons                                         = big.NewInt(1 << 32)
-	rotateClientSecretResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
-	rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
-	rotateClientSecretResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
-	rotateClientSecretResponseContentFieldMobile                                         = big.NewInt(1 << 36)
-	rotateClientSecretResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
-	rotateClientSecretResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
-	rotateClientSecretResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
-	rotateClientSecretResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
-	rotateClientSecretResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
-	rotateClientSecretResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
-	rotateClientSecretResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
-	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
-	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
-	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
-	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	rotateClientSecretResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 11)
+	rotateClientSecretResponseContentFieldOidcConformant                                 = big.NewInt(1 << 12)
+	rotateClientSecretResponseContentFieldCallbacks                                      = big.NewInt(1 << 13)
+	rotateClientSecretResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 14)
+	rotateClientSecretResponseContentFieldWebOrigins                                     = big.NewInt(1 << 15)
+	rotateClientSecretResponseContentFieldClientAliases                                  = big.NewInt(1 << 16)
+	rotateClientSecretResponseContentFieldAllowedClients                                 = big.NewInt(1 << 17)
+	rotateClientSecretResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 18)
+	rotateClientSecretResponseContentFieldSessionTransfer                                = big.NewInt(1 << 19)
+	rotateClientSecretResponseContentFieldOidcLogout                                     = big.NewInt(1 << 20)
+	rotateClientSecretResponseContentFieldGrantTypes                                     = big.NewInt(1 << 21)
+	rotateClientSecretResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 22)
+	rotateClientSecretResponseContentFieldSigningKeys                                    = big.NewInt(1 << 23)
+	rotateClientSecretResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 24)
+	rotateClientSecretResponseContentFieldSSO                                            = big.NewInt(1 << 25)
+	rotateClientSecretResponseContentFieldSSODisabled                                    = big.NewInt(1 << 26)
+	rotateClientSecretResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 27)
+	rotateClientSecretResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 28)
+	rotateClientSecretResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 29)
+	rotateClientSecretResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 30)
+	rotateClientSecretResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 31)
+	rotateClientSecretResponseContentFieldFormTemplate                                   = big.NewInt(1 << 32)
+	rotateClientSecretResponseContentFieldAddons                                         = big.NewInt(1 << 33)
+	rotateClientSecretResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 34)
+	rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 35)
+	rotateClientSecretResponseContentFieldClientMetadata                                 = big.NewInt(1 << 36)
+	rotateClientSecretResponseContentFieldMobile                                         = big.NewInt(1 << 37)
+	rotateClientSecretResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 38)
+	rotateClientSecretResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 39)
+	rotateClientSecretResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 40)
+	rotateClientSecretResponseContentFieldRefreshToken                                   = big.NewInt(1 << 41)
+	rotateClientSecretResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 42)
+	rotateClientSecretResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 43)
+	rotateClientSecretResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 44)
+	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 45)
+	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 46)
+	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
@@ -17979,6 +18048,8 @@ type RotateClientSecretResponseContent struct {
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients. An absent or null value behaves as false.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
 	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
@@ -18153,6 +18224,13 @@ func (r *RotateClientSecretResponseContent) GetIsFirstParty() bool {
 		return false
 	}
 	return *r.IsFirstParty
+}
+
+func (r *RotateClientSecretResponseContent) GetAllowPersonalAgentBrowserJoin() bool {
+	if r == nil || r.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *r.AllowPersonalAgentBrowserJoin
 }
 
 func (r *RotateClientSecretResponseContent) GetOidcConformant() bool {
@@ -18673,6 +18751,13 @@ func (r *RotateClientSecretResponseContent) SetLogoURI(logoURI *string) {
 func (r *RotateClientSecretResponseContent) SetIsFirstParty(isFirstParty *bool) {
 	r.IsFirstParty = isFirstParty
 	r.require(rotateClientSecretResponseContentFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	r.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	r.require(rotateClientSecretResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;
@@ -19471,67 +19556,68 @@ var (
 	updateClientResponseContentFieldAppType                                        = big.NewInt(1 << 8)
 	updateClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
 	updateClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
-	updateClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
-	updateClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
-	updateClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
-	updateClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
-	updateClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
-	updateClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
-	updateClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
-	updateClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
-	updateClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
-	updateClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
-	updateClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
-	updateClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
-	updateClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
-	updateClientResponseContentFieldSSO                                            = big.NewInt(1 << 24)
-	updateClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
-	updateClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
-	updateClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
-	updateClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
-	updateClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
-	updateClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
-	updateClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
-	updateClientResponseContentFieldAddons                                         = big.NewInt(1 << 32)
-	updateClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
-	updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
-	updateClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
-	updateClientResponseContentFieldMobile                                         = big.NewInt(1 << 36)
-	updateClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
-	updateClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
-	updateClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
-	updateClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
-	updateClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
-	updateClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
-	updateClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
-	updateClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
-	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
-	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
-	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	updateClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	updateClientResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 11)
+	updateClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 12)
+	updateClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 13)
+	updateClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 14)
+	updateClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 15)
+	updateClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 16)
+	updateClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 17)
+	updateClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 18)
+	updateClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 19)
+	updateClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 20)
+	updateClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 21)
+	updateClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 22)
+	updateClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 23)
+	updateClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 24)
+	updateClientResponseContentFieldSSO                                            = big.NewInt(1 << 25)
+	updateClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 26)
+	updateClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 27)
+	updateClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 28)
+	updateClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 29)
+	updateClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 30)
+	updateClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 31)
+	updateClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 32)
+	updateClientResponseContentFieldAddons                                         = big.NewInt(1 << 33)
+	updateClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 34)
+	updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 35)
+	updateClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 36)
+	updateClientResponseContentFieldMobile                                         = big.NewInt(1 << 37)
+	updateClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 38)
+	updateClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 39)
+	updateClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 40)
+	updateClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 41)
+	updateClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 42)
+	updateClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 43)
+	updateClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 44)
+	updateClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 45)
+	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 46)
+	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 47)
+	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 48)
+	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	updateClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -19568,6 +19654,8 @@ type UpdateClientResponseContent struct {
 	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
 	// Whether this client a first party client (true) or not (false).
 	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether a personal agent's browser can join a session on this client through the Auth0-hosted browser session endpoint. Can only be enabled for first-party clients. An absent or null value behaves as false.
+	AllowPersonalAgentBrowserJoin *bool `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
 	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
 	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
 	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
@@ -19742,6 +19830,13 @@ func (u *UpdateClientResponseContent) GetIsFirstParty() bool {
 		return false
 	}
 	return *u.IsFirstParty
+}
+
+func (u *UpdateClientResponseContent) GetAllowPersonalAgentBrowserJoin() bool {
+	if u == nil || u.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *u.AllowPersonalAgentBrowserJoin
 }
 
 func (u *UpdateClientResponseContent) GetOidcConformant() bool {
@@ -20262,6 +20357,13 @@ func (u *UpdateClientResponseContent) SetLogoURI(logoURI *string) {
 func (u *UpdateClientResponseContent) SetIsFirstParty(isFirstParty *bool) {
 	u.IsFirstParty = isFirstParty
 	u.require(updateClientResponseContentFieldIsFirstParty)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *bool) {
+	u.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	u.require(updateClientResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetOidcConformant sets the OidcConformant field and marks it as non-optional;
