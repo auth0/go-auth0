@@ -31,6 +31,9 @@ const (
 	// EmailProviderMS365 constant.
 	EmailProviderMS365 = "ms365"
 
+	// EmailProviderResend constant.
+	EmailProviderResend = "resend"
+
 	// EmailProviderCustom constant.
 	EmailProviderCustom = "custom"
 )
@@ -40,7 +43,8 @@ const (
 // See: https://auth0.com/docs/customize/email
 type EmailProvider struct {
 	// The name of the email provider.
-	// Can be one of "mandrill", "ses", "sendgrid", "sparkpost", "mailgun"  or "smtp".
+	// Can be one of "mandrill", "ses", "sendgrid", "sparkpost", "mailgun", "smtp",
+	// "azure_cs", "ms365", "resend" or "custom".
 	Name *string `json:"name,omitempty"`
 
 	// Indicates whether the email provider is enabled or not.
@@ -119,6 +123,12 @@ type EmailProviderCredentialsMS365 struct {
 
 	// Microsoft 365 Client Secret.
 	ClientSecret *string `json:"clientSecret,omitempty"`
+}
+
+// EmailProviderCredentialsResend represent the
+// credentials required to use the resend provider.
+type EmailProviderCredentialsResend struct {
+	APIKey *string `json:"api_key,omitempty"`
 }
 
 // EmailProviderCredentialsCustom represent the
@@ -235,6 +245,10 @@ func (ep *EmailProvider) UnmarshalJSON(b []byte) error {
 	case EmailProviderMS365:
 		credentials = &EmailProviderCredentialsMS365{}
 		// No settings for ms365.
+		settings = nil
+	case EmailProviderResend:
+		credentials = &EmailProviderCredentialsResend{}
+		// No settings for resend.
 		settings = nil
 	case EmailProviderCustom:
 		credentials = &EmailProviderCredentialsCustom{}
