@@ -1,5 +1,16 @@
 # Change Log
 
+## [v3.12.0-beta.0](https://github.com/auth0/go-auth0/tree/v3.12.0-beta.0) (2026-11-06)
+
+**Beta**
+- No beta-only changes in this release.
+
+**Stable (from main)**
+- feat: add passwordless OTP on database connections
+- fix: reject non-compact JWS serialization in ID token validation
+- fix: redact sensitive headers on a copy in debug dumps and bump golang.org/x deps
+- chore: sync workflows, Dependabot config and examples with main
+
 ## [v3.2.0-beta.0](https://github.com/auth0/go-auth0/tree/v3.2.0-beta.0) (2026-07-22)
 
 **Beta**
