@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"net/url"
+	"strings"
 	"testing"
 	"time"
 
@@ -142,6 +143,65 @@ func TestIDTokenValidation(t *testing.T) {
 
 		err = validator.Validate(string(jwtPayload), ValidationOptions{})
 		assert.ErrorContains(t, err, "signature algorithm \"HS512\" is not supported")
+	})
+
+	t.Run("rejects a token using JWS flattened JSON serialization", func(t *testing.T) {
+		args := defaultJWTArgs
+		args.clientSecret = jwtClientSecret
+
+		token, _, err := givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		parts := strings.Split(token, ".")
+		assert.Len(t, parts, 3)
+
+		flattened, err := json.Marshal(map[string]interface{}{
+			"protected": parts[0],
+			"payload":   parts[1],
+			"signature": parts[2],
+			"iss":       jwtURL,
+			"sub":       "attacker-injected",
+			"aud":       []string{jwtClientID},
+			"iat":       time.Now().Unix(),
+			"exp":       time.Now().Add(time.Hour).Unix(),
+		})
+		assert.NoError(t, err)
+
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
+		assert.NoError(t, err)
+
+		err = validator.Validate(string(flattened), ValidationOptions{})
+		assert.ErrorContains(t, err, "invalid compact serialization format")
+	})
+
+	t.Run("rejects a token using JWS general JSON serialization", func(t *testing.T) {
+		args := defaultJWTArgs
+		args.clientSecret = jwtClientSecret
+
+		token, _, err := givenAJWT(t, args)
+		assert.NoError(t, err)
+
+		parts := strings.Split(token, ".")
+		assert.Len(t, parts, 3)
+
+		general, err := json.Marshal(map[string]interface{}{
+			"payload": parts[1],
+			"signatures": []map[string]string{
+				{"protected": parts[0], "signature": parts[2]},
+			},
+			"iss": jwtURL,
+			"sub": "attacker-injected",
+			"aud": []string{jwtClientID},
+			"iat": time.Now().Unix(),
+			"exp": time.Now().Add(time.Hour).Unix(),
+		})
+		assert.NoError(t, err)
+
+		validator, err := New(context.Background(), jwtDomain, jwtClientID, jwtClientSecret, "HS256")
+		assert.NoError(t, err)
+
+		err = validator.Validate(string(general), ValidationOptions{})
+		assert.ErrorContains(t, err, "invalid compact serialization format")
 	})
 
 	t.Run("rejects if azp is not present and more than one audience is provided", func(t *testing.T) {

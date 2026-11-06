@@ -13,6 +13,33 @@ type Error struct {
 	Err        string `json:"error"`
 	Message    string `json:"error_description"`
 	MFAToken   string `json:"mfa_token,omitempty"`
+	// MFARequirements describes the factors the user can challenge or enroll when MFA is required.
+	MFARequirements *MFARequirements `json:"mfa_requirements,omitempty"`
+	// ValidationErrors lists the request fields that failed validation, if any.
+	ValidationErrors *[]ValidationError `json:"validation_errors,omitempty"`
+}
+
+// MFARequirements describes the MFA factors that can be challenged or enrolled
+// when the API responds with an mfa_required error.
+type MFARequirements struct {
+	// Challenge lists the factors the user can be challenged with.
+	Challenge []MFAFactor `json:"challenge,omitempty"`
+	// Enroll lists the factors the user can enroll.
+	Enroll []MFAFactor `json:"enroll,omitempty"`
+}
+
+// MFAFactor represents a single MFA factor.
+type MFAFactor struct {
+	// Type is the factor type, such as "otp", "oob", "email", "phone", "push-notification", "webauthn-roaming" or "webauthn-platform".
+	Type string `json:"type"`
+}
+
+// ValidationError describes a single request field that failed validation.
+type ValidationError struct {
+	// Field is the name of the request field that failed validation.
+	Field string `json:"field"`
+	// Message describes why the field failed validation.
+	Message string `json:"message"`
 }
 
 func newError(response *http.Response) error {
@@ -49,6 +76,24 @@ func (a *Error) GetMFAToken() string {
 	}
 
 	return a.MFAToken
+}
+
+// GetMFARequirements returns the MFA requirements associated with the error, if any.
+func (a *Error) GetMFARequirements() *MFARequirements {
+	if a == nil {
+		return nil
+	}
+
+	return a.MFARequirements
+}
+
+// GetValidationErrors returns the field level validation errors associated with the error, if any.
+func (a *Error) GetValidationErrors() []ValidationError {
+	if a == nil || a.ValidationErrors == nil {
+		return nil
+	}
+
+	return *a.ValidationErrors
 }
 
 // Status returns the status code of the error.

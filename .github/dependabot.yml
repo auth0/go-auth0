@@ -9,7 +9,32 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      golang-x:
+        update-types: ["minor", "patch"]
+        patterns:
+          - "golang.org/x/*"
+      lestrrat-go:
+        update-types: ["minor", "patch"]
+        patterns:
+          - "github.com/lestrrat-go/*"
+      test-tools:
+        update-types: ["minor", "patch"]
+        patterns:
+          - "github.com/stretchr/*"
+          - "gopkg.in/dnaeon/go-vcr.v3"
+      yaml:
+        update-types: ["minor", "patch"]
+        patterns:
+          - "gopkg.in/yaml*"
+          - "go.yaml.in/*"
   - package-ecosystem: 'github-actions'
     directory: '/'
     schedule:
       interval: 'daily'
+    groups:
+      github-official:
+        update-types: ["minor", "patch"]
+        patterns:
+          - "actions/*"
+          - "github/*"
