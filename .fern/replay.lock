@@ -1,76 +1,10 @@
 # DO NOT EDIT MANUALLY - Managed by Fern Replay
 version: "1.0"
 generations:
-  - commit_sha: 719005b979819dd06cb386427dbc13ebb02a2402
-    tree_hash: 0ad5a7a7b46c51c248fe4c36cf2c06274d620be5
-    timestamp: 2026-08-06T15:22:26.162Z
+  - commit_sha: 3425d1e44430034b4ef6882a4ffdf534fabceeaf
+    tree_hash: fdde7bb67ead2821d5034292eed95c022f757105
+    timestamp: 2026-11-06T19:57:14.500Z
     cli_version: unknown
     generator_versions: {}
-  - commit_sha: f4a11aa9bf2ddabca61a0c086c1bd97b597164bf
-    tree_hash: ad3c4d1dce5108d5588bd4dd71c06711337b09d6
-    timestamp: 2026-08-18T10:41:08.654Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.44.9
-  - commit_sha: f0be58a5ba14777a9f8949129b006ba0d156182c
-    tree_hash: 2ed83e7ca405529b34cf68864aa2b272d2836f1f
-    timestamp: 2026-09-02T08:55:31.377Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.44.9
-  - commit_sha: 9ff52c82d98c625d96a31062fb021eb7140b31e2
-    tree_hash: e402528ba00746b9218c66d4f23fc81d831c0825
-    timestamp: 2026-09-11T02:45:47.779Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.44.9
-  - commit_sha: 5cd670d524f65b1f3b2ac829770f107bb7a30465
-    tree_hash: 38190050aeffc010e7e732420f8f161fb2c8f1ab
-    timestamp: 2026-09-15T12:10:46.341Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.44.9
-  - commit_sha: 9f7e333f8652ae90da3ff78a28293d785e5fd2d0
-    tree_hash: 6d7650f9ecc0f86f1d60aabd6f67b099c8538753
-    timestamp: 2026-09-29T05:47:21.682Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.44.9
-  - commit_sha: 58cfc1e7cf8b66728ae45291d5c027618b4d14b2
-    tree_hash: 5b1257a0bc4845d98031673a1a13ebd85d42fc9e
-    timestamp: 2026-10-05T08:24:38.928Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.65.0
-  - commit_sha: c7329db5bb93f799b5f34c90c96491ac7dad4f73
-    tree_hash: 7cd205bfce12987e5ff480ede0c2d723c7308f25
-    timestamp: 2026-10-09T07:54:38.936Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.65.0
-  - commit_sha: e6957f0297c6601c56ed3fa44f60987adee70b54
-    tree_hash: dca5a9f62b7e10d864a986448bca66ae2f6361ca
-    timestamp: 2026-10-13T10:24:41.750Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.65.0
-  - commit_sha: 3d5a54adb606bf60e6fa778f6acd9fa2dba93b04
-    tree_hash: 5bec1a36b2790080bc82325e5dc65fe6c90b3ae5
-    timestamp: 2026-10-16T15:06:50.642Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.65.0
-  - commit_sha: 8f94be0d374036983b971ad2107a4a7c851ce9a8
-    tree_hash: ad587c06429857312848472cce47aed62e63ca31
-    timestamp: 2026-10-27T05:47:16.727Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.65.0
-  - commit_sha: 3bbb16001c2946a01405be674016230bfa6830fd
-    tree_hash: 96547ff5b83ac2db1bfff2d38b702b7936cc68c8
-    timestamp: 2026-11-04T03:50:05.588Z
-    cli_version: unknown
-    generator_versions:
-      fernapi/fern-go-sdk: 1.65.0
-current_generation: 3bbb16001c2946a01405be674016230bfa6830fd
+current_generation: 3425d1e44430034b4ef6882a4ffdf534fabceeaf
 patches: []
