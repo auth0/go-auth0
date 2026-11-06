@@ -6397,6 +6397,14 @@ func (c *ConnectionOptionsPingFederate) GetAPIEnableUsers() bool {
 	return *c.APIEnableUsers
 }
 
+// GetAssertionDecryptionSettings returns the AssertionDecryptionSettings field.
+func (c *ConnectionOptionsPingFederate) GetAssertionDecryptionSettings() *ConnectionOptionsSAMLAssertionDecryptionSettings {
+	if c == nil {
+		return nil
+	}
+	return c.AssertionDecryptionSettings
+}
+
 // GetBindingMethod returns the BindingMethod field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsPingFederate) GetBindingMethod() string {
 	if c == nil || c.BindingMethod == nil {
@@ -6751,6 +6759,14 @@ func (c *ConnectionOptionsSAML) GetAgentVersion() string {
 	return *c.AgentVersion
 }
 
+// GetAssertionDecryptionSettings returns the AssertionDecryptionSettings field.
+func (c *ConnectionOptionsSAML) GetAssertionDecryptionSettings() *ConnectionOptionsSAMLAssertionDecryptionSettings {
+	if c == nil {
+		return nil
+	}
+	return c.AssertionDecryptionSettings
+}
+
 // GetBindingMethod returns the BindingMethod field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSAML) GetBindingMethod() string {
 	if c == nil || c.BindingMethod == nil {
@@ -7057,6 +7073,27 @@ func (c *ConnectionOptionsSAML) GetUserIDAttribute() string {
 
 // String returns a string representation of ConnectionOptionsSAML.
 func (c *ConnectionOptionsSAML) String() string {
+	return Stringify(c)
+}
+
+// GetAlgorithmExceptions returns the AlgorithmExceptions field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAMLAssertionDecryptionSettings) GetAlgorithmExceptions() []string {
+	if c == nil || c.AlgorithmExceptions == nil {
+		return nil
+	}
+	return *c.AlgorithmExceptions
+}
+
+// GetAlgorithmProfile returns the AlgorithmProfile field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAMLAssertionDecryptionSettings) GetAlgorithmProfile() string {
+	if c == nil || c.AlgorithmProfile == nil {
+		return ""
+	}
+	return *c.AlgorithmProfile
+}
+
+// String returns a string representation of ConnectionOptionsSAMLAssertionDecryptionSettings.
+func (c *ConnectionOptionsSAMLAssertionDecryptionSettings) String() string {
 	return Stringify(c)
 }
 
