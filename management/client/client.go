@@ -3,11 +3,16 @@
 package client
 
 import (
+	fmt "fmt"
+
+	management "github.com/auth0/go-auth0/v3/management"
 	client "github.com/auth0/go-auth0/v3/management/actions/client"
+	agents "github.com/auth0/go-auth0/v3/management/agents"
 	anomalyclient "github.com/auth0/go-auth0/v3/management/anomaly/client"
 	attackprotectionclient "github.com/auth0/go-auth0/v3/management/attackprotection/client"
 	brandingclient "github.com/auth0/go-auth0/v3/management/branding/client"
 	clientgrantsclient "github.com/auth0/go-auth0/v3/management/clientgrants/client"
+	clientprofiles "github.com/auth0/go-auth0/v3/management/clientprofiles"
 	clientsclient "github.com/auth0/go-auth0/v3/management/clients/client"
 	connectionprofiles "github.com/auth0/go-auth0/v3/management/connectionprofiles"
 	connectionsclient "github.com/auth0/go-auth0/v3/management/connections/client"
@@ -32,6 +37,7 @@ import (
 	networkacls "github.com/auth0/go-auth0/v3/management/networkacls"
 	option "github.com/auth0/go-auth0/v3/management/option"
 	organizationsclient "github.com/auth0/go-auth0/v3/management/organizations/client"
+	portals "github.com/auth0/go-auth0/v3/management/portals"
 	promptsclient "github.com/auth0/go-auth0/v3/management/prompts/client"
 	ratelimitpolicies "github.com/auth0/go-auth0/v3/management/ratelimitpolicies"
 	refreshtokens "github.com/auth0/go-auth0/v3/management/refreshtokens"
@@ -56,8 +62,10 @@ import (
 
 type Management struct {
 	Actions               *client.Client
+	Agents                *agents.Client
 	Branding              *brandingclient.Client
 	ClientGrants          *clientgrantsclient.Client
+	ClientProfiles        *clientprofiles.Client
 	Clients               *clientsclient.Client
 	ConnectionProfiles    *connectionprofiles.Client
 	Connections           *connectionsclient.Client
@@ -70,12 +78,14 @@ type Management struct {
 	Forms                 *forms.Client
 	UserGrants            *usergrants.Client
 	Groups                *groupsclient.Client
+	Guardian              *guardianclient.Client
 	Hooks                 *hooksclient.Client
 	Jobs                  *jobsclient.Client
 	LogStreams            *logstreams.Client
 	Logs                  *logs.Client
 	NetworkACLs           *networkacls.Client
 	Organizations         *organizationsclient.Client
+	Portals               *portals.Client
 	Prompts               *promptsclient.Client
 	RateLimitPolicies     *ratelimitpolicies.Client
 	RefreshTokens         *refreshtokens.Client
@@ -96,7 +106,6 @@ type Management struct {
 	AttackProtection      *attackprotectionclient.Client
 	Emails                *emailsclient.Client
 	Experimentation       *experimentationclient.Client
-	Guardian              *guardianclient.Client
 	Keys                  *keysclient.Client
 	RiskAssessments       *riskassessmentsclient.Client
 	Tenants               *tenantsclient.Client
@@ -109,10 +118,25 @@ type Management struct {
 
 func NewWithOptions(opts ...option.RequestOption) *Management {
 	options := core.NewRequestOptions(opts...)
+	if options.TenantDomain != "" {
+		tenantDomain := options.TenantDomain
+		if tenantDomain == "" {
+			tenantDomain = "{TENANT}.auth0.com"
+		}
+		switch options.BaseURL {
+		case "", management.Environments.Default:
+			options.BaseURL = fmt.Sprintf(
+				"https://%s/api/v2",
+				tenantDomain,
+			)
+		}
+	}
 	return &Management{
 		Actions:               client.NewClient(options),
+		Agents:                agents.NewClient(options),
 		Branding:              brandingclient.NewClient(options),
 		ClientGrants:          clientgrantsclient.NewClient(options),
+		ClientProfiles:        clientprofiles.NewClient(options),
 		Clients:               clientsclient.NewClient(options),
 		ConnectionProfiles:    connectionprofiles.NewClient(options),
 		Connections:           connectionsclient.NewClient(options),
@@ -125,12 +149,14 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		Forms:                 forms.NewClient(options),
 		UserGrants:            usergrants.NewClient(options),
 		Groups:                groupsclient.NewClient(options),
+		Guardian:              guardianclient.NewClient(options),
 		Hooks:                 hooksclient.NewClient(options),
 		Jobs:                  jobsclient.NewClient(options),
 		LogStreams:            logstreams.NewClient(options),
 		Logs:                  logs.NewClient(options),
 		NetworkACLs:           networkacls.NewClient(options),
 		Organizations:         organizationsclient.NewClient(options),
+		Portals:               portals.NewClient(options),
 		Prompts:               promptsclient.NewClient(options),
 		RateLimitPolicies:     ratelimitpolicies.NewClient(options),
 		RefreshTokens:         refreshtokens.NewClient(options),
@@ -151,7 +177,6 @@ func NewWithOptions(opts ...option.RequestOption) *Management {
 		AttackProtection:      attackprotectionclient.NewClient(options),
 		Emails:                emailsclient.NewClient(options),
 		Experimentation:       experimentationclient.NewClient(options),
-		Guardian:              guardianclient.NewClient(options),
 		Keys:                  keysclient.NewClient(options),
 		RiskAssessments:       riskassessmentsclient.NewClient(options),
 		Tenants:               tenantsclient.NewClient(options),

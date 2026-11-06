@@ -35,6 +35,27 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details on [custom domains](https://auth0.com/docs/custom-domains).
+//
+// Example:
+//
+//	request := &management.ListCustomDomainsRequestParameters{
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Sort: management.String(
+//	        "sort",
+//	    ),
+//	}
+//	client.CustomDomains.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListCustomDomainsRequestParameters,
@@ -64,6 +85,17 @@ func (c *Client) List(
 // TLS Policies:
 //
 // - recommended - for modern usage this includes TLS 1.2 only
+//
+// Example:
+//
+//	request := &management.CreateCustomDomainRequestContent{
+//	    Domain: "domain",
+//	    Type: management.CustomDomainProvisioningTypeEnumAuth0ManagedCerts,
+//	}
+//	client.CustomDomains.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateCustomDomainRequestContent,
@@ -81,6 +113,12 @@ func (c *Client) Create(
 }
 
 // Retrieve the tenant's default domain.
+//
+// Example:
+//
+//	client.CustomDomains.GetDefault(
+//	    context.TODO(),
+//	)
 func (c *Client) GetDefault(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -96,6 +134,16 @@ func (c *Client) GetDefault(
 }
 
 // Set the default custom domain for the tenant.
+//
+// Example:
+//
+//	request := &management.SetDefaultCustomDomainRequestContent{
+//	    Domain: "domain",
+//	}
+//	client.CustomDomains.SetDefault(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) SetDefault(
 	ctx context.Context,
 	request *management.SetDefaultCustomDomainRequestContent,
@@ -113,6 +161,13 @@ func (c *Client) SetDefault(
 }
 
 // Retrieve a custom domain configuration and status.
+//
+// Example:
+//
+//	client.CustomDomains.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the custom domain to retrieve.
@@ -131,6 +186,13 @@ func (c *Client) Get(
 }
 
 // Delete a custom domain and stop serving requests for it.
+//
+// Example:
+//
+//	client.CustomDomains.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the custom domain to delete.
@@ -180,6 +242,15 @@ func (c *Client) Delete(
 //
 // - The TLS ciphers and protocols available in each TLS policy follow industry recommendations, and may be updated occasionally.
 // - The `compatible` TLS policy is no longer supported.
+//
+// Example:
+//
+//	request := &management.UpdateCustomDomainRequestContent{}
+//	client.CustomDomains.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the custom domain to update
@@ -200,6 +271,13 @@ func (c *Client) Update(
 }
 
 // Run the test process on a custom domain.
+//
+// Example:
+//
+//	client.CustomDomains.Test(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Test(
 	ctx context.Context,
 	// ID of the custom domain to test.
@@ -225,6 +303,13 @@ func (c *Client) Test(
 //
 // [Learn more](https://auth0.com/docs/custom-domains#step-2-verify-ownership) about verifying custom domains that use Auth0 Managed certificates.
 // [Learn more](https://auth0.com/docs/custom-domains/self-managed-certificates#step-2-verify-ownership) about verifying custom domains that use Self Managed certificates.
+//
+// Example:
+//
+//	client.CustomDomains.Verify(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Verify(
 	ctx context.Context,
 	// ID of the custom domain to verify.

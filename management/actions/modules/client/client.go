@@ -41,6 +41,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a paginated list of all Actions Modules with optional filtering and totals.
+//
+// Example:
+//
+//	request := &management.GetActionModulesRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Actions.Modules.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.GetActionModulesRequestParameters,
@@ -114,6 +129,17 @@ func (c *Client) List(
 }
 
 // Create a new Actions Module for reusable code across actions.
+//
+// Example:
+//
+//	request := &management.CreateActionModuleRequestContent{
+//	    Name: "name",
+//	    Code: "code",
+//	}
+//	client.Actions.Modules.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateActionModuleRequestContent,
@@ -131,6 +157,13 @@ func (c *Client) Create(
 }
 
 // Retrieve details of a specific Actions Module by its unique identifier.
+//
+// Example:
+//
+//	client.Actions.Modules.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the action module to retrieve.
@@ -149,6 +182,13 @@ func (c *Client) Get(
 }
 
 // Permanently delete an Actions Module. This will fail if the module is still in use by any actions.
+//
+// Example:
+//
+//	client.Actions.Modules.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the Actions Module to delete.
@@ -167,6 +207,15 @@ func (c *Client) Delete(
 }
 
 // Update properties of an existing Actions Module, such as code, dependencies, or secrets.
+//
+// Example:
+//
+//	request := &management.UpdateActionModuleRequestContent{}
+//	client.Actions.Modules.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the action module to update.
@@ -187,6 +236,22 @@ func (c *Client) Update(
 }
 
 // Lists all actions that are using a specific Actions Module, showing which deployed action versions reference this Actions Module.
+//
+// Example:
+//
+//	request := &management.GetActionModuleActionsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Actions.Modules.ListActions(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) ListActions(
 	ctx context.Context,
 	// The unique ID of the module.
@@ -265,6 +330,17 @@ func (c *Client) ListActions(
 }
 
 // Rolls back an Actions Module's draft to a previously created version. This action copies the code, dependencies, and secrets from the specified version into the current draft.
+//
+// Example:
+//
+//	request := &management.RollbackActionModuleRequestParameters{
+//	    ModuleVersionID: "module_version_id",
+//	}
+//	client.Actions.Modules.Rollback(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Rollback(
 	ctx context.Context,
 	// The unique ID of the module to roll back.

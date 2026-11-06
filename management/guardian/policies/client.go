@@ -42,6 +42,12 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `confidence-score` policy prompts with MFA only for low confidence logins.
 //
 // **Note**: The `confidence-score` policy is part of the [Adaptive MFA feature](https://auth0.com/docs/secure/multi-factor-authentication/adaptive-mfa). Adaptive MFA requires an add-on for the Enterprise plan; review [Auth0 Pricing](https://auth0.com/pricing) for more details.
+//
+// Example:
+//
+//	client.Guardian.Policies.List(
+//	    context.TODO(),
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -64,6 +70,16 @@ func (c *Client) List(
 // - `confidence-score` policy prompts with MFA only for low confidence logins.
 //
 // **Note**: The `confidence-score` policy is part of the [Adaptive MFA feature](https://auth0.com/docs/secure/multi-factor-authentication/adaptive-mfa). Adaptive MFA requires an add-on for the Enterprise plan; review [Auth0 Pricing](https://auth0.com/pricing) for more details.
+//
+// Example:
+//
+//	request := []management.MfaPolicyEnum{
+//	    management.MfaPolicyEnumAllApplications,
+//	}
+//	client.Guardian.Policies.Set(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
 	request management.SetGuardianPoliciesRequestContent,

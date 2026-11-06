@@ -126,8 +126,7 @@ func TestEventStreamsCreateWithWireMock(
 				Configuration: &management.EventStreamWebhookConfiguration{
 					WebhookEndpoint: "webhook_endpoint",
 					WebhookAuthorization: &management.EventStreamWebhookAuthorizationResponse{
-						EventStreamWebhookBasicAuth: &management.EventStreamWebhookBasicAuth{
-							Method:   management.EventStreamWebhookBasicAuthMethodEnumBasic,
+						Basic: &management.EventStreamWebhookBasicAuth{
 							Username: "username",
 						},
 					},

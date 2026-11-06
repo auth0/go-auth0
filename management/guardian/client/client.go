@@ -3,17 +3,22 @@
 package client
 
 import (
+	context "context"
+
+	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
 	enrollments "github.com/auth0/go-auth0/v3/management/guardian/enrollments"
 	client "github.com/auth0/go-auth0/v3/management/guardian/factors/client"
 	policies "github.com/auth0/go-auth0/v3/management/guardian/policies"
 	internal "github.com/auth0/go-auth0/v3/management/internal"
+	option "github.com/auth0/go-auth0/v3/management/option"
 )
 
 type Client struct {
-	Enrollments *enrollments.Client
-	Factors     *client.Client
-	Policies    *policies.Client
+	WithRawResponse *RawClient
+	Enrollments     *enrollments.Client
+	Factors         *client.Client
+	Policies        *policies.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -22,11 +27,12 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
-		Enrollments: enrollments.NewClient(options),
-		Factors:     client.NewClient(options),
-		Policies:    policies.NewClient(options),
-		options:     options,
-		baseURL:     options.BaseURL,
+		Enrollments:     enrollments.NewClient(options),
+		Factors:         client.NewClient(options),
+		Policies:        policies.NewClient(options),
+		WithRawResponse: NewRawClient(options),
+		options:         options,
+		baseURL:         options.BaseURL,
 		caller: internal.NewCaller(
 			&internal.CallerParams{
 				Client:         options.HTTPClient,
@@ -35,4 +41,55 @@ func NewClient(options *core.RequestOptions) *Client {
 			},
 		),
 	}
+}
+
+// TODO: Link this endpoint to relevant documentation when available.
+//
+// Example:
+//
+//	client.Guardian.Get(
+//	    context.TODO(),
+//	)
+func (c *Client) Get(
+	ctx context.Context,
+	opts ...option.RequestOption,
+) (*management.GetGuardianSettingsResponseContent, error) {
+	response, err := c.WithRawResponse.Get(
+		ctx,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
+}
+
+// Update a tenant's guardian settings such as Remember Me
+//
+// Example:
+//
+//	request := &management.SetGuardianSettingsRequestContent{
+//	    DisplayRememberMeCheckbox: true,
+//	    RememberMeDefaultValue: true,
+//	    MfaSessionInactivityTimeout: 1,
+//	    MfaSessionOverallTimeout: 1,
+//	}
+//	client.Guardian.Set(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) Set(
+	ctx context.Context,
+	request *management.SetGuardianSettingsRequestContent,
+	opts ...option.RequestOption,
+) (*management.SetGuardianSettingsResponseContent, error) {
+	response, err := c.WithRawResponse.Set(
+		ctx,
+		request,
+		opts...,
+	)
+	if err != nil {
+		return nil, err
+	}
+	return response.Body, nil
 }

@@ -2030,6 +2030,102 @@ func TestJSONMarshalingUpdateRefreshTokenResponseContent(t *testing.T) {
 	})
 }
 
+func TestOptionalNullableRoundTripGetRefreshTokenResponseContent(t *testing.T) {
+	optionalNullableKeys := []string{
+		"created_at",
+		"idle_expires_at",
+		"expires_at",
+		"session_id",
+		"refresh_token_metadata",
+		"last_exchanged_at",
+	}
+	marshalToMap := func(t *testing.T, obj *GetRefreshTokenResponseContent) map[string]json.RawMessage {
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		var result map[string]json.RawMessage
+		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
+		return result
+	}
+
+	t.Run("NullPreserved", func(t *testing.T) {
+		t.Parallel()
+		var obj GetRefreshTokenResponseContent
+		require.NoError(t, json.Unmarshal([]byte(`{"created_at":null,"idle_expires_at":null,"expires_at":null,"session_id":null,"refresh_token_metadata":null,"last_exchanged_at":null}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range optionalNullableKeys {
+			value, ok := result[key]
+			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
+			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
+		}
+	})
+
+	t.Run("AbsentStaysAbsent", func(t *testing.T) {
+		t.Parallel()
+		var obj GetRefreshTokenResponseContent
+		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range optionalNullableKeys {
+			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
+		}
+	})
+
+	t.Run("FreshValueOmits", func(t *testing.T) {
+		t.Parallel()
+		result := marshalToMap(t, &GetRefreshTokenResponseContent{})
+		for _, key := range optionalNullableKeys {
+			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
+		}
+	})
+}
+
+func TestOptionalNullableRoundTripUpdateRefreshTokenResponseContent(t *testing.T) {
+	optionalNullableKeys := []string{
+		"created_at",
+		"idle_expires_at",
+		"expires_at",
+		"session_id",
+		"refresh_token_metadata",
+		"last_exchanged_at",
+	}
+	marshalToMap := func(t *testing.T, obj *UpdateRefreshTokenResponseContent) map[string]json.RawMessage {
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		var result map[string]json.RawMessage
+		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
+		return result
+	}
+
+	t.Run("NullPreserved", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateRefreshTokenResponseContent
+		require.NoError(t, json.Unmarshal([]byte(`{"created_at":null,"idle_expires_at":null,"expires_at":null,"session_id":null,"refresh_token_metadata":null,"last_exchanged_at":null}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range optionalNullableKeys {
+			value, ok := result[key]
+			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
+			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
+		}
+	})
+
+	t.Run("AbsentStaysAbsent", func(t *testing.T) {
+		t.Parallel()
+		var obj UpdateRefreshTokenResponseContent
+		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range optionalNullableKeys {
+			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
+		}
+	})
+
+	t.Run("FreshValueOmits", func(t *testing.T) {
+		t.Parallel()
+		result := marshalToMap(t, &UpdateRefreshTokenResponseContent{})
+		for _, key := range optionalNullableKeys {
+			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
+		}
+	})
+}
+
 func TestStringGetRefreshTokenResponseContent(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()

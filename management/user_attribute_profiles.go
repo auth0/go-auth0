@@ -65,10 +65,12 @@ func (c *CreateUserAttributeProfileResponseContent) GetExtraProperties() map[str
 }
 
 func (c *CreateUserAttributeProfileResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -197,10 +199,12 @@ func (g *GetUserAttributeProfileResponseContent) GetExtraProperties() map[string
 }
 
 func (g *GetUserAttributeProfileResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -322,10 +326,12 @@ func (g *GetUserAttributeProfileTemplateResponseContent) GetExtraProperties() ma
 }
 
 func (g *GetUserAttributeProfileTemplateResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -420,10 +426,12 @@ func (l *ListUserAttributeProfileTemplateResponseContent) GetExtraProperties() m
 }
 
 func (l *ListUserAttributeProfileTemplateResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetUserAttributeProfileTemplates sets the UserAttributeProfileTemplates field and marks it as non-optional;
@@ -514,10 +522,12 @@ func (l *ListUserAttributeProfilesPaginatedResponseContent) GetExtraProperties()
 }
 
 func (l *ListUserAttributeProfilesPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -632,10 +642,12 @@ func (u *UpdateUserAttributeProfileResponseContent) GetExtraProperties() map[str
 }
 
 func (u *UpdateUserAttributeProfileResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -764,10 +776,12 @@ func (u *UserAttributeProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserAttributeProfile) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -846,12 +860,12 @@ type UserAttributeProfileID = string
 // The name of the user attribute profile.
 type UserAttributeProfileName = string
 
-// OIDC mapping for this attribute
 var (
 	userAttributeProfileOidcMappingFieldMapping     = big.NewInt(1 << 0)
 	userAttributeProfileOidcMappingFieldDisplayName = big.NewInt(1 << 1)
 )
 
+// OIDC mapping for this attribute
 type UserAttributeProfileOidcMapping struct {
 	// OIDC mapping field
 	Mapping string `json:"mapping" url:"mapping"`
@@ -887,10 +901,12 @@ func (u *UserAttributeProfileOidcMapping) GetExtraProperties() map[string]interf
 }
 
 func (u *UserAttributeProfileOidcMapping) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
@@ -954,7 +970,6 @@ type UserAttributeProfilePatchUserID = *UserAttributeProfileUserID
 // SAML mapping override for this strategy
 type UserAttributeProfileSAMLMapping = []string
 
-// Strategy-specific overrides for this attribute
 var (
 	userAttributeProfileStrategyOverridesFieldPingfederate = big.NewInt(1 << 0)
 	userAttributeProfileStrategyOverridesFieldAd           = big.NewInt(1 << 1)
@@ -966,6 +981,7 @@ var (
 	userAttributeProfileStrategyOverridesFieldSamlp        = big.NewInt(1 << 7)
 )
 
+// Strategy-specific overrides for this attribute
 type UserAttributeProfileStrategyOverrides struct {
 	Pingfederate *UserAttributeProfileStrategyOverridesMapping `json:"pingfederate,omitempty" url:"pingfederate,omitempty"`
 	Ad           *UserAttributeProfileStrategyOverridesMapping `json:"ad,omitempty" url:"ad,omitempty"`
@@ -1047,10 +1063,12 @@ func (u *UserAttributeProfileStrategyOverrides) GetExtraProperties() map[string]
 }
 
 func (u *UserAttributeProfileStrategyOverrides) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetPingfederate sets the Pingfederate field and marks it as non-optional;
@@ -1200,10 +1218,12 @@ func (u *UserAttributeProfileStrategyOverridesMapping) GetExtraProperties() map[
 }
 
 func (u *UserAttributeProfileStrategyOverridesMapping) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetOidcMapping sets the OidcMapping field and marks it as non-optional;
@@ -1269,7 +1289,6 @@ func (u *UserAttributeProfileStrategyOverridesMapping) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// Strategy-specific overrides for user ID
 var (
 	userAttributeProfileStrategyOverridesUserIDFieldPingfederate = big.NewInt(1 << 0)
 	userAttributeProfileStrategyOverridesUserIDFieldAd           = big.NewInt(1 << 1)
@@ -1281,6 +1300,7 @@ var (
 	userAttributeProfileStrategyOverridesUserIDFieldSamlp        = big.NewInt(1 << 7)
 )
 
+// Strategy-specific overrides for user ID
 type UserAttributeProfileStrategyOverridesUserID struct {
 	Pingfederate *UserAttributeProfileStrategyOverridesUserIDMapping `json:"pingfederate,omitempty" url:"pingfederate,omitempty"`
 	Ad           *UserAttributeProfileStrategyOverridesUserIDMapping `json:"ad,omitempty" url:"ad,omitempty"`
@@ -1362,10 +1382,12 @@ func (u *UserAttributeProfileStrategyOverridesUserID) GetExtraProperties() map[s
 }
 
 func (u *UserAttributeProfileStrategyOverridesUserID) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetPingfederate sets the Pingfederate field and marks it as non-optional;
@@ -1514,10 +1536,12 @@ func (u *UserAttributeProfileStrategyOverridesUserIDMapping) GetExtraProperties(
 }
 
 func (u *UserAttributeProfileStrategyOverridesUserIDMapping) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetOidcMapping sets the OidcMapping field and marks it as non-optional;
@@ -1583,13 +1607,13 @@ func (u *UserAttributeProfileStrategyOverridesUserIDMapping) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// The structure of the template, which can be used as the payload for creating or updating a User Attribute Profile.
 var (
 	userAttributeProfileTemplateFieldName           = big.NewInt(1 << 0)
 	userAttributeProfileTemplateFieldUserID         = big.NewInt(1 << 1)
 	userAttributeProfileTemplateFieldUserAttributes = big.NewInt(1 << 2)
 )
 
+// The structure of the template, which can be used as the payload for creating or updating a User Attribute Profile.
 type UserAttributeProfileTemplate struct {
 	Name           *UserAttributeProfileName           `json:"name,omitempty" url:"name,omitempty"`
 	UserID         *UserAttributeProfileUserID         `json:"user_id,omitempty" url:"user_id,omitempty"`
@@ -1631,10 +1655,12 @@ func (u *UserAttributeProfileTemplate) GetExtraProperties() map[string]interface
 }
 
 func (u *UserAttributeProfileTemplate) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1749,10 +1775,12 @@ func (u *UserAttributeProfileTemplateItem) GetExtraProperties() map[string]inter
 }
 
 func (u *UserAttributeProfileTemplateItem) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1916,10 +1944,12 @@ func (u *UserAttributeProfileUserAttributeAdditionalProperties) GetExtraProperti
 }
 
 func (u *UserAttributeProfileUserAttributeAdditionalProperties) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetDescription sets the Description field and marks it as non-optional;
@@ -2023,7 +2053,6 @@ func (u *UserAttributeProfileUserAttributeAdditionalProperties) String() string 
 // User attributes configuration map. Keys are attribute names, values are the mapping configuration for each attribute.
 type UserAttributeProfileUserAttributes = map[string]*UserAttributeProfileUserAttributeAdditionalProperties
 
-// User ID mapping configuration
 var (
 	userAttributeProfileUserIDFieldOidcMapping       = big.NewInt(1 << 0)
 	userAttributeProfileUserIDFieldSAMLMapping       = big.NewInt(1 << 1)
@@ -2031,6 +2060,7 @@ var (
 	userAttributeProfileUserIDFieldStrategyOverrides = big.NewInt(1 << 3)
 )
 
+// User ID mapping configuration
 type UserAttributeProfileUserID struct {
 	OidcMapping *UserAttributeProfileUserIDOidcMappingEnum `json:"oidc_mapping,omitempty" url:"oidc_mapping,omitempty"`
 	SAMLMapping *UserAttributeProfileUserIdSamlMapping     `json:"saml_mapping,omitempty" url:"saml_mapping,omitempty"`
@@ -2081,10 +2111,12 @@ func (u *UserAttributeProfileUserID) GetExtraProperties() map[string]interface{}
 }
 
 func (u *UserAttributeProfileUserID) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetOidcMapping sets the OidcMapping field and marks it as non-optional;

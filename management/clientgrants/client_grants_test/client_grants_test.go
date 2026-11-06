@@ -89,6 +89,9 @@ func TestClientGrantsListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListClientGrantsRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -116,7 +119,7 @@ func TestClientGrantsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestClientGrantsListWithWireMock", "GET", "/client-grants", map[string]interface{}{"from": "from", "take": "1", "audience": "audience", "client_id": "client_id", "allow_any_organization": "true", "subject_type": "client", "default_for": "third_party_clients"}, 1)
+	VerifyRequestCount(t, "TestClientGrantsListWithWireMock", "GET", "/client-grants", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1", "audience": "audience", "client_id": "client_id", "allow_any_organization": "true", "subject_type": "client", "default_for": "third_party_clients"}, 1)
 }
 
 func TestClientGrantsCreateWithWireMock(
@@ -143,6 +146,48 @@ func TestClientGrantsCreateWithWireMock(
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
 	VerifyRequestCount(t, "TestClientGrantsCreateWithWireMock", "POST", "/client-grants", nil, 1)
+}
+
+func TestClientGrantsSearchWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	request := &management.SearchClientGrantsRequestParameters{
+		Q: management.String(
+			"q",
+		),
+		Parser: management.SearchParserEnumSCIM.Ptr(),
+		Fields: management.String(
+			"fields",
+		),
+		IncludeFields: management.Bool(
+			true,
+		),
+		Take: management.Int(
+			1,
+		),
+		From: management.String(
+			"from",
+		),
+		Sort: management.ClientGrantSortFieldEnumAudience.Ptr(),
+	}
+	_, invocationErr := client.ClientGrants.Search(
+		context.TODO(),
+		request,
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestClientGrantsSearchWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestClientGrantsSearchWithWireMock", "GET", "/client-grants/search", map[string]interface{}{"q": "q", "parser": "scim", "fields": "fields", "include_fields": "true", "take": "1", "from": "from", "sort": "audience"}, 1)
 }
 
 func TestClientGrantsGetWithWireMock(

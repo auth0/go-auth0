@@ -88,10 +88,12 @@ func (c *CreateHookResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CreateHookResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetTriggerID sets the TriggerID field and marks it as non-optional;
@@ -257,10 +259,12 @@ func (g *GetHookResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetHookResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetTriggerID sets the TriggerID field and marks it as non-optional;
@@ -426,10 +430,12 @@ func (h *Hook) GetExtraProperties() map[string]interface{} {
 }
 
 func (h *Hook) require(field *big.Int) {
-	if h.explicitFields == nil {
-		h.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if h.explicitFields != nil {
+		next.Set(h.explicitFields)
 	}
-	h.explicitFields.Or(h.explicitFields, field)
+	next.Or(next, field)
+	h.explicitFields = next
 }
 
 // SetTriggerID sets the TriggerID field and marks it as non-optional;
@@ -607,10 +613,12 @@ func (l *ListHooksOffsetPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListHooksOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -762,10 +770,12 @@ func (u *UpdateHookResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UpdateHookResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetTriggerID sets the TriggerID field and marks it as non-optional;

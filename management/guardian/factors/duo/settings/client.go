@@ -35,6 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieves the DUO account and factor configuration.
+//
+// Example:
+//
+//	client.Guardian.Factors.Duo.Settings.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -50,6 +56,14 @@ func (c *Client) Get(
 }
 
 // Set the DUO account configuration and other properties specific to this factor.
+//
+// Example:
+//
+//	request := &management.SetGuardianFactorDuoSettingsRequestContent{}
+//	client.Guardian.Factors.Duo.Settings.Set(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
 	request *management.SetGuardianFactorDuoSettingsRequestContent,
@@ -66,6 +80,13 @@ func (c *Client) Set(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &management.UpdateGuardianFactorDuoSettingsRequestContent{}
+//	client.Guardian.Factors.Duo.Settings.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateGuardianFactorDuoSettingsRequestContent,

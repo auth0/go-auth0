@@ -13,6 +13,8 @@ var (
 	createRoleResponseContentFieldID          = big.NewInt(1 << 0)
 	createRoleResponseContentFieldName        = big.NewInt(1 << 1)
 	createRoleResponseContentFieldDescription = big.NewInt(1 << 2)
+	createRoleResponseContentFieldType        = big.NewInt(1 << 3)
+	createRoleResponseContentFieldOwnerID     = big.NewInt(1 << 4)
 )
 
 type CreateRoleResponseContent struct {
@@ -21,7 +23,9 @@ type CreateRoleResponseContent struct {
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
-	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	Description *string       `json:"description,omitempty" url:"description,omitempty"`
+	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -51,6 +55,20 @@ func (c *CreateRoleResponseContent) GetDescription() string {
 	return *c.Description
 }
 
+func (c *CreateRoleResponseContent) GetType() RoleTypeEnum {
+	if c == nil || c.Type == nil {
+		return ""
+	}
+	return *c.Type
+}
+
+func (c *CreateRoleResponseContent) GetOwnerID() RoleOwnerID {
+	if c == nil || c.OwnerID == nil {
+		return ""
+	}
+	return *c.OwnerID
+}
+
 func (c *CreateRoleResponseContent) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -59,10 +77,12 @@ func (c *CreateRoleResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CreateRoleResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -84,6 +104,20 @@ func (c *CreateRoleResponseContent) SetName(name *string) {
 func (c *CreateRoleResponseContent) SetDescription(description *string) {
 	c.Description = description
 	c.require(createRoleResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleResponseContent) SetType(type_ *RoleTypeEnum) {
+	c.Type = type_
+	c.require(createRoleResponseContentFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateRoleResponseContent) SetOwnerID(ownerID *RoleOwnerID) {
+	c.OwnerID = ownerID
+	c.require(createRoleResponseContentFieldOwnerID)
 }
 
 func (c *CreateRoleResponseContent) UnmarshalJSON(data []byte) error {
@@ -132,6 +166,8 @@ var (
 	getRoleResponseContentFieldID          = big.NewInt(1 << 0)
 	getRoleResponseContentFieldName        = big.NewInt(1 << 1)
 	getRoleResponseContentFieldDescription = big.NewInt(1 << 2)
+	getRoleResponseContentFieldType        = big.NewInt(1 << 3)
+	getRoleResponseContentFieldOwnerID     = big.NewInt(1 << 4)
 )
 
 type GetRoleResponseContent struct {
@@ -140,7 +176,9 @@ type GetRoleResponseContent struct {
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
-	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	Description *string       `json:"description,omitempty" url:"description,omitempty"`
+	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -170,6 +208,20 @@ func (g *GetRoleResponseContent) GetDescription() string {
 	return *g.Description
 }
 
+func (g *GetRoleResponseContent) GetType() RoleTypeEnum {
+	if g == nil || g.Type == nil {
+		return ""
+	}
+	return *g.Type
+}
+
+func (g *GetRoleResponseContent) GetOwnerID() RoleOwnerID {
+	if g == nil || g.OwnerID == nil {
+		return ""
+	}
+	return *g.OwnerID
+}
+
 func (g *GetRoleResponseContent) GetExtraProperties() map[string]interface{} {
 	if g == nil {
 		return nil
@@ -178,10 +230,12 @@ func (g *GetRoleResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetRoleResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -203,6 +257,20 @@ func (g *GetRoleResponseContent) SetName(name *string) {
 func (g *GetRoleResponseContent) SetDescription(description *string) {
 	g.Description = description
 	g.require(getRoleResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRoleResponseContent) SetType(type_ *RoleTypeEnum) {
+	g.Type = type_
+	g.require(getRoleResponseContentFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetRoleResponseContent) SetOwnerID(ownerID *RoleOwnerID) {
+	g.OwnerID = ownerID
+	g.require(getRoleResponseContentFieldOwnerID)
 }
 
 func (g *GetRoleResponseContent) UnmarshalJSON(data []byte) error {
@@ -303,10 +371,12 @@ func (l *ListRolesOffsetPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -379,10 +449,15 @@ func (l *ListRolesOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+// Filter organization-level roles by owner ID. Use an organization ID to filter that organization's roles, or "auth0" to retrieve Auth0-managed System Roles. Required when type is "organization".
+type RoleOwnerIDFilter = string
+
 var (
 	updateRoleResponseContentFieldID          = big.NewInt(1 << 0)
 	updateRoleResponseContentFieldName        = big.NewInt(1 << 1)
 	updateRoleResponseContentFieldDescription = big.NewInt(1 << 2)
+	updateRoleResponseContentFieldType        = big.NewInt(1 << 3)
+	updateRoleResponseContentFieldOwnerID     = big.NewInt(1 << 4)
 )
 
 type UpdateRoleResponseContent struct {
@@ -391,7 +466,9 @@ type UpdateRoleResponseContent struct {
 	// Name of this role.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
 	// Description of this role.
-	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	Description *string       `json:"description,omitempty" url:"description,omitempty"`
+	Type        *RoleTypeEnum `json:"type,omitempty" url:"type,omitempty"`
+	OwnerID     *RoleOwnerID  `json:"owner_id,omitempty" url:"owner_id,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -421,6 +498,20 @@ func (u *UpdateRoleResponseContent) GetDescription() string {
 	return *u.Description
 }
 
+func (u *UpdateRoleResponseContent) GetType() RoleTypeEnum {
+	if u == nil || u.Type == nil {
+		return ""
+	}
+	return *u.Type
+}
+
+func (u *UpdateRoleResponseContent) GetOwnerID() RoleOwnerID {
+	if u == nil || u.OwnerID == nil {
+		return ""
+	}
+	return *u.OwnerID
+}
+
 func (u *UpdateRoleResponseContent) GetExtraProperties() map[string]interface{} {
 	if u == nil {
 		return nil
@@ -429,10 +520,12 @@ func (u *UpdateRoleResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UpdateRoleResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -454,6 +547,20 @@ func (u *UpdateRoleResponseContent) SetName(name *string) {
 func (u *UpdateRoleResponseContent) SetDescription(description *string) {
 	u.Description = description
 	u.require(updateRoleResponseContentFieldDescription)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRoleResponseContent) SetType(type_ *RoleTypeEnum) {
+	u.Type = type_
+	u.require(updateRoleResponseContentFieldType)
+}
+
+// SetOwnerID sets the OwnerID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateRoleResponseContent) SetOwnerID(ownerID *RoleOwnerID) {
+	u.OwnerID = ownerID
+	u.require(updateRoleResponseContentFieldOwnerID)
 }
 
 func (u *UpdateRoleResponseContent) UnmarshalJSON(data []byte) error {

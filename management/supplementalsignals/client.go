@@ -35,6 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get the supplemental signals configuration for a tenant.
+//
+// Example:
+//
+//	client.SupplementalSignals.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -50,6 +56,16 @@ func (c *Client) Get(
 }
 
 // Update the supplemental signals configuration for a tenant.
+//
+// Example:
+//
+//	request := &management.UpdateSupplementalSignalsRequestContent{
+//	    AkamaiEnabled: true,
+//	}
+//	client.SupplementalSignals.Patch(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Patch(
 	ctx context.Context,
 	request *management.UpdateSupplementalSignalsRequestContent,

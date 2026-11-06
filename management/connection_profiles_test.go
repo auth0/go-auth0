@@ -66,6 +66,22 @@ func TestSettersConnectionProfile(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetProvisioning", func(t *testing.T) {
+		obj := &ConnectionProfile{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+		obj.SetProvisioning(fernTestValueProvisioning)
+		assert.Equal(t, fernTestValueProvisioning, obj.Provisioning)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
+		obj := &ConnectionProfile{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+		assert.Equal(t, fernTestValueCrossAppAccessResourceApp, obj.CrossAppAccessResourceApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersConnectionProfile(t *testing.T) {
@@ -307,6 +323,74 @@ func TestGettersConnectionProfile(t *testing.T) {
 		_ = obj.GetStrategyOverrides() // Should return zero value
 	})
 
+	t.Run("GetProvisioning", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfile{}
+		var value ConnectionProfileProvisioning
+		obj.Provisioning = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProvisioning(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProvisioning_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfile{}
+		obj.Provisioning = nil
+		var expectedZero ConnectionProfileProvisioning
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProvisioning(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProvisioning_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfile
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProvisioning() // Should return zero value
+	})
+
+	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfile{}
+		var value ConnectionProfileCrossAppAccessResourceApp
+		obj.CrossAppAccessResourceApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessResourceApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfile{}
+		obj.CrossAppAccessResourceApp = nil
+		var expectedZero ConnectionProfileCrossAppAccessResourceApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessResourceApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfile
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessResourceApp() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionProfile(t *testing.T) {
@@ -527,6 +611,293 @@ func TestSettersMarkExplicitConnectionProfile(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetProvisioning_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfile{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+
+		// Act
+		obj.SetProvisioning(fernTestValueProvisioning)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessResourceApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfile{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+
+		// Act
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionProfileCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("SetStatus", func(t *testing.T) {
+		obj := &ConnectionProfileCrossAppAccessResourceApp{}
+		var fernTestValueStatus *ConnectionProfileCrossAppAccessResourceAppStatus
+		obj.SetStatus(fernTestValueStatus)
+		assert.Equal(t, fernTestValueStatus, obj.Status)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("GetStatus", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceApp{}
+		var expected *ConnectionProfileCrossAppAccessResourceAppStatus
+		obj.Status = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStatus(), "getter should return the property value")
+	})
+
+	t.Run("GetStatus_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceApp{}
+		obj.Status = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetStatus(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetStatus_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileCrossAppAccessResourceApp
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStatus() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("SetStatus_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceApp{}
+		var fernTestValueStatus *ConnectionProfileCrossAppAccessResourceAppStatus
+
+		// Act
+		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionProfileCrossAppAccessResourceAppStatus(t *testing.T) {
+	t.Run("SetDefaultValue", func(t *testing.T) {
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		var fernTestValueDefaultValue ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum
+		obj.SetDefaultValue(fernTestValueDefaultValue)
+		assert.Equal(t, fernTestValueDefaultValue, obj.DefaultValue)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAllowedValues", func(t *testing.T) {
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		var fernTestValueAllowedValues *ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum
+		obj.SetAllowedValues(fernTestValueAllowedValues)
+		assert.Equal(t, fernTestValueAllowedValues, obj.AllowedValues)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileCrossAppAccessResourceAppStatus(t *testing.T) {
+	t.Run("GetDefaultValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		var expected ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum
+		obj.DefaultValue = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetDefaultValue(), "getter should return the property value")
+	})
+
+	t.Run("GetDefaultValue_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileCrossAppAccessResourceAppStatus
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultValue() // Should return zero value
+	})
+
+	t.Run("GetAllowedValues", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		var value ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum
+		obj.AllowedValues = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowedValues(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowedValues_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		obj.AllowedValues = nil
+		var expectedZero ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowedValues(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowedValues_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileCrossAppAccessResourceAppStatus
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowedValues() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileCrossAppAccessResourceAppStatus(t *testing.T) {
+	t.Run("SetDefaultValue_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		var fernTestValueDefaultValue ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum
+
+		// Act
+		obj.SetDefaultValue(fernTestValueDefaultValue)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowedValues_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		var fernTestValueAllowedValues *ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum
+
+		// Act
+		obj.SetAllowedValues(fernTestValueAllowedValues)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersConnectionProfileOrganization(t *testing.T) {
@@ -684,6 +1055,530 @@ func TestSettersMarkExplicitConnectionProfileOrganization(t *testing.T) {
 
 }
 
+func TestSettersConnectionProfileProvisioning(t *testing.T) {
+	t.Run("SetSCIM", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioning{}
+		var fernTestValueSCIM *ConnectionProfileProvisioningSCIM
+		obj.SetSCIM(fernTestValueSCIM)
+		assert.Equal(t, fernTestValueSCIM, obj.SCIM)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetGoogleWorkspace", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
+		assert.Equal(t, fernTestValueGoogleWorkspace, obj.GoogleWorkspace)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileProvisioning(t *testing.T) {
+	t.Run("GetSCIM", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		var value ConnectionProfileProvisioningSCIM
+		obj.SCIM = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSCIM(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSCIM_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		obj.SCIM = nil
+		var expectedZero ConnectionProfileProvisioningSCIM
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSCIM(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSCIM_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioning
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSCIM() // Should return zero value
+	})
+
+	t.Run("GetGoogleWorkspace", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		var value ConnectionProfileProvisioningGoogleWorkspace
+		obj.GoogleWorkspace = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleWorkspace(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleWorkspace_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		obj.GoogleWorkspace = nil
+		var expectedZero ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleWorkspace(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleWorkspace_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioning
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleWorkspace() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileProvisioning(t *testing.T) {
+	t.Run("SetSCIM_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		var fernTestValueSCIM *ConnectionProfileProvisioningSCIM
+
+		// Act
+		obj.SetSCIM(fernTestValueSCIM)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGoogleWorkspace_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("SetSyncUsers", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		var fernTestValueSyncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers
+		obj.SetSyncUsers(fernTestValueSyncUsers)
+		assert.Equal(t, fernTestValueSyncUsers, obj.SyncUsers)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("GetSyncUsers", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		var expected ConnectionProfileProvisioningGoogleWorkspaceSyncUsers
+		obj.SyncUsers = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetSyncUsers(), "getter should return the property value")
+	})
+
+	t.Run("GetSyncUsers_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningGoogleWorkspace
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSyncUsers() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("SetSyncUsers_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		var fernTestValueSyncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers
+
+		// Act
+		obj.SetSyncUsers(fernTestValueSyncUsers)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionProfileProvisioningSCIM(t *testing.T) {
+	t.Run("SetTokens", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioningSCIM{}
+		var fernTestValueTokens *ConnectionProfileProvisioningSCIMTokens
+		obj.SetTokens(fernTestValueTokens)
+		assert.Equal(t, fernTestValueTokens, obj.Tokens)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileProvisioningSCIM(t *testing.T) {
+	t.Run("GetTokens", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIM{}
+		var expected *ConnectionProfileProvisioningSCIMTokens
+		obj.Tokens = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetTokens(), "getter should return the property value")
+	})
+
+	t.Run("GetTokens_NilValue", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIM{}
+		obj.Tokens = nil
+
+		// Act & Assert
+		assert.Nil(t, obj.GetTokens(), "getter should return nil when property is nil")
+	})
+
+	t.Run("GetTokens_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIM
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetTokens() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileProvisioningSCIM(t *testing.T) {
+	t.Run("SetTokens_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIM{}
+		var fernTestValueTokens *ConnectionProfileProvisioningSCIMTokens
+
+		// Act
+		obj.SetTokens(fernTestValueTokens)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersConnectionProfileProvisioningSCIMTokens(t *testing.T) {
+	t.Run("SetScopes", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var fernTestValueScopes ConnectionProfileProvisioningSCIMTokenScopes
+		obj.SetScopes(fernTestValueScopes)
+		assert.Equal(t, fernTestValueScopes, obj.Scopes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetDefaultExpiry", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var fernTestValueDefaultExpiry *ConnectionProfileProvisioningSCIMTokenDefaultExpiry
+		obj.SetDefaultExpiry(fernTestValueDefaultExpiry)
+		assert.Equal(t, fernTestValueDefaultExpiry, obj.DefaultExpiry)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetMaxAllowedExpiry", func(t *testing.T) {
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var fernTestValueMaxAllowedExpiry *ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry
+		obj.SetMaxAllowedExpiry(fernTestValueMaxAllowedExpiry)
+		assert.Equal(t, fernTestValueMaxAllowedExpiry, obj.MaxAllowedExpiry)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileProvisioningSCIMTokens(t *testing.T) {
+	t.Run("GetScopes", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var expected ConnectionProfileProvisioningSCIMTokenScopes
+		obj.Scopes = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetScopes(), "getter should return the property value")
+	})
+
+	t.Run("GetScopes_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIMTokens
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetScopes() // Should return zero value
+	})
+
+	t.Run("GetDefaultExpiry", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var value ConnectionProfileProvisioningSCIMTokenDefaultExpiry
+		obj.DefaultExpiry = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetDefaultExpiry(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetDefaultExpiry_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		obj.DefaultExpiry = nil
+		var expectedZero ConnectionProfileProvisioningSCIMTokenDefaultExpiry
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetDefaultExpiry(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetDefaultExpiry_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIMTokens
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetDefaultExpiry() // Should return zero value
+	})
+
+	t.Run("GetMaxAllowedExpiry", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var value ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry
+		obj.MaxAllowedExpiry = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetMaxAllowedExpiry(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetMaxAllowedExpiry_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		obj.MaxAllowedExpiry = nil
+		var expectedZero ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetMaxAllowedExpiry(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetMaxAllowedExpiry_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIMTokens
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMaxAllowedExpiry() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileProvisioningSCIMTokens(t *testing.T) {
+	t.Run("SetScopes_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var fernTestValueScopes ConnectionProfileProvisioningSCIMTokenScopes
+
+		// Act
+		obj.SetScopes(fernTestValueScopes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetDefaultExpiry_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var fernTestValueDefaultExpiry *ConnectionProfileProvisioningSCIMTokenDefaultExpiry
+
+		// Act
+		obj.SetDefaultExpiry(fernTestValueDefaultExpiry)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetMaxAllowedExpiry_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		var fernTestValueMaxAllowedExpiry *ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry
+
+		// Act
+		obj.SetMaxAllowedExpiry(fernTestValueMaxAllowedExpiry)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersConnectionProfileStrategyOverride(t *testing.T) {
 	t.Run("SetEnabledFeatures", func(t *testing.T) {
 		obj := &ConnectionProfileStrategyOverride{}
@@ -698,6 +1593,14 @@ func TestSettersConnectionProfileStrategyOverride(t *testing.T) {
 		var fernTestValueConnectionConfig *ConnectionProfileStrategyOverridesConnectionConfig
 		obj.SetConnectionConfig(fernTestValueConnectionConfig)
 		assert.Equal(t, fernTestValueConnectionConfig, obj.ConnectionConfig)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetProvisioning", func(t *testing.T) {
+		obj := &ConnectionProfileStrategyOverride{}
+		var fernTestValueProvisioning *ConnectionProfileStrategyOverridesProvisioning
+		obj.SetProvisioning(fernTestValueProvisioning)
+		assert.Equal(t, fernTestValueProvisioning, obj.Provisioning)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -772,6 +1675,40 @@ func TestGettersConnectionProfileStrategyOverride(t *testing.T) {
 		_ = obj.GetConnectionConfig() // Should return zero value
 	})
 
+	t.Run("GetProvisioning", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverride{}
+		var value ConnectionProfileStrategyOverridesProvisioning
+		obj.Provisioning = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProvisioning(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProvisioning_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverride{}
+		obj.Provisioning = nil
+		var expectedZero ConnectionProfileStrategyOverridesProvisioning
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProvisioning(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProvisioning_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileStrategyOverride
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProvisioning() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionProfileStrategyOverride(t *testing.T) {
@@ -814,6 +1751,37 @@ func TestSettersMarkExplicitConnectionProfileStrategyOverride(t *testing.T) {
 
 		// Act
 		obj.SetConnectionConfig(fernTestValueConnectionConfig)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetProvisioning_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverride{}
+		var fernTestValueProvisioning *ConnectionProfileStrategyOverridesProvisioning
+
+		// Act
+		obj.SetProvisioning(fernTestValueProvisioning)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1432,6 +2400,161 @@ func TestSettersMarkExplicitConnectionProfileStrategyOverrides(t *testing.T) {
 
 }
 
+func TestSettersConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
+	t.Run("SetSCIM", func(t *testing.T) {
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var fernTestValueSCIM *ConnectionProfileProvisioningSCIM
+		obj.SetSCIM(fernTestValueSCIM)
+		assert.Equal(t, fernTestValueSCIM, obj.SCIM)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetGoogleWorkspace", func(t *testing.T) {
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
+		assert.Equal(t, fernTestValueGoogleWorkspace, obj.GoogleWorkspace)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
+	t.Run("GetSCIM", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var value ConnectionProfileProvisioningSCIM
+		obj.SCIM = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetSCIM(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetSCIM_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		obj.SCIM = nil
+		var expectedZero ConnectionProfileProvisioningSCIM
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetSCIM(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetSCIM_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileStrategyOverridesProvisioning
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetSCIM() // Should return zero value
+	})
+
+	t.Run("GetGoogleWorkspace", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var value ConnectionProfileProvisioningGoogleWorkspace
+		obj.GoogleWorkspace = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleWorkspace(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleWorkspace_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		obj.GoogleWorkspace = nil
+		var expectedZero ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleWorkspace(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleWorkspace_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileStrategyOverridesProvisioning
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleWorkspace() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
+	t.Run("SetSCIM_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var fernTestValueSCIM *ConnectionProfileProvisioningSCIM
+
+		// Act
+		obj.SetSCIM(fernTestValueSCIM)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGoogleWorkspace_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		var fernTestValueGoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace
+
+		// Act
+		obj.SetGoogleWorkspace(fernTestValueGoogleWorkspace)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
 func TestSettersConnectionProfileTemplate(t *testing.T) {
 	t.Run("SetName", func(t *testing.T) {
 		obj := &ConnectionProfileTemplate{}
@@ -1478,6 +2601,14 @@ func TestSettersConnectionProfileTemplate(t *testing.T) {
 		var fernTestValueStrategyOverrides *ConnectionProfileStrategyOverrides
 		obj.SetStrategyOverrides(fernTestValueStrategyOverrides)
 		assert.Equal(t, fernTestValueStrategyOverrides, obj.StrategyOverrides)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetProvisioning", func(t *testing.T) {
+		obj := &ConnectionProfileTemplate{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+		obj.SetProvisioning(fernTestValueProvisioning)
+		assert.Equal(t, fernTestValueProvisioning, obj.Provisioning)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1688,6 +2819,40 @@ func TestGettersConnectionProfileTemplate(t *testing.T) {
 		_ = obj.GetStrategyOverrides() // Should return zero value
 	})
 
+	t.Run("GetProvisioning", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileTemplate{}
+		var value ConnectionProfileProvisioning
+		obj.Provisioning = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProvisioning(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProvisioning_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileTemplate{}
+		obj.Provisioning = nil
+		var expectedZero ConnectionProfileProvisioning
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProvisioning(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProvisioning_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileTemplate
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProvisioning() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitConnectionProfileTemplate(t *testing.T) {
@@ -1854,6 +3019,37 @@ func TestSettersMarkExplicitConnectionProfileTemplate(t *testing.T) {
 
 		// Act
 		obj.SetStrategyOverrides(fernTestValueStrategyOverrides)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetProvisioning_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileTemplate{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+
+		// Act
+		obj.SetProvisioning(fernTestValueProvisioning)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2164,6 +3360,22 @@ func TestSettersCreateConnectionProfileResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetProvisioning", func(t *testing.T) {
+		obj := &CreateConnectionProfileResponseContent{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+		obj.SetProvisioning(fernTestValueProvisioning)
+		assert.Equal(t, fernTestValueProvisioning, obj.Provisioning)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
+		obj := &CreateConnectionProfileResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+		assert.Equal(t, fernTestValueCrossAppAccessResourceApp, obj.CrossAppAccessResourceApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersCreateConnectionProfileResponseContent(t *testing.T) {
@@ -2405,6 +3617,74 @@ func TestGettersCreateConnectionProfileResponseContent(t *testing.T) {
 		_ = obj.GetStrategyOverrides() // Should return zero value
 	})
 
+	t.Run("GetProvisioning", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionProfileResponseContent{}
+		var value ConnectionProfileProvisioning
+		obj.Provisioning = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProvisioning(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProvisioning_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionProfileResponseContent{}
+		obj.Provisioning = nil
+		var expectedZero ConnectionProfileProvisioning
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProvisioning(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProvisioning_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateConnectionProfileResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProvisioning() // Should return zero value
+	})
+
+	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionProfileResponseContent{}
+		var value ConnectionProfileCrossAppAccessResourceApp
+		obj.CrossAppAccessResourceApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessResourceApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionProfileResponseContent{}
+		obj.CrossAppAccessResourceApp = nil
+		var expectedZero ConnectionProfileCrossAppAccessResourceApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessResourceApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateConnectionProfileResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessResourceApp() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitCreateConnectionProfileResponseContent(t *testing.T) {
@@ -2625,6 +3905,68 @@ func TestSettersMarkExplicitCreateConnectionProfileResponseContent(t *testing.T)
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetProvisioning_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionProfileResponseContent{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+
+		// Act
+		obj.SetProvisioning(fernTestValueProvisioning)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessResourceApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateConnectionProfileResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+
+		// Act
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersGetConnectionProfileResponseContent(t *testing.T) {
@@ -2681,6 +4023,22 @@ func TestSettersGetConnectionProfileResponseContent(t *testing.T) {
 		var fernTestValueStrategyOverrides *ConnectionProfileStrategyOverrides
 		obj.SetStrategyOverrides(fernTestValueStrategyOverrides)
 		assert.Equal(t, fernTestValueStrategyOverrides, obj.StrategyOverrides)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetProvisioning", func(t *testing.T) {
+		obj := &GetConnectionProfileResponseContent{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+		obj.SetProvisioning(fernTestValueProvisioning)
+		assert.Equal(t, fernTestValueProvisioning, obj.Provisioning)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
+		obj := &GetConnectionProfileResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+		assert.Equal(t, fernTestValueCrossAppAccessResourceApp, obj.CrossAppAccessResourceApp)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2925,6 +4283,74 @@ func TestGettersGetConnectionProfileResponseContent(t *testing.T) {
 		_ = obj.GetStrategyOverrides() // Should return zero value
 	})
 
+	t.Run("GetProvisioning", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionProfileResponseContent{}
+		var value ConnectionProfileProvisioning
+		obj.Provisioning = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProvisioning(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProvisioning_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionProfileResponseContent{}
+		obj.Provisioning = nil
+		var expectedZero ConnectionProfileProvisioning
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProvisioning(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProvisioning_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetConnectionProfileResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProvisioning() // Should return zero value
+	})
+
+	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionProfileResponseContent{}
+		var value ConnectionProfileCrossAppAccessResourceApp
+		obj.CrossAppAccessResourceApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessResourceApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionProfileResponseContent{}
+		obj.CrossAppAccessResourceApp = nil
+		var expectedZero ConnectionProfileCrossAppAccessResourceApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessResourceApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetConnectionProfileResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessResourceApp() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitGetConnectionProfileResponseContent(t *testing.T) {
@@ -3122,6 +4548,68 @@ func TestSettersMarkExplicitGetConnectionProfileResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetStrategyOverrides(fernTestValueStrategyOverrides)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetProvisioning_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionProfileResponseContent{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+
+		// Act
+		obj.SetProvisioning(fernTestValueProvisioning)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessResourceApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetConnectionProfileResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+
+		// Act
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3667,6 +5155,22 @@ func TestSettersUpdateConnectionProfileResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetProvisioning", func(t *testing.T) {
+		obj := &UpdateConnectionProfileResponseContent{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+		obj.SetProvisioning(fernTestValueProvisioning)
+		assert.Equal(t, fernTestValueProvisioning, obj.Provisioning)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetCrossAppAccessResourceApp", func(t *testing.T) {
+		obj := &UpdateConnectionProfileResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+		assert.Equal(t, fernTestValueCrossAppAccessResourceApp, obj.CrossAppAccessResourceApp)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersUpdateConnectionProfileResponseContent(t *testing.T) {
@@ -3908,6 +5412,74 @@ func TestGettersUpdateConnectionProfileResponseContent(t *testing.T) {
 		_ = obj.GetStrategyOverrides() // Should return zero value
 	})
 
+	t.Run("GetProvisioning", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionProfileResponseContent{}
+		var value ConnectionProfileProvisioning
+		obj.Provisioning = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetProvisioning(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetProvisioning_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionProfileResponseContent{}
+		obj.Provisioning = nil
+		var expectedZero ConnectionProfileProvisioning
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetProvisioning(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetProvisioning_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionProfileResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetProvisioning() // Should return zero value
+	})
+
+	t.Run("GetCrossAppAccessResourceApp", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionProfileResponseContent{}
+		var value ConnectionProfileCrossAppAccessResourceApp
+		obj.CrossAppAccessResourceApp = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetCrossAppAccessResourceApp(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionProfileResponseContent{}
+		obj.CrossAppAccessResourceApp = nil
+		var expectedZero ConnectionProfileCrossAppAccessResourceApp
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetCrossAppAccessResourceApp(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetCrossAppAccessResourceApp_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateConnectionProfileResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetCrossAppAccessResourceApp() // Should return zero value
+	})
+
 }
 
 func TestSettersMarkExplicitUpdateConnectionProfileResponseContent(t *testing.T) {
@@ -4128,6 +5700,68 @@ func TestSettersMarkExplicitUpdateConnectionProfileResponseContent(t *testing.T)
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetProvisioning_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionProfileResponseContent{}
+		var fernTestValueProvisioning *ConnectionProfileProvisioning
+
+		// Act
+		obj.SetProvisioning(fernTestValueProvisioning)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetCrossAppAccessResourceApp_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateConnectionProfileResponseContent{}
+		var fernTestValueCrossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp
+
+		// Act
+		obj.SetCrossAppAccessResourceApp(fernTestValueCrossAppAccessResourceApp)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestJSONMarshalingConnectionProfile(t *testing.T) {
@@ -4196,6 +5830,72 @@ func TestJSONMarshalingConnectionProfileConfig(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingConnectionProfileCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceApp{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileCrossAppAccessResourceApp
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileCrossAppAccessResourceApp
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileCrossAppAccessResourceApp
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionProfileCrossAppAccessResourceAppStatus(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileCrossAppAccessResourceAppStatus
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileCrossAppAccessResourceAppStatus
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileCrossAppAccessResourceAppStatus
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingConnectionProfileOrganization(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -4224,6 +5924,138 @@ func TestJSONMarshalingConnectionProfileOrganization(t *testing.T) {
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj ConnectionProfileOrganization
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionProfileProvisioning(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioning{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileProvisioning
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioning
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioning
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileProvisioningGoogleWorkspace
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningGoogleWorkspace
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningGoogleWorkspace
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionProfileProvisioningSCIM(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIM{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileProvisioningSCIM
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningSCIM
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningSCIM
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionProfileProvisioningSCIMTokens(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileProvisioningSCIMTokens
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningSCIMTokens
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningSCIMTokens
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -4323,6 +6155,39 @@ func TestJSONMarshalingConnectionProfileStrategyOverridesConnectionConfig(t *tes
 	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
 		t.Parallel()
 		var obj ConnectionProfileStrategyOverridesConnectionConfig
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled ConnectionProfileStrategyOverridesProvisioning
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileStrategyOverridesProvisioning
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileStrategyOverridesProvisioning
 		err := json.Unmarshal([]byte(`{}`), &obj)
 		assert.NoError(t, err, "unmarshaling empty object should succeed")
 	})
@@ -4592,6 +6457,50 @@ func TestJSONMarshalingUpdateConnectionProfileResponseContent(t *testing.T) {
 	})
 }
 
+func TestOptionalNullableRoundTripConnectionProfileProvisioningSCIMTokens(t *testing.T) {
+	optionalNullableKeys := []string{
+		"default_expiry",
+		"max_allowed_expiry",
+	}
+	marshalToMap := func(t *testing.T, obj *ConnectionProfileProvisioningSCIMTokens) map[string]json.RawMessage {
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		var result map[string]json.RawMessage
+		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
+		return result
+	}
+
+	t.Run("NullPreserved", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningSCIMTokens
+		require.NoError(t, json.Unmarshal([]byte(`{"default_expiry":null,"max_allowed_expiry":null}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range optionalNullableKeys {
+			value, ok := result[key]
+			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
+			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
+		}
+	})
+
+	t.Run("AbsentStaysAbsent", func(t *testing.T) {
+		t.Parallel()
+		var obj ConnectionProfileProvisioningSCIMTokens
+		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
+		result := marshalToMap(t, &obj)
+		for _, key := range optionalNullableKeys {
+			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
+		}
+	})
+
+	t.Run("FreshValueOmits", func(t *testing.T) {
+		t.Parallel()
+		result := marshalToMap(t, &ConnectionProfileProvisioningSCIMTokens{})
+		for _, key := range optionalNullableKeys {
+			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
+		}
+	})
+}
+
 func TestStringConnectionProfile(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -4624,6 +6533,38 @@ func TestStringConnectionProfileConfig(t *testing.T) {
 	})
 }
 
+func TestStringConnectionProfileCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileCrossAppAccessResourceApp{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileCrossAppAccessResourceApp
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionProfileCrossAppAccessResourceAppStatus(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileCrossAppAccessResourceAppStatus
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringConnectionProfileOrganization(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -4635,6 +6576,70 @@ func TestStringConnectionProfileOrganization(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionProfileOrganization
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionProfileProvisioning(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioning{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioning
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningGoogleWorkspace
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionProfileProvisioningSCIM(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningSCIM{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIM
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionProfileProvisioningSCIMTokens(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIMTokens
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -4683,6 +6688,22 @@ func TestStringConnectionProfileStrategyOverridesConnectionConfig(t *testing.T) 
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionProfileStrategyOverridesConnectionConfig
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileStrategyOverridesProvisioning
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -4816,6 +6837,64 @@ func TestStringUpdateConnectionProfileResponseContent(t *testing.T) {
 	})
 }
 
+func TestEnumConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum(t *testing.T) {
+	t.Run("NewFromString_enabled", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumFromString("enabled")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum("enabled"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_disabled", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumFromString("disabled")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum("disabled"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumFromString("enabled")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumConnectionProfileCrossAppAccessResourceAppStatusValueEnum(t *testing.T) {
+	t.Run("NewFromString_enabled", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileCrossAppAccessResourceAppStatusValueEnumFromString("enabled")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileCrossAppAccessResourceAppStatusValueEnum("enabled"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_disabled", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileCrossAppAccessResourceAppStatusValueEnumFromString("disabled")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileCrossAppAccessResourceAppStatusValueEnum("disabled"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionProfileCrossAppAccessResourceAppStatusValueEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionProfileCrossAppAccessResourceAppStatusValueEnumFromString("enabled")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumConnectionProfileOrganizationAssignMembershipOnLoginEnum(t *testing.T) {
 	t.Run("NewFromString_none", func(t *testing.T) {
 		t.Parallel()
@@ -4888,6 +6967,56 @@ func TestEnumConnectionProfileOrganizationShowAsButtonEnum(t *testing.T) {
 	})
 }
 
+func TestEnumConnectionProfileProvisioningSCIMTokenScopeEnum(t *testing.T) {
+	t.Run("NewFromString_get_users", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString("get:users")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileProvisioningSCIMTokenScopeEnum("get:users"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_post_users", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString("post:users")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileProvisioningSCIMTokenScopeEnum("post:users"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_patch_users", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString("patch:users")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileProvisioningSCIMTokenScopeEnum("patch:users"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_delete_users", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString("delete:users")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileProvisioningSCIMTokenScopeEnum("delete:users"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_put_users", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString("put:users")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ConnectionProfileProvisioningSCIMTokenScopeEnum("put:users"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString("get:users")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEnabledFeaturesEnum(t *testing.T) {
 	t.Run("NewFromString_scim", func(t *testing.T) {
 		t.Parallel()
@@ -4901,6 +7030,13 @@ func TestEnumEnabledFeaturesEnum(t *testing.T) {
 		val, err := NewEnabledFeaturesEnumFromString("universal_logout")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, EnabledFeaturesEnum("universal_logout"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_directory_sync", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEnabledFeaturesEnumFromString("directory_sync")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EnabledFeaturesEnum("directory_sync"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
@@ -4963,6 +7099,52 @@ func TestExtraPropertiesConnectionProfileConfig(t *testing.T) {
 	})
 }
 
+func TestExtraPropertiesConnectionProfileCrossAppAccessResourceApp(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileCrossAppAccessResourceApp{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileCrossAppAccessResourceApp
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionProfileCrossAppAccessResourceAppStatus(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileCrossAppAccessResourceAppStatus{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileCrossAppAccessResourceAppStatus
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
 func TestExtraPropertiesConnectionProfileOrganization(t *testing.T) {
 	t.Run("GetExtraProperties", func(t *testing.T) {
 		t.Parallel()
@@ -4981,6 +7163,98 @@ func TestExtraPropertiesConnectionProfileOrganization(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionProfileOrganization
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionProfileProvisioning(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioning{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioning
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionProfileProvisioningGoogleWorkspace(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningGoogleWorkspace{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningGoogleWorkspace
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionProfileProvisioningSCIM(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningSCIM{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIM
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionProfileProvisioningSCIMTokens(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileProvisioningSCIMTokens{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileProvisioningSCIMTokens
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
@@ -5050,6 +7324,29 @@ func TestExtraPropertiesConnectionProfileStrategyOverridesConnectionConfig(t *te
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *ConnectionProfileStrategyOverridesConnectionConfig
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesConnectionProfileStrategyOverridesProvisioning(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &ConnectionProfileStrategyOverridesProvisioning{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ConnectionProfileStrategyOverridesProvisioning
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -101,6 +101,10 @@ func TestRolesListWithWireMock(
 		NameFilter: management.String(
 			"name_filter",
 		),
+		Type: management.RoleTypeEnumTenant.Ptr(),
+		OwnerID: management.String(
+			"owner_id",
+		),
 	}
 	_, invocationErr := client.Roles.List(
 		context.TODO(),
@@ -111,7 +115,7 @@ func TestRolesListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRolesListWithWireMock", "GET", "/roles", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true", "name_filter": "name_filter"}, 1)
+	VerifyRequestCount(t, "TestRolesListWithWireMock", "GET", "/roles", map[string]interface{}{"per_page": "1", "page": "1", "include_totals": "true", "name_filter": "name_filter", "type": "tenant", "owner_id": "owner_id"}, 1)
 }
 
 func TestRolesCreateWithWireMock(

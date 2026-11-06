@@ -44,6 +44,24 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieves self-service profiles.
+//
+// Example:
+//
+//	request := &management.ListSelfServiceProfilesRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.SelfServiceProfiles.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListSelfServiceProfilesRequestParameters,
@@ -118,6 +136,16 @@ func (c *Client) List(
 }
 
 // Creates a self-service profile.
+//
+// Example:
+//
+//	request := &management.CreateSelfServiceProfileRequestContent{
+//	    Name: "name",
+//	}
+//	client.SelfServiceProfiles.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateSelfServiceProfileRequestContent,
@@ -135,6 +163,13 @@ func (c *Client) Create(
 }
 
 // Retrieves a self-service profile by Id.
+//
+// Example:
+//
+//	client.SelfServiceProfiles.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the self-service profile to retrieve
@@ -153,6 +188,13 @@ func (c *Client) Get(
 }
 
 // Deletes a self-service profile by Id.
+//
+// Example:
+//
+//	client.SelfServiceProfiles.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The id of the self-service profile to delete
@@ -171,6 +213,15 @@ func (c *Client) Delete(
 }
 
 // Updates a self-service profile.
+//
+// Example:
+//
+//	request := &management.UpdateSelfServiceProfileRequestContent{}
+//	client.SelfServiceProfiles.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the self-service profile to update

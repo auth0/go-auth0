@@ -89,6 +89,9 @@ func TestUsersSessionsListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListUserSessionsRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -106,7 +109,7 @@ func TestUsersSessionsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUsersSessionsListWithWireMock", "GET", "/users/user_id/sessions", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestUsersSessionsListWithWireMock", "GET", "/users/user_id/sessions", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1"}, 1)
 }
 
 func TestUsersSessionsDeleteWithWireMock(

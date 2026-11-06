@@ -211,10 +211,12 @@ func (c *ClientGrantResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ClientGrantResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -334,6 +336,29 @@ func (c *ClientGrantResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", c)
+}
+
+// Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
+type ClientGrantSortFieldEnum string
+
+const (
+	ClientGrantSortFieldEnumAudience  ClientGrantSortFieldEnum = "audience"
+	ClientGrantSortFieldEnumUpdatedAt ClientGrantSortFieldEnum = "updated_at"
+)
+
+func NewClientGrantSortFieldEnumFromString(s string) (ClientGrantSortFieldEnum, error) {
+	switch s {
+	case "audience":
+		return ClientGrantSortFieldEnumAudience, nil
+	case "updated_at":
+		return ClientGrantSortFieldEnumUpdatedAt, nil
+	}
+	var t ClientGrantSortFieldEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientGrantSortFieldEnum) Ptr() *ClientGrantSortFieldEnum {
+	return &c
 }
 
 // The type of application access the client grant allows.
@@ -489,10 +514,12 @@ func (c *CreateClientGrantResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateClientGrantResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -741,10 +768,12 @@ func (g *GetClientGrantResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (g *GetClientGrantResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -905,10 +934,12 @@ func (l *ListClientGrantPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListClientGrantPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -965,6 +996,110 @@ func (l *ListClientGrantPaginatedResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+var (
+	searchClientGrantsResponseContentFieldClientGrants = big.NewInt(1 << 0)
+	searchClientGrantsResponseContentFieldNext         = big.NewInt(1 << 1)
+)
+
+type SearchClientGrantsResponseContent struct {
+	// Array of client grant objects matching the search criteria.
+	ClientGrants []*ClientGrantResponseContent `json:"client_grants" url:"client_grants"`
+	// Cursor for retrieving the next page of results. Omitted if there are no more results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SearchClientGrantsResponseContent) GetClientGrants() []*ClientGrantResponseContent {
+	if s == nil {
+		return nil
+	}
+	return s.ClientGrants
+}
+
+func (s *SearchClientGrantsResponseContent) GetNext() string {
+	if s == nil || s.Next == nil {
+		return ""
+	}
+	return *s.Next
+}
+
+func (s *SearchClientGrantsResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchClientGrantsResponseContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetClientGrants sets the ClientGrants field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsResponseContent) SetClientGrants(clientGrants []*ClientGrantResponseContent) {
+	s.ClientGrants = clientGrants
+	s.require(searchClientGrantsResponseContentFieldClientGrants)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientGrantsResponseContent) SetNext(next *string) {
+	s.Next = next
+	s.require(searchClientGrantsResponseContentFieldNext)
+}
+
+func (s *SearchClientGrantsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchClientGrantsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchClientGrantsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchClientGrantsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SearchClientGrantsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SearchClientGrantsResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 var (
@@ -1094,10 +1229,12 @@ func (u *UpdateClientGrantResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (u *UpdateClientGrantResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
