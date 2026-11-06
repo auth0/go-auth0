@@ -50,9 +50,16 @@ permissions: {}
 jobs:
   beta-release:
     # Run for a genuinely merged PR into beta, or a manual dispatch on beta.
+    # A PR labelled `skip-release` at merge time does not cut a release. The
+    # label list comes from the event payload, so it must be applied before the
+    # PR is merged. Manual dispatch is never skipped.
     if: >-
       github.repository == 'auth0/go-auth0' &&
-      (github.event.pull_request.merged == true || github.event_name == 'workflow_dispatch')
+      (
+        (github.event.pull_request.merged == true &&
+          !contains(github.event.pull_request.labels.*.name, 'skip-release')) ||
+        github.event_name == 'workflow_dispatch'
+      )
     runs-on: ubuntu-latest
     environment: release
     permissions:
