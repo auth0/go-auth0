@@ -38,6 +38,22 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve the actions that are bound to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The list of actions returned reflects the order in which they will be executed during the appropriate flow.
+//
+// Example:
+//
+//	request := &management.ListActionTriggerBindingsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Actions.Triggers.Bindings.List(
+//	    context.TODO(),
+//	    management.ActionTriggerTypeEnumPostLogin.Ptr(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// An actions extensibility point.
@@ -116,6 +132,15 @@ func (c *Client) List(
 }
 
 // Update the actions that are bound (i.e. attached) to a trigger. Once an action is created and deployed, it must be attached (i.e. bound) to a trigger so that it will be executed as part of a flow. The order in which the actions are provided will determine the order in which they are executed.
+//
+// Example:
+//
+//	request := &management.UpdateActionBindingsRequestContent{}
+//	client.Actions.Triggers.Bindings.UpdateMany(
+//	    context.TODO(),
+//	    management.ActionTriggerTypeEnumPostLogin.Ptr(),
+//	    request,
+//	)
 func (c *Client) UpdateMany(
 	ctx context.Context,
 	// An actions extensibility point.

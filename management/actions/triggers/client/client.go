@@ -38,6 +38,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve the set of triggers currently available within actions. A trigger is an extensibility point to which actions can be bound.
+//
+// Example:
+//
+//	client.Actions.Triggers.List(
+//	    context.TODO(),
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,

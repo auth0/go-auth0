@@ -107,6 +107,9 @@ func TestGroupsListWithWireMock(
 		IncludeFields: management.Bool(
 			true,
 		),
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -123,7 +126,7 @@ func TestGroupsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestGroupsListWithWireMock", "GET", "/groups", map[string]interface{}{"connection_id": "connection_id", "name": "name", "external_id": "external_id", "search": "search", "fields": "fields", "include_fields": "true", "from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestGroupsListWithWireMock", "GET", "/groups", map[string]interface{}{"connection_id": "connection_id", "name": "name", "external_id": "external_id", "search": "search", "fields": "fields", "include_fields": "true", "include_totals": "true", "from": "from", "take": "1"}, 1)
 }
 
 func TestGroupsGetWithWireMock(

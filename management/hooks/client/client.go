@@ -41,6 +41,31 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve all [hooks](https://auth0.com/docs/hooks). Accepts a list of fields to include or exclude in the result.
+//
+// Example:
+//
+//	request := &management.ListHooksRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    Enabled: management.Bool(
+//	        true,
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    TriggerID: management.HookTriggerIDEnumCredentialsExchange.Ptr(),
+//	}
+//	client.Hooks.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListHooksRequestParameters,
@@ -115,6 +140,18 @@ func (c *Client) List(
 }
 
 // Create a new hook.
+//
+// Example:
+//
+//	request := &management.CreateHookRequestContent{
+//	    Name: "name",
+//	    Script: "script",
+//	    TriggerID: management.HookTriggerIDEnumCredentialsExchange,
+//	}
+//	client.Hooks.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateHookRequestContent,
@@ -132,6 +169,19 @@ func (c *Client) Create(
 }
 
 // Retrieve [a hook](https://auth0.com/docs/hooks) by its ID. Accepts a list of fields to include in the result.
+//
+// Example:
+//
+//	request := &management.GetHookRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	}
+//	client.Hooks.Get(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the hook to retrieve.
@@ -152,6 +202,13 @@ func (c *Client) Get(
 }
 
 // Delete a hook.
+//
+// Example:
+//
+//	client.Hooks.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the hook to delete.
@@ -170,6 +227,15 @@ func (c *Client) Delete(
 }
 
 // Update an existing hook.
+//
+// Example:
+//
+//	request := &management.UpdateHookRequestContent{}
+//	client.Hooks.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the hook to update.

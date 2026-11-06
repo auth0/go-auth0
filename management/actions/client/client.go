@@ -50,6 +50,31 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve all actions.
+//
+// Example:
+//
+//	request := &management.ListActionsRequestParameters{
+//	    TriggerID: management.ActionTriggerTypeEnumPostLogin.Ptr(),
+//	    ActionName: management.String(
+//	        "actionName",
+//	    ),
+//	    Deployed: management.Bool(
+//	        true,
+//	    ),
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    Installed: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Actions.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListActionsRequestParameters,
@@ -123,6 +148,21 @@ func (c *Client) List(
 }
 
 // Create an action. Once an action is created, it must be deployed, and then bound to a trigger before it will be executed as part of a flow.
+//
+// Example:
+//
+//	request := &management.CreateActionRequestContent{
+//	    Name: "name",
+//	    SupportedTriggers: []*management.ActionTrigger{
+//	        &management.ActionTrigger{
+//	            ID: management.ActionTriggerTypeEnumPostLogin,
+//	        },
+//	    },
+//	}
+//	client.Actions.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateActionRequestContent,
@@ -140,6 +180,13 @@ func (c *Client) Create(
 }
 
 // Retrieve an action by its ID.
+//
+// Example:
+//
+//	client.Actions.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the action to retrieve.
@@ -158,6 +205,19 @@ func (c *Client) Get(
 }
 
 // Deletes an action and all of its associated versions. An action must be unbound from all triggers before it can be deleted.
+//
+// Example:
+//
+//	request := &management.DeleteActionRequestParameters{
+//	    Force: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Actions.Delete(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the action to delete.
@@ -178,6 +238,15 @@ func (c *Client) Delete(
 }
 
 // Update an existing action. If this action is currently bound to a trigger, updating it will **not** affect any user flows until the action is deployed.
+//
+// Example:
+//
+//	request := &management.UpdateActionRequestContent{}
+//	client.Actions.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the action to update.
@@ -198,6 +267,13 @@ func (c *Client) Update(
 }
 
 // Deploy an action. Deploying an action will create a new immutable version of the action. If the action is currently bound to a trigger, then the system will begin executing the newly deployed version of the action immediately. Otherwise, the action will only be executed as a part of a flow once it is bound to that flow.
+//
+// Example:
+//
+//	client.Actions.Deploy(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Deploy(
 	ctx context.Context,
 	// The ID of an action.
@@ -216,6 +292,19 @@ func (c *Client) Deploy(
 }
 
 // Test an action. After updating an action, it can be tested prior to being deployed to ensure it behaves as expected.
+//
+// Example:
+//
+//	request := &management.TestActionRequestContent{
+//	    Payload: map[string]any{
+//	        "key": "value",
+//	    },
+//	}
+//	client.Actions.Test(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Test(
 	ctx context.Context,
 	// The id of the action to test.

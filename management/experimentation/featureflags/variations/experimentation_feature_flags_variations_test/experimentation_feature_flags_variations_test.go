@@ -112,8 +112,10 @@ func TestExperimentationFeatureFlagsVariationsCreateWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.CreateVariationRequestContent{
-		Name:      "name",
-		Overrides: map[string]*management.VariationOverrideValue{},
+		Name: "name",
+		Overrides: map[string]any{
+			"key": "value",
+		},
 	}
 	_, invocationErr := client.Experimentation.FeatureFlags.Variations.Create(
 		context.TODO(),

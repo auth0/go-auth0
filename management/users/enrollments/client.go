@@ -35,6 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve the first [multi-factor authentication](https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors) enrollment that a specific user has confirmed.
+//
+// Example:
+//
+//	client.Users.Enrollments.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the user to list enrollments for.

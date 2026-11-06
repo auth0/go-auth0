@@ -35,6 +35,15 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieves text customizations for a given self-service profile, language and Self-Service Enterprise Configuration flow page.
+//
+// Example:
+//
+//	client.SelfServiceProfiles.CustomText.List(
+//	    context.TODO(),
+//	    "id",
+//	    management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+//	    management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// The id of the self-service profile.
@@ -59,6 +68,19 @@ func (c *Client) List(
 }
 
 // Updates text customizations for a given self-service profile, language and Self-Service Enterprise Configuration flow page.
+//
+// Example:
+//
+//	request := map[string]string{
+//	    "key": "value",
+//	}
+//	client.SelfServiceProfiles.CustomText.Set(
+//	    context.TODO(),
+//	    "id",
+//	    management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+//	    management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// The id of the self-service profile.

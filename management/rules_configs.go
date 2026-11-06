@@ -40,10 +40,12 @@ func (r *RulesConfig) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RulesConfig) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetKey sets the Key field and marks it as non-optional;
@@ -140,10 +142,12 @@ func (s *SetRulesConfigResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (s *SetRulesConfigResponseContent) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetKey sets the Key field and marks it as non-optional;

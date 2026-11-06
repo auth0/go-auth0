@@ -8,6 +8,7 @@ import (
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
 	client "github.com/auth0/go-auth0/v3/management/guardian/factors/duo/client"
+	email "github.com/auth0/go-auth0/v3/management/guardian/factors/email"
 	phone "github.com/auth0/go-auth0/v3/management/guardian/factors/phone"
 	pushnotification "github.com/auth0/go-auth0/v3/management/guardian/factors/pushnotification"
 	sms "github.com/auth0/go-auth0/v3/management/guardian/factors/sms"
@@ -17,6 +18,7 @@ import (
 
 type Client struct {
 	WithRawResponse  *RawClient
+	Email            *email.Client
 	Phone            *phone.Client
 	PushNotification *pushnotification.Client
 	Sms              *sms.Client
@@ -29,6 +31,7 @@ type Client struct {
 
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
+		Email:            email.NewClient(options),
 		Phone:            phone.NewClient(options),
 		PushNotification: pushnotification.NewClient(options),
 		Sms:              sms.NewClient(options),
@@ -47,6 +50,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of all <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication factors</a> associated with your tenant.
+//
+// Example:
+//
+//	client.Guardian.Factors.List(
+//	    context.TODO(),
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -62,9 +71,20 @@ func (c *Client) List(
 }
 
 // Update the status (i.e., enabled or disabled) of a specific multi-factor authentication factor.
+//
+// Example:
+//
+//	request := &management.SetGuardianFactorRequestContent{
+//	    Enabled: true,
+//	}
+//	client.Guardian.Factors.Set(
+//	    context.TODO(),
+//	    management.GuardianFactorNameEnumPushNotification.Ptr(),
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
-	// Factor name. Can be `sms`, `push-notification`, `email`, `duo` `otp` `webauthn-roaming`, `webauthn-platform`, or `recovery-code`.
+	// Factor name. Can be `sms`, `push-notification`, `email`, `duo`, `otp`, `webauthn-roaming`, `webauthn-platform`, `recovery-code`, or `passkey`.
 	name *management.GuardianFactorNameEnum,
 	request *management.SetGuardianFactorRequestContent,
 	opts ...option.RequestOption,

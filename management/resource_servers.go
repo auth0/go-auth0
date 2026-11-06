@@ -24,15 +24,31 @@ var (
 	createResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
 	createResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	createResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 14)
-	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 15)
-	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 16)
-	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
-	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 18)
-	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
-	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
-	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 21)
+	createResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
+	createResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
+	createResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
+	createResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
+	createResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
+	createResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	createResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	createResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
+	createResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
+	createResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
 )
+
+// createResourceServerResponseContentNullableFields maps the wire names of CreateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
+var createResourceServerResponseContentNullableFields = map[string]*big.Int{
+	"access_token":          createResourceServerResponseContentFieldAccessToken,
+	"token_encryption":      createResourceServerResponseContentFieldTokenEncryption,
+	"consent_policy":        createResourceServerResponseContentFieldConsentPolicy,
+	"authorization_details": createResourceServerResponseContentFieldAuthorizationDetails,
+	"proof_of_possession":   createResourceServerResponseContentFieldProofOfPossession,
+	"authorization_policy":  createResourceServerResponseContentFieldAuthorizationPolicy,
+	"type":                  createResourceServerResponseContentFieldType,
+}
 
 type CreateResourceServerResponseContent struct {
 	// ID of the API (resource server).
@@ -61,16 +77,23 @@ type CreateResourceServerResponseContent struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
+	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
+	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
+	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -177,11 +200,25 @@ func (c *CreateResourceServerResponseContent) GetEnforcePolicies() bool {
 	return *c.EnforcePolicies
 }
 
+func (c *CreateResourceServerResponseContent) GetTokenLifetimeForAnonymousAccessTokens() int {
+	if c == nil || c.TokenLifetimeForAnonymousAccessTokens == nil {
+		return 0
+	}
+	return *c.TokenLifetimeForAnonymousAccessTokens
+}
+
 func (c *CreateResourceServerResponseContent) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
 	if c == nil || c.TokenDialect == nil {
 		return ""
 	}
 	return *c.TokenDialect
+}
+
+func (c *CreateResourceServerResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if c == nil || c.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *c.AccessToken
 }
 
 func (c *CreateResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -196,6 +233,13 @@ func (c *CreateResourceServerResponseContent) GetConsentPolicy() ResourceServerC
 		return ""
 	}
 	return *c.ConsentPolicy
+}
+
+func (c *CreateResourceServerResponseContent) GetRequireConsentNonRepudiation() bool {
+	if c == nil || c.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *c.RequireConsentNonRepudiation
 }
 
 func (c *CreateResourceServerResponseContent) GetAuthorizationDetails() []any {
@@ -233,6 +277,20 @@ func (c *CreateResourceServerResponseContent) GetClientID() string {
 	return *c.ClientID
 }
 
+func (c *CreateResourceServerResponseContent) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if c == nil || c.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *c.AgentSubjectClaims
+}
+
+func (c *CreateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
+	if c == nil || c.Type == nil {
+		return ""
+	}
+	return *c.Type
+}
+
 func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -241,10 +299,12 @@ func (c *CreateResourceServerResponseContent) GetExtraProperties() map[string]in
 }
 
 func (c *CreateResourceServerResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -345,11 +405,25 @@ func (c *CreateResourceServerResponseContent) SetEnforcePolicies(enforcePolicies
 	c.require(createResourceServerResponseContentFieldEnforcePolicies)
 }
 
+// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
+	c.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
+	c.require(createResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens)
+}
+
 // SetTokenDialect sets the TokenDialect field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	c.TokenDialect = tokenDialect
 	c.require(createResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	c.AccessToken = accessToken
+	c.require(createResourceServerResponseContentFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -364,6 +438,13 @@ func (c *CreateResourceServerResponseContent) SetTokenEncryption(tokenEncryption
 func (c *CreateResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	c.ConsentPolicy = consentPolicy
 	c.require(createResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	c.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	c.require(createResourceServerResponseContentFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
@@ -401,6 +482,20 @@ func (c *CreateResourceServerResponseContent) SetClientID(clientID *string) {
 	c.require(createResourceServerResponseContentFieldClientID)
 }
 
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	c.AgentSubjectClaims = agentSubjectClaims
+	c.require(createResourceServerResponseContentFieldAgentSubjectClaims)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
+	c.Type = type_
+	c.require(createResourceServerResponseContentFieldType)
+}
+
 func (c *CreateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateResourceServerResponseContent
 	var value unmarshaler
@@ -413,6 +508,13 @@ func (c *CreateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, createResourceServerResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -458,15 +560,31 @@ var (
 	getResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
 	getResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	getResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 14)
-	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 15)
-	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 16)
-	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
-	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 18)
-	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
-	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
-	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 21)
+	getResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
+	getResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
+	getResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
+	getResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
+	getResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
+	getResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	getResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	getResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
+	getResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
+	getResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
 )
+
+// getResourceServerResponseContentNullableFields maps the wire names of GetResourceServerResponseContent's nullable fields (required or optional) to their field bits.
+var getResourceServerResponseContentNullableFields = map[string]*big.Int{
+	"access_token":          getResourceServerResponseContentFieldAccessToken,
+	"token_encryption":      getResourceServerResponseContentFieldTokenEncryption,
+	"consent_policy":        getResourceServerResponseContentFieldConsentPolicy,
+	"authorization_details": getResourceServerResponseContentFieldAuthorizationDetails,
+	"proof_of_possession":   getResourceServerResponseContentFieldProofOfPossession,
+	"authorization_policy":  getResourceServerResponseContentFieldAuthorizationPolicy,
+	"type":                  getResourceServerResponseContentFieldType,
+}
 
 type GetResourceServerResponseContent struct {
 	// ID of the API (resource server).
@@ -495,16 +613,23 @@ type GetResourceServerResponseContent struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
+	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
+	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
+	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -611,11 +736,25 @@ func (g *GetResourceServerResponseContent) GetEnforcePolicies() bool {
 	return *g.EnforcePolicies
 }
 
+func (g *GetResourceServerResponseContent) GetTokenLifetimeForAnonymousAccessTokens() int {
+	if g == nil || g.TokenLifetimeForAnonymousAccessTokens == nil {
+		return 0
+	}
+	return *g.TokenLifetimeForAnonymousAccessTokens
+}
+
 func (g *GetResourceServerResponseContent) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
 	if g == nil || g.TokenDialect == nil {
 		return ""
 	}
 	return *g.TokenDialect
+}
+
+func (g *GetResourceServerResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if g == nil || g.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *g.AccessToken
 }
 
 func (g *GetResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -630,6 +769,13 @@ func (g *GetResourceServerResponseContent) GetConsentPolicy() ResourceServerCons
 		return ""
 	}
 	return *g.ConsentPolicy
+}
+
+func (g *GetResourceServerResponseContent) GetRequireConsentNonRepudiation() bool {
+	if g == nil || g.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *g.RequireConsentNonRepudiation
 }
 
 func (g *GetResourceServerResponseContent) GetAuthorizationDetails() []any {
@@ -667,6 +813,20 @@ func (g *GetResourceServerResponseContent) GetClientID() string {
 	return *g.ClientID
 }
 
+func (g *GetResourceServerResponseContent) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if g == nil || g.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *g.AgentSubjectClaims
+}
+
+func (g *GetResourceServerResponseContent) GetType() ResourceServerTypeEnum {
+	if g == nil || g.Type == nil {
+		return ""
+	}
+	return *g.Type
+}
+
 func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	if g == nil {
 		return nil
@@ -675,10 +835,12 @@ func (g *GetResourceServerResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (g *GetResourceServerResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -779,11 +941,25 @@ func (g *GetResourceServerResponseContent) SetEnforcePolicies(enforcePolicies *b
 	g.require(getResourceServerResponseContentFieldEnforcePolicies)
 }
 
+// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
+	g.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
+	g.require(getResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens)
+}
+
 // SetTokenDialect sets the TokenDialect field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	g.TokenDialect = tokenDialect
 	g.require(getResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	g.AccessToken = accessToken
+	g.require(getResourceServerResponseContentFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -798,6 +974,13 @@ func (g *GetResourceServerResponseContent) SetTokenEncryption(tokenEncryption *R
 func (g *GetResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	g.ConsentPolicy = consentPolicy
 	g.require(getResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	g.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	g.require(getResourceServerResponseContentFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
@@ -835,6 +1018,20 @@ func (g *GetResourceServerResponseContent) SetClientID(clientID *string) {
 	g.require(getResourceServerResponseContentFieldClientID)
 }
 
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	g.AgentSubjectClaims = agentSubjectClaims
+	g.require(getResourceServerResponseContentFieldAgentSubjectClaims)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
+	g.Type = type_
+	g.require(getResourceServerResponseContentFieldType)
+}
+
 func (g *GetResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler GetResourceServerResponseContent
 	var value unmarshaler
@@ -847,6 +1044,13 @@ func (g *GetResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, getResourceServerResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		g.require(presentFields)
+	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -933,10 +1137,12 @@ func (l *ListResourceServerOffsetPaginatedResponseContent) GetExtraProperties() 
 }
 
 func (l *ListResourceServerOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -1024,15 +1230,31 @@ var (
 	resourceServerFieldTokenLifetime                             = big.NewInt(1 << 11)
 	resourceServerFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	resourceServerFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	resourceServerFieldTokenDialect                              = big.NewInt(1 << 14)
-	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 15)
-	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 16)
-	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 17)
-	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 18)
-	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
-	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
-	resourceServerFieldClientID                                  = big.NewInt(1 << 21)
+	resourceServerFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
+	resourceServerFieldTokenDialect                              = big.NewInt(1 << 15)
+	resourceServerFieldAccessToken                               = big.NewInt(1 << 16)
+	resourceServerFieldTokenEncryption                           = big.NewInt(1 << 17)
+	resourceServerFieldConsentPolicy                             = big.NewInt(1 << 18)
+	resourceServerFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	resourceServerFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	resourceServerFieldProofOfPossession                         = big.NewInt(1 << 21)
+	resourceServerFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	resourceServerFieldClientID                                  = big.NewInt(1 << 24)
+	resourceServerFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	resourceServerFieldType                                      = big.NewInt(1 << 26)
 )
+
+// resourceServerNullableFields maps the wire names of ResourceServer's nullable fields (required or optional) to their field bits.
+var resourceServerNullableFields = map[string]*big.Int{
+	"access_token":          resourceServerFieldAccessToken,
+	"token_encryption":      resourceServerFieldTokenEncryption,
+	"consent_policy":        resourceServerFieldConsentPolicy,
+	"authorization_details": resourceServerFieldAuthorizationDetails,
+	"proof_of_possession":   resourceServerFieldProofOfPossession,
+	"authorization_policy":  resourceServerFieldAuthorizationPolicy,
+	"type":                  resourceServerFieldType,
+}
 
 type ResourceServer struct {
 	// ID of the API (resource server).
@@ -1061,16 +1283,23 @@ type ResourceServer struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
+	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
+	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
+	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1177,11 +1406,25 @@ func (r *ResourceServer) GetEnforcePolicies() bool {
 	return *r.EnforcePolicies
 }
 
+func (r *ResourceServer) GetTokenLifetimeForAnonymousAccessTokens() int {
+	if r == nil || r.TokenLifetimeForAnonymousAccessTokens == nil {
+		return 0
+	}
+	return *r.TokenLifetimeForAnonymousAccessTokens
+}
+
 func (r *ResourceServer) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
 	if r == nil || r.TokenDialect == nil {
 		return ""
 	}
 	return *r.TokenDialect
+}
+
+func (r *ResourceServer) GetAccessToken() ResourceServerAccessToken {
+	if r == nil || r.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *r.AccessToken
 }
 
 func (r *ResourceServer) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -1196,6 +1439,13 @@ func (r *ResourceServer) GetConsentPolicy() ResourceServerConsentPolicyEnum {
 		return ""
 	}
 	return *r.ConsentPolicy
+}
+
+func (r *ResourceServer) GetRequireConsentNonRepudiation() bool {
+	if r == nil || r.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *r.RequireConsentNonRepudiation
 }
 
 func (r *ResourceServer) GetAuthorizationDetails() []any {
@@ -1233,6 +1483,20 @@ func (r *ResourceServer) GetClientID() string {
 	return *r.ClientID
 }
 
+func (r *ResourceServer) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if r == nil || r.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *r.AgentSubjectClaims
+}
+
+func (r *ResourceServer) GetType() ResourceServerTypeEnum {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
+}
+
 func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
 	if r == nil {
 		return nil
@@ -1241,10 +1505,12 @@ func (r *ResourceServer) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ResourceServer) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1345,11 +1611,25 @@ func (r *ResourceServer) SetEnforcePolicies(enforcePolicies *bool) {
 	r.require(resourceServerFieldEnforcePolicies)
 }
 
+// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
+	r.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
+	r.require(resourceServerFieldTokenLifetimeForAnonymousAccessTokens)
+}
+
 // SetTokenDialect sets the TokenDialect field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *ResourceServer) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	r.TokenDialect = tokenDialect
 	r.require(resourceServerFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	r.AccessToken = accessToken
+	r.require(resourceServerFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -1364,6 +1644,13 @@ func (r *ResourceServer) SetTokenEncryption(tokenEncryption *ResourceServerToken
 func (r *ResourceServer) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	r.ConsentPolicy = consentPolicy
 	r.require(resourceServerFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	r.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	r.require(resourceServerFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
@@ -1401,6 +1688,20 @@ func (r *ResourceServer) SetClientID(clientID *string) {
 	r.require(resourceServerFieldClientID)
 }
 
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	r.AgentSubjectClaims = agentSubjectClaims
+	r.require(resourceServerFieldAgentSubjectClaims)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetType(type_ *ResourceServerTypeEnum) {
+	r.Type = type_
+	r.require(resourceServerFieldType)
+}
+
 func (r *ResourceServer) UnmarshalJSON(data []byte) error {
 	type unmarshaler ResourceServer
 	var value unmarshaler
@@ -1413,6 +1714,13 @@ func (r *ResourceServer) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, resourceServerNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		r.require(presentFields)
+	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1443,11 +1751,57 @@ func (r *ResourceServer) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Authorization policy for the resource server.
+// Controls whether access tokens issued for this API include agent subject claims. With <code>auth0-v1</code>, access tokens include additional claims that identify whether the subject is a <code>user</code>, <code>service</code>, or <code>ai_agent</code>. The <code>sub</code> claim can reference an agent ID, and the <code>@clients</code> suffix is no longer appended to client IDs. With <code>off</code>, these claims are not included and the <code>@clients</code> suffix is still appended. When not set, the API behaves as <code>off</code>.
+type ResourceServerAgentSubjectClaimsResponseEnum string
+
+const (
+	ResourceServerAgentSubjectClaimsResponseEnumOff     ResourceServerAgentSubjectClaimsResponseEnum = "off"
+	ResourceServerAgentSubjectClaimsResponseEnumAuth0V1 ResourceServerAgentSubjectClaimsResponseEnum = "auth0-v1"
+)
+
+func NewResourceServerAgentSubjectClaimsResponseEnumFromString(s string) (ResourceServerAgentSubjectClaimsResponseEnum, error) {
+	switch s {
+	case "off":
+		return ResourceServerAgentSubjectClaimsResponseEnumOff, nil
+	case "auth0-v1":
+		return ResourceServerAgentSubjectClaimsResponseEnumAuth0V1, nil
+	}
+	var t ResourceServerAgentSubjectClaimsResponseEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerAgentSubjectClaimsResponseEnum) Ptr() *ResourceServerAgentSubjectClaimsResponseEnum {
+	return &r
+}
+
+// Controls whether access tokens issued for this API include agent subject claims. With <code>auth0-v1</code>, access tokens include additional claims that identify whether the subject is a <code>user</code>, <code>service</code>, or <code>ai_agent</code>. The <code>sub</code> claim can reference an agent ID, and the <code>@clients</code> suffix is no longer appended to client IDs. With <code>off</code>, these claims are not included and the <code>@clients</code> suffix is still appended. When not set, the API behaves as <code>off</code>.
+type ResourceServerAgentSubjectClaimsSchemaEnum string
+
+const (
+	ResourceServerAgentSubjectClaimsSchemaEnumOff     ResourceServerAgentSubjectClaimsSchemaEnum = "off"
+	ResourceServerAgentSubjectClaimsSchemaEnumAuth0V1 ResourceServerAgentSubjectClaimsSchemaEnum = "auth0-v1"
+)
+
+func NewResourceServerAgentSubjectClaimsSchemaEnumFromString(s string) (ResourceServerAgentSubjectClaimsSchemaEnum, error) {
+	switch s {
+	case "off":
+		return ResourceServerAgentSubjectClaimsSchemaEnumOff, nil
+	case "auth0-v1":
+		return ResourceServerAgentSubjectClaimsSchemaEnumAuth0V1, nil
+	}
+	var t ResourceServerAgentSubjectClaimsSchemaEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerAgentSubjectClaimsSchemaEnum) Ptr() *ResourceServerAgentSubjectClaimsSchemaEnum {
+	return &r
+}
+
 var (
 	resourceServerAuthorizationPolicyFieldPolicyID = big.NewInt(1 << 0)
 )
 
+// Authorization policy for the resource server.
 type ResourceServerAuthorizationPolicy struct {
 	// The ID of the authorization policy to apply.
 	PolicyID string `json:"policy_id" url:"policy_id"`
@@ -1474,10 +1828,12 @@ func (r *ResourceServerAuthorizationPolicy) GetExtraProperties() map[string]inte
 }
 
 func (r *ResourceServerAuthorizationPolicy) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetPolicyID sets the PolicyID field and marks it as non-optional;
@@ -1548,13 +1904,13 @@ func (r ResourceServerConsentPolicyEnum) Ptr() *ResourceServerConsentPolicyEnum 
 	return &r
 }
 
-// Proof-of-Possession configuration for access tokens
 var (
 	resourceServerProofOfPossessionFieldMechanism   = big.NewInt(1 << 0)
 	resourceServerProofOfPossessionFieldRequired    = big.NewInt(1 << 1)
 	resourceServerProofOfPossessionFieldRequiredFor = big.NewInt(1 << 2)
 )
 
+// Proof-of-Possession configuration for access tokens
 type ResourceServerProofOfPossession struct {
 	Mechanism ResourceServerProofOfPossessionMechanismEnum `json:"mechanism" url:"mechanism"`
 	// Whether the use of Proof-of-Possession is required for the resource server
@@ -1597,10 +1953,12 @@ func (r *ResourceServerProofOfPossession) GetExtraProperties() map[string]interf
 }
 
 func (r *ResourceServerProofOfPossession) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetMechanism sets the Mechanism field and marks it as non-optional;
@@ -1752,10 +2110,12 @@ func (r *ResourceServerScope) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *ResourceServerScope) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -1814,15 +2174,562 @@ func (r *ResourceServerScope) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Defines application access permission for a resource server
 var (
-	resourceServerSubjectTypeAuthorizationFieldUser   = big.NewInt(1 << 0)
-	resourceServerSubjectTypeAuthorizationFieldClient = big.NewInt(1 << 1)
+	resourceServerSearchResponseFieldID                                        = big.NewInt(1 << 0)
+	resourceServerSearchResponseFieldName                                      = big.NewInt(1 << 1)
+	resourceServerSearchResponseFieldIsSystem                                  = big.NewInt(1 << 2)
+	resourceServerSearchResponseFieldIdentifier                                = big.NewInt(1 << 3)
+	resourceServerSearchResponseFieldScopes                                    = big.NewInt(1 << 4)
+	resourceServerSearchResponseFieldSigningAlg                                = big.NewInt(1 << 5)
+	resourceServerSearchResponseFieldAllowOfflineAccess                        = big.NewInt(1 << 6)
+	resourceServerSearchResponseFieldAllowOnlineAccess                         = big.NewInt(1 << 7)
+	resourceServerSearchResponseFieldAllowOnlineAccessWithEphemeralSessions    = big.NewInt(1 << 8)
+	resourceServerSearchResponseFieldSkipConsentForVerifiableFirstPartyClients = big.NewInt(1 << 9)
+	resourceServerSearchResponseFieldTokenLifetime                             = big.NewInt(1 << 10)
+	resourceServerSearchResponseFieldTokenLifetimeForWeb                       = big.NewInt(1 << 11)
+	resourceServerSearchResponseFieldEnforcePolicies                           = big.NewInt(1 << 12)
+	resourceServerSearchResponseFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 13)
+	resourceServerSearchResponseFieldTokenDialect                              = big.NewInt(1 << 14)
+	resourceServerSearchResponseFieldAccessToken                               = big.NewInt(1 << 15)
+	resourceServerSearchResponseFieldTokenEncryption                           = big.NewInt(1 << 16)
+	resourceServerSearchResponseFieldConsentPolicy                             = big.NewInt(1 << 17)
+	resourceServerSearchResponseFieldRequireConsentNonRepudiation              = big.NewInt(1 << 18)
+	resourceServerSearchResponseFieldAuthorizationDetails                      = big.NewInt(1 << 19)
+	resourceServerSearchResponseFieldProofOfPossession                         = big.NewInt(1 << 20)
+	resourceServerSearchResponseFieldSubjectTypeAuthorization                  = big.NewInt(1 << 21)
+	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
+	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 23)
+	resourceServerSearchResponseFieldAgentSubjectClaims                        = big.NewInt(1 << 24)
+	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 25)
 )
 
+// resourceServerSearchResponseNullableFields maps the wire names of ResourceServerSearchResponse's nullable fields (required or optional) to their field bits.
+var resourceServerSearchResponseNullableFields = map[string]*big.Int{
+	"access_token":          resourceServerSearchResponseFieldAccessToken,
+	"token_encryption":      resourceServerSearchResponseFieldTokenEncryption,
+	"consent_policy":        resourceServerSearchResponseFieldConsentPolicy,
+	"authorization_details": resourceServerSearchResponseFieldAuthorizationDetails,
+	"proof_of_possession":   resourceServerSearchResponseFieldProofOfPossession,
+	"authorization_policy":  resourceServerSearchResponseFieldAuthorizationPolicy,
+	"type":                  resourceServerSearchResponseFieldType,
+}
+
+type ResourceServerSearchResponse struct {
+	// ID of the API (resource server).
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// Friendly name for this resource server. Can not contain `<` or `>` characters.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Whether this is an Auth0 system API (true) or a custom API (false).
+	IsSystem *bool `json:"is_system,omitempty" url:"is_system,omitempty"`
+	// Unique identifier for the API used as the audience parameter on authorization calls. Can not be changed once set.
+	Identifier *string `json:"identifier,omitempty" url:"identifier,omitempty"`
+	// List of permissions (scopes) that this API uses.
+	Scopes     []*ResourceServerScope `json:"scopes,omitempty" url:"scopes,omitempty"`
+	SigningAlg *SigningAlgorithmEnum  `json:"signing_alg,omitempty" url:"signing_alg,omitempty"`
+	// Whether refresh tokens can be issued for this API (true) or not (false).
+	AllowOfflineAccess *bool `json:"allow_offline_access,omitempty" url:"allow_offline_access,omitempty"`
+	// Whether Online Refresh Tokens can be issued for this API (true) or not (false).
+	AllowOnlineAccess *bool `json:"allow_online_access,omitempty" url:"allow_online_access,omitempty"`
+	// Whether Online Refresh Tokens can be issued even when sessions are configured as ephemeral (true) or not (false).
+	AllowOnlineAccessWithEphemeralSessions *bool `json:"allow_online_access_with_ephemeral_sessions,omitempty" url:"allow_online_access_with_ephemeral_sessions,omitempty"`
+	// Whether to skip user consent for applications flagged as first party (true) or not (false).
+	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty" url:"skip_consent_for_verifiable_first_party_clients,omitempty"`
+	// Expiration value (in seconds) for access tokens issued for this API from the token endpoint.
+	TokenLifetime *int `json:"token_lifetime,omitempty" url:"token_lifetime,omitempty"`
+	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
+	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
+	// Whether authorization polices are enforced (true) or unenforced (false).
+	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
+	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
+	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
+	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	// The client ID of the client that this resource server is linked to
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (r *ResourceServerSearchResponse) GetID() string {
+	if r == nil || r.ID == nil {
+		return ""
+	}
+	return *r.ID
+}
+
+func (r *ResourceServerSearchResponse) GetName() string {
+	if r == nil || r.Name == nil {
+		return ""
+	}
+	return *r.Name
+}
+
+func (r *ResourceServerSearchResponse) GetIsSystem() bool {
+	if r == nil || r.IsSystem == nil {
+		return false
+	}
+	return *r.IsSystem
+}
+
+func (r *ResourceServerSearchResponse) GetIdentifier() string {
+	if r == nil || r.Identifier == nil {
+		return ""
+	}
+	return *r.Identifier
+}
+
+func (r *ResourceServerSearchResponse) GetScopes() []*ResourceServerScope {
+	if r == nil || r.Scopes == nil {
+		return nil
+	}
+	return r.Scopes
+}
+
+func (r *ResourceServerSearchResponse) GetSigningAlg() SigningAlgorithmEnum {
+	if r == nil || r.SigningAlg == nil {
+		return ""
+	}
+	return *r.SigningAlg
+}
+
+func (r *ResourceServerSearchResponse) GetAllowOfflineAccess() bool {
+	if r == nil || r.AllowOfflineAccess == nil {
+		return false
+	}
+	return *r.AllowOfflineAccess
+}
+
+func (r *ResourceServerSearchResponse) GetAllowOnlineAccess() bool {
+	if r == nil || r.AllowOnlineAccess == nil {
+		return false
+	}
+	return *r.AllowOnlineAccess
+}
+
+func (r *ResourceServerSearchResponse) GetAllowOnlineAccessWithEphemeralSessions() bool {
+	if r == nil || r.AllowOnlineAccessWithEphemeralSessions == nil {
+		return false
+	}
+	return *r.AllowOnlineAccessWithEphemeralSessions
+}
+
+func (r *ResourceServerSearchResponse) GetSkipConsentForVerifiableFirstPartyClients() bool {
+	if r == nil || r.SkipConsentForVerifiableFirstPartyClients == nil {
+		return false
+	}
+	return *r.SkipConsentForVerifiableFirstPartyClients
+}
+
+func (r *ResourceServerSearchResponse) GetTokenLifetime() int {
+	if r == nil || r.TokenLifetime == nil {
+		return 0
+	}
+	return *r.TokenLifetime
+}
+
+func (r *ResourceServerSearchResponse) GetTokenLifetimeForWeb() int {
+	if r == nil || r.TokenLifetimeForWeb == nil {
+		return 0
+	}
+	return *r.TokenLifetimeForWeb
+}
+
+func (r *ResourceServerSearchResponse) GetEnforcePolicies() bool {
+	if r == nil || r.EnforcePolicies == nil {
+		return false
+	}
+	return *r.EnforcePolicies
+}
+
+func (r *ResourceServerSearchResponse) GetTokenLifetimeForAnonymousAccessTokens() int {
+	if r == nil || r.TokenLifetimeForAnonymousAccessTokens == nil {
+		return 0
+	}
+	return *r.TokenLifetimeForAnonymousAccessTokens
+}
+
+func (r *ResourceServerSearchResponse) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
+	if r == nil || r.TokenDialect == nil {
+		return ""
+	}
+	return *r.TokenDialect
+}
+
+func (r *ResourceServerSearchResponse) GetAccessToken() ResourceServerAccessToken {
+	if r == nil || r.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *r.AccessToken
+}
+
+func (r *ResourceServerSearchResponse) GetTokenEncryption() ResourceServerTokenEncryption {
+	if r == nil || r.TokenEncryption == nil {
+		return ResourceServerTokenEncryption{}
+	}
+	return *r.TokenEncryption
+}
+
+func (r *ResourceServerSearchResponse) GetConsentPolicy() ResourceServerConsentPolicyEnum {
+	if r == nil || r.ConsentPolicy == nil {
+		return ""
+	}
+	return *r.ConsentPolicy
+}
+
+func (r *ResourceServerSearchResponse) GetRequireConsentNonRepudiation() bool {
+	if r == nil || r.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *r.RequireConsentNonRepudiation
+}
+
+func (r *ResourceServerSearchResponse) GetAuthorizationDetails() []any {
+	if r == nil || r.AuthorizationDetails == nil {
+		return nil
+	}
+	return r.AuthorizationDetails
+}
+
+func (r *ResourceServerSearchResponse) GetProofOfPossession() ResourceServerProofOfPossession {
+	if r == nil || r.ProofOfPossession == nil {
+		return ResourceServerProofOfPossession{}
+	}
+	return *r.ProofOfPossession
+}
+
+func (r *ResourceServerSearchResponse) GetSubjectTypeAuthorization() ResourceServerSubjectTypeAuthorization {
+	if r == nil || r.SubjectTypeAuthorization == nil {
+		return ResourceServerSubjectTypeAuthorization{}
+	}
+	return *r.SubjectTypeAuthorization
+}
+
+func (r *ResourceServerSearchResponse) GetAuthorizationPolicy() ResourceServerAuthorizationPolicy {
+	if r == nil || r.AuthorizationPolicy == nil {
+		return ResourceServerAuthorizationPolicy{}
+	}
+	return *r.AuthorizationPolicy
+}
+
+func (r *ResourceServerSearchResponse) GetClientID() string {
+	if r == nil || r.ClientID == nil {
+		return ""
+	}
+	return *r.ClientID
+}
+
+func (r *ResourceServerSearchResponse) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if r == nil || r.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *r.AgentSubjectClaims
+}
+
+func (r *ResourceServerSearchResponse) GetType() ResourceServerTypeEnum {
+	if r == nil || r.Type == nil {
+		return ""
+	}
+	return *r.Type
+}
+
+func (r *ResourceServerSearchResponse) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.extraProperties
+}
+
+func (r *ResourceServerSearchResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetID(id *string) {
+	r.ID = id
+	r.require(resourceServerSearchResponseFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetName(name *string) {
+	r.Name = name
+	r.require(resourceServerSearchResponseFieldName)
+}
+
+// SetIsSystem sets the IsSystem field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetIsSystem(isSystem *bool) {
+	r.IsSystem = isSystem
+	r.require(resourceServerSearchResponseFieldIsSystem)
+}
+
+// SetIdentifier sets the Identifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetIdentifier(identifier *string) {
+	r.Identifier = identifier
+	r.require(resourceServerSearchResponseFieldIdentifier)
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetScopes(scopes []*ResourceServerScope) {
+	r.Scopes = scopes
+	r.require(resourceServerSearchResponseFieldScopes)
+}
+
+// SetSigningAlg sets the SigningAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetSigningAlg(signingAlg *SigningAlgorithmEnum) {
+	r.SigningAlg = signingAlg
+	r.require(resourceServerSearchResponseFieldSigningAlg)
+}
+
+// SetAllowOfflineAccess sets the AllowOfflineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAllowOfflineAccess(allowOfflineAccess *bool) {
+	r.AllowOfflineAccess = allowOfflineAccess
+	r.require(resourceServerSearchResponseFieldAllowOfflineAccess)
+}
+
+// SetAllowOnlineAccess sets the AllowOnlineAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAllowOnlineAccess(allowOnlineAccess *bool) {
+	r.AllowOnlineAccess = allowOnlineAccess
+	r.require(resourceServerSearchResponseFieldAllowOnlineAccess)
+}
+
+// SetAllowOnlineAccessWithEphemeralSessions sets the AllowOnlineAccessWithEphemeralSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAllowOnlineAccessWithEphemeralSessions(allowOnlineAccessWithEphemeralSessions *bool) {
+	r.AllowOnlineAccessWithEphemeralSessions = allowOnlineAccessWithEphemeralSessions
+	r.require(resourceServerSearchResponseFieldAllowOnlineAccessWithEphemeralSessions)
+}
+
+// SetSkipConsentForVerifiableFirstPartyClients sets the SkipConsentForVerifiableFirstPartyClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetSkipConsentForVerifiableFirstPartyClients(skipConsentForVerifiableFirstPartyClients *bool) {
+	r.SkipConsentForVerifiableFirstPartyClients = skipConsentForVerifiableFirstPartyClients
+	r.require(resourceServerSearchResponseFieldSkipConsentForVerifiableFirstPartyClients)
+}
+
+// SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetTokenLifetime(tokenLifetime *int) {
+	r.TokenLifetime = tokenLifetime
+	r.require(resourceServerSearchResponseFieldTokenLifetime)
+}
+
+// SetTokenLifetimeForWeb sets the TokenLifetimeForWeb field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetTokenLifetimeForWeb(tokenLifetimeForWeb *int) {
+	r.TokenLifetimeForWeb = tokenLifetimeForWeb
+	r.require(resourceServerSearchResponseFieldTokenLifetimeForWeb)
+}
+
+// SetEnforcePolicies sets the EnforcePolicies field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetEnforcePolicies(enforcePolicies *bool) {
+	r.EnforcePolicies = enforcePolicies
+	r.require(resourceServerSearchResponseFieldEnforcePolicies)
+}
+
+// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
+	r.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
+	r.require(resourceServerSearchResponseFieldTokenLifetimeForAnonymousAccessTokens)
+}
+
+// SetTokenDialect sets the TokenDialect field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
+	r.TokenDialect = tokenDialect
+	r.require(resourceServerSearchResponseFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	r.AccessToken = accessToken
+	r.require(resourceServerSearchResponseFieldAccessToken)
+}
+
+// SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetTokenEncryption(tokenEncryption *ResourceServerTokenEncryption) {
+	r.TokenEncryption = tokenEncryption
+	r.require(resourceServerSearchResponseFieldTokenEncryption)
+}
+
+// SetConsentPolicy sets the ConsentPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
+	r.ConsentPolicy = consentPolicy
+	r.require(resourceServerSearchResponseFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	r.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	r.require(resourceServerSearchResponseFieldRequireConsentNonRepudiation)
+}
+
+// SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAuthorizationDetails(authorizationDetails []any) {
+	r.AuthorizationDetails = authorizationDetails
+	r.require(resourceServerSearchResponseFieldAuthorizationDetails)
+}
+
+// SetProofOfPossession sets the ProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetProofOfPossession(proofOfPossession *ResourceServerProofOfPossession) {
+	r.ProofOfPossession = proofOfPossession
+	r.require(resourceServerSearchResponseFieldProofOfPossession)
+}
+
+// SetSubjectTypeAuthorization sets the SubjectTypeAuthorization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetSubjectTypeAuthorization(subjectTypeAuthorization *ResourceServerSubjectTypeAuthorization) {
+	r.SubjectTypeAuthorization = subjectTypeAuthorization
+	r.require(resourceServerSearchResponseFieldSubjectTypeAuthorization)
+}
+
+// SetAuthorizationPolicy sets the AuthorizationPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAuthorizationPolicy(authorizationPolicy *ResourceServerAuthorizationPolicy) {
+	r.AuthorizationPolicy = authorizationPolicy
+	r.require(resourceServerSearchResponseFieldAuthorizationPolicy)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetClientID(clientID *string) {
+	r.ClientID = clientID
+	r.require(resourceServerSearchResponseFieldClientID)
+}
+
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	r.AgentSubjectClaims = agentSubjectClaims
+	r.require(resourceServerSearchResponseFieldAgentSubjectClaims)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetType(type_ *ResourceServerTypeEnum) {
+	r.Type = type_
+	r.require(resourceServerSearchResponseFieldType)
+}
+
+func (r *ResourceServerSearchResponse) UnmarshalJSON(data []byte) error {
+	type unmarshaler ResourceServerSearchResponse
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*r = ResourceServerSearchResponse(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, resourceServerSearchResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		r.require(presentFields)
+	}
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerSearchResponse) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerSearchResponse
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (r *ResourceServerSearchResponse) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Field name to sort results by in ascending order only. Defaults to insertion order (oldest first) if not provided.
+type ResourceServerSortFieldEnum string
+
+const (
+	ResourceServerSortFieldEnumIdentifier ResourceServerSortFieldEnum = "identifier"
+	ResourceServerSortFieldEnumName       ResourceServerSortFieldEnum = "name"
+	ResourceServerSortFieldEnumUpdatedAt  ResourceServerSortFieldEnum = "updated_at"
+)
+
+func NewResourceServerSortFieldEnumFromString(s string) (ResourceServerSortFieldEnum, error) {
+	switch s {
+	case "identifier":
+		return ResourceServerSortFieldEnumIdentifier, nil
+	case "name":
+		return ResourceServerSortFieldEnumName, nil
+	case "updated_at":
+		return ResourceServerSortFieldEnumUpdatedAt, nil
+	}
+	var t ResourceServerSortFieldEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerSortFieldEnum) Ptr() *ResourceServerSortFieldEnum {
+	return &r
+}
+
+var (
+	resourceServerSubjectTypeAuthorizationFieldUser          = big.NewInt(1 << 0)
+	resourceServerSubjectTypeAuthorizationFieldClient        = big.NewInt(1 << 1)
+	resourceServerSubjectTypeAuthorizationFieldAnonymousUser = big.NewInt(1 << 2)
+)
+
+// Defines application access permission for a resource server
 type ResourceServerSubjectTypeAuthorization struct {
-	User   *ResourceServerSubjectTypeAuthorizationUser   `json:"user,omitempty" url:"user,omitempty"`
-	Client *ResourceServerSubjectTypeAuthorizationClient `json:"client,omitempty" url:"client,omitempty"`
+	User          *ResourceServerSubjectTypeAuthorizationUser          `json:"user,omitempty" url:"user,omitempty"`
+	Client        *ResourceServerSubjectTypeAuthorizationClient        `json:"client,omitempty" url:"client,omitempty"`
+	AnonymousUser *ResourceServerSubjectTypeAuthorizationAnonymousUser `json:"anonymous_user,omitempty" url:"anonymous_user,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1845,6 +2752,13 @@ func (r *ResourceServerSubjectTypeAuthorization) GetClient() ResourceServerSubje
 	return *r.Client
 }
 
+func (r *ResourceServerSubjectTypeAuthorization) GetAnonymousUser() ResourceServerSubjectTypeAuthorizationAnonymousUser {
+	if r == nil || r.AnonymousUser == nil {
+		return ResourceServerSubjectTypeAuthorizationAnonymousUser{}
+	}
+	return *r.AnonymousUser
+}
+
 func (r *ResourceServerSubjectTypeAuthorization) GetExtraProperties() map[string]interface{} {
 	if r == nil {
 		return nil
@@ -1853,10 +2767,12 @@ func (r *ResourceServerSubjectTypeAuthorization) GetExtraProperties() map[string
 }
 
 func (r *ResourceServerSubjectTypeAuthorization) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetUser sets the User field and marks it as non-optional;
@@ -1871,6 +2787,13 @@ func (r *ResourceServerSubjectTypeAuthorization) SetUser(user *ResourceServerSub
 func (r *ResourceServerSubjectTypeAuthorization) SetClient(client *ResourceServerSubjectTypeAuthorizationClient) {
 	r.Client = client
 	r.require(resourceServerSubjectTypeAuthorizationFieldClient)
+}
+
+// SetAnonymousUser sets the AnonymousUser field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSubjectTypeAuthorization) SetAnonymousUser(anonymousUser *ResourceServerSubjectTypeAuthorizationAnonymousUser) {
+	r.AnonymousUser = anonymousUser
+	r.require(resourceServerSubjectTypeAuthorizationFieldAnonymousUser)
 }
 
 func (r *ResourceServerSubjectTypeAuthorization) UnmarshalJSON(data []byte) error {
@@ -1915,11 +2838,126 @@ func (r *ResourceServerSubjectTypeAuthorization) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Access Permissions for client flows
+var (
+	resourceServerSubjectTypeAuthorizationAnonymousUserFieldPolicy = big.NewInt(1 << 0)
+)
+
+// Access Permissions for anonymous user flows
+type ResourceServerSubjectTypeAuthorizationAnonymousUser struct {
+	Policy *ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) GetPolicy() ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum {
+	if r == nil || r.Policy == nil {
+		return ""
+	}
+	return *r.Policy
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) GetExtraProperties() map[string]interface{} {
+	if r == nil {
+		return nil
+	}
+	return r.ExtraProperties
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) require(field *big.Int) {
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
+	}
+	next.Or(next, field)
+	r.explicitFields = next
+}
+
+// SetPolicy sets the Policy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) SetPolicy(policy *ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum) {
+	r.Policy = policy
+	r.require(resourceServerSubjectTypeAuthorizationAnonymousUserFieldPolicy)
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) UnmarshalJSON(data []byte) error {
+	type embed ResourceServerSubjectTypeAuthorizationAnonymousUser
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*r = ResourceServerSubjectTypeAuthorizationAnonymousUser(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *r)
+	if err != nil {
+		return err
+	}
+	r.ExtraProperties = extraProperties
+	r.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) MarshalJSON() ([]byte, error) {
+	type embed ResourceServerSubjectTypeAuthorizationAnonymousUser
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*r),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
+}
+
+func (r *ResourceServerSubjectTypeAuthorizationAnonymousUser) String() string {
+	if r == nil {
+		return "<nil>"
+	}
+	if len(r.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(r.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(r); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", r)
+}
+
+// Defines the anonymous user flows policy for the resource server
+type ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum string
+
+const (
+	ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnumDenyAll            ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum = "deny_all"
+	ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnumRequireClientGrant ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum = "require_client_grant"
+)
+
+func NewResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnumFromString(s string) (ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum, error) {
+	switch s {
+	case "deny_all":
+		return ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnumDenyAll, nil
+	case "require_client_grant":
+		return ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnumRequireClientGrant, nil
+	}
+	var t ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum) Ptr() *ResourceServerSubjectTypeAuthorizationAnonymousUserPolicyEnum {
+	return &r
+}
+
 var (
 	resourceServerSubjectTypeAuthorizationClientFieldPolicy = big.NewInt(1 << 0)
 )
 
+// Access Permissions for client flows
 type ResourceServerSubjectTypeAuthorizationClient struct {
 	Policy *ResourceServerSubjectTypeAuthorizationClientPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
 
@@ -1946,10 +2984,12 @@ func (r *ResourceServerSubjectTypeAuthorizationClient) GetExtraProperties() map[
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationClient) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetPolicy sets the Policy field and marks it as non-optional;
@@ -2028,11 +3068,11 @@ func (r ResourceServerSubjectTypeAuthorizationClientPolicyEnum) Ptr() *ResourceS
 	return &r
 }
 
-// Access Permissions for user flows
 var (
 	resourceServerSubjectTypeAuthorizationUserFieldPolicy = big.NewInt(1 << 0)
 )
 
+// Access Permissions for user flows
 type ResourceServerSubjectTypeAuthorizationUser struct {
 	Policy *ResourceServerSubjectTypeAuthorizationUserPolicyEnum `json:"policy,omitempty" url:"policy,omitempty"`
 
@@ -2059,10 +3099,12 @@ func (r *ResourceServerSubjectTypeAuthorizationUser) GetExtraProperties() map[st
 }
 
 func (r *ResourceServerSubjectTypeAuthorizationUser) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetPolicy sets the Policy field and marks it as non-optional;
@@ -2240,10 +3282,12 @@ func (r *ResourceServerTokenEncryption) GetExtraProperties() map[string]interfac
 }
 
 func (r *ResourceServerTokenEncryption) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetFormat sets the Format field and marks it as non-optional;
@@ -2407,10 +3451,12 @@ func (r *ResourceServerTokenEncryptionKey) GetExtraProperties() map[string]inter
 }
 
 func (r *ResourceServerTokenEncryptionKey) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2483,6 +3529,130 @@ func (r *ResourceServerTokenEncryptionKey) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+// The type of the resource server.
+type ResourceServerTypeEnum string
+
+const (
+	ResourceServerTypeEnumUniversalCommerceProtocolServer ResourceServerTypeEnum = "universal_commerce_protocol_server"
+)
+
+func NewResourceServerTypeEnumFromString(s string) (ResourceServerTypeEnum, error) {
+	switch s {
+	case "universal_commerce_protocol_server":
+		return ResourceServerTypeEnumUniversalCommerceProtocolServer, nil
+	}
+	var t ResourceServerTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (r ResourceServerTypeEnum) Ptr() *ResourceServerTypeEnum {
+	return &r
+}
+
+var (
+	searchResourceServersResponseContentFieldResourceServers = big.NewInt(1 << 0)
+	searchResourceServersResponseContentFieldNext            = big.NewInt(1 << 1)
+)
+
+type SearchResourceServersResponseContent struct {
+	// Array of resource server objects matching the search criteria.
+	ResourceServers []*ResourceServerSearchResponse `json:"resource_servers" url:"resource_servers"`
+	// Cursor for retrieving the next page of results. Omitted if there are no more results.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SearchResourceServersResponseContent) GetResourceServers() []*ResourceServerSearchResponse {
+	if s == nil {
+		return nil
+	}
+	return s.ResourceServers
+}
+
+func (s *SearchResourceServersResponseContent) GetNext() string {
+	if s == nil || s.Next == nil {
+		return ""
+	}
+	return *s.Next
+}
+
+func (s *SearchResourceServersResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchResourceServersResponseContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetResourceServers sets the ResourceServers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchResourceServersResponseContent) SetResourceServers(resourceServers []*ResourceServerSearchResponse) {
+	s.ResourceServers = resourceServers
+	s.require(searchResourceServersResponseContentFieldResourceServers)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchResourceServersResponseContent) SetNext(next *string) {
+	s.Next = next
+	s.require(searchResourceServersResponseContentFieldNext)
+}
+
+func (s *SearchResourceServersResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchResourceServersResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchResourceServersResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchResourceServersResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SearchResourceServersResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SearchResourceServersResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 var (
 	updateResourceServerResponseContentFieldID                                        = big.NewInt(1 << 0)
 	updateResourceServerResponseContentFieldName                                      = big.NewInt(1 << 1)
@@ -2498,15 +3668,31 @@ var (
 	updateResourceServerResponseContentFieldTokenLifetime                             = big.NewInt(1 << 11)
 	updateResourceServerResponseContentFieldTokenLifetimeForWeb                       = big.NewInt(1 << 12)
 	updateResourceServerResponseContentFieldEnforcePolicies                           = big.NewInt(1 << 13)
-	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 14)
-	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 15)
-	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 16)
-	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 17)
-	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 18)
-	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
-	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
-	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 21)
+	updateResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens     = big.NewInt(1 << 14)
+	updateResourceServerResponseContentFieldTokenDialect                              = big.NewInt(1 << 15)
+	updateResourceServerResponseContentFieldAccessToken                               = big.NewInt(1 << 16)
+	updateResourceServerResponseContentFieldTokenEncryption                           = big.NewInt(1 << 17)
+	updateResourceServerResponseContentFieldConsentPolicy                             = big.NewInt(1 << 18)
+	updateResourceServerResponseContentFieldRequireConsentNonRepudiation              = big.NewInt(1 << 19)
+	updateResourceServerResponseContentFieldAuthorizationDetails                      = big.NewInt(1 << 20)
+	updateResourceServerResponseContentFieldProofOfPossession                         = big.NewInt(1 << 21)
+	updateResourceServerResponseContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 22)
+	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
+	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
+	updateResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
+	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
 )
+
+// updateResourceServerResponseContentNullableFields maps the wire names of UpdateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
+var updateResourceServerResponseContentNullableFields = map[string]*big.Int{
+	"access_token":          updateResourceServerResponseContentFieldAccessToken,
+	"token_encryption":      updateResourceServerResponseContentFieldTokenEncryption,
+	"consent_policy":        updateResourceServerResponseContentFieldConsentPolicy,
+	"authorization_details": updateResourceServerResponseContentFieldAuthorizationDetails,
+	"proof_of_possession":   updateResourceServerResponseContentFieldProofOfPossession,
+	"authorization_policy":  updateResourceServerResponseContentFieldAuthorizationPolicy,
+	"type":                  updateResourceServerResponseContentFieldType,
+}
 
 type UpdateResourceServerResponseContent struct {
 	// ID of the API (resource server).
@@ -2535,16 +3721,23 @@ type UpdateResourceServerResponseContent struct {
 	// Expiration value (in seconds) for access tokens issued for this API via Implicit or Hybrid Flows. Cannot be greater than the `token_lifetime` value.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty" url:"token_lifetime_for_web,omitempty"`
 	// Whether authorization polices are enforced (true) or unenforced (false).
-	EnforcePolicies          *bool                                   `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
-	TokenDialect             *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
-	TokenEncryption          *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
-	ConsentPolicy            *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
-	AuthorizationDetails     []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
-	ProofOfPossession        *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
-	SubjectTypeAuthorization *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
-	AuthorizationPolicy      *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
+	EnforcePolicies *bool `json:"enforce_policies,omitempty" url:"enforce_policies,omitempty"`
+	// Expiration value (in seconds) for anonymous-session access tokens issued for this API.
+	TokenLifetimeForAnonymousAccessTokens *int                                    `json:"token_lifetime_for_anonymous_access_tokens,omitempty" url:"token_lifetime_for_anonymous_access_tokens,omitempty"`
+	TokenDialect                          *ResourceServerTokenDialectResponseEnum `json:"token_dialect,omitempty" url:"token_dialect,omitempty"`
+	AccessToken                           *ResourceServerAccessToken              `json:"access_token,omitempty" url:"access_token,omitempty"`
+	TokenEncryption                       *ResourceServerTokenEncryption          `json:"token_encryption,omitempty" url:"token_encryption,omitempty"`
+	ConsentPolicy                         *ResourceServerConsentPolicyEnum        `json:"consent_policy,omitempty" url:"consent_policy,omitempty"`
+	// When true, the resource server requires every consent approval to be digitally signed, so the approver cannot later deny a consent they granted. When false, consent decisions do not need a signature. Defaults to false. A configured value is still returned even after the related entitlement is disabled.
+	RequireConsentNonRepudiation *bool                                   `json:"require_consent_non_repudiation,omitempty" url:"require_consent_non_repudiation,omitempty"`
+	AuthorizationDetails         []any                                   `json:"authorization_details,omitempty" url:"authorization_details,omitempty"`
+	ProofOfPossession            *ResourceServerProofOfPossession        `json:"proof_of_possession,omitempty" url:"proof_of_possession,omitempty"`
+	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
+	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2651,11 +3844,25 @@ func (u *UpdateResourceServerResponseContent) GetEnforcePolicies() bool {
 	return *u.EnforcePolicies
 }
 
+func (u *UpdateResourceServerResponseContent) GetTokenLifetimeForAnonymousAccessTokens() int {
+	if u == nil || u.TokenLifetimeForAnonymousAccessTokens == nil {
+		return 0
+	}
+	return *u.TokenLifetimeForAnonymousAccessTokens
+}
+
 func (u *UpdateResourceServerResponseContent) GetTokenDialect() ResourceServerTokenDialectResponseEnum {
 	if u == nil || u.TokenDialect == nil {
 		return ""
 	}
 	return *u.TokenDialect
+}
+
+func (u *UpdateResourceServerResponseContent) GetAccessToken() ResourceServerAccessToken {
+	if u == nil || u.AccessToken == nil {
+		return ResourceServerAccessToken{}
+	}
+	return *u.AccessToken
 }
 
 func (u *UpdateResourceServerResponseContent) GetTokenEncryption() ResourceServerTokenEncryption {
@@ -2670,6 +3877,13 @@ func (u *UpdateResourceServerResponseContent) GetConsentPolicy() ResourceServerC
 		return ""
 	}
 	return *u.ConsentPolicy
+}
+
+func (u *UpdateResourceServerResponseContent) GetRequireConsentNonRepudiation() bool {
+	if u == nil || u.RequireConsentNonRepudiation == nil {
+		return false
+	}
+	return *u.RequireConsentNonRepudiation
 }
 
 func (u *UpdateResourceServerResponseContent) GetAuthorizationDetails() []any {
@@ -2707,6 +3921,20 @@ func (u *UpdateResourceServerResponseContent) GetClientID() string {
 	return *u.ClientID
 }
 
+func (u *UpdateResourceServerResponseContent) GetAgentSubjectClaims() ResourceServerAgentSubjectClaimsResponseEnum {
+	if u == nil || u.AgentSubjectClaims == nil {
+		return ""
+	}
+	return *u.AgentSubjectClaims
+}
+
+func (u *UpdateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
+	if u == nil || u.Type == nil {
+		return ""
+	}
+	return *u.Type
+}
+
 func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]interface{} {
 	if u == nil {
 		return nil
@@ -2715,10 +3943,12 @@ func (u *UpdateResourceServerResponseContent) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateResourceServerResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2819,11 +4049,25 @@ func (u *UpdateResourceServerResponseContent) SetEnforcePolicies(enforcePolicies
 	u.require(updateResourceServerResponseContentFieldEnforcePolicies)
 }
 
+// SetTokenLifetimeForAnonymousAccessTokens sets the TokenLifetimeForAnonymousAccessTokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetTokenLifetimeForAnonymousAccessTokens(tokenLifetimeForAnonymousAccessTokens *int) {
+	u.TokenLifetimeForAnonymousAccessTokens = tokenLifetimeForAnonymousAccessTokens
+	u.require(updateResourceServerResponseContentFieldTokenLifetimeForAnonymousAccessTokens)
+}
+
 // SetTokenDialect sets the TokenDialect field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateResourceServerResponseContent) SetTokenDialect(tokenDialect *ResourceServerTokenDialectResponseEnum) {
 	u.TokenDialect = tokenDialect
 	u.require(updateResourceServerResponseContentFieldTokenDialect)
+}
+
+// SetAccessToken sets the AccessToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAccessToken(accessToken *ResourceServerAccessToken) {
+	u.AccessToken = accessToken
+	u.require(updateResourceServerResponseContentFieldAccessToken)
 }
 
 // SetTokenEncryption sets the TokenEncryption field and marks it as non-optional;
@@ -2838,6 +4082,13 @@ func (u *UpdateResourceServerResponseContent) SetTokenEncryption(tokenEncryption
 func (u *UpdateResourceServerResponseContent) SetConsentPolicy(consentPolicy *ResourceServerConsentPolicyEnum) {
 	u.ConsentPolicy = consentPolicy
 	u.require(updateResourceServerResponseContentFieldConsentPolicy)
+}
+
+// SetRequireConsentNonRepudiation sets the RequireConsentNonRepudiation field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetRequireConsentNonRepudiation(requireConsentNonRepudiation *bool) {
+	u.RequireConsentNonRepudiation = requireConsentNonRepudiation
+	u.require(updateResourceServerResponseContentFieldRequireConsentNonRepudiation)
 }
 
 // SetAuthorizationDetails sets the AuthorizationDetails field and marks it as non-optional;
@@ -2875,6 +4126,20 @@ func (u *UpdateResourceServerResponseContent) SetClientID(clientID *string) {
 	u.require(updateResourceServerResponseContentFieldClientID)
 }
 
+// SetAgentSubjectClaims sets the AgentSubjectClaims field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
+	u.AgentSubjectClaims = agentSubjectClaims
+	u.require(updateResourceServerResponseContentFieldAgentSubjectClaims)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
+	u.Type = type_
+	u.require(updateResourceServerResponseContentFieldType)
+}
+
 func (u *UpdateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler UpdateResourceServerResponseContent
 	var value unmarshaler
@@ -2887,6 +4152,13 @@ func (u *UpdateResourceServerResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateResourceServerResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
