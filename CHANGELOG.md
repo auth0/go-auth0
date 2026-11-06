@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+## [v1.52.0](https://github.com/auth0/go-auth0/tree/v1.52.0) (2026-11-04)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.51.0...v1.52.0)
+
+**Added**
+- feat: add `AgentID` field to `Client`, linking a client to an agent (Early Access) [\#906](https://github.com/auth0/go-auth0/pull/906) ([KartikJha](https://github.com/KartikJha))
+- feat: add `ExternalMetadataStatus` to `Client` and `ClientIDMetadataDocumentDynamicRegistrationSupported` to `Tenant` for Client ID Metadata Documents (Early Access) [\#912](https://github.com/auth0/go-auth0/pull/912) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `OTPSettings` to `ConnectionOptions` for per-channel one-time password settings (Early Access) [\#860](https://github.com/auth0/go-auth0/pull/860) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `Type` to `ResourceServer` with Universal Commerce Protocol server support (Early Access) [\#917](https://github.com/auth0/go-auth0/pull/917) ([KartikJha](https://github.com/KartikJha))
+
 ## [v1.51.0](https://github.com/auth0/go-auth0/tree/v1.51.0) (2026-10-07)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.50.0...v1.51.0)
 

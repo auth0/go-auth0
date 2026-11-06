@@ -241,6 +241,27 @@ type Client struct {
 	// Only present for CIMD-registered clients.
 	ExternalClientID *string `json:"external_client_id,omitempty"`
 
+	// AgentID is the identifier of the agent this client is linked to (Early Access).
+	// This feature may be unavailable on your tenant.
+	//
+	// A client can be linked to at most one agent. Sending a different agent ID on update
+	// moves the link to that agent. Deleting an agent does not clear this field.
+	//
+	// To list the clients linked to an agent, pass `management.Parameter("agent_id", id)` to
+	// ClientManager.List. This cannot be combined with the `q` parameter.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/clients/{id}
+	//
+	// {
+	//	 "agent_id": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	AgentID *string `json:"agent_id,omitempty"`
+
 	// ExternalMetadataType is the type of external metadata.
 	// Value is "cimd" for CIMD-registered clients.
 	ExternalMetadataType *string `json:"external_metadata_type,omitempty"`
@@ -248,6 +269,14 @@ type Client struct {
 	// ExternalMetadataCreatedBy indicates who created the external metadata client.
 	// Values: "admin" (via Management API), "client" (self-registered), or "unknown".
 	ExternalMetadataCreatedBy *string `json:"external_metadata_created_by,omitempty"`
+
+	// ExternalMetadataStatus indicates whether Auth0 can currently resolve the Client ID Metadata
+	// Document, from its cache or from the document URL. Values: "available" or "unavailable".
+	//
+	// This field is read-only and is only present for CIMD-registered clients.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	ExternalMetadataStatus *string `json:"external_metadata_status,omitempty"`
 
 	// JwksURI is the URL for the JSON Web Key Set (JWKS) containing the public keys
 	// used for private_key_jwt authentication. Only present for CIMD clients.

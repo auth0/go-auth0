@@ -1742,6 +1742,14 @@ func (c *Client) GetAddons() *ClientAddons {
 	return c.Addons
 }
 
+// GetAgentID returns the AgentID field if it's non-nil, zero value otherwise.
+func (c *Client) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
+}
+
 // GetAllowedClients returns the AllowedClients field if it's non-nil, zero value otherwise.
 func (c *Client) GetAllowedClients() []string {
 	if c == nil || c.AllowedClients == nil {
@@ -1940,6 +1948,14 @@ func (c *Client) GetExternalMetadataCreatedBy() string {
 		return ""
 	}
 	return *c.ExternalMetadataCreatedBy
+}
+
+// GetExternalMetadataStatus returns the ExternalMetadataStatus field if it's non-nil, zero value otherwise.
+func (c *Client) GetExternalMetadataStatus() string {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
 }
 
 // GetExternalMetadataType returns the ExternalMetadataType field if it's non-nil, zero value otherwise.
@@ -3389,6 +3405,14 @@ func (c *ConnectionOptions) GetNonPersistentAttrs() []string {
 		return nil
 	}
 	return *c.NonPersistentAttrs
+}
+
+// GetOTPSettings returns the OTPSettings field.
+func (c *ConnectionOptions) GetOTPSettings() *ConnectionOptionsOTPSettings {
+	if c == nil {
+		return nil
+	}
+	return c.OTPSettings
 }
 
 // GetPasskeyOptions returns the PasskeyOptions field.
@@ -6267,6 +6291,48 @@ func (c *ConnectionOptionsOTP) GetTimeStep() int {
 
 // String returns a string representation of ConnectionOptionsOTP.
 func (c *ConnectionOptionsOTP) String() string {
+	return Stringify(c)
+}
+
+// GetOTPExpiry returns the OTPExpiry field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOTPChannelSettings) GetOTPExpiry() int {
+	if c == nil || c.OTPExpiry == nil {
+		return 0
+	}
+	return *c.OTPExpiry
+}
+
+// GetOTPLength returns the OTPLength field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsOTPChannelSettings) GetOTPLength() int {
+	if c == nil || c.OTPLength == nil {
+		return 0
+	}
+	return *c.OTPLength
+}
+
+// String returns a string representation of ConnectionOptionsOTPChannelSettings.
+func (c *ConnectionOptionsOTPChannelSettings) String() string {
+	return Stringify(c)
+}
+
+// GetEmail returns the Email field.
+func (c *ConnectionOptionsOTPSettings) GetEmail() *ConnectionOptionsOTPChannelSettings {
+	if c == nil {
+		return nil
+	}
+	return c.Email
+}
+
+// GetPhone returns the Phone field.
+func (c *ConnectionOptionsOTPSettings) GetPhone() *ConnectionOptionsOTPChannelSettings {
+	if c == nil {
+		return nil
+	}
+	return c.Phone
+}
+
+// String returns a string representation of ConnectionOptionsOTPSettings.
+func (c *ConnectionOptionsOTPSettings) String() string {
 	return Stringify(c)
 }
 
@@ -14223,6 +14289,14 @@ func (t *Tenant) GetChangePassword() *TenantChangePassword {
 		return nil
 	}
 	return t.ChangePassword
+}
+
+// GetClientIDMetadataDocumentDynamicRegistrationSupported returns the ClientIDMetadataDocumentDynamicRegistrationSupported field if it's non-nil, zero value otherwise.
+func (t *Tenant) GetClientIDMetadataDocumentDynamicRegistrationSupported() bool {
+	if t == nil || t.ClientIDMetadataDocumentDynamicRegistrationSupported == nil {
+		return false
+	}
+	return *t.ClientIDMetadataDocumentDynamicRegistrationSupported
 }
 
 // GetClientIDMetadataDocumentSupported returns the ClientIDMetadataDocumentSupported field if it's non-nil, zero value otherwise.

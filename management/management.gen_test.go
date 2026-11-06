@@ -2221,6 +2221,16 @@ func TestClient_GetAddons(tt *testing.T) {
 	c.GetAddons()
 }
 
+func TestClient_GetAgentID(tt *testing.T) {
+	var zeroValue string
+	c := &Client{AgentID: &zeroValue}
+	c.GetAgentID()
+	c = &Client{}
+	c.GetAgentID()
+	c = nil
+	c.GetAgentID()
+}
+
 func TestClient_GetAllowedClients(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{AllowedClients: &zeroValue}
@@ -2454,6 +2464,16 @@ func TestClient_GetExternalMetadataCreatedBy(tt *testing.T) {
 	c.GetExternalMetadataCreatedBy()
 	c = nil
 	c.GetExternalMetadataCreatedBy()
+}
+
+func TestClient_GetExternalMetadataStatus(tt *testing.T) {
+	var zeroValue string
+	c := &Client{ExternalMetadataStatus: &zeroValue}
+	c.GetExternalMetadataStatus()
+	c = &Client{}
+	c.GetExternalMetadataStatus()
+	c = nil
+	c.GetExternalMetadataStatus()
 }
 
 func TestClient_GetExternalMetadataType(tt *testing.T) {
@@ -4142,6 +4162,13 @@ func TestConnectionOptions_GetNonPersistentAttrs(tt *testing.T) {
 	c.GetNonPersistentAttrs()
 	c = nil
 	c.GetNonPersistentAttrs()
+}
+
+func TestConnectionOptions_GetOTPSettings(tt *testing.T) {
+	c := &ConnectionOptions{}
+	c.GetOTPSettings()
+	c = nil
+	c.GetOTPSettings()
 }
 
 func TestConnectionOptions_GetPasskeyOptions(tt *testing.T) {
@@ -7734,6 +7761,56 @@ func TestConnectionOptionsOTP_GetTimeStep(tt *testing.T) {
 func TestConnectionOptionsOTP_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ConnectionOptionsOTP{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsOTPChannelSettings_GetOTPExpiry(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsOTPChannelSettings{OTPExpiry: &zeroValue}
+	c.GetOTPExpiry()
+	c = &ConnectionOptionsOTPChannelSettings{}
+	c.GetOTPExpiry()
+	c = nil
+	c.GetOTPExpiry()
+}
+
+func TestConnectionOptionsOTPChannelSettings_GetOTPLength(tt *testing.T) {
+	var zeroValue int
+	c := &ConnectionOptionsOTPChannelSettings{OTPLength: &zeroValue}
+	c.GetOTPLength()
+	c = &ConnectionOptionsOTPChannelSettings{}
+	c.GetOTPLength()
+	c = nil
+	c.GetOTPLength()
+}
+
+func TestConnectionOptionsOTPChannelSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOTPChannelSettings{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestConnectionOptionsOTPSettings_GetEmail(tt *testing.T) {
+	c := &ConnectionOptionsOTPSettings{}
+	c.GetEmail()
+	c = nil
+	c.GetEmail()
+}
+
+func TestConnectionOptionsOTPSettings_GetPhone(tt *testing.T) {
+	c := &ConnectionOptionsOTPSettings{}
+	c.GetPhone()
+	c = nil
+	c.GetPhone()
+}
+
+func TestConnectionOptionsOTPSettings_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ConnectionOptionsOTPSettings{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
@@ -17849,6 +17926,16 @@ func TestTenant_GetChangePassword(tt *testing.T) {
 	t.GetChangePassword()
 	t = nil
 	t.GetChangePassword()
+}
+
+func TestTenant_GetClientIDMetadataDocumentDynamicRegistrationSupported(tt *testing.T) {
+	var zeroValue bool
+	t := &Tenant{ClientIDMetadataDocumentDynamicRegistrationSupported: &zeroValue}
+	t.GetClientIDMetadataDocumentDynamicRegistrationSupported()
+	t = &Tenant{}
+	t.GetClientIDMetadataDocumentDynamicRegistrationSupported()
+	t = nil
+	t.GetClientIDMetadataDocumentDynamicRegistrationSupported()
 }
 
 func TestTenant_GetClientIDMetadataDocumentSupported(tt *testing.T) {
