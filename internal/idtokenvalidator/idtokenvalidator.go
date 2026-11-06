@@ -165,7 +165,7 @@ func (i *IDTokenValidator) Validate(idToken string, optional ValidationOptions) 
 		return nil
 	})
 
-	decodedToken, err := jws.Parse([]byte(idToken))
+	decodedToken, err := jws.Parse([]byte(idToken), jws.WithCompact())
 	if err != nil {
 		return err
 	}

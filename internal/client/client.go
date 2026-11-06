@@ -341,11 +341,8 @@ func CustomDomainHeaderTransport(base http.RoundTripper, customDomain string) ht
 }
 
 func dumpRequest(r *http.Request) {
-	// Clone headers to avoid modifying the original
-	headerClone := r.Header.Clone()
-
-	// Redact sensitive headers in the cloned header
-	redactSensitiveHeaders(headerClone)
+	// Redact sensitive headers in a copy to avoid modifying the original
+	headerClone := redactSensitiveHeaders(r.Header)
 
 	// Temporarily swap headers for dumping
 	originalHeaders := r.Header
@@ -360,11 +357,8 @@ func dumpRequest(r *http.Request) {
 }
 
 func dumpResponse(r *http.Response) {
-	// Clone headers to avoid modifying the original
-	headerClone := r.Header.Clone()
-
-	// Redact sensitive headers
-	redactSensitiveHeaders(headerClone)
+	// Redact sensitive headers in a copy to avoid modifying the original
+	headerClone := redactSensitiveHeaders(r.Header)
 
 	// Temporarily swap headers for dumping
 	originalHeaders := r.Header
@@ -378,10 +372,17 @@ func dumpResponse(r *http.Response) {
 	log.Printf("\n%s\n\n", b) //nolint:gosec // Debug logging of HTTP responses, not user-controlled log injection.
 }
 
-// redactSensitiveHeaders redacts sensitive header values to prevent token leakage in logs.
-func redactSensitiveHeaders(headers http.Header) {
+// redactSensitiveHeaders returns a copy of the headers with sensitive values redacted
+// to prevent token leakage in logs. The input headers are not modified.
+func redactSensitiveHeaders(headers http.Header) http.Header {
+	redacted := headers.Clone()
+	if redacted == nil {
+		redacted = http.Header{}
+	}
+
 	sensitiveHeaders := []string{
 		"Authorization",
+		"Proxy-Authorization",
 		"Cookie",
 		"Set-Cookie",
 		"X-Api-Key",
@@ -391,10 +392,12 @@ func redactSensitiveHeaders(headers http.Header) {
 	}
 
 	for _, header := range sensitiveHeaders {
-		if headers.Get(header) != "" {
-			headers.Set(header, "[REDACTED]")
+		if redacted.Get(header) != "" {
+			redacted.Set(header, "[REDACTED]")
 		}
 	}
+
+	return redacted
 }
 
 // DebugTransport wraps base transport with the ability to log the contents
