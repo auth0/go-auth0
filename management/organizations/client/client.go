@@ -11,6 +11,7 @@ import (
 	internal "github.com/auth0/go-auth0/v3/management/internal"
 	option "github.com/auth0/go-auth0/v3/management/option"
 	clientgrants "github.com/auth0/go-auth0/v3/management/organizations/clientgrants"
+	clients "github.com/auth0/go-auth0/v3/management/organizations/clients"
 	connections "github.com/auth0/go-auth0/v3/management/organizations/connections"
 	discoverydomains "github.com/auth0/go-auth0/v3/management/organizations/discoverydomains"
 	enabledconnections "github.com/auth0/go-auth0/v3/management/organizations/enabledconnections"
@@ -23,6 +24,7 @@ import (
 type Client struct {
 	WithRawResponse    *RawClient
 	ClientGrants       *clientgrants.Client
+	Clients            *clients.Client
 	Connections        *connections.Client
 	DiscoveryDomains   *discoverydomains.Client
 	EnabledConnections *enabledconnections.Client
@@ -39,6 +41,7 @@ type Client struct {
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		ClientGrants:       clientgrants.NewClient(options),
+		Clients:            clients.NewClient(options),
 		Connections:        connections.NewClient(options),
 		DiscoveryDomains:   discoverydomains.NewClient(options),
 		EnabledConnections: enabledconnections.NewClient(options),
@@ -76,6 +79,30 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `take`: The total number of entries to retrieve when using the `from` parameter. Defaults to 50.
 //
 // **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+//
+// Example:
+//
+//	request := &management.ListOrganizationsRequestParameters{
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    Sort: management.String(
+//	        "sort",
+//	    ),
+//	    IncludeClientAssociationFor: management.String(
+//	        "include_client_association_for",
+//	    ),
+//	}
+//	client.Organizations.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListOrganizationsRequestParameters,
@@ -91,7 +118,8 @@ func (c *Client) List(
 	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
 		map[string]any{
-			"take": 50,
+			"include_totals": true,
+			"take":           50,
 		},
 	)
 	if err != nil {
@@ -130,7 +158,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -142,6 +170,16 @@ func (c *Client) List(
 }
 
 // Create a new Organization within your tenant.  To learn more about Organization settings, behavior, and configuration options, review [Create Your First Organization](https://auth0.com/docs/manage-users/organizations/create-first-organization).
+//
+// Example:
+//
+//	request := &management.CreateOrganizationRequestContent{
+//	    Name: "name",
+//	}
+//	client.Organizations.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateOrganizationRequestContent,
@@ -159,6 +197,13 @@ func (c *Client) Create(
 }
 
 // Retrieve details about a single Organization specified by name.
+//
+// Example:
+//
+//	client.Organizations.GetByName(
+//	    context.TODO(),
+//	    "name",
+//	)
 func (c *Client) GetByName(
 	ctx context.Context,
 	// name of the organization to retrieve.
@@ -176,7 +221,114 @@ func (c *Client) GetByName(
 	return response.Body, nil
 }
 
+// Retrieve details of organizations matching a search criteria. It is possible to:
+//
+// - Specify a search criteria for organizations
+// - Search via `name`
+// - Search via `display_name`
+// - Substring matching (`contains` and `ends-with`) requires at least 3 characters
+// - Use wildcards
+//
+// The `q` query parameter can be used to get organizations that match the specified criteria on `name` OR `display_name`.
+//
+// This endpoint supports SCIM or Lucene filter syntax with low-latency, cursor-based pagination. Use the `parser` parameter to specify "scim" or "lucene" syntax (default: "lucene").
+//
+// Results are eventually consistent and may not reflect recent updates immediately.
+//
+// **Sortable fields:** `name`, `display_name`, `created_at` (ascending only). Defaults to insertion order (oldest first).
+//
+// Example:
+//
+//	request := &management.SearchOrganizationsRequestParameters{
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	    Parser: management.SearchParserEnumSCIM.Ptr(),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Sort: management.OrganizationSortFieldEnumName.Ptr(),
+//	}
+//	client.Organizations.Search(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) Search(
+	ctx context.Context,
+	request *management.SearchOrganizationsRequestParameters,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *management.SearchOrganization, *management.SearchOrganizationsPaginatedResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/organizations/search"
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.SearchOrganizationsPaginatedResponseContent) *core.PageResponse[*string, *management.SearchOrganization, *management.SearchOrganizationsPaginatedResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.Organizations
+		return &core.PageResponse[*string, *management.SearchOrganization, *management.SearchOrganizationsPaginatedResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
+}
+
 // Retrieve details about a single Organization specified by ID.
+//
+// Example:
+//
+//	client.Organizations.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the organization to retrieve.
@@ -197,6 +349,13 @@ func (c *Client) Get(
 // Remove an Organization from your tenant.  This action cannot be undone.
 //
 // **Note**: Members are automatically disassociated from an Organization when it is deleted. However, this action does **not** delete these users from your tenant.
+//
+// Example:
+//
+//	client.Organizations.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.
@@ -215,6 +374,15 @@ func (c *Client) Delete(
 }
 
 // Update the details of a specific [Organization](https://auth0.com/docs/manage-users/organizations/configure-organizations/create-organizations), such as name and display name, branding options, and metadata.
+//
+// Example:
+//
+//	request := &management.UpdateOrganizationRequestContent{}
+//	client.Organizations.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the organization to update.

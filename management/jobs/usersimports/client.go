@@ -35,6 +35,19 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Import users from a <a href="https://auth0.com/docs/users/references/bulk-import-database-schema-examples">formatted file</a> into a connection via a long-running job. When importing users, with or without upsert, the `email_verified` is set to `false` when the email address is added or updated. Users must verify their email address. To avoid this behavior, set `email_verified` to `true` in the imported data.
+//
+// Example:
+//
+//	request := &management.CreateImportUsersRequestContent{
+//	    Users: strings.NewReader(
+//	        "",
+//	    ),
+//	    ConnectionID: "connection_id",
+//	}
+//	client.Jobs.UsersImports.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateImportUsersRequestContent,

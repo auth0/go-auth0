@@ -42,6 +42,42 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List all groups in your tenant.
+//
+// Example:
+//
+//	request := &management.ListGroupsRequestParameters{
+//	    ConnectionID: management.String(
+//	        "connection_id",
+//	    ),
+//	    Name: management.String(
+//	        "name",
+//	    ),
+//	    ExternalID: management.String(
+//	        "external_id",
+//	    ),
+//	    Search: management.String(
+//	        "search",
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Groups.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListGroupsRequestParameters,
@@ -57,7 +93,8 @@ func (c *Client) List(
 	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
 		map[string]any{
-			"take": 50,
+			"include_totals": true,
+			"take":           50,
 		},
 	)
 	if err != nil {
@@ -96,7 +133,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -108,6 +145,13 @@ func (c *Client) List(
 }
 
 // Retrieve a group by its ID.
+//
+// Example:
+//
+//	client.Groups.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Unique identifier for the group (service-generated).
@@ -126,6 +170,13 @@ func (c *Client) Get(
 }
 
 // Delete a group by its ID.
+//
+// Example:
+//
+//	client.Groups.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Unique identifier for the group (service-generated).

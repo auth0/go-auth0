@@ -45,6 +45,21 @@ func NewClient(options *core.RequestOptions) *Client {
 // - `take`: The total amount of entries to retrieve when using the from parameter. Defaults to 50.
 //
 // **Note**: The first time you call this endpoint using checkpoint pagination, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no pages are remaining.
+//
+// Example:
+//
+//	request := &management.TokenExchangeProfilesListRequest{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.TokenExchangeProfiles.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.TokenExchangeProfilesListRequest,
@@ -99,7 +114,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -113,6 +128,19 @@ func (c *Client) List(
 // Create a new Token Exchange Profile within your tenant.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+//
+// Example:
+//
+//	request := &management.CreateTokenExchangeProfileRequestContent{
+//	    Name: "name",
+//	    SubjectTokenType: "subject_token_type",
+//	    ActionID: "action_id",
+//	    Type: management.TokenExchangeProfileTypeEnumCustomAuthentication,
+//	}
+//	client.TokenExchangeProfiles.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateTokenExchangeProfileRequestContent,
@@ -132,6 +160,13 @@ func (c *Client) Create(
 // Retrieve details about a single Token Exchange Profile specified by ID.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta’s Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user’s subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+//
+// Example:
+//
+//	client.TokenExchangeProfiles.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the Token Exchange Profile to retrieve.
@@ -152,6 +187,13 @@ func (c *Client) Get(
 // Delete a Token Exchange Profile within your tenant.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+//
+// Example:
+//
+//	client.TokenExchangeProfiles.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the Token Exchange Profile to delete.
@@ -172,6 +214,15 @@ func (c *Client) Delete(
 // Update a Token Exchange Profile within your tenant.
 //
 // By using this feature, you agree to the applicable Free Trial terms in [Okta's Master Subscription Agreement](https://www.okta.com/legal/). It is your responsibility to securely validate the user's subject_token. See [User Guide](https://auth0.com/docs/authenticate/custom-token-exchange) for more details.
+//
+// Example:
+//
+//	request := &management.UpdateTokenExchangeProfileRequestContent{}
+//	client.TokenExchangeProfiles.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the Token Exchange Profile to update.

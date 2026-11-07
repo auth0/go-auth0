@@ -34,16 +34,32 @@ func New(domain string, options ...option.RequestOption) (*Management, error) {
 		MaxRetries: 3,
 	}
 
-	// Extract NoAuth0ClientInfo and Auth0ClientEnv options in a single loop
+	// Extract NoAuth0ClientInfo, Auth0ClientEnv and any caller supplied HTTP
+	// client in a single loop
 	var noAuth0ClientInfo bool
 	var envOnlyOptions []option.RequestOption
+	var callerHTTPClient core.HTTPClient
+
+	passthroughOptions := make([]option.RequestOption, 0, len(options))
+
 	for _, opt := range options {
-		switch opt.(type) {
+		switch opt := opt.(type) {
 		case *core.NoAuth0ClientInfoOption:
 			noAuth0ClientInfo = true
 		case *core.Auth0ClientEnvEntryOption:
 			envOnlyOptions = append(envOnlyOptions, opt)
+		case *core.HTTPClientOption:
+			// Keep the client so the transports below can be layered onto it,
+			// and drop the option itself. Options are applied in order, so
+			// passing it through would replace the wrapped client built here
+			// and with it the User-Agent, Auth0-Client and custom domain
+			// headers.
+			callerHTTPClient = opt.HTTPClient
+
+			continue
 		}
+
+		passthroughOptions = append(passthroughOptions, opt)
 	}
 
 	// Build the base options that will be passed to NewWithOptions
@@ -52,11 +68,13 @@ func New(domain string, options ...option.RequestOption) (*Management, error) {
 		option.WithMaxAttempts(uint(retryOptions.MaxRetries)),
 	}
 
-	// Clone DefaultClient to avoid modifying the global client
-	httpClient := *http.DefaultClient
+	// Start from the caller's client when one was given, so its timeout, proxy
+	// and transport settings are kept, and fall back to a clone of
+	// DefaultClient otherwise
+	httpClient := baseHTTPClient(callerHTTPClient)
 
 	// Apply transports in order: UserAgent, Auth0-Client (if needed), then CustomDomain
-	httpClient.Transport = internal.UserAgentTransport(http.DefaultClient.Transport, internal.UserAgent)
+	httpClient.Transport = internal.UserAgentTransport(httpClient.Transport, internal.UserAgent)
 
 	// Only add Auth0-Client header transport if NoAuth0ClientInfo is not set
 	if !noAuth0ClientInfo {
@@ -91,9 +109,35 @@ func New(domain string, options ...option.RequestOption) (*Management, error) {
 	// Apply CustomDomainHeaderTransport last (pass empty string for client-level domain; request-level will use the hint header)
 	httpClient.Transport = internal.CustomDomainHeaderTransport(httpClient.Transport, "")
 
-	baseOptions = append(baseOptions, option.WithHTTPClient(&httpClient))
+	baseOptions = append(baseOptions, option.WithHTTPClient(httpClient))
 
-	m := NewWithOptions(append(baseOptions, options...)...)
+	m := NewWithOptions(append(baseOptions, passthroughOptions...)...)
 
 	return m, nil
+}
+
+// baseHTTPClient returns the client that the SDK transports are layered onto.
+//
+// Callers can supply any core.HTTPClient, so a client that is not an
+// *http.Client is delegated to through a round tripper, which keeps the SDK
+// headers on the requests it issues. Clients are cloned rather than used
+// directly, so that wrapping their transport does not modify the caller's copy.
+func baseHTTPClient(callerHTTPClient core.HTTPClient) *http.Client {
+	switch client := callerHTTPClient.(type) {
+	case nil:
+	case *http.Client:
+		if client != nil {
+			clone := *client
+
+			return &clone
+		}
+	default:
+		return &http.Client{
+			Transport: internal.RoundTripFunc(client.Do),
+		}
+	}
+
+	clone := *http.DefaultClient
+
+	return &clone
 }

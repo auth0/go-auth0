@@ -39,6 +39,31 @@ func NewClient(options *core.RequestOptions) *Client {
 //
 // - This endpoint requires the `read:connections` scope and any one of `read:clients` or `read:client_summary`.
 // - **Note**: The first time you call this endpoint, omit the `from` parameter. If there are more results, a `next` value is included in the response. You can use this for subsequent API calls. When `next` is no longer included in the response, no further results are remaining.
+//
+// Example:
+//
+//	request := &management.ConnectionsGetRequest{
+//	    Strategy: []*management.ConnectionStrategyEnum{
+//	        management.ConnectionStrategyEnumAd.Ptr(),
+//	    },
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Clients.Connections.Get(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client for which to retrieve enabled connections.
@@ -98,7 +123,7 @@ func (c *Client) Get(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(

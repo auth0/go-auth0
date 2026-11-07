@@ -11,6 +11,156 @@ import (
 )
 
 var (
+	consentSigningKeyFieldKid              = big.NewInt(1 << 0)
+	consentSigningKeyFieldDeviceIdentifier = big.NewInt(1 << 1)
+	consentSigningKeyFieldCreatedAt        = big.NewInt(1 << 2)
+	consentSigningKeyFieldExpiresAt        = big.NewInt(1 << 3)
+)
+
+type ConsentSigningKey struct {
+	// The key identifier of the consent signing key.
+	Kid string `json:"kid" url:"kid"`
+	// A human-readable label for the device holding the corresponding private key.
+	DeviceIdentifier string `json:"device_identifier" url:"device_identifier"`
+	// The ISO 8601 timestamp at which the key was registered.
+	CreatedAt time.Time `json:"created_at" url:"created_at"`
+	// The ISO 8601 timestamp at which the key expires and can no longer be used to verify consent decisions.
+	ExpiresAt time.Time `json:"expires_at" url:"expires_at"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConsentSigningKey) GetKid() string {
+	if c == nil {
+		return ""
+	}
+	return c.Kid
+}
+
+func (c *ConsentSigningKey) GetDeviceIdentifier() string {
+	if c == nil {
+		return ""
+	}
+	return c.DeviceIdentifier
+}
+
+func (c *ConsentSigningKey) GetCreatedAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.CreatedAt
+}
+
+func (c *ConsentSigningKey) GetExpiresAt() time.Time {
+	if c == nil {
+		return time.Time{}
+	}
+	return c.ExpiresAt
+}
+
+func (c *ConsentSigningKey) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConsentSigningKey) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetKid sets the Kid field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConsentSigningKey) SetKid(kid string) {
+	c.Kid = kid
+	c.require(consentSigningKeyFieldKid)
+}
+
+// SetDeviceIdentifier sets the DeviceIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConsentSigningKey) SetDeviceIdentifier(deviceIdentifier string) {
+	c.DeviceIdentifier = deviceIdentifier
+	c.require(consentSigningKeyFieldDeviceIdentifier)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConsentSigningKey) SetCreatedAt(createdAt time.Time) {
+	c.CreatedAt = createdAt
+	c.require(consentSigningKeyFieldCreatedAt)
+}
+
+// SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConsentSigningKey) SetExpiresAt(expiresAt time.Time) {
+	c.ExpiresAt = expiresAt
+	c.require(consentSigningKeyFieldExpiresAt)
+}
+
+func (c *ConsentSigningKey) UnmarshalJSON(data []byte) error {
+	type embed ConsentSigningKey
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		ExpiresAt *internal.DateTime `json:"expires_at"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ConsentSigningKey(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.Time()
+	c.ExpiresAt = unmarshaler.ExpiresAt.Time()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConsentSigningKey) MarshalJSON() ([]byte, error) {
+	type embed ConsentSigningKey
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at"`
+		ExpiresAt *internal.DateTime `json:"expires_at"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewDateTime(c.CreatedAt),
+		ExpiresAt: internal.NewDateTime(c.ExpiresAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConsentSigningKey) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
 	createUserResponseContentFieldUserID                  = big.NewInt(1 << 0)
 	createUserResponseContentFieldEmail                   = big.NewInt(1 << 1)
 	createUserResponseContentFieldEmailVerified           = big.NewInt(1 << 2)
@@ -259,10 +409,12 @@ func (c *CreateUserResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CreateUserResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -741,10 +893,12 @@ func (g *GetUserResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetUserResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -975,6 +1129,93 @@ func (g *GetUserResponseContent) String() string {
 }
 
 var (
+	listUserConsentSigningKeysResponseContentFieldKeys = big.NewInt(1 << 0)
+)
+
+type ListUserConsentSigningKeysResponseContent struct {
+	// The consent signing keys registered for the user.
+	Keys []*ConsentSigningKey `json:"keys" url:"keys"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) GetKeys() []*ConsentSigningKey {
+	if l == nil {
+		return nil
+	}
+	return l.Keys
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) GetExtraProperties() map[string]interface{} {
+	if l == nil {
+		return nil
+	}
+	return l.extraProperties
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) require(field *big.Int) {
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
+	}
+	next.Or(next, field)
+	l.explicitFields = next
+}
+
+// SetKeys sets the Keys field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *ListUserConsentSigningKeysResponseContent) SetKeys(keys []*ConsentSigningKey) {
+	l.Keys = keys
+	l.require(listUserConsentSigningKeysResponseContentFieldKeys)
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler ListUserConsentSigningKeysResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*l = ListUserConsentSigningKeysResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *l)
+	if err != nil {
+		return err
+	}
+	l.extraProperties = extraProperties
+	l.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) MarshalJSON() ([]byte, error) {
+	type embed ListUserConsentSigningKeysResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*l),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, l.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (l *ListUserConsentSigningKeysResponseContent) String() string {
+	if l == nil {
+		return "<nil>"
+	}
+	if len(l.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(l.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(l); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", l)
+}
+
+var (
 	listUsersOffsetPaginatedResponseContentFieldStart  = big.NewInt(1 << 0)
 	listUsersOffsetPaginatedResponseContentFieldLimit  = big.NewInt(1 << 1)
 	listUsersOffsetPaginatedResponseContentFieldLength = big.NewInt(1 << 2)
@@ -1039,10 +1280,12 @@ func (l *ListUsersOffsetPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListUsersOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -1153,10 +1396,12 @@ func (r *RegenerateUsersRecoveryCodeResponseContent) GetExtraProperties() map[st
 }
 
 func (r *RegenerateUsersRecoveryCodeResponseContent) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetRecoveryCode sets the RecoveryCode field and marks it as non-optional;
@@ -1487,10 +1732,12 @@ func (u *UpdateUserResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UpdateUserResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -1820,10 +2067,12 @@ func (u *UserIdentitySchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserIdentitySchema) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -2176,10 +2425,12 @@ func (u *UserResponseSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserResponseSchema) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;

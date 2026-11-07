@@ -20,16 +20,20 @@ var (
 	connectionProfileFieldEnabledFeatures              = big.NewInt(1 << 4)
 	connectionProfileFieldConnectionConfig             = big.NewInt(1 << 5)
 	connectionProfileFieldStrategyOverrides            = big.NewInt(1 << 6)
+	connectionProfileFieldProvisioning                 = big.NewInt(1 << 7)
+	connectionProfileFieldCrossAppAccessResourceApp    = big.NewInt(1 << 8)
 )
 
 type ConnectionProfile struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	Provisioning                 *ConnectionProfileProvisioning              `json:"provisioning,omitempty" url:"provisioning,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -87,6 +91,20 @@ func (c *ConnectionProfile) GetStrategyOverrides() ConnectionProfileStrategyOver
 	return *c.StrategyOverrides
 }
 
+func (c *ConnectionProfile) GetProvisioning() ConnectionProfileProvisioning {
+	if c == nil || c.Provisioning == nil {
+		return ConnectionProfileProvisioning{}
+	}
+	return *c.Provisioning
+}
+
+func (c *ConnectionProfile) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if c == nil || c.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *c.CrossAppAccessResourceApp
+}
+
 func (c *ConnectionProfile) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -95,10 +113,12 @@ func (c *ConnectionProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionProfile) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -148,6 +168,20 @@ func (c *ConnectionProfile) SetConnectionConfig(connectionConfig *ConnectionProf
 func (c *ConnectionProfile) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	c.StrategyOverrides = strategyOverrides
 	c.require(connectionProfileFieldStrategyOverrides)
+}
+
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfile) SetProvisioning(provisioning *ConnectionProfileProvisioning) {
+	c.Provisioning = provisioning
+	c.require(connectionProfileFieldProvisioning)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfile) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(connectionProfileFieldCrossAppAccessResourceApp)
 }
 
 func (c *ConnectionProfile) UnmarshalJSON(data []byte) error {
@@ -210,10 +244,12 @@ func (c *ConnectionProfileConfig) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionProfileConfig) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 func (c *ConnectionProfileConfig) UnmarshalJSON(data []byte) error {
@@ -258,6 +294,245 @@ func (c *ConnectionProfileConfig) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	connectionProfileCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
+)
+
+// Controls whether organization admins may enable Cross App Access (XAA) on their Identity Providers.
+type ConnectionProfileCrossAppAccessResourceApp struct {
+	Status *ConnectionProfileCrossAppAccessResourceAppStatus `json:"status" url:"status"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) GetStatus() *ConnectionProfileCrossAppAccessResourceAppStatus {
+	if c == nil {
+		return nil
+	}
+	return c.Status
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetStatus sets the Status field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileCrossAppAccessResourceApp) SetStatus(status *ConnectionProfileCrossAppAccessResourceAppStatus) {
+	c.Status = status
+	c.require(connectionProfileCrossAppAccessResourceAppFieldStatus)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileCrossAppAccessResourceApp
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileCrossAppAccessResourceApp(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileCrossAppAccessResourceApp
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceApp) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	connectionProfileCrossAppAccessResourceAppStatusFieldDefaultValue  = big.NewInt(1 << 0)
+	connectionProfileCrossAppAccessResourceAppStatusFieldAllowedValues = big.NewInt(1 << 1)
+)
+
+// The Cross App Access resource app status configuration.
+type ConnectionProfileCrossAppAccessResourceAppStatus struct {
+	DefaultValue  ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum   `json:"default_value" url:"default_value"`
+	AllowedValues *ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum `json:"allowed_values,omitempty" url:"allowed_values,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) GetDefaultValue() ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum {
+	if c == nil {
+		return ""
+	}
+	return c.DefaultValue
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) GetAllowedValues() ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum {
+	if c == nil || c.AllowedValues == nil {
+		return nil
+	}
+	return *c.AllowedValues
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) SetDefaultValue(defaultValue ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum) {
+	c.DefaultValue = defaultValue
+	c.require(connectionProfileCrossAppAccessResourceAppStatusFieldDefaultValue)
+}
+
+// SetAllowedValues sets the AllowedValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) SetAllowedValues(allowedValues *ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum) {
+	c.AllowedValues = allowedValues
+	c.require(connectionProfileCrossAppAccessResourceAppStatusFieldAllowedValues)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileCrossAppAccessResourceAppStatus
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileCrossAppAccessResourceAppStatus(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileCrossAppAccessResourceAppStatus
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileCrossAppAccessResourceAppStatus) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// The allowed Cross App Access resource app status values.
+type ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum = []ConnectionProfileCrossAppAccessResourceAppStatusValueEnum
+
+// The default Cross App Access resource app status.
+type ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum string
+
+const (
+	ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumEnabled  ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum = "enabled"
+	ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumDisabled ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum = "disabled"
+)
+
+func NewConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumFromString(s string) (ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum, error) {
+	switch s {
+	case "enabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumEnabled, nil
+	case "disabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnumDisabled, nil
+	}
+	var t ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum) Ptr() *ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum {
+	return &c
+}
+
+// A Cross App Access resource app status value.
+type ConnectionProfileCrossAppAccessResourceAppStatusValueEnum string
+
+const (
+	ConnectionProfileCrossAppAccessResourceAppStatusValueEnumEnabled  ConnectionProfileCrossAppAccessResourceAppStatusValueEnum = "enabled"
+	ConnectionProfileCrossAppAccessResourceAppStatusValueEnumDisabled ConnectionProfileCrossAppAccessResourceAppStatusValueEnum = "disabled"
+)
+
+func NewConnectionProfileCrossAppAccessResourceAppStatusValueEnumFromString(s string) (ConnectionProfileCrossAppAccessResourceAppStatusValueEnum, error) {
+	switch s {
+	case "enabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusValueEnumEnabled, nil
+	case "disabled":
+		return ConnectionProfileCrossAppAccessResourceAppStatusValueEnumDisabled, nil
+	}
+	var t ConnectionProfileCrossAppAccessResourceAppStatusValueEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionProfileCrossAppAccessResourceAppStatusValueEnum) Ptr() *ConnectionProfileCrossAppAccessResourceAppStatusValueEnum {
+	return &c
+}
+
 // Enabled features for the connection profile.
 type ConnectionProfileEnabledFeatures = []EnabledFeaturesEnum
 
@@ -267,12 +542,12 @@ type ConnectionProfileID = string
 // The name of the connection profile.
 type ConnectionProfileName = string
 
-// The organization of the connection profile.
 var (
 	connectionProfileOrganizationFieldShowAsButton            = big.NewInt(1 << 0)
 	connectionProfileOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 )
 
+// The organization of the connection profile.
 type ConnectionProfileOrganization struct {
 	ShowAsButton            *ConnectionProfileOrganizationShowAsButtonEnum            `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	AssignMembershipOnLogin *ConnectionProfileOrganizationAssignMembershipOnLoginEnum `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
@@ -306,10 +581,12 @@ func (c *ConnectionProfileOrganization) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionProfileOrganization) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
@@ -420,15 +697,470 @@ func (c ConnectionProfileOrganizationShowAsButtonEnum) Ptr() *ConnectionProfileO
 	return &c
 }
 
-// Connection Profile Strategy Override
+var (
+	connectionProfileProvisioningFieldSCIM            = big.NewInt(1 << 0)
+	connectionProfileProvisioningFieldGoogleWorkspace = big.NewInt(1 << 1)
+)
+
+// Provisioning settings for connections created from this profile.
+type ConnectionProfileProvisioning struct {
+	SCIM            *ConnectionProfileProvisioningSCIM            `json:"scim,omitempty" url:"scim,omitempty"`
+	GoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace `json:"google_workspace,omitempty" url:"google_workspace,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileProvisioning) GetSCIM() ConnectionProfileProvisioningSCIM {
+	if c == nil || c.SCIM == nil {
+		return ConnectionProfileProvisioningSCIM{}
+	}
+	return *c.SCIM
+}
+
+func (c *ConnectionProfileProvisioning) GetGoogleWorkspace() ConnectionProfileProvisioningGoogleWorkspace {
+	if c == nil || c.GoogleWorkspace == nil {
+		return ConnectionProfileProvisioningGoogleWorkspace{}
+	}
+	return *c.GoogleWorkspace
+}
+
+func (c *ConnectionProfileProvisioning) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileProvisioning) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSCIM sets the SCIM field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioning) SetSCIM(scim *ConnectionProfileProvisioningSCIM) {
+	c.SCIM = scim
+	c.require(connectionProfileProvisioningFieldSCIM)
+}
+
+// SetGoogleWorkspace sets the GoogleWorkspace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioning) SetGoogleWorkspace(googleWorkspace *ConnectionProfileProvisioningGoogleWorkspace) {
+	c.GoogleWorkspace = googleWorkspace
+	c.require(connectionProfileProvisioningFieldGoogleWorkspace)
+}
+
+func (c *ConnectionProfileProvisioning) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileProvisioning
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileProvisioning(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileProvisioning) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileProvisioning
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileProvisioning) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	connectionProfileProvisioningGoogleWorkspaceFieldSyncUsers = big.NewInt(1 << 0)
+)
+
+// Google Workspace provisioning settings.
+type ConnectionProfileProvisioningGoogleWorkspace struct {
+	SyncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers `json:"sync_users" url:"sync_users"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) GetSyncUsers() ConnectionProfileProvisioningGoogleWorkspaceSyncUsers {
+	if c == nil {
+		return false
+	}
+	return c.SyncUsers
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSyncUsers sets the SyncUsers field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioningGoogleWorkspace) SetSyncUsers(syncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers) {
+	c.SyncUsers = syncUsers
+	c.require(connectionProfileProvisioningGoogleWorkspaceFieldSyncUsers)
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileProvisioningGoogleWorkspace
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileProvisioningGoogleWorkspace(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileProvisioningGoogleWorkspace
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileProvisioningGoogleWorkspace) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// Whether the connection is authorized to run Google Workspace user provisioning.
+type ConnectionProfileProvisioningGoogleWorkspaceSyncUsers = bool
+
+var (
+	connectionProfileProvisioningSCIMFieldTokens = big.NewInt(1 << 0)
+)
+
+// SCIM provisioning settings.
+type ConnectionProfileProvisioningSCIM struct {
+	Tokens *ConnectionProfileProvisioningSCIMTokens `json:"tokens" url:"tokens"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileProvisioningSCIM) GetTokens() *ConnectionProfileProvisioningSCIMTokens {
+	if c == nil {
+		return nil
+	}
+	return c.Tokens
+}
+
+func (c *ConnectionProfileProvisioningSCIM) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileProvisioningSCIM) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetTokens sets the Tokens field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioningSCIM) SetTokens(tokens *ConnectionProfileProvisioningSCIMTokens) {
+	c.Tokens = tokens
+	c.require(connectionProfileProvisioningSCIMFieldTokens)
+}
+
+func (c *ConnectionProfileProvisioningSCIM) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileProvisioningSCIM
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileProvisioningSCIM(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileProvisioningSCIM) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileProvisioningSCIM
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileProvisioningSCIM) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+// The default SCIM token expiry, in seconds. `null` means the token never expires by default.
+type ConnectionProfileProvisioningSCIMTokenDefaultExpiry = *int
+
+// The maximum SCIM token expiry, in seconds. `null` means there is no maximum.
+type ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry = *int
+
+// A SCIM token scope.
+type ConnectionProfileProvisioningSCIMTokenScopeEnum string
+
+const (
+	ConnectionProfileProvisioningSCIMTokenScopeEnumGetUsers    ConnectionProfileProvisioningSCIMTokenScopeEnum = "get:users"
+	ConnectionProfileProvisioningSCIMTokenScopeEnumPostUsers   ConnectionProfileProvisioningSCIMTokenScopeEnum = "post:users"
+	ConnectionProfileProvisioningSCIMTokenScopeEnumPatchUsers  ConnectionProfileProvisioningSCIMTokenScopeEnum = "patch:users"
+	ConnectionProfileProvisioningSCIMTokenScopeEnumDeleteUsers ConnectionProfileProvisioningSCIMTokenScopeEnum = "delete:users"
+	ConnectionProfileProvisioningSCIMTokenScopeEnumPutUsers    ConnectionProfileProvisioningSCIMTokenScopeEnum = "put:users"
+)
+
+func NewConnectionProfileProvisioningSCIMTokenScopeEnumFromString(s string) (ConnectionProfileProvisioningSCIMTokenScopeEnum, error) {
+	switch s {
+	case "get:users":
+		return ConnectionProfileProvisioningSCIMTokenScopeEnumGetUsers, nil
+	case "post:users":
+		return ConnectionProfileProvisioningSCIMTokenScopeEnumPostUsers, nil
+	case "patch:users":
+		return ConnectionProfileProvisioningSCIMTokenScopeEnumPatchUsers, nil
+	case "delete:users":
+		return ConnectionProfileProvisioningSCIMTokenScopeEnumDeleteUsers, nil
+	case "put:users":
+		return ConnectionProfileProvisioningSCIMTokenScopeEnumPutUsers, nil
+	}
+	var t ConnectionProfileProvisioningSCIMTokenScopeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionProfileProvisioningSCIMTokenScopeEnum) Ptr() *ConnectionProfileProvisioningSCIMTokenScopeEnum {
+	return &c
+}
+
+// The scopes granted to SCIM tokens.
+type ConnectionProfileProvisioningSCIMTokenScopes = []ConnectionProfileProvisioningSCIMTokenScopeEnum
+
+var (
+	connectionProfileProvisioningSCIMTokensFieldScopes           = big.NewInt(1 << 0)
+	connectionProfileProvisioningSCIMTokensFieldDefaultExpiry    = big.NewInt(1 << 1)
+	connectionProfileProvisioningSCIMTokensFieldMaxAllowedExpiry = big.NewInt(1 << 2)
+)
+
+// connectionProfileProvisioningSCIMTokensNullableFields maps the wire names of ConnectionProfileProvisioningSCIMTokens's nullable fields (required or optional) to their field bits.
+var connectionProfileProvisioningSCIMTokensNullableFields = map[string]*big.Int{
+	"default_expiry":     connectionProfileProvisioningSCIMTokensFieldDefaultExpiry,
+	"max_allowed_expiry": connectionProfileProvisioningSCIMTokensFieldMaxAllowedExpiry,
+}
+
+// SCIM token settings for connections created from this profile.
+type ConnectionProfileProvisioningSCIMTokens struct {
+	Scopes           ConnectionProfileProvisioningSCIMTokenScopes            `json:"scopes" url:"scopes"`
+	DefaultExpiry    *ConnectionProfileProvisioningSCIMTokenDefaultExpiry    `json:"default_expiry,omitempty" url:"default_expiry,omitempty"`
+	MaxAllowedExpiry *ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry `json:"max_allowed_expiry,omitempty" url:"max_allowed_expiry,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) GetScopes() ConnectionProfileProvisioningSCIMTokenScopes {
+	if c == nil {
+		return nil
+	}
+	return c.Scopes
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) GetDefaultExpiry() ConnectionProfileProvisioningSCIMTokenDefaultExpiry {
+	if c == nil || c.DefaultExpiry == nil {
+		return nil
+	}
+	return *c.DefaultExpiry
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) GetMaxAllowedExpiry() ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry {
+	if c == nil || c.MaxAllowedExpiry == nil {
+		return nil
+	}
+	return *c.MaxAllowedExpiry
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetScopes sets the Scopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioningSCIMTokens) SetScopes(scopes ConnectionProfileProvisioningSCIMTokenScopes) {
+	c.Scopes = scopes
+	c.require(connectionProfileProvisioningSCIMTokensFieldScopes)
+}
+
+// SetDefaultExpiry sets the DefaultExpiry field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioningSCIMTokens) SetDefaultExpiry(defaultExpiry *ConnectionProfileProvisioningSCIMTokenDefaultExpiry) {
+	c.DefaultExpiry = defaultExpiry
+	c.require(connectionProfileProvisioningSCIMTokensFieldDefaultExpiry)
+}
+
+// SetMaxAllowedExpiry sets the MaxAllowedExpiry field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileProvisioningSCIMTokens) SetMaxAllowedExpiry(maxAllowedExpiry *ConnectionProfileProvisioningSCIMTokenMaxAllowedExpiry) {
+	c.MaxAllowedExpiry = maxAllowedExpiry
+	c.require(connectionProfileProvisioningSCIMTokensFieldMaxAllowedExpiry)
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileProvisioningSCIMTokens
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileProvisioningSCIMTokens(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionProfileProvisioningSCIMTokensNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileProvisioningSCIMTokens
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileProvisioningSCIMTokens) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	connectionProfileStrategyOverrideFieldEnabledFeatures  = big.NewInt(1 << 0)
 	connectionProfileStrategyOverrideFieldConnectionConfig = big.NewInt(1 << 1)
+	connectionProfileStrategyOverrideFieldProvisioning     = big.NewInt(1 << 2)
 )
 
+// Connection Profile Strategy Override
 type ConnectionProfileStrategyOverride struct {
 	EnabledFeatures  *ConnectionProfileStrategyOverridesEnabledFeatures  `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
 	ConnectionConfig *ConnectionProfileStrategyOverridesConnectionConfig `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	Provisioning     *ConnectionProfileStrategyOverridesProvisioning     `json:"provisioning,omitempty" url:"provisioning,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -451,6 +1183,13 @@ func (c *ConnectionProfileStrategyOverride) GetConnectionConfig() ConnectionProf
 	return *c.ConnectionConfig
 }
 
+func (c *ConnectionProfileStrategyOverride) GetProvisioning() ConnectionProfileStrategyOverridesProvisioning {
+	if c == nil || c.Provisioning == nil {
+		return ConnectionProfileStrategyOverridesProvisioning{}
+	}
+	return *c.Provisioning
+}
+
 func (c *ConnectionProfileStrategyOverride) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -459,10 +1198,12 @@ func (c *ConnectionProfileStrategyOverride) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionProfileStrategyOverride) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
@@ -477,6 +1218,13 @@ func (c *ConnectionProfileStrategyOverride) SetEnabledFeatures(enabledFeatures *
 func (c *ConnectionProfileStrategyOverride) SetConnectionConfig(connectionConfig *ConnectionProfileStrategyOverridesConnectionConfig) {
 	c.ConnectionConfig = connectionConfig
 	c.require(connectionProfileStrategyOverrideFieldConnectionConfig)
+}
+
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileStrategyOverride) SetProvisioning(provisioning *ConnectionProfileStrategyOverridesProvisioning) {
+	c.Provisioning = provisioning
+	c.require(connectionProfileStrategyOverrideFieldProvisioning)
 }
 
 func (c *ConnectionProfileStrategyOverride) UnmarshalJSON(data []byte) error {
@@ -521,7 +1269,6 @@ func (c *ConnectionProfileStrategyOverride) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Strategy-specific overrides for this attribute
 var (
 	connectionProfileStrategyOverridesFieldPingfederate = big.NewInt(1 << 0)
 	connectionProfileStrategyOverridesFieldAd           = big.NewInt(1 << 1)
@@ -533,6 +1280,7 @@ var (
 	connectionProfileStrategyOverridesFieldSamlp        = big.NewInt(1 << 7)
 )
 
+// Strategy-specific overrides for this attribute
 type ConnectionProfileStrategyOverrides struct {
 	Pingfederate *ConnectionProfileStrategyOverride `json:"pingfederate,omitempty" url:"pingfederate,omitempty"`
 	Ad           *ConnectionProfileStrategyOverride `json:"ad,omitempty" url:"ad,omitempty"`
@@ -614,10 +1362,12 @@ func (c *ConnectionProfileStrategyOverrides) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionProfileStrategyOverrides) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPingfederate sets the Pingfederate field and marks it as non-optional;
@@ -736,10 +1486,12 @@ func (c *ConnectionProfileStrategyOverridesConnectionConfig) GetExtraProperties(
 }
 
 func (c *ConnectionProfileStrategyOverridesConnectionConfig) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 func (c *ConnectionProfileStrategyOverridesConnectionConfig) UnmarshalJSON(data []byte) error {
@@ -787,7 +1539,109 @@ func (c *ConnectionProfileStrategyOverridesConnectionConfig) String() string {
 // Enabled features for a connections profile strategy override.
 type ConnectionProfileStrategyOverridesEnabledFeatures = []EnabledFeaturesEnum
 
-// The structure of the template, which can be used as the payload for creating or updating a Connection Profile.
+var (
+	connectionProfileStrategyOverridesProvisioningFieldSCIM            = big.NewInt(1 << 0)
+	connectionProfileStrategyOverridesProvisioningFieldGoogleWorkspace = big.NewInt(1 << 1)
+)
+
+// Provisioning settings for a connection profile strategy override.
+type ConnectionProfileStrategyOverridesProvisioning struct {
+	SCIM            *ConnectionProfileProvisioningSCIM            `json:"scim,omitempty" url:"scim,omitempty"`
+	GoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace `json:"google_workspace,omitempty" url:"google_workspace,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) GetSCIM() ConnectionProfileProvisioningSCIM {
+	if c == nil || c.SCIM == nil {
+		return ConnectionProfileProvisioningSCIM{}
+	}
+	return *c.SCIM
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) GetGoogleWorkspace() ConnectionProfileProvisioningGoogleWorkspace {
+	if c == nil || c.GoogleWorkspace == nil {
+		return ConnectionProfileProvisioningGoogleWorkspace{}
+	}
+	return *c.GoogleWorkspace
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetSCIM sets the SCIM field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileStrategyOverridesProvisioning) SetSCIM(scim *ConnectionProfileProvisioningSCIM) {
+	c.SCIM = scim
+	c.require(connectionProfileStrategyOverridesProvisioningFieldSCIM)
+}
+
+// SetGoogleWorkspace sets the GoogleWorkspace field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileStrategyOverridesProvisioning) SetGoogleWorkspace(googleWorkspace *ConnectionProfileProvisioningGoogleWorkspace) {
+	c.GoogleWorkspace = googleWorkspace
+	c.require(connectionProfileStrategyOverridesProvisioningFieldGoogleWorkspace)
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionProfileStrategyOverridesProvisioning
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionProfileStrategyOverridesProvisioning(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) MarshalJSON() ([]byte, error) {
+	type embed ConnectionProfileStrategyOverridesProvisioning
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionProfileStrategyOverridesProvisioning) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	connectionProfileTemplateFieldName                         = big.NewInt(1 << 0)
 	connectionProfileTemplateFieldOrganization                 = big.NewInt(1 << 1)
@@ -795,8 +1649,10 @@ var (
 	connectionProfileTemplateFieldEnabledFeatures              = big.NewInt(1 << 3)
 	connectionProfileTemplateFieldConnectionConfig             = big.NewInt(1 << 4)
 	connectionProfileTemplateFieldStrategyOverrides            = big.NewInt(1 << 5)
+	connectionProfileTemplateFieldProvisioning                 = big.NewInt(1 << 6)
 )
 
+// The structure of the template, which can be used as the payload for creating or updating a Connection Profile.
 type ConnectionProfileTemplate struct {
 	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
 	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
@@ -804,6 +1660,7 @@ type ConnectionProfileTemplate struct {
 	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
 	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
 	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	Provisioning                 *ConnectionProfileProvisioning      `json:"provisioning,omitempty" url:"provisioning,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -854,6 +1711,13 @@ func (c *ConnectionProfileTemplate) GetStrategyOverrides() ConnectionProfileStra
 	return *c.StrategyOverrides
 }
 
+func (c *ConnectionProfileTemplate) GetProvisioning() ConnectionProfileProvisioning {
+	if c == nil || c.Provisioning == nil {
+		return ConnectionProfileProvisioning{}
+	}
+	return *c.Provisioning
+}
+
 func (c *ConnectionProfileTemplate) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -862,10 +1726,12 @@ func (c *ConnectionProfileTemplate) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionProfileTemplate) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -908,6 +1774,13 @@ func (c *ConnectionProfileTemplate) SetConnectionConfig(connectionConfig *Connec
 func (c *ConnectionProfileTemplate) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	c.StrategyOverrides = strategyOverrides
 	c.require(connectionProfileTemplateFieldStrategyOverrides)
+}
+
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionProfileTemplate) SetProvisioning(provisioning *ConnectionProfileProvisioning) {
+	c.Provisioning = provisioning
+	c.require(connectionProfileTemplateFieldProvisioning)
 }
 
 func (c *ConnectionProfileTemplate) UnmarshalJSON(data []byte) error {
@@ -1001,10 +1874,12 @@ func (c *ConnectionProfileTemplateItem) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionProfileTemplateItem) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1078,16 +1953,20 @@ var (
 	createConnectionProfileResponseContentFieldEnabledFeatures              = big.NewInt(1 << 4)
 	createConnectionProfileResponseContentFieldConnectionConfig             = big.NewInt(1 << 5)
 	createConnectionProfileResponseContentFieldStrategyOverrides            = big.NewInt(1 << 6)
+	createConnectionProfileResponseContentFieldProvisioning                 = big.NewInt(1 << 7)
+	createConnectionProfileResponseContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 8)
 )
 
 type CreateConnectionProfileResponseContent struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	Provisioning                 *ConnectionProfileProvisioning              `json:"provisioning,omitempty" url:"provisioning,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1145,6 +2024,20 @@ func (c *CreateConnectionProfileResponseContent) GetStrategyOverrides() Connecti
 	return *c.StrategyOverrides
 }
 
+func (c *CreateConnectionProfileResponseContent) GetProvisioning() ConnectionProfileProvisioning {
+	if c == nil || c.Provisioning == nil {
+		return ConnectionProfileProvisioning{}
+	}
+	return *c.Provisioning
+}
+
+func (c *CreateConnectionProfileResponseContent) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if c == nil || c.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *c.CrossAppAccessResourceApp
+}
+
 func (c *CreateConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -1153,10 +2046,12 @@ func (c *CreateConnectionProfileResponseContent) GetExtraProperties() map[string
 }
 
 func (c *CreateConnectionProfileResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1208,6 +2103,20 @@ func (c *CreateConnectionProfileResponseContent) SetStrategyOverrides(strategyOv
 	c.require(createConnectionProfileResponseContentFieldStrategyOverrides)
 }
 
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileResponseContent) SetProvisioning(provisioning *ConnectionProfileProvisioning) {
+	c.Provisioning = provisioning
+	c.require(createConnectionProfileResponseContentFieldProvisioning)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateConnectionProfileResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	c.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	c.require(createConnectionProfileResponseContentFieldCrossAppAccessResourceApp)
+}
+
 func (c *CreateConnectionProfileResponseContent) UnmarshalJSON(data []byte) error {
 	type unmarshaler CreateConnectionProfileResponseContent
 	var value unmarshaler
@@ -1256,6 +2165,7 @@ type EnabledFeaturesEnum string
 const (
 	EnabledFeaturesEnumSCIM            EnabledFeaturesEnum = "scim"
 	EnabledFeaturesEnumUniversalLogout EnabledFeaturesEnum = "universal_logout"
+	EnabledFeaturesEnumDirectorySync   EnabledFeaturesEnum = "directory_sync"
 )
 
 func NewEnabledFeaturesEnumFromString(s string) (EnabledFeaturesEnum, error) {
@@ -1264,6 +2174,8 @@ func NewEnabledFeaturesEnumFromString(s string) (EnabledFeaturesEnum, error) {
 		return EnabledFeaturesEnumSCIM, nil
 	case "universal_logout":
 		return EnabledFeaturesEnumUniversalLogout, nil
+	case "directory_sync":
+		return EnabledFeaturesEnumDirectorySync, nil
 	}
 	var t EnabledFeaturesEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -1281,16 +2193,20 @@ var (
 	getConnectionProfileResponseContentFieldEnabledFeatures              = big.NewInt(1 << 4)
 	getConnectionProfileResponseContentFieldConnectionConfig             = big.NewInt(1 << 5)
 	getConnectionProfileResponseContentFieldStrategyOverrides            = big.NewInt(1 << 6)
+	getConnectionProfileResponseContentFieldProvisioning                 = big.NewInt(1 << 7)
+	getConnectionProfileResponseContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 8)
 )
 
 type GetConnectionProfileResponseContent struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	Provisioning                 *ConnectionProfileProvisioning              `json:"provisioning,omitempty" url:"provisioning,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1348,6 +2264,20 @@ func (g *GetConnectionProfileResponseContent) GetStrategyOverrides() ConnectionP
 	return *g.StrategyOverrides
 }
 
+func (g *GetConnectionProfileResponseContent) GetProvisioning() ConnectionProfileProvisioning {
+	if g == nil || g.Provisioning == nil {
+		return ConnectionProfileProvisioning{}
+	}
+	return *g.Provisioning
+}
+
+func (g *GetConnectionProfileResponseContent) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if g == nil || g.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *g.CrossAppAccessResourceApp
+}
+
 func (g *GetConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
 	if g == nil {
 		return nil
@@ -1356,10 +2286,12 @@ func (g *GetConnectionProfileResponseContent) GetExtraProperties() map[string]in
 }
 
 func (g *GetConnectionProfileResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1409,6 +2341,20 @@ func (g *GetConnectionProfileResponseContent) SetConnectionConfig(connectionConf
 func (g *GetConnectionProfileResponseContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	g.StrategyOverrides = strategyOverrides
 	g.require(getConnectionProfileResponseContentFieldStrategyOverrides)
+}
+
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionProfileResponseContent) SetProvisioning(provisioning *ConnectionProfileProvisioning) {
+	g.Provisioning = provisioning
+	g.require(getConnectionProfileResponseContentFieldProvisioning)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetConnectionProfileResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	g.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	g.require(getConnectionProfileResponseContentFieldCrossAppAccessResourceApp)
 }
 
 func (g *GetConnectionProfileResponseContent) UnmarshalJSON(data []byte) error {
@@ -1502,10 +2448,12 @@ func (g *GetConnectionProfileTemplateResponseContent) GetExtraProperties() map[s
 }
 
 func (g *GetConnectionProfileTemplateResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1600,10 +2548,12 @@ func (l *ListConnectionProfileTemplateResponseContent) GetExtraProperties() map[
 }
 
 func (l *ListConnectionProfileTemplateResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetConnectionProfileTemplates sets the ConnectionProfileTemplates field and marks it as non-optional;
@@ -1694,10 +2644,12 @@ func (l *ListConnectionProfilesPaginatedResponseContent) GetExtraProperties() ma
 }
 
 func (l *ListConnectionProfilesPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -1764,16 +2716,20 @@ var (
 	updateConnectionProfileResponseContentFieldEnabledFeatures              = big.NewInt(1 << 4)
 	updateConnectionProfileResponseContentFieldConnectionConfig             = big.NewInt(1 << 5)
 	updateConnectionProfileResponseContentFieldStrategyOverrides            = big.NewInt(1 << 6)
+	updateConnectionProfileResponseContentFieldProvisioning                 = big.NewInt(1 << 7)
+	updateConnectionProfileResponseContentFieldCrossAppAccessResourceApp    = big.NewInt(1 << 8)
 )
 
 type UpdateConnectionProfileResponseContent struct {
-	ID                           *ConnectionProfileID                `json:"id,omitempty" url:"id,omitempty"`
-	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
-	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
-	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate       `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
-	EnabledFeatures              *ConnectionProfileEnabledFeatures   `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
-	ConnectionConfig             *ConnectionProfileConfig            `json:"connection_config,omitempty" url:"connection_config,omitempty"`
-	StrategyOverrides            *ConnectionProfileStrategyOverrides `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	ID                           *ConnectionProfileID                        `json:"id,omitempty" url:"id,omitempty"`
+	Name                         *ConnectionProfileName                      `json:"name,omitempty" url:"name,omitempty"`
+	Organization                 *ConnectionProfileOrganization              `json:"organization,omitempty" url:"organization,omitempty"`
+	ConnectionNamePrefixTemplate *ConnectionNamePrefixTemplate               `json:"connection_name_prefix_template,omitempty" url:"connection_name_prefix_template,omitempty"`
+	EnabledFeatures              *ConnectionProfileEnabledFeatures           `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
+	ConnectionConfig             *ConnectionProfileConfig                    `json:"connection_config,omitempty" url:"connection_config,omitempty"`
+	StrategyOverrides            *ConnectionProfileStrategyOverrides         `json:"strategy_overrides,omitempty" url:"strategy_overrides,omitempty"`
+	Provisioning                 *ConnectionProfileProvisioning              `json:"provisioning,omitempty" url:"provisioning,omitempty"`
+	CrossAppAccessResourceApp    *ConnectionProfileCrossAppAccessResourceApp `json:"cross_app_access_resource_app,omitempty" url:"cross_app_access_resource_app,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1831,6 +2787,20 @@ func (u *UpdateConnectionProfileResponseContent) GetStrategyOverrides() Connecti
 	return *u.StrategyOverrides
 }
 
+func (u *UpdateConnectionProfileResponseContent) GetProvisioning() ConnectionProfileProvisioning {
+	if u == nil || u.Provisioning == nil {
+		return ConnectionProfileProvisioning{}
+	}
+	return *u.Provisioning
+}
+
+func (u *UpdateConnectionProfileResponseContent) GetCrossAppAccessResourceApp() ConnectionProfileCrossAppAccessResourceApp {
+	if u == nil || u.CrossAppAccessResourceApp == nil {
+		return ConnectionProfileCrossAppAccessResourceApp{}
+	}
+	return *u.CrossAppAccessResourceApp
+}
+
 func (u *UpdateConnectionProfileResponseContent) GetExtraProperties() map[string]interface{} {
 	if u == nil {
 		return nil
@@ -1839,10 +2809,12 @@ func (u *UpdateConnectionProfileResponseContent) GetExtraProperties() map[string
 }
 
 func (u *UpdateConnectionProfileResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1892,6 +2864,20 @@ func (u *UpdateConnectionProfileResponseContent) SetConnectionConfig(connectionC
 func (u *UpdateConnectionProfileResponseContent) SetStrategyOverrides(strategyOverrides *ConnectionProfileStrategyOverrides) {
 	u.StrategyOverrides = strategyOverrides
 	u.require(updateConnectionProfileResponseContentFieldStrategyOverrides)
+}
+
+// SetProvisioning sets the Provisioning field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionProfileResponseContent) SetProvisioning(provisioning *ConnectionProfileProvisioning) {
+	u.Provisioning = provisioning
+	u.require(updateConnectionProfileResponseContentFieldProvisioning)
+}
+
+// SetCrossAppAccessResourceApp sets the CrossAppAccessResourceApp field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionProfileResponseContent) SetCrossAppAccessResourceApp(crossAppAccessResourceApp *ConnectionProfileCrossAppAccessResourceApp) {
+	u.CrossAppAccessResourceApp = crossAppAccessResourceApp
+	u.require(updateConnectionProfileResponseContentFieldCrossAppAccessResourceApp)
 }
 
 func (u *UpdateConnectionProfileResponseContent) UnmarshalJSON(data []byte) error {

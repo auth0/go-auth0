@@ -44,6 +44,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve branding settings.
+//
+// Example:
+//
+//	client.Branding.Get(
+//	    context.TODO(),
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -59,6 +65,14 @@ func (c *Client) Get(
 }
 
 // Update branding settings.
+//
+// Example:
+//
+//	request := &management.UpdateBrandingRequestContent{}
+//	client.Branding.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateBrandingRequestContent,

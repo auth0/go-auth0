@@ -39,6 +39,22 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Lists the groups that are assigned to the specified organization.
+//
+// Example:
+//
+//	request := &management.ListOrganizationGroupsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Organizations.Groups.List(
+//	    context.TODO(),
+//	    "organization_id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization
@@ -98,7 +114,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(

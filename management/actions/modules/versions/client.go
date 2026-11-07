@@ -38,6 +38,22 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List all published versions of a specific Actions Module.
+//
+// Example:
+//
+//	request := &management.GetActionModuleVersionsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Actions.Modules.Versions.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// The unique ID of the module.
@@ -116,6 +132,13 @@ func (c *Client) List(
 }
 
 // Creates a new immutable version of an Actions Module from the current draft version. This publishes the draft as a new version that can be referenced by actions, while maintaining the existing draft for continued development.
+//
+// Example:
+//
+//	client.Actions.Modules.Versions.Create(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The ID of the action module to create a version for.
@@ -134,6 +157,14 @@ func (c *Client) Create(
 }
 
 // Retrieve the details of a specific, immutable version of an Actions Module.
+//
+// Example:
+//
+//	client.Actions.Modules.Versions.Get(
+//	    context.TODO(),
+//	    "id",
+//	    "versionId",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The unique ID of the module.

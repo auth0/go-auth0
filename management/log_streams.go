@@ -96,10 +96,12 @@ func (c *CreateLogStreamDatadogRequestBody) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateLogStreamDatadogRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -280,10 +282,12 @@ func (c *CreateLogStreamEventBridgeRequestBody) GetExtraProperties() map[string]
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -464,10 +468,12 @@ func (c *CreateLogStreamEventGridRequestBody) GetExtraProperties() map[string]in
 }
 
 func (c *CreateLogStreamEventGridRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -648,10 +654,12 @@ func (c *CreateLogStreamHTTPRequestBody) GetExtraProperties() map[string]interfa
 }
 
 func (c *CreateLogStreamHTTPRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -832,10 +840,12 @@ func (c *CreateLogStreamMixpanelRequestBody) GetExtraProperties() map[string]int
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -999,6 +1009,134 @@ func (c *CreateLogStreamRequestContent) GetCreateLogStreamMixpanelRequestBody() 
 }
 
 func (c *CreateLogStreamRequestContent) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamHTTPRequestBody := new(CreateLogStreamHTTPRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamHTTPRequestBody); err == nil {
+			c.typ = "CreateLogStreamHTTPRequestBody"
+			c.CreateLogStreamHTTPRequestBody = valueCreateLogStreamHTTPRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamEventBridgeRequestBody := new(CreateLogStreamEventBridgeRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventBridgeRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventBridgeRequestBody"
+			c.CreateLogStreamEventBridgeRequestBody = valueCreateLogStreamEventBridgeRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamEventGridRequestBody := new(CreateLogStreamEventGridRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventGridRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventGridRequestBody"
+			c.CreateLogStreamEventGridRequestBody = valueCreateLogStreamEventGridRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamDatadogRequestBody := new(CreateLogStreamDatadogRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamDatadogRequestBody); err == nil {
+			c.typ = "CreateLogStreamDatadogRequestBody"
+			c.CreateLogStreamDatadogRequestBody = valueCreateLogStreamDatadogRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamSplunkRequestBody := new(CreateLogStreamSplunkRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSplunkRequestBody); err == nil {
+			c.typ = "CreateLogStreamSplunkRequestBody"
+			c.CreateLogStreamSplunkRequestBody = valueCreateLogStreamSplunkRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamSumoRequestBody := new(CreateLogStreamSumoRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSumoRequestBody); err == nil {
+			c.typ = "CreateLogStreamSumoRequestBody"
+			c.CreateLogStreamSumoRequestBody = valueCreateLogStreamSumoRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamSegmentRequestBody := new(CreateLogStreamSegmentRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSegmentRequestBody); err == nil {
+			c.typ = "CreateLogStreamSegmentRequestBody"
+			c.CreateLogStreamSegmentRequestBody = valueCreateLogStreamSegmentRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamMixpanelRequestBody := new(CreateLogStreamMixpanelRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamMixpanelRequestBody); err == nil {
+			c.typ = "CreateLogStreamMixpanelRequestBody"
+			c.CreateLogStreamMixpanelRequestBody = valueCreateLogStreamMixpanelRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamHTTPRequestBody := new(CreateLogStreamHTTPRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamHTTPRequestBody); err == nil {
+			c.typ = "CreateLogStreamHTTPRequestBody"
+			c.CreateLogStreamHTTPRequestBody = valueCreateLogStreamHTTPRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamEventBridgeRequestBody := new(CreateLogStreamEventBridgeRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventBridgeRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventBridgeRequestBody"
+			c.CreateLogStreamEventBridgeRequestBody = valueCreateLogStreamEventBridgeRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamEventGridRequestBody := new(CreateLogStreamEventGridRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventGridRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventGridRequestBody"
+			c.CreateLogStreamEventGridRequestBody = valueCreateLogStreamEventGridRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamDatadogRequestBody := new(CreateLogStreamDatadogRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamDatadogRequestBody); err == nil {
+			c.typ = "CreateLogStreamDatadogRequestBody"
+			c.CreateLogStreamDatadogRequestBody = valueCreateLogStreamDatadogRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamSplunkRequestBody := new(CreateLogStreamSplunkRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSplunkRequestBody); err == nil {
+			c.typ = "CreateLogStreamSplunkRequestBody"
+			c.CreateLogStreamSplunkRequestBody = valueCreateLogStreamSplunkRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamSumoRequestBody := new(CreateLogStreamSumoRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSumoRequestBody); err == nil {
+			c.typ = "CreateLogStreamSumoRequestBody"
+			c.CreateLogStreamSumoRequestBody = valueCreateLogStreamSumoRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamSegmentRequestBody := new(CreateLogStreamSegmentRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSegmentRequestBody); err == nil {
+			c.typ = "CreateLogStreamSegmentRequestBody"
+			c.CreateLogStreamSegmentRequestBody = valueCreateLogStreamSegmentRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamMixpanelRequestBody := new(CreateLogStreamMixpanelRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamMixpanelRequestBody); err == nil {
+			c.typ = "CreateLogStreamMixpanelRequestBody"
+			c.CreateLogStreamMixpanelRequestBody = valueCreateLogStreamMixpanelRequestBody
+			return nil
+		}
+	}
 	valueCreateLogStreamHTTPRequestBody := new(CreateLogStreamHTTPRequestBody)
 	if err := json.Unmarshal(data, &valueCreateLogStreamHTTPRequestBody); err == nil {
 		c.typ = "CreateLogStreamHTTPRequestBody"
@@ -1392,10 +1530,12 @@ func (c *CreateLogStreamSegmentRequestBody) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateLogStreamSegmentRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1576,10 +1716,12 @@ func (c *CreateLogStreamSplunkRequestBody) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateLogStreamSplunkRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1760,10 +1902,12 @@ func (c *CreateLogStreamSumoRequestBody) GetExtraProperties() map[string]interfa
 }
 
 func (c *CreateLogStreamSumoRequestBody) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2086,10 +2230,12 @@ func (h *HTTPCustomHeader) GetExtraProperties() map[string]interface{} {
 }
 
 func (h *HTTPCustomHeader) require(field *big.Int) {
-	if h.explicitFields == nil {
-		h.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if h.explicitFields != nil {
+		next.Set(h.explicitFields)
 	}
-	h.explicitFields.Or(h.explicitFields, field)
+	next.Or(next, field)
+	h.explicitFields = next
 }
 
 // SetHeader sets the Header field and marks it as non-optional;
@@ -2297,10 +2443,12 @@ func (l *LogStreamDatadogResponseSchema) GetExtraProperties() map[string]interfa
 }
 
 func (l *LogStreamDatadogResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2444,10 +2592,12 @@ func (l *LogStreamDatadogSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamDatadogSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetDatadogAPIKey sets the DatadogAPIKey field and marks it as non-optional;
@@ -2622,10 +2772,12 @@ func (l *LogStreamEventBridgeResponseSchema) GetExtraProperties() map[string]int
 }
 
 func (l *LogStreamEventBridgeResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2779,10 +2931,12 @@ func (l *LogStreamEventBridgeSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamEventBridgeSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetAwsAccountID sets the AwsAccountID field and marks it as non-optional;
@@ -3208,10 +3362,12 @@ func (l *LogStreamEventGridResponseSchema) GetExtraProperties() map[string]inter
 }
 
 func (l *LogStreamEventGridResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3375,10 +3531,12 @@ func (l *LogStreamEventGridSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamEventGridSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetAzureSubscriptionID sets the AzureSubscriptionID field and marks it as non-optional;
@@ -3490,10 +3648,12 @@ func (l *LogStreamFilter) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamFilter) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -3795,10 +3955,12 @@ func (l *LogStreamHTTPResponseSchema) GetExtraProperties() map[string]interface{
 }
 
 func (l *LogStreamHTTPResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3972,10 +4134,12 @@ func (l *LogStreamHTTPSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamHTTPSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetHTTPAuthorization sets the HTTPAuthorization field and marks it as non-optional;
@@ -4194,10 +4358,12 @@ func (l *LogStreamMixpanelResponseSchema) GetExtraProperties() map[string]interf
 }
 
 func (l *LogStreamMixpanelResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -4361,10 +4527,12 @@ func (l *LogStreamMixpanelSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamMixpanelSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetMixpanelRegion sets the MixpanelRegion field and marks it as non-optional;
@@ -4496,10 +4664,12 @@ func (l *LogStreamMixpanelSinkPatch) GetExtraProperties() map[string]interface{}
 }
 
 func (l *LogStreamMixpanelSinkPatch) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetMixpanelRegion sets the MixpanelRegion field and marks it as non-optional;
@@ -4638,10 +4808,12 @@ func (l *LogStreamPiiConfig) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamPiiConfig) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetLogFields sets the LogFields field and marks it as non-optional;
@@ -5067,10 +5239,12 @@ func (l *LogStreamSegmentResponseSchema) GetExtraProperties() map[string]interfa
 }
 
 func (l *LogStreamSegmentResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -5205,10 +5379,12 @@ func (l *LogStreamSegmentSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamSegmentSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetSegmentWriteKey sets the SegmentWriteKey field and marks it as non-optional;
@@ -5290,10 +5466,12 @@ func (l *LogStreamSegmentSinkWriteKey) GetExtraProperties() map[string]interface
 }
 
 func (l *LogStreamSegmentSinkWriteKey) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetSegmentWriteKey sets the SegmentWriteKey field and marks it as non-optional;
@@ -5399,6 +5577,94 @@ func (l *LogStreamSinkPatch) GetLogStreamMixpanelSinkPatch() *LogStreamMixpanelS
 }
 
 func (l *LogStreamSinkPatch) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"httpAuthorization", "httpContentFormat", "httpContentType", "httpEndpoint", "httpCustomHeaders"}, []string{"httpEndpoint"}) {
+		valueLogStreamHTTPSink := new(LogStreamHTTPSink)
+		if err := json.Unmarshal(data, &valueLogStreamHTTPSink); err == nil {
+			l.typ = "LogStreamHTTPSink"
+			l.LogStreamHTTPSink = valueLogStreamHTTPSink
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"datadogApiKey", "datadogRegion"}, []string{"datadogApiKey", "datadogRegion"}) {
+		valueLogStreamDatadogSink := new(LogStreamDatadogSink)
+		if err := json.Unmarshal(data, &valueLogStreamDatadogSink); err == nil {
+			l.typ = "LogStreamDatadogSink"
+			l.LogStreamDatadogSink = valueLogStreamDatadogSink
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"splunkDomain", "splunkPort", "splunkToken", "splunkSecure"}, []string{"splunkDomain", "splunkPort", "splunkToken", "splunkSecure"}) {
+		valueLogStreamSplunkSink := new(LogStreamSplunkSink)
+		if err := json.Unmarshal(data, &valueLogStreamSplunkSink); err == nil {
+			l.typ = "LogStreamSplunkSink"
+			l.LogStreamSplunkSink = valueLogStreamSplunkSink
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"sumoSourceAddress"}, []string{"sumoSourceAddress"}) {
+		valueLogStreamSumoSink := new(LogStreamSumoSink)
+		if err := json.Unmarshal(data, &valueLogStreamSumoSink); err == nil {
+			l.typ = "LogStreamSumoSink"
+			l.LogStreamSumoSink = valueLogStreamSumoSink
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"segmentWriteKey"}, []string{}) {
+		valueLogStreamSegmentSink := new(LogStreamSegmentSink)
+		if err := json.Unmarshal(data, &valueLogStreamSegmentSink); err == nil {
+			l.typ = "LogStreamSegmentSink"
+			l.LogStreamSegmentSink = valueLogStreamSegmentSink
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"mixpanelRegion", "mixpanelProjectId", "mixpanelServiceAccountUsername", "mixpanelServiceAccountPassword"}, []string{"mixpanelRegion", "mixpanelProjectId", "mixpanelServiceAccountUsername"}) {
+		valueLogStreamMixpanelSinkPatch := new(LogStreamMixpanelSinkPatch)
+		if err := json.Unmarshal(data, &valueLogStreamMixpanelSinkPatch); err == nil {
+			l.typ = "LogStreamMixpanelSinkPatch"
+			l.LogStreamMixpanelSinkPatch = valueLogStreamMixpanelSinkPatch
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"httpEndpoint"}) {
+		valueLogStreamHTTPSink := new(LogStreamHTTPSink)
+		if err := json.Unmarshal(data, &valueLogStreamHTTPSink); err == nil {
+			l.typ = "LogStreamHTTPSink"
+			l.LogStreamHTTPSink = valueLogStreamHTTPSink
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"datadogApiKey", "datadogRegion"}) {
+		valueLogStreamDatadogSink := new(LogStreamDatadogSink)
+		if err := json.Unmarshal(data, &valueLogStreamDatadogSink); err == nil {
+			l.typ = "LogStreamDatadogSink"
+			l.LogStreamDatadogSink = valueLogStreamDatadogSink
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"splunkDomain", "splunkPort", "splunkToken", "splunkSecure"}) {
+		valueLogStreamSplunkSink := new(LogStreamSplunkSink)
+		if err := json.Unmarshal(data, &valueLogStreamSplunkSink); err == nil {
+			l.typ = "LogStreamSplunkSink"
+			l.LogStreamSplunkSink = valueLogStreamSplunkSink
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"sumoSourceAddress"}) {
+		valueLogStreamSumoSink := new(LogStreamSumoSink)
+		if err := json.Unmarshal(data, &valueLogStreamSumoSink); err == nil {
+			l.typ = "LogStreamSumoSink"
+			l.LogStreamSumoSink = valueLogStreamSumoSink
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"mixpanelRegion", "mixpanelProjectId", "mixpanelServiceAccountUsername"}) {
+		valueLogStreamMixpanelSinkPatch := new(LogStreamMixpanelSinkPatch)
+		if err := json.Unmarshal(data, &valueLogStreamMixpanelSinkPatch); err == nil {
+			l.typ = "LogStreamMixpanelSinkPatch"
+			l.LogStreamMixpanelSinkPatch = valueLogStreamMixpanelSinkPatch
+			return nil
+		}
+	}
 	valueLogStreamHTTPSink := new(LogStreamHTTPSink)
 	if err := json.Unmarshal(data, &valueLogStreamHTTPSink); err == nil {
 		l.typ = "LogStreamHTTPSink"
@@ -5607,10 +5873,12 @@ func (l *LogStreamSplunkResponseSchema) GetExtraProperties() map[string]interfac
 }
 
 func (l *LogStreamSplunkResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -5775,10 +6043,12 @@ func (l *LogStreamSplunkSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamSplunkSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetSplunkDomain sets the SplunkDomain field and marks it as non-optional;
@@ -5993,10 +6263,12 @@ func (l *LogStreamSumoResponseSchema) GetExtraProperties() map[string]interface{
 }
 
 func (l *LogStreamSumoResponseSchema) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -6131,10 +6403,12 @@ func (l *LogStreamSumoSink) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogStreamSumoSink) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetSumoSourceAddress sets the SumoSourceAddress field and marks it as non-optional;

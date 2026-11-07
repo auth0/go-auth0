@@ -24,6 +24,7 @@ type RequestOption interface {
 // to be used directly; use the option package instead.
 type RequestOptions struct {
 	BaseURL         string
+	TenantDomain    string
 	HTTPClient      HTTPClient
 	HTTPHeader      http.Header
 	BodyProperties  map[string]interface{}
@@ -101,6 +102,15 @@ type BaseURLOption struct {
 
 func (b *BaseURLOption) applyRequestOptions(opts *RequestOptions) {
 	opts.BaseURL = b.BaseURL
+}
+
+// TenantDomainOption implements the RequestOption interface.
+type TenantDomainOption struct {
+	TenantDomain string
+}
+
+func (t *TenantDomainOption) applyRequestOptions(opts *RequestOptions) {
+	opts.TenantDomain = t.TenantDomain
 }
 
 // HTTPClientOption implements the RequestOption interface.
