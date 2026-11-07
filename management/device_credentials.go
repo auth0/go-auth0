@@ -40,10 +40,12 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) GetExtraProperties() ma
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -179,10 +181,12 @@ func (d *DeviceCredential) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DeviceCredential) require(field *big.Int) {
-	if d.explicitFields == nil {
-		d.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if d.explicitFields != nil {
+		next.Set(d.explicitFields)
 	}
-	d.explicitFields.Or(d.explicitFields, field)
+	next.Or(next, field)
+	d.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -289,7 +293,7 @@ func (d DeviceCredentialPublicKeyTypeEnum) Ptr() *DeviceCredentialPublicKeyTypeE
 	return &d
 }
 
-// Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. The property will default to `refresh_token` when paging is requested
+// Type of credentials to retrieve. Must be `public_key`, `refresh_token` or `rotating_refresh_token`. If none is provided a combined list of `refresh_tokens` and `public_keys` will be returned (and no `rotating_refresh_token`), in this case `page`, `per_page` and `include_totals` will be ignored.
 type DeviceCredentialTypeEnum string
 
 const (
@@ -371,10 +375,12 @@ func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetExtraProperties
 }
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;

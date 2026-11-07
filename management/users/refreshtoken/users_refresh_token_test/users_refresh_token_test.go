@@ -89,6 +89,9 @@ func TestUsersRefreshTokenListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListRefreshTokensRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -106,7 +109,7 @@ func TestUsersRefreshTokenListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestUsersRefreshTokenListWithWireMock", "GET", "/users/user_id/refresh-tokens", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestUsersRefreshTokenListWithWireMock", "GET", "/users/user_id/refresh-tokens", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1"}, 1)
 }
 
 func TestUsersRefreshTokenDeleteWithWireMock(

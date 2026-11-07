@@ -35,6 +35,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of the [email provider configuration](https://auth0.com/docs/customize/email/smtp-email-providers) in your tenant. A list of fields to include or exclude may also be specified.
+//
+// Example:
+//
+//	request := &management.GetEmailProviderRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Emails.Provider.Get(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	request *management.GetEmailProviderRequestParameters,
@@ -76,6 +91,21 @@ func (c *Client) Get(
 //     `X-MSYS_API` header. Value must be an object.
 //   - For `ses` provider, `settings` may contain `message` object, where you can provide
 //     a name of configuration set in `configuration_set_name` property. Value must be a string.
+//
+// Example:
+//
+//	request := &management.CreateEmailProviderRequestContent{
+//	    Name: management.EmailProviderNameEnumMailgun,
+//	    Credentials: &management.EmailProviderCredentialsSchema{
+//	        EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
+//	            APIKey: "api_key",
+//	        },
+//	    },
+//	}
+//	client.Emails.Provider.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateEmailProviderRequestContent,
@@ -93,6 +123,12 @@ func (c *Client) Create(
 }
 
 // Delete the email provider.
+//
+// Example:
+//
+//	client.Emails.Provider.Delete(
+//	    context.TODO(),
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -135,6 +171,14 @@ func (c *Client) Delete(
 //
 //     For `ses` provider, `settings` may contain `message` object, where you can provide
 //     a name of configuration set in `configuration_set_name` property. Value must be a string.
+//
+// Example:
+//
+//	request := &management.UpdateEmailProviderRequestContent{}
+//	client.Emails.Provider.Update(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateEmailProviderRequestContent,

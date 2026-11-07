@@ -268,6 +268,77 @@ func TestUsersUpdateWithWireMock(
 	VerifyRequestCount(t, "TestUsersUpdateWithWireMock", "PATCH", "/users/id", nil, 1)
 }
 
+func TestUsersListConsentSigningKeysWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Users.ListConsentSigningKeys(
+		context.TODO(),
+		"id",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestUsersListConsentSigningKeysWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestUsersListConsentSigningKeysWithWireMock", "GET", "/users/id/consent-signing-keys", nil, 1)
+}
+
+func TestUsersGetConsentSigningKeyWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	_, invocationErr := client.Users.GetConsentSigningKey(
+		context.TODO(),
+		"id",
+		"kid",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestUsersGetConsentSigningKeyWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestUsersGetConsentSigningKeyWithWireMock", "GET", "/users/id/consent-signing-keys/kid", nil, 1)
+}
+
+func TestUsersDeleteConsentSigningKeyWithWireMock(
+	t *testing.T,
+) {
+	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
+	if WireMockBaseURL == "" {
+		WireMockBaseURL = "http://localhost:8080"
+	}
+	client := client.NewWithOptions(
+		option.WithBaseURL(WireMockBaseURL),
+		option.WithToken("test-token"),
+	)
+	invocationErr := client.Users.DeleteConsentSigningKey(
+		context.TODO(),
+		"id",
+		"kid",
+		option.WithHTTPHeader(
+			http.Header{"X-Test-Id": []string{"TestUsersDeleteConsentSigningKeyWithWireMock"}},
+		),
+	)
+
+	require.NoError(t, invocationErr, "Client method call should succeed")
+	VerifyRequestCount(t, "TestUsersDeleteConsentSigningKeyWithWireMock", "DELETE", "/users/id/consent-signing-keys/kid", nil, 1)
+}
+
 func TestUsersRegenerateRecoveryCodeWithWireMock(
 	t *testing.T,
 ) {

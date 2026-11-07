@@ -36,6 +36,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of Connection Profiles. This endpoint supports Checkpoint pagination.
+//
+// Example:
+//
+//	request := &management.ListConnectionProfileRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.ConnectionProfiles.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListConnectionProfileRequestParameters,
@@ -90,7 +105,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -102,6 +117,16 @@ func (c *Client) List(
 }
 
 // Create a Connection Profile.
+//
+// Example:
+//
+//	request := &management.CreateConnectionProfileRequestContent{
+//	    Name: "name",
+//	}
+//	client.ConnectionProfiles.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateConnectionProfileRequestContent,
@@ -119,6 +144,12 @@ func (c *Client) Create(
 }
 
 // Retrieve a list of Connection Profile Templates.
+//
+// Example:
+//
+//	client.ConnectionProfiles.ListTemplates(
+//	    context.TODO(),
+//	)
 func (c *Client) ListTemplates(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -134,6 +165,13 @@ func (c *Client) ListTemplates(
 }
 
 // Retrieve a Connection Profile Template.
+//
+// Example:
+//
+//	client.ConnectionProfiles.GetTemplate(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) GetTemplate(
 	ctx context.Context,
 	// ID of the connection-profile-template to retrieve.
@@ -152,6 +190,13 @@ func (c *Client) GetTemplate(
 }
 
 // Retrieve details about a single Connection Profile specified by ID.
+//
+// Example:
+//
+//	client.ConnectionProfiles.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the connection-profile to retrieve.
@@ -170,6 +215,13 @@ func (c *Client) Get(
 }
 
 // Delete a single Connection Profile specified by ID.
+//
+// Example:
+//
+//	client.ConnectionProfiles.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the connection-profile to delete.
@@ -188,6 +240,15 @@ func (c *Client) Delete(
 }
 
 // Update the details of a specific Connection Profile.
+//
+// Example:
+//
+//	request := &management.UpdateConnectionProfileRequestContent{}
+//	client.ConnectionProfiles.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the connection profile to update.

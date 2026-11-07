@@ -36,6 +36,25 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details for a user's sessions.
+//
+// Example:
+//
+//	request := &management.ListUserSessionsRequestParameters{
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Users.Sessions.List(
+//	    context.TODO(),
+//	    "user_id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to get sessions for
@@ -56,7 +75,8 @@ func (c *Client) List(
 	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
 		map[string]any{
-			"take": 50,
+			"include_totals": true,
+			"take":           50,
 		},
 	)
 	if err != nil {
@@ -95,7 +115,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -107,6 +127,13 @@ func (c *Client) List(
 }
 
 // Delete all sessions for a user.
+//
+// Example:
+//
+//	client.Users.Sessions.Delete(
+//	    context.TODO(),
+//	    "user_id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user to get sessions for

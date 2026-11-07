@@ -35,6 +35,12 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of all the application signing keys associated with your tenant.
+//
+// Example:
+//
+//	client.Keys.Signing.List(
+//	    context.TODO(),
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -50,6 +56,12 @@ func (c *Client) List(
 }
 
 // Rotate the application signing key of your tenant.
+//
+// Example:
+//
+//	client.Keys.Signing.Rotate(
+//	    context.TODO(),
+//	)
 func (c *Client) Rotate(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -65,6 +77,13 @@ func (c *Client) Rotate(
 }
 
 // Retrieve details of the application signing key with the given ID.
+//
+// Example:
+//
+//	client.Keys.Signing.Get(
+//	    context.TODO(),
+//	    "kid",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Key id of the key to retrieve
@@ -83,6 +102,13 @@ func (c *Client) Get(
 }
 
 // Revoke the application signing key with the given ID.
+//
+// Example:
+//
+//	client.Keys.Signing.Revoke(
+//	    context.TODO(),
+//	    "kid",
+//	)
 func (c *Client) Revoke(
 	ctx context.Context,
 	// Key id of the key to revoke

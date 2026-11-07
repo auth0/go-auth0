@@ -84,10 +84,12 @@ func (c *CreateFlowResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CreateFlowResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -410,11 +412,13 @@ func (f *FlowAction) UnmarshalJSON(data []byte) error {
 		f.FlowActionAuth0 = valueFlowActionAuth0
 		return nil
 	}
-	var valueFlowActionBigquery FlowActionBigquery
-	if err := json.Unmarshal(data, &valueFlowActionBigquery); err == nil {
-		f.typ = "FlowActionBigquery"
-		f.FlowActionBigquery = valueFlowActionBigquery
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionBigquery FlowActionBigquery
+		if err := json.Unmarshal(data, &valueFlowActionBigquery); err == nil {
+			f.typ = "FlowActionBigquery"
+			f.FlowActionBigquery = valueFlowActionBigquery
+			return nil
+		}
 	}
 	valueFlowActionClearbit := new(FlowActionClearbit)
 	if err := json.Unmarshal(data, &valueFlowActionClearbit); err == nil {
@@ -422,11 +426,13 @@ func (f *FlowAction) UnmarshalJSON(data []byte) error {
 		f.FlowActionClearbit = valueFlowActionClearbit
 		return nil
 	}
-	var valueFlowActionEmail FlowActionEmail
-	if err := json.Unmarshal(data, &valueFlowActionEmail); err == nil {
-		f.typ = "FlowActionEmail"
-		f.FlowActionEmail = valueFlowActionEmail
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionEmail FlowActionEmail
+		if err := json.Unmarshal(data, &valueFlowActionEmail); err == nil {
+			f.typ = "FlowActionEmail"
+			f.FlowActionEmail = valueFlowActionEmail
+			return nil
+		}
 	}
 	valueFlowActionFlow := new(FlowActionFlow)
 	if err := json.Unmarshal(data, &valueFlowActionFlow); err == nil {
@@ -434,17 +440,21 @@ func (f *FlowAction) UnmarshalJSON(data []byte) error {
 		f.FlowActionFlow = valueFlowActionFlow
 		return nil
 	}
-	var valueFlowActionGoogleSheets FlowActionGoogleSheets
-	if err := json.Unmarshal(data, &valueFlowActionGoogleSheets); err == nil {
-		f.typ = "FlowActionGoogleSheets"
-		f.FlowActionGoogleSheets = valueFlowActionGoogleSheets
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionGoogleSheets FlowActionGoogleSheets
+		if err := json.Unmarshal(data, &valueFlowActionGoogleSheets); err == nil {
+			f.typ = "FlowActionGoogleSheets"
+			f.FlowActionGoogleSheets = valueFlowActionGoogleSheets
+			return nil
+		}
 	}
-	var valueFlowActionHTTP FlowActionHTTP
-	if err := json.Unmarshal(data, &valueFlowActionHTTP); err == nil {
-		f.typ = "FlowActionHTTP"
-		f.FlowActionHTTP = valueFlowActionHTTP
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionHTTP FlowActionHTTP
+		if err := json.Unmarshal(data, &valueFlowActionHTTP); err == nil {
+			f.typ = "FlowActionHTTP"
+			f.FlowActionHTTP = valueFlowActionHTTP
+			return nil
+		}
 	}
 	valueFlowActionHubspot := new(FlowActionHubspot)
 	if err := json.Unmarshal(data, &valueFlowActionHubspot); err == nil {
@@ -464,17 +474,21 @@ func (f *FlowAction) UnmarshalJSON(data []byte) error {
 		f.FlowActionJwt = valueFlowActionJwt
 		return nil
 	}
-	var valueFlowActionMailchimp FlowActionMailchimp
-	if err := json.Unmarshal(data, &valueFlowActionMailchimp); err == nil {
-		f.typ = "FlowActionMailchimp"
-		f.FlowActionMailchimp = valueFlowActionMailchimp
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionMailchimp FlowActionMailchimp
+		if err := json.Unmarshal(data, &valueFlowActionMailchimp); err == nil {
+			f.typ = "FlowActionMailchimp"
+			f.FlowActionMailchimp = valueFlowActionMailchimp
+			return nil
+		}
 	}
-	var valueFlowActionMailjet FlowActionMailjet
-	if err := json.Unmarshal(data, &valueFlowActionMailjet); err == nil {
-		f.typ = "FlowActionMailjet"
-		f.FlowActionMailjet = valueFlowActionMailjet
-		return nil
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionMailjet FlowActionMailjet
+		if err := json.Unmarshal(data, &valueFlowActionMailjet); err == nil {
+			f.typ = "FlowActionMailjet"
+			f.FlowActionMailjet = valueFlowActionMailjet
+			return nil
+		}
 	}
 	valueFlowActionOtp := new(FlowActionOtp)
 	if err := json.Unmarshal(data, &valueFlowActionOtp); err == nil {
@@ -494,6 +508,188 @@ func (f *FlowAction) UnmarshalJSON(data []byte) error {
 		f.FlowActionSalesforce = valueFlowActionSalesforce
 		return nil
 	}
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionSendgrid FlowActionSendgrid
+		if err := json.Unmarshal(data, &valueFlowActionSendgrid); err == nil {
+			f.typ = "FlowActionSendgrid"
+			f.FlowActionSendgrid = valueFlowActionSendgrid
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionSlack FlowActionSlack
+		if err := json.Unmarshal(data, &valueFlowActionSlack); err == nil {
+			f.typ = "FlowActionSlack"
+			f.FlowActionSlack = valueFlowActionSlack
+			return nil
+		}
+	}
+	valueFlowActionStripe := new(FlowActionStripe)
+	if err := json.Unmarshal(data, &valueFlowActionStripe); err == nil {
+		f.typ = "FlowActionStripe"
+		f.FlowActionStripe = valueFlowActionStripe
+		return nil
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionTelegram FlowActionTelegram
+		if err := json.Unmarshal(data, &valueFlowActionTelegram); err == nil {
+			f.typ = "FlowActionTelegram"
+			f.FlowActionTelegram = valueFlowActionTelegram
+			return nil
+		}
+	}
+	valueFlowActionTwilio := new(FlowActionTwilio)
+	if err := json.Unmarshal(data, &valueFlowActionTwilio); err == nil {
+		f.typ = "FlowActionTwilio"
+		f.FlowActionTwilio = valueFlowActionTwilio
+		return nil
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionWhatsapp FlowActionWhatsapp
+		if err := json.Unmarshal(data, &valueFlowActionWhatsapp); err == nil {
+			f.typ = "FlowActionWhatsapp"
+			f.FlowActionWhatsapp = valueFlowActionWhatsapp
+			return nil
+		}
+	}
+	valueFlowActionXML := new(FlowActionXML)
+	if err := json.Unmarshal(data, &valueFlowActionXML); err == nil {
+		f.typ = "FlowActionXML"
+		f.FlowActionXML = valueFlowActionXML
+		return nil
+	}
+	if internal.MatchesObjectKeys(data, []string{"id", "alias", "type", "action", "allow_failure", "mask_output", "params"}, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionZapier FlowActionZapier
+		if err := json.Unmarshal(data, &valueFlowActionZapier); err == nil {
+			f.typ = "FlowActionZapier"
+			f.FlowActionZapier = valueFlowActionZapier
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionBigquery FlowActionBigquery
+		if err := json.Unmarshal(data, &valueFlowActionBigquery); err == nil {
+			f.typ = "FlowActionBigquery"
+			f.FlowActionBigquery = valueFlowActionBigquery
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionEmail FlowActionEmail
+		if err := json.Unmarshal(data, &valueFlowActionEmail); err == nil {
+			f.typ = "FlowActionEmail"
+			f.FlowActionEmail = valueFlowActionEmail
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionGoogleSheets FlowActionGoogleSheets
+		if err := json.Unmarshal(data, &valueFlowActionGoogleSheets); err == nil {
+			f.typ = "FlowActionGoogleSheets"
+			f.FlowActionGoogleSheets = valueFlowActionGoogleSheets
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionHTTP FlowActionHTTP
+		if err := json.Unmarshal(data, &valueFlowActionHTTP); err == nil {
+			f.typ = "FlowActionHTTP"
+			f.FlowActionHTTP = valueFlowActionHTTP
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionMailchimp FlowActionMailchimp
+		if err := json.Unmarshal(data, &valueFlowActionMailchimp); err == nil {
+			f.typ = "FlowActionMailchimp"
+			f.FlowActionMailchimp = valueFlowActionMailchimp
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionMailjet FlowActionMailjet
+		if err := json.Unmarshal(data, &valueFlowActionMailjet); err == nil {
+			f.typ = "FlowActionMailjet"
+			f.FlowActionMailjet = valueFlowActionMailjet
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionSendgrid FlowActionSendgrid
+		if err := json.Unmarshal(data, &valueFlowActionSendgrid); err == nil {
+			f.typ = "FlowActionSendgrid"
+			f.FlowActionSendgrid = valueFlowActionSendgrid
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionSlack FlowActionSlack
+		if err := json.Unmarshal(data, &valueFlowActionSlack); err == nil {
+			f.typ = "FlowActionSlack"
+			f.FlowActionSlack = valueFlowActionSlack
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionTelegram FlowActionTelegram
+		if err := json.Unmarshal(data, &valueFlowActionTelegram); err == nil {
+			f.typ = "FlowActionTelegram"
+			f.FlowActionTelegram = valueFlowActionTelegram
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionWhatsapp FlowActionWhatsapp
+		if err := json.Unmarshal(data, &valueFlowActionWhatsapp); err == nil {
+			f.typ = "FlowActionWhatsapp"
+			f.FlowActionWhatsapp = valueFlowActionWhatsapp
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"id", "type", "action", "params"}) {
+		var valueFlowActionZapier FlowActionZapier
+		if err := json.Unmarshal(data, &valueFlowActionZapier); err == nil {
+			f.typ = "FlowActionZapier"
+			f.FlowActionZapier = valueFlowActionZapier
+			return nil
+		}
+	}
+	var valueFlowActionBigquery FlowActionBigquery
+	if err := json.Unmarshal(data, &valueFlowActionBigquery); err == nil {
+		f.typ = "FlowActionBigquery"
+		f.FlowActionBigquery = valueFlowActionBigquery
+		return nil
+	}
+	var valueFlowActionEmail FlowActionEmail
+	if err := json.Unmarshal(data, &valueFlowActionEmail); err == nil {
+		f.typ = "FlowActionEmail"
+		f.FlowActionEmail = valueFlowActionEmail
+		return nil
+	}
+	var valueFlowActionGoogleSheets FlowActionGoogleSheets
+	if err := json.Unmarshal(data, &valueFlowActionGoogleSheets); err == nil {
+		f.typ = "FlowActionGoogleSheets"
+		f.FlowActionGoogleSheets = valueFlowActionGoogleSheets
+		return nil
+	}
+	var valueFlowActionHTTP FlowActionHTTP
+	if err := json.Unmarshal(data, &valueFlowActionHTTP); err == nil {
+		f.typ = "FlowActionHTTP"
+		f.FlowActionHTTP = valueFlowActionHTTP
+		return nil
+	}
+	var valueFlowActionMailchimp FlowActionMailchimp
+	if err := json.Unmarshal(data, &valueFlowActionMailchimp); err == nil {
+		f.typ = "FlowActionMailchimp"
+		f.FlowActionMailchimp = valueFlowActionMailchimp
+		return nil
+	}
+	var valueFlowActionMailjet FlowActionMailjet
+	if err := json.Unmarshal(data, &valueFlowActionMailjet); err == nil {
+		f.typ = "FlowActionMailjet"
+		f.FlowActionMailjet = valueFlowActionMailjet
+		return nil
+	}
 	var valueFlowActionSendgrid FlowActionSendgrid
 	if err := json.Unmarshal(data, &valueFlowActionSendgrid); err == nil {
 		f.typ = "FlowActionSendgrid"
@@ -506,34 +702,16 @@ func (f *FlowAction) UnmarshalJSON(data []byte) error {
 		f.FlowActionSlack = valueFlowActionSlack
 		return nil
 	}
-	valueFlowActionStripe := new(FlowActionStripe)
-	if err := json.Unmarshal(data, &valueFlowActionStripe); err == nil {
-		f.typ = "FlowActionStripe"
-		f.FlowActionStripe = valueFlowActionStripe
-		return nil
-	}
 	var valueFlowActionTelegram FlowActionTelegram
 	if err := json.Unmarshal(data, &valueFlowActionTelegram); err == nil {
 		f.typ = "FlowActionTelegram"
 		f.FlowActionTelegram = valueFlowActionTelegram
 		return nil
 	}
-	valueFlowActionTwilio := new(FlowActionTwilio)
-	if err := json.Unmarshal(data, &valueFlowActionTwilio); err == nil {
-		f.typ = "FlowActionTwilio"
-		f.FlowActionTwilio = valueFlowActionTwilio
-		return nil
-	}
 	var valueFlowActionWhatsapp FlowActionWhatsapp
 	if err := json.Unmarshal(data, &valueFlowActionWhatsapp); err == nil {
 		f.typ = "FlowActionWhatsapp"
 		f.FlowActionWhatsapp = valueFlowActionWhatsapp
-		return nil
-	}
-	valueFlowActionXML := new(FlowActionXML)
-	if err := json.Unmarshal(data, &valueFlowActionXML); err == nil {
-		f.typ = "FlowActionXML"
-		f.FlowActionXML = valueFlowActionXML
 		return nil
 	}
 	var valueFlowActionZapier FlowActionZapier
@@ -732,82 +910,194 @@ func (f *FlowAction) Accept(visitor FlowActionVisitor) error {
 }
 
 type FlowActionActivecampaign struct {
-	FlowActionActivecampaignListContacts  *FlowActionActivecampaignListContacts
-	FlowActionActivecampaignUpsertContact *FlowActionActivecampaignUpsertContact
+	Action        string
+	ID            string
+	Alias         *string
+	Type          FlowActionActivecampaignListContactsType
+	AllowFailure  *bool
+	MaskOutput    *bool
+	ListContacts  *FlowActionActivecampaignListContacts
+	UpsertContact *FlowActionActivecampaignUpsertContact
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionActivecampaign) GetFlowActionActivecampaignListContacts() *FlowActionActivecampaignListContacts {
+func (f *FlowActionActivecampaign) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionActivecampaign) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionActivecampaign) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionActivecampaign) GetType() FlowActionActivecampaignListContactsType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionActivecampaign) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionActivecampaign) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionActivecampaign) GetListContacts() *FlowActionActivecampaignListContacts {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionActivecampaignListContacts
+	return f.ListContacts
 }
 
-func (f *FlowActionActivecampaign) GetFlowActionActivecampaignUpsertContact() *FlowActionActivecampaignUpsertContact {
+func (f *FlowActionActivecampaign) GetUpsertContact() *FlowActionActivecampaignUpsertContact {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionActivecampaignUpsertContact
+	return f.UpsertContact
 }
 
 func (f *FlowActionActivecampaign) UnmarshalJSON(data []byte) error {
-	valueFlowActionActivecampaignListContacts := new(FlowActionActivecampaignListContacts)
-	if err := json.Unmarshal(data, &valueFlowActionActivecampaignListContacts); err == nil {
-		f.typ = "FlowActionActivecampaignListContacts"
-		f.FlowActionActivecampaignListContacts = valueFlowActionActivecampaignListContacts
-		return nil
+	var unmarshaler struct {
+		Action       string                                   `json:"action"`
+		ID           string                                   `json:"id"`
+		Alias        *string                                  `json:"alias,omitempty"`
+		Type         FlowActionActivecampaignListContactsType `json:"type"`
+		AllowFailure *bool                                    `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                                    `json:"mask_output,omitempty"`
 	}
-	valueFlowActionActivecampaignUpsertContact := new(FlowActionActivecampaignUpsertContact)
-	if err := json.Unmarshal(data, &valueFlowActionActivecampaignUpsertContact); err == nil {
-		f.typ = "FlowActionActivecampaignUpsertContact"
-		f.FlowActionActivecampaignUpsertContact = valueFlowActionActivecampaignUpsertContact
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
+	}
+	switch unmarshaler.Action {
+	case "LIST_CONTACTS":
+		value := new(FlowActionActivecampaignListContacts)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.ListContacts = value
+	case "UPSERT_CONTACT":
+		value := new(FlowActionActivecampaignUpsertContact)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.UpsertContact = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionActivecampaign) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionActivecampaignListContacts" || f.FlowActionActivecampaignListContacts != nil {
-		return json.Marshal(f.FlowActionActivecampaignListContacts)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionActivecampaignUpsertContact" || f.FlowActionActivecampaignUpsertContact != nil {
-		return json.Marshal(f.FlowActionActivecampaignUpsertContact)
+	if f.ListContacts != nil {
+		return internal.MarshalJSONWithExtraProperty(f.ListContacts, "action", "LIST_CONTACTS")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.UpsertContact != nil {
+		return internal.MarshalJSONWithExtraProperty(f.UpsertContact, "action", "UPSERT_CONTACT")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionActivecampaignVisitor interface {
-	VisitFlowActionActivecampaignListContacts(*FlowActionActivecampaignListContacts) error
-	VisitFlowActionActivecampaignUpsertContact(*FlowActionActivecampaignUpsertContact) error
+	VisitListContacts(*FlowActionActivecampaignListContacts) error
+	VisitUpsertContact(*FlowActionActivecampaignUpsertContact) error
 }
 
 func (f *FlowActionActivecampaign) Accept(visitor FlowActionActivecampaignVisitor) error {
-	if f.typ == "FlowActionActivecampaignListContacts" || f.FlowActionActivecampaignListContacts != nil {
-		return visitor.VisitFlowActionActivecampaignListContacts(f.FlowActionActivecampaignListContacts)
+	if f.ListContacts != nil {
+		return visitor.VisitListContacts(f.ListContacts)
 	}
-	if f.typ == "FlowActionActivecampaignUpsertContact" || f.FlowActionActivecampaignUpsertContact != nil {
-		return visitor.VisitFlowActionActivecampaignUpsertContact(f.FlowActionActivecampaignUpsertContact)
+	if f.UpsertContact != nil {
+		return visitor.VisitUpsertContact(f.UpsertContact)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionActivecampaign) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.ListContacts != nil {
+		fields = append(fields, "LIST_CONTACTS")
+	}
+	if f.UpsertContact != nil {
+		fields = append(fields, "UPSERT_CONTACT")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionActivecampaignListContactsFieldID           = big.NewInt(1 << 0)
 	flowActionActivecampaignListContactsFieldAlias        = big.NewInt(1 << 1)
 	flowActionActivecampaignListContactsFieldType         = big.NewInt(1 << 2)
-	flowActionActivecampaignListContactsFieldAction       = big.NewInt(1 << 3)
-	flowActionActivecampaignListContactsFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionActivecampaignListContactsFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionActivecampaignListContactsFieldParams       = big.NewInt(1 << 6)
+	flowActionActivecampaignListContactsFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionActivecampaignListContactsFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionActivecampaignListContactsFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionActivecampaignListContacts struct {
 	ID           string                                      `json:"id" url:"id"`
 	Alias        *string                                     `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionActivecampaignListContactsType    `json:"type" url:"type"`
-	Action       FlowActionActivecampaignListContactsAction  `json:"action" url:"action"`
 	AllowFailure *bool                                       `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                       `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionActivecampaignListContactsParams `json:"params" url:"params"`
@@ -840,13 +1130,6 @@ func (f *FlowActionActivecampaignListContacts) GetType() FlowActionActivecampaig
 	return f.Type
 }
 
-func (f *FlowActionActivecampaignListContacts) GetAction() FlowActionActivecampaignListContactsAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionActivecampaignListContacts) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -876,10 +1159,12 @@ func (f *FlowActionActivecampaignListContacts) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionActivecampaignListContacts) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -901,13 +1186,6 @@ func (f *FlowActionActivecampaignListContacts) SetAlias(alias *string) {
 func (f *FlowActionActivecampaignListContacts) SetType(type_ FlowActionActivecampaignListContactsType) {
 	f.Type = type_
 	f.require(flowActionActivecampaignListContactsFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionActivecampaignListContacts) SetAction(action FlowActionActivecampaignListContactsAction) {
-	f.Action = action
-	f.require(flowActionActivecampaignListContactsFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -973,25 +1251,6 @@ func (f *FlowActionActivecampaignListContacts) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionActivecampaignListContactsAction string
-
-const (
-	FlowActionActivecampaignListContactsActionListContacts FlowActionActivecampaignListContactsAction = "LIST_CONTACTS"
-)
-
-func NewFlowActionActivecampaignListContactsActionFromString(s string) (FlowActionActivecampaignListContactsAction, error) {
-	switch s {
-	case "LIST_CONTACTS":
-		return FlowActionActivecampaignListContactsActionListContacts, nil
-	}
-	var t FlowActionActivecampaignListContactsAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionActivecampaignListContactsAction) Ptr() *FlowActionActivecampaignListContactsAction {
-	return &f
-}
-
 var (
 	flowActionActivecampaignListContactsParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionActivecampaignListContactsParamsFieldEmail        = big.NewInt(1 << 1)
@@ -1030,10 +1289,12 @@ func (f *FlowActionActivecampaignListContactsParams) GetExtraProperties() map[st
 }
 
 func (f *FlowActionActivecampaignListContactsParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -1115,17 +1376,15 @@ var (
 	flowActionActivecampaignUpsertContactFieldID           = big.NewInt(1 << 0)
 	flowActionActivecampaignUpsertContactFieldAlias        = big.NewInt(1 << 1)
 	flowActionActivecampaignUpsertContactFieldType         = big.NewInt(1 << 2)
-	flowActionActivecampaignUpsertContactFieldAction       = big.NewInt(1 << 3)
-	flowActionActivecampaignUpsertContactFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionActivecampaignUpsertContactFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionActivecampaignUpsertContactFieldParams       = big.NewInt(1 << 6)
+	flowActionActivecampaignUpsertContactFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionActivecampaignUpsertContactFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionActivecampaignUpsertContactFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionActivecampaignUpsertContact struct {
 	ID           string                                       `json:"id" url:"id"`
 	Alias        *string                                      `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionActivecampaignUpsertContactType    `json:"type" url:"type"`
-	Action       FlowActionActivecampaignUpsertContactAction  `json:"action" url:"action"`
 	AllowFailure *bool                                        `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                        `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionActivecampaignUpsertContactParams `json:"params" url:"params"`
@@ -1158,13 +1417,6 @@ func (f *FlowActionActivecampaignUpsertContact) GetType() FlowActionActivecampai
 	return f.Type
 }
 
-func (f *FlowActionActivecampaignUpsertContact) GetAction() FlowActionActivecampaignUpsertContactAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionActivecampaignUpsertContact) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -1194,10 +1446,12 @@ func (f *FlowActionActivecampaignUpsertContact) GetExtraProperties() map[string]
 }
 
 func (f *FlowActionActivecampaignUpsertContact) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1219,13 +1473,6 @@ func (f *FlowActionActivecampaignUpsertContact) SetAlias(alias *string) {
 func (f *FlowActionActivecampaignUpsertContact) SetType(type_ FlowActionActivecampaignUpsertContactType) {
 	f.Type = type_
 	f.require(flowActionActivecampaignUpsertContactFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionActivecampaignUpsertContact) SetAction(action FlowActionActivecampaignUpsertContactAction) {
-	f.Action = action
-	f.require(flowActionActivecampaignUpsertContactFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -1289,25 +1536,6 @@ func (f *FlowActionActivecampaignUpsertContact) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionActivecampaignUpsertContactAction string
-
-const (
-	FlowActionActivecampaignUpsertContactActionUpsertContact FlowActionActivecampaignUpsertContactAction = "UPSERT_CONTACT"
-)
-
-func NewFlowActionActivecampaignUpsertContactActionFromString(s string) (FlowActionActivecampaignUpsertContactAction, error) {
-	switch s {
-	case "UPSERT_CONTACT":
-		return FlowActionActivecampaignUpsertContactActionUpsertContact, nil
-	}
-	var t FlowActionActivecampaignUpsertContactAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionActivecampaignUpsertContactAction) Ptr() *FlowActionActivecampaignUpsertContactAction {
-	return &f
 }
 
 var (
@@ -1384,10 +1612,12 @@ func (f *FlowActionActivecampaignUpsertContactParams) GetExtraProperties() map[s
 }
 
 func (f *FlowActionActivecampaignUpsertContactParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -1496,103 +1726,218 @@ func (f FlowActionActivecampaignUpsertContactType) Ptr() *FlowActionActivecampai
 }
 
 type FlowActionAirtable struct {
-	FlowActionAirtableCreateRecord *FlowActionAirtableCreateRecord
-	FlowActionAirtableListRecords  *FlowActionAirtableListRecords
-	FlowActionAirtableUpdateRecord *FlowActionAirtableUpdateRecord
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionAirtableCreateRecordType
+	AllowFailure *bool
+	MaskOutput   *bool
+	CreateRecord *FlowActionAirtableCreateRecord
+	ListRecords  *FlowActionAirtableListRecords
+	UpdateRecord *FlowActionAirtableUpdateRecord
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionAirtable) GetFlowActionAirtableCreateRecord() *FlowActionAirtableCreateRecord {
+func (f *FlowActionAirtable) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionAirtable) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionAirtable) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionAirtable) GetType() FlowActionAirtableCreateRecordType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionAirtable) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionAirtable) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionAirtable) GetCreateRecord() *FlowActionAirtableCreateRecord {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAirtableCreateRecord
+	return f.CreateRecord
 }
 
-func (f *FlowActionAirtable) GetFlowActionAirtableListRecords() *FlowActionAirtableListRecords {
+func (f *FlowActionAirtable) GetListRecords() *FlowActionAirtableListRecords {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAirtableListRecords
+	return f.ListRecords
 }
 
-func (f *FlowActionAirtable) GetFlowActionAirtableUpdateRecord() *FlowActionAirtableUpdateRecord {
+func (f *FlowActionAirtable) GetUpdateRecord() *FlowActionAirtableUpdateRecord {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAirtableUpdateRecord
+	return f.UpdateRecord
 }
 
 func (f *FlowActionAirtable) UnmarshalJSON(data []byte) error {
-	valueFlowActionAirtableCreateRecord := new(FlowActionAirtableCreateRecord)
-	if err := json.Unmarshal(data, &valueFlowActionAirtableCreateRecord); err == nil {
-		f.typ = "FlowActionAirtableCreateRecord"
-		f.FlowActionAirtableCreateRecord = valueFlowActionAirtableCreateRecord
-		return nil
+	var unmarshaler struct {
+		Action       string                             `json:"action"`
+		ID           string                             `json:"id"`
+		Alias        *string                            `json:"alias,omitempty"`
+		Type         FlowActionAirtableCreateRecordType `json:"type"`
+		AllowFailure *bool                              `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                              `json:"mask_output,omitempty"`
 	}
-	valueFlowActionAirtableListRecords := new(FlowActionAirtableListRecords)
-	if err := json.Unmarshal(data, &valueFlowActionAirtableListRecords); err == nil {
-		f.typ = "FlowActionAirtableListRecords"
-		f.FlowActionAirtableListRecords = valueFlowActionAirtableListRecords
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionAirtableUpdateRecord := new(FlowActionAirtableUpdateRecord)
-	if err := json.Unmarshal(data, &valueFlowActionAirtableUpdateRecord); err == nil {
-		f.typ = "FlowActionAirtableUpdateRecord"
-		f.FlowActionAirtableUpdateRecord = valueFlowActionAirtableUpdateRecord
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	switch unmarshaler.Action {
+	case "CREATE_RECORD":
+		value := new(FlowActionAirtableCreateRecord)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.CreateRecord = value
+	case "LIST_RECORDS":
+		value := new(FlowActionAirtableListRecords)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.ListRecords = value
+	case "UPDATE_RECORD":
+		value := new(FlowActionAirtableUpdateRecord)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.UpdateRecord = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionAirtable) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionAirtableCreateRecord" || f.FlowActionAirtableCreateRecord != nil {
-		return json.Marshal(f.FlowActionAirtableCreateRecord)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionAirtableListRecords" || f.FlowActionAirtableListRecords != nil {
-		return json.Marshal(f.FlowActionAirtableListRecords)
+	if f.CreateRecord != nil {
+		return internal.MarshalJSONWithExtraProperty(f.CreateRecord, "action", "CREATE_RECORD")
 	}
-	if f.typ == "FlowActionAirtableUpdateRecord" || f.FlowActionAirtableUpdateRecord != nil {
-		return json.Marshal(f.FlowActionAirtableUpdateRecord)
+	if f.ListRecords != nil {
+		return internal.MarshalJSONWithExtraProperty(f.ListRecords, "action", "LIST_RECORDS")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.UpdateRecord != nil {
+		return internal.MarshalJSONWithExtraProperty(f.UpdateRecord, "action", "UPDATE_RECORD")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionAirtableVisitor interface {
-	VisitFlowActionAirtableCreateRecord(*FlowActionAirtableCreateRecord) error
-	VisitFlowActionAirtableListRecords(*FlowActionAirtableListRecords) error
-	VisitFlowActionAirtableUpdateRecord(*FlowActionAirtableUpdateRecord) error
+	VisitCreateRecord(*FlowActionAirtableCreateRecord) error
+	VisitListRecords(*FlowActionAirtableListRecords) error
+	VisitUpdateRecord(*FlowActionAirtableUpdateRecord) error
 }
 
 func (f *FlowActionAirtable) Accept(visitor FlowActionAirtableVisitor) error {
-	if f.typ == "FlowActionAirtableCreateRecord" || f.FlowActionAirtableCreateRecord != nil {
-		return visitor.VisitFlowActionAirtableCreateRecord(f.FlowActionAirtableCreateRecord)
+	if f.CreateRecord != nil {
+		return visitor.VisitCreateRecord(f.CreateRecord)
 	}
-	if f.typ == "FlowActionAirtableListRecords" || f.FlowActionAirtableListRecords != nil {
-		return visitor.VisitFlowActionAirtableListRecords(f.FlowActionAirtableListRecords)
+	if f.ListRecords != nil {
+		return visitor.VisitListRecords(f.ListRecords)
 	}
-	if f.typ == "FlowActionAirtableUpdateRecord" || f.FlowActionAirtableUpdateRecord != nil {
-		return visitor.VisitFlowActionAirtableUpdateRecord(f.FlowActionAirtableUpdateRecord)
+	if f.UpdateRecord != nil {
+		return visitor.VisitUpdateRecord(f.UpdateRecord)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionAirtable) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.CreateRecord != nil {
+		fields = append(fields, "CREATE_RECORD")
+	}
+	if f.ListRecords != nil {
+		fields = append(fields, "LIST_RECORDS")
+	}
+	if f.UpdateRecord != nil {
+		fields = append(fields, "UPDATE_RECORD")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionAirtableCreateRecordFieldID           = big.NewInt(1 << 0)
 	flowActionAirtableCreateRecordFieldAlias        = big.NewInt(1 << 1)
 	flowActionAirtableCreateRecordFieldType         = big.NewInt(1 << 2)
-	flowActionAirtableCreateRecordFieldAction       = big.NewInt(1 << 3)
-	flowActionAirtableCreateRecordFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAirtableCreateRecordFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAirtableCreateRecordFieldParams       = big.NewInt(1 << 6)
+	flowActionAirtableCreateRecordFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAirtableCreateRecordFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAirtableCreateRecordFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAirtableCreateRecord struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAirtableCreateRecordType    `json:"type" url:"type"`
-	Action       FlowActionAirtableCreateRecordAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAirtableCreateRecordParams `json:"params" url:"params"`
@@ -1625,13 +1970,6 @@ func (f *FlowActionAirtableCreateRecord) GetType() FlowActionAirtableCreateRecor
 	return f.Type
 }
 
-func (f *FlowActionAirtableCreateRecord) GetAction() FlowActionAirtableCreateRecordAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAirtableCreateRecord) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -1661,10 +1999,12 @@ func (f *FlowActionAirtableCreateRecord) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionAirtableCreateRecord) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1686,13 +2026,6 @@ func (f *FlowActionAirtableCreateRecord) SetAlias(alias *string) {
 func (f *FlowActionAirtableCreateRecord) SetType(type_ FlowActionAirtableCreateRecordType) {
 	f.Type = type_
 	f.require(flowActionAirtableCreateRecordFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAirtableCreateRecord) SetAction(action FlowActionAirtableCreateRecordAction) {
-	f.Action = action
-	f.require(flowActionAirtableCreateRecordFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -1758,25 +2091,6 @@ func (f *FlowActionAirtableCreateRecord) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAirtableCreateRecordAction string
-
-const (
-	FlowActionAirtableCreateRecordActionCreateRecord FlowActionAirtableCreateRecordAction = "CREATE_RECORD"
-)
-
-func NewFlowActionAirtableCreateRecordActionFromString(s string) (FlowActionAirtableCreateRecordAction, error) {
-	switch s {
-	case "CREATE_RECORD":
-		return FlowActionAirtableCreateRecordActionCreateRecord, nil
-	}
-	var t FlowActionAirtableCreateRecordAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAirtableCreateRecordAction) Ptr() *FlowActionAirtableCreateRecordAction {
-	return &f
-}
-
 var (
 	flowActionAirtableCreateRecordParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionAirtableCreateRecordParamsFieldBaseID       = big.NewInt(1 << 1)
@@ -1833,10 +2147,12 @@ func (f *FlowActionAirtableCreateRecordParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionAirtableCreateRecordParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -1934,17 +2250,15 @@ var (
 	flowActionAirtableListRecordsFieldID           = big.NewInt(1 << 0)
 	flowActionAirtableListRecordsFieldAlias        = big.NewInt(1 << 1)
 	flowActionAirtableListRecordsFieldType         = big.NewInt(1 << 2)
-	flowActionAirtableListRecordsFieldAction       = big.NewInt(1 << 3)
-	flowActionAirtableListRecordsFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAirtableListRecordsFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAirtableListRecordsFieldParams       = big.NewInt(1 << 6)
+	flowActionAirtableListRecordsFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAirtableListRecordsFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAirtableListRecordsFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAirtableListRecords struct {
 	ID           string                               `json:"id" url:"id"`
 	Alias        *string                              `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAirtableListRecordsType    `json:"type" url:"type"`
-	Action       FlowActionAirtableListRecordsAction  `json:"action" url:"action"`
 	AllowFailure *bool                                `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAirtableListRecordsParams `json:"params" url:"params"`
@@ -1977,13 +2291,6 @@ func (f *FlowActionAirtableListRecords) GetType() FlowActionAirtableListRecordsT
 	return f.Type
 }
 
-func (f *FlowActionAirtableListRecords) GetAction() FlowActionAirtableListRecordsAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAirtableListRecords) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -2013,10 +2320,12 @@ func (f *FlowActionAirtableListRecords) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionAirtableListRecords) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2038,13 +2347,6 @@ func (f *FlowActionAirtableListRecords) SetAlias(alias *string) {
 func (f *FlowActionAirtableListRecords) SetType(type_ FlowActionAirtableListRecordsType) {
 	f.Type = type_
 	f.require(flowActionAirtableListRecordsFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAirtableListRecords) SetAction(action FlowActionAirtableListRecordsAction) {
-	f.Action = action
-	f.require(flowActionAirtableListRecordsFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -2108,25 +2410,6 @@ func (f *FlowActionAirtableListRecords) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionAirtableListRecordsAction string
-
-const (
-	FlowActionAirtableListRecordsActionListRecords FlowActionAirtableListRecordsAction = "LIST_RECORDS"
-)
-
-func NewFlowActionAirtableListRecordsActionFromString(s string) (FlowActionAirtableListRecordsAction, error) {
-	switch s {
-	case "LIST_RECORDS":
-		return FlowActionAirtableListRecordsActionListRecords, nil
-	}
-	var t FlowActionAirtableListRecordsAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAirtableListRecordsAction) Ptr() *FlowActionAirtableListRecordsAction {
-	return &f
 }
 
 var (
@@ -2194,10 +2477,12 @@ func (f *FlowActionAirtableListRecordsParams) GetExtraProperties() map[string]in
 }
 
 func (f *FlowActionAirtableListRecordsParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -2300,17 +2585,15 @@ var (
 	flowActionAirtableUpdateRecordFieldID           = big.NewInt(1 << 0)
 	flowActionAirtableUpdateRecordFieldAlias        = big.NewInt(1 << 1)
 	flowActionAirtableUpdateRecordFieldType         = big.NewInt(1 << 2)
-	flowActionAirtableUpdateRecordFieldAction       = big.NewInt(1 << 3)
-	flowActionAirtableUpdateRecordFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAirtableUpdateRecordFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAirtableUpdateRecordFieldParams       = big.NewInt(1 << 6)
+	flowActionAirtableUpdateRecordFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAirtableUpdateRecordFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAirtableUpdateRecordFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAirtableUpdateRecord struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAirtableUpdateRecordType    `json:"type" url:"type"`
-	Action       FlowActionAirtableUpdateRecordAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAirtableUpdateRecordParams `json:"params" url:"params"`
@@ -2343,13 +2626,6 @@ func (f *FlowActionAirtableUpdateRecord) GetType() FlowActionAirtableUpdateRecor
 	return f.Type
 }
 
-func (f *FlowActionAirtableUpdateRecord) GetAction() FlowActionAirtableUpdateRecordAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAirtableUpdateRecord) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -2379,10 +2655,12 @@ func (f *FlowActionAirtableUpdateRecord) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionAirtableUpdateRecord) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2404,13 +2682,6 @@ func (f *FlowActionAirtableUpdateRecord) SetAlias(alias *string) {
 func (f *FlowActionAirtableUpdateRecord) SetType(type_ FlowActionAirtableUpdateRecordType) {
 	f.Type = type_
 	f.require(flowActionAirtableUpdateRecordFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAirtableUpdateRecord) SetAction(action FlowActionAirtableUpdateRecordAction) {
-	f.Action = action
-	f.require(flowActionAirtableUpdateRecordFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -2474,25 +2745,6 @@ func (f *FlowActionAirtableUpdateRecord) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionAirtableUpdateRecordAction string
-
-const (
-	FlowActionAirtableUpdateRecordActionUpdateRecord FlowActionAirtableUpdateRecordAction = "UPDATE_RECORD"
-)
-
-func NewFlowActionAirtableUpdateRecordActionFromString(s string) (FlowActionAirtableUpdateRecordAction, error) {
-	switch s {
-	case "UPDATE_RECORD":
-		return FlowActionAirtableUpdateRecordActionUpdateRecord, nil
-	}
-	var t FlowActionAirtableUpdateRecordAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAirtableUpdateRecordAction) Ptr() *FlowActionAirtableUpdateRecordAction {
-	return &f
 }
 
 var (
@@ -2560,10 +2812,12 @@ func (f *FlowActionAirtableUpdateRecordParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionAirtableUpdateRecordParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -2665,187 +2919,314 @@ func (f FlowActionAirtableUpdateRecordType) Ptr() *FlowActionAirtableUpdateRecor
 }
 
 type FlowActionAuth0 struct {
-	FlowActionAuth0CreateUser  *FlowActionAuth0CreateUser
-	FlowActionAuth0GetUser     *FlowActionAuth0GetUser
-	FlowActionAuth0UpdateUser  *FlowActionAuth0UpdateUser
-	FlowActionAuth0SendRequest *FlowActionAuth0SendRequest
-	FlowActionAuth0SendEmail   *FlowActionAuth0SendEmail
-	FlowActionAuth0SendSms     *FlowActionAuth0SendSms
-	FlowActionAuth0MakeCall    *FlowActionAuth0MakeCall
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionAuth0CreateUserType
+	AllowFailure *bool
+	MaskOutput   *bool
+	CreateUser   *FlowActionAuth0CreateUser
+	GetUser      *FlowActionAuth0GetUser
+	UpdateUser   *FlowActionAuth0UpdateUser
+	SendRequest  *FlowActionAuth0SendRequest
+	SendEmail    *FlowActionAuth0SendEmail
+	SendSms      *FlowActionAuth0SendSms
+	MakeCall     *FlowActionAuth0MakeCall
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionAuth0) GetFlowActionAuth0CreateUser() *FlowActionAuth0CreateUser {
+func (f *FlowActionAuth0) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionAuth0) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionAuth0) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionAuth0) GetType() FlowActionAuth0CreateUserType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionAuth0) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionAuth0) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionAuth0) GetCreateUser() *FlowActionAuth0CreateUser {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAuth0CreateUser
+	return f.CreateUser
 }
 
-func (f *FlowActionAuth0) GetFlowActionAuth0GetUser() *FlowActionAuth0GetUser {
+func (f *FlowActionAuth0) GetGetUser() *FlowActionAuth0GetUser {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAuth0GetUser
+	return f.GetUser
 }
 
-func (f *FlowActionAuth0) GetFlowActionAuth0UpdateUser() *FlowActionAuth0UpdateUser {
+func (f *FlowActionAuth0) GetUpdateUser() *FlowActionAuth0UpdateUser {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAuth0UpdateUser
+	return f.UpdateUser
 }
 
-func (f *FlowActionAuth0) GetFlowActionAuth0SendRequest() *FlowActionAuth0SendRequest {
+func (f *FlowActionAuth0) GetSendRequest() *FlowActionAuth0SendRequest {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAuth0SendRequest
+	return f.SendRequest
 }
 
-func (f *FlowActionAuth0) GetFlowActionAuth0SendEmail() *FlowActionAuth0SendEmail {
+func (f *FlowActionAuth0) GetSendEmail() *FlowActionAuth0SendEmail {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAuth0SendEmail
+	return f.SendEmail
 }
 
-func (f *FlowActionAuth0) GetFlowActionAuth0SendSms() *FlowActionAuth0SendSms {
+func (f *FlowActionAuth0) GetSendSms() *FlowActionAuth0SendSms {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAuth0SendSms
+	return f.SendSms
 }
 
-func (f *FlowActionAuth0) GetFlowActionAuth0MakeCall() *FlowActionAuth0MakeCall {
+func (f *FlowActionAuth0) GetMakeCall() *FlowActionAuth0MakeCall {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionAuth0MakeCall
+	return f.MakeCall
 }
 
 func (f *FlowActionAuth0) UnmarshalJSON(data []byte) error {
-	valueFlowActionAuth0CreateUser := new(FlowActionAuth0CreateUser)
-	if err := json.Unmarshal(data, &valueFlowActionAuth0CreateUser); err == nil {
-		f.typ = "FlowActionAuth0CreateUser"
-		f.FlowActionAuth0CreateUser = valueFlowActionAuth0CreateUser
-		return nil
+	var unmarshaler struct {
+		Action       string                        `json:"action"`
+		ID           string                        `json:"id"`
+		Alias        *string                       `json:"alias,omitempty"`
+		Type         FlowActionAuth0CreateUserType `json:"type"`
+		AllowFailure *bool                         `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                         `json:"mask_output,omitempty"`
 	}
-	valueFlowActionAuth0GetUser := new(FlowActionAuth0GetUser)
-	if err := json.Unmarshal(data, &valueFlowActionAuth0GetUser); err == nil {
-		f.typ = "FlowActionAuth0GetUser"
-		f.FlowActionAuth0GetUser = valueFlowActionAuth0GetUser
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionAuth0UpdateUser := new(FlowActionAuth0UpdateUser)
-	if err := json.Unmarshal(data, &valueFlowActionAuth0UpdateUser); err == nil {
-		f.typ = "FlowActionAuth0UpdateUser"
-		f.FlowActionAuth0UpdateUser = valueFlowActionAuth0UpdateUser
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	valueFlowActionAuth0SendRequest := new(FlowActionAuth0SendRequest)
-	if err := json.Unmarshal(data, &valueFlowActionAuth0SendRequest); err == nil {
-		f.typ = "FlowActionAuth0SendRequest"
-		f.FlowActionAuth0SendRequest = valueFlowActionAuth0SendRequest
-		return nil
+	switch unmarshaler.Action {
+	case "CREATE_USER":
+		value := new(FlowActionAuth0CreateUser)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.CreateUser = value
+	case "GET_USER":
+		value := new(FlowActionAuth0GetUser)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.GetUser = value
+	case "UPDATE_USER":
+		value := new(FlowActionAuth0UpdateUser)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.UpdateUser = value
+	case "SEND_REQUEST":
+		value := new(FlowActionAuth0SendRequest)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SendRequest = value
+	case "SEND_EMAIL":
+		value := new(FlowActionAuth0SendEmail)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SendEmail = value
+	case "SEND_SMS":
+		value := new(FlowActionAuth0SendSms)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SendSms = value
+	case "MAKE_CALL":
+		value := new(FlowActionAuth0MakeCall)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.MakeCall = value
 	}
-	valueFlowActionAuth0SendEmail := new(FlowActionAuth0SendEmail)
-	if err := json.Unmarshal(data, &valueFlowActionAuth0SendEmail); err == nil {
-		f.typ = "FlowActionAuth0SendEmail"
-		f.FlowActionAuth0SendEmail = valueFlowActionAuth0SendEmail
-		return nil
-	}
-	valueFlowActionAuth0SendSms := new(FlowActionAuth0SendSms)
-	if err := json.Unmarshal(data, &valueFlowActionAuth0SendSms); err == nil {
-		f.typ = "FlowActionAuth0SendSms"
-		f.FlowActionAuth0SendSms = valueFlowActionAuth0SendSms
-		return nil
-	}
-	valueFlowActionAuth0MakeCall := new(FlowActionAuth0MakeCall)
-	if err := json.Unmarshal(data, &valueFlowActionAuth0MakeCall); err == nil {
-		f.typ = "FlowActionAuth0MakeCall"
-		f.FlowActionAuth0MakeCall = valueFlowActionAuth0MakeCall
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionAuth0) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionAuth0CreateUser" || f.FlowActionAuth0CreateUser != nil {
-		return json.Marshal(f.FlowActionAuth0CreateUser)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionAuth0GetUser" || f.FlowActionAuth0GetUser != nil {
-		return json.Marshal(f.FlowActionAuth0GetUser)
+	if f.CreateUser != nil {
+		return internal.MarshalJSONWithExtraProperty(f.CreateUser, "action", "CREATE_USER")
 	}
-	if f.typ == "FlowActionAuth0UpdateUser" || f.FlowActionAuth0UpdateUser != nil {
-		return json.Marshal(f.FlowActionAuth0UpdateUser)
+	if f.GetUser != nil {
+		return internal.MarshalJSONWithExtraProperty(f.GetUser, "action", "GET_USER")
 	}
-	if f.typ == "FlowActionAuth0SendRequest" || f.FlowActionAuth0SendRequest != nil {
-		return json.Marshal(f.FlowActionAuth0SendRequest)
+	if f.UpdateUser != nil {
+		return internal.MarshalJSONWithExtraProperty(f.UpdateUser, "action", "UPDATE_USER")
 	}
-	if f.typ == "FlowActionAuth0SendEmail" || f.FlowActionAuth0SendEmail != nil {
-		return json.Marshal(f.FlowActionAuth0SendEmail)
+	if f.SendRequest != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SendRequest, "action", "SEND_REQUEST")
 	}
-	if f.typ == "FlowActionAuth0SendSms" || f.FlowActionAuth0SendSms != nil {
-		return json.Marshal(f.FlowActionAuth0SendSms)
+	if f.SendEmail != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SendEmail, "action", "SEND_EMAIL")
 	}
-	if f.typ == "FlowActionAuth0MakeCall" || f.FlowActionAuth0MakeCall != nil {
-		return json.Marshal(f.FlowActionAuth0MakeCall)
+	if f.SendSms != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SendSms, "action", "SEND_SMS")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.MakeCall != nil {
+		return internal.MarshalJSONWithExtraProperty(f.MakeCall, "action", "MAKE_CALL")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionAuth0Visitor interface {
-	VisitFlowActionAuth0CreateUser(*FlowActionAuth0CreateUser) error
-	VisitFlowActionAuth0GetUser(*FlowActionAuth0GetUser) error
-	VisitFlowActionAuth0UpdateUser(*FlowActionAuth0UpdateUser) error
-	VisitFlowActionAuth0SendRequest(*FlowActionAuth0SendRequest) error
-	VisitFlowActionAuth0SendEmail(*FlowActionAuth0SendEmail) error
-	VisitFlowActionAuth0SendSms(*FlowActionAuth0SendSms) error
-	VisitFlowActionAuth0MakeCall(*FlowActionAuth0MakeCall) error
+	VisitCreateUser(*FlowActionAuth0CreateUser) error
+	VisitGetUser(*FlowActionAuth0GetUser) error
+	VisitUpdateUser(*FlowActionAuth0UpdateUser) error
+	VisitSendRequest(*FlowActionAuth0SendRequest) error
+	VisitSendEmail(*FlowActionAuth0SendEmail) error
+	VisitSendSms(*FlowActionAuth0SendSms) error
+	VisitMakeCall(*FlowActionAuth0MakeCall) error
 }
 
 func (f *FlowActionAuth0) Accept(visitor FlowActionAuth0Visitor) error {
-	if f.typ == "FlowActionAuth0CreateUser" || f.FlowActionAuth0CreateUser != nil {
-		return visitor.VisitFlowActionAuth0CreateUser(f.FlowActionAuth0CreateUser)
+	if f.CreateUser != nil {
+		return visitor.VisitCreateUser(f.CreateUser)
 	}
-	if f.typ == "FlowActionAuth0GetUser" || f.FlowActionAuth0GetUser != nil {
-		return visitor.VisitFlowActionAuth0GetUser(f.FlowActionAuth0GetUser)
+	if f.GetUser != nil {
+		return visitor.VisitGetUser(f.GetUser)
 	}
-	if f.typ == "FlowActionAuth0UpdateUser" || f.FlowActionAuth0UpdateUser != nil {
-		return visitor.VisitFlowActionAuth0UpdateUser(f.FlowActionAuth0UpdateUser)
+	if f.UpdateUser != nil {
+		return visitor.VisitUpdateUser(f.UpdateUser)
 	}
-	if f.typ == "FlowActionAuth0SendRequest" || f.FlowActionAuth0SendRequest != nil {
-		return visitor.VisitFlowActionAuth0SendRequest(f.FlowActionAuth0SendRequest)
+	if f.SendRequest != nil {
+		return visitor.VisitSendRequest(f.SendRequest)
 	}
-	if f.typ == "FlowActionAuth0SendEmail" || f.FlowActionAuth0SendEmail != nil {
-		return visitor.VisitFlowActionAuth0SendEmail(f.FlowActionAuth0SendEmail)
+	if f.SendEmail != nil {
+		return visitor.VisitSendEmail(f.SendEmail)
 	}
-	if f.typ == "FlowActionAuth0SendSms" || f.FlowActionAuth0SendSms != nil {
-		return visitor.VisitFlowActionAuth0SendSms(f.FlowActionAuth0SendSms)
+	if f.SendSms != nil {
+		return visitor.VisitSendSms(f.SendSms)
 	}
-	if f.typ == "FlowActionAuth0MakeCall" || f.FlowActionAuth0MakeCall != nil {
-		return visitor.VisitFlowActionAuth0MakeCall(f.FlowActionAuth0MakeCall)
+	if f.MakeCall != nil {
+		return visitor.VisitMakeCall(f.MakeCall)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionAuth0) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.CreateUser != nil {
+		fields = append(fields, "CREATE_USER")
+	}
+	if f.GetUser != nil {
+		fields = append(fields, "GET_USER")
+	}
+	if f.UpdateUser != nil {
+		fields = append(fields, "UPDATE_USER")
+	}
+	if f.SendRequest != nil {
+		fields = append(fields, "SEND_REQUEST")
+	}
+	if f.SendEmail != nil {
+		fields = append(fields, "SEND_EMAIL")
+	}
+	if f.SendSms != nil {
+		fields = append(fields, "SEND_SMS")
+	}
+	if f.MakeCall != nil {
+		fields = append(fields, "MAKE_CALL")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionAuth0CreateUserFieldID           = big.NewInt(1 << 0)
 	flowActionAuth0CreateUserFieldAlias        = big.NewInt(1 << 1)
 	flowActionAuth0CreateUserFieldType         = big.NewInt(1 << 2)
-	flowActionAuth0CreateUserFieldAction       = big.NewInt(1 << 3)
-	flowActionAuth0CreateUserFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAuth0CreateUserFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAuth0CreateUserFieldParams       = big.NewInt(1 << 6)
+	flowActionAuth0CreateUserFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAuth0CreateUserFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAuth0CreateUserFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAuth0CreateUser struct {
 	ID           string                           `json:"id" url:"id"`
 	Alias        *string                          `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAuth0CreateUserType    `json:"type" url:"type"`
-	Action       FlowActionAuth0CreateUserAction  `json:"action" url:"action"`
 	AllowFailure *bool                            `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                            `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAuth0CreateUserParams `json:"params" url:"params"`
@@ -2878,13 +3259,6 @@ func (f *FlowActionAuth0CreateUser) GetType() FlowActionAuth0CreateUserType {
 	return f.Type
 }
 
-func (f *FlowActionAuth0CreateUser) GetAction() FlowActionAuth0CreateUserAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAuth0CreateUser) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -2914,10 +3288,12 @@ func (f *FlowActionAuth0CreateUser) GetExtraProperties() map[string]interface{} 
 }
 
 func (f *FlowActionAuth0CreateUser) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2939,13 +3315,6 @@ func (f *FlowActionAuth0CreateUser) SetAlias(alias *string) {
 func (f *FlowActionAuth0CreateUser) SetType(type_ FlowActionAuth0CreateUserType) {
 	f.Type = type_
 	f.require(flowActionAuth0CreateUserFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAuth0CreateUser) SetAction(action FlowActionAuth0CreateUserAction) {
-	f.Action = action
-	f.require(flowActionAuth0CreateUserFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -3011,25 +3380,6 @@ func (f *FlowActionAuth0CreateUser) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0CreateUserAction string
-
-const (
-	FlowActionAuth0CreateUserActionCreateUser FlowActionAuth0CreateUserAction = "CREATE_USER"
-)
-
-func NewFlowActionAuth0CreateUserActionFromString(s string) (FlowActionAuth0CreateUserAction, error) {
-	switch s {
-	case "CREATE_USER":
-		return FlowActionAuth0CreateUserActionCreateUser, nil
-	}
-	var t FlowActionAuth0CreateUserAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAuth0CreateUserAction) Ptr() *FlowActionAuth0CreateUserAction {
-	return &f
-}
-
 var (
 	flowActionAuth0CreateUserParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionAuth0CreateUserParamsFieldPayload      = big.NewInt(1 << 1)
@@ -3068,10 +3418,12 @@ func (f *FlowActionAuth0CreateUserParams) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowActionAuth0CreateUserParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -3155,17 +3507,15 @@ var (
 	flowActionAuth0GetUserFieldID           = big.NewInt(1 << 0)
 	flowActionAuth0GetUserFieldAlias        = big.NewInt(1 << 1)
 	flowActionAuth0GetUserFieldType         = big.NewInt(1 << 2)
-	flowActionAuth0GetUserFieldAction       = big.NewInt(1 << 3)
-	flowActionAuth0GetUserFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAuth0GetUserFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAuth0GetUserFieldParams       = big.NewInt(1 << 6)
+	flowActionAuth0GetUserFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAuth0GetUserFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAuth0GetUserFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAuth0GetUser struct {
 	ID           string                        `json:"id" url:"id"`
 	Alias        *string                       `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAuth0GetUserType    `json:"type" url:"type"`
-	Action       FlowActionAuth0GetUserAction  `json:"action" url:"action"`
 	AllowFailure *bool                         `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                         `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAuth0GetUserParams `json:"params" url:"params"`
@@ -3198,13 +3548,6 @@ func (f *FlowActionAuth0GetUser) GetType() FlowActionAuth0GetUserType {
 	return f.Type
 }
 
-func (f *FlowActionAuth0GetUser) GetAction() FlowActionAuth0GetUserAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAuth0GetUser) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -3234,10 +3577,12 @@ func (f *FlowActionAuth0GetUser) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionAuth0GetUser) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3259,13 +3604,6 @@ func (f *FlowActionAuth0GetUser) SetAlias(alias *string) {
 func (f *FlowActionAuth0GetUser) SetType(type_ FlowActionAuth0GetUserType) {
 	f.Type = type_
 	f.require(flowActionAuth0GetUserFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAuth0GetUser) SetAction(action FlowActionAuth0GetUserAction) {
-	f.Action = action
-	f.require(flowActionAuth0GetUserFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -3331,25 +3669,6 @@ func (f *FlowActionAuth0GetUser) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0GetUserAction string
-
-const (
-	FlowActionAuth0GetUserActionGetUser FlowActionAuth0GetUserAction = "GET_USER"
-)
-
-func NewFlowActionAuth0GetUserActionFromString(s string) (FlowActionAuth0GetUserAction, error) {
-	switch s {
-	case "GET_USER":
-		return FlowActionAuth0GetUserActionGetUser, nil
-	}
-	var t FlowActionAuth0GetUserAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAuth0GetUserAction) Ptr() *FlowActionAuth0GetUserAction {
-	return &f
-}
-
 var (
 	flowActionAuth0GetUserParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionAuth0GetUserParamsFieldUserID       = big.NewInt(1 << 1)
@@ -3388,10 +3707,12 @@ func (f *FlowActionAuth0GetUserParams) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionAuth0GetUserParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -3473,17 +3794,15 @@ var (
 	flowActionAuth0MakeCallFieldID           = big.NewInt(1 << 0)
 	flowActionAuth0MakeCallFieldAlias        = big.NewInt(1 << 1)
 	flowActionAuth0MakeCallFieldType         = big.NewInt(1 << 2)
-	flowActionAuth0MakeCallFieldAction       = big.NewInt(1 << 3)
-	flowActionAuth0MakeCallFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAuth0MakeCallFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAuth0MakeCallFieldParams       = big.NewInt(1 << 6)
+	flowActionAuth0MakeCallFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAuth0MakeCallFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAuth0MakeCallFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAuth0MakeCall struct {
 	ID           string                         `json:"id" url:"id"`
 	Alias        *string                        `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAuth0MakeCallType    `json:"type" url:"type"`
-	Action       FlowActionAuth0MakeCallAction  `json:"action" url:"action"`
 	AllowFailure *bool                          `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                          `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAuth0MakeCallParams `json:"params" url:"params"`
@@ -3516,13 +3835,6 @@ func (f *FlowActionAuth0MakeCall) GetType() FlowActionAuth0MakeCallType {
 	return f.Type
 }
 
-func (f *FlowActionAuth0MakeCall) GetAction() FlowActionAuth0MakeCallAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAuth0MakeCall) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -3552,10 +3864,12 @@ func (f *FlowActionAuth0MakeCall) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionAuth0MakeCall) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3577,13 +3891,6 @@ func (f *FlowActionAuth0MakeCall) SetAlias(alias *string) {
 func (f *FlowActionAuth0MakeCall) SetType(type_ FlowActionAuth0MakeCallType) {
 	f.Type = type_
 	f.require(flowActionAuth0MakeCallFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAuth0MakeCall) SetAction(action FlowActionAuth0MakeCallAction) {
-	f.Action = action
-	f.require(flowActionAuth0MakeCallFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -3649,25 +3956,6 @@ func (f *FlowActionAuth0MakeCall) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0MakeCallAction string
-
-const (
-	FlowActionAuth0MakeCallActionMakeCall FlowActionAuth0MakeCallAction = "MAKE_CALL"
-)
-
-func NewFlowActionAuth0MakeCallActionFromString(s string) (FlowActionAuth0MakeCallAction, error) {
-	switch s {
-	case "MAKE_CALL":
-		return FlowActionAuth0MakeCallActionMakeCall, nil
-	}
-	var t FlowActionAuth0MakeCallAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAuth0MakeCallAction) Ptr() *FlowActionAuth0MakeCallAction {
-	return &f
-}
-
 var (
 	flowActionAuth0MakeCallParamsFieldFrom       = big.NewInt(1 << 0)
 	flowActionAuth0MakeCallParamsFieldTo         = big.NewInt(1 << 1)
@@ -3724,10 +4012,12 @@ func (f *FlowActionAuth0MakeCallParams) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionAuth0MakeCallParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -3825,17 +4115,15 @@ var (
 	flowActionAuth0SendEmailFieldID           = big.NewInt(1 << 0)
 	flowActionAuth0SendEmailFieldAlias        = big.NewInt(1 << 1)
 	flowActionAuth0SendEmailFieldType         = big.NewInt(1 << 2)
-	flowActionAuth0SendEmailFieldAction       = big.NewInt(1 << 3)
-	flowActionAuth0SendEmailFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAuth0SendEmailFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAuth0SendEmailFieldParams       = big.NewInt(1 << 6)
+	flowActionAuth0SendEmailFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAuth0SendEmailFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAuth0SendEmailFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAuth0SendEmail struct {
 	ID           string                          `json:"id" url:"id"`
 	Alias        *string                         `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAuth0SendEmailType    `json:"type" url:"type"`
-	Action       FlowActionAuth0SendEmailAction  `json:"action" url:"action"`
 	AllowFailure *bool                           `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                           `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAuth0SendEmailParams `json:"params" url:"params"`
@@ -3868,13 +4156,6 @@ func (f *FlowActionAuth0SendEmail) GetType() FlowActionAuth0SendEmailType {
 	return f.Type
 }
 
-func (f *FlowActionAuth0SendEmail) GetAction() FlowActionAuth0SendEmailAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAuth0SendEmail) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -3904,10 +4185,12 @@ func (f *FlowActionAuth0SendEmail) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionAuth0SendEmail) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3929,13 +4212,6 @@ func (f *FlowActionAuth0SendEmail) SetAlias(alias *string) {
 func (f *FlowActionAuth0SendEmail) SetType(type_ FlowActionAuth0SendEmailType) {
 	f.Type = type_
 	f.require(flowActionAuth0SendEmailFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAuth0SendEmail) SetAction(action FlowActionAuth0SendEmailAction) {
-	f.Action = action
-	f.require(flowActionAuth0SendEmailFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -3999,25 +4275,6 @@ func (f *FlowActionAuth0SendEmail) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionAuth0SendEmailAction string
-
-const (
-	FlowActionAuth0SendEmailActionSendEmail FlowActionAuth0SendEmailAction = "SEND_EMAIL"
-)
-
-func NewFlowActionAuth0SendEmailActionFromString(s string) (FlowActionAuth0SendEmailAction, error) {
-	switch s {
-	case "SEND_EMAIL":
-		return FlowActionAuth0SendEmailActionSendEmail, nil
-	}
-	var t FlowActionAuth0SendEmailAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAuth0SendEmailAction) Ptr() *FlowActionAuth0SendEmailAction {
-	return &f
 }
 
 var (
@@ -4085,10 +4342,12 @@ func (f *FlowActionAuth0SendEmailParams) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionAuth0SendEmailParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -4206,10 +4465,12 @@ func (f *FlowActionAuth0SendEmailParamsFrom) GetExtraProperties() map[string]int
 }
 
 func (f *FlowActionAuth0SendEmailParamsFrom) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -4295,17 +4556,15 @@ var (
 	flowActionAuth0SendRequestFieldID           = big.NewInt(1 << 0)
 	flowActionAuth0SendRequestFieldAlias        = big.NewInt(1 << 1)
 	flowActionAuth0SendRequestFieldType         = big.NewInt(1 << 2)
-	flowActionAuth0SendRequestFieldAction       = big.NewInt(1 << 3)
-	flowActionAuth0SendRequestFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAuth0SendRequestFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAuth0SendRequestFieldParams       = big.NewInt(1 << 6)
+	flowActionAuth0SendRequestFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAuth0SendRequestFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAuth0SendRequestFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAuth0SendRequest struct {
 	ID           string                            `json:"id" url:"id"`
 	Alias        *string                           `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAuth0SendRequestType    `json:"type" url:"type"`
-	Action       FlowActionAuth0SendRequestAction  `json:"action" url:"action"`
 	AllowFailure *bool                             `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                             `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAuth0SendRequestParams `json:"params" url:"params"`
@@ -4338,13 +4597,6 @@ func (f *FlowActionAuth0SendRequest) GetType() FlowActionAuth0SendRequestType {
 	return f.Type
 }
 
-func (f *FlowActionAuth0SendRequest) GetAction() FlowActionAuth0SendRequestAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAuth0SendRequest) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -4374,10 +4626,12 @@ func (f *FlowActionAuth0SendRequest) GetExtraProperties() map[string]interface{}
 }
 
 func (f *FlowActionAuth0SendRequest) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -4399,13 +4653,6 @@ func (f *FlowActionAuth0SendRequest) SetAlias(alias *string) {
 func (f *FlowActionAuth0SendRequest) SetType(type_ FlowActionAuth0SendRequestType) {
 	f.Type = type_
 	f.require(flowActionAuth0SendRequestFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAuth0SendRequest) SetAction(action FlowActionAuth0SendRequestAction) {
-	f.Action = action
-	f.require(flowActionAuth0SendRequestFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -4469,25 +4716,6 @@ func (f *FlowActionAuth0SendRequest) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionAuth0SendRequestAction string
-
-const (
-	FlowActionAuth0SendRequestActionSendRequest FlowActionAuth0SendRequestAction = "SEND_REQUEST"
-)
-
-func NewFlowActionAuth0SendRequestActionFromString(s string) (FlowActionAuth0SendRequestAction, error) {
-	switch s {
-	case "SEND_REQUEST":
-		return FlowActionAuth0SendRequestActionSendRequest, nil
-	}
-	var t FlowActionAuth0SendRequestAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAuth0SendRequestAction) Ptr() *FlowActionAuth0SendRequestAction {
-	return &f
 }
 
 var (
@@ -4564,10 +4792,12 @@ func (f *FlowActionAuth0SendRequestParams) GetExtraProperties() map[string]inter
 }
 
 func (f *FlowActionAuth0SendRequestParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -4861,17 +5091,15 @@ var (
 	flowActionAuth0SendSmsFieldID           = big.NewInt(1 << 0)
 	flowActionAuth0SendSmsFieldAlias        = big.NewInt(1 << 1)
 	flowActionAuth0SendSmsFieldType         = big.NewInt(1 << 2)
-	flowActionAuth0SendSmsFieldAction       = big.NewInt(1 << 3)
-	flowActionAuth0SendSmsFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAuth0SendSmsFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAuth0SendSmsFieldParams       = big.NewInt(1 << 6)
+	flowActionAuth0SendSmsFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAuth0SendSmsFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAuth0SendSmsFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAuth0SendSms struct {
 	ID           string                        `json:"id" url:"id"`
 	Alias        *string                       `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAuth0SendSmsType    `json:"type" url:"type"`
-	Action       FlowActionAuth0SendSmsAction  `json:"action" url:"action"`
 	AllowFailure *bool                         `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                         `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAuth0SendSmsParams `json:"params" url:"params"`
@@ -4904,13 +5132,6 @@ func (f *FlowActionAuth0SendSms) GetType() FlowActionAuth0SendSmsType {
 	return f.Type
 }
 
-func (f *FlowActionAuth0SendSms) GetAction() FlowActionAuth0SendSmsAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAuth0SendSms) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -4940,10 +5161,12 @@ func (f *FlowActionAuth0SendSms) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionAuth0SendSms) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -4965,13 +5188,6 @@ func (f *FlowActionAuth0SendSms) SetAlias(alias *string) {
 func (f *FlowActionAuth0SendSms) SetType(type_ FlowActionAuth0SendSmsType) {
 	f.Type = type_
 	f.require(flowActionAuth0SendSmsFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAuth0SendSms) SetAction(action FlowActionAuth0SendSmsAction) {
-	f.Action = action
-	f.require(flowActionAuth0SendSmsFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -5037,25 +5253,6 @@ func (f *FlowActionAuth0SendSms) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0SendSmsAction string
-
-const (
-	FlowActionAuth0SendSmsActionSendSms FlowActionAuth0SendSmsAction = "SEND_SMS"
-)
-
-func NewFlowActionAuth0SendSmsActionFromString(s string) (FlowActionAuth0SendSmsAction, error) {
-	switch s {
-	case "SEND_SMS":
-		return FlowActionAuth0SendSmsActionSendSms, nil
-	}
-	var t FlowActionAuth0SendSmsAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAuth0SendSmsAction) Ptr() *FlowActionAuth0SendSmsAction {
-	return &f
-}
-
 var (
 	flowActionAuth0SendSmsParamsFieldFrom       = big.NewInt(1 << 0)
 	flowActionAuth0SendSmsParamsFieldTo         = big.NewInt(1 << 1)
@@ -5112,10 +5309,12 @@ func (f *FlowActionAuth0SendSmsParams) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionAuth0SendSmsParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -5213,17 +5412,15 @@ var (
 	flowActionAuth0UpdateUserFieldID           = big.NewInt(1 << 0)
 	flowActionAuth0UpdateUserFieldAlias        = big.NewInt(1 << 1)
 	flowActionAuth0UpdateUserFieldType         = big.NewInt(1 << 2)
-	flowActionAuth0UpdateUserFieldAction       = big.NewInt(1 << 3)
-	flowActionAuth0UpdateUserFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionAuth0UpdateUserFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionAuth0UpdateUserFieldParams       = big.NewInt(1 << 6)
+	flowActionAuth0UpdateUserFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionAuth0UpdateUserFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionAuth0UpdateUserFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionAuth0UpdateUser struct {
 	ID           string                           `json:"id" url:"id"`
 	Alias        *string                          `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionAuth0UpdateUserType    `json:"type" url:"type"`
-	Action       FlowActionAuth0UpdateUserAction  `json:"action" url:"action"`
 	AllowFailure *bool                            `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                            `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionAuth0UpdateUserParams `json:"params" url:"params"`
@@ -5256,13 +5453,6 @@ func (f *FlowActionAuth0UpdateUser) GetType() FlowActionAuth0UpdateUserType {
 	return f.Type
 }
 
-func (f *FlowActionAuth0UpdateUser) GetAction() FlowActionAuth0UpdateUserAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionAuth0UpdateUser) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -5292,10 +5482,12 @@ func (f *FlowActionAuth0UpdateUser) GetExtraProperties() map[string]interface{} 
 }
 
 func (f *FlowActionAuth0UpdateUser) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -5317,13 +5509,6 @@ func (f *FlowActionAuth0UpdateUser) SetAlias(alias *string) {
 func (f *FlowActionAuth0UpdateUser) SetType(type_ FlowActionAuth0UpdateUserType) {
 	f.Type = type_
 	f.require(flowActionAuth0UpdateUserFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionAuth0UpdateUser) SetAction(action FlowActionAuth0UpdateUserAction) {
-	f.Action = action
-	f.require(flowActionAuth0UpdateUserFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -5389,25 +5574,6 @@ func (f *FlowActionAuth0UpdateUser) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionAuth0UpdateUserAction string
-
-const (
-	FlowActionAuth0UpdateUserActionUpdateUser FlowActionAuth0UpdateUserAction = "UPDATE_USER"
-)
-
-func NewFlowActionAuth0UpdateUserActionFromString(s string) (FlowActionAuth0UpdateUserAction, error) {
-	switch s {
-	case "UPDATE_USER":
-		return FlowActionAuth0UpdateUserActionUpdateUser, nil
-	}
-	var t FlowActionAuth0UpdateUserAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionAuth0UpdateUserAction) Ptr() *FlowActionAuth0UpdateUserAction {
-	return &f
-}
-
 var (
 	flowActionAuth0UpdateUserParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionAuth0UpdateUserParamsFieldUserID       = big.NewInt(1 << 1)
@@ -5455,10 +5621,12 @@ func (f *FlowActionAuth0UpdateUserParams) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowActionAuth0UpdateUserParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -5630,10 +5798,12 @@ func (f *FlowActionBigqueryInsertRows) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionBigqueryInsertRows) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -5802,10 +5972,12 @@ func (f *FlowActionBigqueryInsertRowsParams) GetExtraProperties() map[string]int
 }
 
 func (f *FlowActionBigqueryInsertRowsParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -5900,82 +6072,194 @@ func (f FlowActionBigqueryInsertRowsType) Ptr() *FlowActionBigqueryInsertRowsTyp
 }
 
 type FlowActionClearbit struct {
-	FlowActionClearbitFindPerson  *FlowActionClearbitFindPerson
-	FlowActionClearbitFindCompany *FlowActionClearbitFindCompany
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionClearbitFindPersonType
+	AllowFailure *bool
+	MaskOutput   *bool
+	FindPerson   *FlowActionClearbitFindPerson
+	FindCompany  *FlowActionClearbitFindCompany
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionClearbit) GetFlowActionClearbitFindPerson() *FlowActionClearbitFindPerson {
+func (f *FlowActionClearbit) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionClearbit) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionClearbit) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionClearbit) GetType() FlowActionClearbitFindPersonType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionClearbit) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionClearbit) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionClearbit) GetFindPerson() *FlowActionClearbitFindPerson {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionClearbitFindPerson
+	return f.FindPerson
 }
 
-func (f *FlowActionClearbit) GetFlowActionClearbitFindCompany() *FlowActionClearbitFindCompany {
+func (f *FlowActionClearbit) GetFindCompany() *FlowActionClearbitFindCompany {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionClearbitFindCompany
+	return f.FindCompany
 }
 
 func (f *FlowActionClearbit) UnmarshalJSON(data []byte) error {
-	valueFlowActionClearbitFindPerson := new(FlowActionClearbitFindPerson)
-	if err := json.Unmarshal(data, &valueFlowActionClearbitFindPerson); err == nil {
-		f.typ = "FlowActionClearbitFindPerson"
-		f.FlowActionClearbitFindPerson = valueFlowActionClearbitFindPerson
-		return nil
+	var unmarshaler struct {
+		Action       string                           `json:"action"`
+		ID           string                           `json:"id"`
+		Alias        *string                          `json:"alias,omitempty"`
+		Type         FlowActionClearbitFindPersonType `json:"type"`
+		AllowFailure *bool                            `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                            `json:"mask_output,omitempty"`
 	}
-	valueFlowActionClearbitFindCompany := new(FlowActionClearbitFindCompany)
-	if err := json.Unmarshal(data, &valueFlowActionClearbitFindCompany); err == nil {
-		f.typ = "FlowActionClearbitFindCompany"
-		f.FlowActionClearbitFindCompany = valueFlowActionClearbitFindCompany
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
+	}
+	switch unmarshaler.Action {
+	case "FIND_PERSON":
+		value := new(FlowActionClearbitFindPerson)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.FindPerson = value
+	case "FIND_COMPANY":
+		value := new(FlowActionClearbitFindCompany)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.FindCompany = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionClearbit) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionClearbitFindPerson" || f.FlowActionClearbitFindPerson != nil {
-		return json.Marshal(f.FlowActionClearbitFindPerson)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionClearbitFindCompany" || f.FlowActionClearbitFindCompany != nil {
-		return json.Marshal(f.FlowActionClearbitFindCompany)
+	if f.FindPerson != nil {
+		return internal.MarshalJSONWithExtraProperty(f.FindPerson, "action", "FIND_PERSON")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.FindCompany != nil {
+		return internal.MarshalJSONWithExtraProperty(f.FindCompany, "action", "FIND_COMPANY")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionClearbitVisitor interface {
-	VisitFlowActionClearbitFindPerson(*FlowActionClearbitFindPerson) error
-	VisitFlowActionClearbitFindCompany(*FlowActionClearbitFindCompany) error
+	VisitFindPerson(*FlowActionClearbitFindPerson) error
+	VisitFindCompany(*FlowActionClearbitFindCompany) error
 }
 
 func (f *FlowActionClearbit) Accept(visitor FlowActionClearbitVisitor) error {
-	if f.typ == "FlowActionClearbitFindPerson" || f.FlowActionClearbitFindPerson != nil {
-		return visitor.VisitFlowActionClearbitFindPerson(f.FlowActionClearbitFindPerson)
+	if f.FindPerson != nil {
+		return visitor.VisitFindPerson(f.FindPerson)
 	}
-	if f.typ == "FlowActionClearbitFindCompany" || f.FlowActionClearbitFindCompany != nil {
-		return visitor.VisitFlowActionClearbitFindCompany(f.FlowActionClearbitFindCompany)
+	if f.FindCompany != nil {
+		return visitor.VisitFindCompany(f.FindCompany)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionClearbit) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.FindPerson != nil {
+		fields = append(fields, "FIND_PERSON")
+	}
+	if f.FindCompany != nil {
+		fields = append(fields, "FIND_COMPANY")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionClearbitFindCompanyFieldID           = big.NewInt(1 << 0)
 	flowActionClearbitFindCompanyFieldAlias        = big.NewInt(1 << 1)
 	flowActionClearbitFindCompanyFieldType         = big.NewInt(1 << 2)
-	flowActionClearbitFindCompanyFieldAction       = big.NewInt(1 << 3)
-	flowActionClearbitFindCompanyFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionClearbitFindCompanyFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionClearbitFindCompanyFieldParams       = big.NewInt(1 << 6)
+	flowActionClearbitFindCompanyFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionClearbitFindCompanyFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionClearbitFindCompanyFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionClearbitFindCompany struct {
 	ID           string                               `json:"id" url:"id"`
 	Alias        *string                              `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionClearbitFindCompanyType    `json:"type" url:"type"`
-	Action       FlowActionClearbitFindCompanyAction  `json:"action" url:"action"`
 	AllowFailure *bool                                `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionClearbitFindCompanyParams `json:"params" url:"params"`
@@ -6008,13 +6292,6 @@ func (f *FlowActionClearbitFindCompany) GetType() FlowActionClearbitFindCompanyT
 	return f.Type
 }
 
-func (f *FlowActionClearbitFindCompany) GetAction() FlowActionClearbitFindCompanyAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionClearbitFindCompany) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -6044,10 +6321,12 @@ func (f *FlowActionClearbitFindCompany) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionClearbitFindCompany) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -6069,13 +6348,6 @@ func (f *FlowActionClearbitFindCompany) SetAlias(alias *string) {
 func (f *FlowActionClearbitFindCompany) SetType(type_ FlowActionClearbitFindCompanyType) {
 	f.Type = type_
 	f.require(flowActionClearbitFindCompanyFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionClearbitFindCompany) SetAction(action FlowActionClearbitFindCompanyAction) {
-	f.Action = action
-	f.require(flowActionClearbitFindCompanyFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -6141,25 +6413,6 @@ func (f *FlowActionClearbitFindCompany) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionClearbitFindCompanyAction string
-
-const (
-	FlowActionClearbitFindCompanyActionFindCompany FlowActionClearbitFindCompanyAction = "FIND_COMPANY"
-)
-
-func NewFlowActionClearbitFindCompanyActionFromString(s string) (FlowActionClearbitFindCompanyAction, error) {
-	switch s {
-	case "FIND_COMPANY":
-		return FlowActionClearbitFindCompanyActionFindCompany, nil
-	}
-	var t FlowActionClearbitFindCompanyAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionClearbitFindCompanyAction) Ptr() *FlowActionClearbitFindCompanyAction {
-	return &f
-}
-
 var (
 	flowActionClearbitFindCompanyParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionClearbitFindCompanyParamsFieldDomain       = big.NewInt(1 << 1)
@@ -6198,10 +6451,12 @@ func (f *FlowActionClearbitFindCompanyParams) GetExtraProperties() map[string]in
 }
 
 func (f *FlowActionClearbitFindCompanyParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -6283,17 +6538,15 @@ var (
 	flowActionClearbitFindPersonFieldID           = big.NewInt(1 << 0)
 	flowActionClearbitFindPersonFieldAlias        = big.NewInt(1 << 1)
 	flowActionClearbitFindPersonFieldType         = big.NewInt(1 << 2)
-	flowActionClearbitFindPersonFieldAction       = big.NewInt(1 << 3)
-	flowActionClearbitFindPersonFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionClearbitFindPersonFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionClearbitFindPersonFieldParams       = big.NewInt(1 << 6)
+	flowActionClearbitFindPersonFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionClearbitFindPersonFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionClearbitFindPersonFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionClearbitFindPerson struct {
 	ID           string                              `json:"id" url:"id"`
 	Alias        *string                             `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionClearbitFindPersonType    `json:"type" url:"type"`
-	Action       FlowActionClearbitFindPersonAction  `json:"action" url:"action"`
 	AllowFailure *bool                               `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                               `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionClearbitFindPersonParams `json:"params" url:"params"`
@@ -6326,13 +6579,6 @@ func (f *FlowActionClearbitFindPerson) GetType() FlowActionClearbitFindPersonTyp
 	return f.Type
 }
 
-func (f *FlowActionClearbitFindPerson) GetAction() FlowActionClearbitFindPersonAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionClearbitFindPerson) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -6362,10 +6608,12 @@ func (f *FlowActionClearbitFindPerson) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionClearbitFindPerson) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -6387,13 +6635,6 @@ func (f *FlowActionClearbitFindPerson) SetAlias(alias *string) {
 func (f *FlowActionClearbitFindPerson) SetType(type_ FlowActionClearbitFindPersonType) {
 	f.Type = type_
 	f.require(flowActionClearbitFindPersonFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionClearbitFindPerson) SetAction(action FlowActionClearbitFindPersonAction) {
-	f.Action = action
-	f.require(flowActionClearbitFindPersonFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -6459,25 +6700,6 @@ func (f *FlowActionClearbitFindPerson) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionClearbitFindPersonAction string
-
-const (
-	FlowActionClearbitFindPersonActionFindPerson FlowActionClearbitFindPersonAction = "FIND_PERSON"
-)
-
-func NewFlowActionClearbitFindPersonActionFromString(s string) (FlowActionClearbitFindPersonAction, error) {
-	switch s {
-	case "FIND_PERSON":
-		return FlowActionClearbitFindPersonActionFindPerson, nil
-	}
-	var t FlowActionClearbitFindPersonAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionClearbitFindPersonAction) Ptr() *FlowActionClearbitFindPersonAction {
-	return &f
-}
-
 var (
 	flowActionClearbitFindPersonParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionClearbitFindPersonParamsFieldEmail        = big.NewInt(1 << 1)
@@ -6516,10 +6738,12 @@ func (f *FlowActionClearbitFindPersonParams) GetExtraProperties() map[string]int
 }
 
 func (f *FlowActionClearbitFindPersonParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -6682,10 +6906,12 @@ func (f *FlowActionEmailVerifyEmail) GetExtraProperties() map[string]interface{}
 }
 
 func (f *FlowActionEmailVerifyEmail) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -6836,10 +7062,12 @@ func (f *FlowActionEmailVerifyEmailParams) GetExtraProperties() map[string]inter
 }
 
 func (f *FlowActionEmailVerifyEmailParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -6972,10 +7200,12 @@ func (f *FlowActionEmailVerifyEmailParamsRules) GetExtraProperties() map[string]
 }
 
 func (f *FlowActionEmailVerifyEmailParamsRules) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetRequireMxRecord sets the RequireMxRecord field and marks it as non-optional;
@@ -7082,187 +7312,314 @@ func (f FlowActionEmailVerifyEmailType) Ptr() *FlowActionEmailVerifyEmailType {
 }
 
 type FlowActionFlow struct {
-	FlowActionFlowBooleanCondition *FlowActionFlowBooleanCondition
-	FlowActionFlowDelayFlow        *FlowActionFlowDelayFlow
-	FlowActionFlowDoNothing        *FlowActionFlowDoNothing
-	FlowActionFlowErrorMessage     *FlowActionFlowErrorMessage
-	FlowActionFlowMapValue         *FlowActionFlowMapValue
-	FlowActionFlowReturnJSON       *FlowActionFlowReturnJSON
-	FlowActionFlowStoreVars        *FlowActionFlowStoreVars
+	Action           string
+	ID               string
+	Alias            *string
+	Type             FlowActionFlowBooleanConditionType
+	AllowFailure     *bool
+	MaskOutput       *bool
+	BooleanCondition *FlowActionFlowBooleanCondition
+	DelayFlow        *FlowActionFlowDelayFlow
+	DoNothing        *FlowActionFlowDoNothing
+	ErrorMessage     *FlowActionFlowErrorMessage
+	MapValue         *FlowActionFlowMapValue
+	ReturnJSON       *FlowActionFlowReturnJSON
+	StoreVars        *FlowActionFlowStoreVars
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionFlow) GetFlowActionFlowBooleanCondition() *FlowActionFlowBooleanCondition {
+func (f *FlowActionFlow) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionFlow) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionFlow) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionFlow) GetType() FlowActionFlowBooleanConditionType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionFlow) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionFlow) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionFlow) GetBooleanCondition() *FlowActionFlowBooleanCondition {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionFlowBooleanCondition
+	return f.BooleanCondition
 }
 
-func (f *FlowActionFlow) GetFlowActionFlowDelayFlow() *FlowActionFlowDelayFlow {
+func (f *FlowActionFlow) GetDelayFlow() *FlowActionFlowDelayFlow {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionFlowDelayFlow
+	return f.DelayFlow
 }
 
-func (f *FlowActionFlow) GetFlowActionFlowDoNothing() *FlowActionFlowDoNothing {
+func (f *FlowActionFlow) GetDoNothing() *FlowActionFlowDoNothing {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionFlowDoNothing
+	return f.DoNothing
 }
 
-func (f *FlowActionFlow) GetFlowActionFlowErrorMessage() *FlowActionFlowErrorMessage {
+func (f *FlowActionFlow) GetErrorMessage() *FlowActionFlowErrorMessage {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionFlowErrorMessage
+	return f.ErrorMessage
 }
 
-func (f *FlowActionFlow) GetFlowActionFlowMapValue() *FlowActionFlowMapValue {
+func (f *FlowActionFlow) GetMapValue() *FlowActionFlowMapValue {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionFlowMapValue
+	return f.MapValue
 }
 
-func (f *FlowActionFlow) GetFlowActionFlowReturnJSON() *FlowActionFlowReturnJSON {
+func (f *FlowActionFlow) GetReturnJSON() *FlowActionFlowReturnJSON {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionFlowReturnJSON
+	return f.ReturnJSON
 }
 
-func (f *FlowActionFlow) GetFlowActionFlowStoreVars() *FlowActionFlowStoreVars {
+func (f *FlowActionFlow) GetStoreVars() *FlowActionFlowStoreVars {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionFlowStoreVars
+	return f.StoreVars
 }
 
 func (f *FlowActionFlow) UnmarshalJSON(data []byte) error {
-	valueFlowActionFlowBooleanCondition := new(FlowActionFlowBooleanCondition)
-	if err := json.Unmarshal(data, &valueFlowActionFlowBooleanCondition); err == nil {
-		f.typ = "FlowActionFlowBooleanCondition"
-		f.FlowActionFlowBooleanCondition = valueFlowActionFlowBooleanCondition
-		return nil
+	var unmarshaler struct {
+		Action       string                             `json:"action"`
+		ID           string                             `json:"id"`
+		Alias        *string                            `json:"alias,omitempty"`
+		Type         FlowActionFlowBooleanConditionType `json:"type"`
+		AllowFailure *bool                              `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                              `json:"mask_output,omitempty"`
 	}
-	valueFlowActionFlowDelayFlow := new(FlowActionFlowDelayFlow)
-	if err := json.Unmarshal(data, &valueFlowActionFlowDelayFlow); err == nil {
-		f.typ = "FlowActionFlowDelayFlow"
-		f.FlowActionFlowDelayFlow = valueFlowActionFlowDelayFlow
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionFlowDoNothing := new(FlowActionFlowDoNothing)
-	if err := json.Unmarshal(data, &valueFlowActionFlowDoNothing); err == nil {
-		f.typ = "FlowActionFlowDoNothing"
-		f.FlowActionFlowDoNothing = valueFlowActionFlowDoNothing
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	valueFlowActionFlowErrorMessage := new(FlowActionFlowErrorMessage)
-	if err := json.Unmarshal(data, &valueFlowActionFlowErrorMessage); err == nil {
-		f.typ = "FlowActionFlowErrorMessage"
-		f.FlowActionFlowErrorMessage = valueFlowActionFlowErrorMessage
-		return nil
+	switch unmarshaler.Action {
+	case "BOOLEAN_CONDITION":
+		value := new(FlowActionFlowBooleanCondition)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.BooleanCondition = value
+	case "DELAY_FLOW":
+		value := new(FlowActionFlowDelayFlow)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.DelayFlow = value
+	case "DO_NOTHING":
+		value := new(FlowActionFlowDoNothing)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.DoNothing = value
+	case "ERROR_MESSAGE":
+		value := new(FlowActionFlowErrorMessage)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.ErrorMessage = value
+	case "MAP_VALUE":
+		value := new(FlowActionFlowMapValue)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.MapValue = value
+	case "RETURN_JSON":
+		value := new(FlowActionFlowReturnJSON)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.ReturnJSON = value
+	case "STORE_VARS":
+		value := new(FlowActionFlowStoreVars)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.StoreVars = value
 	}
-	valueFlowActionFlowMapValue := new(FlowActionFlowMapValue)
-	if err := json.Unmarshal(data, &valueFlowActionFlowMapValue); err == nil {
-		f.typ = "FlowActionFlowMapValue"
-		f.FlowActionFlowMapValue = valueFlowActionFlowMapValue
-		return nil
-	}
-	valueFlowActionFlowReturnJSON := new(FlowActionFlowReturnJSON)
-	if err := json.Unmarshal(data, &valueFlowActionFlowReturnJSON); err == nil {
-		f.typ = "FlowActionFlowReturnJSON"
-		f.FlowActionFlowReturnJSON = valueFlowActionFlowReturnJSON
-		return nil
-	}
-	valueFlowActionFlowStoreVars := new(FlowActionFlowStoreVars)
-	if err := json.Unmarshal(data, &valueFlowActionFlowStoreVars); err == nil {
-		f.typ = "FlowActionFlowStoreVars"
-		f.FlowActionFlowStoreVars = valueFlowActionFlowStoreVars
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionFlow) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionFlowBooleanCondition" || f.FlowActionFlowBooleanCondition != nil {
-		return json.Marshal(f.FlowActionFlowBooleanCondition)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionFlowDelayFlow" || f.FlowActionFlowDelayFlow != nil {
-		return json.Marshal(f.FlowActionFlowDelayFlow)
+	if f.BooleanCondition != nil {
+		return internal.MarshalJSONWithExtraProperty(f.BooleanCondition, "action", "BOOLEAN_CONDITION")
 	}
-	if f.typ == "FlowActionFlowDoNothing" || f.FlowActionFlowDoNothing != nil {
-		return json.Marshal(f.FlowActionFlowDoNothing)
+	if f.DelayFlow != nil {
+		return internal.MarshalJSONWithExtraProperty(f.DelayFlow, "action", "DELAY_FLOW")
 	}
-	if f.typ == "FlowActionFlowErrorMessage" || f.FlowActionFlowErrorMessage != nil {
-		return json.Marshal(f.FlowActionFlowErrorMessage)
+	if f.DoNothing != nil {
+		return internal.MarshalJSONWithExtraProperty(f.DoNothing, "action", "DO_NOTHING")
 	}
-	if f.typ == "FlowActionFlowMapValue" || f.FlowActionFlowMapValue != nil {
-		return json.Marshal(f.FlowActionFlowMapValue)
+	if f.ErrorMessage != nil {
+		return internal.MarshalJSONWithExtraProperty(f.ErrorMessage, "action", "ERROR_MESSAGE")
 	}
-	if f.typ == "FlowActionFlowReturnJSON" || f.FlowActionFlowReturnJSON != nil {
-		return json.Marshal(f.FlowActionFlowReturnJSON)
+	if f.MapValue != nil {
+		return internal.MarshalJSONWithExtraProperty(f.MapValue, "action", "MAP_VALUE")
 	}
-	if f.typ == "FlowActionFlowStoreVars" || f.FlowActionFlowStoreVars != nil {
-		return json.Marshal(f.FlowActionFlowStoreVars)
+	if f.ReturnJSON != nil {
+		return internal.MarshalJSONWithExtraProperty(f.ReturnJSON, "action", "RETURN_JSON")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.StoreVars != nil {
+		return internal.MarshalJSONWithExtraProperty(f.StoreVars, "action", "STORE_VARS")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionFlowVisitor interface {
-	VisitFlowActionFlowBooleanCondition(*FlowActionFlowBooleanCondition) error
-	VisitFlowActionFlowDelayFlow(*FlowActionFlowDelayFlow) error
-	VisitFlowActionFlowDoNothing(*FlowActionFlowDoNothing) error
-	VisitFlowActionFlowErrorMessage(*FlowActionFlowErrorMessage) error
-	VisitFlowActionFlowMapValue(*FlowActionFlowMapValue) error
-	VisitFlowActionFlowReturnJSON(*FlowActionFlowReturnJSON) error
-	VisitFlowActionFlowStoreVars(*FlowActionFlowStoreVars) error
+	VisitBooleanCondition(*FlowActionFlowBooleanCondition) error
+	VisitDelayFlow(*FlowActionFlowDelayFlow) error
+	VisitDoNothing(*FlowActionFlowDoNothing) error
+	VisitErrorMessage(*FlowActionFlowErrorMessage) error
+	VisitMapValue(*FlowActionFlowMapValue) error
+	VisitReturnJSON(*FlowActionFlowReturnJSON) error
+	VisitStoreVars(*FlowActionFlowStoreVars) error
 }
 
 func (f *FlowActionFlow) Accept(visitor FlowActionFlowVisitor) error {
-	if f.typ == "FlowActionFlowBooleanCondition" || f.FlowActionFlowBooleanCondition != nil {
-		return visitor.VisitFlowActionFlowBooleanCondition(f.FlowActionFlowBooleanCondition)
+	if f.BooleanCondition != nil {
+		return visitor.VisitBooleanCondition(f.BooleanCondition)
 	}
-	if f.typ == "FlowActionFlowDelayFlow" || f.FlowActionFlowDelayFlow != nil {
-		return visitor.VisitFlowActionFlowDelayFlow(f.FlowActionFlowDelayFlow)
+	if f.DelayFlow != nil {
+		return visitor.VisitDelayFlow(f.DelayFlow)
 	}
-	if f.typ == "FlowActionFlowDoNothing" || f.FlowActionFlowDoNothing != nil {
-		return visitor.VisitFlowActionFlowDoNothing(f.FlowActionFlowDoNothing)
+	if f.DoNothing != nil {
+		return visitor.VisitDoNothing(f.DoNothing)
 	}
-	if f.typ == "FlowActionFlowErrorMessage" || f.FlowActionFlowErrorMessage != nil {
-		return visitor.VisitFlowActionFlowErrorMessage(f.FlowActionFlowErrorMessage)
+	if f.ErrorMessage != nil {
+		return visitor.VisitErrorMessage(f.ErrorMessage)
 	}
-	if f.typ == "FlowActionFlowMapValue" || f.FlowActionFlowMapValue != nil {
-		return visitor.VisitFlowActionFlowMapValue(f.FlowActionFlowMapValue)
+	if f.MapValue != nil {
+		return visitor.VisitMapValue(f.MapValue)
 	}
-	if f.typ == "FlowActionFlowReturnJSON" || f.FlowActionFlowReturnJSON != nil {
-		return visitor.VisitFlowActionFlowReturnJSON(f.FlowActionFlowReturnJSON)
+	if f.ReturnJSON != nil {
+		return visitor.VisitReturnJSON(f.ReturnJSON)
 	}
-	if f.typ == "FlowActionFlowStoreVars" || f.FlowActionFlowStoreVars != nil {
-		return visitor.VisitFlowActionFlowStoreVars(f.FlowActionFlowStoreVars)
+	if f.StoreVars != nil {
+		return visitor.VisitStoreVars(f.StoreVars)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionFlow) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.BooleanCondition != nil {
+		fields = append(fields, "BOOLEAN_CONDITION")
+	}
+	if f.DelayFlow != nil {
+		fields = append(fields, "DELAY_FLOW")
+	}
+	if f.DoNothing != nil {
+		fields = append(fields, "DO_NOTHING")
+	}
+	if f.ErrorMessage != nil {
+		fields = append(fields, "ERROR_MESSAGE")
+	}
+	if f.MapValue != nil {
+		fields = append(fields, "MAP_VALUE")
+	}
+	if f.ReturnJSON != nil {
+		fields = append(fields, "RETURN_JSON")
+	}
+	if f.StoreVars != nil {
+		fields = append(fields, "STORE_VARS")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionFlowBooleanConditionFieldID           = big.NewInt(1 << 0)
 	flowActionFlowBooleanConditionFieldAlias        = big.NewInt(1 << 1)
 	flowActionFlowBooleanConditionFieldType         = big.NewInt(1 << 2)
-	flowActionFlowBooleanConditionFieldAction       = big.NewInt(1 << 3)
-	flowActionFlowBooleanConditionFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionFlowBooleanConditionFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionFlowBooleanConditionFieldParams       = big.NewInt(1 << 6)
+	flowActionFlowBooleanConditionFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionFlowBooleanConditionFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionFlowBooleanConditionFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionFlowBooleanCondition struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionFlowBooleanConditionType    `json:"type" url:"type"`
-	Action       FlowActionFlowBooleanConditionAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionFlowBooleanConditionParams `json:"params" url:"params"`
@@ -7295,13 +7652,6 @@ func (f *FlowActionFlowBooleanCondition) GetType() FlowActionFlowBooleanConditio
 	return f.Type
 }
 
-func (f *FlowActionFlowBooleanCondition) GetAction() FlowActionFlowBooleanConditionAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionFlowBooleanCondition) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -7331,10 +7681,12 @@ func (f *FlowActionFlowBooleanCondition) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionFlowBooleanCondition) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -7356,13 +7708,6 @@ func (f *FlowActionFlowBooleanCondition) SetAlias(alias *string) {
 func (f *FlowActionFlowBooleanCondition) SetType(type_ FlowActionFlowBooleanConditionType) {
 	f.Type = type_
 	f.require(flowActionFlowBooleanConditionFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionFlowBooleanCondition) SetAction(action FlowActionFlowBooleanConditionAction) {
-	f.Action = action
-	f.require(flowActionFlowBooleanConditionFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -7428,25 +7773,6 @@ func (f *FlowActionFlowBooleanCondition) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowBooleanConditionAction string
-
-const (
-	FlowActionFlowBooleanConditionActionBooleanCondition FlowActionFlowBooleanConditionAction = "BOOLEAN_CONDITION"
-)
-
-func NewFlowActionFlowBooleanConditionActionFromString(s string) (FlowActionFlowBooleanConditionAction, error) {
-	switch s {
-	case "BOOLEAN_CONDITION":
-		return FlowActionFlowBooleanConditionActionBooleanCondition, nil
-	}
-	var t FlowActionFlowBooleanConditionAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionFlowBooleanConditionAction) Ptr() *FlowActionFlowBooleanConditionAction {
-	return &f
-}
-
 var (
 	flowActionFlowBooleanConditionParamsFieldThen = big.NewInt(1 << 0)
 	flowActionFlowBooleanConditionParamsFieldElse = big.NewInt(1 << 1)
@@ -7485,10 +7811,12 @@ func (f *FlowActionFlowBooleanConditionParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionFlowBooleanConditionParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetThen sets the Then field and marks it as non-optional;
@@ -7570,17 +7898,15 @@ var (
 	flowActionFlowDelayFlowFieldID           = big.NewInt(1 << 0)
 	flowActionFlowDelayFlowFieldAlias        = big.NewInt(1 << 1)
 	flowActionFlowDelayFlowFieldType         = big.NewInt(1 << 2)
-	flowActionFlowDelayFlowFieldAction       = big.NewInt(1 << 3)
-	flowActionFlowDelayFlowFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionFlowDelayFlowFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionFlowDelayFlowFieldParams       = big.NewInt(1 << 6)
+	flowActionFlowDelayFlowFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionFlowDelayFlowFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionFlowDelayFlowFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionFlowDelayFlow struct {
 	ID           string                         `json:"id" url:"id"`
 	Alias        *string                        `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionFlowDelayFlowType    `json:"type" url:"type"`
-	Action       FlowActionFlowDelayFlowAction  `json:"action" url:"action"`
 	AllowFailure *bool                          `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                          `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionFlowDelayFlowParams `json:"params" url:"params"`
@@ -7613,13 +7939,6 @@ func (f *FlowActionFlowDelayFlow) GetType() FlowActionFlowDelayFlowType {
 	return f.Type
 }
 
-func (f *FlowActionFlowDelayFlow) GetAction() FlowActionFlowDelayFlowAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionFlowDelayFlow) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -7649,10 +7968,12 @@ func (f *FlowActionFlowDelayFlow) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionFlowDelayFlow) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -7674,13 +7995,6 @@ func (f *FlowActionFlowDelayFlow) SetAlias(alias *string) {
 func (f *FlowActionFlowDelayFlow) SetType(type_ FlowActionFlowDelayFlowType) {
 	f.Type = type_
 	f.require(flowActionFlowDelayFlowFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionFlowDelayFlow) SetAction(action FlowActionFlowDelayFlowAction) {
-	f.Action = action
-	f.require(flowActionFlowDelayFlowFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -7746,25 +8060,6 @@ func (f *FlowActionFlowDelayFlow) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowDelayFlowAction string
-
-const (
-	FlowActionFlowDelayFlowActionDelayFlow FlowActionFlowDelayFlowAction = "DELAY_FLOW"
-)
-
-func NewFlowActionFlowDelayFlowActionFromString(s string) (FlowActionFlowDelayFlowAction, error) {
-	switch s {
-	case "DELAY_FLOW":
-		return FlowActionFlowDelayFlowActionDelayFlow, nil
-	}
-	var t FlowActionFlowDelayFlowAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionFlowDelayFlowAction) Ptr() *FlowActionFlowDelayFlowAction {
-	return &f
-}
-
 var (
 	flowActionFlowDelayFlowParamsFieldNumber = big.NewInt(1 << 0)
 	flowActionFlowDelayFlowParamsFieldUnits  = big.NewInt(1 << 1)
@@ -7803,10 +8098,12 @@ func (f *FlowActionFlowDelayFlowParams) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionFlowDelayFlowParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetNumber sets the Number field and marks it as non-optional;
@@ -7978,17 +8275,15 @@ var (
 	flowActionFlowDoNothingFieldID           = big.NewInt(1 << 0)
 	flowActionFlowDoNothingFieldAlias        = big.NewInt(1 << 1)
 	flowActionFlowDoNothingFieldType         = big.NewInt(1 << 2)
-	flowActionFlowDoNothingFieldAction       = big.NewInt(1 << 3)
-	flowActionFlowDoNothingFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionFlowDoNothingFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionFlowDoNothingFieldParams       = big.NewInt(1 << 6)
+	flowActionFlowDoNothingFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionFlowDoNothingFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionFlowDoNothingFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionFlowDoNothing struct {
 	ID           string                         `json:"id" url:"id"`
 	Alias        *string                        `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionFlowDoNothingType    `json:"type" url:"type"`
-	Action       FlowActionFlowDoNothingAction  `json:"action" url:"action"`
 	AllowFailure *bool                          `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                          `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionFlowDoNothingParams `json:"params,omitempty" url:"params,omitempty"`
@@ -8021,13 +8316,6 @@ func (f *FlowActionFlowDoNothing) GetType() FlowActionFlowDoNothingType {
 	return f.Type
 }
 
-func (f *FlowActionFlowDoNothing) GetAction() FlowActionFlowDoNothingAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionFlowDoNothing) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -8057,10 +8345,12 @@ func (f *FlowActionFlowDoNothing) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionFlowDoNothing) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -8082,13 +8372,6 @@ func (f *FlowActionFlowDoNothing) SetAlias(alias *string) {
 func (f *FlowActionFlowDoNothing) SetType(type_ FlowActionFlowDoNothingType) {
 	f.Type = type_
 	f.require(flowActionFlowDoNothingFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionFlowDoNothing) SetAction(action FlowActionFlowDoNothingAction) {
-	f.Action = action
-	f.require(flowActionFlowDoNothingFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -8154,25 +8437,6 @@ func (f *FlowActionFlowDoNothing) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowDoNothingAction string
-
-const (
-	FlowActionFlowDoNothingActionDoNothing FlowActionFlowDoNothingAction = "DO_NOTHING"
-)
-
-func NewFlowActionFlowDoNothingActionFromString(s string) (FlowActionFlowDoNothingAction, error) {
-	switch s {
-	case "DO_NOTHING":
-		return FlowActionFlowDoNothingActionDoNothing, nil
-	}
-	var t FlowActionFlowDoNothingAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionFlowDoNothingAction) Ptr() *FlowActionFlowDoNothingAction {
-	return &f
-}
-
 type FlowActionFlowDoNothingParams struct {
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -8190,10 +8454,12 @@ func (f *FlowActionFlowDoNothingParams) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionFlowDoNothingParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 func (f *FlowActionFlowDoNothingParams) UnmarshalJSON(data []byte) error {
@@ -8261,17 +8527,15 @@ var (
 	flowActionFlowErrorMessageFieldID           = big.NewInt(1 << 0)
 	flowActionFlowErrorMessageFieldAlias        = big.NewInt(1 << 1)
 	flowActionFlowErrorMessageFieldType         = big.NewInt(1 << 2)
-	flowActionFlowErrorMessageFieldAction       = big.NewInt(1 << 3)
-	flowActionFlowErrorMessageFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionFlowErrorMessageFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionFlowErrorMessageFieldParams       = big.NewInt(1 << 6)
+	flowActionFlowErrorMessageFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionFlowErrorMessageFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionFlowErrorMessageFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionFlowErrorMessage struct {
 	ID           string                            `json:"id" url:"id"`
 	Alias        *string                           `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionFlowErrorMessageType    `json:"type" url:"type"`
-	Action       FlowActionFlowErrorMessageAction  `json:"action" url:"action"`
 	AllowFailure *bool                             `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                             `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionFlowErrorMessageParams `json:"params" url:"params"`
@@ -8304,13 +8568,6 @@ func (f *FlowActionFlowErrorMessage) GetType() FlowActionFlowErrorMessageType {
 	return f.Type
 }
 
-func (f *FlowActionFlowErrorMessage) GetAction() FlowActionFlowErrorMessageAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionFlowErrorMessage) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -8340,10 +8597,12 @@ func (f *FlowActionFlowErrorMessage) GetExtraProperties() map[string]interface{}
 }
 
 func (f *FlowActionFlowErrorMessage) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -8365,13 +8624,6 @@ func (f *FlowActionFlowErrorMessage) SetAlias(alias *string) {
 func (f *FlowActionFlowErrorMessage) SetType(type_ FlowActionFlowErrorMessageType) {
 	f.Type = type_
 	f.require(flowActionFlowErrorMessageFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionFlowErrorMessage) SetAction(action FlowActionFlowErrorMessageAction) {
-	f.Action = action
-	f.require(flowActionFlowErrorMessageFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -8437,25 +8689,6 @@ func (f *FlowActionFlowErrorMessage) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowErrorMessageAction string
-
-const (
-	FlowActionFlowErrorMessageActionErrorMessage FlowActionFlowErrorMessageAction = "ERROR_MESSAGE"
-)
-
-func NewFlowActionFlowErrorMessageActionFromString(s string) (FlowActionFlowErrorMessageAction, error) {
-	switch s {
-	case "ERROR_MESSAGE":
-		return FlowActionFlowErrorMessageActionErrorMessage, nil
-	}
-	var t FlowActionFlowErrorMessageAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionFlowErrorMessageAction) Ptr() *FlowActionFlowErrorMessageAction {
-	return &f
-}
-
 var (
 	flowActionFlowErrorMessageParamsFieldMessage = big.NewInt(1 << 0)
 )
@@ -8485,10 +8718,12 @@ func (f *FlowActionFlowErrorMessageParams) GetExtraProperties() map[string]inter
 }
 
 func (f *FlowActionFlowErrorMessageParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -8563,17 +8798,15 @@ var (
 	flowActionFlowMapValueFieldID           = big.NewInt(1 << 0)
 	flowActionFlowMapValueFieldAlias        = big.NewInt(1 << 1)
 	flowActionFlowMapValueFieldType         = big.NewInt(1 << 2)
-	flowActionFlowMapValueFieldAction       = big.NewInt(1 << 3)
-	flowActionFlowMapValueFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionFlowMapValueFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionFlowMapValueFieldParams       = big.NewInt(1 << 6)
+	flowActionFlowMapValueFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionFlowMapValueFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionFlowMapValueFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionFlowMapValue struct {
 	ID           string                        `json:"id" url:"id"`
 	Alias        *string                       `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionFlowMapValueType    `json:"type" url:"type"`
-	Action       FlowActionFlowMapValueAction  `json:"action" url:"action"`
 	AllowFailure *bool                         `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                         `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionFlowMapValueParams `json:"params" url:"params"`
@@ -8606,13 +8839,6 @@ func (f *FlowActionFlowMapValue) GetType() FlowActionFlowMapValueType {
 	return f.Type
 }
 
-func (f *FlowActionFlowMapValue) GetAction() FlowActionFlowMapValueAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionFlowMapValue) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -8642,10 +8868,12 @@ func (f *FlowActionFlowMapValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionFlowMapValue) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -8667,13 +8895,6 @@ func (f *FlowActionFlowMapValue) SetAlias(alias *string) {
 func (f *FlowActionFlowMapValue) SetType(type_ FlowActionFlowMapValueType) {
 	f.Type = type_
 	f.require(flowActionFlowMapValueFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionFlowMapValue) SetAction(action FlowActionFlowMapValueAction) {
-	f.Action = action
-	f.require(flowActionFlowMapValueFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -8739,30 +8960,16 @@ func (f *FlowActionFlowMapValue) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowMapValueAction string
-
-const (
-	FlowActionFlowMapValueActionMapValue FlowActionFlowMapValueAction = "MAP_VALUE"
-)
-
-func NewFlowActionFlowMapValueActionFromString(s string) (FlowActionFlowMapValueAction, error) {
-	switch s {
-	case "MAP_VALUE":
-		return FlowActionFlowMapValueActionMapValue, nil
-	}
-	var t FlowActionFlowMapValueAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionFlowMapValueAction) Ptr() *FlowActionFlowMapValueAction {
-	return &f
-}
-
 var (
 	flowActionFlowMapValueParamsFieldInput    = big.NewInt(1 << 0)
 	flowActionFlowMapValueParamsFieldCases    = big.NewInt(1 << 1)
 	flowActionFlowMapValueParamsFieldFallback = big.NewInt(1 << 2)
 )
+
+// flowActionFlowMapValueParamsNullableFields maps the wire names of FlowActionFlowMapValueParams's nullable fields (required or optional) to their field bits.
+var flowActionFlowMapValueParamsNullableFields = map[string]*big.Int{
+	"fallback": flowActionFlowMapValueParamsFieldFallback,
+}
 
 type FlowActionFlowMapValueParams struct {
 	Input    *FlowActionFlowMapValueParamsInput    `json:"input" url:"input"`
@@ -8805,10 +9012,12 @@ func (f *FlowActionFlowMapValueParams) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionFlowMapValueParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetInput sets the Input field and marks it as non-optional;
@@ -8844,6 +9053,13 @@ func (f *FlowActionFlowMapValueParams) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, flowActionFlowMapValueParamsNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		f.require(presentFields)
+	}
 	f.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -9067,17 +9283,15 @@ var (
 	flowActionFlowReturnJSONFieldID           = big.NewInt(1 << 0)
 	flowActionFlowReturnJSONFieldAlias        = big.NewInt(1 << 1)
 	flowActionFlowReturnJSONFieldType         = big.NewInt(1 << 2)
-	flowActionFlowReturnJSONFieldAction       = big.NewInt(1 << 3)
-	flowActionFlowReturnJSONFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionFlowReturnJSONFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionFlowReturnJSONFieldParams       = big.NewInt(1 << 6)
+	flowActionFlowReturnJSONFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionFlowReturnJSONFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionFlowReturnJSONFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionFlowReturnJSON struct {
 	ID           string                          `json:"id" url:"id"`
 	Alias        *string                         `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionFlowReturnJSONType    `json:"type" url:"type"`
-	Action       FlowActionFlowReturnJSONAction  `json:"action" url:"action"`
 	AllowFailure *bool                           `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                           `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionFlowReturnJSONParams `json:"params" url:"params"`
@@ -9110,13 +9324,6 @@ func (f *FlowActionFlowReturnJSON) GetType() FlowActionFlowReturnJSONType {
 	return f.Type
 }
 
-func (f *FlowActionFlowReturnJSON) GetAction() FlowActionFlowReturnJSONAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionFlowReturnJSON) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -9146,10 +9353,12 @@ func (f *FlowActionFlowReturnJSON) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionFlowReturnJSON) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -9171,13 +9380,6 @@ func (f *FlowActionFlowReturnJSON) SetAlias(alias *string) {
 func (f *FlowActionFlowReturnJSON) SetType(type_ FlowActionFlowReturnJSONType) {
 	f.Type = type_
 	f.require(flowActionFlowReturnJSONFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionFlowReturnJSON) SetAction(action FlowActionFlowReturnJSONAction) {
-	f.Action = action
-	f.require(flowActionFlowReturnJSONFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -9243,25 +9445,6 @@ func (f *FlowActionFlowReturnJSON) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowReturnJSONAction string
-
-const (
-	FlowActionFlowReturnJSONActionReturnJSON FlowActionFlowReturnJSONAction = "RETURN_JSON"
-)
-
-func NewFlowActionFlowReturnJSONActionFromString(s string) (FlowActionFlowReturnJSONAction, error) {
-	switch s {
-	case "RETURN_JSON":
-		return FlowActionFlowReturnJSONActionReturnJSON, nil
-	}
-	var t FlowActionFlowReturnJSONAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionFlowReturnJSONAction) Ptr() *FlowActionFlowReturnJSONAction {
-	return &f
-}
-
 var (
 	flowActionFlowReturnJSONParamsFieldPayload = big.NewInt(1 << 0)
 )
@@ -9291,10 +9474,12 @@ func (f *FlowActionFlowReturnJSONParams) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionFlowReturnJSONParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetPayload sets the Payload field and marks it as non-optional;
@@ -9433,17 +9618,15 @@ var (
 	flowActionFlowStoreVarsFieldID           = big.NewInt(1 << 0)
 	flowActionFlowStoreVarsFieldAlias        = big.NewInt(1 << 1)
 	flowActionFlowStoreVarsFieldType         = big.NewInt(1 << 2)
-	flowActionFlowStoreVarsFieldAction       = big.NewInt(1 << 3)
-	flowActionFlowStoreVarsFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionFlowStoreVarsFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionFlowStoreVarsFieldParams       = big.NewInt(1 << 6)
+	flowActionFlowStoreVarsFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionFlowStoreVarsFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionFlowStoreVarsFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionFlowStoreVars struct {
 	ID           string                         `json:"id" url:"id"`
 	Alias        *string                        `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionFlowStoreVarsType    `json:"type" url:"type"`
-	Action       FlowActionFlowStoreVarsAction  `json:"action" url:"action"`
 	AllowFailure *bool                          `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                          `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionFlowStoreVarsParams `json:"params" url:"params"`
@@ -9476,13 +9659,6 @@ func (f *FlowActionFlowStoreVars) GetType() FlowActionFlowStoreVarsType {
 	return f.Type
 }
 
-func (f *FlowActionFlowStoreVars) GetAction() FlowActionFlowStoreVarsAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionFlowStoreVars) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -9512,10 +9688,12 @@ func (f *FlowActionFlowStoreVars) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionFlowStoreVars) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -9537,13 +9715,6 @@ func (f *FlowActionFlowStoreVars) SetAlias(alias *string) {
 func (f *FlowActionFlowStoreVars) SetType(type_ FlowActionFlowStoreVarsType) {
 	f.Type = type_
 	f.require(flowActionFlowStoreVarsFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionFlowStoreVars) SetAction(action FlowActionFlowStoreVarsAction) {
-	f.Action = action
-	f.require(flowActionFlowStoreVarsFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -9609,25 +9780,6 @@ func (f *FlowActionFlowStoreVars) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionFlowStoreVarsAction string
-
-const (
-	FlowActionFlowStoreVarsActionStoreVars FlowActionFlowStoreVarsAction = "STORE_VARS"
-)
-
-func NewFlowActionFlowStoreVarsActionFromString(s string) (FlowActionFlowStoreVarsAction, error) {
-	switch s {
-	case "STORE_VARS":
-		return FlowActionFlowStoreVarsActionStoreVars, nil
-	}
-	var t FlowActionFlowStoreVarsAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionFlowStoreVarsAction) Ptr() *FlowActionFlowStoreVarsAction {
-	return &f
-}
-
 var (
 	flowActionFlowStoreVarsParamsFieldVars = big.NewInt(1 << 0)
 )
@@ -9657,10 +9809,12 @@ func (f *FlowActionFlowStoreVarsParams) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionFlowStoreVarsParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetVars sets the Vars field and marks it as non-optional;
@@ -9818,10 +9972,12 @@ func (f *FlowActionGoogleSheetsAddRow) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionGoogleSheetsAddRow) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -9990,10 +10146,12 @@ func (f *FlowActionGoogleSheetsAddRowParams) GetExtraProperties() map[string]int
 }
 
 func (f *FlowActionGoogleSheetsAddRowParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -10234,10 +10392,12 @@ func (f *FlowActionHTTPSendRequest) GetExtraProperties() map[string]interface{} 
 }
 
 func (f *FlowActionHTTPSendRequest) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -10442,10 +10602,12 @@ func (f *FlowActionHTTPSendRequestParams) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowActionHTTPSendRequestParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -10584,10 +10746,12 @@ func (f *FlowActionHTTPSendRequestParamsBasicAuth) GetExtraProperties() map[stri
 }
 
 func (f *FlowActionHTTPSendRequestParamsBasicAuth) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -10873,103 +11037,218 @@ func (f FlowActionHTTPSendRequestType) Ptr() *FlowActionHTTPSendRequestType {
 }
 
 type FlowActionHubspot struct {
-	FlowActionHubspotEnrollContact *FlowActionHubspotEnrollContact
-	FlowActionHubspotGetContact    *FlowActionHubspotGetContact
-	FlowActionHubspotUpsertContact *FlowActionHubspotUpsertContact
+	Action        string
+	ID            string
+	Alias         *string
+	Type          FlowActionHubspotEnrollContactType
+	AllowFailure  *bool
+	MaskOutput    *bool
+	EnrollContact *FlowActionHubspotEnrollContact
+	GetContact    *FlowActionHubspotGetContact
+	UpsertContact *FlowActionHubspotUpsertContact
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionHubspot) GetFlowActionHubspotEnrollContact() *FlowActionHubspotEnrollContact {
+func (f *FlowActionHubspot) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionHubspot) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionHubspot) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionHubspot) GetType() FlowActionHubspotEnrollContactType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionHubspot) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionHubspot) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionHubspot) GetEnrollContact() *FlowActionHubspotEnrollContact {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionHubspotEnrollContact
+	return f.EnrollContact
 }
 
-func (f *FlowActionHubspot) GetFlowActionHubspotGetContact() *FlowActionHubspotGetContact {
+func (f *FlowActionHubspot) GetGetContact() *FlowActionHubspotGetContact {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionHubspotGetContact
+	return f.GetContact
 }
 
-func (f *FlowActionHubspot) GetFlowActionHubspotUpsertContact() *FlowActionHubspotUpsertContact {
+func (f *FlowActionHubspot) GetUpsertContact() *FlowActionHubspotUpsertContact {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionHubspotUpsertContact
+	return f.UpsertContact
 }
 
 func (f *FlowActionHubspot) UnmarshalJSON(data []byte) error {
-	valueFlowActionHubspotEnrollContact := new(FlowActionHubspotEnrollContact)
-	if err := json.Unmarshal(data, &valueFlowActionHubspotEnrollContact); err == nil {
-		f.typ = "FlowActionHubspotEnrollContact"
-		f.FlowActionHubspotEnrollContact = valueFlowActionHubspotEnrollContact
-		return nil
+	var unmarshaler struct {
+		Action       string                             `json:"action"`
+		ID           string                             `json:"id"`
+		Alias        *string                            `json:"alias,omitempty"`
+		Type         FlowActionHubspotEnrollContactType `json:"type"`
+		AllowFailure *bool                              `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                              `json:"mask_output,omitempty"`
 	}
-	valueFlowActionHubspotGetContact := new(FlowActionHubspotGetContact)
-	if err := json.Unmarshal(data, &valueFlowActionHubspotGetContact); err == nil {
-		f.typ = "FlowActionHubspotGetContact"
-		f.FlowActionHubspotGetContact = valueFlowActionHubspotGetContact
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionHubspotUpsertContact := new(FlowActionHubspotUpsertContact)
-	if err := json.Unmarshal(data, &valueFlowActionHubspotUpsertContact); err == nil {
-		f.typ = "FlowActionHubspotUpsertContact"
-		f.FlowActionHubspotUpsertContact = valueFlowActionHubspotUpsertContact
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	switch unmarshaler.Action {
+	case "ENROLL_CONTACT":
+		value := new(FlowActionHubspotEnrollContact)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.EnrollContact = value
+	case "GET_CONTACT":
+		value := new(FlowActionHubspotGetContact)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.GetContact = value
+	case "UPSERT_CONTACT":
+		value := new(FlowActionHubspotUpsertContact)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.UpsertContact = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionHubspot) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionHubspotEnrollContact" || f.FlowActionHubspotEnrollContact != nil {
-		return json.Marshal(f.FlowActionHubspotEnrollContact)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionHubspotGetContact" || f.FlowActionHubspotGetContact != nil {
-		return json.Marshal(f.FlowActionHubspotGetContact)
+	if f.EnrollContact != nil {
+		return internal.MarshalJSONWithExtraProperty(f.EnrollContact, "action", "ENROLL_CONTACT")
 	}
-	if f.typ == "FlowActionHubspotUpsertContact" || f.FlowActionHubspotUpsertContact != nil {
-		return json.Marshal(f.FlowActionHubspotUpsertContact)
+	if f.GetContact != nil {
+		return internal.MarshalJSONWithExtraProperty(f.GetContact, "action", "GET_CONTACT")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.UpsertContact != nil {
+		return internal.MarshalJSONWithExtraProperty(f.UpsertContact, "action", "UPSERT_CONTACT")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionHubspotVisitor interface {
-	VisitFlowActionHubspotEnrollContact(*FlowActionHubspotEnrollContact) error
-	VisitFlowActionHubspotGetContact(*FlowActionHubspotGetContact) error
-	VisitFlowActionHubspotUpsertContact(*FlowActionHubspotUpsertContact) error
+	VisitEnrollContact(*FlowActionHubspotEnrollContact) error
+	VisitGetContact(*FlowActionHubspotGetContact) error
+	VisitUpsertContact(*FlowActionHubspotUpsertContact) error
 }
 
 func (f *FlowActionHubspot) Accept(visitor FlowActionHubspotVisitor) error {
-	if f.typ == "FlowActionHubspotEnrollContact" || f.FlowActionHubspotEnrollContact != nil {
-		return visitor.VisitFlowActionHubspotEnrollContact(f.FlowActionHubspotEnrollContact)
+	if f.EnrollContact != nil {
+		return visitor.VisitEnrollContact(f.EnrollContact)
 	}
-	if f.typ == "FlowActionHubspotGetContact" || f.FlowActionHubspotGetContact != nil {
-		return visitor.VisitFlowActionHubspotGetContact(f.FlowActionHubspotGetContact)
+	if f.GetContact != nil {
+		return visitor.VisitGetContact(f.GetContact)
 	}
-	if f.typ == "FlowActionHubspotUpsertContact" || f.FlowActionHubspotUpsertContact != nil {
-		return visitor.VisitFlowActionHubspotUpsertContact(f.FlowActionHubspotUpsertContact)
+	if f.UpsertContact != nil {
+		return visitor.VisitUpsertContact(f.UpsertContact)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionHubspot) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.EnrollContact != nil {
+		fields = append(fields, "ENROLL_CONTACT")
+	}
+	if f.GetContact != nil {
+		fields = append(fields, "GET_CONTACT")
+	}
+	if f.UpsertContact != nil {
+		fields = append(fields, "UPSERT_CONTACT")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionHubspotEnrollContactFieldID           = big.NewInt(1 << 0)
 	flowActionHubspotEnrollContactFieldAlias        = big.NewInt(1 << 1)
 	flowActionHubspotEnrollContactFieldType         = big.NewInt(1 << 2)
-	flowActionHubspotEnrollContactFieldAction       = big.NewInt(1 << 3)
-	flowActionHubspotEnrollContactFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionHubspotEnrollContactFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionHubspotEnrollContactFieldParams       = big.NewInt(1 << 6)
+	flowActionHubspotEnrollContactFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionHubspotEnrollContactFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionHubspotEnrollContactFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionHubspotEnrollContact struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionHubspotEnrollContactType    `json:"type" url:"type"`
-	Action       FlowActionHubspotEnrollContactAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionHubspotEnrollContactParams `json:"params" url:"params"`
@@ -11002,13 +11281,6 @@ func (f *FlowActionHubspotEnrollContact) GetType() FlowActionHubspotEnrollContac
 	return f.Type
 }
 
-func (f *FlowActionHubspotEnrollContact) GetAction() FlowActionHubspotEnrollContactAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionHubspotEnrollContact) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -11038,10 +11310,12 @@ func (f *FlowActionHubspotEnrollContact) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionHubspotEnrollContact) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -11063,13 +11337,6 @@ func (f *FlowActionHubspotEnrollContact) SetAlias(alias *string) {
 func (f *FlowActionHubspotEnrollContact) SetType(type_ FlowActionHubspotEnrollContactType) {
 	f.Type = type_
 	f.require(flowActionHubspotEnrollContactFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionHubspotEnrollContact) SetAction(action FlowActionHubspotEnrollContactAction) {
-	f.Action = action
-	f.require(flowActionHubspotEnrollContactFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -11135,25 +11402,6 @@ func (f *FlowActionHubspotEnrollContact) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionHubspotEnrollContactAction string
-
-const (
-	FlowActionHubspotEnrollContactActionEnrollContact FlowActionHubspotEnrollContactAction = "ENROLL_CONTACT"
-)
-
-func NewFlowActionHubspotEnrollContactActionFromString(s string) (FlowActionHubspotEnrollContactAction, error) {
-	switch s {
-	case "ENROLL_CONTACT":
-		return FlowActionHubspotEnrollContactActionEnrollContact, nil
-	}
-	var t FlowActionHubspotEnrollContactAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionHubspotEnrollContactAction) Ptr() *FlowActionHubspotEnrollContactAction {
-	return &f
-}
-
 var (
 	flowActionHubspotEnrollContactParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionHubspotEnrollContactParamsFieldEmail        = big.NewInt(1 << 1)
@@ -11201,10 +11449,12 @@ func (f *FlowActionHubspotEnrollContactParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionHubspotEnrollContactParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -11355,17 +11605,15 @@ var (
 	flowActionHubspotGetContactFieldID           = big.NewInt(1 << 0)
 	flowActionHubspotGetContactFieldAlias        = big.NewInt(1 << 1)
 	flowActionHubspotGetContactFieldType         = big.NewInt(1 << 2)
-	flowActionHubspotGetContactFieldAction       = big.NewInt(1 << 3)
-	flowActionHubspotGetContactFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionHubspotGetContactFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionHubspotGetContactFieldParams       = big.NewInt(1 << 6)
+	flowActionHubspotGetContactFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionHubspotGetContactFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionHubspotGetContactFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionHubspotGetContact struct {
 	ID           string                             `json:"id" url:"id"`
 	Alias        *string                            `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionHubspotGetContactType    `json:"type" url:"type"`
-	Action       FlowActionHubspotGetContactAction  `json:"action" url:"action"`
 	AllowFailure *bool                              `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                              `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionHubspotGetContactParams `json:"params" url:"params"`
@@ -11398,13 +11646,6 @@ func (f *FlowActionHubspotGetContact) GetType() FlowActionHubspotGetContactType 
 	return f.Type
 }
 
-func (f *FlowActionHubspotGetContact) GetAction() FlowActionHubspotGetContactAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionHubspotGetContact) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -11434,10 +11675,12 @@ func (f *FlowActionHubspotGetContact) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowActionHubspotGetContact) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -11459,13 +11702,6 @@ func (f *FlowActionHubspotGetContact) SetAlias(alias *string) {
 func (f *FlowActionHubspotGetContact) SetType(type_ FlowActionHubspotGetContactType) {
 	f.Type = type_
 	f.require(flowActionHubspotGetContactFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionHubspotGetContact) SetAction(action FlowActionHubspotGetContactAction) {
-	f.Action = action
-	f.require(flowActionHubspotGetContactFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -11531,25 +11767,6 @@ func (f *FlowActionHubspotGetContact) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionHubspotGetContactAction string
-
-const (
-	FlowActionHubspotGetContactActionGetContact FlowActionHubspotGetContactAction = "GET_CONTACT"
-)
-
-func NewFlowActionHubspotGetContactActionFromString(s string) (FlowActionHubspotGetContactAction, error) {
-	switch s {
-	case "GET_CONTACT":
-		return FlowActionHubspotGetContactActionGetContact, nil
-	}
-	var t FlowActionHubspotGetContactAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionHubspotGetContactAction) Ptr() *FlowActionHubspotGetContactAction {
-	return &f
-}
-
 var (
 	flowActionHubspotGetContactParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionHubspotGetContactParamsFieldEmail        = big.NewInt(1 << 1)
@@ -11588,10 +11805,12 @@ func (f *FlowActionHubspotGetContactParams) GetExtraProperties() map[string]inte
 }
 
 func (f *FlowActionHubspotGetContactParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -11673,17 +11892,15 @@ var (
 	flowActionHubspotUpsertContactFieldID           = big.NewInt(1 << 0)
 	flowActionHubspotUpsertContactFieldAlias        = big.NewInt(1 << 1)
 	flowActionHubspotUpsertContactFieldType         = big.NewInt(1 << 2)
-	flowActionHubspotUpsertContactFieldAction       = big.NewInt(1 << 3)
-	flowActionHubspotUpsertContactFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionHubspotUpsertContactFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionHubspotUpsertContactFieldParams       = big.NewInt(1 << 6)
+	flowActionHubspotUpsertContactFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionHubspotUpsertContactFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionHubspotUpsertContactFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionHubspotUpsertContact struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionHubspotUpsertContactType    `json:"type" url:"type"`
-	Action       FlowActionHubspotUpsertContactAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionHubspotUpsertContactParams `json:"params" url:"params"`
@@ -11716,13 +11933,6 @@ func (f *FlowActionHubspotUpsertContact) GetType() FlowActionHubspotUpsertContac
 	return f.Type
 }
 
-func (f *FlowActionHubspotUpsertContact) GetAction() FlowActionHubspotUpsertContactAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionHubspotUpsertContact) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -11752,10 +11962,12 @@ func (f *FlowActionHubspotUpsertContact) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionHubspotUpsertContact) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -11777,13 +11989,6 @@ func (f *FlowActionHubspotUpsertContact) SetAlias(alias *string) {
 func (f *FlowActionHubspotUpsertContact) SetType(type_ FlowActionHubspotUpsertContactType) {
 	f.Type = type_
 	f.require(flowActionHubspotUpsertContactFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionHubspotUpsertContact) SetAction(action FlowActionHubspotUpsertContactAction) {
-	f.Action = action
-	f.require(flowActionHubspotUpsertContactFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -11849,25 +12054,6 @@ func (f *FlowActionHubspotUpsertContact) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionHubspotUpsertContactAction string
-
-const (
-	FlowActionHubspotUpsertContactActionUpsertContact FlowActionHubspotUpsertContactAction = "UPSERT_CONTACT"
-)
-
-func NewFlowActionHubspotUpsertContactActionFromString(s string) (FlowActionHubspotUpsertContactAction, error) {
-	switch s {
-	case "UPSERT_CONTACT":
-		return FlowActionHubspotUpsertContactActionUpsertContact, nil
-	}
-	var t FlowActionHubspotUpsertContactAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionHubspotUpsertContactAction) Ptr() *FlowActionHubspotUpsertContactAction {
-	return &f
-}
-
 var (
 	flowActionHubspotUpsertContactParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionHubspotUpsertContactParamsFieldEmail        = big.NewInt(1 << 1)
@@ -11916,10 +12102,12 @@ func (f *FlowActionHubspotUpsertContactParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionHubspotUpsertContactParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -12018,10 +12206,12 @@ func (f *FlowActionHubspotUpsertContactParamsProperty) GetExtraProperties() map[
 }
 
 func (f *FlowActionHubspotUpsertContactParamsProperty) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetProperty sets the Property field and marks it as non-optional;
@@ -12093,103 +12283,218 @@ func (f FlowActionHubspotUpsertContactType) Ptr() *FlowActionHubspotUpsertContac
 }
 
 type FlowActionJSON struct {
-	FlowActionJSONCreateJSON    *FlowActionJSONCreateJSON
-	FlowActionJSONParseJSON     *FlowActionJSONParseJSON
-	FlowActionJSONSerializeJSON *FlowActionJSONSerializeJSON
+	Action        string
+	ID            string
+	Alias         *string
+	Type          FlowActionJSONCreateJSONType
+	AllowFailure  *bool
+	MaskOutput    *bool
+	CreateJSON    *FlowActionJSONCreateJSON
+	ParseJSON     *FlowActionJSONParseJSON
+	SerializeJSON *FlowActionJSONSerializeJSON
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionJSON) GetFlowActionJSONCreateJSON() *FlowActionJSONCreateJSON {
+func (f *FlowActionJSON) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionJSON) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionJSON) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionJSON) GetType() FlowActionJSONCreateJSONType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionJSON) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionJSON) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionJSON) GetCreateJSON() *FlowActionJSONCreateJSON {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionJSONCreateJSON
+	return f.CreateJSON
 }
 
-func (f *FlowActionJSON) GetFlowActionJSONParseJSON() *FlowActionJSONParseJSON {
+func (f *FlowActionJSON) GetParseJSON() *FlowActionJSONParseJSON {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionJSONParseJSON
+	return f.ParseJSON
 }
 
-func (f *FlowActionJSON) GetFlowActionJSONSerializeJSON() *FlowActionJSONSerializeJSON {
+func (f *FlowActionJSON) GetSerializeJSON() *FlowActionJSONSerializeJSON {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionJSONSerializeJSON
+	return f.SerializeJSON
 }
 
 func (f *FlowActionJSON) UnmarshalJSON(data []byte) error {
-	valueFlowActionJSONCreateJSON := new(FlowActionJSONCreateJSON)
-	if err := json.Unmarshal(data, &valueFlowActionJSONCreateJSON); err == nil {
-		f.typ = "FlowActionJSONCreateJSON"
-		f.FlowActionJSONCreateJSON = valueFlowActionJSONCreateJSON
-		return nil
+	var unmarshaler struct {
+		Action       string                       `json:"action"`
+		ID           string                       `json:"id"`
+		Alias        *string                      `json:"alias,omitempty"`
+		Type         FlowActionJSONCreateJSONType `json:"type"`
+		AllowFailure *bool                        `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                        `json:"mask_output,omitempty"`
 	}
-	valueFlowActionJSONParseJSON := new(FlowActionJSONParseJSON)
-	if err := json.Unmarshal(data, &valueFlowActionJSONParseJSON); err == nil {
-		f.typ = "FlowActionJSONParseJSON"
-		f.FlowActionJSONParseJSON = valueFlowActionJSONParseJSON
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionJSONSerializeJSON := new(FlowActionJSONSerializeJSON)
-	if err := json.Unmarshal(data, &valueFlowActionJSONSerializeJSON); err == nil {
-		f.typ = "FlowActionJSONSerializeJSON"
-		f.FlowActionJSONSerializeJSON = valueFlowActionJSONSerializeJSON
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	switch unmarshaler.Action {
+	case "CREATE_JSON":
+		value := new(FlowActionJSONCreateJSON)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.CreateJSON = value
+	case "PARSE_JSON":
+		value := new(FlowActionJSONParseJSON)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.ParseJSON = value
+	case "SERIALIZE_JSON":
+		value := new(FlowActionJSONSerializeJSON)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SerializeJSON = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionJSON) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionJSONCreateJSON" || f.FlowActionJSONCreateJSON != nil {
-		return json.Marshal(f.FlowActionJSONCreateJSON)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionJSONParseJSON" || f.FlowActionJSONParseJSON != nil {
-		return json.Marshal(f.FlowActionJSONParseJSON)
+	if f.CreateJSON != nil {
+		return internal.MarshalJSONWithExtraProperty(f.CreateJSON, "action", "CREATE_JSON")
 	}
-	if f.typ == "FlowActionJSONSerializeJSON" || f.FlowActionJSONSerializeJSON != nil {
-		return json.Marshal(f.FlowActionJSONSerializeJSON)
+	if f.ParseJSON != nil {
+		return internal.MarshalJSONWithExtraProperty(f.ParseJSON, "action", "PARSE_JSON")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.SerializeJSON != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SerializeJSON, "action", "SERIALIZE_JSON")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionJSONVisitor interface {
-	VisitFlowActionJSONCreateJSON(*FlowActionJSONCreateJSON) error
-	VisitFlowActionJSONParseJSON(*FlowActionJSONParseJSON) error
-	VisitFlowActionJSONSerializeJSON(*FlowActionJSONSerializeJSON) error
+	VisitCreateJSON(*FlowActionJSONCreateJSON) error
+	VisitParseJSON(*FlowActionJSONParseJSON) error
+	VisitSerializeJSON(*FlowActionJSONSerializeJSON) error
 }
 
 func (f *FlowActionJSON) Accept(visitor FlowActionJSONVisitor) error {
-	if f.typ == "FlowActionJSONCreateJSON" || f.FlowActionJSONCreateJSON != nil {
-		return visitor.VisitFlowActionJSONCreateJSON(f.FlowActionJSONCreateJSON)
+	if f.CreateJSON != nil {
+		return visitor.VisitCreateJSON(f.CreateJSON)
 	}
-	if f.typ == "FlowActionJSONParseJSON" || f.FlowActionJSONParseJSON != nil {
-		return visitor.VisitFlowActionJSONParseJSON(f.FlowActionJSONParseJSON)
+	if f.ParseJSON != nil {
+		return visitor.VisitParseJSON(f.ParseJSON)
 	}
-	if f.typ == "FlowActionJSONSerializeJSON" || f.FlowActionJSONSerializeJSON != nil {
-		return visitor.VisitFlowActionJSONSerializeJSON(f.FlowActionJSONSerializeJSON)
+	if f.SerializeJSON != nil {
+		return visitor.VisitSerializeJSON(f.SerializeJSON)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionJSON) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.CreateJSON != nil {
+		fields = append(fields, "CREATE_JSON")
+	}
+	if f.ParseJSON != nil {
+		fields = append(fields, "PARSE_JSON")
+	}
+	if f.SerializeJSON != nil {
+		fields = append(fields, "SERIALIZE_JSON")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionJSONCreateJSONFieldID           = big.NewInt(1 << 0)
 	flowActionJSONCreateJSONFieldAlias        = big.NewInt(1 << 1)
 	flowActionJSONCreateJSONFieldType         = big.NewInt(1 << 2)
-	flowActionJSONCreateJSONFieldAction       = big.NewInt(1 << 3)
-	flowActionJSONCreateJSONFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionJSONCreateJSONFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionJSONCreateJSONFieldParams       = big.NewInt(1 << 6)
+	flowActionJSONCreateJSONFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionJSONCreateJSONFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionJSONCreateJSONFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionJSONCreateJSON struct {
 	ID           string                          `json:"id" url:"id"`
 	Alias        *string                         `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionJSONCreateJSONType    `json:"type" url:"type"`
-	Action       FlowActionJSONCreateJSONAction  `json:"action" url:"action"`
 	AllowFailure *bool                           `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                           `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionJSONCreateJSONParams `json:"params" url:"params"`
@@ -12222,13 +12527,6 @@ func (f *FlowActionJSONCreateJSON) GetType() FlowActionJSONCreateJSONType {
 	return f.Type
 }
 
-func (f *FlowActionJSONCreateJSON) GetAction() FlowActionJSONCreateJSONAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionJSONCreateJSON) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -12258,10 +12556,12 @@ func (f *FlowActionJSONCreateJSON) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionJSONCreateJSON) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -12283,13 +12583,6 @@ func (f *FlowActionJSONCreateJSON) SetAlias(alias *string) {
 func (f *FlowActionJSONCreateJSON) SetType(type_ FlowActionJSONCreateJSONType) {
 	f.Type = type_
 	f.require(flowActionJSONCreateJSONFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionJSONCreateJSON) SetAction(action FlowActionJSONCreateJSONAction) {
-	f.Action = action
-	f.require(flowActionJSONCreateJSONFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -12355,25 +12648,6 @@ func (f *FlowActionJSONCreateJSON) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionJSONCreateJSONAction string
-
-const (
-	FlowActionJSONCreateJSONActionCreateJSON FlowActionJSONCreateJSONAction = "CREATE_JSON"
-)
-
-func NewFlowActionJSONCreateJSONActionFromString(s string) (FlowActionJSONCreateJSONAction, error) {
-	switch s {
-	case "CREATE_JSON":
-		return FlowActionJSONCreateJSONActionCreateJSON, nil
-	}
-	var t FlowActionJSONCreateJSONAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionJSONCreateJSONAction) Ptr() *FlowActionJSONCreateJSONAction {
-	return &f
-}
-
 var (
 	flowActionJSONCreateJSONParamsFieldObject = big.NewInt(1 << 0)
 )
@@ -12403,10 +12677,12 @@ func (f *FlowActionJSONCreateJSONParams) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionJSONCreateJSONParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -12483,17 +12759,15 @@ var (
 	flowActionJSONParseJSONFieldID           = big.NewInt(1 << 0)
 	flowActionJSONParseJSONFieldAlias        = big.NewInt(1 << 1)
 	flowActionJSONParseJSONFieldType         = big.NewInt(1 << 2)
-	flowActionJSONParseJSONFieldAction       = big.NewInt(1 << 3)
-	flowActionJSONParseJSONFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionJSONParseJSONFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionJSONParseJSONFieldParams       = big.NewInt(1 << 6)
+	flowActionJSONParseJSONFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionJSONParseJSONFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionJSONParseJSONFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionJSONParseJSON struct {
 	ID           string                         `json:"id" url:"id"`
 	Alias        *string                        `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionJSONParseJSONType    `json:"type" url:"type"`
-	Action       FlowActionJSONParseJSONAction  `json:"action" url:"action"`
 	AllowFailure *bool                          `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                          `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionJSONParseJSONParams `json:"params" url:"params"`
@@ -12526,13 +12800,6 @@ func (f *FlowActionJSONParseJSON) GetType() FlowActionJSONParseJSONType {
 	return f.Type
 }
 
-func (f *FlowActionJSONParseJSON) GetAction() FlowActionJSONParseJSONAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionJSONParseJSON) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -12562,10 +12829,12 @@ func (f *FlowActionJSONParseJSON) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionJSONParseJSON) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -12587,13 +12856,6 @@ func (f *FlowActionJSONParseJSON) SetAlias(alias *string) {
 func (f *FlowActionJSONParseJSON) SetType(type_ FlowActionJSONParseJSONType) {
 	f.Type = type_
 	f.require(flowActionJSONParseJSONFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionJSONParseJSON) SetAction(action FlowActionJSONParseJSONAction) {
-	f.Action = action
-	f.require(flowActionJSONParseJSONFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -12659,25 +12921,6 @@ func (f *FlowActionJSONParseJSON) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionJSONParseJSONAction string
-
-const (
-	FlowActionJSONParseJSONActionParseJSON FlowActionJSONParseJSONAction = "PARSE_JSON"
-)
-
-func NewFlowActionJSONParseJSONActionFromString(s string) (FlowActionJSONParseJSONAction, error) {
-	switch s {
-	case "PARSE_JSON":
-		return FlowActionJSONParseJSONActionParseJSON, nil
-	}
-	var t FlowActionJSONParseJSONAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionJSONParseJSONAction) Ptr() *FlowActionJSONParseJSONAction {
-	return &f
-}
-
 var (
 	flowActionJSONParseJSONParamsFieldJSON = big.NewInt(1 << 0)
 )
@@ -12707,10 +12950,12 @@ func (f *FlowActionJSONParseJSONParams) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionJSONParseJSONParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetJSON sets the JSON field and marks it as non-optional;
@@ -12785,17 +13030,15 @@ var (
 	flowActionJSONSerializeJSONFieldID           = big.NewInt(1 << 0)
 	flowActionJSONSerializeJSONFieldAlias        = big.NewInt(1 << 1)
 	flowActionJSONSerializeJSONFieldType         = big.NewInt(1 << 2)
-	flowActionJSONSerializeJSONFieldAction       = big.NewInt(1 << 3)
-	flowActionJSONSerializeJSONFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionJSONSerializeJSONFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionJSONSerializeJSONFieldParams       = big.NewInt(1 << 6)
+	flowActionJSONSerializeJSONFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionJSONSerializeJSONFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionJSONSerializeJSONFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionJSONSerializeJSON struct {
 	ID           string                             `json:"id" url:"id"`
 	Alias        *string                            `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionJSONSerializeJSONType    `json:"type" url:"type"`
-	Action       FlowActionJSONSerializeJSONAction  `json:"action" url:"action"`
 	AllowFailure *bool                              `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                              `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionJSONSerializeJSONParams `json:"params" url:"params"`
@@ -12828,13 +13071,6 @@ func (f *FlowActionJSONSerializeJSON) GetType() FlowActionJSONSerializeJSONType 
 	return f.Type
 }
 
-func (f *FlowActionJSONSerializeJSON) GetAction() FlowActionJSONSerializeJSONAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionJSONSerializeJSON) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -12864,10 +13100,12 @@ func (f *FlowActionJSONSerializeJSON) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowActionJSONSerializeJSON) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -12889,13 +13127,6 @@ func (f *FlowActionJSONSerializeJSON) SetAlias(alias *string) {
 func (f *FlowActionJSONSerializeJSON) SetType(type_ FlowActionJSONSerializeJSONType) {
 	f.Type = type_
 	f.require(flowActionJSONSerializeJSONFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionJSONSerializeJSON) SetAction(action FlowActionJSONSerializeJSONAction) {
-	f.Action = action
-	f.require(flowActionJSONSerializeJSONFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -12961,25 +13192,6 @@ func (f *FlowActionJSONSerializeJSON) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionJSONSerializeJSONAction string
-
-const (
-	FlowActionJSONSerializeJSONActionSerializeJSON FlowActionJSONSerializeJSONAction = "SERIALIZE_JSON"
-)
-
-func NewFlowActionJSONSerializeJSONActionFromString(s string) (FlowActionJSONSerializeJSONAction, error) {
-	switch s {
-	case "SERIALIZE_JSON":
-		return FlowActionJSONSerializeJSONActionSerializeJSON, nil
-	}
-	var t FlowActionJSONSerializeJSONAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionJSONSerializeJSONAction) Ptr() *FlowActionJSONSerializeJSONAction {
-	return &f
-}
-
 var (
 	flowActionJSONSerializeJSONParamsFieldObject = big.NewInt(1 << 0)
 )
@@ -13009,10 +13221,12 @@ func (f *FlowActionJSONSerializeJSONParams) GetExtraProperties() map[string]inte
 }
 
 func (f *FlowActionJSONSerializeJSONParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -13148,103 +13362,218 @@ func (f FlowActionJSONSerializeJSONType) Ptr() *FlowActionJSONSerializeJSONType 
 }
 
 type FlowActionJwt struct {
-	FlowActionJwtDecodeJwt *FlowActionJwtDecodeJwt
-	FlowActionJwtSignJwt   *FlowActionJwtSignJwt
-	FlowActionJwtVerifyJwt *FlowActionJwtVerifyJwt
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionJwtDecodeJwtType
+	AllowFailure *bool
+	MaskOutput   *bool
+	DecodeJwt    *FlowActionJwtDecodeJwt
+	SignJwt      *FlowActionJwtSignJwt
+	VerifyJwt    *FlowActionJwtVerifyJwt
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionJwt) GetFlowActionJwtDecodeJwt() *FlowActionJwtDecodeJwt {
+func (f *FlowActionJwt) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionJwt) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionJwt) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionJwt) GetType() FlowActionJwtDecodeJwtType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionJwt) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionJwt) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionJwt) GetDecodeJwt() *FlowActionJwtDecodeJwt {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionJwtDecodeJwt
+	return f.DecodeJwt
 }
 
-func (f *FlowActionJwt) GetFlowActionJwtSignJwt() *FlowActionJwtSignJwt {
+func (f *FlowActionJwt) GetSignJwt() *FlowActionJwtSignJwt {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionJwtSignJwt
+	return f.SignJwt
 }
 
-func (f *FlowActionJwt) GetFlowActionJwtVerifyJwt() *FlowActionJwtVerifyJwt {
+func (f *FlowActionJwt) GetVerifyJwt() *FlowActionJwtVerifyJwt {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionJwtVerifyJwt
+	return f.VerifyJwt
 }
 
 func (f *FlowActionJwt) UnmarshalJSON(data []byte) error {
-	valueFlowActionJwtDecodeJwt := new(FlowActionJwtDecodeJwt)
-	if err := json.Unmarshal(data, &valueFlowActionJwtDecodeJwt); err == nil {
-		f.typ = "FlowActionJwtDecodeJwt"
-		f.FlowActionJwtDecodeJwt = valueFlowActionJwtDecodeJwt
-		return nil
+	var unmarshaler struct {
+		Action       string                     `json:"action"`
+		ID           string                     `json:"id"`
+		Alias        *string                    `json:"alias,omitempty"`
+		Type         FlowActionJwtDecodeJwtType `json:"type"`
+		AllowFailure *bool                      `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                      `json:"mask_output,omitempty"`
 	}
-	valueFlowActionJwtSignJwt := new(FlowActionJwtSignJwt)
-	if err := json.Unmarshal(data, &valueFlowActionJwtSignJwt); err == nil {
-		f.typ = "FlowActionJwtSignJwt"
-		f.FlowActionJwtSignJwt = valueFlowActionJwtSignJwt
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionJwtVerifyJwt := new(FlowActionJwtVerifyJwt)
-	if err := json.Unmarshal(data, &valueFlowActionJwtVerifyJwt); err == nil {
-		f.typ = "FlowActionJwtVerifyJwt"
-		f.FlowActionJwtVerifyJwt = valueFlowActionJwtVerifyJwt
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	switch unmarshaler.Action {
+	case "DECODE_JWT":
+		value := new(FlowActionJwtDecodeJwt)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.DecodeJwt = value
+	case "SIGN_JWT":
+		value := new(FlowActionJwtSignJwt)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SignJwt = value
+	case "VERIFY_JWT":
+		value := new(FlowActionJwtVerifyJwt)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.VerifyJwt = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionJwt) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionJwtDecodeJwt" || f.FlowActionJwtDecodeJwt != nil {
-		return json.Marshal(f.FlowActionJwtDecodeJwt)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionJwtSignJwt" || f.FlowActionJwtSignJwt != nil {
-		return json.Marshal(f.FlowActionJwtSignJwt)
+	if f.DecodeJwt != nil {
+		return internal.MarshalJSONWithExtraProperty(f.DecodeJwt, "action", "DECODE_JWT")
 	}
-	if f.typ == "FlowActionJwtVerifyJwt" || f.FlowActionJwtVerifyJwt != nil {
-		return json.Marshal(f.FlowActionJwtVerifyJwt)
+	if f.SignJwt != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SignJwt, "action", "SIGN_JWT")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.VerifyJwt != nil {
+		return internal.MarshalJSONWithExtraProperty(f.VerifyJwt, "action", "VERIFY_JWT")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionJwtVisitor interface {
-	VisitFlowActionJwtDecodeJwt(*FlowActionJwtDecodeJwt) error
-	VisitFlowActionJwtSignJwt(*FlowActionJwtSignJwt) error
-	VisitFlowActionJwtVerifyJwt(*FlowActionJwtVerifyJwt) error
+	VisitDecodeJwt(*FlowActionJwtDecodeJwt) error
+	VisitSignJwt(*FlowActionJwtSignJwt) error
+	VisitVerifyJwt(*FlowActionJwtVerifyJwt) error
 }
 
 func (f *FlowActionJwt) Accept(visitor FlowActionJwtVisitor) error {
-	if f.typ == "FlowActionJwtDecodeJwt" || f.FlowActionJwtDecodeJwt != nil {
-		return visitor.VisitFlowActionJwtDecodeJwt(f.FlowActionJwtDecodeJwt)
+	if f.DecodeJwt != nil {
+		return visitor.VisitDecodeJwt(f.DecodeJwt)
 	}
-	if f.typ == "FlowActionJwtSignJwt" || f.FlowActionJwtSignJwt != nil {
-		return visitor.VisitFlowActionJwtSignJwt(f.FlowActionJwtSignJwt)
+	if f.SignJwt != nil {
+		return visitor.VisitSignJwt(f.SignJwt)
 	}
-	if f.typ == "FlowActionJwtVerifyJwt" || f.FlowActionJwtVerifyJwt != nil {
-		return visitor.VisitFlowActionJwtVerifyJwt(f.FlowActionJwtVerifyJwt)
+	if f.VerifyJwt != nil {
+		return visitor.VisitVerifyJwt(f.VerifyJwt)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionJwt) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.DecodeJwt != nil {
+		fields = append(fields, "DECODE_JWT")
+	}
+	if f.SignJwt != nil {
+		fields = append(fields, "SIGN_JWT")
+	}
+	if f.VerifyJwt != nil {
+		fields = append(fields, "VERIFY_JWT")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionJwtDecodeJwtFieldID           = big.NewInt(1 << 0)
 	flowActionJwtDecodeJwtFieldAlias        = big.NewInt(1 << 1)
 	flowActionJwtDecodeJwtFieldType         = big.NewInt(1 << 2)
-	flowActionJwtDecodeJwtFieldAction       = big.NewInt(1 << 3)
-	flowActionJwtDecodeJwtFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionJwtDecodeJwtFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionJwtDecodeJwtFieldParams       = big.NewInt(1 << 6)
+	flowActionJwtDecodeJwtFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionJwtDecodeJwtFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionJwtDecodeJwtFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionJwtDecodeJwt struct {
 	ID           string                        `json:"id" url:"id"`
 	Alias        *string                       `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionJwtDecodeJwtType    `json:"type" url:"type"`
-	Action       FlowActionJwtDecodeJwtAction  `json:"action" url:"action"`
 	AllowFailure *bool                         `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                         `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionJwtDecodeJwtParams `json:"params" url:"params"`
@@ -13277,13 +13606,6 @@ func (f *FlowActionJwtDecodeJwt) GetType() FlowActionJwtDecodeJwtType {
 	return f.Type
 }
 
-func (f *FlowActionJwtDecodeJwt) GetAction() FlowActionJwtDecodeJwtAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionJwtDecodeJwt) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -13313,10 +13635,12 @@ func (f *FlowActionJwtDecodeJwt) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionJwtDecodeJwt) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -13338,13 +13662,6 @@ func (f *FlowActionJwtDecodeJwt) SetAlias(alias *string) {
 func (f *FlowActionJwtDecodeJwt) SetType(type_ FlowActionJwtDecodeJwtType) {
 	f.Type = type_
 	f.require(flowActionJwtDecodeJwtFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionJwtDecodeJwt) SetAction(action FlowActionJwtDecodeJwtAction) {
-	f.Action = action
-	f.require(flowActionJwtDecodeJwtFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -13410,25 +13727,6 @@ func (f *FlowActionJwtDecodeJwt) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionJwtDecodeJwtAction string
-
-const (
-	FlowActionJwtDecodeJwtActionDecodeJwt FlowActionJwtDecodeJwtAction = "DECODE_JWT"
-)
-
-func NewFlowActionJwtDecodeJwtActionFromString(s string) (FlowActionJwtDecodeJwtAction, error) {
-	switch s {
-	case "DECODE_JWT":
-		return FlowActionJwtDecodeJwtActionDecodeJwt, nil
-	}
-	var t FlowActionJwtDecodeJwtAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionJwtDecodeJwtAction) Ptr() *FlowActionJwtDecodeJwtAction {
-	return &f
-}
-
 var (
 	flowActionJwtDecodeJwtParamsFieldToken = big.NewInt(1 << 0)
 )
@@ -13458,10 +13756,12 @@ func (f *FlowActionJwtDecodeJwtParams) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionJwtDecodeJwtParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetToken sets the Token field and marks it as non-optional;
@@ -13536,17 +13836,15 @@ var (
 	flowActionJwtSignJwtFieldID           = big.NewInt(1 << 0)
 	flowActionJwtSignJwtFieldAlias        = big.NewInt(1 << 1)
 	flowActionJwtSignJwtFieldType         = big.NewInt(1 << 2)
-	flowActionJwtSignJwtFieldAction       = big.NewInt(1 << 3)
-	flowActionJwtSignJwtFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionJwtSignJwtFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionJwtSignJwtFieldParams       = big.NewInt(1 << 6)
+	flowActionJwtSignJwtFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionJwtSignJwtFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionJwtSignJwtFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionJwtSignJwt struct {
 	ID           string                      `json:"id" url:"id"`
 	Alias        *string                     `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionJwtSignJwtType    `json:"type" url:"type"`
-	Action       FlowActionJwtSignJwtAction  `json:"action" url:"action"`
 	AllowFailure *bool                       `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                       `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionJwtSignJwtParams `json:"params" url:"params"`
@@ -13579,13 +13877,6 @@ func (f *FlowActionJwtSignJwt) GetType() FlowActionJwtSignJwtType {
 	return f.Type
 }
 
-func (f *FlowActionJwtSignJwt) GetAction() FlowActionJwtSignJwtAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionJwtSignJwt) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -13615,10 +13906,12 @@ func (f *FlowActionJwtSignJwt) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionJwtSignJwt) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -13640,13 +13933,6 @@ func (f *FlowActionJwtSignJwt) SetAlias(alias *string) {
 func (f *FlowActionJwtSignJwt) SetType(type_ FlowActionJwtSignJwtType) {
 	f.Type = type_
 	f.require(flowActionJwtSignJwtFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionJwtSignJwt) SetAction(action FlowActionJwtSignJwtAction) {
-	f.Action = action
-	f.require(flowActionJwtSignJwtFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -13710,25 +13996,6 @@ func (f *FlowActionJwtSignJwt) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionJwtSignJwtAction string
-
-const (
-	FlowActionJwtSignJwtActionSignJwt FlowActionJwtSignJwtAction = "SIGN_JWT"
-)
-
-func NewFlowActionJwtSignJwtActionFromString(s string) (FlowActionJwtSignJwtAction, error) {
-	switch s {
-	case "SIGN_JWT":
-		return FlowActionJwtSignJwtActionSignJwt, nil
-	}
-	var t FlowActionJwtSignJwtAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionJwtSignJwtAction) Ptr() *FlowActionJwtSignJwtAction {
-	return &f
 }
 
 var (
@@ -13805,10 +14072,12 @@ func (f *FlowActionJwtSignJwtParams) GetExtraProperties() map[string]interface{}
 }
 
 func (f *FlowActionJwtSignJwtParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -13920,17 +14189,15 @@ var (
 	flowActionJwtVerifyJwtFieldID           = big.NewInt(1 << 0)
 	flowActionJwtVerifyJwtFieldAlias        = big.NewInt(1 << 1)
 	flowActionJwtVerifyJwtFieldType         = big.NewInt(1 << 2)
-	flowActionJwtVerifyJwtFieldAction       = big.NewInt(1 << 3)
-	flowActionJwtVerifyJwtFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionJwtVerifyJwtFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionJwtVerifyJwtFieldParams       = big.NewInt(1 << 6)
+	flowActionJwtVerifyJwtFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionJwtVerifyJwtFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionJwtVerifyJwtFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionJwtVerifyJwt struct {
 	ID           string                        `json:"id" url:"id"`
 	Alias        *string                       `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionJwtVerifyJwtType    `json:"type" url:"type"`
-	Action       FlowActionJwtVerifyJwtAction  `json:"action" url:"action"`
 	AllowFailure *bool                         `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                         `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionJwtVerifyJwtParams `json:"params" url:"params"`
@@ -13963,13 +14230,6 @@ func (f *FlowActionJwtVerifyJwt) GetType() FlowActionJwtVerifyJwtType {
 	return f.Type
 }
 
-func (f *FlowActionJwtVerifyJwt) GetAction() FlowActionJwtVerifyJwtAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionJwtVerifyJwt) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -13999,10 +14259,12 @@ func (f *FlowActionJwtVerifyJwt) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionJwtVerifyJwt) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -14024,13 +14286,6 @@ func (f *FlowActionJwtVerifyJwt) SetAlias(alias *string) {
 func (f *FlowActionJwtVerifyJwt) SetType(type_ FlowActionJwtVerifyJwtType) {
 	f.Type = type_
 	f.require(flowActionJwtVerifyJwtFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionJwtVerifyJwt) SetAction(action FlowActionJwtVerifyJwtAction) {
-	f.Action = action
-	f.require(flowActionJwtVerifyJwtFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -14096,25 +14351,6 @@ func (f *FlowActionJwtVerifyJwt) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionJwtVerifyJwtAction string
-
-const (
-	FlowActionJwtVerifyJwtActionVerifyJwt FlowActionJwtVerifyJwtAction = "VERIFY_JWT"
-)
-
-func NewFlowActionJwtVerifyJwtActionFromString(s string) (FlowActionJwtVerifyJwtAction, error) {
-	switch s {
-	case "VERIFY_JWT":
-		return FlowActionJwtVerifyJwtActionVerifyJwt, nil
-	}
-	var t FlowActionJwtVerifyJwtAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionJwtVerifyJwtAction) Ptr() *FlowActionJwtVerifyJwtAction {
-	return &f
-}
-
 var (
 	flowActionJwtVerifyJwtParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionJwtVerifyJwtParamsFieldToken        = big.NewInt(1 << 1)
@@ -14171,10 +14407,12 @@ func (f *FlowActionJwtVerifyJwtParams) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionJwtVerifyJwtParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -14351,10 +14589,12 @@ func (f *FlowActionMailchimpUpsertMember) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowActionMailchimpUpsertMember) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -14514,10 +14754,12 @@ func (f *FlowActionMailchimpUpsertMemberParams) GetExtraProperties() map[string]
 }
 
 func (f *FlowActionMailchimpUpsertMemberParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -14630,10 +14872,12 @@ func (f *FlowActionMailchimpUpsertMemberParamsMember) GetExtraProperties() map[s
 }
 
 func (f *FlowActionMailchimpUpsertMemberParamsMember) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetEmailAddress sets the EmailAddress field and marks it as non-optional;
@@ -14805,10 +15049,12 @@ func (f *FlowActionMailjetSendEmail) GetExtraProperties() map[string]interface{}
 }
 
 func (f *FlowActionMailjetSendEmail) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -15013,10 +15259,12 @@ func (f *FlowActionMailjetSendEmailParamsContent) GetExtraProperties() map[strin
 }
 
 func (f *FlowActionMailjetSendEmailParamsContent) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetContent sets the Content field and marks it as non-optional;
@@ -15111,10 +15359,12 @@ func (f *FlowActionMailjetSendEmailParamsTemplateID) GetExtraProperties() map[st
 }
 
 func (f *FlowActionMailjetSendEmailParamsTemplateID) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetTemplateID sets the TemplateID field and marks it as non-optional;
@@ -15197,82 +15447,194 @@ func (f FlowActionMailjetSendEmailType) Ptr() *FlowActionMailjetSendEmailType {
 }
 
 type FlowActionOtp struct {
-	FlowActionOtpGenerateCode *FlowActionOtpGenerateCode
-	FlowActionOtpVerifyCode   *FlowActionOtpVerifyCode
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionOtpGenerateCodeType
+	AllowFailure *bool
+	MaskOutput   *bool
+	GenerateCode *FlowActionOtpGenerateCode
+	VerifyCode   *FlowActionOtpVerifyCode
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionOtp) GetFlowActionOtpGenerateCode() *FlowActionOtpGenerateCode {
+func (f *FlowActionOtp) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionOtp) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionOtp) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionOtp) GetType() FlowActionOtpGenerateCodeType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionOtp) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionOtp) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionOtp) GetGenerateCode() *FlowActionOtpGenerateCode {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionOtpGenerateCode
+	return f.GenerateCode
 }
 
-func (f *FlowActionOtp) GetFlowActionOtpVerifyCode() *FlowActionOtpVerifyCode {
+func (f *FlowActionOtp) GetVerifyCode() *FlowActionOtpVerifyCode {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionOtpVerifyCode
+	return f.VerifyCode
 }
 
 func (f *FlowActionOtp) UnmarshalJSON(data []byte) error {
-	valueFlowActionOtpGenerateCode := new(FlowActionOtpGenerateCode)
-	if err := json.Unmarshal(data, &valueFlowActionOtpGenerateCode); err == nil {
-		f.typ = "FlowActionOtpGenerateCode"
-		f.FlowActionOtpGenerateCode = valueFlowActionOtpGenerateCode
-		return nil
+	var unmarshaler struct {
+		Action       string                        `json:"action"`
+		ID           string                        `json:"id"`
+		Alias        *string                       `json:"alias,omitempty"`
+		Type         FlowActionOtpGenerateCodeType `json:"type"`
+		AllowFailure *bool                         `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                         `json:"mask_output,omitempty"`
 	}
-	valueFlowActionOtpVerifyCode := new(FlowActionOtpVerifyCode)
-	if err := json.Unmarshal(data, &valueFlowActionOtpVerifyCode); err == nil {
-		f.typ = "FlowActionOtpVerifyCode"
-		f.FlowActionOtpVerifyCode = valueFlowActionOtpVerifyCode
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
+	}
+	switch unmarshaler.Action {
+	case "GENERATE_CODE":
+		value := new(FlowActionOtpGenerateCode)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.GenerateCode = value
+	case "VERIFY_CODE":
+		value := new(FlowActionOtpVerifyCode)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.VerifyCode = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionOtp) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionOtpGenerateCode" || f.FlowActionOtpGenerateCode != nil {
-		return json.Marshal(f.FlowActionOtpGenerateCode)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionOtpVerifyCode" || f.FlowActionOtpVerifyCode != nil {
-		return json.Marshal(f.FlowActionOtpVerifyCode)
+	if f.GenerateCode != nil {
+		return internal.MarshalJSONWithExtraProperty(f.GenerateCode, "action", "GENERATE_CODE")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.VerifyCode != nil {
+		return internal.MarshalJSONWithExtraProperty(f.VerifyCode, "action", "VERIFY_CODE")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionOtpVisitor interface {
-	VisitFlowActionOtpGenerateCode(*FlowActionOtpGenerateCode) error
-	VisitFlowActionOtpVerifyCode(*FlowActionOtpVerifyCode) error
+	VisitGenerateCode(*FlowActionOtpGenerateCode) error
+	VisitVerifyCode(*FlowActionOtpVerifyCode) error
 }
 
 func (f *FlowActionOtp) Accept(visitor FlowActionOtpVisitor) error {
-	if f.typ == "FlowActionOtpGenerateCode" || f.FlowActionOtpGenerateCode != nil {
-		return visitor.VisitFlowActionOtpGenerateCode(f.FlowActionOtpGenerateCode)
+	if f.GenerateCode != nil {
+		return visitor.VisitGenerateCode(f.GenerateCode)
 	}
-	if f.typ == "FlowActionOtpVerifyCode" || f.FlowActionOtpVerifyCode != nil {
-		return visitor.VisitFlowActionOtpVerifyCode(f.FlowActionOtpVerifyCode)
+	if f.VerifyCode != nil {
+		return visitor.VisitVerifyCode(f.VerifyCode)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionOtp) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.GenerateCode != nil {
+		fields = append(fields, "GENERATE_CODE")
+	}
+	if f.VerifyCode != nil {
+		fields = append(fields, "VERIFY_CODE")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionOtpGenerateCodeFieldID           = big.NewInt(1 << 0)
 	flowActionOtpGenerateCodeFieldAlias        = big.NewInt(1 << 1)
 	flowActionOtpGenerateCodeFieldType         = big.NewInt(1 << 2)
-	flowActionOtpGenerateCodeFieldAction       = big.NewInt(1 << 3)
-	flowActionOtpGenerateCodeFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionOtpGenerateCodeFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionOtpGenerateCodeFieldParams       = big.NewInt(1 << 6)
+	flowActionOtpGenerateCodeFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionOtpGenerateCodeFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionOtpGenerateCodeFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionOtpGenerateCode struct {
 	ID           string                           `json:"id" url:"id"`
 	Alias        *string                          `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionOtpGenerateCodeType    `json:"type" url:"type"`
-	Action       FlowActionOtpGenerateCodeAction  `json:"action" url:"action"`
 	AllowFailure *bool                            `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                            `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionOtpGenerateCodeParams `json:"params" url:"params"`
@@ -15305,13 +15667,6 @@ func (f *FlowActionOtpGenerateCode) GetType() FlowActionOtpGenerateCodeType {
 	return f.Type
 }
 
-func (f *FlowActionOtpGenerateCode) GetAction() FlowActionOtpGenerateCodeAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionOtpGenerateCode) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -15341,10 +15696,12 @@ func (f *FlowActionOtpGenerateCode) GetExtraProperties() map[string]interface{} 
 }
 
 func (f *FlowActionOtpGenerateCode) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -15366,13 +15723,6 @@ func (f *FlowActionOtpGenerateCode) SetAlias(alias *string) {
 func (f *FlowActionOtpGenerateCode) SetType(type_ FlowActionOtpGenerateCodeType) {
 	f.Type = type_
 	f.require(flowActionOtpGenerateCodeFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionOtpGenerateCode) SetAction(action FlowActionOtpGenerateCodeAction) {
-	f.Action = action
-	f.require(flowActionOtpGenerateCodeFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -15438,25 +15788,6 @@ func (f *FlowActionOtpGenerateCode) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionOtpGenerateCodeAction string
-
-const (
-	FlowActionOtpGenerateCodeActionGenerateCode FlowActionOtpGenerateCodeAction = "GENERATE_CODE"
-)
-
-func NewFlowActionOtpGenerateCodeActionFromString(s string) (FlowActionOtpGenerateCodeAction, error) {
-	switch s {
-	case "GENERATE_CODE":
-		return FlowActionOtpGenerateCodeActionGenerateCode, nil
-	}
-	var t FlowActionOtpGenerateCodeAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionOtpGenerateCodeAction) Ptr() *FlowActionOtpGenerateCodeAction {
-	return &f
-}
-
 var (
 	flowActionOtpGenerateCodeParamsFieldReference = big.NewInt(1 << 0)
 	flowActionOtpGenerateCodeParamsFieldLength    = big.NewInt(1 << 1)
@@ -15495,10 +15826,12 @@ func (f *FlowActionOtpGenerateCodeParams) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowActionOtpGenerateCodeParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetReference sets the Reference field and marks it as non-optional;
@@ -15580,17 +15913,15 @@ var (
 	flowActionOtpVerifyCodeFieldID           = big.NewInt(1 << 0)
 	flowActionOtpVerifyCodeFieldAlias        = big.NewInt(1 << 1)
 	flowActionOtpVerifyCodeFieldType         = big.NewInt(1 << 2)
-	flowActionOtpVerifyCodeFieldAction       = big.NewInt(1 << 3)
-	flowActionOtpVerifyCodeFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionOtpVerifyCodeFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionOtpVerifyCodeFieldParams       = big.NewInt(1 << 6)
+	flowActionOtpVerifyCodeFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionOtpVerifyCodeFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionOtpVerifyCodeFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionOtpVerifyCode struct {
 	ID           string                         `json:"id" url:"id"`
 	Alias        *string                        `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionOtpVerifyCodeType    `json:"type" url:"type"`
-	Action       FlowActionOtpVerifyCodeAction  `json:"action" url:"action"`
 	AllowFailure *bool                          `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                          `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionOtpVerifyCodeParams `json:"params" url:"params"`
@@ -15623,13 +15954,6 @@ func (f *FlowActionOtpVerifyCode) GetType() FlowActionOtpVerifyCodeType {
 	return f.Type
 }
 
-func (f *FlowActionOtpVerifyCode) GetAction() FlowActionOtpVerifyCodeAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionOtpVerifyCode) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -15659,10 +15983,12 @@ func (f *FlowActionOtpVerifyCode) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionOtpVerifyCode) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -15684,13 +16010,6 @@ func (f *FlowActionOtpVerifyCode) SetAlias(alias *string) {
 func (f *FlowActionOtpVerifyCode) SetType(type_ FlowActionOtpVerifyCodeType) {
 	f.Type = type_
 	f.require(flowActionOtpVerifyCodeFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionOtpVerifyCode) SetAction(action FlowActionOtpVerifyCodeAction) {
-	f.Action = action
-	f.require(flowActionOtpVerifyCodeFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -15756,25 +16075,6 @@ func (f *FlowActionOtpVerifyCode) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionOtpVerifyCodeAction string
-
-const (
-	FlowActionOtpVerifyCodeActionVerifyCode FlowActionOtpVerifyCodeAction = "VERIFY_CODE"
-)
-
-func NewFlowActionOtpVerifyCodeActionFromString(s string) (FlowActionOtpVerifyCodeAction, error) {
-	switch s {
-	case "VERIFY_CODE":
-		return FlowActionOtpVerifyCodeActionVerifyCode, nil
-	}
-	var t FlowActionOtpVerifyCodeAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionOtpVerifyCodeAction) Ptr() *FlowActionOtpVerifyCodeAction {
-	return &f
-}
-
 var (
 	flowActionOtpVerifyCodeParamsFieldReference = big.NewInt(1 << 0)
 	flowActionOtpVerifyCodeParamsFieldCode      = big.NewInt(1 << 1)
@@ -15813,10 +16113,12 @@ func (f *FlowActionOtpVerifyCodeParams) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionOtpVerifyCodeParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetReference sets the Reference field and marks it as non-optional;
@@ -15957,103 +16259,218 @@ func (f FlowActionOtpVerifyCodeType) Ptr() *FlowActionOtpVerifyCodeType {
 }
 
 type FlowActionPipedrive struct {
-	FlowActionPipedriveAddDeal         *FlowActionPipedriveAddDeal
-	FlowActionPipedriveAddOrganization *FlowActionPipedriveAddOrganization
-	FlowActionPipedriveAddPerson       *FlowActionPipedriveAddPerson
+	Action          string
+	ID              string
+	Alias           *string
+	Type            FlowActionPipedriveAddDealType
+	AllowFailure    *bool
+	MaskOutput      *bool
+	AddDeal         *FlowActionPipedriveAddDeal
+	AddOrganization *FlowActionPipedriveAddOrganization
+	AddPerson       *FlowActionPipedriveAddPerson
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionPipedrive) GetFlowActionPipedriveAddDeal() *FlowActionPipedriveAddDeal {
+func (f *FlowActionPipedrive) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionPipedrive) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionPipedrive) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionPipedrive) GetType() FlowActionPipedriveAddDealType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionPipedrive) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionPipedrive) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionPipedrive) GetAddDeal() *FlowActionPipedriveAddDeal {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionPipedriveAddDeal
+	return f.AddDeal
 }
 
-func (f *FlowActionPipedrive) GetFlowActionPipedriveAddOrganization() *FlowActionPipedriveAddOrganization {
+func (f *FlowActionPipedrive) GetAddOrganization() *FlowActionPipedriveAddOrganization {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionPipedriveAddOrganization
+	return f.AddOrganization
 }
 
-func (f *FlowActionPipedrive) GetFlowActionPipedriveAddPerson() *FlowActionPipedriveAddPerson {
+func (f *FlowActionPipedrive) GetAddPerson() *FlowActionPipedriveAddPerson {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionPipedriveAddPerson
+	return f.AddPerson
 }
 
 func (f *FlowActionPipedrive) UnmarshalJSON(data []byte) error {
-	valueFlowActionPipedriveAddDeal := new(FlowActionPipedriveAddDeal)
-	if err := json.Unmarshal(data, &valueFlowActionPipedriveAddDeal); err == nil {
-		f.typ = "FlowActionPipedriveAddDeal"
-		f.FlowActionPipedriveAddDeal = valueFlowActionPipedriveAddDeal
-		return nil
+	var unmarshaler struct {
+		Action       string                         `json:"action"`
+		ID           string                         `json:"id"`
+		Alias        *string                        `json:"alias,omitempty"`
+		Type         FlowActionPipedriveAddDealType `json:"type"`
+		AllowFailure *bool                          `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                          `json:"mask_output,omitempty"`
 	}
-	valueFlowActionPipedriveAddOrganization := new(FlowActionPipedriveAddOrganization)
-	if err := json.Unmarshal(data, &valueFlowActionPipedriveAddOrganization); err == nil {
-		f.typ = "FlowActionPipedriveAddOrganization"
-		f.FlowActionPipedriveAddOrganization = valueFlowActionPipedriveAddOrganization
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionPipedriveAddPerson := new(FlowActionPipedriveAddPerson)
-	if err := json.Unmarshal(data, &valueFlowActionPipedriveAddPerson); err == nil {
-		f.typ = "FlowActionPipedriveAddPerson"
-		f.FlowActionPipedriveAddPerson = valueFlowActionPipedriveAddPerson
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	switch unmarshaler.Action {
+	case "ADD_DEAL":
+		value := new(FlowActionPipedriveAddDeal)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.AddDeal = value
+	case "ADD_ORGANIZATION":
+		value := new(FlowActionPipedriveAddOrganization)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.AddOrganization = value
+	case "ADD_PERSON":
+		value := new(FlowActionPipedriveAddPerson)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.AddPerson = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionPipedrive) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionPipedriveAddDeal" || f.FlowActionPipedriveAddDeal != nil {
-		return json.Marshal(f.FlowActionPipedriveAddDeal)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionPipedriveAddOrganization" || f.FlowActionPipedriveAddOrganization != nil {
-		return json.Marshal(f.FlowActionPipedriveAddOrganization)
+	if f.AddDeal != nil {
+		return internal.MarshalJSONWithExtraProperty(f.AddDeal, "action", "ADD_DEAL")
 	}
-	if f.typ == "FlowActionPipedriveAddPerson" || f.FlowActionPipedriveAddPerson != nil {
-		return json.Marshal(f.FlowActionPipedriveAddPerson)
+	if f.AddOrganization != nil {
+		return internal.MarshalJSONWithExtraProperty(f.AddOrganization, "action", "ADD_ORGANIZATION")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.AddPerson != nil {
+		return internal.MarshalJSONWithExtraProperty(f.AddPerson, "action", "ADD_PERSON")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionPipedriveVisitor interface {
-	VisitFlowActionPipedriveAddDeal(*FlowActionPipedriveAddDeal) error
-	VisitFlowActionPipedriveAddOrganization(*FlowActionPipedriveAddOrganization) error
-	VisitFlowActionPipedriveAddPerson(*FlowActionPipedriveAddPerson) error
+	VisitAddDeal(*FlowActionPipedriveAddDeal) error
+	VisitAddOrganization(*FlowActionPipedriveAddOrganization) error
+	VisitAddPerson(*FlowActionPipedriveAddPerson) error
 }
 
 func (f *FlowActionPipedrive) Accept(visitor FlowActionPipedriveVisitor) error {
-	if f.typ == "FlowActionPipedriveAddDeal" || f.FlowActionPipedriveAddDeal != nil {
-		return visitor.VisitFlowActionPipedriveAddDeal(f.FlowActionPipedriveAddDeal)
+	if f.AddDeal != nil {
+		return visitor.VisitAddDeal(f.AddDeal)
 	}
-	if f.typ == "FlowActionPipedriveAddOrganization" || f.FlowActionPipedriveAddOrganization != nil {
-		return visitor.VisitFlowActionPipedriveAddOrganization(f.FlowActionPipedriveAddOrganization)
+	if f.AddOrganization != nil {
+		return visitor.VisitAddOrganization(f.AddOrganization)
 	}
-	if f.typ == "FlowActionPipedriveAddPerson" || f.FlowActionPipedriveAddPerson != nil {
-		return visitor.VisitFlowActionPipedriveAddPerson(f.FlowActionPipedriveAddPerson)
+	if f.AddPerson != nil {
+		return visitor.VisitAddPerson(f.AddPerson)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionPipedrive) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.AddDeal != nil {
+		fields = append(fields, "ADD_DEAL")
+	}
+	if f.AddOrganization != nil {
+		fields = append(fields, "ADD_ORGANIZATION")
+	}
+	if f.AddPerson != nil {
+		fields = append(fields, "ADD_PERSON")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionPipedriveAddDealFieldID           = big.NewInt(1 << 0)
 	flowActionPipedriveAddDealFieldAlias        = big.NewInt(1 << 1)
 	flowActionPipedriveAddDealFieldType         = big.NewInt(1 << 2)
-	flowActionPipedriveAddDealFieldAction       = big.NewInt(1 << 3)
-	flowActionPipedriveAddDealFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionPipedriveAddDealFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionPipedriveAddDealFieldParams       = big.NewInt(1 << 6)
+	flowActionPipedriveAddDealFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionPipedriveAddDealFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionPipedriveAddDealFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionPipedriveAddDeal struct {
 	ID           string                            `json:"id" url:"id"`
 	Alias        *string                           `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionPipedriveAddDealType    `json:"type" url:"type"`
-	Action       FlowActionPipedriveAddDealAction  `json:"action" url:"action"`
 	AllowFailure *bool                             `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                             `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionPipedriveAddDealParams `json:"params" url:"params"`
@@ -16086,13 +16503,6 @@ func (f *FlowActionPipedriveAddDeal) GetType() FlowActionPipedriveAddDealType {
 	return f.Type
 }
 
-func (f *FlowActionPipedriveAddDeal) GetAction() FlowActionPipedriveAddDealAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionPipedriveAddDeal) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -16122,10 +16532,12 @@ func (f *FlowActionPipedriveAddDeal) GetExtraProperties() map[string]interface{}
 }
 
 func (f *FlowActionPipedriveAddDeal) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -16147,13 +16559,6 @@ func (f *FlowActionPipedriveAddDeal) SetAlias(alias *string) {
 func (f *FlowActionPipedriveAddDeal) SetType(type_ FlowActionPipedriveAddDealType) {
 	f.Type = type_
 	f.require(flowActionPipedriveAddDealFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionPipedriveAddDeal) SetAction(action FlowActionPipedriveAddDealAction) {
-	f.Action = action
-	f.require(flowActionPipedriveAddDealFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -16217,25 +16622,6 @@ func (f *FlowActionPipedriveAddDeal) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionPipedriveAddDealAction string
-
-const (
-	FlowActionPipedriveAddDealActionAddDeal FlowActionPipedriveAddDealAction = "ADD_DEAL"
-)
-
-func NewFlowActionPipedriveAddDealActionFromString(s string) (FlowActionPipedriveAddDealAction, error) {
-	switch s {
-	case "ADD_DEAL":
-		return FlowActionPipedriveAddDealActionAddDeal, nil
-	}
-	var t FlowActionPipedriveAddDealAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionPipedriveAddDealAction) Ptr() *FlowActionPipedriveAddDealAction {
-	return &f
 }
 
 var (
@@ -16330,10 +16716,12 @@ func (f *FlowActionPipedriveAddDealParams) GetExtraProperties() map[string]inter
 }
 
 func (f *FlowActionPipedriveAddDealParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -16707,17 +17095,15 @@ var (
 	flowActionPipedriveAddOrganizationFieldID           = big.NewInt(1 << 0)
 	flowActionPipedriveAddOrganizationFieldAlias        = big.NewInt(1 << 1)
 	flowActionPipedriveAddOrganizationFieldType         = big.NewInt(1 << 2)
-	flowActionPipedriveAddOrganizationFieldAction       = big.NewInt(1 << 3)
-	flowActionPipedriveAddOrganizationFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionPipedriveAddOrganizationFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionPipedriveAddOrganizationFieldParams       = big.NewInt(1 << 6)
+	flowActionPipedriveAddOrganizationFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionPipedriveAddOrganizationFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionPipedriveAddOrganizationFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionPipedriveAddOrganization struct {
 	ID           string                                    `json:"id" url:"id"`
 	Alias        *string                                   `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionPipedriveAddOrganizationType    `json:"type" url:"type"`
-	Action       FlowActionPipedriveAddOrganizationAction  `json:"action" url:"action"`
 	AllowFailure *bool                                     `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                     `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionPipedriveAddOrganizationParams `json:"params" url:"params"`
@@ -16750,13 +17136,6 @@ func (f *FlowActionPipedriveAddOrganization) GetType() FlowActionPipedriveAddOrg
 	return f.Type
 }
 
-func (f *FlowActionPipedriveAddOrganization) GetAction() FlowActionPipedriveAddOrganizationAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionPipedriveAddOrganization) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -16786,10 +17165,12 @@ func (f *FlowActionPipedriveAddOrganization) GetExtraProperties() map[string]int
 }
 
 func (f *FlowActionPipedriveAddOrganization) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -16811,13 +17192,6 @@ func (f *FlowActionPipedriveAddOrganization) SetAlias(alias *string) {
 func (f *FlowActionPipedriveAddOrganization) SetType(type_ FlowActionPipedriveAddOrganizationType) {
 	f.Type = type_
 	f.require(flowActionPipedriveAddOrganizationFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionPipedriveAddOrganization) SetAction(action FlowActionPipedriveAddOrganizationAction) {
-	f.Action = action
-	f.require(flowActionPipedriveAddOrganizationFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -16883,25 +17257,6 @@ func (f *FlowActionPipedriveAddOrganization) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionPipedriveAddOrganizationAction string
-
-const (
-	FlowActionPipedriveAddOrganizationActionAddOrganization FlowActionPipedriveAddOrganizationAction = "ADD_ORGANIZATION"
-)
-
-func NewFlowActionPipedriveAddOrganizationActionFromString(s string) (FlowActionPipedriveAddOrganizationAction, error) {
-	switch s {
-	case "ADD_ORGANIZATION":
-		return FlowActionPipedriveAddOrganizationActionAddOrganization, nil
-	}
-	var t FlowActionPipedriveAddOrganizationAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionPipedriveAddOrganizationAction) Ptr() *FlowActionPipedriveAddOrganizationAction {
-	return &f
-}
-
 var (
 	flowActionPipedriveAddOrganizationParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionPipedriveAddOrganizationParamsFieldName         = big.NewInt(1 << 1)
@@ -16958,10 +17313,12 @@ func (f *FlowActionPipedriveAddOrganizationParams) GetExtraProperties() map[stri
 }
 
 func (f *FlowActionPipedriveAddOrganizationParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -17121,17 +17478,15 @@ var (
 	flowActionPipedriveAddPersonFieldID           = big.NewInt(1 << 0)
 	flowActionPipedriveAddPersonFieldAlias        = big.NewInt(1 << 1)
 	flowActionPipedriveAddPersonFieldType         = big.NewInt(1 << 2)
-	flowActionPipedriveAddPersonFieldAction       = big.NewInt(1 << 3)
-	flowActionPipedriveAddPersonFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionPipedriveAddPersonFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionPipedriveAddPersonFieldParams       = big.NewInt(1 << 6)
+	flowActionPipedriveAddPersonFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionPipedriveAddPersonFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionPipedriveAddPersonFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionPipedriveAddPerson struct {
 	ID           string                              `json:"id" url:"id"`
 	Alias        *string                             `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionPipedriveAddPersonType    `json:"type" url:"type"`
-	Action       FlowActionPipedriveAddPersonAction  `json:"action" url:"action"`
 	AllowFailure *bool                               `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                               `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionPipedriveAddPersonParams `json:"params" url:"params"`
@@ -17164,13 +17519,6 @@ func (f *FlowActionPipedriveAddPerson) GetType() FlowActionPipedriveAddPersonTyp
 	return f.Type
 }
 
-func (f *FlowActionPipedriveAddPerson) GetAction() FlowActionPipedriveAddPersonAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionPipedriveAddPerson) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -17200,10 +17548,12 @@ func (f *FlowActionPipedriveAddPerson) GetExtraProperties() map[string]interface
 }
 
 func (f *FlowActionPipedriveAddPerson) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -17225,13 +17575,6 @@ func (f *FlowActionPipedriveAddPerson) SetAlias(alias *string) {
 func (f *FlowActionPipedriveAddPerson) SetType(type_ FlowActionPipedriveAddPersonType) {
 	f.Type = type_
 	f.require(flowActionPipedriveAddPersonFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionPipedriveAddPerson) SetAction(action FlowActionPipedriveAddPersonAction) {
-	f.Action = action
-	f.require(flowActionPipedriveAddPersonFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -17295,25 +17638,6 @@ func (f *FlowActionPipedriveAddPerson) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionPipedriveAddPersonAction string
-
-const (
-	FlowActionPipedriveAddPersonActionAddPerson FlowActionPipedriveAddPersonAction = "ADD_PERSON"
-)
-
-func NewFlowActionPipedriveAddPersonActionFromString(s string) (FlowActionPipedriveAddPersonAction, error) {
-	switch s {
-	case "ADD_PERSON":
-		return FlowActionPipedriveAddPersonActionAddPerson, nil
-	}
-	var t FlowActionPipedriveAddPersonAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionPipedriveAddPersonAction) Ptr() *FlowActionPipedriveAddPersonAction {
-	return &f
 }
 
 var (
@@ -17399,10 +17723,12 @@ func (f *FlowActionPipedriveAddPersonParams) GetExtraProperties() map[string]int
 }
 
 func (f *FlowActionPipedriveAddPersonParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -17642,124 +17968,242 @@ func (f FlowActionPipedriveAddPersonType) Ptr() *FlowActionPipedriveAddPersonTyp
 }
 
 type FlowActionSalesforce struct {
-	FlowActionSalesforceCreateLead  *FlowActionSalesforceCreateLead
-	FlowActionSalesforceGetLead     *FlowActionSalesforceGetLead
-	FlowActionSalesforceSearchLeads *FlowActionSalesforceSearchLeads
-	FlowActionSalesforceUpdateLead  *FlowActionSalesforceUpdateLead
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionSalesforceCreateLeadType
+	AllowFailure *bool
+	MaskOutput   *bool
+	CreateLead   *FlowActionSalesforceCreateLead
+	GetLead      *FlowActionSalesforceGetLead
+	SearchLeads  *FlowActionSalesforceSearchLeads
+	UpdateLead   *FlowActionSalesforceUpdateLead
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionSalesforce) GetFlowActionSalesforceCreateLead() *FlowActionSalesforceCreateLead {
+func (f *FlowActionSalesforce) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionSalesforce) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionSalesforce) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionSalesforce) GetType() FlowActionSalesforceCreateLeadType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionSalesforce) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionSalesforce) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionSalesforce) GetCreateLead() *FlowActionSalesforceCreateLead {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionSalesforceCreateLead
+	return f.CreateLead
 }
 
-func (f *FlowActionSalesforce) GetFlowActionSalesforceGetLead() *FlowActionSalesforceGetLead {
+func (f *FlowActionSalesforce) GetGetLead() *FlowActionSalesforceGetLead {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionSalesforceGetLead
+	return f.GetLead
 }
 
-func (f *FlowActionSalesforce) GetFlowActionSalesforceSearchLeads() *FlowActionSalesforceSearchLeads {
+func (f *FlowActionSalesforce) GetSearchLeads() *FlowActionSalesforceSearchLeads {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionSalesforceSearchLeads
+	return f.SearchLeads
 }
 
-func (f *FlowActionSalesforce) GetFlowActionSalesforceUpdateLead() *FlowActionSalesforceUpdateLead {
+func (f *FlowActionSalesforce) GetUpdateLead() *FlowActionSalesforceUpdateLead {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionSalesforceUpdateLead
+	return f.UpdateLead
 }
 
 func (f *FlowActionSalesforce) UnmarshalJSON(data []byte) error {
-	valueFlowActionSalesforceCreateLead := new(FlowActionSalesforceCreateLead)
-	if err := json.Unmarshal(data, &valueFlowActionSalesforceCreateLead); err == nil {
-		f.typ = "FlowActionSalesforceCreateLead"
-		f.FlowActionSalesforceCreateLead = valueFlowActionSalesforceCreateLead
-		return nil
+	var unmarshaler struct {
+		Action       string                             `json:"action"`
+		ID           string                             `json:"id"`
+		Alias        *string                            `json:"alias,omitempty"`
+		Type         FlowActionSalesforceCreateLeadType `json:"type"`
+		AllowFailure *bool                              `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                              `json:"mask_output,omitempty"`
 	}
-	valueFlowActionSalesforceGetLead := new(FlowActionSalesforceGetLead)
-	if err := json.Unmarshal(data, &valueFlowActionSalesforceGetLead); err == nil {
-		f.typ = "FlowActionSalesforceGetLead"
-		f.FlowActionSalesforceGetLead = valueFlowActionSalesforceGetLead
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionSalesforceSearchLeads := new(FlowActionSalesforceSearchLeads)
-	if err := json.Unmarshal(data, &valueFlowActionSalesforceSearchLeads); err == nil {
-		f.typ = "FlowActionSalesforceSearchLeads"
-		f.FlowActionSalesforceSearchLeads = valueFlowActionSalesforceSearchLeads
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	valueFlowActionSalesforceUpdateLead := new(FlowActionSalesforceUpdateLead)
-	if err := json.Unmarshal(data, &valueFlowActionSalesforceUpdateLead); err == nil {
-		f.typ = "FlowActionSalesforceUpdateLead"
-		f.FlowActionSalesforceUpdateLead = valueFlowActionSalesforceUpdateLead
-		return nil
+	switch unmarshaler.Action {
+	case "CREATE_LEAD":
+		value := new(FlowActionSalesforceCreateLead)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.CreateLead = value
+	case "GET_LEAD":
+		value := new(FlowActionSalesforceGetLead)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.GetLead = value
+	case "SEARCH_LEADS":
+		value := new(FlowActionSalesforceSearchLeads)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SearchLeads = value
+	case "UPDATE_LEAD":
+		value := new(FlowActionSalesforceUpdateLead)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.UpdateLead = value
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionSalesforce) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionSalesforceCreateLead" || f.FlowActionSalesforceCreateLead != nil {
-		return json.Marshal(f.FlowActionSalesforceCreateLead)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionSalesforceGetLead" || f.FlowActionSalesforceGetLead != nil {
-		return json.Marshal(f.FlowActionSalesforceGetLead)
+	if f.CreateLead != nil {
+		return internal.MarshalJSONWithExtraProperty(f.CreateLead, "action", "CREATE_LEAD")
 	}
-	if f.typ == "FlowActionSalesforceSearchLeads" || f.FlowActionSalesforceSearchLeads != nil {
-		return json.Marshal(f.FlowActionSalesforceSearchLeads)
+	if f.GetLead != nil {
+		return internal.MarshalJSONWithExtraProperty(f.GetLead, "action", "GET_LEAD")
 	}
-	if f.typ == "FlowActionSalesforceUpdateLead" || f.FlowActionSalesforceUpdateLead != nil {
-		return json.Marshal(f.FlowActionSalesforceUpdateLead)
+	if f.SearchLeads != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SearchLeads, "action", "SEARCH_LEADS")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.UpdateLead != nil {
+		return internal.MarshalJSONWithExtraProperty(f.UpdateLead, "action", "UPDATE_LEAD")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionSalesforceVisitor interface {
-	VisitFlowActionSalesforceCreateLead(*FlowActionSalesforceCreateLead) error
-	VisitFlowActionSalesforceGetLead(*FlowActionSalesforceGetLead) error
-	VisitFlowActionSalesforceSearchLeads(*FlowActionSalesforceSearchLeads) error
-	VisitFlowActionSalesforceUpdateLead(*FlowActionSalesforceUpdateLead) error
+	VisitCreateLead(*FlowActionSalesforceCreateLead) error
+	VisitGetLead(*FlowActionSalesforceGetLead) error
+	VisitSearchLeads(*FlowActionSalesforceSearchLeads) error
+	VisitUpdateLead(*FlowActionSalesforceUpdateLead) error
 }
 
 func (f *FlowActionSalesforce) Accept(visitor FlowActionSalesforceVisitor) error {
-	if f.typ == "FlowActionSalesforceCreateLead" || f.FlowActionSalesforceCreateLead != nil {
-		return visitor.VisitFlowActionSalesforceCreateLead(f.FlowActionSalesforceCreateLead)
+	if f.CreateLead != nil {
+		return visitor.VisitCreateLead(f.CreateLead)
 	}
-	if f.typ == "FlowActionSalesforceGetLead" || f.FlowActionSalesforceGetLead != nil {
-		return visitor.VisitFlowActionSalesforceGetLead(f.FlowActionSalesforceGetLead)
+	if f.GetLead != nil {
+		return visitor.VisitGetLead(f.GetLead)
 	}
-	if f.typ == "FlowActionSalesforceSearchLeads" || f.FlowActionSalesforceSearchLeads != nil {
-		return visitor.VisitFlowActionSalesforceSearchLeads(f.FlowActionSalesforceSearchLeads)
+	if f.SearchLeads != nil {
+		return visitor.VisitSearchLeads(f.SearchLeads)
 	}
-	if f.typ == "FlowActionSalesforceUpdateLead" || f.FlowActionSalesforceUpdateLead != nil {
-		return visitor.VisitFlowActionSalesforceUpdateLead(f.FlowActionSalesforceUpdateLead)
+	if f.UpdateLead != nil {
+		return visitor.VisitUpdateLead(f.UpdateLead)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionSalesforce) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.CreateLead != nil {
+		fields = append(fields, "CREATE_LEAD")
+	}
+	if f.GetLead != nil {
+		fields = append(fields, "GET_LEAD")
+	}
+	if f.SearchLeads != nil {
+		fields = append(fields, "SEARCH_LEADS")
+	}
+	if f.UpdateLead != nil {
+		fields = append(fields, "UPDATE_LEAD")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionSalesforceCreateLeadFieldID           = big.NewInt(1 << 0)
 	flowActionSalesforceCreateLeadFieldAlias        = big.NewInt(1 << 1)
 	flowActionSalesforceCreateLeadFieldType         = big.NewInt(1 << 2)
-	flowActionSalesforceCreateLeadFieldAction       = big.NewInt(1 << 3)
-	flowActionSalesforceCreateLeadFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionSalesforceCreateLeadFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionSalesforceCreateLeadFieldParams       = big.NewInt(1 << 6)
+	flowActionSalesforceCreateLeadFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionSalesforceCreateLeadFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionSalesforceCreateLeadFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionSalesforceCreateLead struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionSalesforceCreateLeadType    `json:"type" url:"type"`
-	Action       FlowActionSalesforceCreateLeadAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionSalesforceCreateLeadParams `json:"params" url:"params"`
@@ -17792,13 +18236,6 @@ func (f *FlowActionSalesforceCreateLead) GetType() FlowActionSalesforceCreateLea
 	return f.Type
 }
 
-func (f *FlowActionSalesforceCreateLead) GetAction() FlowActionSalesforceCreateLeadAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionSalesforceCreateLead) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -17828,10 +18265,12 @@ func (f *FlowActionSalesforceCreateLead) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionSalesforceCreateLead) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -17853,13 +18292,6 @@ func (f *FlowActionSalesforceCreateLead) SetAlias(alias *string) {
 func (f *FlowActionSalesforceCreateLead) SetType(type_ FlowActionSalesforceCreateLeadType) {
 	f.Type = type_
 	f.require(flowActionSalesforceCreateLeadFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionSalesforceCreateLead) SetAction(action FlowActionSalesforceCreateLeadAction) {
-	f.Action = action
-	f.require(flowActionSalesforceCreateLeadFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -17923,25 +18355,6 @@ func (f *FlowActionSalesforceCreateLead) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionSalesforceCreateLeadAction string
-
-const (
-	FlowActionSalesforceCreateLeadActionCreateLead FlowActionSalesforceCreateLeadAction = "CREATE_LEAD"
-)
-
-func NewFlowActionSalesforceCreateLeadActionFromString(s string) (FlowActionSalesforceCreateLeadAction, error) {
-	switch s {
-	case "CREATE_LEAD":
-		return FlowActionSalesforceCreateLeadActionCreateLead, nil
-	}
-	var t FlowActionSalesforceCreateLeadAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionSalesforceCreateLeadAction) Ptr() *FlowActionSalesforceCreateLeadAction {
-	return &f
 }
 
 var (
@@ -18027,10 +18440,12 @@ func (f *FlowActionSalesforceCreateLeadParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionSalesforceCreateLeadParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -18149,17 +18564,15 @@ var (
 	flowActionSalesforceGetLeadFieldID           = big.NewInt(1 << 0)
 	flowActionSalesforceGetLeadFieldAlias        = big.NewInt(1 << 1)
 	flowActionSalesforceGetLeadFieldType         = big.NewInt(1 << 2)
-	flowActionSalesforceGetLeadFieldAction       = big.NewInt(1 << 3)
-	flowActionSalesforceGetLeadFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionSalesforceGetLeadFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionSalesforceGetLeadFieldParams       = big.NewInt(1 << 6)
+	flowActionSalesforceGetLeadFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionSalesforceGetLeadFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionSalesforceGetLeadFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionSalesforceGetLead struct {
 	ID           string                             `json:"id" url:"id"`
 	Alias        *string                            `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionSalesforceGetLeadType    `json:"type" url:"type"`
-	Action       FlowActionSalesforceGetLeadAction  `json:"action" url:"action"`
 	AllowFailure *bool                              `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                              `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionSalesforceGetLeadParams `json:"params" url:"params"`
@@ -18192,13 +18605,6 @@ func (f *FlowActionSalesforceGetLead) GetType() FlowActionSalesforceGetLeadType 
 	return f.Type
 }
 
-func (f *FlowActionSalesforceGetLead) GetAction() FlowActionSalesforceGetLeadAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionSalesforceGetLead) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -18228,10 +18634,12 @@ func (f *FlowActionSalesforceGetLead) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowActionSalesforceGetLead) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -18253,13 +18661,6 @@ func (f *FlowActionSalesforceGetLead) SetAlias(alias *string) {
 func (f *FlowActionSalesforceGetLead) SetType(type_ FlowActionSalesforceGetLeadType) {
 	f.Type = type_
 	f.require(flowActionSalesforceGetLeadFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionSalesforceGetLead) SetAction(action FlowActionSalesforceGetLeadAction) {
-	f.Action = action
-	f.require(flowActionSalesforceGetLeadFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -18325,25 +18726,6 @@ func (f *FlowActionSalesforceGetLead) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionSalesforceGetLeadAction string
-
-const (
-	FlowActionSalesforceGetLeadActionGetLead FlowActionSalesforceGetLeadAction = "GET_LEAD"
-)
-
-func NewFlowActionSalesforceGetLeadActionFromString(s string) (FlowActionSalesforceGetLeadAction, error) {
-	switch s {
-	case "GET_LEAD":
-		return FlowActionSalesforceGetLeadActionGetLead, nil
-	}
-	var t FlowActionSalesforceGetLeadAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionSalesforceGetLeadAction) Ptr() *FlowActionSalesforceGetLeadAction {
-	return &f
-}
-
 var (
 	flowActionSalesforceGetLeadParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionSalesforceGetLeadParamsFieldLeadID       = big.NewInt(1 << 1)
@@ -18382,10 +18764,12 @@ func (f *FlowActionSalesforceGetLeadParams) GetExtraProperties() map[string]inte
 }
 
 func (f *FlowActionSalesforceGetLeadParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -18467,17 +18851,15 @@ var (
 	flowActionSalesforceSearchLeadsFieldID           = big.NewInt(1 << 0)
 	flowActionSalesforceSearchLeadsFieldAlias        = big.NewInt(1 << 1)
 	flowActionSalesforceSearchLeadsFieldType         = big.NewInt(1 << 2)
-	flowActionSalesforceSearchLeadsFieldAction       = big.NewInt(1 << 3)
-	flowActionSalesforceSearchLeadsFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionSalesforceSearchLeadsFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionSalesforceSearchLeadsFieldParams       = big.NewInt(1 << 6)
+	flowActionSalesforceSearchLeadsFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionSalesforceSearchLeadsFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionSalesforceSearchLeadsFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionSalesforceSearchLeads struct {
 	ID           string                                 `json:"id" url:"id"`
 	Alias        *string                                `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionSalesforceSearchLeadsType    `json:"type" url:"type"`
-	Action       FlowActionSalesforceSearchLeadsAction  `json:"action" url:"action"`
 	AllowFailure *bool                                  `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                  `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionSalesforceSearchLeadsParams `json:"params" url:"params"`
@@ -18510,13 +18892,6 @@ func (f *FlowActionSalesforceSearchLeads) GetType() FlowActionSalesforceSearchLe
 	return f.Type
 }
 
-func (f *FlowActionSalesforceSearchLeads) GetAction() FlowActionSalesforceSearchLeadsAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionSalesforceSearchLeads) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -18546,10 +18921,12 @@ func (f *FlowActionSalesforceSearchLeads) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowActionSalesforceSearchLeads) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -18571,13 +18948,6 @@ func (f *FlowActionSalesforceSearchLeads) SetAlias(alias *string) {
 func (f *FlowActionSalesforceSearchLeads) SetType(type_ FlowActionSalesforceSearchLeadsType) {
 	f.Type = type_
 	f.require(flowActionSalesforceSearchLeadsFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionSalesforceSearchLeads) SetAction(action FlowActionSalesforceSearchLeadsAction) {
-	f.Action = action
-	f.require(flowActionSalesforceSearchLeadsFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -18643,25 +19013,6 @@ func (f *FlowActionSalesforceSearchLeads) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionSalesforceSearchLeadsAction string
-
-const (
-	FlowActionSalesforceSearchLeadsActionSearchLeads FlowActionSalesforceSearchLeadsAction = "SEARCH_LEADS"
-)
-
-func NewFlowActionSalesforceSearchLeadsActionFromString(s string) (FlowActionSalesforceSearchLeadsAction, error) {
-	switch s {
-	case "SEARCH_LEADS":
-		return FlowActionSalesforceSearchLeadsActionSearchLeads, nil
-	}
-	var t FlowActionSalesforceSearchLeadsAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionSalesforceSearchLeadsAction) Ptr() *FlowActionSalesforceSearchLeadsAction {
-	return &f
-}
-
 var (
 	flowActionSalesforceSearchLeadsParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionSalesforceSearchLeadsParamsFieldSearchField  = big.NewInt(1 << 1)
@@ -18718,10 +19069,12 @@ func (f *FlowActionSalesforceSearchLeadsParams) GetExtraProperties() map[string]
 }
 
 func (f *FlowActionSalesforceSearchLeadsParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -18845,17 +19198,15 @@ var (
 	flowActionSalesforceUpdateLeadFieldID           = big.NewInt(1 << 0)
 	flowActionSalesforceUpdateLeadFieldAlias        = big.NewInt(1 << 1)
 	flowActionSalesforceUpdateLeadFieldType         = big.NewInt(1 << 2)
-	flowActionSalesforceUpdateLeadFieldAction       = big.NewInt(1 << 3)
-	flowActionSalesforceUpdateLeadFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionSalesforceUpdateLeadFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionSalesforceUpdateLeadFieldParams       = big.NewInt(1 << 6)
+	flowActionSalesforceUpdateLeadFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionSalesforceUpdateLeadFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionSalesforceUpdateLeadFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionSalesforceUpdateLead struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionSalesforceUpdateLeadType    `json:"type" url:"type"`
-	Action       FlowActionSalesforceUpdateLeadAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionSalesforceUpdateLeadParams `json:"params" url:"params"`
@@ -18888,13 +19239,6 @@ func (f *FlowActionSalesforceUpdateLead) GetType() FlowActionSalesforceUpdateLea
 	return f.Type
 }
 
-func (f *FlowActionSalesforceUpdateLead) GetAction() FlowActionSalesforceUpdateLeadAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionSalesforceUpdateLead) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -18924,10 +19268,12 @@ func (f *FlowActionSalesforceUpdateLead) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionSalesforceUpdateLead) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -18949,13 +19295,6 @@ func (f *FlowActionSalesforceUpdateLead) SetAlias(alias *string) {
 func (f *FlowActionSalesforceUpdateLead) SetType(type_ FlowActionSalesforceUpdateLeadType) {
 	f.Type = type_
 	f.require(flowActionSalesforceUpdateLeadFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionSalesforceUpdateLead) SetAction(action FlowActionSalesforceUpdateLeadAction) {
-	f.Action = action
-	f.require(flowActionSalesforceUpdateLeadFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -19021,25 +19360,6 @@ func (f *FlowActionSalesforceUpdateLead) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionSalesforceUpdateLeadAction string
-
-const (
-	FlowActionSalesforceUpdateLeadActionUpdateLead FlowActionSalesforceUpdateLeadAction = "UPDATE_LEAD"
-)
-
-func NewFlowActionSalesforceUpdateLeadActionFromString(s string) (FlowActionSalesforceUpdateLeadAction, error) {
-	switch s {
-	case "UPDATE_LEAD":
-		return FlowActionSalesforceUpdateLeadActionUpdateLead, nil
-	}
-	var t FlowActionSalesforceUpdateLeadAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionSalesforceUpdateLeadAction) Ptr() *FlowActionSalesforceUpdateLeadAction {
-	return &f
-}
-
 var (
 	flowActionSalesforceUpdateLeadParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionSalesforceUpdateLeadParamsFieldLeadID       = big.NewInt(1 << 1)
@@ -19087,10 +19407,12 @@ func (f *FlowActionSalesforceUpdateLeadParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionSalesforceUpdateLeadParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -19262,10 +19584,12 @@ func (f *FlowActionSendgridSendEmail) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowActionSendgridSendEmail) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -19426,10 +19750,12 @@ func (f *FlowActionSendgridSendEmailParams) GetExtraProperties() map[string]inte
 }
 
 func (f *FlowActionSendgridSendEmailParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -19537,10 +19863,12 @@ func (f *FlowActionSendgridSendEmailParamsPerson) GetExtraProperties() map[strin
 }
 
 func (f *FlowActionSendgridSendEmailParamsPerson) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -19703,10 +20031,12 @@ func (f *FlowActionSlackPostMessage) GetExtraProperties() map[string]interface{}
 }
 
 func (f *FlowActionSlackPostMessage) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -19866,10 +20196,12 @@ func (f *FlowActionSlackPostMessageParams) GetExtraProperties() map[string]inter
 }
 
 func (f *FlowActionSlackPostMessageParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -19991,10 +20323,12 @@ func (f *FlowActionSlackPostMessageParamsAttachment) GetExtraProperties() map[st
 }
 
 func (f *FlowActionSlackPostMessageParamsAttachment) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetColor sets the Color field and marks it as non-optional;
@@ -20139,10 +20473,12 @@ func (f *FlowActionSlackPostMessageParamsAttachmentField) GetExtraProperties() m
 }
 
 func (f *FlowActionSlackPostMessageParamsAttachmentField) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetTitle sets the Title field and marks it as non-optional;
@@ -20228,187 +20564,314 @@ func (f FlowActionSlackPostMessageType) Ptr() *FlowActionSlackPostMessageType {
 }
 
 type FlowActionStripe struct {
-	FlowActionStripeAddTaxID            *FlowActionStripeAddTaxID
-	FlowActionStripeCreateCustomer      *FlowActionStripeCreateCustomer
-	FlowActionStripeCreatePortalSession *FlowActionStripeCreatePortalSession
-	FlowActionStripeDeleteTaxID         *FlowActionStripeDeleteTaxID
-	FlowActionStripeFindCustomers       *FlowActionStripeFindCustomers
-	FlowActionStripeGetCustomer         *FlowActionStripeGetCustomer
-	FlowActionStripeUpdateCustomer      *FlowActionStripeUpdateCustomer
+	Action              string
+	ID                  string
+	Alias               *string
+	Type                FlowActionStripeAddTaxIDType
+	AllowFailure        *bool
+	MaskOutput          *bool
+	AddTaxID            *FlowActionStripeAddTaxID
+	CreateCustomer      *FlowActionStripeCreateCustomer
+	CreatePortalSession *FlowActionStripeCreatePortalSession
+	DeleteTaxID         *FlowActionStripeDeleteTaxID
+	FindCustomers       *FlowActionStripeFindCustomers
+	GetCustomer         *FlowActionStripeGetCustomer
+	UpdateCustomer      *FlowActionStripeUpdateCustomer
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionStripe) GetFlowActionStripeAddTaxID() *FlowActionStripeAddTaxID {
+func (f *FlowActionStripe) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionStripe) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionStripe) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionStripe) GetType() FlowActionStripeAddTaxIDType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionStripe) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionStripe) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionStripe) GetAddTaxID() *FlowActionStripeAddTaxID {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionStripeAddTaxID
+	return f.AddTaxID
 }
 
-func (f *FlowActionStripe) GetFlowActionStripeCreateCustomer() *FlowActionStripeCreateCustomer {
+func (f *FlowActionStripe) GetCreateCustomer() *FlowActionStripeCreateCustomer {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionStripeCreateCustomer
+	return f.CreateCustomer
 }
 
-func (f *FlowActionStripe) GetFlowActionStripeCreatePortalSession() *FlowActionStripeCreatePortalSession {
+func (f *FlowActionStripe) GetCreatePortalSession() *FlowActionStripeCreatePortalSession {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionStripeCreatePortalSession
+	return f.CreatePortalSession
 }
 
-func (f *FlowActionStripe) GetFlowActionStripeDeleteTaxID() *FlowActionStripeDeleteTaxID {
+func (f *FlowActionStripe) GetDeleteTaxID() *FlowActionStripeDeleteTaxID {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionStripeDeleteTaxID
+	return f.DeleteTaxID
 }
 
-func (f *FlowActionStripe) GetFlowActionStripeFindCustomers() *FlowActionStripeFindCustomers {
+func (f *FlowActionStripe) GetFindCustomers() *FlowActionStripeFindCustomers {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionStripeFindCustomers
+	return f.FindCustomers
 }
 
-func (f *FlowActionStripe) GetFlowActionStripeGetCustomer() *FlowActionStripeGetCustomer {
+func (f *FlowActionStripe) GetGetCustomer() *FlowActionStripeGetCustomer {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionStripeGetCustomer
+	return f.GetCustomer
 }
 
-func (f *FlowActionStripe) GetFlowActionStripeUpdateCustomer() *FlowActionStripeUpdateCustomer {
+func (f *FlowActionStripe) GetUpdateCustomer() *FlowActionStripeUpdateCustomer {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionStripeUpdateCustomer
+	return f.UpdateCustomer
 }
 
 func (f *FlowActionStripe) UnmarshalJSON(data []byte) error {
-	valueFlowActionStripeAddTaxID := new(FlowActionStripeAddTaxID)
-	if err := json.Unmarshal(data, &valueFlowActionStripeAddTaxID); err == nil {
-		f.typ = "FlowActionStripeAddTaxID"
-		f.FlowActionStripeAddTaxID = valueFlowActionStripeAddTaxID
-		return nil
+	var unmarshaler struct {
+		Action       string                       `json:"action"`
+		ID           string                       `json:"id"`
+		Alias        *string                      `json:"alias,omitempty"`
+		Type         FlowActionStripeAddTaxIDType `json:"type"`
+		AllowFailure *bool                        `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                        `json:"mask_output,omitempty"`
 	}
-	valueFlowActionStripeCreateCustomer := new(FlowActionStripeCreateCustomer)
-	if err := json.Unmarshal(data, &valueFlowActionStripeCreateCustomer); err == nil {
-		f.typ = "FlowActionStripeCreateCustomer"
-		f.FlowActionStripeCreateCustomer = valueFlowActionStripeCreateCustomer
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	valueFlowActionStripeCreatePortalSession := new(FlowActionStripeCreatePortalSession)
-	if err := json.Unmarshal(data, &valueFlowActionStripeCreatePortalSession); err == nil {
-		f.typ = "FlowActionStripeCreatePortalSession"
-		f.FlowActionStripeCreatePortalSession = valueFlowActionStripeCreatePortalSession
-		return nil
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
 	}
-	valueFlowActionStripeDeleteTaxID := new(FlowActionStripeDeleteTaxID)
-	if err := json.Unmarshal(data, &valueFlowActionStripeDeleteTaxID); err == nil {
-		f.typ = "FlowActionStripeDeleteTaxID"
-		f.FlowActionStripeDeleteTaxID = valueFlowActionStripeDeleteTaxID
-		return nil
+	switch unmarshaler.Action {
+	case "ADD_TAX_ID":
+		value := new(FlowActionStripeAddTaxID)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.AddTaxID = value
+	case "CREATE_CUSTOMER":
+		value := new(FlowActionStripeCreateCustomer)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.CreateCustomer = value
+	case "CREATE_PORTAL_SESSION":
+		value := new(FlowActionStripeCreatePortalSession)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.CreatePortalSession = value
+	case "DELETE_TAX_ID":
+		value := new(FlowActionStripeDeleteTaxID)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.DeleteTaxID = value
+	case "FIND_CUSTOMERS":
+		value := new(FlowActionStripeFindCustomers)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.FindCustomers = value
+	case "GET_CUSTOMER":
+		value := new(FlowActionStripeGetCustomer)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.GetCustomer = value
+	case "UPDATE_CUSTOMER":
+		value := new(FlowActionStripeUpdateCustomer)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.UpdateCustomer = value
 	}
-	valueFlowActionStripeFindCustomers := new(FlowActionStripeFindCustomers)
-	if err := json.Unmarshal(data, &valueFlowActionStripeFindCustomers); err == nil {
-		f.typ = "FlowActionStripeFindCustomers"
-		f.FlowActionStripeFindCustomers = valueFlowActionStripeFindCustomers
-		return nil
-	}
-	valueFlowActionStripeGetCustomer := new(FlowActionStripeGetCustomer)
-	if err := json.Unmarshal(data, &valueFlowActionStripeGetCustomer); err == nil {
-		f.typ = "FlowActionStripeGetCustomer"
-		f.FlowActionStripeGetCustomer = valueFlowActionStripeGetCustomer
-		return nil
-	}
-	valueFlowActionStripeUpdateCustomer := new(FlowActionStripeUpdateCustomer)
-	if err := json.Unmarshal(data, &valueFlowActionStripeUpdateCustomer); err == nil {
-		f.typ = "FlowActionStripeUpdateCustomer"
-		f.FlowActionStripeUpdateCustomer = valueFlowActionStripeUpdateCustomer
-		return nil
-	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionStripe) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionStripeAddTaxID" || f.FlowActionStripeAddTaxID != nil {
-		return json.Marshal(f.FlowActionStripeAddTaxID)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionStripeCreateCustomer" || f.FlowActionStripeCreateCustomer != nil {
-		return json.Marshal(f.FlowActionStripeCreateCustomer)
+	if f.AddTaxID != nil {
+		return internal.MarshalJSONWithExtraProperty(f.AddTaxID, "action", "ADD_TAX_ID")
 	}
-	if f.typ == "FlowActionStripeCreatePortalSession" || f.FlowActionStripeCreatePortalSession != nil {
-		return json.Marshal(f.FlowActionStripeCreatePortalSession)
+	if f.CreateCustomer != nil {
+		return internal.MarshalJSONWithExtraProperty(f.CreateCustomer, "action", "CREATE_CUSTOMER")
 	}
-	if f.typ == "FlowActionStripeDeleteTaxID" || f.FlowActionStripeDeleteTaxID != nil {
-		return json.Marshal(f.FlowActionStripeDeleteTaxID)
+	if f.CreatePortalSession != nil {
+		return internal.MarshalJSONWithExtraProperty(f.CreatePortalSession, "action", "CREATE_PORTAL_SESSION")
 	}
-	if f.typ == "FlowActionStripeFindCustomers" || f.FlowActionStripeFindCustomers != nil {
-		return json.Marshal(f.FlowActionStripeFindCustomers)
+	if f.DeleteTaxID != nil {
+		return internal.MarshalJSONWithExtraProperty(f.DeleteTaxID, "action", "DELETE_TAX_ID")
 	}
-	if f.typ == "FlowActionStripeGetCustomer" || f.FlowActionStripeGetCustomer != nil {
-		return json.Marshal(f.FlowActionStripeGetCustomer)
+	if f.FindCustomers != nil {
+		return internal.MarshalJSONWithExtraProperty(f.FindCustomers, "action", "FIND_CUSTOMERS")
 	}
-	if f.typ == "FlowActionStripeUpdateCustomer" || f.FlowActionStripeUpdateCustomer != nil {
-		return json.Marshal(f.FlowActionStripeUpdateCustomer)
+	if f.GetCustomer != nil {
+		return internal.MarshalJSONWithExtraProperty(f.GetCustomer, "action", "GET_CUSTOMER")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.UpdateCustomer != nil {
+		return internal.MarshalJSONWithExtraProperty(f.UpdateCustomer, "action", "UPDATE_CUSTOMER")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionStripeVisitor interface {
-	VisitFlowActionStripeAddTaxID(*FlowActionStripeAddTaxID) error
-	VisitFlowActionStripeCreateCustomer(*FlowActionStripeCreateCustomer) error
-	VisitFlowActionStripeCreatePortalSession(*FlowActionStripeCreatePortalSession) error
-	VisitFlowActionStripeDeleteTaxID(*FlowActionStripeDeleteTaxID) error
-	VisitFlowActionStripeFindCustomers(*FlowActionStripeFindCustomers) error
-	VisitFlowActionStripeGetCustomer(*FlowActionStripeGetCustomer) error
-	VisitFlowActionStripeUpdateCustomer(*FlowActionStripeUpdateCustomer) error
+	VisitAddTaxID(*FlowActionStripeAddTaxID) error
+	VisitCreateCustomer(*FlowActionStripeCreateCustomer) error
+	VisitCreatePortalSession(*FlowActionStripeCreatePortalSession) error
+	VisitDeleteTaxID(*FlowActionStripeDeleteTaxID) error
+	VisitFindCustomers(*FlowActionStripeFindCustomers) error
+	VisitGetCustomer(*FlowActionStripeGetCustomer) error
+	VisitUpdateCustomer(*FlowActionStripeUpdateCustomer) error
 }
 
 func (f *FlowActionStripe) Accept(visitor FlowActionStripeVisitor) error {
-	if f.typ == "FlowActionStripeAddTaxID" || f.FlowActionStripeAddTaxID != nil {
-		return visitor.VisitFlowActionStripeAddTaxID(f.FlowActionStripeAddTaxID)
+	if f.AddTaxID != nil {
+		return visitor.VisitAddTaxID(f.AddTaxID)
 	}
-	if f.typ == "FlowActionStripeCreateCustomer" || f.FlowActionStripeCreateCustomer != nil {
-		return visitor.VisitFlowActionStripeCreateCustomer(f.FlowActionStripeCreateCustomer)
+	if f.CreateCustomer != nil {
+		return visitor.VisitCreateCustomer(f.CreateCustomer)
 	}
-	if f.typ == "FlowActionStripeCreatePortalSession" || f.FlowActionStripeCreatePortalSession != nil {
-		return visitor.VisitFlowActionStripeCreatePortalSession(f.FlowActionStripeCreatePortalSession)
+	if f.CreatePortalSession != nil {
+		return visitor.VisitCreatePortalSession(f.CreatePortalSession)
 	}
-	if f.typ == "FlowActionStripeDeleteTaxID" || f.FlowActionStripeDeleteTaxID != nil {
-		return visitor.VisitFlowActionStripeDeleteTaxID(f.FlowActionStripeDeleteTaxID)
+	if f.DeleteTaxID != nil {
+		return visitor.VisitDeleteTaxID(f.DeleteTaxID)
 	}
-	if f.typ == "FlowActionStripeFindCustomers" || f.FlowActionStripeFindCustomers != nil {
-		return visitor.VisitFlowActionStripeFindCustomers(f.FlowActionStripeFindCustomers)
+	if f.FindCustomers != nil {
+		return visitor.VisitFindCustomers(f.FindCustomers)
 	}
-	if f.typ == "FlowActionStripeGetCustomer" || f.FlowActionStripeGetCustomer != nil {
-		return visitor.VisitFlowActionStripeGetCustomer(f.FlowActionStripeGetCustomer)
+	if f.GetCustomer != nil {
+		return visitor.VisitGetCustomer(f.GetCustomer)
 	}
-	if f.typ == "FlowActionStripeUpdateCustomer" || f.FlowActionStripeUpdateCustomer != nil {
-		return visitor.VisitFlowActionStripeUpdateCustomer(f.FlowActionStripeUpdateCustomer)
+	if f.UpdateCustomer != nil {
+		return visitor.VisitUpdateCustomer(f.UpdateCustomer)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionStripe) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.AddTaxID != nil {
+		fields = append(fields, "ADD_TAX_ID")
+	}
+	if f.CreateCustomer != nil {
+		fields = append(fields, "CREATE_CUSTOMER")
+	}
+	if f.CreatePortalSession != nil {
+		fields = append(fields, "CREATE_PORTAL_SESSION")
+	}
+	if f.DeleteTaxID != nil {
+		fields = append(fields, "DELETE_TAX_ID")
+	}
+	if f.FindCustomers != nil {
+		fields = append(fields, "FIND_CUSTOMERS")
+	}
+	if f.GetCustomer != nil {
+		fields = append(fields, "GET_CUSTOMER")
+	}
+	if f.UpdateCustomer != nil {
+		fields = append(fields, "UPDATE_CUSTOMER")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionStripeAddTaxIDFieldID           = big.NewInt(1 << 0)
 	flowActionStripeAddTaxIDFieldAlias        = big.NewInt(1 << 1)
 	flowActionStripeAddTaxIDFieldType         = big.NewInt(1 << 2)
-	flowActionStripeAddTaxIDFieldAction       = big.NewInt(1 << 3)
-	flowActionStripeAddTaxIDFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionStripeAddTaxIDFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionStripeAddTaxIDFieldParams       = big.NewInt(1 << 6)
+	flowActionStripeAddTaxIDFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionStripeAddTaxIDFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionStripeAddTaxIDFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionStripeAddTaxID struct {
 	ID           string                          `json:"id" url:"id"`
 	Alias        *string                         `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionStripeAddTaxIDType    `json:"type" url:"type"`
-	Action       FlowActionStripeAddTaxIDAction  `json:"action" url:"action"`
 	AllowFailure *bool                           `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                           `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionStripeAddTaxIDParams `json:"params" url:"params"`
@@ -20441,13 +20904,6 @@ func (f *FlowActionStripeAddTaxID) GetType() FlowActionStripeAddTaxIDType {
 	return f.Type
 }
 
-func (f *FlowActionStripeAddTaxID) GetAction() FlowActionStripeAddTaxIDAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionStripeAddTaxID) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -20477,10 +20933,12 @@ func (f *FlowActionStripeAddTaxID) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionStripeAddTaxID) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -20502,13 +20960,6 @@ func (f *FlowActionStripeAddTaxID) SetAlias(alias *string) {
 func (f *FlowActionStripeAddTaxID) SetType(type_ FlowActionStripeAddTaxIDType) {
 	f.Type = type_
 	f.require(flowActionStripeAddTaxIDFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionStripeAddTaxID) SetAction(action FlowActionStripeAddTaxIDAction) {
-	f.Action = action
-	f.require(flowActionStripeAddTaxIDFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -20574,25 +21025,6 @@ func (f *FlowActionStripeAddTaxID) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionStripeAddTaxIDAction string
-
-const (
-	FlowActionStripeAddTaxIDActionAddTaxID FlowActionStripeAddTaxIDAction = "ADD_TAX_ID"
-)
-
-func NewFlowActionStripeAddTaxIDActionFromString(s string) (FlowActionStripeAddTaxIDAction, error) {
-	switch s {
-	case "ADD_TAX_ID":
-		return FlowActionStripeAddTaxIDActionAddTaxID, nil
-	}
-	var t FlowActionStripeAddTaxIDAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionStripeAddTaxIDAction) Ptr() *FlowActionStripeAddTaxIDAction {
-	return &f
-}
-
 var (
 	flowActionStripeAddTaxIDParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionStripeAddTaxIDParamsFieldCustomerID   = big.NewInt(1 << 1)
@@ -20649,10 +21081,12 @@ func (f *FlowActionStripeAddTaxIDParams) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionStripeAddTaxIDParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -20818,10 +21252,12 @@ func (f *FlowActionStripeAddress) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionStripeAddress) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetLine1 sets the Line1 field and marks it as non-optional;
@@ -20912,17 +21348,15 @@ var (
 	flowActionStripeCreateCustomerFieldID           = big.NewInt(1 << 0)
 	flowActionStripeCreateCustomerFieldAlias        = big.NewInt(1 << 1)
 	flowActionStripeCreateCustomerFieldType         = big.NewInt(1 << 2)
-	flowActionStripeCreateCustomerFieldAction       = big.NewInt(1 << 3)
-	flowActionStripeCreateCustomerFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionStripeCreateCustomerFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionStripeCreateCustomerFieldParams       = big.NewInt(1 << 6)
+	flowActionStripeCreateCustomerFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionStripeCreateCustomerFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionStripeCreateCustomerFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionStripeCreateCustomer struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionStripeCreateCustomerType    `json:"type" url:"type"`
-	Action       FlowActionStripeCreateCustomerAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionStripeCreateCustomerParams `json:"params" url:"params"`
@@ -20955,13 +21389,6 @@ func (f *FlowActionStripeCreateCustomer) GetType() FlowActionStripeCreateCustome
 	return f.Type
 }
 
-func (f *FlowActionStripeCreateCustomer) GetAction() FlowActionStripeCreateCustomerAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionStripeCreateCustomer) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -20991,10 +21418,12 @@ func (f *FlowActionStripeCreateCustomer) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionStripeCreateCustomer) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -21016,13 +21445,6 @@ func (f *FlowActionStripeCreateCustomer) SetAlias(alias *string) {
 func (f *FlowActionStripeCreateCustomer) SetType(type_ FlowActionStripeCreateCustomerType) {
 	f.Type = type_
 	f.require(flowActionStripeCreateCustomerFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionStripeCreateCustomer) SetAction(action FlowActionStripeCreateCustomerAction) {
-	f.Action = action
-	f.require(flowActionStripeCreateCustomerFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -21086,25 +21508,6 @@ func (f *FlowActionStripeCreateCustomer) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionStripeCreateCustomerAction string
-
-const (
-	FlowActionStripeCreateCustomerActionCreateCustomer FlowActionStripeCreateCustomerAction = "CREATE_CUSTOMER"
-)
-
-func NewFlowActionStripeCreateCustomerActionFromString(s string) (FlowActionStripeCreateCustomerAction, error) {
-	switch s {
-	case "CREATE_CUSTOMER":
-		return FlowActionStripeCreateCustomerActionCreateCustomer, nil
-	}
-	var t FlowActionStripeCreateCustomerAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionStripeCreateCustomerAction) Ptr() *FlowActionStripeCreateCustomerAction {
-	return &f
 }
 
 var (
@@ -21208,10 +21611,12 @@ func (f *FlowActionStripeCreateCustomerParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionStripeCreateCustomerParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -21342,17 +21747,15 @@ var (
 	flowActionStripeCreatePortalSessionFieldID           = big.NewInt(1 << 0)
 	flowActionStripeCreatePortalSessionFieldAlias        = big.NewInt(1 << 1)
 	flowActionStripeCreatePortalSessionFieldType         = big.NewInt(1 << 2)
-	flowActionStripeCreatePortalSessionFieldAction       = big.NewInt(1 << 3)
-	flowActionStripeCreatePortalSessionFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionStripeCreatePortalSessionFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionStripeCreatePortalSessionFieldParams       = big.NewInt(1 << 6)
+	flowActionStripeCreatePortalSessionFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionStripeCreatePortalSessionFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionStripeCreatePortalSessionFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionStripeCreatePortalSession struct {
 	ID           string                                     `json:"id" url:"id"`
 	Alias        *string                                    `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionStripeCreatePortalSessionType    `json:"type" url:"type"`
-	Action       FlowActionStripeCreatePortalSessionAction  `json:"action" url:"action"`
 	AllowFailure *bool                                      `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                      `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionStripeCreatePortalSessionParams `json:"params" url:"params"`
@@ -21385,13 +21788,6 @@ func (f *FlowActionStripeCreatePortalSession) GetType() FlowActionStripeCreatePo
 	return f.Type
 }
 
-func (f *FlowActionStripeCreatePortalSession) GetAction() FlowActionStripeCreatePortalSessionAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionStripeCreatePortalSession) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -21421,10 +21817,12 @@ func (f *FlowActionStripeCreatePortalSession) GetExtraProperties() map[string]in
 }
 
 func (f *FlowActionStripeCreatePortalSession) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -21446,13 +21844,6 @@ func (f *FlowActionStripeCreatePortalSession) SetAlias(alias *string) {
 func (f *FlowActionStripeCreatePortalSession) SetType(type_ FlowActionStripeCreatePortalSessionType) {
 	f.Type = type_
 	f.require(flowActionStripeCreatePortalSessionFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionStripeCreatePortalSession) SetAction(action FlowActionStripeCreatePortalSessionAction) {
-	f.Action = action
-	f.require(flowActionStripeCreatePortalSessionFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -21518,25 +21909,6 @@ func (f *FlowActionStripeCreatePortalSession) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionStripeCreatePortalSessionAction string
-
-const (
-	FlowActionStripeCreatePortalSessionActionCreatePortalSession FlowActionStripeCreatePortalSessionAction = "CREATE_PORTAL_SESSION"
-)
-
-func NewFlowActionStripeCreatePortalSessionActionFromString(s string) (FlowActionStripeCreatePortalSessionAction, error) {
-	switch s {
-	case "CREATE_PORTAL_SESSION":
-		return FlowActionStripeCreatePortalSessionActionCreatePortalSession, nil
-	}
-	var t FlowActionStripeCreatePortalSessionAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionStripeCreatePortalSessionAction) Ptr() *FlowActionStripeCreatePortalSessionAction {
-	return &f
-}
-
 var (
 	flowActionStripeCreatePortalSessionParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionStripeCreatePortalSessionParamsFieldCustomerID   = big.NewInt(1 << 1)
@@ -21584,10 +21956,12 @@ func (f *FlowActionStripeCreatePortalSessionParams) GetExtraProperties() map[str
 }
 
 func (f *FlowActionStripeCreatePortalSessionParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -21676,17 +22050,15 @@ var (
 	flowActionStripeDeleteTaxIDFieldID           = big.NewInt(1 << 0)
 	flowActionStripeDeleteTaxIDFieldAlias        = big.NewInt(1 << 1)
 	flowActionStripeDeleteTaxIDFieldType         = big.NewInt(1 << 2)
-	flowActionStripeDeleteTaxIDFieldAction       = big.NewInt(1 << 3)
-	flowActionStripeDeleteTaxIDFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionStripeDeleteTaxIDFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionStripeDeleteTaxIDFieldParams       = big.NewInt(1 << 6)
+	flowActionStripeDeleteTaxIDFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionStripeDeleteTaxIDFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionStripeDeleteTaxIDFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionStripeDeleteTaxID struct {
 	ID           string                             `json:"id" url:"id"`
 	Alias        *string                            `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionStripeDeleteTaxIDType    `json:"type" url:"type"`
-	Action       FlowActionStripeDeleteTaxIDAction  `json:"action" url:"action"`
 	AllowFailure *bool                              `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                              `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionStripeDeleteTaxIDParams `json:"params" url:"params"`
@@ -21719,13 +22091,6 @@ func (f *FlowActionStripeDeleteTaxID) GetType() FlowActionStripeDeleteTaxIDType 
 	return f.Type
 }
 
-func (f *FlowActionStripeDeleteTaxID) GetAction() FlowActionStripeDeleteTaxIDAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionStripeDeleteTaxID) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -21755,10 +22120,12 @@ func (f *FlowActionStripeDeleteTaxID) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowActionStripeDeleteTaxID) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -21780,13 +22147,6 @@ func (f *FlowActionStripeDeleteTaxID) SetAlias(alias *string) {
 func (f *FlowActionStripeDeleteTaxID) SetType(type_ FlowActionStripeDeleteTaxIDType) {
 	f.Type = type_
 	f.require(flowActionStripeDeleteTaxIDFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionStripeDeleteTaxID) SetAction(action FlowActionStripeDeleteTaxIDAction) {
-	f.Action = action
-	f.require(flowActionStripeDeleteTaxIDFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -21852,25 +22212,6 @@ func (f *FlowActionStripeDeleteTaxID) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionStripeDeleteTaxIDAction string
-
-const (
-	FlowActionStripeDeleteTaxIDActionDeleteTaxID FlowActionStripeDeleteTaxIDAction = "DELETE_TAX_ID"
-)
-
-func NewFlowActionStripeDeleteTaxIDActionFromString(s string) (FlowActionStripeDeleteTaxIDAction, error) {
-	switch s {
-	case "DELETE_TAX_ID":
-		return FlowActionStripeDeleteTaxIDActionDeleteTaxID, nil
-	}
-	var t FlowActionStripeDeleteTaxIDAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionStripeDeleteTaxIDAction) Ptr() *FlowActionStripeDeleteTaxIDAction {
-	return &f
-}
-
 var (
 	flowActionStripeDeleteTaxIDParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionStripeDeleteTaxIDParamsFieldCustomerID   = big.NewInt(1 << 1)
@@ -21918,10 +22259,12 @@ func (f *FlowActionStripeDeleteTaxIDParams) GetExtraProperties() map[string]inte
 }
 
 func (f *FlowActionStripeDeleteTaxIDParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -22010,17 +22353,15 @@ var (
 	flowActionStripeFindCustomersFieldID           = big.NewInt(1 << 0)
 	flowActionStripeFindCustomersFieldAlias        = big.NewInt(1 << 1)
 	flowActionStripeFindCustomersFieldType         = big.NewInt(1 << 2)
-	flowActionStripeFindCustomersFieldAction       = big.NewInt(1 << 3)
-	flowActionStripeFindCustomersFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionStripeFindCustomersFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionStripeFindCustomersFieldParams       = big.NewInt(1 << 6)
+	flowActionStripeFindCustomersFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionStripeFindCustomersFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionStripeFindCustomersFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionStripeFindCustomers struct {
 	ID           string                               `json:"id" url:"id"`
 	Alias        *string                              `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionStripeFindCustomersType    `json:"type" url:"type"`
-	Action       FlowActionStripeFindCustomersAction  `json:"action" url:"action"`
 	AllowFailure *bool                                `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionStripeFindCustomersParams `json:"params" url:"params"`
@@ -22053,13 +22394,6 @@ func (f *FlowActionStripeFindCustomers) GetType() FlowActionStripeFindCustomersT
 	return f.Type
 }
 
-func (f *FlowActionStripeFindCustomers) GetAction() FlowActionStripeFindCustomersAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionStripeFindCustomers) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -22089,10 +22423,12 @@ func (f *FlowActionStripeFindCustomers) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionStripeFindCustomers) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -22114,13 +22450,6 @@ func (f *FlowActionStripeFindCustomers) SetAlias(alias *string) {
 func (f *FlowActionStripeFindCustomers) SetType(type_ FlowActionStripeFindCustomersType) {
 	f.Type = type_
 	f.require(flowActionStripeFindCustomersFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionStripeFindCustomers) SetAction(action FlowActionStripeFindCustomersAction) {
-	f.Action = action
-	f.require(flowActionStripeFindCustomersFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -22186,25 +22515,6 @@ func (f *FlowActionStripeFindCustomers) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionStripeFindCustomersAction string
-
-const (
-	FlowActionStripeFindCustomersActionFindCustomers FlowActionStripeFindCustomersAction = "FIND_CUSTOMERS"
-)
-
-func NewFlowActionStripeFindCustomersActionFromString(s string) (FlowActionStripeFindCustomersAction, error) {
-	switch s {
-	case "FIND_CUSTOMERS":
-		return FlowActionStripeFindCustomersActionFindCustomers, nil
-	}
-	var t FlowActionStripeFindCustomersAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionStripeFindCustomersAction) Ptr() *FlowActionStripeFindCustomersAction {
-	return &f
-}
-
 var (
 	flowActionStripeFindCustomersParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionStripeFindCustomersParamsFieldEmail        = big.NewInt(1 << 1)
@@ -22243,10 +22553,12 @@ func (f *FlowActionStripeFindCustomersParams) GetExtraProperties() map[string]in
 }
 
 func (f *FlowActionStripeFindCustomersParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -22328,17 +22640,15 @@ var (
 	flowActionStripeGetCustomerFieldID           = big.NewInt(1 << 0)
 	flowActionStripeGetCustomerFieldAlias        = big.NewInt(1 << 1)
 	flowActionStripeGetCustomerFieldType         = big.NewInt(1 << 2)
-	flowActionStripeGetCustomerFieldAction       = big.NewInt(1 << 3)
-	flowActionStripeGetCustomerFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionStripeGetCustomerFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionStripeGetCustomerFieldParams       = big.NewInt(1 << 6)
+	flowActionStripeGetCustomerFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionStripeGetCustomerFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionStripeGetCustomerFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionStripeGetCustomer struct {
 	ID           string                             `json:"id" url:"id"`
 	Alias        *string                            `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionStripeGetCustomerType    `json:"type" url:"type"`
-	Action       FlowActionStripeGetCustomerAction  `json:"action" url:"action"`
 	AllowFailure *bool                              `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                              `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionStripeGetCustomerParams `json:"params" url:"params"`
@@ -22371,13 +22681,6 @@ func (f *FlowActionStripeGetCustomer) GetType() FlowActionStripeGetCustomerType 
 	return f.Type
 }
 
-func (f *FlowActionStripeGetCustomer) GetAction() FlowActionStripeGetCustomerAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionStripeGetCustomer) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -22407,10 +22710,12 @@ func (f *FlowActionStripeGetCustomer) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowActionStripeGetCustomer) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -22432,13 +22737,6 @@ func (f *FlowActionStripeGetCustomer) SetAlias(alias *string) {
 func (f *FlowActionStripeGetCustomer) SetType(type_ FlowActionStripeGetCustomerType) {
 	f.Type = type_
 	f.require(flowActionStripeGetCustomerFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionStripeGetCustomer) SetAction(action FlowActionStripeGetCustomerAction) {
-	f.Action = action
-	f.require(flowActionStripeGetCustomerFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -22504,25 +22802,6 @@ func (f *FlowActionStripeGetCustomer) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionStripeGetCustomerAction string
-
-const (
-	FlowActionStripeGetCustomerActionGetCustomer FlowActionStripeGetCustomerAction = "GET_CUSTOMER"
-)
-
-func NewFlowActionStripeGetCustomerActionFromString(s string) (FlowActionStripeGetCustomerAction, error) {
-	switch s {
-	case "GET_CUSTOMER":
-		return FlowActionStripeGetCustomerActionGetCustomer, nil
-	}
-	var t FlowActionStripeGetCustomerAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionStripeGetCustomerAction) Ptr() *FlowActionStripeGetCustomerAction {
-	return &f
-}
-
 var (
 	flowActionStripeGetCustomerParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionStripeGetCustomerParamsFieldID           = big.NewInt(1 << 1)
@@ -22561,10 +22840,12 @@ func (f *FlowActionStripeGetCustomerParams) GetExtraProperties() map[string]inte
 }
 
 func (f *FlowActionStripeGetCustomerParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -22682,10 +22963,12 @@ func (f *FlowActionStripeTaxID) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionStripeTaxID) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -22748,17 +23031,15 @@ var (
 	flowActionStripeUpdateCustomerFieldID           = big.NewInt(1 << 0)
 	flowActionStripeUpdateCustomerFieldAlias        = big.NewInt(1 << 1)
 	flowActionStripeUpdateCustomerFieldType         = big.NewInt(1 << 2)
-	flowActionStripeUpdateCustomerFieldAction       = big.NewInt(1 << 3)
-	flowActionStripeUpdateCustomerFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionStripeUpdateCustomerFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionStripeUpdateCustomerFieldParams       = big.NewInt(1 << 6)
+	flowActionStripeUpdateCustomerFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionStripeUpdateCustomerFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionStripeUpdateCustomerFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionStripeUpdateCustomer struct {
 	ID           string                                `json:"id" url:"id"`
 	Alias        *string                               `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionStripeUpdateCustomerType    `json:"type" url:"type"`
-	Action       FlowActionStripeUpdateCustomerAction  `json:"action" url:"action"`
 	AllowFailure *bool                                 `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                                 `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionStripeUpdateCustomerParams `json:"params" url:"params"`
@@ -22791,13 +23072,6 @@ func (f *FlowActionStripeUpdateCustomer) GetType() FlowActionStripeUpdateCustome
 	return f.Type
 }
 
-func (f *FlowActionStripeUpdateCustomer) GetAction() FlowActionStripeUpdateCustomerAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionStripeUpdateCustomer) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -22827,10 +23101,12 @@ func (f *FlowActionStripeUpdateCustomer) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionStripeUpdateCustomer) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -22852,13 +23128,6 @@ func (f *FlowActionStripeUpdateCustomer) SetAlias(alias *string) {
 func (f *FlowActionStripeUpdateCustomer) SetType(type_ FlowActionStripeUpdateCustomerType) {
 	f.Type = type_
 	f.require(flowActionStripeUpdateCustomerFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionStripeUpdateCustomer) SetAction(action FlowActionStripeUpdateCustomerAction) {
-	f.Action = action
-	f.require(flowActionStripeUpdateCustomerFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -22922,25 +23191,6 @@ func (f *FlowActionStripeUpdateCustomer) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", f)
-}
-
-type FlowActionStripeUpdateCustomerAction string
-
-const (
-	FlowActionStripeUpdateCustomerActionUpdateCustomer FlowActionStripeUpdateCustomerAction = "UPDATE_CUSTOMER"
-)
-
-func NewFlowActionStripeUpdateCustomerActionFromString(s string) (FlowActionStripeUpdateCustomerAction, error) {
-	switch s {
-	case "UPDATE_CUSTOMER":
-		return FlowActionStripeUpdateCustomerActionUpdateCustomer, nil
-	}
-	var t FlowActionStripeUpdateCustomerAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionStripeUpdateCustomerAction) Ptr() *FlowActionStripeUpdateCustomerAction {
-	return &f
 }
 
 var (
@@ -23044,10 +23294,12 @@ func (f *FlowActionStripeUpdateCustomerParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionStripeUpdateCustomerParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -23259,10 +23511,12 @@ func (f *FlowActionTelegramSendMessage) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionTelegramSendMessage) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -23422,10 +23676,12 @@ func (f *FlowActionTelegramSendMessageParams) GetExtraProperties() map[string]in
 }
 
 func (f *FlowActionTelegramSendMessageParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -23511,82 +23767,194 @@ func (f FlowActionTelegramSendMessageType) Ptr() *FlowActionTelegramSendMessageT
 }
 
 type FlowActionTwilio struct {
-	FlowActionTwilioMakeCall *FlowActionTwilioMakeCall
-	FlowActionTwilioSendSms  *FlowActionTwilioSendSms
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionTwilioMakeCallType
+	AllowFailure *bool
+	MaskOutput   *bool
+	MakeCall     *FlowActionTwilioMakeCall
+	SendSms      *FlowActionTwilioSendSms
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionTwilio) GetFlowActionTwilioMakeCall() *FlowActionTwilioMakeCall {
+func (f *FlowActionTwilio) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionTwilio) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionTwilio) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionTwilio) GetType() FlowActionTwilioMakeCallType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionTwilio) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionTwilio) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionTwilio) GetMakeCall() *FlowActionTwilioMakeCall {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionTwilioMakeCall
+	return f.MakeCall
 }
 
-func (f *FlowActionTwilio) GetFlowActionTwilioSendSms() *FlowActionTwilioSendSms {
+func (f *FlowActionTwilio) GetSendSms() *FlowActionTwilioSendSms {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionTwilioSendSms
+	return f.SendSms
 }
 
 func (f *FlowActionTwilio) UnmarshalJSON(data []byte) error {
-	valueFlowActionTwilioMakeCall := new(FlowActionTwilioMakeCall)
-	if err := json.Unmarshal(data, &valueFlowActionTwilioMakeCall); err == nil {
-		f.typ = "FlowActionTwilioMakeCall"
-		f.FlowActionTwilioMakeCall = valueFlowActionTwilioMakeCall
-		return nil
+	var unmarshaler struct {
+		Action       string                       `json:"action"`
+		ID           string                       `json:"id"`
+		Alias        *string                      `json:"alias,omitempty"`
+		Type         FlowActionTwilioMakeCallType `json:"type"`
+		AllowFailure *bool                        `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                        `json:"mask_output,omitempty"`
 	}
-	valueFlowActionTwilioSendSms := new(FlowActionTwilioSendSms)
-	if err := json.Unmarshal(data, &valueFlowActionTwilioSendSms); err == nil {
-		f.typ = "FlowActionTwilioSendSms"
-		f.FlowActionTwilioSendSms = valueFlowActionTwilioSendSms
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
+	}
+	switch unmarshaler.Action {
+	case "MAKE_CALL":
+		value := new(FlowActionTwilioMakeCall)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.MakeCall = value
+	case "SEND_SMS":
+		value := new(FlowActionTwilioSendSms)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SendSms = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionTwilio) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionTwilioMakeCall" || f.FlowActionTwilioMakeCall != nil {
-		return json.Marshal(f.FlowActionTwilioMakeCall)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionTwilioSendSms" || f.FlowActionTwilioSendSms != nil {
-		return json.Marshal(f.FlowActionTwilioSendSms)
+	if f.MakeCall != nil {
+		return internal.MarshalJSONWithExtraProperty(f.MakeCall, "action", "MAKE_CALL")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.SendSms != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SendSms, "action", "SEND_SMS")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionTwilioVisitor interface {
-	VisitFlowActionTwilioMakeCall(*FlowActionTwilioMakeCall) error
-	VisitFlowActionTwilioSendSms(*FlowActionTwilioSendSms) error
+	VisitMakeCall(*FlowActionTwilioMakeCall) error
+	VisitSendSms(*FlowActionTwilioSendSms) error
 }
 
 func (f *FlowActionTwilio) Accept(visitor FlowActionTwilioVisitor) error {
-	if f.typ == "FlowActionTwilioMakeCall" || f.FlowActionTwilioMakeCall != nil {
-		return visitor.VisitFlowActionTwilioMakeCall(f.FlowActionTwilioMakeCall)
+	if f.MakeCall != nil {
+		return visitor.VisitMakeCall(f.MakeCall)
 	}
-	if f.typ == "FlowActionTwilioSendSms" || f.FlowActionTwilioSendSms != nil {
-		return visitor.VisitFlowActionTwilioSendSms(f.FlowActionTwilioSendSms)
+	if f.SendSms != nil {
+		return visitor.VisitSendSms(f.SendSms)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionTwilio) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.MakeCall != nil {
+		fields = append(fields, "MAKE_CALL")
+	}
+	if f.SendSms != nil {
+		fields = append(fields, "SEND_SMS")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionTwilioMakeCallFieldID           = big.NewInt(1 << 0)
 	flowActionTwilioMakeCallFieldAlias        = big.NewInt(1 << 1)
 	flowActionTwilioMakeCallFieldType         = big.NewInt(1 << 2)
-	flowActionTwilioMakeCallFieldAction       = big.NewInt(1 << 3)
-	flowActionTwilioMakeCallFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionTwilioMakeCallFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionTwilioMakeCallFieldParams       = big.NewInt(1 << 6)
+	flowActionTwilioMakeCallFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionTwilioMakeCallFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionTwilioMakeCallFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionTwilioMakeCall struct {
 	ID           string                          `json:"id" url:"id"`
 	Alias        *string                         `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionTwilioMakeCallType    `json:"type" url:"type"`
-	Action       FlowActionTwilioMakeCallAction  `json:"action" url:"action"`
 	AllowFailure *bool                           `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                           `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionTwilioMakeCallParams `json:"params" url:"params"`
@@ -23619,13 +23987,6 @@ func (f *FlowActionTwilioMakeCall) GetType() FlowActionTwilioMakeCallType {
 	return f.Type
 }
 
-func (f *FlowActionTwilioMakeCall) GetAction() FlowActionTwilioMakeCallAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionTwilioMakeCall) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -23655,10 +24016,12 @@ func (f *FlowActionTwilioMakeCall) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionTwilioMakeCall) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -23680,13 +24043,6 @@ func (f *FlowActionTwilioMakeCall) SetAlias(alias *string) {
 func (f *FlowActionTwilioMakeCall) SetType(type_ FlowActionTwilioMakeCallType) {
 	f.Type = type_
 	f.require(flowActionTwilioMakeCallFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionTwilioMakeCall) SetAction(action FlowActionTwilioMakeCallAction) {
-	f.Action = action
-	f.require(flowActionTwilioMakeCallFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -23752,25 +24108,6 @@ func (f *FlowActionTwilioMakeCall) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionTwilioMakeCallAction string
-
-const (
-	FlowActionTwilioMakeCallActionMakeCall FlowActionTwilioMakeCallAction = "MAKE_CALL"
-)
-
-func NewFlowActionTwilioMakeCallActionFromString(s string) (FlowActionTwilioMakeCallAction, error) {
-	switch s {
-	case "MAKE_CALL":
-		return FlowActionTwilioMakeCallActionMakeCall, nil
-	}
-	var t FlowActionTwilioMakeCallAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionTwilioMakeCallAction) Ptr() *FlowActionTwilioMakeCallAction {
-	return &f
-}
-
 var (
 	flowActionTwilioMakeCallParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionTwilioMakeCallParamsFieldFrom         = big.NewInt(1 << 1)
@@ -23827,10 +24164,12 @@ func (f *FlowActionTwilioMakeCallParams) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionTwilioMakeCallParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -23926,17 +24265,15 @@ var (
 	flowActionTwilioSendSmsFieldID           = big.NewInt(1 << 0)
 	flowActionTwilioSendSmsFieldAlias        = big.NewInt(1 << 1)
 	flowActionTwilioSendSmsFieldType         = big.NewInt(1 << 2)
-	flowActionTwilioSendSmsFieldAction       = big.NewInt(1 << 3)
-	flowActionTwilioSendSmsFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionTwilioSendSmsFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionTwilioSendSmsFieldParams       = big.NewInt(1 << 6)
+	flowActionTwilioSendSmsFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionTwilioSendSmsFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionTwilioSendSmsFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionTwilioSendSms struct {
 	ID           string                         `json:"id" url:"id"`
 	Alias        *string                        `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionTwilioSendSmsType    `json:"type" url:"type"`
-	Action       FlowActionTwilioSendSmsAction  `json:"action" url:"action"`
 	AllowFailure *bool                          `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                          `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionTwilioSendSmsParams `json:"params" url:"params"`
@@ -23969,13 +24306,6 @@ func (f *FlowActionTwilioSendSms) GetType() FlowActionTwilioSendSmsType {
 	return f.Type
 }
 
-func (f *FlowActionTwilioSendSms) GetAction() FlowActionTwilioSendSmsAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionTwilioSendSms) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -24005,10 +24335,12 @@ func (f *FlowActionTwilioSendSms) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionTwilioSendSms) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -24030,13 +24362,6 @@ func (f *FlowActionTwilioSendSms) SetAlias(alias *string) {
 func (f *FlowActionTwilioSendSms) SetType(type_ FlowActionTwilioSendSmsType) {
 	f.Type = type_
 	f.require(flowActionTwilioSendSmsFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionTwilioSendSms) SetAction(action FlowActionTwilioSendSmsAction) {
-	f.Action = action
-	f.require(flowActionTwilioSendSmsFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -24102,25 +24427,6 @@ func (f *FlowActionTwilioSendSms) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionTwilioSendSmsAction string
-
-const (
-	FlowActionTwilioSendSmsActionSendSms FlowActionTwilioSendSmsAction = "SEND_SMS"
-)
-
-func NewFlowActionTwilioSendSmsActionFromString(s string) (FlowActionTwilioSendSmsAction, error) {
-	switch s {
-	case "SEND_SMS":
-		return FlowActionTwilioSendSmsActionSendSms, nil
-	}
-	var t FlowActionTwilioSendSmsAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionTwilioSendSmsAction) Ptr() *FlowActionTwilioSendSmsAction {
-	return &f
-}
-
 var (
 	flowActionTwilioSendSmsParamsFieldConnectionID = big.NewInt(1 << 0)
 	flowActionTwilioSendSmsParamsFieldFrom         = big.NewInt(1 << 1)
@@ -24177,10 +24483,12 @@ func (f *FlowActionTwilioSendSmsParams) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionTwilioSendSmsParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -24357,10 +24665,12 @@ func (f *FlowActionWhatsappSendMessage) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowActionWhatsappSendMessage) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -24538,10 +24848,12 @@ func (f *FlowActionWhatsappSendMessageParams) GetExtraProperties() map[string]in
 }
 
 func (f *FlowActionWhatsappSendMessageParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -24748,82 +25060,194 @@ func (f FlowActionWhatsappSendMessageType) Ptr() *FlowActionWhatsappSendMessageT
 }
 
 type FlowActionXML struct {
-	FlowActionXMLParseXML     *FlowActionXMLParseXML
-	FlowActionXMLSerializeXML *FlowActionXMLSerializeXML
+	Action       string
+	ID           string
+	Alias        *string
+	Type         FlowActionXMLParseXMLType
+	AllowFailure *bool
+	MaskOutput   *bool
+	ParseXML     *FlowActionXMLParseXML
+	SerializeXML *FlowActionXMLSerializeXML
 
-	typ string
+	rawJSON json.RawMessage
 }
 
-func (f *FlowActionXML) GetFlowActionXMLParseXML() *FlowActionXMLParseXML {
+func (f *FlowActionXML) GetAction() string {
+	if f == nil {
+		return ""
+	}
+	return f.Action
+}
+
+func (f *FlowActionXML) GetID() string {
+	if f == nil {
+		return ""
+	}
+	return f.ID
+}
+
+func (f *FlowActionXML) GetAlias() string {
+	if f == nil || f.Alias == nil {
+		return ""
+	}
+	return *f.Alias
+}
+
+func (f *FlowActionXML) GetType() FlowActionXMLParseXMLType {
+	if f == nil {
+		return ""
+	}
+	return f.Type
+}
+
+func (f *FlowActionXML) GetAllowFailure() bool {
+	if f == nil || f.AllowFailure == nil {
+		return false
+	}
+	return *f.AllowFailure
+}
+
+func (f *FlowActionXML) GetMaskOutput() bool {
+	if f == nil || f.MaskOutput == nil {
+		return false
+	}
+	return *f.MaskOutput
+}
+
+func (f *FlowActionXML) GetParseXML() *FlowActionXMLParseXML {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionXMLParseXML
+	return f.ParseXML
 }
 
-func (f *FlowActionXML) GetFlowActionXMLSerializeXML() *FlowActionXMLSerializeXML {
+func (f *FlowActionXML) GetSerializeXML() *FlowActionXMLSerializeXML {
 	if f == nil {
 		return nil
 	}
-	return f.FlowActionXMLSerializeXML
+	return f.SerializeXML
 }
 
 func (f *FlowActionXML) UnmarshalJSON(data []byte) error {
-	valueFlowActionXMLParseXML := new(FlowActionXMLParseXML)
-	if err := json.Unmarshal(data, &valueFlowActionXMLParseXML); err == nil {
-		f.typ = "FlowActionXMLParseXML"
-		f.FlowActionXMLParseXML = valueFlowActionXMLParseXML
-		return nil
+	var unmarshaler struct {
+		Action       string                    `json:"action"`
+		ID           string                    `json:"id"`
+		Alias        *string                   `json:"alias,omitempty"`
+		Type         FlowActionXMLParseXMLType `json:"type"`
+		AllowFailure *bool                     `json:"allow_failure,omitempty"`
+		MaskOutput   *bool                     `json:"mask_output,omitempty"`
 	}
-	valueFlowActionXMLSerializeXML := new(FlowActionXMLSerializeXML)
-	if err := json.Unmarshal(data, &valueFlowActionXMLSerializeXML); err == nil {
-		f.typ = "FlowActionXMLSerializeXML"
-		f.FlowActionXMLSerializeXML = valueFlowActionXMLSerializeXML
-		return nil
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
 	}
-	return fmt.Errorf("%s cannot be deserialized as a %T", data, f)
+	f.Action = unmarshaler.Action
+	f.ID = unmarshaler.ID
+	f.Alias = unmarshaler.Alias
+	f.Type = unmarshaler.Type
+	f.AllowFailure = unmarshaler.AllowFailure
+	f.MaskOutput = unmarshaler.MaskOutput
+	if unmarshaler.Action == "" {
+		return fmt.Errorf("%T did not include discriminant action", f)
+	}
+	switch unmarshaler.Action {
+	case "PARSE_XML":
+		value := new(FlowActionXMLParseXML)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.ParseXML = value
+	case "SERIALIZE_XML":
+		value := new(FlowActionXMLSerializeXML)
+		if err := json.Unmarshal(data, &value); err != nil {
+			return err
+		}
+		f.SerializeXML = value
+	}
+	f.rawJSON = json.RawMessage(data)
+	return nil
 }
 
 func (f FlowActionXML) MarshalJSON() ([]byte, error) {
-	if f.typ == "FlowActionXMLParseXML" || f.FlowActionXMLParseXML != nil {
-		return json.Marshal(f.FlowActionXMLParseXML)
+	if err := f.validate(); err != nil {
+		return nil, err
 	}
-	if f.typ == "FlowActionXMLSerializeXML" || f.FlowActionXMLSerializeXML != nil {
-		return json.Marshal(f.FlowActionXMLSerializeXML)
+	if f.ParseXML != nil {
+		return internal.MarshalJSONWithExtraProperty(f.ParseXML, "action", "PARSE_XML")
 	}
-	return nil, fmt.Errorf("type %T does not include a non-empty union type", f)
+	if f.SerializeXML != nil {
+		return internal.MarshalJSONWithExtraProperty(f.SerializeXML, "action", "SERIALIZE_XML")
+	}
+	if len(f.rawJSON) > 0 {
+		return f.rawJSON, nil
+	}
+	return nil, fmt.Errorf("type %T does not define a non-empty union type", f)
 }
 
 type FlowActionXMLVisitor interface {
-	VisitFlowActionXMLParseXML(*FlowActionXMLParseXML) error
-	VisitFlowActionXMLSerializeXML(*FlowActionXMLSerializeXML) error
+	VisitParseXML(*FlowActionXMLParseXML) error
+	VisitSerializeXML(*FlowActionXMLSerializeXML) error
 }
 
 func (f *FlowActionXML) Accept(visitor FlowActionXMLVisitor) error {
-	if f.typ == "FlowActionXMLParseXML" || f.FlowActionXMLParseXML != nil {
-		return visitor.VisitFlowActionXMLParseXML(f.FlowActionXMLParseXML)
+	if f.ParseXML != nil {
+		return visitor.VisitParseXML(f.ParseXML)
 	}
-	if f.typ == "FlowActionXMLSerializeXML" || f.FlowActionXMLSerializeXML != nil {
-		return visitor.VisitFlowActionXMLSerializeXML(f.FlowActionXMLSerializeXML)
+	if f.SerializeXML != nil {
+		return visitor.VisitSerializeXML(f.SerializeXML)
 	}
-	return fmt.Errorf("type %T does not include a non-empty union type", f)
+	return fmt.Errorf("type %T does not define a non-empty union type", f)
+}
+
+func (f *FlowActionXML) validate() error {
+	if f == nil {
+		return fmt.Errorf("type %T is nil", f)
+	}
+	var fields []string
+	if f.ParseXML != nil {
+		fields = append(fields, "PARSE_XML")
+	}
+	if f.SerializeXML != nil {
+		fields = append(fields, "SERIALIZE_XML")
+	}
+	if len(fields) == 0 {
+		if f.Action != "" {
+			if len(f.rawJSON) > 0 {
+				return nil
+			}
+			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", f, f.Action)
+		}
+		return fmt.Errorf("type %T is empty", f)
+	}
+	if len(fields) > 1 {
+		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", f, fields)
+	}
+	if f.Action != "" {
+		field := fields[0]
+		if f.Action != field {
+			return fmt.Errorf(
+				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
+				f,
+				f.Action,
+				f,
+			)
+		}
+	}
+	return nil
 }
 
 var (
 	flowActionXMLParseXMLFieldID           = big.NewInt(1 << 0)
 	flowActionXMLParseXMLFieldAlias        = big.NewInt(1 << 1)
 	flowActionXMLParseXMLFieldType         = big.NewInt(1 << 2)
-	flowActionXMLParseXMLFieldAction       = big.NewInt(1 << 3)
-	flowActionXMLParseXMLFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionXMLParseXMLFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionXMLParseXMLFieldParams       = big.NewInt(1 << 6)
+	flowActionXMLParseXMLFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionXMLParseXMLFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionXMLParseXMLFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionXMLParseXML struct {
 	ID           string                       `json:"id" url:"id"`
 	Alias        *string                      `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionXMLParseXMLType    `json:"type" url:"type"`
-	Action       FlowActionXMLParseXMLAction  `json:"action" url:"action"`
 	AllowFailure *bool                        `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                        `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionXMLParseXMLParams `json:"params" url:"params"`
@@ -24856,13 +25280,6 @@ func (f *FlowActionXMLParseXML) GetType() FlowActionXMLParseXMLType {
 	return f.Type
 }
 
-func (f *FlowActionXMLParseXML) GetAction() FlowActionXMLParseXMLAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionXMLParseXML) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -24892,10 +25309,12 @@ func (f *FlowActionXMLParseXML) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowActionXMLParseXML) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -24917,13 +25336,6 @@ func (f *FlowActionXMLParseXML) SetAlias(alias *string) {
 func (f *FlowActionXMLParseXML) SetType(type_ FlowActionXMLParseXMLType) {
 	f.Type = type_
 	f.require(flowActionXMLParseXMLFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionXMLParseXML) SetAction(action FlowActionXMLParseXMLAction) {
-	f.Action = action
-	f.require(flowActionXMLParseXMLFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -24989,25 +25401,6 @@ func (f *FlowActionXMLParseXML) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionXMLParseXMLAction string
-
-const (
-	FlowActionXMLParseXMLActionParseXML FlowActionXMLParseXMLAction = "PARSE_XML"
-)
-
-func NewFlowActionXMLParseXMLActionFromString(s string) (FlowActionXMLParseXMLAction, error) {
-	switch s {
-	case "PARSE_XML":
-		return FlowActionXMLParseXMLActionParseXML, nil
-	}
-	var t FlowActionXMLParseXMLAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionXMLParseXMLAction) Ptr() *FlowActionXMLParseXMLAction {
-	return &f
-}
-
 var (
 	flowActionXMLParseXMLParamsFieldXML = big.NewInt(1 << 0)
 )
@@ -25037,10 +25430,12 @@ func (f *FlowActionXMLParseXMLParams) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowActionXMLParseXMLParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetXML sets the XML field and marks it as non-optional;
@@ -25115,17 +25510,15 @@ var (
 	flowActionXMLSerializeXMLFieldID           = big.NewInt(1 << 0)
 	flowActionXMLSerializeXMLFieldAlias        = big.NewInt(1 << 1)
 	flowActionXMLSerializeXMLFieldType         = big.NewInt(1 << 2)
-	flowActionXMLSerializeXMLFieldAction       = big.NewInt(1 << 3)
-	flowActionXMLSerializeXMLFieldAllowFailure = big.NewInt(1 << 4)
-	flowActionXMLSerializeXMLFieldMaskOutput   = big.NewInt(1 << 5)
-	flowActionXMLSerializeXMLFieldParams       = big.NewInt(1 << 6)
+	flowActionXMLSerializeXMLFieldAllowFailure = big.NewInt(1 << 3)
+	flowActionXMLSerializeXMLFieldMaskOutput   = big.NewInt(1 << 4)
+	flowActionXMLSerializeXMLFieldParams       = big.NewInt(1 << 5)
 )
 
 type FlowActionXMLSerializeXML struct {
 	ID           string                           `json:"id" url:"id"`
 	Alias        *string                          `json:"alias,omitempty" url:"alias,omitempty"`
 	Type         FlowActionXMLSerializeXMLType    `json:"type" url:"type"`
-	Action       FlowActionXMLSerializeXMLAction  `json:"action" url:"action"`
 	AllowFailure *bool                            `json:"allow_failure,omitempty" url:"allow_failure,omitempty"`
 	MaskOutput   *bool                            `json:"mask_output,omitempty" url:"mask_output,omitempty"`
 	Params       *FlowActionXMLSerializeXMLParams `json:"params" url:"params"`
@@ -25158,13 +25551,6 @@ func (f *FlowActionXMLSerializeXML) GetType() FlowActionXMLSerializeXMLType {
 	return f.Type
 }
 
-func (f *FlowActionXMLSerializeXML) GetAction() FlowActionXMLSerializeXMLAction {
-	if f == nil {
-		return ""
-	}
-	return f.Action
-}
-
 func (f *FlowActionXMLSerializeXML) GetAllowFailure() bool {
 	if f == nil || f.AllowFailure == nil {
 		return false
@@ -25194,10 +25580,12 @@ func (f *FlowActionXMLSerializeXML) GetExtraProperties() map[string]interface{} 
 }
 
 func (f *FlowActionXMLSerializeXML) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -25219,13 +25607,6 @@ func (f *FlowActionXMLSerializeXML) SetAlias(alias *string) {
 func (f *FlowActionXMLSerializeXML) SetType(type_ FlowActionXMLSerializeXMLType) {
 	f.Type = type_
 	f.require(flowActionXMLSerializeXMLFieldType)
-}
-
-// SetAction sets the Action field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (f *FlowActionXMLSerializeXML) SetAction(action FlowActionXMLSerializeXMLAction) {
-	f.Action = action
-	f.require(flowActionXMLSerializeXMLFieldAction)
 }
 
 // SetAllowFailure sets the AllowFailure field and marks it as non-optional;
@@ -25291,25 +25672,6 @@ func (f *FlowActionXMLSerializeXML) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-type FlowActionXMLSerializeXMLAction string
-
-const (
-	FlowActionXMLSerializeXMLActionSerializeXML FlowActionXMLSerializeXMLAction = "SERIALIZE_XML"
-)
-
-func NewFlowActionXMLSerializeXMLActionFromString(s string) (FlowActionXMLSerializeXMLAction, error) {
-	switch s {
-	case "SERIALIZE_XML":
-		return FlowActionXMLSerializeXMLActionSerializeXML, nil
-	}
-	var t FlowActionXMLSerializeXMLAction
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (f FlowActionXMLSerializeXMLAction) Ptr() *FlowActionXMLSerializeXMLAction {
-	return &f
-}
-
 var (
 	flowActionXMLSerializeXMLParamsFieldObject = big.NewInt(1 << 0)
 )
@@ -25339,10 +25701,12 @@ func (f *FlowActionXMLSerializeXMLParams) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowActionXMLSerializeXMLParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetObject sets the Object field and marks it as non-optional;
@@ -25562,10 +25926,12 @@ func (f *FlowActionZapierTriggerWebhook) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowActionZapierTriggerWebhook) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -25717,10 +26083,12 @@ func (f *FlowActionZapierTriggerWebhookParams) GetExtraProperties() map[string]i
 }
 
 func (f *FlowActionZapierTriggerWebhookParams) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -25892,10 +26260,12 @@ func (f *FlowSummary) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowSummary) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -26083,10 +26453,12 @@ func (g *GetFlowResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetFlowResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -26241,10 +26613,12 @@ func (l *ListFlowsOffsetPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListFlowsOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -26410,10 +26784,12 @@ func (u *UpdateFlowResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UpdateFlowResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;

@@ -5,11 +5,13 @@ package client
 import (
 	core "github.com/auth0/go-auth0/v3/management/core"
 	internal "github.com/auth0/go-auth0/v3/management/internal"
+	groups "github.com/auth0/go-auth0/v3/management/organizations/roles/groups"
 	members "github.com/auth0/go-auth0/v3/management/organizations/roles/members"
 )
 
 type Client struct {
 	Members *members.Client
+	Groups  *groups.Client
 
 	options *core.RequestOptions
 	baseURL string
@@ -19,6 +21,7 @@ type Client struct {
 func NewClient(options *core.RequestOptions) *Client {
 	return &Client{
 		Members: members.NewClient(options),
+		Groups:  groups.NewClient(options),
 		options: options,
 		baseURL: options.BaseURL,
 		caller: internal.NewCaller(

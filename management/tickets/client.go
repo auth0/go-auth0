@@ -35,6 +35,16 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Create an email verification ticket for a given user. An email verification ticket is a generated URL that the user can consume to verify their email address.
+//
+// Example:
+//
+//	request := &management.VerifyEmailTicketRequestContent{
+//	    UserID: "user_id",
+//	}
+//	client.Tickets.VerifyEmail(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) VerifyEmail(
 	ctx context.Context,
 	request *management.VerifyEmailTicketRequestContent,
@@ -54,6 +64,14 @@ func (c *Client) VerifyEmail(
 // Create a password change ticket for a given user. A password change ticket is a generated URL that the user can consume to start a reset password flow.
 //
 // Note: This endpoint does not verify the given user’s identity. If you call this endpoint within your application, you must design your application to verify the user’s identity.
+//
+// Example:
+//
+//	request := &management.ChangePasswordTicketRequestContent{}
+//	client.Tickets.ChangePassword(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) ChangePassword(
 	ctx context.Context,
 	request *management.ChangePasswordTicketRequestContent,

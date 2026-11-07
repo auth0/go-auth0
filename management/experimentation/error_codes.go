@@ -39,4 +39,9 @@ var ErrorCodes internal.ErrorCodes = internal.ErrorCodes{
 			APIError: apiError,
 		}
 	},
+	422: func(apiError *core.APIError) error {
+		return &management.UnprocessableEntityError{
+			APIError: apiError,
+		}
+	},
 }

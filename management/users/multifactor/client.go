@@ -35,6 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Invalidate all remembered browsers across all [authentication factors](https://auth0.com/docs/multifactor-authentication) for a user.
+//
+// Example:
+//
+//	client.Users.Multifactor.InvalidateRememberBrowser(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) InvalidateRememberBrowser(
 	ctx context.Context,
 	// ID of the user to invalidate all remembered browsers and authentication factors for.
@@ -53,6 +60,14 @@ func (c *Client) InvalidateRememberBrowser(
 }
 
 // Remove a [multifactor](https://auth0.com/docs/multifactor-authentication) authentication configuration from a user's account. This forces the user to manually reconfigure the multi-factor provider.
+//
+// Example:
+//
+//	client.Users.Multifactor.DeleteProvider(
+//	    context.TODO(),
+//	    "id",
+//	    management.UserMultifactorProviderEnumDuo.Ptr(),
+//	)
 func (c *Client) DeleteProvider(
 	ctx context.Context,
 	// ID of the user to remove a multifactor configuration from.

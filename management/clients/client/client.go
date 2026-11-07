@@ -56,7 +56,7 @@ func NewClient(options *core.RequestOptions) *Client {
 //     `jwt_configuration.lifetime_in_seconds`, `jwt_configuration.secret_encoded`,
 //     `jwt_configuration.scopes`, `jwt_configuration.alg`, `api_type`,
 //     `logo_uri`, `allowed_clients`, `owners`, `custom_login_page`,
-//     `custom_login_page_off`, `sso`, `addons`, `form_template`,
+//     `custom_login_page_on`, `sso`, `addons`, `form_template`,
 //     `custom_login_page_codeview`, `resource_servers`, `client_metadata`,
 //     `mobile`, `mobile.android`, `mobile.ios`, `allowed_logout_urls`,
 //     `token_endpoint_auth_method`, `is_first_party`, `oidc_conformant`,
@@ -68,6 +68,48 @@ func NewClient(options *core.RequestOptions) *Client {
 //     `read:client_keys` or `read:client_credentials` scope:
 //     `encryption_key`, `encryption_key.pub`, `encryption_key.cert`,
 //     `client_secret`, `client_authentication_methods` and `signing_key`.
+//
+// Example:
+//
+//	request := &management.ListClientsRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    IsGlobal: management.Bool(
+//	        true,
+//	    ),
+//	    IsFirstParty: management.Bool(
+//	        true,
+//	    ),
+//	    AppType: management.String(
+//	        "app_type",
+//	    ),
+//	    ExternalClientID: management.String(
+//	        "external_client_id",
+//	    ),
+//	    AgentID: management.String(
+//	        "agent_id",
+//	    ),
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	}
+//	client.Clients.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListClientsRequestParameters,
@@ -155,6 +197,16 @@ func (c *Client) List(
 // - To configure `client_authentication_methods`, the property `jwt_configuration.alg` must be set to RS256.
 //
 // SSO Integrations created via this endpoint will accept login requests and share user profile information.
+//
+// Example:
+//
+//	request := &management.CreateClientRequestContent{
+//	    Name: "name",
+//	}
+//	client.Clients.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateClientRequestContent,
@@ -174,6 +226,16 @@ func (c *Client) Create(
 //	Fetches and validates a Client ID Metadata Document without creating a client.
 //	Returns the raw metadata and how it would be mapped to Auth0 client fields.
 //	This endpoint is useful for testing metadata URIs before creating CIMD clients.
+//
+// Example:
+//
+//	request := &management.PreviewCimdMetadataRequestContent{
+//	    ExternalClientID: "external_client_id",
+//	}
+//	client.Clients.PreviewCimdMetadata(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) PreviewCimdMetadata(
 	ctx context.Context,
 	request *management.PreviewCimdMetadataRequestContent,
@@ -201,6 +263,16 @@ func (c *Client) PreviewCimdMetadata(
 // - Maps CIMD fields to Auth0 client configuration
 // - Creates/rotates credentials from the JWKS
 // - Enforces CIMD security policies (HTTPS-only, no shared secrets)
+//
+// Example:
+//
+//	request := &management.RegisterCimdClientRequestContent{
+//	    ExternalClientID: "external_client_id",
+//	}
+//	client.Clients.RegisterCimdClient(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) RegisterCimdClient(
 	ctx context.Context,
 	request *management.RegisterCimdClientRequestContent,
@@ -217,6 +289,109 @@ func (c *Client) RegisterCimdClient(
 	return response.Body, nil
 }
 
+// Search clients using SCIM or Lucene filter syntax with low-latency, eventually consistent results.
+// Use the parser parameter to specify "scim" or "lucene" syntax (default: "lucene").
+// This endpoint provides an alternative to the standard GET /clients endpoint with better performance
+// for complex queries. Results may not reflect recent updates immediately.
+//
+// - This endpoint only supports `read:clients` and `read:client_summary` scopes. The `read:client_keys` and `read:client_credentials` scopes are not supported.
+// - The following fields are never returned by this endpoint:
+//   - `client_secret`
+//   - `encryption_key`
+//   - `signing_keys`
+//   - `owners`
+//   - `addons`
+//
+// Example:
+//
+//	request := &management.SearchClientsRequestParameters{
+//	    Q: management.String(
+//	        "q",
+//	    ),
+//	    Parser: management.SearchParserEnumSCIM.Ptr(),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Sort: management.ClientSortFieldEnumName.Ptr(),
+//	}
+//	client.Clients.Search(
+//	    context.TODO(),
+//	    request,
+//	)
+func (c *Client) Search(
+	ctx context.Context,
+	request *management.SearchClientsRequestParameters,
+	opts ...option.RequestOption,
+) (*core.Page[*string, *management.ClientSearchResponse, *management.SearchClientsResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := baseURL + "/clients/search"
+	queryParams, err := internal.QueryValuesWithDefaults(
+		request,
+		map[string]any{
+			"take": 50,
+		},
+	)
+	if err != nil {
+		return nil, err
+	}
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.SearchClientsResponseContent) *core.PageResponse[*string, *management.ClientSearchResponse, *management.SearchClientsResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.Clients
+		return &core.PageResponse[*string, *management.ClientSearchResponse, *management.SearchClientsResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
+}
+
 // Retrieve client details by ID. Clients are SSO connections or Applications linked with your Auth0 tenant. A list of fields to include or exclude may also be specified.
 // For more information, read [Applications in Auth0](https://www.auth0.com/docs/get-started/applications) and [Single Sign-On](https://www.auth0.com/docs/authenticate/single-sign-on).
 //
@@ -230,7 +405,7 @@ func (c *Client) RegisterCimdClient(
 //     `jwt_configuration.lifetime_in_seconds`, `jwt_configuration.secret_encoded`,
 //     `jwt_configuration.scopes`, `jwt_configuration.alg`, `api_type`,
 //     `logo_uri`, `allowed_clients`, `owners`, `custom_login_page`,
-//     `custom_login_page_off`, `sso`, `addons`, `form_template`,
+//     `custom_login_page_on`, `sso`, `addons`, `form_template`,
 //     `custom_login_page_codeview`, `resource_servers`, `client_metadata`,
 //     `mobile`, `mobile.android`, `mobile.ios`, `allowed_logout_urls`,
 //     `token_endpoint_auth_method`, `is_first_party`, `oidc_conformant`,
@@ -241,6 +416,22 @@ func (c *Client) RegisterCimdClient(
 //   - The following properties can only be retrieved with the `read:client_keys` or `read:client_credentials` scopes:
 //     `encryption_key`, `encryption_key.pub`, `encryption_key.cert`,
 //     `client_secret`, `client_authentication_methods` and `signing_key`.
+//
+// Example:
+//
+//	request := &management.GetClientRequestParameters{
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.Clients.Get(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client to retrieve.
@@ -261,6 +452,13 @@ func (c *Client) Get(
 }
 
 // Delete a client and related configuration (rules, connections, etc).
+//
+// Example:
+//
+//	client.Clients.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the client to delete.
@@ -287,6 +485,15 @@ func (c *Client) Delete(
 // - To configure `client_authentication_methods`, the `update:client_credentials` scope is required.
 // - To configure `client_authentication_methods`, the property `jwt_configuration.alg` must be set to RS256.
 // - To change a client's `is_first_party` property to `false`, the `organization_usage` and `organization_require_behavior` properties must be unset.
+//
+// Example:
+//
+//	request := &management.UpdateClientRequestContent{}
+//	client.Clients.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the client to update.
@@ -311,6 +518,13 @@ func (c *Client) Update(
 // This endpoint cannot be used with clients configured with Private Key JWT authentication method (client_authentication_methods configured with private_key_jwt). The generated secret is NOT base64 encoded.
 //
 // For more information, read [Rotate Client Secrets](https://www.auth0.com/docs/get-started/applications/rotate-client-secret).
+//
+// Example:
+//
+//	client.Clients.RotateSecret(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) RotateSecret(
 	ctx context.Context,
 	// ID of the client that will rotate secrets.
