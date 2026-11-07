@@ -11,16 +11,18 @@ import (
 
 var (
 	createLogStreamDatadogRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamDatadogRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamDatadogRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamDatadogRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamDatadogRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamDatadogRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamDatadogRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamDatadogRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamDatadogRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamDatadogRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamDatadogRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamDatadogRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamDatadogRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string              `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamDatadogEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -42,6 +44,13 @@ func (c *CreateLogStreamDatadogRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamDatadogRequestBody) GetType() LogStreamDatadogEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamDatadogRequestBody) GetIsPriority() bool {
@@ -100,6 +109,13 @@ func (c *CreateLogStreamDatadogRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamDatadogRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamDatadogRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamDatadogRequestBody) SetType(type_ LogStreamDatadogEnum) {
+	c.Type = type_
+	c.require(createLogStreamDatadogRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -181,16 +197,18 @@ func (c *CreateLogStreamDatadogRequestBody) String() string {
 
 var (
 	createLogStreamEventBridgeRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamEventBridgeRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamEventBridgeRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamEventBridgeRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamEventBridgeRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamEventBridgeRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamEventBridgeRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamEventBridgeRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamEventBridgeRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamEventBridgeRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamEventBridgeRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamEventBridgeRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamEventBridgeRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string                  `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamEventBridgeEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -212,6 +230,13 @@ func (c *CreateLogStreamEventBridgeRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamEventBridgeRequestBody) GetType() LogStreamEventBridgeEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamEventBridgeRequestBody) GetIsPriority() bool {
@@ -270,6 +295,13 @@ func (c *CreateLogStreamEventBridgeRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamEventBridgeRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamEventBridgeRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventBridgeRequestBody) SetType(type_ LogStreamEventBridgeEnum) {
+	c.Type = type_
+	c.require(createLogStreamEventBridgeRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -351,16 +383,18 @@ func (c *CreateLogStreamEventBridgeRequestBody) String() string {
 
 var (
 	createLogStreamEventGridRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamEventGridRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamEventGridRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamEventGridRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamEventGridRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamEventGridRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamEventGridRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamEventGridRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamEventGridRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamEventGridRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamEventGridRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamEventGridRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamEventGridRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string                `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamEventGridEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -382,6 +416,13 @@ func (c *CreateLogStreamEventGridRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamEventGridRequestBody) GetType() LogStreamEventGridEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamEventGridRequestBody) GetIsPriority() bool {
@@ -440,6 +481,13 @@ func (c *CreateLogStreamEventGridRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamEventGridRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamEventGridRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamEventGridRequestBody) SetType(type_ LogStreamEventGridEnum) {
+	c.Type = type_
+	c.require(createLogStreamEventGridRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -521,16 +569,18 @@ func (c *CreateLogStreamEventGridRequestBody) String() string {
 
 var (
 	createLogStreamHTTPRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamHTTPRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamHTTPRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamHTTPRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamHTTPRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamHTTPRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamHTTPRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamHTTPRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamHTTPRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamHTTPRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamHTTPRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamHTTPRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamHTTPRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string           `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamHTTPEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -552,6 +602,13 @@ func (c *CreateLogStreamHTTPRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamHTTPRequestBody) GetType() LogStreamHTTPEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamHTTPRequestBody) GetIsPriority() bool {
@@ -610,6 +667,13 @@ func (c *CreateLogStreamHTTPRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamHTTPRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamHTTPRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamHTTPRequestBody) SetType(type_ LogStreamHTTPEnum) {
+	c.Type = type_
+	c.require(createLogStreamHTTPRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -691,16 +755,18 @@ func (c *CreateLogStreamHTTPRequestBody) String() string {
 
 var (
 	createLogStreamMixpanelRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamMixpanelRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamMixpanelRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamMixpanelRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamMixpanelRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamMixpanelRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamMixpanelRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamMixpanelRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamMixpanelRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamMixpanelRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamMixpanelRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamMixpanelRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamMixpanelRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string               `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamMixpanelEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -722,6 +788,13 @@ func (c *CreateLogStreamMixpanelRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamMixpanelRequestBody) GetType() LogStreamMixpanelEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamMixpanelRequestBody) GetIsPriority() bool {
@@ -780,6 +853,13 @@ func (c *CreateLogStreamMixpanelRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamMixpanelRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamMixpanelRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamMixpanelRequestBody) SetType(type_ LogStreamMixpanelEnum) {
+	c.Type = type_
+	c.require(createLogStreamMixpanelRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -860,557 +940,523 @@ func (c *CreateLogStreamMixpanelRequestBody) String() string {
 }
 
 type CreateLogStreamRequestContent struct {
-	Type        string
-	HTTP        *CreateLogStreamHTTPRequestBody
-	Eventbridge *CreateLogStreamEventBridgeRequestBody
-	Eventgrid   *CreateLogStreamEventGridRequestBody
-	Datadog     *CreateLogStreamDatadogRequestBody
-	Splunk      *CreateLogStreamSplunkRequestBody
-	Sumo        *CreateLogStreamSumoRequestBody
-	Segment     *CreateLogStreamSegmentRequestBody
-	Mixpanel    *CreateLogStreamMixpanelRequestBody
+	CreateLogStreamHTTPRequestBody        *CreateLogStreamHTTPRequestBody
+	CreateLogStreamEventBridgeRequestBody *CreateLogStreamEventBridgeRequestBody
+	CreateLogStreamEventGridRequestBody   *CreateLogStreamEventGridRequestBody
+	CreateLogStreamDatadogRequestBody     *CreateLogStreamDatadogRequestBody
+	CreateLogStreamSplunkRequestBody      *CreateLogStreamSplunkRequestBody
+	CreateLogStreamSumoRequestBody        *CreateLogStreamSumoRequestBody
+	CreateLogStreamSegmentRequestBody     *CreateLogStreamSegmentRequestBody
+	CreateLogStreamMixpanelRequestBody    *CreateLogStreamMixpanelRequestBody
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (c *CreateLogStreamRequestContent) GetType() string {
-	if c == nil {
-		return ""
-	}
-	return c.Type
-}
-
-func (c *CreateLogStreamRequestContent) GetHTTP() *CreateLogStreamHTTPRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamHTTPRequestBody() *CreateLogStreamHTTPRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.HTTP
+	return c.CreateLogStreamHTTPRequestBody
 }
 
-func (c *CreateLogStreamRequestContent) GetEventbridge() *CreateLogStreamEventBridgeRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamEventBridgeRequestBody() *CreateLogStreamEventBridgeRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.Eventbridge
+	return c.CreateLogStreamEventBridgeRequestBody
 }
 
-func (c *CreateLogStreamRequestContent) GetEventgrid() *CreateLogStreamEventGridRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamEventGridRequestBody() *CreateLogStreamEventGridRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.Eventgrid
+	return c.CreateLogStreamEventGridRequestBody
 }
 
-func (c *CreateLogStreamRequestContent) GetDatadog() *CreateLogStreamDatadogRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamDatadogRequestBody() *CreateLogStreamDatadogRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.Datadog
+	return c.CreateLogStreamDatadogRequestBody
 }
 
-func (c *CreateLogStreamRequestContent) GetSplunk() *CreateLogStreamSplunkRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamSplunkRequestBody() *CreateLogStreamSplunkRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.Splunk
+	return c.CreateLogStreamSplunkRequestBody
 }
 
-func (c *CreateLogStreamRequestContent) GetSumo() *CreateLogStreamSumoRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamSumoRequestBody() *CreateLogStreamSumoRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.Sumo
+	return c.CreateLogStreamSumoRequestBody
 }
 
-func (c *CreateLogStreamRequestContent) GetSegment() *CreateLogStreamSegmentRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamSegmentRequestBody() *CreateLogStreamSegmentRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.Segment
+	return c.CreateLogStreamSegmentRequestBody
 }
 
-func (c *CreateLogStreamRequestContent) GetMixpanel() *CreateLogStreamMixpanelRequestBody {
+func (c *CreateLogStreamRequestContent) GetCreateLogStreamMixpanelRequestBody() *CreateLogStreamMixpanelRequestBody {
 	if c == nil {
 		return nil
 	}
-	return c.Mixpanel
+	return c.CreateLogStreamMixpanelRequestBody
 }
 
 func (c *CreateLogStreamRequestContent) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamHTTPRequestBody := new(CreateLogStreamHTTPRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamHTTPRequestBody); err == nil {
+			c.typ = "CreateLogStreamHTTPRequestBody"
+			c.CreateLogStreamHTTPRequestBody = valueCreateLogStreamHTTPRequestBody
+			return nil
+		}
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamEventBridgeRequestBody := new(CreateLogStreamEventBridgeRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventBridgeRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventBridgeRequestBody"
+			c.CreateLogStreamEventBridgeRequestBody = valueCreateLogStreamEventBridgeRequestBody
+			return nil
+		}
 	}
-	c.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", c)
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamEventGridRequestBody := new(CreateLogStreamEventGridRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventGridRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventGridRequestBody"
+			c.CreateLogStreamEventGridRequestBody = valueCreateLogStreamEventGridRequestBody
+			return nil
+		}
 	}
-	switch unmarshaler.Type {
-	case "http":
-		value := new(CreateLogStreamHTTPRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamDatadogRequestBody := new(CreateLogStreamDatadogRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamDatadogRequestBody); err == nil {
+			c.typ = "CreateLogStreamDatadogRequestBody"
+			c.CreateLogStreamDatadogRequestBody = valueCreateLogStreamDatadogRequestBody
+			return nil
 		}
-		c.HTTP = value
-	case "eventbridge":
-		value := new(CreateLogStreamEventBridgeRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Eventbridge = value
-	case "eventgrid":
-		value := new(CreateLogStreamEventGridRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Eventgrid = value
-	case "datadog":
-		value := new(CreateLogStreamDatadogRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Datadog = value
-	case "splunk":
-		value := new(CreateLogStreamSplunkRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Splunk = value
-	case "sumo":
-		value := new(CreateLogStreamSumoRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Sumo = value
-	case "segment":
-		value := new(CreateLogStreamSegmentRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Segment = value
-	case "mixpanel":
-		value := new(CreateLogStreamMixpanelRequestBody)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Mixpanel = value
 	}
-	c.rawJSON = json.RawMessage(data)
-	return nil
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamSplunkRequestBody := new(CreateLogStreamSplunkRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSplunkRequestBody); err == nil {
+			c.typ = "CreateLogStreamSplunkRequestBody"
+			c.CreateLogStreamSplunkRequestBody = valueCreateLogStreamSplunkRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamSumoRequestBody := new(CreateLogStreamSumoRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSumoRequestBody); err == nil {
+			c.typ = "CreateLogStreamSumoRequestBody"
+			c.CreateLogStreamSumoRequestBody = valueCreateLogStreamSumoRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamSegmentRequestBody := new(CreateLogStreamSegmentRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSegmentRequestBody); err == nil {
+			c.typ = "CreateLogStreamSegmentRequestBody"
+			c.CreateLogStreamSegmentRequestBody = valueCreateLogStreamSegmentRequestBody
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"name", "type", "isPriority", "filters", "pii_config", "sink", "startFrom"}, []string{"type", "sink"}) {
+		valueCreateLogStreamMixpanelRequestBody := new(CreateLogStreamMixpanelRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamMixpanelRequestBody); err == nil {
+			c.typ = "CreateLogStreamMixpanelRequestBody"
+			c.CreateLogStreamMixpanelRequestBody = valueCreateLogStreamMixpanelRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamHTTPRequestBody := new(CreateLogStreamHTTPRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamHTTPRequestBody); err == nil {
+			c.typ = "CreateLogStreamHTTPRequestBody"
+			c.CreateLogStreamHTTPRequestBody = valueCreateLogStreamHTTPRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamEventBridgeRequestBody := new(CreateLogStreamEventBridgeRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventBridgeRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventBridgeRequestBody"
+			c.CreateLogStreamEventBridgeRequestBody = valueCreateLogStreamEventBridgeRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamEventGridRequestBody := new(CreateLogStreamEventGridRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamEventGridRequestBody); err == nil {
+			c.typ = "CreateLogStreamEventGridRequestBody"
+			c.CreateLogStreamEventGridRequestBody = valueCreateLogStreamEventGridRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamDatadogRequestBody := new(CreateLogStreamDatadogRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamDatadogRequestBody); err == nil {
+			c.typ = "CreateLogStreamDatadogRequestBody"
+			c.CreateLogStreamDatadogRequestBody = valueCreateLogStreamDatadogRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamSplunkRequestBody := new(CreateLogStreamSplunkRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSplunkRequestBody); err == nil {
+			c.typ = "CreateLogStreamSplunkRequestBody"
+			c.CreateLogStreamSplunkRequestBody = valueCreateLogStreamSplunkRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamSumoRequestBody := new(CreateLogStreamSumoRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSumoRequestBody); err == nil {
+			c.typ = "CreateLogStreamSumoRequestBody"
+			c.CreateLogStreamSumoRequestBody = valueCreateLogStreamSumoRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamSegmentRequestBody := new(CreateLogStreamSegmentRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamSegmentRequestBody); err == nil {
+			c.typ = "CreateLogStreamSegmentRequestBody"
+			c.CreateLogStreamSegmentRequestBody = valueCreateLogStreamSegmentRequestBody
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "sink"}) {
+		valueCreateLogStreamMixpanelRequestBody := new(CreateLogStreamMixpanelRequestBody)
+		if err := json.Unmarshal(data, &valueCreateLogStreamMixpanelRequestBody); err == nil {
+			c.typ = "CreateLogStreamMixpanelRequestBody"
+			c.CreateLogStreamMixpanelRequestBody = valueCreateLogStreamMixpanelRequestBody
+			return nil
+		}
+	}
+	valueCreateLogStreamHTTPRequestBody := new(CreateLogStreamHTTPRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamHTTPRequestBody); err == nil {
+		c.typ = "CreateLogStreamHTTPRequestBody"
+		c.CreateLogStreamHTTPRequestBody = valueCreateLogStreamHTTPRequestBody
+		return nil
+	}
+	valueCreateLogStreamEventBridgeRequestBody := new(CreateLogStreamEventBridgeRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamEventBridgeRequestBody); err == nil {
+		c.typ = "CreateLogStreamEventBridgeRequestBody"
+		c.CreateLogStreamEventBridgeRequestBody = valueCreateLogStreamEventBridgeRequestBody
+		return nil
+	}
+	valueCreateLogStreamEventGridRequestBody := new(CreateLogStreamEventGridRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamEventGridRequestBody); err == nil {
+		c.typ = "CreateLogStreamEventGridRequestBody"
+		c.CreateLogStreamEventGridRequestBody = valueCreateLogStreamEventGridRequestBody
+		return nil
+	}
+	valueCreateLogStreamDatadogRequestBody := new(CreateLogStreamDatadogRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamDatadogRequestBody); err == nil {
+		c.typ = "CreateLogStreamDatadogRequestBody"
+		c.CreateLogStreamDatadogRequestBody = valueCreateLogStreamDatadogRequestBody
+		return nil
+	}
+	valueCreateLogStreamSplunkRequestBody := new(CreateLogStreamSplunkRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamSplunkRequestBody); err == nil {
+		c.typ = "CreateLogStreamSplunkRequestBody"
+		c.CreateLogStreamSplunkRequestBody = valueCreateLogStreamSplunkRequestBody
+		return nil
+	}
+	valueCreateLogStreamSumoRequestBody := new(CreateLogStreamSumoRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamSumoRequestBody); err == nil {
+		c.typ = "CreateLogStreamSumoRequestBody"
+		c.CreateLogStreamSumoRequestBody = valueCreateLogStreamSumoRequestBody
+		return nil
+	}
+	valueCreateLogStreamSegmentRequestBody := new(CreateLogStreamSegmentRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamSegmentRequestBody); err == nil {
+		c.typ = "CreateLogStreamSegmentRequestBody"
+		c.CreateLogStreamSegmentRequestBody = valueCreateLogStreamSegmentRequestBody
+		return nil
+	}
+	valueCreateLogStreamMixpanelRequestBody := new(CreateLogStreamMixpanelRequestBody)
+	if err := json.Unmarshal(data, &valueCreateLogStreamMixpanelRequestBody); err == nil {
+		c.typ = "CreateLogStreamMixpanelRequestBody"
+		c.CreateLogStreamMixpanelRequestBody = valueCreateLogStreamMixpanelRequestBody
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
 }
 
 func (c CreateLogStreamRequestContent) MarshalJSON() ([]byte, error) {
-	if err := c.validate(); err != nil {
-		return nil, err
+	if c.typ == "CreateLogStreamHTTPRequestBody" || c.CreateLogStreamHTTPRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamHTTPRequestBody)
 	}
-	if c.HTTP != nil {
-		return internal.MarshalJSONWithExtraProperty(c.HTTP, "type", "http")
+	if c.typ == "CreateLogStreamEventBridgeRequestBody" || c.CreateLogStreamEventBridgeRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamEventBridgeRequestBody)
 	}
-	if c.Eventbridge != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Eventbridge, "type", "eventbridge")
+	if c.typ == "CreateLogStreamEventGridRequestBody" || c.CreateLogStreamEventGridRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamEventGridRequestBody)
 	}
-	if c.Eventgrid != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Eventgrid, "type", "eventgrid")
+	if c.typ == "CreateLogStreamDatadogRequestBody" || c.CreateLogStreamDatadogRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamDatadogRequestBody)
 	}
-	if c.Datadog != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Datadog, "type", "datadog")
+	if c.typ == "CreateLogStreamSplunkRequestBody" || c.CreateLogStreamSplunkRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamSplunkRequestBody)
 	}
-	if c.Splunk != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Splunk, "type", "splunk")
+	if c.typ == "CreateLogStreamSumoRequestBody" || c.CreateLogStreamSumoRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamSumoRequestBody)
 	}
-	if c.Sumo != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Sumo, "type", "sumo")
+	if c.typ == "CreateLogStreamSegmentRequestBody" || c.CreateLogStreamSegmentRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamSegmentRequestBody)
 	}
-	if c.Segment != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Segment, "type", "segment")
+	if c.typ == "CreateLogStreamMixpanelRequestBody" || c.CreateLogStreamMixpanelRequestBody != nil {
+		return json.Marshal(c.CreateLogStreamMixpanelRequestBody)
 	}
-	if c.Mixpanel != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Mixpanel, "type", "mixpanel")
-	}
-	if len(c.rawJSON) > 0 {
-		return c.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", c)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 type CreateLogStreamRequestContentVisitor interface {
-	VisitHTTP(*CreateLogStreamHTTPRequestBody) error
-	VisitEventbridge(*CreateLogStreamEventBridgeRequestBody) error
-	VisitEventgrid(*CreateLogStreamEventGridRequestBody) error
-	VisitDatadog(*CreateLogStreamDatadogRequestBody) error
-	VisitSplunk(*CreateLogStreamSplunkRequestBody) error
-	VisitSumo(*CreateLogStreamSumoRequestBody) error
-	VisitSegment(*CreateLogStreamSegmentRequestBody) error
-	VisitMixpanel(*CreateLogStreamMixpanelRequestBody) error
+	VisitCreateLogStreamHTTPRequestBody(*CreateLogStreamHTTPRequestBody) error
+	VisitCreateLogStreamEventBridgeRequestBody(*CreateLogStreamEventBridgeRequestBody) error
+	VisitCreateLogStreamEventGridRequestBody(*CreateLogStreamEventGridRequestBody) error
+	VisitCreateLogStreamDatadogRequestBody(*CreateLogStreamDatadogRequestBody) error
+	VisitCreateLogStreamSplunkRequestBody(*CreateLogStreamSplunkRequestBody) error
+	VisitCreateLogStreamSumoRequestBody(*CreateLogStreamSumoRequestBody) error
+	VisitCreateLogStreamSegmentRequestBody(*CreateLogStreamSegmentRequestBody) error
+	VisitCreateLogStreamMixpanelRequestBody(*CreateLogStreamMixpanelRequestBody) error
 }
 
 func (c *CreateLogStreamRequestContent) Accept(visitor CreateLogStreamRequestContentVisitor) error {
-	if c.HTTP != nil {
-		return visitor.VisitHTTP(c.HTTP)
+	if c.typ == "CreateLogStreamHTTPRequestBody" || c.CreateLogStreamHTTPRequestBody != nil {
+		return visitor.VisitCreateLogStreamHTTPRequestBody(c.CreateLogStreamHTTPRequestBody)
 	}
-	if c.Eventbridge != nil {
-		return visitor.VisitEventbridge(c.Eventbridge)
+	if c.typ == "CreateLogStreamEventBridgeRequestBody" || c.CreateLogStreamEventBridgeRequestBody != nil {
+		return visitor.VisitCreateLogStreamEventBridgeRequestBody(c.CreateLogStreamEventBridgeRequestBody)
 	}
-	if c.Eventgrid != nil {
-		return visitor.VisitEventgrid(c.Eventgrid)
+	if c.typ == "CreateLogStreamEventGridRequestBody" || c.CreateLogStreamEventGridRequestBody != nil {
+		return visitor.VisitCreateLogStreamEventGridRequestBody(c.CreateLogStreamEventGridRequestBody)
 	}
-	if c.Datadog != nil {
-		return visitor.VisitDatadog(c.Datadog)
+	if c.typ == "CreateLogStreamDatadogRequestBody" || c.CreateLogStreamDatadogRequestBody != nil {
+		return visitor.VisitCreateLogStreamDatadogRequestBody(c.CreateLogStreamDatadogRequestBody)
 	}
-	if c.Splunk != nil {
-		return visitor.VisitSplunk(c.Splunk)
+	if c.typ == "CreateLogStreamSplunkRequestBody" || c.CreateLogStreamSplunkRequestBody != nil {
+		return visitor.VisitCreateLogStreamSplunkRequestBody(c.CreateLogStreamSplunkRequestBody)
 	}
-	if c.Sumo != nil {
-		return visitor.VisitSumo(c.Sumo)
+	if c.typ == "CreateLogStreamSumoRequestBody" || c.CreateLogStreamSumoRequestBody != nil {
+		return visitor.VisitCreateLogStreamSumoRequestBody(c.CreateLogStreamSumoRequestBody)
 	}
-	if c.Segment != nil {
-		return visitor.VisitSegment(c.Segment)
+	if c.typ == "CreateLogStreamSegmentRequestBody" || c.CreateLogStreamSegmentRequestBody != nil {
+		return visitor.VisitCreateLogStreamSegmentRequestBody(c.CreateLogStreamSegmentRequestBody)
 	}
-	if c.Mixpanel != nil {
-		return visitor.VisitMixpanel(c.Mixpanel)
+	if c.typ == "CreateLogStreamMixpanelRequestBody" || c.CreateLogStreamMixpanelRequestBody != nil {
+		return visitor.VisitCreateLogStreamMixpanelRequestBody(c.CreateLogStreamMixpanelRequestBody)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", c)
-}
-
-func (c *CreateLogStreamRequestContent) validate() error {
-	if c == nil {
-		return fmt.Errorf("type %T is nil", c)
-	}
-	var fields []string
-	if c.HTTP != nil {
-		fields = append(fields, "http")
-	}
-	if c.Eventbridge != nil {
-		fields = append(fields, "eventbridge")
-	}
-	if c.Eventgrid != nil {
-		fields = append(fields, "eventgrid")
-	}
-	if c.Datadog != nil {
-		fields = append(fields, "datadog")
-	}
-	if c.Splunk != nil {
-		fields = append(fields, "splunk")
-	}
-	if c.Sumo != nil {
-		fields = append(fields, "sumo")
-	}
-	if c.Segment != nil {
-		fields = append(fields, "segment")
-	}
-	if c.Mixpanel != nil {
-		fields = append(fields, "mixpanel")
-	}
-	if len(fields) == 0 {
-		if c.Type != "" {
-			if len(c.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", c, c.Type)
-		}
-		return fmt.Errorf("type %T is empty", c)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", c, fields)
-	}
-	if c.Type != "" {
-		field := fields[0]
-		if c.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				c,
-				c.Type,
-				c,
-			)
-		}
-	}
-	return nil
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 type CreateLogStreamResponseContent struct {
-	Type        string
-	HTTP        *LogStreamHTTPResponseSchema
-	Eventbridge *LogStreamEventBridgeResponseSchema
-	Eventgrid   *LogStreamEventGridResponseSchema
-	Datadog     *LogStreamDatadogResponseSchema
-	Splunk      *LogStreamSplunkResponseSchema
-	Sumo        *LogStreamSumoResponseSchema
-	Segment     *LogStreamSegmentResponseSchema
-	Mixpanel    *LogStreamMixpanelResponseSchema
+	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
+	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
+	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
+	LogStreamSplunkResponseSchema      *LogStreamSplunkResponseSchema
+	LogStreamSumoResponseSchema        *LogStreamSumoResponseSchema
+	LogStreamSegmentResponseSchema     *LogStreamSegmentResponseSchema
+	LogStreamMixpanelResponseSchema    *LogStreamMixpanelResponseSchema
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (c *CreateLogStreamResponseContent) GetType() string {
-	if c == nil {
-		return ""
-	}
-	return c.Type
-}
-
-func (c *CreateLogStreamResponseContent) GetHTTP() *LogStreamHTTPResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.HTTP
+	return c.LogStreamHTTPResponseSchema
 }
 
-func (c *CreateLogStreamResponseContent) GetEventbridge() *LogStreamEventBridgeResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.Eventbridge
+	return c.LogStreamEventBridgeResponseSchema
 }
 
-func (c *CreateLogStreamResponseContent) GetEventgrid() *LogStreamEventGridResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamEventGridResponseSchema() *LogStreamEventGridResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.Eventgrid
+	return c.LogStreamEventGridResponseSchema
 }
 
-func (c *CreateLogStreamResponseContent) GetDatadog() *LogStreamDatadogResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamDatadogResponseSchema() *LogStreamDatadogResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.Datadog
+	return c.LogStreamDatadogResponseSchema
 }
 
-func (c *CreateLogStreamResponseContent) GetSplunk() *LogStreamSplunkResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamSplunkResponseSchema() *LogStreamSplunkResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.Splunk
+	return c.LogStreamSplunkResponseSchema
 }
 
-func (c *CreateLogStreamResponseContent) GetSumo() *LogStreamSumoResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamSumoResponseSchema() *LogStreamSumoResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.Sumo
+	return c.LogStreamSumoResponseSchema
 }
 
-func (c *CreateLogStreamResponseContent) GetSegment() *LogStreamSegmentResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamSegmentResponseSchema() *LogStreamSegmentResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.Segment
+	return c.LogStreamSegmentResponseSchema
 }
 
-func (c *CreateLogStreamResponseContent) GetMixpanel() *LogStreamMixpanelResponseSchema {
+func (c *CreateLogStreamResponseContent) GetLogStreamMixpanelResponseSchema() *LogStreamMixpanelResponseSchema {
 	if c == nil {
 		return nil
 	}
-	return c.Mixpanel
+	return c.LogStreamMixpanelResponseSchema
 }
 
 func (c *CreateLogStreamResponseContent) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
+		c.typ = "LogStreamHTTPResponseSchema"
+		c.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+		return nil
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventBridgeResponseSchema); err == nil {
+		c.typ = "LogStreamEventBridgeResponseSchema"
+		c.LogStreamEventBridgeResponseSchema = valueLogStreamEventBridgeResponseSchema
+		return nil
 	}
-	c.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", c)
+	valueLogStreamEventGridResponseSchema := new(LogStreamEventGridResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventGridResponseSchema); err == nil {
+		c.typ = "LogStreamEventGridResponseSchema"
+		c.LogStreamEventGridResponseSchema = valueLogStreamEventGridResponseSchema
+		return nil
 	}
-	switch unmarshaler.Type {
-	case "http":
-		value := new(LogStreamHTTPResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.HTTP = value
-	case "eventbridge":
-		value := new(LogStreamEventBridgeResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Eventbridge = value
-	case "eventgrid":
-		value := new(LogStreamEventGridResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Eventgrid = value
-	case "datadog":
-		value := new(LogStreamDatadogResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Datadog = value
-	case "splunk":
-		value := new(LogStreamSplunkResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Splunk = value
-	case "sumo":
-		value := new(LogStreamSumoResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Sumo = value
-	case "segment":
-		value := new(LogStreamSegmentResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Segment = value
-	case "mixpanel":
-		value := new(LogStreamMixpanelResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		c.Mixpanel = value
+	valueLogStreamDatadogResponseSchema := new(LogStreamDatadogResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamDatadogResponseSchema); err == nil {
+		c.typ = "LogStreamDatadogResponseSchema"
+		c.LogStreamDatadogResponseSchema = valueLogStreamDatadogResponseSchema
+		return nil
 	}
-	c.rawJSON = json.RawMessage(data)
-	return nil
+	valueLogStreamSplunkResponseSchema := new(LogStreamSplunkResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSplunkResponseSchema); err == nil {
+		c.typ = "LogStreamSplunkResponseSchema"
+		c.LogStreamSplunkResponseSchema = valueLogStreamSplunkResponseSchema
+		return nil
+	}
+	valueLogStreamSumoResponseSchema := new(LogStreamSumoResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSumoResponseSchema); err == nil {
+		c.typ = "LogStreamSumoResponseSchema"
+		c.LogStreamSumoResponseSchema = valueLogStreamSumoResponseSchema
+		return nil
+	}
+	valueLogStreamSegmentResponseSchema := new(LogStreamSegmentResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSegmentResponseSchema); err == nil {
+		c.typ = "LogStreamSegmentResponseSchema"
+		c.LogStreamSegmentResponseSchema = valueLogStreamSegmentResponseSchema
+		return nil
+	}
+	valueLogStreamMixpanelResponseSchema := new(LogStreamMixpanelResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamMixpanelResponseSchema); err == nil {
+		c.typ = "LogStreamMixpanelResponseSchema"
+		c.LogStreamMixpanelResponseSchema = valueLogStreamMixpanelResponseSchema
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
 }
 
 func (c CreateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
-	if err := c.validate(); err != nil {
-		return nil, err
+	if c.typ == "LogStreamHTTPResponseSchema" || c.LogStreamHTTPResponseSchema != nil {
+		return json.Marshal(c.LogStreamHTTPResponseSchema)
 	}
-	if c.HTTP != nil {
-		return internal.MarshalJSONWithExtraProperty(c.HTTP, "type", "http")
+	if c.typ == "LogStreamEventBridgeResponseSchema" || c.LogStreamEventBridgeResponseSchema != nil {
+		return json.Marshal(c.LogStreamEventBridgeResponseSchema)
 	}
-	if c.Eventbridge != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Eventbridge, "type", "eventbridge")
+	if c.typ == "LogStreamEventGridResponseSchema" || c.LogStreamEventGridResponseSchema != nil {
+		return json.Marshal(c.LogStreamEventGridResponseSchema)
 	}
-	if c.Eventgrid != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Eventgrid, "type", "eventgrid")
+	if c.typ == "LogStreamDatadogResponseSchema" || c.LogStreamDatadogResponseSchema != nil {
+		return json.Marshal(c.LogStreamDatadogResponseSchema)
 	}
-	if c.Datadog != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Datadog, "type", "datadog")
+	if c.typ == "LogStreamSplunkResponseSchema" || c.LogStreamSplunkResponseSchema != nil {
+		return json.Marshal(c.LogStreamSplunkResponseSchema)
 	}
-	if c.Splunk != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Splunk, "type", "splunk")
+	if c.typ == "LogStreamSumoResponseSchema" || c.LogStreamSumoResponseSchema != nil {
+		return json.Marshal(c.LogStreamSumoResponseSchema)
 	}
-	if c.Sumo != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Sumo, "type", "sumo")
+	if c.typ == "LogStreamSegmentResponseSchema" || c.LogStreamSegmentResponseSchema != nil {
+		return json.Marshal(c.LogStreamSegmentResponseSchema)
 	}
-	if c.Segment != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Segment, "type", "segment")
+	if c.typ == "LogStreamMixpanelResponseSchema" || c.LogStreamMixpanelResponseSchema != nil {
+		return json.Marshal(c.LogStreamMixpanelResponseSchema)
 	}
-	if c.Mixpanel != nil {
-		return internal.MarshalJSONWithExtraProperty(c.Mixpanel, "type", "mixpanel")
-	}
-	if len(c.rawJSON) > 0 {
-		return c.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", c)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 type CreateLogStreamResponseContentVisitor interface {
-	VisitHTTP(*LogStreamHTTPResponseSchema) error
-	VisitEventbridge(*LogStreamEventBridgeResponseSchema) error
-	VisitEventgrid(*LogStreamEventGridResponseSchema) error
-	VisitDatadog(*LogStreamDatadogResponseSchema) error
-	VisitSplunk(*LogStreamSplunkResponseSchema) error
-	VisitSumo(*LogStreamSumoResponseSchema) error
-	VisitSegment(*LogStreamSegmentResponseSchema) error
-	VisitMixpanel(*LogStreamMixpanelResponseSchema) error
+	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
+	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
+	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
+	VisitLogStreamSplunkResponseSchema(*LogStreamSplunkResponseSchema) error
+	VisitLogStreamSumoResponseSchema(*LogStreamSumoResponseSchema) error
+	VisitLogStreamSegmentResponseSchema(*LogStreamSegmentResponseSchema) error
+	VisitLogStreamMixpanelResponseSchema(*LogStreamMixpanelResponseSchema) error
 }
 
 func (c *CreateLogStreamResponseContent) Accept(visitor CreateLogStreamResponseContentVisitor) error {
-	if c.HTTP != nil {
-		return visitor.VisitHTTP(c.HTTP)
+	if c.typ == "LogStreamHTTPResponseSchema" || c.LogStreamHTTPResponseSchema != nil {
+		return visitor.VisitLogStreamHTTPResponseSchema(c.LogStreamHTTPResponseSchema)
 	}
-	if c.Eventbridge != nil {
-		return visitor.VisitEventbridge(c.Eventbridge)
+	if c.typ == "LogStreamEventBridgeResponseSchema" || c.LogStreamEventBridgeResponseSchema != nil {
+		return visitor.VisitLogStreamEventBridgeResponseSchema(c.LogStreamEventBridgeResponseSchema)
 	}
-	if c.Eventgrid != nil {
-		return visitor.VisitEventgrid(c.Eventgrid)
+	if c.typ == "LogStreamEventGridResponseSchema" || c.LogStreamEventGridResponseSchema != nil {
+		return visitor.VisitLogStreamEventGridResponseSchema(c.LogStreamEventGridResponseSchema)
 	}
-	if c.Datadog != nil {
-		return visitor.VisitDatadog(c.Datadog)
+	if c.typ == "LogStreamDatadogResponseSchema" || c.LogStreamDatadogResponseSchema != nil {
+		return visitor.VisitLogStreamDatadogResponseSchema(c.LogStreamDatadogResponseSchema)
 	}
-	if c.Splunk != nil {
-		return visitor.VisitSplunk(c.Splunk)
+	if c.typ == "LogStreamSplunkResponseSchema" || c.LogStreamSplunkResponseSchema != nil {
+		return visitor.VisitLogStreamSplunkResponseSchema(c.LogStreamSplunkResponseSchema)
 	}
-	if c.Sumo != nil {
-		return visitor.VisitSumo(c.Sumo)
+	if c.typ == "LogStreamSumoResponseSchema" || c.LogStreamSumoResponseSchema != nil {
+		return visitor.VisitLogStreamSumoResponseSchema(c.LogStreamSumoResponseSchema)
 	}
-	if c.Segment != nil {
-		return visitor.VisitSegment(c.Segment)
+	if c.typ == "LogStreamSegmentResponseSchema" || c.LogStreamSegmentResponseSchema != nil {
+		return visitor.VisitLogStreamSegmentResponseSchema(c.LogStreamSegmentResponseSchema)
 	}
-	if c.Mixpanel != nil {
-		return visitor.VisitMixpanel(c.Mixpanel)
+	if c.typ == "LogStreamMixpanelResponseSchema" || c.LogStreamMixpanelResponseSchema != nil {
+		return visitor.VisitLogStreamMixpanelResponseSchema(c.LogStreamMixpanelResponseSchema)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", c)
-}
-
-func (c *CreateLogStreamResponseContent) validate() error {
-	if c == nil {
-		return fmt.Errorf("type %T is nil", c)
-	}
-	var fields []string
-	if c.HTTP != nil {
-		fields = append(fields, "http")
-	}
-	if c.Eventbridge != nil {
-		fields = append(fields, "eventbridge")
-	}
-	if c.Eventgrid != nil {
-		fields = append(fields, "eventgrid")
-	}
-	if c.Datadog != nil {
-		fields = append(fields, "datadog")
-	}
-	if c.Splunk != nil {
-		fields = append(fields, "splunk")
-	}
-	if c.Sumo != nil {
-		fields = append(fields, "sumo")
-	}
-	if c.Segment != nil {
-		fields = append(fields, "segment")
-	}
-	if c.Mixpanel != nil {
-		fields = append(fields, "mixpanel")
-	}
-	if len(fields) == 0 {
-		if c.Type != "" {
-			if len(c.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", c, c.Type)
-		}
-		return fmt.Errorf("type %T is empty", c)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", c, fields)
-	}
-	if c.Type != "" {
-		field := fields[0]
-		if c.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				c,
-				c.Type,
-				c,
-			)
-		}
-	}
-	return nil
+	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
 var (
 	createLogStreamSegmentRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamSegmentRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamSegmentRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamSegmentRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamSegmentRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamSegmentRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamSegmentRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamSegmentRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamSegmentRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamSegmentRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamSegmentRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamSegmentRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamSegmentRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string              `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamSegmentEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -1432,6 +1478,13 @@ func (c *CreateLogStreamSegmentRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamSegmentRequestBody) GetType() LogStreamSegmentEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamSegmentRequestBody) GetIsPriority() bool {
@@ -1490,6 +1543,13 @@ func (c *CreateLogStreamSegmentRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamSegmentRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamSegmentRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSegmentRequestBody) SetType(type_ LogStreamSegmentEnum) {
+	c.Type = type_
+	c.require(createLogStreamSegmentRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -1571,16 +1631,18 @@ func (c *CreateLogStreamSegmentRequestBody) String() string {
 
 var (
 	createLogStreamSplunkRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamSplunkRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamSplunkRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamSplunkRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamSplunkRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamSplunkRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamSplunkRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamSplunkRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamSplunkRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamSplunkRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamSplunkRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamSplunkRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamSplunkRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string             `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamSplunkEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -1602,6 +1664,13 @@ func (c *CreateLogStreamSplunkRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamSplunkRequestBody) GetType() LogStreamSplunkEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamSplunkRequestBody) GetIsPriority() bool {
@@ -1660,6 +1729,13 @@ func (c *CreateLogStreamSplunkRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamSplunkRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamSplunkRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSplunkRequestBody) SetType(type_ LogStreamSplunkEnum) {
+	c.Type = type_
+	c.require(createLogStreamSplunkRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -1741,16 +1817,18 @@ func (c *CreateLogStreamSplunkRequestBody) String() string {
 
 var (
 	createLogStreamSumoRequestBodyFieldName       = big.NewInt(1 << 0)
-	createLogStreamSumoRequestBodyFieldIsPriority = big.NewInt(1 << 1)
-	createLogStreamSumoRequestBodyFieldFilters    = big.NewInt(1 << 2)
-	createLogStreamSumoRequestBodyFieldPiiConfig  = big.NewInt(1 << 3)
-	createLogStreamSumoRequestBodyFieldSink       = big.NewInt(1 << 4)
-	createLogStreamSumoRequestBodyFieldStartFrom  = big.NewInt(1 << 5)
+	createLogStreamSumoRequestBodyFieldType       = big.NewInt(1 << 1)
+	createLogStreamSumoRequestBodyFieldIsPriority = big.NewInt(1 << 2)
+	createLogStreamSumoRequestBodyFieldFilters    = big.NewInt(1 << 3)
+	createLogStreamSumoRequestBodyFieldPiiConfig  = big.NewInt(1 << 4)
+	createLogStreamSumoRequestBodyFieldSink       = big.NewInt(1 << 5)
+	createLogStreamSumoRequestBodyFieldStartFrom  = big.NewInt(1 << 6)
 )
 
 type CreateLogStreamSumoRequestBody struct {
 	// log stream name
-	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	Name *string           `json:"name,omitempty" url:"name,omitempty"`
+	Type LogStreamSumoEnum `json:"type" url:"type"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -1772,6 +1850,13 @@ func (c *CreateLogStreamSumoRequestBody) GetName() string {
 		return ""
 	}
 	return *c.Name
+}
+
+func (c *CreateLogStreamSumoRequestBody) GetType() LogStreamSumoEnum {
+	if c == nil {
+		return ""
+	}
+	return c.Type
 }
 
 func (c *CreateLogStreamSumoRequestBody) GetIsPriority() bool {
@@ -1830,6 +1915,13 @@ func (c *CreateLogStreamSumoRequestBody) require(field *big.Int) {
 func (c *CreateLogStreamSumoRequestBody) SetName(name *string) {
 	c.Name = name
 	c.require(createLogStreamSumoRequestBodyFieldName)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateLogStreamSumoRequestBody) SetType(type_ LogStreamSumoEnum) {
+	c.Type = type_
+	c.require(createLogStreamSumoRequestBodyFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -1910,273 +2002,191 @@ func (c *CreateLogStreamSumoRequestBody) String() string {
 }
 
 type GetLogStreamResponseContent struct {
-	Type        string
-	HTTP        *LogStreamHTTPResponseSchema
-	Eventbridge *LogStreamEventBridgeResponseSchema
-	Eventgrid   *LogStreamEventGridResponseSchema
-	Datadog     *LogStreamDatadogResponseSchema
-	Splunk      *LogStreamSplunkResponseSchema
-	Sumo        *LogStreamSumoResponseSchema
-	Segment     *LogStreamSegmentResponseSchema
-	Mixpanel    *LogStreamMixpanelResponseSchema
+	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
+	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
+	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
+	LogStreamSplunkResponseSchema      *LogStreamSplunkResponseSchema
+	LogStreamSumoResponseSchema        *LogStreamSumoResponseSchema
+	LogStreamSegmentResponseSchema     *LogStreamSegmentResponseSchema
+	LogStreamMixpanelResponseSchema    *LogStreamMixpanelResponseSchema
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (g *GetLogStreamResponseContent) GetType() string {
-	if g == nil {
-		return ""
-	}
-	return g.Type
-}
-
-func (g *GetLogStreamResponseContent) GetHTTP() *LogStreamHTTPResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.HTTP
+	return g.LogStreamHTTPResponseSchema
 }
 
-func (g *GetLogStreamResponseContent) GetEventbridge() *LogStreamEventBridgeResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.Eventbridge
+	return g.LogStreamEventBridgeResponseSchema
 }
 
-func (g *GetLogStreamResponseContent) GetEventgrid() *LogStreamEventGridResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamEventGridResponseSchema() *LogStreamEventGridResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.Eventgrid
+	return g.LogStreamEventGridResponseSchema
 }
 
-func (g *GetLogStreamResponseContent) GetDatadog() *LogStreamDatadogResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamDatadogResponseSchema() *LogStreamDatadogResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.Datadog
+	return g.LogStreamDatadogResponseSchema
 }
 
-func (g *GetLogStreamResponseContent) GetSplunk() *LogStreamSplunkResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamSplunkResponseSchema() *LogStreamSplunkResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.Splunk
+	return g.LogStreamSplunkResponseSchema
 }
 
-func (g *GetLogStreamResponseContent) GetSumo() *LogStreamSumoResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamSumoResponseSchema() *LogStreamSumoResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.Sumo
+	return g.LogStreamSumoResponseSchema
 }
 
-func (g *GetLogStreamResponseContent) GetSegment() *LogStreamSegmentResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamSegmentResponseSchema() *LogStreamSegmentResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.Segment
+	return g.LogStreamSegmentResponseSchema
 }
 
-func (g *GetLogStreamResponseContent) GetMixpanel() *LogStreamMixpanelResponseSchema {
+func (g *GetLogStreamResponseContent) GetLogStreamMixpanelResponseSchema() *LogStreamMixpanelResponseSchema {
 	if g == nil {
 		return nil
 	}
-	return g.Mixpanel
+	return g.LogStreamMixpanelResponseSchema
 }
 
 func (g *GetLogStreamResponseContent) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
+		g.typ = "LogStreamHTTPResponseSchema"
+		g.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+		return nil
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventBridgeResponseSchema); err == nil {
+		g.typ = "LogStreamEventBridgeResponseSchema"
+		g.LogStreamEventBridgeResponseSchema = valueLogStreamEventBridgeResponseSchema
+		return nil
 	}
-	g.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", g)
+	valueLogStreamEventGridResponseSchema := new(LogStreamEventGridResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventGridResponseSchema); err == nil {
+		g.typ = "LogStreamEventGridResponseSchema"
+		g.LogStreamEventGridResponseSchema = valueLogStreamEventGridResponseSchema
+		return nil
 	}
-	switch unmarshaler.Type {
-	case "http":
-		value := new(LogStreamHTTPResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.HTTP = value
-	case "eventbridge":
-		value := new(LogStreamEventBridgeResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.Eventbridge = value
-	case "eventgrid":
-		value := new(LogStreamEventGridResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.Eventgrid = value
-	case "datadog":
-		value := new(LogStreamDatadogResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.Datadog = value
-	case "splunk":
-		value := new(LogStreamSplunkResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.Splunk = value
-	case "sumo":
-		value := new(LogStreamSumoResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.Sumo = value
-	case "segment":
-		value := new(LogStreamSegmentResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.Segment = value
-	case "mixpanel":
-		value := new(LogStreamMixpanelResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		g.Mixpanel = value
+	valueLogStreamDatadogResponseSchema := new(LogStreamDatadogResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamDatadogResponseSchema); err == nil {
+		g.typ = "LogStreamDatadogResponseSchema"
+		g.LogStreamDatadogResponseSchema = valueLogStreamDatadogResponseSchema
+		return nil
 	}
-	g.rawJSON = json.RawMessage(data)
-	return nil
+	valueLogStreamSplunkResponseSchema := new(LogStreamSplunkResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSplunkResponseSchema); err == nil {
+		g.typ = "LogStreamSplunkResponseSchema"
+		g.LogStreamSplunkResponseSchema = valueLogStreamSplunkResponseSchema
+		return nil
+	}
+	valueLogStreamSumoResponseSchema := new(LogStreamSumoResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSumoResponseSchema); err == nil {
+		g.typ = "LogStreamSumoResponseSchema"
+		g.LogStreamSumoResponseSchema = valueLogStreamSumoResponseSchema
+		return nil
+	}
+	valueLogStreamSegmentResponseSchema := new(LogStreamSegmentResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSegmentResponseSchema); err == nil {
+		g.typ = "LogStreamSegmentResponseSchema"
+		g.LogStreamSegmentResponseSchema = valueLogStreamSegmentResponseSchema
+		return nil
+	}
+	valueLogStreamMixpanelResponseSchema := new(LogStreamMixpanelResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamMixpanelResponseSchema); err == nil {
+		g.typ = "LogStreamMixpanelResponseSchema"
+		g.LogStreamMixpanelResponseSchema = valueLogStreamMixpanelResponseSchema
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, g)
 }
 
 func (g GetLogStreamResponseContent) MarshalJSON() ([]byte, error) {
-	if err := g.validate(); err != nil {
-		return nil, err
+	if g.typ == "LogStreamHTTPResponseSchema" || g.LogStreamHTTPResponseSchema != nil {
+		return json.Marshal(g.LogStreamHTTPResponseSchema)
 	}
-	if g.HTTP != nil {
-		return internal.MarshalJSONWithExtraProperty(g.HTTP, "type", "http")
+	if g.typ == "LogStreamEventBridgeResponseSchema" || g.LogStreamEventBridgeResponseSchema != nil {
+		return json.Marshal(g.LogStreamEventBridgeResponseSchema)
 	}
-	if g.Eventbridge != nil {
-		return internal.MarshalJSONWithExtraProperty(g.Eventbridge, "type", "eventbridge")
+	if g.typ == "LogStreamEventGridResponseSchema" || g.LogStreamEventGridResponseSchema != nil {
+		return json.Marshal(g.LogStreamEventGridResponseSchema)
 	}
-	if g.Eventgrid != nil {
-		return internal.MarshalJSONWithExtraProperty(g.Eventgrid, "type", "eventgrid")
+	if g.typ == "LogStreamDatadogResponseSchema" || g.LogStreamDatadogResponseSchema != nil {
+		return json.Marshal(g.LogStreamDatadogResponseSchema)
 	}
-	if g.Datadog != nil {
-		return internal.MarshalJSONWithExtraProperty(g.Datadog, "type", "datadog")
+	if g.typ == "LogStreamSplunkResponseSchema" || g.LogStreamSplunkResponseSchema != nil {
+		return json.Marshal(g.LogStreamSplunkResponseSchema)
 	}
-	if g.Splunk != nil {
-		return internal.MarshalJSONWithExtraProperty(g.Splunk, "type", "splunk")
+	if g.typ == "LogStreamSumoResponseSchema" || g.LogStreamSumoResponseSchema != nil {
+		return json.Marshal(g.LogStreamSumoResponseSchema)
 	}
-	if g.Sumo != nil {
-		return internal.MarshalJSONWithExtraProperty(g.Sumo, "type", "sumo")
+	if g.typ == "LogStreamSegmentResponseSchema" || g.LogStreamSegmentResponseSchema != nil {
+		return json.Marshal(g.LogStreamSegmentResponseSchema)
 	}
-	if g.Segment != nil {
-		return internal.MarshalJSONWithExtraProperty(g.Segment, "type", "segment")
+	if g.typ == "LogStreamMixpanelResponseSchema" || g.LogStreamMixpanelResponseSchema != nil {
+		return json.Marshal(g.LogStreamMixpanelResponseSchema)
 	}
-	if g.Mixpanel != nil {
-		return internal.MarshalJSONWithExtraProperty(g.Mixpanel, "type", "mixpanel")
-	}
-	if len(g.rawJSON) > 0 {
-		return g.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", g)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", g)
 }
 
 type GetLogStreamResponseContentVisitor interface {
-	VisitHTTP(*LogStreamHTTPResponseSchema) error
-	VisitEventbridge(*LogStreamEventBridgeResponseSchema) error
-	VisitEventgrid(*LogStreamEventGridResponseSchema) error
-	VisitDatadog(*LogStreamDatadogResponseSchema) error
-	VisitSplunk(*LogStreamSplunkResponseSchema) error
-	VisitSumo(*LogStreamSumoResponseSchema) error
-	VisitSegment(*LogStreamSegmentResponseSchema) error
-	VisitMixpanel(*LogStreamMixpanelResponseSchema) error
+	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
+	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
+	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
+	VisitLogStreamSplunkResponseSchema(*LogStreamSplunkResponseSchema) error
+	VisitLogStreamSumoResponseSchema(*LogStreamSumoResponseSchema) error
+	VisitLogStreamSegmentResponseSchema(*LogStreamSegmentResponseSchema) error
+	VisitLogStreamMixpanelResponseSchema(*LogStreamMixpanelResponseSchema) error
 }
 
 func (g *GetLogStreamResponseContent) Accept(visitor GetLogStreamResponseContentVisitor) error {
-	if g.HTTP != nil {
-		return visitor.VisitHTTP(g.HTTP)
+	if g.typ == "LogStreamHTTPResponseSchema" || g.LogStreamHTTPResponseSchema != nil {
+		return visitor.VisitLogStreamHTTPResponseSchema(g.LogStreamHTTPResponseSchema)
 	}
-	if g.Eventbridge != nil {
-		return visitor.VisitEventbridge(g.Eventbridge)
+	if g.typ == "LogStreamEventBridgeResponseSchema" || g.LogStreamEventBridgeResponseSchema != nil {
+		return visitor.VisitLogStreamEventBridgeResponseSchema(g.LogStreamEventBridgeResponseSchema)
 	}
-	if g.Eventgrid != nil {
-		return visitor.VisitEventgrid(g.Eventgrid)
+	if g.typ == "LogStreamEventGridResponseSchema" || g.LogStreamEventGridResponseSchema != nil {
+		return visitor.VisitLogStreamEventGridResponseSchema(g.LogStreamEventGridResponseSchema)
 	}
-	if g.Datadog != nil {
-		return visitor.VisitDatadog(g.Datadog)
+	if g.typ == "LogStreamDatadogResponseSchema" || g.LogStreamDatadogResponseSchema != nil {
+		return visitor.VisitLogStreamDatadogResponseSchema(g.LogStreamDatadogResponseSchema)
 	}
-	if g.Splunk != nil {
-		return visitor.VisitSplunk(g.Splunk)
+	if g.typ == "LogStreamSplunkResponseSchema" || g.LogStreamSplunkResponseSchema != nil {
+		return visitor.VisitLogStreamSplunkResponseSchema(g.LogStreamSplunkResponseSchema)
 	}
-	if g.Sumo != nil {
-		return visitor.VisitSumo(g.Sumo)
+	if g.typ == "LogStreamSumoResponseSchema" || g.LogStreamSumoResponseSchema != nil {
+		return visitor.VisitLogStreamSumoResponseSchema(g.LogStreamSumoResponseSchema)
 	}
-	if g.Segment != nil {
-		return visitor.VisitSegment(g.Segment)
+	if g.typ == "LogStreamSegmentResponseSchema" || g.LogStreamSegmentResponseSchema != nil {
+		return visitor.VisitLogStreamSegmentResponseSchema(g.LogStreamSegmentResponseSchema)
 	}
-	if g.Mixpanel != nil {
-		return visitor.VisitMixpanel(g.Mixpanel)
+	if g.typ == "LogStreamMixpanelResponseSchema" || g.LogStreamMixpanelResponseSchema != nil {
+		return visitor.VisitLogStreamMixpanelResponseSchema(g.LogStreamMixpanelResponseSchema)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", g)
-}
-
-func (g *GetLogStreamResponseContent) validate() error {
-	if g == nil {
-		return fmt.Errorf("type %T is nil", g)
-	}
-	var fields []string
-	if g.HTTP != nil {
-		fields = append(fields, "http")
-	}
-	if g.Eventbridge != nil {
-		fields = append(fields, "eventbridge")
-	}
-	if g.Eventgrid != nil {
-		fields = append(fields, "eventgrid")
-	}
-	if g.Datadog != nil {
-		fields = append(fields, "datadog")
-	}
-	if g.Splunk != nil {
-		fields = append(fields, "splunk")
-	}
-	if g.Sumo != nil {
-		fields = append(fields, "sumo")
-	}
-	if g.Segment != nil {
-		fields = append(fields, "segment")
-	}
-	if g.Mixpanel != nil {
-		fields = append(fields, "mixpanel")
-	}
-	if len(fields) == 0 {
-		if g.Type != "" {
-			if len(g.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", g, g.Type)
-		}
-		return fmt.Errorf("type %T is empty", g)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", g, fields)
-	}
-	if g.Type != "" {
-		field := fields[0]
-		if g.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				g,
-				g.Type,
-				g,
-			)
-		}
-	}
-	return nil
+	return fmt.Errorf("type %T does not include a non-empty union type", g)
 }
 
 var (
@@ -2288,6 +2298,25 @@ func (h *HTTPCustomHeader) String() string {
 	return fmt.Sprintf("%#v", h)
 }
 
+type LogStreamDatadogEnum string
+
+const (
+	LogStreamDatadogEnumDatadog LogStreamDatadogEnum = "datadog"
+)
+
+func NewLogStreamDatadogEnumFromString(s string) (LogStreamDatadogEnum, error) {
+	switch s {
+	case "datadog":
+		return LogStreamDatadogEnumDatadog, nil
+	}
+	var t LogStreamDatadogEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamDatadogEnum) Ptr() *LogStreamDatadogEnum {
+	return &l
+}
+
 // Datadog region
 type LogStreamDatadogRegionEnum string
 
@@ -2321,18 +2350,20 @@ var (
 	logStreamDatadogResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamDatadogResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamDatadogResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamDatadogResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamDatadogResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamDatadogResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamDatadogResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamDatadogResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamDatadogResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamDatadogResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamDatadogResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamDatadogResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamDatadogResponseSchema struct {
 	// The id of the log stream
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
-	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
-	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Name   *string               `json:"name,omitempty" url:"name,omitempty"`
+	Status *LogStreamStatusEnum  `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamDatadogEnum `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -2367,6 +2398,13 @@ func (l *LogStreamDatadogResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamDatadogResponseSchema) GetType() LogStreamDatadogEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamDatadogResponseSchema) GetIsPriority() bool {
@@ -2432,6 +2470,13 @@ func (l *LogStreamDatadogResponseSchema) SetName(name *string) {
 func (l *LogStreamDatadogResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamDatadogResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamDatadogResponseSchema) SetType(type_ *LogStreamDatadogEnum) {
+	l.Type = type_
+	l.require(logStreamDatadogResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -2611,22 +2656,43 @@ func (l *LogStreamDatadogSink) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type LogStreamEventBridgeEnum string
+
+const (
+	LogStreamEventBridgeEnumEventbridge LogStreamEventBridgeEnum = "eventbridge"
+)
+
+func NewLogStreamEventBridgeEnumFromString(s string) (LogStreamEventBridgeEnum, error) {
+	switch s {
+	case "eventbridge":
+		return LogStreamEventBridgeEnumEventbridge, nil
+	}
+	var t LogStreamEventBridgeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamEventBridgeEnum) Ptr() *LogStreamEventBridgeEnum {
+	return &l
+}
+
 var (
 	logStreamEventBridgeResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamEventBridgeResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamEventBridgeResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamEventBridgeResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamEventBridgeResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamEventBridgeResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamEventBridgeResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamEventBridgeResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamEventBridgeResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamEventBridgeResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamEventBridgeResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamEventBridgeResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamEventBridgeResponseSchema struct {
 	// The id of the log stream
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
-	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
-	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Name   *string                   `json:"name,omitempty" url:"name,omitempty"`
+	Status *LogStreamStatusEnum      `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamEventBridgeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -2661,6 +2727,13 @@ func (l *LogStreamEventBridgeResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamEventBridgeResponseSchema) GetType() LogStreamEventBridgeEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamEventBridgeResponseSchema) GetIsPriority() bool {
@@ -2726,6 +2799,13 @@ func (l *LogStreamEventBridgeResponseSchema) SetName(name *string) {
 func (l *LogStreamEventBridgeResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamEventBridgeResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventBridgeResponseSchema) SetType(type_ *LogStreamEventBridgeEnum) {
+	l.Type = type_
+	l.require(logStreamEventBridgeResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -3047,6 +3127,25 @@ func (l LogStreamEventBridgeSinkRegionEnum) Ptr() *LogStreamEventBridgeSinkRegio
 	return &l
 }
 
+type LogStreamEventGridEnum string
+
+const (
+	LogStreamEventGridEnumEventgrid LogStreamEventGridEnum = "eventgrid"
+)
+
+func NewLogStreamEventGridEnumFromString(s string) (LogStreamEventGridEnum, error) {
+	switch s {
+	case "eventgrid":
+		return LogStreamEventGridEnumEventgrid, nil
+	}
+	var t LogStreamEventGridEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamEventGridEnum) Ptr() *LogStreamEventGridEnum {
+	return &l
+}
+
 // Azure Region Name
 type LogStreamEventGridRegionEnum string
 
@@ -3170,18 +3269,20 @@ var (
 	logStreamEventGridResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamEventGridResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamEventGridResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamEventGridResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamEventGridResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamEventGridResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamEventGridResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamEventGridResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamEventGridResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamEventGridResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamEventGridResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamEventGridResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamEventGridResponseSchema struct {
 	// The id of the log stream
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
-	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
-	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Name   *string                 `json:"name,omitempty" url:"name,omitempty"`
+	Status *LogStreamStatusEnum    `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamEventGridEnum `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -3216,6 +3317,13 @@ func (l *LogStreamEventGridResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamEventGridResponseSchema) GetType() LogStreamEventGridEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamEventGridResponseSchema) GetIsPriority() bool {
@@ -3281,6 +3389,13 @@ func (l *LogStreamEventGridResponseSchema) SetName(name *string) {
 func (l *LogStreamEventGridResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamEventGridResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamEventGridResponseSchema) SetType(type_ *LogStreamEventGridEnum) {
+	l.Type = type_
+	l.require(logStreamEventGridResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -3724,14 +3839,34 @@ func (l LogStreamHTTPContentFormatEnum) Ptr() *LogStreamHTTPContentFormatEnum {
 	return &l
 }
 
+type LogStreamHTTPEnum string
+
+const (
+	LogStreamHTTPEnumHTTP LogStreamHTTPEnum = "http"
+)
+
+func NewLogStreamHTTPEnumFromString(s string) (LogStreamHTTPEnum, error) {
+	switch s {
+	case "http":
+		return LogStreamHTTPEnumHTTP, nil
+	}
+	var t LogStreamHTTPEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamHTTPEnum) Ptr() *LogStreamHTTPEnum {
+	return &l
+}
+
 var (
 	logStreamHTTPResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamHTTPResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamHTTPResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamHTTPResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamHTTPResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamHTTPResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamHTTPResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamHTTPResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamHTTPResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamHTTPResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamHTTPResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamHTTPResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamHTTPResponseSchema struct {
@@ -3740,6 +3875,7 @@ type LogStreamHTTPResponseSchema struct {
 	// log stream name
 	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamHTTPEnum   `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -3774,6 +3910,13 @@ func (l *LogStreamHTTPResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamHTTPResponseSchema) GetType() LogStreamHTTPEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamHTTPResponseSchema) GetIsPriority() bool {
@@ -3839,6 +3982,13 @@ func (l *LogStreamHTTPResponseSchema) SetName(name *string) {
 func (l *LogStreamHTTPResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamHTTPResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamHTTPResponseSchema) SetType(type_ *LogStreamHTTPEnum) {
+	l.Type = type_
+	l.require(logStreamHTTPResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -4069,6 +4219,25 @@ func (l *LogStreamHTTPSink) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+type LogStreamMixpanelEnum string
+
+const (
+	LogStreamMixpanelEnumMixpanel LogStreamMixpanelEnum = "mixpanel"
+)
+
+func NewLogStreamMixpanelEnumFromString(s string) (LogStreamMixpanelEnum, error) {
+	switch s {
+	case "mixpanel":
+		return LogStreamMixpanelEnumMixpanel, nil
+	}
+	var t LogStreamMixpanelEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamMixpanelEnum) Ptr() *LogStreamMixpanelEnum {
+	return &l
+}
+
 // Mixpanel Region
 type LogStreamMixpanelRegionEnum string
 
@@ -4096,18 +4265,20 @@ var (
 	logStreamMixpanelResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamMixpanelResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamMixpanelResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamMixpanelResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamMixpanelResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamMixpanelResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamMixpanelResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamMixpanelResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamMixpanelResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamMixpanelResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamMixpanelResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamMixpanelResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamMixpanelResponseSchema struct {
 	// The id of the log stream
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
-	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
-	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Name   *string                `json:"name,omitempty" url:"name,omitempty"`
+	Status *LogStreamStatusEnum   `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamMixpanelEnum `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -4142,6 +4313,13 @@ func (l *LogStreamMixpanelResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamMixpanelResponseSchema) GetType() LogStreamMixpanelEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamMixpanelResponseSchema) GetIsPriority() bool {
@@ -4207,6 +4385,13 @@ func (l *LogStreamMixpanelResponseSchema) SetName(name *string) {
 func (l *LogStreamMixpanelResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamMixpanelResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamMixpanelResponseSchema) SetType(type_ *LogStreamMixpanelEnum) {
+	l.Type = type_
+	l.require(logStreamMixpanelResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -4751,291 +4936,230 @@ func (l LogStreamPiiMethodEnum) Ptr() *LogStreamPiiMethodEnum {
 }
 
 type LogStreamResponseSchema struct {
-	Type        string
-	HTTP        *LogStreamHTTPResponseSchema
-	Eventbridge *LogStreamEventBridgeResponseSchema
-	Eventgrid   *LogStreamEventGridResponseSchema
-	Datadog     *LogStreamDatadogResponseSchema
-	Splunk      *LogStreamSplunkResponseSchema
-	Sumo        *LogStreamSumoResponseSchema
-	Segment     *LogStreamSegmentResponseSchema
-	Mixpanel    *LogStreamMixpanelResponseSchema
+	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
+	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
+	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
+	LogStreamSplunkResponseSchema      *LogStreamSplunkResponseSchema
+	LogStreamSumoResponseSchema        *LogStreamSumoResponseSchema
+	LogStreamSegmentResponseSchema     *LogStreamSegmentResponseSchema
+	LogStreamMixpanelResponseSchema    *LogStreamMixpanelResponseSchema
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (l *LogStreamResponseSchema) GetType() string {
-	if l == nil {
-		return ""
-	}
-	return l.Type
-}
-
-func (l *LogStreamResponseSchema) GetHTTP() *LogStreamHTTPResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.HTTP
+	return l.LogStreamHTTPResponseSchema
 }
 
-func (l *LogStreamResponseSchema) GetEventbridge() *LogStreamEventBridgeResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.Eventbridge
+	return l.LogStreamEventBridgeResponseSchema
 }
 
-func (l *LogStreamResponseSchema) GetEventgrid() *LogStreamEventGridResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamEventGridResponseSchema() *LogStreamEventGridResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.Eventgrid
+	return l.LogStreamEventGridResponseSchema
 }
 
-func (l *LogStreamResponseSchema) GetDatadog() *LogStreamDatadogResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamDatadogResponseSchema() *LogStreamDatadogResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.Datadog
+	return l.LogStreamDatadogResponseSchema
 }
 
-func (l *LogStreamResponseSchema) GetSplunk() *LogStreamSplunkResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamSplunkResponseSchema() *LogStreamSplunkResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.Splunk
+	return l.LogStreamSplunkResponseSchema
 }
 
-func (l *LogStreamResponseSchema) GetSumo() *LogStreamSumoResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamSumoResponseSchema() *LogStreamSumoResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.Sumo
+	return l.LogStreamSumoResponseSchema
 }
 
-func (l *LogStreamResponseSchema) GetSegment() *LogStreamSegmentResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamSegmentResponseSchema() *LogStreamSegmentResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.Segment
+	return l.LogStreamSegmentResponseSchema
 }
 
-func (l *LogStreamResponseSchema) GetMixpanel() *LogStreamMixpanelResponseSchema {
+func (l *LogStreamResponseSchema) GetLogStreamMixpanelResponseSchema() *LogStreamMixpanelResponseSchema {
 	if l == nil {
 		return nil
 	}
-	return l.Mixpanel
+	return l.LogStreamMixpanelResponseSchema
 }
 
 func (l *LogStreamResponseSchema) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
+		l.typ = "LogStreamHTTPResponseSchema"
+		l.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+		return nil
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventBridgeResponseSchema); err == nil {
+		l.typ = "LogStreamEventBridgeResponseSchema"
+		l.LogStreamEventBridgeResponseSchema = valueLogStreamEventBridgeResponseSchema
+		return nil
 	}
-	l.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", l)
+	valueLogStreamEventGridResponseSchema := new(LogStreamEventGridResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventGridResponseSchema); err == nil {
+		l.typ = "LogStreamEventGridResponseSchema"
+		l.LogStreamEventGridResponseSchema = valueLogStreamEventGridResponseSchema
+		return nil
 	}
-	switch unmarshaler.Type {
-	case "http":
-		value := new(LogStreamHTTPResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.HTTP = value
-	case "eventbridge":
-		value := new(LogStreamEventBridgeResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.Eventbridge = value
-	case "eventgrid":
-		value := new(LogStreamEventGridResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.Eventgrid = value
-	case "datadog":
-		value := new(LogStreamDatadogResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.Datadog = value
-	case "splunk":
-		value := new(LogStreamSplunkResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.Splunk = value
-	case "sumo":
-		value := new(LogStreamSumoResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.Sumo = value
-	case "segment":
-		value := new(LogStreamSegmentResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.Segment = value
-	case "mixpanel":
-		value := new(LogStreamMixpanelResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		l.Mixpanel = value
+	valueLogStreamDatadogResponseSchema := new(LogStreamDatadogResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamDatadogResponseSchema); err == nil {
+		l.typ = "LogStreamDatadogResponseSchema"
+		l.LogStreamDatadogResponseSchema = valueLogStreamDatadogResponseSchema
+		return nil
 	}
-	l.rawJSON = json.RawMessage(data)
-	return nil
+	valueLogStreamSplunkResponseSchema := new(LogStreamSplunkResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSplunkResponseSchema); err == nil {
+		l.typ = "LogStreamSplunkResponseSchema"
+		l.LogStreamSplunkResponseSchema = valueLogStreamSplunkResponseSchema
+		return nil
+	}
+	valueLogStreamSumoResponseSchema := new(LogStreamSumoResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSumoResponseSchema); err == nil {
+		l.typ = "LogStreamSumoResponseSchema"
+		l.LogStreamSumoResponseSchema = valueLogStreamSumoResponseSchema
+		return nil
+	}
+	valueLogStreamSegmentResponseSchema := new(LogStreamSegmentResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSegmentResponseSchema); err == nil {
+		l.typ = "LogStreamSegmentResponseSchema"
+		l.LogStreamSegmentResponseSchema = valueLogStreamSegmentResponseSchema
+		return nil
+	}
+	valueLogStreamMixpanelResponseSchema := new(LogStreamMixpanelResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamMixpanelResponseSchema); err == nil {
+		l.typ = "LogStreamMixpanelResponseSchema"
+		l.LogStreamMixpanelResponseSchema = valueLogStreamMixpanelResponseSchema
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, l)
 }
 
 func (l LogStreamResponseSchema) MarshalJSON() ([]byte, error) {
-	if err := l.validate(); err != nil {
-		return nil, err
+	if l.typ == "LogStreamHTTPResponseSchema" || l.LogStreamHTTPResponseSchema != nil {
+		return json.Marshal(l.LogStreamHTTPResponseSchema)
 	}
-	if l.HTTP != nil {
-		return internal.MarshalJSONWithExtraProperty(l.HTTP, "type", "http")
+	if l.typ == "LogStreamEventBridgeResponseSchema" || l.LogStreamEventBridgeResponseSchema != nil {
+		return json.Marshal(l.LogStreamEventBridgeResponseSchema)
 	}
-	if l.Eventbridge != nil {
-		return internal.MarshalJSONWithExtraProperty(l.Eventbridge, "type", "eventbridge")
+	if l.typ == "LogStreamEventGridResponseSchema" || l.LogStreamEventGridResponseSchema != nil {
+		return json.Marshal(l.LogStreamEventGridResponseSchema)
 	}
-	if l.Eventgrid != nil {
-		return internal.MarshalJSONWithExtraProperty(l.Eventgrid, "type", "eventgrid")
+	if l.typ == "LogStreamDatadogResponseSchema" || l.LogStreamDatadogResponseSchema != nil {
+		return json.Marshal(l.LogStreamDatadogResponseSchema)
 	}
-	if l.Datadog != nil {
-		return internal.MarshalJSONWithExtraProperty(l.Datadog, "type", "datadog")
+	if l.typ == "LogStreamSplunkResponseSchema" || l.LogStreamSplunkResponseSchema != nil {
+		return json.Marshal(l.LogStreamSplunkResponseSchema)
 	}
-	if l.Splunk != nil {
-		return internal.MarshalJSONWithExtraProperty(l.Splunk, "type", "splunk")
+	if l.typ == "LogStreamSumoResponseSchema" || l.LogStreamSumoResponseSchema != nil {
+		return json.Marshal(l.LogStreamSumoResponseSchema)
 	}
-	if l.Sumo != nil {
-		return internal.MarshalJSONWithExtraProperty(l.Sumo, "type", "sumo")
+	if l.typ == "LogStreamSegmentResponseSchema" || l.LogStreamSegmentResponseSchema != nil {
+		return json.Marshal(l.LogStreamSegmentResponseSchema)
 	}
-	if l.Segment != nil {
-		return internal.MarshalJSONWithExtraProperty(l.Segment, "type", "segment")
+	if l.typ == "LogStreamMixpanelResponseSchema" || l.LogStreamMixpanelResponseSchema != nil {
+		return json.Marshal(l.LogStreamMixpanelResponseSchema)
 	}
-	if l.Mixpanel != nil {
-		return internal.MarshalJSONWithExtraProperty(l.Mixpanel, "type", "mixpanel")
-	}
-	if len(l.rawJSON) > 0 {
-		return l.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", l)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
 type LogStreamResponseSchemaVisitor interface {
-	VisitHTTP(*LogStreamHTTPResponseSchema) error
-	VisitEventbridge(*LogStreamEventBridgeResponseSchema) error
-	VisitEventgrid(*LogStreamEventGridResponseSchema) error
-	VisitDatadog(*LogStreamDatadogResponseSchema) error
-	VisitSplunk(*LogStreamSplunkResponseSchema) error
-	VisitSumo(*LogStreamSumoResponseSchema) error
-	VisitSegment(*LogStreamSegmentResponseSchema) error
-	VisitMixpanel(*LogStreamMixpanelResponseSchema) error
+	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
+	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
+	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
+	VisitLogStreamSplunkResponseSchema(*LogStreamSplunkResponseSchema) error
+	VisitLogStreamSumoResponseSchema(*LogStreamSumoResponseSchema) error
+	VisitLogStreamSegmentResponseSchema(*LogStreamSegmentResponseSchema) error
+	VisitLogStreamMixpanelResponseSchema(*LogStreamMixpanelResponseSchema) error
 }
 
 func (l *LogStreamResponseSchema) Accept(visitor LogStreamResponseSchemaVisitor) error {
-	if l.HTTP != nil {
-		return visitor.VisitHTTP(l.HTTP)
+	if l.typ == "LogStreamHTTPResponseSchema" || l.LogStreamHTTPResponseSchema != nil {
+		return visitor.VisitLogStreamHTTPResponseSchema(l.LogStreamHTTPResponseSchema)
 	}
-	if l.Eventbridge != nil {
-		return visitor.VisitEventbridge(l.Eventbridge)
+	if l.typ == "LogStreamEventBridgeResponseSchema" || l.LogStreamEventBridgeResponseSchema != nil {
+		return visitor.VisitLogStreamEventBridgeResponseSchema(l.LogStreamEventBridgeResponseSchema)
 	}
-	if l.Eventgrid != nil {
-		return visitor.VisitEventgrid(l.Eventgrid)
+	if l.typ == "LogStreamEventGridResponseSchema" || l.LogStreamEventGridResponseSchema != nil {
+		return visitor.VisitLogStreamEventGridResponseSchema(l.LogStreamEventGridResponseSchema)
 	}
-	if l.Datadog != nil {
-		return visitor.VisitDatadog(l.Datadog)
+	if l.typ == "LogStreamDatadogResponseSchema" || l.LogStreamDatadogResponseSchema != nil {
+		return visitor.VisitLogStreamDatadogResponseSchema(l.LogStreamDatadogResponseSchema)
 	}
-	if l.Splunk != nil {
-		return visitor.VisitSplunk(l.Splunk)
+	if l.typ == "LogStreamSplunkResponseSchema" || l.LogStreamSplunkResponseSchema != nil {
+		return visitor.VisitLogStreamSplunkResponseSchema(l.LogStreamSplunkResponseSchema)
 	}
-	if l.Sumo != nil {
-		return visitor.VisitSumo(l.Sumo)
+	if l.typ == "LogStreamSumoResponseSchema" || l.LogStreamSumoResponseSchema != nil {
+		return visitor.VisitLogStreamSumoResponseSchema(l.LogStreamSumoResponseSchema)
 	}
-	if l.Segment != nil {
-		return visitor.VisitSegment(l.Segment)
+	if l.typ == "LogStreamSegmentResponseSchema" || l.LogStreamSegmentResponseSchema != nil {
+		return visitor.VisitLogStreamSegmentResponseSchema(l.LogStreamSegmentResponseSchema)
 	}
-	if l.Mixpanel != nil {
-		return visitor.VisitMixpanel(l.Mixpanel)
+	if l.typ == "LogStreamMixpanelResponseSchema" || l.LogStreamMixpanelResponseSchema != nil {
+		return visitor.VisitLogStreamMixpanelResponseSchema(l.LogStreamMixpanelResponseSchema)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", l)
+	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
-func (l *LogStreamResponseSchema) validate() error {
-	if l == nil {
-		return fmt.Errorf("type %T is nil", l)
+type LogStreamSegmentEnum string
+
+const (
+	LogStreamSegmentEnumSegment LogStreamSegmentEnum = "segment"
+)
+
+func NewLogStreamSegmentEnumFromString(s string) (LogStreamSegmentEnum, error) {
+	switch s {
+	case "segment":
+		return LogStreamSegmentEnumSegment, nil
 	}
-	var fields []string
-	if l.HTTP != nil {
-		fields = append(fields, "http")
-	}
-	if l.Eventbridge != nil {
-		fields = append(fields, "eventbridge")
-	}
-	if l.Eventgrid != nil {
-		fields = append(fields, "eventgrid")
-	}
-	if l.Datadog != nil {
-		fields = append(fields, "datadog")
-	}
-	if l.Splunk != nil {
-		fields = append(fields, "splunk")
-	}
-	if l.Sumo != nil {
-		fields = append(fields, "sumo")
-	}
-	if l.Segment != nil {
-		fields = append(fields, "segment")
-	}
-	if l.Mixpanel != nil {
-		fields = append(fields, "mixpanel")
-	}
-	if len(fields) == 0 {
-		if l.Type != "" {
-			if len(l.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", l, l.Type)
-		}
-		return fmt.Errorf("type %T is empty", l)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", l, fields)
-	}
-	if l.Type != "" {
-		field := fields[0]
-		if l.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				l,
-				l.Type,
-				l,
-			)
-		}
-	}
-	return nil
+	var t LogStreamSegmentEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSegmentEnum) Ptr() *LogStreamSegmentEnum {
+	return &l
 }
 
 var (
 	logStreamSegmentResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamSegmentResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamSegmentResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamSegmentResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamSegmentResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamSegmentResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamSegmentResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamSegmentResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamSegmentResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamSegmentResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamSegmentResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamSegmentResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamSegmentResponseSchema struct {
 	// The id of the log stream
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// log stream name
-	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
-	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Name   *string               `json:"name,omitempty" url:"name,omitempty"`
+	Status *LogStreamStatusEnum  `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamSegmentEnum `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -5070,6 +5194,13 @@ func (l *LogStreamSegmentResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamSegmentResponseSchema) GetType() LogStreamSegmentEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamSegmentResponseSchema) GetIsPriority() bool {
@@ -5135,6 +5266,13 @@ func (l *LogStreamSegmentResponseSchema) SetName(name *string) {
 func (l *LogStreamSegmentResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamSegmentResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSegmentResponseSchema) SetType(type_ *LogStreamSegmentEnum) {
+	l.Type = type_
+	l.require(logStreamSegmentResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -5619,14 +5757,34 @@ func (l *LogStreamSinkPatch) Accept(visitor LogStreamSinkPatchVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", l)
 }
 
+type LogStreamSplunkEnum string
+
+const (
+	LogStreamSplunkEnumSplunk LogStreamSplunkEnum = "splunk"
+)
+
+func NewLogStreamSplunkEnumFromString(s string) (LogStreamSplunkEnum, error) {
+	switch s {
+	case "splunk":
+		return LogStreamSplunkEnumSplunk, nil
+	}
+	var t LogStreamSplunkEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSplunkEnum) Ptr() *LogStreamSplunkEnum {
+	return &l
+}
+
 var (
 	logStreamSplunkResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamSplunkResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamSplunkResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamSplunkResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamSplunkResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamSplunkResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamSplunkResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamSplunkResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamSplunkResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamSplunkResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamSplunkResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamSplunkResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamSplunkResponseSchema struct {
@@ -5635,6 +5793,7 @@ type LogStreamSplunkResponseSchema struct {
 	// log stream name
 	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamSplunkEnum `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -5669,6 +5828,13 @@ func (l *LogStreamSplunkResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamSplunkResponseSchema) GetType() LogStreamSplunkEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamSplunkResponseSchema) GetIsPriority() bool {
@@ -5734,6 +5900,13 @@ func (l *LogStreamSplunkResponseSchema) SetName(name *string) {
 func (l *LogStreamSplunkResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamSplunkResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSplunkResponseSchema) SetType(type_ *LogStreamSplunkEnum) {
+	l.Type = type_
+	l.require(logStreamSplunkResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -5974,14 +6147,34 @@ func (l LogStreamStatusEnum) Ptr() *LogStreamStatusEnum {
 	return &l
 }
 
+type LogStreamSumoEnum string
+
+const (
+	LogStreamSumoEnumSumo LogStreamSumoEnum = "sumo"
+)
+
+func NewLogStreamSumoEnumFromString(s string) (LogStreamSumoEnum, error) {
+	switch s {
+	case "sumo":
+		return LogStreamSumoEnumSumo, nil
+	}
+	var t LogStreamSumoEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSumoEnum) Ptr() *LogStreamSumoEnum {
+	return &l
+}
+
 var (
 	logStreamSumoResponseSchemaFieldID         = big.NewInt(1 << 0)
 	logStreamSumoResponseSchemaFieldName       = big.NewInt(1 << 1)
 	logStreamSumoResponseSchemaFieldStatus     = big.NewInt(1 << 2)
-	logStreamSumoResponseSchemaFieldIsPriority = big.NewInt(1 << 3)
-	logStreamSumoResponseSchemaFieldFilters    = big.NewInt(1 << 4)
-	logStreamSumoResponseSchemaFieldPiiConfig  = big.NewInt(1 << 5)
-	logStreamSumoResponseSchemaFieldSink       = big.NewInt(1 << 6)
+	logStreamSumoResponseSchemaFieldType       = big.NewInt(1 << 3)
+	logStreamSumoResponseSchemaFieldIsPriority = big.NewInt(1 << 4)
+	logStreamSumoResponseSchemaFieldFilters    = big.NewInt(1 << 5)
+	logStreamSumoResponseSchemaFieldPiiConfig  = big.NewInt(1 << 6)
+	logStreamSumoResponseSchemaFieldSink       = big.NewInt(1 << 7)
 )
 
 type LogStreamSumoResponseSchema struct {
@@ -5990,6 +6183,7 @@ type LogStreamSumoResponseSchema struct {
 	// log stream name
 	Name   *string              `json:"name,omitempty" url:"name,omitempty"`
 	Status *LogStreamStatusEnum `json:"status,omitempty" url:"status,omitempty"`
+	Type   *LogStreamSumoEnum   `json:"type,omitempty" url:"type,omitempty"`
 	// True for priority log streams, false for non-priority
 	IsPriority *bool `json:"isPriority,omitempty" url:"isPriority,omitempty"`
 	// Only logs events matching these filters will be delivered by the stream. If omitted or empty, all events will be delivered.
@@ -6024,6 +6218,13 @@ func (l *LogStreamSumoResponseSchema) GetStatus() LogStreamStatusEnum {
 		return ""
 	}
 	return *l.Status
+}
+
+func (l *LogStreamSumoResponseSchema) GetType() LogStreamSumoEnum {
+	if l == nil || l.Type == nil {
+		return ""
+	}
+	return *l.Type
 }
 
 func (l *LogStreamSumoResponseSchema) GetIsPriority() bool {
@@ -6089,6 +6290,13 @@ func (l *LogStreamSumoResponseSchema) SetName(name *string) {
 func (l *LogStreamSumoResponseSchema) SetStatus(status *LogStreamStatusEnum) {
 	l.Status = status
 	l.require(logStreamSumoResponseSchemaFieldStatus)
+}
+
+// SetType sets the Type field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (l *LogStreamSumoResponseSchema) SetType(type_ *LogStreamSumoEnum) {
+	l.Type = type_
+	l.require(logStreamSumoResponseSchemaFieldType)
 }
 
 // SetIsPriority sets the IsPriority field and marks it as non-optional;
@@ -6253,271 +6461,189 @@ func (l *LogStreamSumoSink) String() string {
 }
 
 type UpdateLogStreamResponseContent struct {
-	Type        string
-	HTTP        *LogStreamHTTPResponseSchema
-	Eventbridge *LogStreamEventBridgeResponseSchema
-	Eventgrid   *LogStreamEventGridResponseSchema
-	Datadog     *LogStreamDatadogResponseSchema
-	Splunk      *LogStreamSplunkResponseSchema
-	Sumo        *LogStreamSumoResponseSchema
-	Segment     *LogStreamSegmentResponseSchema
-	Mixpanel    *LogStreamMixpanelResponseSchema
+	LogStreamHTTPResponseSchema        *LogStreamHTTPResponseSchema
+	LogStreamEventBridgeResponseSchema *LogStreamEventBridgeResponseSchema
+	LogStreamEventGridResponseSchema   *LogStreamEventGridResponseSchema
+	LogStreamDatadogResponseSchema     *LogStreamDatadogResponseSchema
+	LogStreamSplunkResponseSchema      *LogStreamSplunkResponseSchema
+	LogStreamSumoResponseSchema        *LogStreamSumoResponseSchema
+	LogStreamSegmentResponseSchema     *LogStreamSegmentResponseSchema
+	LogStreamMixpanelResponseSchema    *LogStreamMixpanelResponseSchema
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (u *UpdateLogStreamResponseContent) GetType() string {
-	if u == nil {
-		return ""
-	}
-	return u.Type
-}
-
-func (u *UpdateLogStreamResponseContent) GetHTTP() *LogStreamHTTPResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamHTTPResponseSchema() *LogStreamHTTPResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.HTTP
+	return u.LogStreamHTTPResponseSchema
 }
 
-func (u *UpdateLogStreamResponseContent) GetEventbridge() *LogStreamEventBridgeResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamEventBridgeResponseSchema() *LogStreamEventBridgeResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.Eventbridge
+	return u.LogStreamEventBridgeResponseSchema
 }
 
-func (u *UpdateLogStreamResponseContent) GetEventgrid() *LogStreamEventGridResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamEventGridResponseSchema() *LogStreamEventGridResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.Eventgrid
+	return u.LogStreamEventGridResponseSchema
 }
 
-func (u *UpdateLogStreamResponseContent) GetDatadog() *LogStreamDatadogResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamDatadogResponseSchema() *LogStreamDatadogResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.Datadog
+	return u.LogStreamDatadogResponseSchema
 }
 
-func (u *UpdateLogStreamResponseContent) GetSplunk() *LogStreamSplunkResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamSplunkResponseSchema() *LogStreamSplunkResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.Splunk
+	return u.LogStreamSplunkResponseSchema
 }
 
-func (u *UpdateLogStreamResponseContent) GetSumo() *LogStreamSumoResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamSumoResponseSchema() *LogStreamSumoResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.Sumo
+	return u.LogStreamSumoResponseSchema
 }
 
-func (u *UpdateLogStreamResponseContent) GetSegment() *LogStreamSegmentResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamSegmentResponseSchema() *LogStreamSegmentResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.Segment
+	return u.LogStreamSegmentResponseSchema
 }
 
-func (u *UpdateLogStreamResponseContent) GetMixpanel() *LogStreamMixpanelResponseSchema {
+func (u *UpdateLogStreamResponseContent) GetLogStreamMixpanelResponseSchema() *LogStreamMixpanelResponseSchema {
 	if u == nil {
 		return nil
 	}
-	return u.Mixpanel
+	return u.LogStreamMixpanelResponseSchema
 }
 
 func (u *UpdateLogStreamResponseContent) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
+	valueLogStreamHTTPResponseSchema := new(LogStreamHTTPResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamHTTPResponseSchema); err == nil {
+		u.typ = "LogStreamHTTPResponseSchema"
+		u.LogStreamHTTPResponseSchema = valueLogStreamHTTPResponseSchema
+		return nil
 	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
+	valueLogStreamEventBridgeResponseSchema := new(LogStreamEventBridgeResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventBridgeResponseSchema); err == nil {
+		u.typ = "LogStreamEventBridgeResponseSchema"
+		u.LogStreamEventBridgeResponseSchema = valueLogStreamEventBridgeResponseSchema
+		return nil
 	}
-	u.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", u)
+	valueLogStreamEventGridResponseSchema := new(LogStreamEventGridResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamEventGridResponseSchema); err == nil {
+		u.typ = "LogStreamEventGridResponseSchema"
+		u.LogStreamEventGridResponseSchema = valueLogStreamEventGridResponseSchema
+		return nil
 	}
-	switch unmarshaler.Type {
-	case "http":
-		value := new(LogStreamHTTPResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.HTTP = value
-	case "eventbridge":
-		value := new(LogStreamEventBridgeResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.Eventbridge = value
-	case "eventgrid":
-		value := new(LogStreamEventGridResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.Eventgrid = value
-	case "datadog":
-		value := new(LogStreamDatadogResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.Datadog = value
-	case "splunk":
-		value := new(LogStreamSplunkResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.Splunk = value
-	case "sumo":
-		value := new(LogStreamSumoResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.Sumo = value
-	case "segment":
-		value := new(LogStreamSegmentResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.Segment = value
-	case "mixpanel":
-		value := new(LogStreamMixpanelResponseSchema)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		u.Mixpanel = value
+	valueLogStreamDatadogResponseSchema := new(LogStreamDatadogResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamDatadogResponseSchema); err == nil {
+		u.typ = "LogStreamDatadogResponseSchema"
+		u.LogStreamDatadogResponseSchema = valueLogStreamDatadogResponseSchema
+		return nil
 	}
-	u.rawJSON = json.RawMessage(data)
-	return nil
+	valueLogStreamSplunkResponseSchema := new(LogStreamSplunkResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSplunkResponseSchema); err == nil {
+		u.typ = "LogStreamSplunkResponseSchema"
+		u.LogStreamSplunkResponseSchema = valueLogStreamSplunkResponseSchema
+		return nil
+	}
+	valueLogStreamSumoResponseSchema := new(LogStreamSumoResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSumoResponseSchema); err == nil {
+		u.typ = "LogStreamSumoResponseSchema"
+		u.LogStreamSumoResponseSchema = valueLogStreamSumoResponseSchema
+		return nil
+	}
+	valueLogStreamSegmentResponseSchema := new(LogStreamSegmentResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamSegmentResponseSchema); err == nil {
+		u.typ = "LogStreamSegmentResponseSchema"
+		u.LogStreamSegmentResponseSchema = valueLogStreamSegmentResponseSchema
+		return nil
+	}
+	valueLogStreamMixpanelResponseSchema := new(LogStreamMixpanelResponseSchema)
+	if err := json.Unmarshal(data, &valueLogStreamMixpanelResponseSchema); err == nil {
+		u.typ = "LogStreamMixpanelResponseSchema"
+		u.LogStreamMixpanelResponseSchema = valueLogStreamMixpanelResponseSchema
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, u)
 }
 
 func (u UpdateLogStreamResponseContent) MarshalJSON() ([]byte, error) {
-	if err := u.validate(); err != nil {
-		return nil, err
+	if u.typ == "LogStreamHTTPResponseSchema" || u.LogStreamHTTPResponseSchema != nil {
+		return json.Marshal(u.LogStreamHTTPResponseSchema)
 	}
-	if u.HTTP != nil {
-		return internal.MarshalJSONWithExtraProperty(u.HTTP, "type", "http")
+	if u.typ == "LogStreamEventBridgeResponseSchema" || u.LogStreamEventBridgeResponseSchema != nil {
+		return json.Marshal(u.LogStreamEventBridgeResponseSchema)
 	}
-	if u.Eventbridge != nil {
-		return internal.MarshalJSONWithExtraProperty(u.Eventbridge, "type", "eventbridge")
+	if u.typ == "LogStreamEventGridResponseSchema" || u.LogStreamEventGridResponseSchema != nil {
+		return json.Marshal(u.LogStreamEventGridResponseSchema)
 	}
-	if u.Eventgrid != nil {
-		return internal.MarshalJSONWithExtraProperty(u.Eventgrid, "type", "eventgrid")
+	if u.typ == "LogStreamDatadogResponseSchema" || u.LogStreamDatadogResponseSchema != nil {
+		return json.Marshal(u.LogStreamDatadogResponseSchema)
 	}
-	if u.Datadog != nil {
-		return internal.MarshalJSONWithExtraProperty(u.Datadog, "type", "datadog")
+	if u.typ == "LogStreamSplunkResponseSchema" || u.LogStreamSplunkResponseSchema != nil {
+		return json.Marshal(u.LogStreamSplunkResponseSchema)
 	}
-	if u.Splunk != nil {
-		return internal.MarshalJSONWithExtraProperty(u.Splunk, "type", "splunk")
+	if u.typ == "LogStreamSumoResponseSchema" || u.LogStreamSumoResponseSchema != nil {
+		return json.Marshal(u.LogStreamSumoResponseSchema)
 	}
-	if u.Sumo != nil {
-		return internal.MarshalJSONWithExtraProperty(u.Sumo, "type", "sumo")
+	if u.typ == "LogStreamSegmentResponseSchema" || u.LogStreamSegmentResponseSchema != nil {
+		return json.Marshal(u.LogStreamSegmentResponseSchema)
 	}
-	if u.Segment != nil {
-		return internal.MarshalJSONWithExtraProperty(u.Segment, "type", "segment")
+	if u.typ == "LogStreamMixpanelResponseSchema" || u.LogStreamMixpanelResponseSchema != nil {
+		return json.Marshal(u.LogStreamMixpanelResponseSchema)
 	}
-	if u.Mixpanel != nil {
-		return internal.MarshalJSONWithExtraProperty(u.Mixpanel, "type", "mixpanel")
-	}
-	if len(u.rawJSON) > 0 {
-		return u.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", u)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", u)
 }
 
 type UpdateLogStreamResponseContentVisitor interface {
-	VisitHTTP(*LogStreamHTTPResponseSchema) error
-	VisitEventbridge(*LogStreamEventBridgeResponseSchema) error
-	VisitEventgrid(*LogStreamEventGridResponseSchema) error
-	VisitDatadog(*LogStreamDatadogResponseSchema) error
-	VisitSplunk(*LogStreamSplunkResponseSchema) error
-	VisitSumo(*LogStreamSumoResponseSchema) error
-	VisitSegment(*LogStreamSegmentResponseSchema) error
-	VisitMixpanel(*LogStreamMixpanelResponseSchema) error
+	VisitLogStreamHTTPResponseSchema(*LogStreamHTTPResponseSchema) error
+	VisitLogStreamEventBridgeResponseSchema(*LogStreamEventBridgeResponseSchema) error
+	VisitLogStreamEventGridResponseSchema(*LogStreamEventGridResponseSchema) error
+	VisitLogStreamDatadogResponseSchema(*LogStreamDatadogResponseSchema) error
+	VisitLogStreamSplunkResponseSchema(*LogStreamSplunkResponseSchema) error
+	VisitLogStreamSumoResponseSchema(*LogStreamSumoResponseSchema) error
+	VisitLogStreamSegmentResponseSchema(*LogStreamSegmentResponseSchema) error
+	VisitLogStreamMixpanelResponseSchema(*LogStreamMixpanelResponseSchema) error
 }
 
 func (u *UpdateLogStreamResponseContent) Accept(visitor UpdateLogStreamResponseContentVisitor) error {
-	if u.HTTP != nil {
-		return visitor.VisitHTTP(u.HTTP)
+	if u.typ == "LogStreamHTTPResponseSchema" || u.LogStreamHTTPResponseSchema != nil {
+		return visitor.VisitLogStreamHTTPResponseSchema(u.LogStreamHTTPResponseSchema)
 	}
-	if u.Eventbridge != nil {
-		return visitor.VisitEventbridge(u.Eventbridge)
+	if u.typ == "LogStreamEventBridgeResponseSchema" || u.LogStreamEventBridgeResponseSchema != nil {
+		return visitor.VisitLogStreamEventBridgeResponseSchema(u.LogStreamEventBridgeResponseSchema)
 	}
-	if u.Eventgrid != nil {
-		return visitor.VisitEventgrid(u.Eventgrid)
+	if u.typ == "LogStreamEventGridResponseSchema" || u.LogStreamEventGridResponseSchema != nil {
+		return visitor.VisitLogStreamEventGridResponseSchema(u.LogStreamEventGridResponseSchema)
 	}
-	if u.Datadog != nil {
-		return visitor.VisitDatadog(u.Datadog)
+	if u.typ == "LogStreamDatadogResponseSchema" || u.LogStreamDatadogResponseSchema != nil {
+		return visitor.VisitLogStreamDatadogResponseSchema(u.LogStreamDatadogResponseSchema)
 	}
-	if u.Splunk != nil {
-		return visitor.VisitSplunk(u.Splunk)
+	if u.typ == "LogStreamSplunkResponseSchema" || u.LogStreamSplunkResponseSchema != nil {
+		return visitor.VisitLogStreamSplunkResponseSchema(u.LogStreamSplunkResponseSchema)
 	}
-	if u.Sumo != nil {
-		return visitor.VisitSumo(u.Sumo)
+	if u.typ == "LogStreamSumoResponseSchema" || u.LogStreamSumoResponseSchema != nil {
+		return visitor.VisitLogStreamSumoResponseSchema(u.LogStreamSumoResponseSchema)
 	}
-	if u.Segment != nil {
-		return visitor.VisitSegment(u.Segment)
+	if u.typ == "LogStreamSegmentResponseSchema" || u.LogStreamSegmentResponseSchema != nil {
+		return visitor.VisitLogStreamSegmentResponseSchema(u.LogStreamSegmentResponseSchema)
 	}
-	if u.Mixpanel != nil {
-		return visitor.VisitMixpanel(u.Mixpanel)
+	if u.typ == "LogStreamMixpanelResponseSchema" || u.LogStreamMixpanelResponseSchema != nil {
+		return visitor.VisitLogStreamMixpanelResponseSchema(u.LogStreamMixpanelResponseSchema)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", u)
-}
-
-func (u *UpdateLogStreamResponseContent) validate() error {
-	if u == nil {
-		return fmt.Errorf("type %T is nil", u)
-	}
-	var fields []string
-	if u.HTTP != nil {
-		fields = append(fields, "http")
-	}
-	if u.Eventbridge != nil {
-		fields = append(fields, "eventbridge")
-	}
-	if u.Eventgrid != nil {
-		fields = append(fields, "eventgrid")
-	}
-	if u.Datadog != nil {
-		fields = append(fields, "datadog")
-	}
-	if u.Splunk != nil {
-		fields = append(fields, "splunk")
-	}
-	if u.Sumo != nil {
-		fields = append(fields, "sumo")
-	}
-	if u.Segment != nil {
-		fields = append(fields, "segment")
-	}
-	if u.Mixpanel != nil {
-		fields = append(fields, "mixpanel")
-	}
-	if len(fields) == 0 {
-		if u.Type != "" {
-			if len(u.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", u, u.Type)
-		}
-		return fmt.Errorf("type %T is empty", u)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", u, fields)
-	}
-	if u.Type != "" {
-		field := fields[0]
-		if u.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				u,
-				u.Type,
-				u,
-			)
-		}
-	}
-	return nil
+	return fmt.Errorf("type %T does not include a non-empty union type", u)
 }

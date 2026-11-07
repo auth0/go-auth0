@@ -722,8 +722,8 @@ var (
 
 type PageComponentAuth0MediaImageConfig struct {
 	// URL of the image to display.
-	Src      string                                    `json:"src" url:"src"`
-	Position *PageComponentAuth0MediaImagePositionEnum `json:"position,omitempty" url:"position,omitempty"`
+	Src      string    `json:"src" url:"src"`
+	Position *Position `json:"position,omitempty" url:"position,omitempty"`
 	// Height of the image in pixels. Width scales automatically to preserve aspect ratio.
 	Height *int `json:"height,omitempty" url:"height,omitempty"`
 
@@ -741,7 +741,7 @@ func (p *PageComponentAuth0MediaImageConfig) GetSrc() string {
 	return p.Src
 }
 
-func (p *PageComponentAuth0MediaImageConfig) GetPosition() PageComponentAuth0MediaImagePositionEnum {
+func (p *PageComponentAuth0MediaImageConfig) GetPosition() Position {
 	if p == nil || p.Position == nil {
 		return ""
 	}
@@ -780,7 +780,7 @@ func (p *PageComponentAuth0MediaImageConfig) SetSrc(src string) {
 
 // SetPosition sets the Position field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PageComponentAuth0MediaImageConfig) SetPosition(position *PageComponentAuth0MediaImagePositionEnum) {
+func (p *PageComponentAuth0MediaImageConfig) SetPosition(position *Position) {
 	p.Position = position
 	p.require(pageComponentAuth0MediaImageConfigFieldPosition)
 }
@@ -832,32 +832,6 @@ func (p *PageComponentAuth0MediaImageConfig) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
-}
-
-// Horizontal alignment of the image within its container.
-type PageComponentAuth0MediaImagePositionEnum string
-
-const (
-	PageComponentAuth0MediaImagePositionEnumLeft   PageComponentAuth0MediaImagePositionEnum = "left"
-	PageComponentAuth0MediaImagePositionEnumCenter PageComponentAuth0MediaImagePositionEnum = "center"
-	PageComponentAuth0MediaImagePositionEnumRight  PageComponentAuth0MediaImagePositionEnum = "right"
-)
-
-func NewPageComponentAuth0MediaImagePositionEnumFromString(s string) (PageComponentAuth0MediaImagePositionEnum, error) {
-	switch s {
-	case "left":
-		return PageComponentAuth0MediaImagePositionEnumLeft, nil
-	case "center":
-		return PageComponentAuth0MediaImagePositionEnumCenter, nil
-	case "right":
-		return PageComponentAuth0MediaImagePositionEnumRight, nil
-	}
-	var t PageComponentAuth0MediaImagePositionEnum
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (p PageComponentAuth0MediaImagePositionEnum) Ptr() *PageComponentAuth0MediaImagePositionEnum {
-	return &p
 }
 
 var (
@@ -3820,6 +3794,32 @@ func (p *PortalSummary) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", p)
+}
+
+// Horizontal alignment of the image within its container.
+type Position string
+
+const (
+	PositionLeft   Position = "left"
+	PositionCenter Position = "center"
+	PositionRight  Position = "right"
+)
+
+func NewPositionFromString(s string) (Position, error) {
+	switch s {
+	case "left":
+		return PositionLeft, nil
+	case "center":
+		return PositionCenter, nil
+	case "right":
+		return PositionRight, nil
+	}
+	var t Position
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p Position) Ptr() *Position {
+	return &p
 }
 
 var (

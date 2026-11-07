@@ -1104,129 +1104,97 @@ func (e *EventStreamActionResponseContent) String() string {
 }
 
 type EventStreamDestinationPatch struct {
-	Type    string
-	Webhook *EventStreamWebhookDestination
-	Action  *EventStreamActionDestination
+	EventStreamWebhookDestination *EventStreamWebhookDestination
+	EventStreamActionDestination  *EventStreamActionDestination
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (e *EventStreamDestinationPatch) GetType() string {
-	if e == nil {
-		return ""
-	}
-	return e.Type
-}
-
-func (e *EventStreamDestinationPatch) GetWebhook() *EventStreamWebhookDestination {
+func (e *EventStreamDestinationPatch) GetEventStreamWebhookDestination() *EventStreamWebhookDestination {
 	if e == nil {
 		return nil
 	}
-	return e.Webhook
+	return e.EventStreamWebhookDestination
 }
 
-func (e *EventStreamDestinationPatch) GetAction() *EventStreamActionDestination {
+func (e *EventStreamDestinationPatch) GetEventStreamActionDestination() *EventStreamActionDestination {
 	if e == nil {
 		return nil
 	}
-	return e.Action
+	return e.EventStreamActionDestination
 }
 
 func (e *EventStreamDestinationPatch) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Type string `json:"type"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Type = unmarshaler.Type
-	if unmarshaler.Type == "" {
-		return fmt.Errorf("%T did not include discriminant type", e)
-	}
-	switch unmarshaler.Type {
-	case "webhook":
-		value := new(EventStreamWebhookDestination)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
+	if internal.MatchesObjectKeys(data, []string{"type", "configuration"}, []string{"type", "configuration"}) {
+		valueEventStreamWebhookDestination := new(EventStreamWebhookDestination)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookDestination); err == nil {
+			e.typ = "EventStreamWebhookDestination"
+			e.EventStreamWebhookDestination = valueEventStreamWebhookDestination
+			return nil
 		}
-		e.Webhook = value
-	case "action":
-		value := new(EventStreamActionDestination)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Action = value
 	}
-	e.rawJSON = json.RawMessage(data)
-	return nil
+	if internal.MatchesObjectKeys(data, []string{"type", "configuration"}, []string{"type", "configuration"}) {
+		valueEventStreamActionDestination := new(EventStreamActionDestination)
+		if err := json.Unmarshal(data, &valueEventStreamActionDestination); err == nil {
+			e.typ = "EventStreamActionDestination"
+			e.EventStreamActionDestination = valueEventStreamActionDestination
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "configuration"}) {
+		valueEventStreamWebhookDestination := new(EventStreamWebhookDestination)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookDestination); err == nil {
+			e.typ = "EventStreamWebhookDestination"
+			e.EventStreamWebhookDestination = valueEventStreamWebhookDestination
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"type", "configuration"}) {
+		valueEventStreamActionDestination := new(EventStreamActionDestination)
+		if err := json.Unmarshal(data, &valueEventStreamActionDestination); err == nil {
+			e.typ = "EventStreamActionDestination"
+			e.EventStreamActionDestination = valueEventStreamActionDestination
+			return nil
+		}
+	}
+	valueEventStreamWebhookDestination := new(EventStreamWebhookDestination)
+	if err := json.Unmarshal(data, &valueEventStreamWebhookDestination); err == nil {
+		e.typ = "EventStreamWebhookDestination"
+		e.EventStreamWebhookDestination = valueEventStreamWebhookDestination
+		return nil
+	}
+	valueEventStreamActionDestination := new(EventStreamActionDestination)
+	if err := json.Unmarshal(data, &valueEventStreamActionDestination); err == nil {
+		e.typ = "EventStreamActionDestination"
+		e.EventStreamActionDestination = valueEventStreamActionDestination
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
 }
 
 func (e EventStreamDestinationPatch) MarshalJSON() ([]byte, error) {
-	if err := e.validate(); err != nil {
-		return nil, err
+	if e.typ == "EventStreamWebhookDestination" || e.EventStreamWebhookDestination != nil {
+		return json.Marshal(e.EventStreamWebhookDestination)
 	}
-	if e.Webhook != nil {
-		return internal.MarshalJSONWithExtraProperty(e.Webhook, "type", "webhook")
+	if e.typ == "EventStreamActionDestination" || e.EventStreamActionDestination != nil {
+		return json.Marshal(e.EventStreamActionDestination)
 	}
-	if e.Action != nil {
-		return internal.MarshalJSONWithExtraProperty(e.Action, "type", "action")
-	}
-	if len(e.rawJSON) > 0 {
-		return e.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
 type EventStreamDestinationPatchVisitor interface {
-	VisitWebhook(*EventStreamWebhookDestination) error
-	VisitAction(*EventStreamActionDestination) error
+	VisitEventStreamWebhookDestination(*EventStreamWebhookDestination) error
+	VisitEventStreamActionDestination(*EventStreamActionDestination) error
 }
 
 func (e *EventStreamDestinationPatch) Accept(visitor EventStreamDestinationPatchVisitor) error {
-	if e.Webhook != nil {
-		return visitor.VisitWebhook(e.Webhook)
+	if e.typ == "EventStreamWebhookDestination" || e.EventStreamWebhookDestination != nil {
+		return visitor.VisitEventStreamWebhookDestination(e.EventStreamWebhookDestination)
 	}
-	if e.Action != nil {
-		return visitor.VisitAction(e.Action)
+	if e.typ == "EventStreamActionDestination" || e.EventStreamActionDestination != nil {
+		return visitor.VisitEventStreamActionDestination(e.EventStreamActionDestination)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", e)
-}
-
-func (e *EventStreamDestinationPatch) validate() error {
-	if e == nil {
-		return fmt.Errorf("type %T is nil", e)
-	}
-	var fields []string
-	if e.Webhook != nil {
-		fields = append(fields, "webhook")
-	}
-	if e.Action != nil {
-		fields = append(fields, "action")
-	}
-	if len(fields) == 0 {
-		if e.Type != "" {
-			if len(e.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Type)
-		}
-		return fmt.Errorf("type %T is empty", e)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
-	}
-	if e.Type != "" {
-		field := fields[0]
-		if e.Type != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				e,
-				e.Type,
-				e,
-			)
-		}
-	}
-	return nil
+	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
 // AWS Region for EventBridge destination.
@@ -2105,161 +2073,144 @@ func (e EventStreamTestEventTypeEnum) Ptr() *EventStreamTestEventTypeEnum {
 }
 
 type EventStreamWebhookAuthorizationResponse struct {
-	Method       string
-	Basic        *EventStreamWebhookBasicAuth
-	Bearer       *EventStreamWebhookBearerAuth
-	CustomHeader *EventStreamWebhookCustomHeaderAuth
+	EventStreamWebhookBasicAuth        *EventStreamWebhookBasicAuth
+	EventStreamWebhookBearerAuth       *EventStreamWebhookBearerAuth
+	EventStreamWebhookCustomHeaderAuth *EventStreamWebhookCustomHeaderAuth
 
-	rawJSON json.RawMessage
+	typ string
 }
 
-func (e *EventStreamWebhookAuthorizationResponse) GetMethod() string {
-	if e == nil {
-		return ""
-	}
-	return e.Method
-}
-
-func (e *EventStreamWebhookAuthorizationResponse) GetBasic() *EventStreamWebhookBasicAuth {
+func (e *EventStreamWebhookAuthorizationResponse) GetEventStreamWebhookBasicAuth() *EventStreamWebhookBasicAuth {
 	if e == nil {
 		return nil
 	}
-	return e.Basic
+	return e.EventStreamWebhookBasicAuth
 }
 
-func (e *EventStreamWebhookAuthorizationResponse) GetBearer() *EventStreamWebhookBearerAuth {
+func (e *EventStreamWebhookAuthorizationResponse) GetEventStreamWebhookBearerAuth() *EventStreamWebhookBearerAuth {
 	if e == nil {
 		return nil
 	}
-	return e.Bearer
+	return e.EventStreamWebhookBearerAuth
 }
 
-func (e *EventStreamWebhookAuthorizationResponse) GetCustomHeader() *EventStreamWebhookCustomHeaderAuth {
+func (e *EventStreamWebhookAuthorizationResponse) GetEventStreamWebhookCustomHeaderAuth() *EventStreamWebhookCustomHeaderAuth {
 	if e == nil {
 		return nil
 	}
-	return e.CustomHeader
+	return e.EventStreamWebhookCustomHeaderAuth
 }
 
 func (e *EventStreamWebhookAuthorizationResponse) UnmarshalJSON(data []byte) error {
-	var unmarshaler struct {
-		Method string `json:"method"`
-	}
-	if err := json.Unmarshal(data, &unmarshaler); err != nil {
-		return err
-	}
-	e.Method = unmarshaler.Method
-	if unmarshaler.Method == "" {
-		return fmt.Errorf("%T did not include discriminant method", e)
-	}
-	switch unmarshaler.Method {
-	case "basic":
-		value := new(EventStreamWebhookBasicAuth)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
+	if internal.MatchesObjectKeys(data, []string{"method", "username"}, []string{"method", "username"}) {
+		valueEventStreamWebhookBasicAuth := new(EventStreamWebhookBasicAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBasicAuth); err == nil {
+			e.typ = "EventStreamWebhookBasicAuth"
+			e.EventStreamWebhookBasicAuth = valueEventStreamWebhookBasicAuth
+			return nil
 		}
-		e.Basic = value
-	case "bearer":
-		value := new(EventStreamWebhookBearerAuth)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.Bearer = value
-	case "custom_header":
-		value := new(EventStreamWebhookCustomHeaderAuth)
-		if err := json.Unmarshal(data, &value); err != nil {
-			return err
-		}
-		e.CustomHeader = value
 	}
-	e.rawJSON = json.RawMessage(data)
-	return nil
+	if internal.MatchesObjectKeys(data, []string{"method"}, []string{"method"}) {
+		valueEventStreamWebhookBearerAuth := new(EventStreamWebhookBearerAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBearerAuth); err == nil {
+			e.typ = "EventStreamWebhookBearerAuth"
+			e.EventStreamWebhookBearerAuth = valueEventStreamWebhookBearerAuth
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"method", "header_key"}, []string{"method", "header_key"}) {
+		valueEventStreamWebhookCustomHeaderAuth := new(EventStreamWebhookCustomHeaderAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookCustomHeaderAuth); err == nil {
+			e.typ = "EventStreamWebhookCustomHeaderAuth"
+			e.EventStreamWebhookCustomHeaderAuth = valueEventStreamWebhookCustomHeaderAuth
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "username"}) {
+		valueEventStreamWebhookBasicAuth := new(EventStreamWebhookBasicAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBasicAuth); err == nil {
+			e.typ = "EventStreamWebhookBasicAuth"
+			e.EventStreamWebhookBasicAuth = valueEventStreamWebhookBasicAuth
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method"}) {
+		valueEventStreamWebhookBearerAuth := new(EventStreamWebhookBearerAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookBearerAuth); err == nil {
+			e.typ = "EventStreamWebhookBearerAuth"
+			e.EventStreamWebhookBearerAuth = valueEventStreamWebhookBearerAuth
+			return nil
+		}
+	}
+	if internal.HasObjectKeys(data, []string{"method", "header_key"}) {
+		valueEventStreamWebhookCustomHeaderAuth := new(EventStreamWebhookCustomHeaderAuth)
+		if err := json.Unmarshal(data, &valueEventStreamWebhookCustomHeaderAuth); err == nil {
+			e.typ = "EventStreamWebhookCustomHeaderAuth"
+			e.EventStreamWebhookCustomHeaderAuth = valueEventStreamWebhookCustomHeaderAuth
+			return nil
+		}
+	}
+	valueEventStreamWebhookBasicAuth := new(EventStreamWebhookBasicAuth)
+	if err := json.Unmarshal(data, &valueEventStreamWebhookBasicAuth); err == nil {
+		e.typ = "EventStreamWebhookBasicAuth"
+		e.EventStreamWebhookBasicAuth = valueEventStreamWebhookBasicAuth
+		return nil
+	}
+	valueEventStreamWebhookBearerAuth := new(EventStreamWebhookBearerAuth)
+	if err := json.Unmarshal(data, &valueEventStreamWebhookBearerAuth); err == nil {
+		e.typ = "EventStreamWebhookBearerAuth"
+		e.EventStreamWebhookBearerAuth = valueEventStreamWebhookBearerAuth
+		return nil
+	}
+	valueEventStreamWebhookCustomHeaderAuth := new(EventStreamWebhookCustomHeaderAuth)
+	if err := json.Unmarshal(data, &valueEventStreamWebhookCustomHeaderAuth); err == nil {
+		e.typ = "EventStreamWebhookCustomHeaderAuth"
+		e.EventStreamWebhookCustomHeaderAuth = valueEventStreamWebhookCustomHeaderAuth
+		return nil
+	}
+	return fmt.Errorf("%s cannot be deserialized as a %T", data, e)
 }
 
 func (e EventStreamWebhookAuthorizationResponse) MarshalJSON() ([]byte, error) {
-	if err := e.validate(); err != nil {
-		return nil, err
+	if e.typ == "EventStreamWebhookBasicAuth" || e.EventStreamWebhookBasicAuth != nil {
+		return json.Marshal(e.EventStreamWebhookBasicAuth)
 	}
-	if e.Basic != nil {
-		return internal.MarshalJSONWithExtraProperty(e.Basic, "method", "basic")
+	if e.typ == "EventStreamWebhookBearerAuth" || e.EventStreamWebhookBearerAuth != nil {
+		return json.Marshal(e.EventStreamWebhookBearerAuth)
 	}
-	if e.Bearer != nil {
-		return internal.MarshalJSONWithExtraProperty(e.Bearer, "method", "bearer")
+	if e.typ == "EventStreamWebhookCustomHeaderAuth" || e.EventStreamWebhookCustomHeaderAuth != nil {
+		return json.Marshal(e.EventStreamWebhookCustomHeaderAuth)
 	}
-	if e.CustomHeader != nil {
-		return internal.MarshalJSONWithExtraProperty(e.CustomHeader, "method", "custom_header")
-	}
-	if len(e.rawJSON) > 0 {
-		return e.rawJSON, nil
-	}
-	return nil, fmt.Errorf("type %T does not define a non-empty union type", e)
+	return nil, fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
 type EventStreamWebhookAuthorizationResponseVisitor interface {
-	VisitBasic(*EventStreamWebhookBasicAuth) error
-	VisitBearer(*EventStreamWebhookBearerAuth) error
-	VisitCustomHeader(*EventStreamWebhookCustomHeaderAuth) error
+	VisitEventStreamWebhookBasicAuth(*EventStreamWebhookBasicAuth) error
+	VisitEventStreamWebhookBearerAuth(*EventStreamWebhookBearerAuth) error
+	VisitEventStreamWebhookCustomHeaderAuth(*EventStreamWebhookCustomHeaderAuth) error
 }
 
 func (e *EventStreamWebhookAuthorizationResponse) Accept(visitor EventStreamWebhookAuthorizationResponseVisitor) error {
-	if e.Basic != nil {
-		return visitor.VisitBasic(e.Basic)
+	if e.typ == "EventStreamWebhookBasicAuth" || e.EventStreamWebhookBasicAuth != nil {
+		return visitor.VisitEventStreamWebhookBasicAuth(e.EventStreamWebhookBasicAuth)
 	}
-	if e.Bearer != nil {
-		return visitor.VisitBearer(e.Bearer)
+	if e.typ == "EventStreamWebhookBearerAuth" || e.EventStreamWebhookBearerAuth != nil {
+		return visitor.VisitEventStreamWebhookBearerAuth(e.EventStreamWebhookBearerAuth)
 	}
-	if e.CustomHeader != nil {
-		return visitor.VisitCustomHeader(e.CustomHeader)
+	if e.typ == "EventStreamWebhookCustomHeaderAuth" || e.EventStreamWebhookCustomHeaderAuth != nil {
+		return visitor.VisitEventStreamWebhookCustomHeaderAuth(e.EventStreamWebhookCustomHeaderAuth)
 	}
-	return fmt.Errorf("type %T does not define a non-empty union type", e)
-}
-
-func (e *EventStreamWebhookAuthorizationResponse) validate() error {
-	if e == nil {
-		return fmt.Errorf("type %T is nil", e)
-	}
-	var fields []string
-	if e.Basic != nil {
-		fields = append(fields, "basic")
-	}
-	if e.Bearer != nil {
-		fields = append(fields, "bearer")
-	}
-	if e.CustomHeader != nil {
-		fields = append(fields, "custom_header")
-	}
-	if len(fields) == 0 {
-		if e.Method != "" {
-			if len(e.rawJSON) > 0 {
-				return nil
-			}
-			return fmt.Errorf("type %T defines a discriminant set to %q but the field is not set", e, e.Method)
-		}
-		return fmt.Errorf("type %T is empty", e)
-	}
-	if len(fields) > 1 {
-		return fmt.Errorf("type %T defines values for %s, but only one value is allowed", e, fields)
-	}
-	if e.Method != "" {
-		field := fields[0]
-		if e.Method != field {
-			return fmt.Errorf(
-				"type %T defines a discriminant set to %q, but it does not match the %T field; either remove or update the discriminant to match",
-				e,
-				e.Method,
-				e,
-			)
-		}
-	}
-	return nil
+	return fmt.Errorf("type %T does not include a non-empty union type", e)
 }
 
 var (
-	eventStreamWebhookBasicAuthFieldUsername = big.NewInt(1 << 0)
+	eventStreamWebhookBasicAuthFieldMethod   = big.NewInt(1 << 0)
+	eventStreamWebhookBasicAuthFieldUsername = big.NewInt(1 << 1)
 )
 
 // Basic Authorization for HTTP requests (e.g., 'Basic credentials').
 type EventStreamWebhookBasicAuth struct {
+	Method EventStreamWebhookBasicAuthMethodEnum `json:"method" url:"method"`
 	// Username
 	Username string `json:"username" url:"username"`
 
@@ -2268,6 +2219,13 @@ type EventStreamWebhookBasicAuth struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamWebhookBasicAuth) GetMethod() EventStreamWebhookBasicAuthMethodEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Method
 }
 
 func (e *EventStreamWebhookBasicAuth) GetUsername() string {
@@ -2291,6 +2249,13 @@ func (e *EventStreamWebhookBasicAuth) require(field *big.Int) {
 	}
 	next.Or(next, field)
 	e.explicitFields = next
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookBasicAuth) SetMethod(method EventStreamWebhookBasicAuthMethodEnum) {
+	e.Method = method
+	e.require(eventStreamWebhookBasicAuthFieldMethod)
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -2342,14 +2307,46 @@ func (e *EventStreamWebhookBasicAuth) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+// Type of authorization.
+type EventStreamWebhookBasicAuthMethodEnum string
+
+const (
+	EventStreamWebhookBasicAuthMethodEnumBasic EventStreamWebhookBasicAuthMethodEnum = "basic"
+)
+
+func NewEventStreamWebhookBasicAuthMethodEnumFromString(s string) (EventStreamWebhookBasicAuthMethodEnum, error) {
+	switch s {
+	case "basic":
+		return EventStreamWebhookBasicAuthMethodEnumBasic, nil
+	}
+	var t EventStreamWebhookBasicAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookBasicAuthMethodEnum) Ptr() *EventStreamWebhookBasicAuthMethodEnum {
+	return &e
+}
+
+var (
+	eventStreamWebhookBearerAuthFieldMethod = big.NewInt(1 << 0)
+)
+
 // Bearer Authorization for HTTP requests (e.g., 'Bearer token').
 type EventStreamWebhookBearerAuth struct {
+	Method EventStreamWebhookBearerAuthMethodEnum `json:"method" url:"method"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamWebhookBearerAuth) GetMethod() EventStreamWebhookBearerAuthMethodEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Method
 }
 
 func (e *EventStreamWebhookBearerAuth) GetExtraProperties() map[string]interface{} {
@@ -2366,6 +2363,13 @@ func (e *EventStreamWebhookBearerAuth) require(field *big.Int) {
 	}
 	next.Or(next, field)
 	e.explicitFields = next
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookBearerAuth) SetMethod(method EventStreamWebhookBearerAuthMethodEnum) {
+	e.Method = method
+	e.require(eventStreamWebhookBearerAuthFieldMethod)
 }
 
 func (e *EventStreamWebhookBearerAuth) UnmarshalJSON(data []byte) error {
@@ -2408,6 +2412,26 @@ func (e *EventStreamWebhookBearerAuth) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+// Type of authorization.
+type EventStreamWebhookBearerAuthMethodEnum string
+
+const (
+	EventStreamWebhookBearerAuthMethodEnumBearer EventStreamWebhookBearerAuthMethodEnum = "bearer"
+)
+
+func NewEventStreamWebhookBearerAuthMethodEnumFromString(s string) (EventStreamWebhookBearerAuthMethodEnum, error) {
+	switch s {
+	case "bearer":
+		return EventStreamWebhookBearerAuthMethodEnumBearer, nil
+	}
+	var t EventStreamWebhookBearerAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookBearerAuthMethodEnum) Ptr() *EventStreamWebhookBearerAuthMethodEnum {
+	return &e
 }
 
 var (
@@ -2515,11 +2539,13 @@ func (e *EventStreamWebhookConfiguration) String() string {
 }
 
 var (
-	eventStreamWebhookCustomHeaderAuthFieldHeaderKey = big.NewInt(1 << 0)
+	eventStreamWebhookCustomHeaderAuthFieldMethod    = big.NewInt(1 << 0)
+	eventStreamWebhookCustomHeaderAuthFieldHeaderKey = big.NewInt(1 << 1)
 )
 
 // Custom header authorization for HTTP requests.
 type EventStreamWebhookCustomHeaderAuth struct {
+	Method EventStreamWebhookCustomHeaderAuthMethodEnum `json:"method" url:"method"`
 	// HTTP header name.
 	HeaderKey string `json:"header_key" url:"header_key"`
 
@@ -2528,6 +2554,13 @@ type EventStreamWebhookCustomHeaderAuth struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (e *EventStreamWebhookCustomHeaderAuth) GetMethod() EventStreamWebhookCustomHeaderAuthMethodEnum {
+	if e == nil {
+		return ""
+	}
+	return e.Method
 }
 
 func (e *EventStreamWebhookCustomHeaderAuth) GetHeaderKey() string {
@@ -2551,6 +2584,13 @@ func (e *EventStreamWebhookCustomHeaderAuth) require(field *big.Int) {
 	}
 	next.Or(next, field)
 	e.explicitFields = next
+}
+
+// SetMethod sets the Method field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (e *EventStreamWebhookCustomHeaderAuth) SetMethod(method EventStreamWebhookCustomHeaderAuthMethodEnum) {
+	e.Method = method
+	e.require(eventStreamWebhookCustomHeaderAuthFieldMethod)
 }
 
 // SetHeaderKey sets the HeaderKey field and marks it as non-optional;
@@ -2600,6 +2640,26 @@ func (e *EventStreamWebhookCustomHeaderAuth) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", e)
+}
+
+// Type of authorization.
+type EventStreamWebhookCustomHeaderAuthMethodEnum string
+
+const (
+	EventStreamWebhookCustomHeaderAuthMethodEnumCustomHeader EventStreamWebhookCustomHeaderAuthMethodEnum = "custom_header"
+)
+
+func NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString(s string) (EventStreamWebhookCustomHeaderAuthMethodEnum, error) {
+	switch s {
+	case "custom_header":
+		return EventStreamWebhookCustomHeaderAuthMethodEnumCustomHeader, nil
+	}
+	var t EventStreamWebhookCustomHeaderAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookCustomHeaderAuthMethodEnum) Ptr() *EventStreamWebhookCustomHeaderAuthMethodEnum {
+	return &e
 }
 
 var (

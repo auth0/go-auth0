@@ -357,7 +357,8 @@ func (c *Client) List(
 // Example:
 //
 //	request := &management.CreateLogStreamRequestContent{
-//	    HTTP: &management.CreateLogStreamHTTPRequestBody{
+//	    CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
+//	        Type: management.LogStreamHTTPEnumHTTP,
 //	        Sink: &management.LogStreamHTTPSink{
 //	            HTTPEndpoint: "httpEndpoint",
 //	        },

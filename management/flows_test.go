@@ -1131,51 +1131,28 @@ func TestGettersFlowAction(t *testing.T) {
 }
 
 func TestGettersFlowActionActivecampaign(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionActivecampaign{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionActivecampaign
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetListContacts", func(t *testing.T) {
+	t.Run("GetFlowActionActivecampaignListContacts", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionActivecampaign{}
 		var expected *FlowActionActivecampaignListContacts
-		obj.ListContacts = expected
+		obj.FlowActionActivecampaignListContacts = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetListContacts(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionActivecampaignListContacts(), "getter should return the property value")
 	})
 
-	t.Run("GetListContacts_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionActivecampaignListContacts_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionActivecampaign{}
-		obj.ListContacts = nil
+		obj.FlowActionActivecampaignListContacts = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetListContacts(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionActivecampaignListContacts(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetListContacts_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionActivecampaignListContacts_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionActivecampaign
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1184,31 +1161,31 @@ func TestGettersFlowActionActivecampaign(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetListContacts() // Should return zero value
+		_ = obj.GetFlowActionActivecampaignListContacts() // Should return zero value
 	})
 
-	t.Run("GetUpsertContact", func(t *testing.T) {
+	t.Run("GetFlowActionActivecampaignUpsertContact", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionActivecampaign{}
 		var expected *FlowActionActivecampaignUpsertContact
-		obj.UpsertContact = expected
+		obj.FlowActionActivecampaignUpsertContact = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUpsertContact(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionActivecampaignUpsertContact(), "getter should return the property value")
 	})
 
-	t.Run("GetUpsertContact_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionActivecampaignUpsertContact_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionActivecampaign{}
-		obj.UpsertContact = nil
+		obj.FlowActionActivecampaignUpsertContact = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUpsertContact(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionActivecampaignUpsertContact(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUpsertContact_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionActivecampaignUpsertContact_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionActivecampaign
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1217,7 +1194,7 @@ func TestGettersFlowActionActivecampaign(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUpsertContact() // Should return zero value
+		_ = obj.GetFlowActionActivecampaignUpsertContact() // Should return zero value
 	})
 
 }
@@ -1244,6 +1221,14 @@ func TestSettersFlowActionActivecampaignListContacts(t *testing.T) {
 		var fernTestValueType FlowActionActivecampaignListContactsType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionActivecampaignListContacts{}
+		var fernTestValueAction FlowActionActivecampaignListContactsAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1352,6 +1337,29 @@ func TestGettersFlowActionActivecampaignListContacts(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionActivecampaignListContacts{}
+		var expected FlowActionActivecampaignListContactsAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionActivecampaignListContacts
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -1528,6 +1536,37 @@ func TestSettersMarkExplicitFlowActionActivecampaignListContacts(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionActivecampaignListContacts{}
+		var fernTestValueAction FlowActionActivecampaignListContactsAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1804,6 +1843,14 @@ func TestSettersFlowActionActivecampaignUpsertContact(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionActivecampaignUpsertContact{}
+		var fernTestValueAction FlowActionActivecampaignUpsertContactAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionActivecampaignUpsertContact{}
 		var fernTestValueAllowFailure *bool
@@ -1909,6 +1956,29 @@ func TestGettersFlowActionActivecampaignUpsertContact(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionActivecampaignUpsertContact{}
+		var expected FlowActionActivecampaignUpsertContactAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionActivecampaignUpsertContact
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -2085,6 +2155,37 @@ func TestSettersMarkExplicitFlowActionActivecampaignUpsertContact(t *testing.T) 
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionActivecampaignUpsertContact{}
+		var fernTestValueAction FlowActionActivecampaignUpsertContactAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2629,51 +2730,28 @@ func TestSettersMarkExplicitFlowActionActivecampaignUpsertContactParams(t *testi
 }
 
 func TestGettersFlowActionAirtable(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionAirtable{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionAirtable
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetCreateRecord", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableCreateRecord", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAirtable{}
 		var expected *FlowActionAirtableCreateRecord
-		obj.CreateRecord = expected
+		obj.FlowActionAirtableCreateRecord = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetCreateRecord(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAirtableCreateRecord(), "getter should return the property value")
 	})
 
-	t.Run("GetCreateRecord_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableCreateRecord_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAirtable{}
-		obj.CreateRecord = nil
+		obj.FlowActionAirtableCreateRecord = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetCreateRecord(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAirtableCreateRecord(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetCreateRecord_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableCreateRecord_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAirtable
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2682,31 +2760,31 @@ func TestGettersFlowActionAirtable(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetCreateRecord() // Should return zero value
+		_ = obj.GetFlowActionAirtableCreateRecord() // Should return zero value
 	})
 
-	t.Run("GetListRecords", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableListRecords", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAirtable{}
 		var expected *FlowActionAirtableListRecords
-		obj.ListRecords = expected
+		obj.FlowActionAirtableListRecords = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetListRecords(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAirtableListRecords(), "getter should return the property value")
 	})
 
-	t.Run("GetListRecords_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableListRecords_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAirtable{}
-		obj.ListRecords = nil
+		obj.FlowActionAirtableListRecords = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetListRecords(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAirtableListRecords(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetListRecords_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableListRecords_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAirtable
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2715,31 +2793,31 @@ func TestGettersFlowActionAirtable(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetListRecords() // Should return zero value
+		_ = obj.GetFlowActionAirtableListRecords() // Should return zero value
 	})
 
-	t.Run("GetUpdateRecord", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableUpdateRecord", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAirtable{}
 		var expected *FlowActionAirtableUpdateRecord
-		obj.UpdateRecord = expected
+		obj.FlowActionAirtableUpdateRecord = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUpdateRecord(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAirtableUpdateRecord(), "getter should return the property value")
 	})
 
-	t.Run("GetUpdateRecord_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableUpdateRecord_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAirtable{}
-		obj.UpdateRecord = nil
+		obj.FlowActionAirtableUpdateRecord = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUpdateRecord(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAirtableUpdateRecord(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUpdateRecord_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAirtableUpdateRecord_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAirtable
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2748,7 +2826,7 @@ func TestGettersFlowActionAirtable(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUpdateRecord() // Should return zero value
+		_ = obj.GetFlowActionAirtableUpdateRecord() // Should return zero value
 	})
 
 }
@@ -2775,6 +2853,14 @@ func TestSettersFlowActionAirtableCreateRecord(t *testing.T) {
 		var fernTestValueType FlowActionAirtableCreateRecordType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAirtableCreateRecord{}
+		var fernTestValueAction FlowActionAirtableCreateRecordAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2883,6 +2969,29 @@ func TestGettersFlowActionAirtableCreateRecord(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAirtableCreateRecord{}
+		var expected FlowActionAirtableCreateRecordAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAirtableCreateRecord
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -3059,6 +3168,37 @@ func TestSettersMarkExplicitFlowActionAirtableCreateRecord(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAirtableCreateRecord{}
+		var fernTestValueAction FlowActionAirtableCreateRecordAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3470,6 +3610,14 @@ func TestSettersFlowActionAirtableListRecords(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAirtableListRecords{}
+		var fernTestValueAction FlowActionAirtableListRecordsAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAirtableListRecords{}
 		var fernTestValueAllowFailure *bool
@@ -3575,6 +3723,29 @@ func TestGettersFlowActionAirtableListRecords(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAirtableListRecords{}
+		var expected FlowActionAirtableListRecordsAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAirtableListRecords
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -3751,6 +3922,37 @@ func TestSettersMarkExplicitFlowActionAirtableListRecords(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAirtableListRecords{}
+		var fernTestValueAction FlowActionAirtableListRecordsAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4235,6 +4437,14 @@ func TestSettersFlowActionAirtableUpdateRecord(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAirtableUpdateRecord{}
+		var fernTestValueAction FlowActionAirtableUpdateRecordAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAirtableUpdateRecord{}
 		var fernTestValueAllowFailure *bool
@@ -4340,6 +4550,29 @@ func TestGettersFlowActionAirtableUpdateRecord(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAirtableUpdateRecord{}
+		var expected FlowActionAirtableUpdateRecordAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAirtableUpdateRecord
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -4516,6 +4749,37 @@ func TestSettersMarkExplicitFlowActionAirtableUpdateRecord(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAirtableUpdateRecord{}
+		var fernTestValueAction FlowActionAirtableUpdateRecordAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4965,51 +5229,28 @@ func TestSettersMarkExplicitFlowActionAirtableUpdateRecordParams(t *testing.T) {
 }
 
 func TestGettersFlowActionAuth0(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionAuth0{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionAuth0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetCreateUser", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0CreateUser", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
 		var expected *FlowActionAuth0CreateUser
-		obj.CreateUser = expected
+		obj.FlowActionAuth0CreateUser = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetCreateUser(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAuth0CreateUser(), "getter should return the property value")
 	})
 
-	t.Run("GetCreateUser_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0CreateUser_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
-		obj.CreateUser = nil
+		obj.FlowActionAuth0CreateUser = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetCreateUser(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAuth0CreateUser(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetCreateUser_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0CreateUser_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAuth0
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5018,31 +5259,31 @@ func TestGettersFlowActionAuth0(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetCreateUser() // Should return zero value
+		_ = obj.GetFlowActionAuth0CreateUser() // Should return zero value
 	})
 
-	t.Run("GetGetUser", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0GetUser", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
 		var expected *FlowActionAuth0GetUser
-		obj.GetUser = expected
+		obj.FlowActionAuth0GetUser = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGetUser(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAuth0GetUser(), "getter should return the property value")
 	})
 
-	t.Run("GetGetUser_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0GetUser_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
-		obj.GetUser = nil
+		obj.FlowActionAuth0GetUser = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGetUser(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAuth0GetUser(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGetUser_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0GetUser_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAuth0
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5051,31 +5292,31 @@ func TestGettersFlowActionAuth0(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGetUser() // Should return zero value
+		_ = obj.GetFlowActionAuth0GetUser() // Should return zero value
 	})
 
-	t.Run("GetUpdateUser", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0UpdateUser", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
 		var expected *FlowActionAuth0UpdateUser
-		obj.UpdateUser = expected
+		obj.FlowActionAuth0UpdateUser = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUpdateUser(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAuth0UpdateUser(), "getter should return the property value")
 	})
 
-	t.Run("GetUpdateUser_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0UpdateUser_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
-		obj.UpdateUser = nil
+		obj.FlowActionAuth0UpdateUser = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUpdateUser(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAuth0UpdateUser(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUpdateUser_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0UpdateUser_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAuth0
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5084,31 +5325,31 @@ func TestGettersFlowActionAuth0(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUpdateUser() // Should return zero value
+		_ = obj.GetFlowActionAuth0UpdateUser() // Should return zero value
 	})
 
-	t.Run("GetSendRequest", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendRequest", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
 		var expected *FlowActionAuth0SendRequest
-		obj.SendRequest = expected
+		obj.FlowActionAuth0SendRequest = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSendRequest(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAuth0SendRequest(), "getter should return the property value")
 	})
 
-	t.Run("GetSendRequest_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendRequest_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
-		obj.SendRequest = nil
+		obj.FlowActionAuth0SendRequest = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSendRequest(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAuth0SendRequest(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSendRequest_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendRequest_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAuth0
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5117,31 +5358,31 @@ func TestGettersFlowActionAuth0(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSendRequest() // Should return zero value
+		_ = obj.GetFlowActionAuth0SendRequest() // Should return zero value
 	})
 
-	t.Run("GetSendEmail", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendEmail", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
 		var expected *FlowActionAuth0SendEmail
-		obj.SendEmail = expected
+		obj.FlowActionAuth0SendEmail = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSendEmail(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAuth0SendEmail(), "getter should return the property value")
 	})
 
-	t.Run("GetSendEmail_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendEmail_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
-		obj.SendEmail = nil
+		obj.FlowActionAuth0SendEmail = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSendEmail(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAuth0SendEmail(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSendEmail_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendEmail_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAuth0
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5150,31 +5391,31 @@ func TestGettersFlowActionAuth0(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSendEmail() // Should return zero value
+		_ = obj.GetFlowActionAuth0SendEmail() // Should return zero value
 	})
 
-	t.Run("GetSendSms", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendSms", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
 		var expected *FlowActionAuth0SendSms
-		obj.SendSms = expected
+		obj.FlowActionAuth0SendSms = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSendSms(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAuth0SendSms(), "getter should return the property value")
 	})
 
-	t.Run("GetSendSms_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendSms_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
-		obj.SendSms = nil
+		obj.FlowActionAuth0SendSms = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSendSms(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAuth0SendSms(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSendSms_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0SendSms_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAuth0
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5183,31 +5424,31 @@ func TestGettersFlowActionAuth0(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSendSms() // Should return zero value
+		_ = obj.GetFlowActionAuth0SendSms() // Should return zero value
 	})
 
-	t.Run("GetMakeCall", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0MakeCall", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
 		var expected *FlowActionAuth0MakeCall
-		obj.MakeCall = expected
+		obj.FlowActionAuth0MakeCall = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMakeCall(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionAuth0MakeCall(), "getter should return the property value")
 	})
 
-	t.Run("GetMakeCall_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0MakeCall_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionAuth0{}
-		obj.MakeCall = nil
+		obj.FlowActionAuth0MakeCall = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMakeCall(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionAuth0MakeCall(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMakeCall_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionAuth0MakeCall_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionAuth0
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5216,7 +5457,7 @@ func TestGettersFlowActionAuth0(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMakeCall() // Should return zero value
+		_ = obj.GetFlowActionAuth0MakeCall() // Should return zero value
 	})
 
 }
@@ -5243,6 +5484,14 @@ func TestSettersFlowActionAuth0CreateUser(t *testing.T) {
 		var fernTestValueType FlowActionAuth0CreateUserType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAuth0CreateUser{}
+		var fernTestValueAction FlowActionAuth0CreateUserAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -5351,6 +5600,29 @@ func TestGettersFlowActionAuth0CreateUser(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0CreateUser{}
+		var expected FlowActionAuth0CreateUserAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAuth0CreateUser
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -5527,6 +5799,37 @@ func TestSettersMarkExplicitFlowActionAuth0CreateUser(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0CreateUser{}
+		var fernTestValueAction FlowActionAuth0CreateUserAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5803,6 +6106,14 @@ func TestSettersFlowActionAuth0GetUser(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAuth0GetUser{}
+		var fernTestValueAction FlowActionAuth0GetUserAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAuth0GetUser{}
 		var fernTestValueAllowFailure *bool
@@ -5908,6 +6219,29 @@ func TestGettersFlowActionAuth0GetUser(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0GetUser{}
+		var expected FlowActionAuth0GetUserAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAuth0GetUser
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -6084,6 +6418,37 @@ func TestSettersMarkExplicitFlowActionAuth0GetUser(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0GetUser{}
+		var fernTestValueAction FlowActionAuth0GetUserAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -6360,6 +6725,14 @@ func TestSettersFlowActionAuth0MakeCall(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAuth0MakeCall{}
+		var fernTestValueAction FlowActionAuth0MakeCallAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAuth0MakeCall{}
 		var fernTestValueAllowFailure *bool
@@ -6465,6 +6838,29 @@ func TestGettersFlowActionAuth0MakeCall(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0MakeCall{}
+		var expected FlowActionAuth0MakeCallAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAuth0MakeCall
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -6641,6 +7037,37 @@ func TestSettersMarkExplicitFlowActionAuth0MakeCall(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0MakeCall{}
+		var fernTestValueAction FlowActionAuth0MakeCallAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -7063,6 +7490,14 @@ func TestSettersFlowActionAuth0SendEmail(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAuth0SendEmail{}
+		var fernTestValueAction FlowActionAuth0SendEmailAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAuth0SendEmail{}
 		var fernTestValueAllowFailure *bool
@@ -7168,6 +7603,29 @@ func TestGettersFlowActionAuth0SendEmail(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0SendEmail{}
+		var expected FlowActionAuth0SendEmailAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAuth0SendEmail
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -7344,6 +7802,37 @@ func TestSettersMarkExplicitFlowActionAuth0SendEmail(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0SendEmail{}
+		var fernTestValueAction FlowActionAuth0SendEmailAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -7972,6 +8461,14 @@ func TestSettersFlowActionAuth0SendRequest(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAuth0SendRequest{}
+		var fernTestValueAction FlowActionAuth0SendRequestAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAuth0SendRequest{}
 		var fernTestValueAllowFailure *bool
@@ -8077,6 +8574,29 @@ func TestGettersFlowActionAuth0SendRequest(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0SendRequest{}
+		var expected FlowActionAuth0SendRequestAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAuth0SendRequest
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -8253,6 +8773,37 @@ func TestSettersMarkExplicitFlowActionAuth0SendRequest(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0SendRequest{}
+		var fernTestValueAction FlowActionAuth0SendRequestAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -8952,6 +9503,14 @@ func TestSettersFlowActionAuth0SendSms(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAuth0SendSms{}
+		var fernTestValueAction FlowActionAuth0SendSmsAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAuth0SendSms{}
 		var fernTestValueAllowFailure *bool
@@ -9057,6 +9616,29 @@ func TestGettersFlowActionAuth0SendSms(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0SendSms{}
+		var expected FlowActionAuth0SendSmsAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAuth0SendSms
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -9233,6 +9815,37 @@ func TestSettersMarkExplicitFlowActionAuth0SendSms(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0SendSms{}
+		var fernTestValueAction FlowActionAuth0SendSmsAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -9655,6 +10268,14 @@ func TestSettersFlowActionAuth0UpdateUser(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionAuth0UpdateUser{}
+		var fernTestValueAction FlowActionAuth0UpdateUserAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionAuth0UpdateUser{}
 		var fernTestValueAllowFailure *bool
@@ -9760,6 +10381,29 @@ func TestGettersFlowActionAuth0UpdateUser(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0UpdateUser{}
+		var expected FlowActionAuth0UpdateUserAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionAuth0UpdateUser
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -9936,6 +10580,37 @@ func TestSettersMarkExplicitFlowActionAuth0UpdateUser(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionAuth0UpdateUser{}
+		var fernTestValueAction FlowActionAuth0UpdateUserAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -11004,51 +11679,28 @@ func TestSettersMarkExplicitFlowActionBigqueryInsertRowsParams(t *testing.T) {
 }
 
 func TestGettersFlowActionClearbit(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionClearbit{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionClearbit
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetFindPerson", func(t *testing.T) {
+	t.Run("GetFlowActionClearbitFindPerson", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionClearbit{}
 		var expected *FlowActionClearbitFindPerson
-		obj.FindPerson = expected
+		obj.FlowActionClearbitFindPerson = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFindPerson(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionClearbitFindPerson(), "getter should return the property value")
 	})
 
-	t.Run("GetFindPerson_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionClearbitFindPerson_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionClearbit{}
-		obj.FindPerson = nil
+		obj.FlowActionClearbitFindPerson = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFindPerson(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionClearbitFindPerson(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFindPerson_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionClearbitFindPerson_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionClearbit
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11057,31 +11709,31 @@ func TestGettersFlowActionClearbit(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFindPerson() // Should return zero value
+		_ = obj.GetFlowActionClearbitFindPerson() // Should return zero value
 	})
 
-	t.Run("GetFindCompany", func(t *testing.T) {
+	t.Run("GetFlowActionClearbitFindCompany", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionClearbit{}
 		var expected *FlowActionClearbitFindCompany
-		obj.FindCompany = expected
+		obj.FlowActionClearbitFindCompany = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFindCompany(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionClearbitFindCompany(), "getter should return the property value")
 	})
 
-	t.Run("GetFindCompany_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionClearbitFindCompany_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionClearbit{}
-		obj.FindCompany = nil
+		obj.FlowActionClearbitFindCompany = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFindCompany(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionClearbitFindCompany(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFindCompany_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionClearbitFindCompany_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionClearbit
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11090,7 +11742,7 @@ func TestGettersFlowActionClearbit(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFindCompany() // Should return zero value
+		_ = obj.GetFlowActionClearbitFindCompany() // Should return zero value
 	})
 
 }
@@ -11117,6 +11769,14 @@ func TestSettersFlowActionClearbitFindCompany(t *testing.T) {
 		var fernTestValueType FlowActionClearbitFindCompanyType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionClearbitFindCompany{}
+		var fernTestValueAction FlowActionClearbitFindCompanyAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -11225,6 +11885,29 @@ func TestGettersFlowActionClearbitFindCompany(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionClearbitFindCompany{}
+		var expected FlowActionClearbitFindCompanyAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionClearbitFindCompany
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -11401,6 +12084,37 @@ func TestSettersMarkExplicitFlowActionClearbitFindCompany(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionClearbitFindCompany{}
+		var fernTestValueAction FlowActionClearbitFindCompanyAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -11677,6 +12391,14 @@ func TestSettersFlowActionClearbitFindPerson(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionClearbitFindPerson{}
+		var fernTestValueAction FlowActionClearbitFindPersonAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionClearbitFindPerson{}
 		var fernTestValueAllowFailure *bool
@@ -11782,6 +12504,29 @@ func TestGettersFlowActionClearbitFindPerson(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionClearbitFindPerson{}
+		var expected FlowActionClearbitFindPersonAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionClearbitFindPerson
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -11958,6 +12703,37 @@ func TestSettersMarkExplicitFlowActionClearbitFindPerson(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionClearbitFindPerson{}
+		var fernTestValueAction FlowActionClearbitFindPersonAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -13285,51 +14061,28 @@ func TestSettersMarkExplicitFlowActionEmailVerifyEmailParamsRules(t *testing.T) 
 }
 
 func TestGettersFlowActionFlow(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionFlow{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionFlow
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetBooleanCondition", func(t *testing.T) {
+	t.Run("GetFlowActionFlowBooleanCondition", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
 		var expected *FlowActionFlowBooleanCondition
-		obj.BooleanCondition = expected
+		obj.FlowActionFlowBooleanCondition = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetBooleanCondition(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionFlowBooleanCondition(), "getter should return the property value")
 	})
 
-	t.Run("GetBooleanCondition_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowBooleanCondition_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
-		obj.BooleanCondition = nil
+		obj.FlowActionFlowBooleanCondition = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetBooleanCondition(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionFlowBooleanCondition(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetBooleanCondition_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionFlowBooleanCondition_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionFlow
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13338,31 +14091,31 @@ func TestGettersFlowActionFlow(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetBooleanCondition() // Should return zero value
+		_ = obj.GetFlowActionFlowBooleanCondition() // Should return zero value
 	})
 
-	t.Run("GetDelayFlow", func(t *testing.T) {
+	t.Run("GetFlowActionFlowDelayFlow", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
 		var expected *FlowActionFlowDelayFlow
-		obj.DelayFlow = expected
+		obj.FlowActionFlowDelayFlow = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDelayFlow(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionFlowDelayFlow(), "getter should return the property value")
 	})
 
-	t.Run("GetDelayFlow_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowDelayFlow_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
-		obj.DelayFlow = nil
+		obj.FlowActionFlowDelayFlow = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDelayFlow(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionFlowDelayFlow(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDelayFlow_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionFlowDelayFlow_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionFlow
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13371,31 +14124,31 @@ func TestGettersFlowActionFlow(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDelayFlow() // Should return zero value
+		_ = obj.GetFlowActionFlowDelayFlow() // Should return zero value
 	})
 
-	t.Run("GetDoNothing", func(t *testing.T) {
+	t.Run("GetFlowActionFlowDoNothing", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
 		var expected *FlowActionFlowDoNothing
-		obj.DoNothing = expected
+		obj.FlowActionFlowDoNothing = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDoNothing(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionFlowDoNothing(), "getter should return the property value")
 	})
 
-	t.Run("GetDoNothing_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowDoNothing_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
-		obj.DoNothing = nil
+		obj.FlowActionFlowDoNothing = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDoNothing(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionFlowDoNothing(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDoNothing_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionFlowDoNothing_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionFlow
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13404,31 +14157,31 @@ func TestGettersFlowActionFlow(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDoNothing() // Should return zero value
+		_ = obj.GetFlowActionFlowDoNothing() // Should return zero value
 	})
 
-	t.Run("GetErrorMessage", func(t *testing.T) {
+	t.Run("GetFlowActionFlowErrorMessage", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
 		var expected *FlowActionFlowErrorMessage
-		obj.ErrorMessage = expected
+		obj.FlowActionFlowErrorMessage = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetErrorMessage(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionFlowErrorMessage(), "getter should return the property value")
 	})
 
-	t.Run("GetErrorMessage_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowErrorMessage_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
-		obj.ErrorMessage = nil
+		obj.FlowActionFlowErrorMessage = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetErrorMessage(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionFlowErrorMessage(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetErrorMessage_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionFlowErrorMessage_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionFlow
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13437,31 +14190,31 @@ func TestGettersFlowActionFlow(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetErrorMessage() // Should return zero value
+		_ = obj.GetFlowActionFlowErrorMessage() // Should return zero value
 	})
 
-	t.Run("GetMapValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowMapValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
 		var expected *FlowActionFlowMapValue
-		obj.MapValue = expected
+		obj.FlowActionFlowMapValue = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMapValue(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionFlowMapValue(), "getter should return the property value")
 	})
 
-	t.Run("GetMapValue_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowMapValue_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
-		obj.MapValue = nil
+		obj.FlowActionFlowMapValue = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMapValue(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionFlowMapValue(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMapValue_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionFlowMapValue_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionFlow
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13470,31 +14223,31 @@ func TestGettersFlowActionFlow(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMapValue() // Should return zero value
+		_ = obj.GetFlowActionFlowMapValue() // Should return zero value
 	})
 
-	t.Run("GetReturnJSON", func(t *testing.T) {
+	t.Run("GetFlowActionFlowReturnJSON", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
 		var expected *FlowActionFlowReturnJSON
-		obj.ReturnJSON = expected
+		obj.FlowActionFlowReturnJSON = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetReturnJSON(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionFlowReturnJSON(), "getter should return the property value")
 	})
 
-	t.Run("GetReturnJSON_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowReturnJSON_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
-		obj.ReturnJSON = nil
+		obj.FlowActionFlowReturnJSON = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetReturnJSON(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionFlowReturnJSON(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetReturnJSON_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionFlowReturnJSON_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionFlow
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13503,31 +14256,31 @@ func TestGettersFlowActionFlow(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetReturnJSON() // Should return zero value
+		_ = obj.GetFlowActionFlowReturnJSON() // Should return zero value
 	})
 
-	t.Run("GetStoreVars", func(t *testing.T) {
+	t.Run("GetFlowActionFlowStoreVars", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
 		var expected *FlowActionFlowStoreVars
-		obj.StoreVars = expected
+		obj.FlowActionFlowStoreVars = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetStoreVars(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionFlowStoreVars(), "getter should return the property value")
 	})
 
-	t.Run("GetStoreVars_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionFlowStoreVars_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionFlow{}
-		obj.StoreVars = nil
+		obj.FlowActionFlowStoreVars = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetStoreVars(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionFlowStoreVars(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetStoreVars_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionFlowStoreVars_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionFlow
 		// Should not panic - getters should handle nil receiver gracefully
@@ -13536,7 +14289,7 @@ func TestGettersFlowActionFlow(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetStoreVars() // Should return zero value
+		_ = obj.GetFlowActionFlowStoreVars() // Should return zero value
 	})
 
 }
@@ -13563,6 +14316,14 @@ func TestSettersFlowActionFlowBooleanCondition(t *testing.T) {
 		var fernTestValueType FlowActionFlowBooleanConditionType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionFlowBooleanCondition{}
+		var fernTestValueAction FlowActionFlowBooleanConditionAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -13671,6 +14432,29 @@ func TestGettersFlowActionFlowBooleanCondition(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowBooleanCondition{}
+		var expected FlowActionFlowBooleanConditionAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionFlowBooleanCondition
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -13847,6 +14631,37 @@ func TestSettersMarkExplicitFlowActionFlowBooleanCondition(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowBooleanCondition{}
+		var fernTestValueAction FlowActionFlowBooleanConditionAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -14143,6 +14958,14 @@ func TestSettersFlowActionFlowDelayFlow(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionFlowDelayFlow{}
+		var fernTestValueAction FlowActionFlowDelayFlowAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionFlowDelayFlow{}
 		var fernTestValueAllowFailure *bool
@@ -14248,6 +15071,29 @@ func TestGettersFlowActionFlowDelayFlow(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowDelayFlow{}
+		var expected FlowActionFlowDelayFlowAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionFlowDelayFlow
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -14424,6 +15270,37 @@ func TestSettersMarkExplicitFlowActionFlowDelayFlow(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowDelayFlow{}
+		var fernTestValueAction FlowActionFlowDelayFlowAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -14770,6 +15647,14 @@ func TestSettersFlowActionFlowDoNothing(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionFlowDoNothing{}
+		var fernTestValueAction FlowActionFlowDoNothingAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionFlowDoNothing{}
 		var fernTestValueAllowFailure *bool
@@ -14875,6 +15760,29 @@ func TestGettersFlowActionFlowDoNothing(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowDoNothing{}
+		var expected FlowActionFlowDoNothingAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionFlowDoNothing
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -15075,6 +15983,37 @@ func TestSettersMarkExplicitFlowActionFlowDoNothing(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowDoNothing{}
+		var fernTestValueAction FlowActionFlowDoNothingAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetAllowFailure_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -15195,6 +16134,14 @@ func TestSettersFlowActionFlowErrorMessage(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionFlowErrorMessage{}
+		var fernTestValueAction FlowActionFlowErrorMessageAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionFlowErrorMessage{}
 		var fernTestValueAllowFailure *bool
@@ -15300,6 +16247,29 @@ func TestGettersFlowActionFlowErrorMessage(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowErrorMessage{}
+		var expected FlowActionFlowErrorMessageAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionFlowErrorMessage
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -15476,6 +16446,37 @@ func TestSettersMarkExplicitFlowActionFlowErrorMessage(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowErrorMessage{}
+		var fernTestValueAction FlowActionFlowErrorMessageAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -15690,6 +16691,14 @@ func TestSettersFlowActionFlowMapValue(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionFlowMapValue{}
+		var fernTestValueAction FlowActionFlowMapValueAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionFlowMapValue{}
 		var fernTestValueAllowFailure *bool
@@ -15795,6 +16804,29 @@ func TestGettersFlowActionFlowMapValue(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowMapValue{}
+		var expected FlowActionFlowMapValueAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionFlowMapValue
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -15971,6 +17003,37 @@ func TestSettersMarkExplicitFlowActionFlowMapValue(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowMapValue{}
+		var fernTestValueAction FlowActionFlowMapValueAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -16495,6 +17558,14 @@ func TestSettersFlowActionFlowReturnJSON(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionFlowReturnJSON{}
+		var fernTestValueAction FlowActionFlowReturnJSONAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionFlowReturnJSON{}
 		var fernTestValueAllowFailure *bool
@@ -16600,6 +17671,29 @@ func TestGettersFlowActionFlowReturnJSON(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowReturnJSON{}
+		var expected FlowActionFlowReturnJSONAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionFlowReturnJSON
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -16776,6 +17870,37 @@ func TestSettersMarkExplicitFlowActionFlowReturnJSON(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowReturnJSON{}
+		var fernTestValueAction FlowActionFlowReturnJSONAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -17049,6 +18174,14 @@ func TestSettersFlowActionFlowStoreVars(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionFlowStoreVars{}
+		var fernTestValueAction FlowActionFlowStoreVarsAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionFlowStoreVars{}
 		var fernTestValueAllowFailure *bool
@@ -17154,6 +18287,29 @@ func TestGettersFlowActionFlowStoreVars(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowStoreVars{}
+		var expected FlowActionFlowStoreVarsAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionFlowStoreVars
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -17330,6 +18486,37 @@ func TestSettersMarkExplicitFlowActionFlowStoreVars(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionFlowStoreVars{}
+		var fernTestValueAction FlowActionFlowStoreVarsAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -19688,51 +20875,28 @@ func TestGettersFlowActionHTTPSendRequestParamsQueryParamsValue(t *testing.T) {
 }
 
 func TestGettersFlowActionHubspot(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionHubspot{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionHubspot
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetEnrollContact", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotEnrollContact", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionHubspot{}
 		var expected *FlowActionHubspotEnrollContact
-		obj.EnrollContact = expected
+		obj.FlowActionHubspotEnrollContact = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEnrollContact(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionHubspotEnrollContact(), "getter should return the property value")
 	})
 
-	t.Run("GetEnrollContact_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotEnrollContact_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionHubspot{}
-		obj.EnrollContact = nil
+		obj.FlowActionHubspotEnrollContact = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEnrollContact(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionHubspotEnrollContact(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEnrollContact_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotEnrollContact_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionHubspot
 		// Should not panic - getters should handle nil receiver gracefully
@@ -19741,31 +20905,31 @@ func TestGettersFlowActionHubspot(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEnrollContact() // Should return zero value
+		_ = obj.GetFlowActionHubspotEnrollContact() // Should return zero value
 	})
 
-	t.Run("GetGetContact", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotGetContact", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionHubspot{}
 		var expected *FlowActionHubspotGetContact
-		obj.GetContact = expected
+		obj.FlowActionHubspotGetContact = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGetContact(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionHubspotGetContact(), "getter should return the property value")
 	})
 
-	t.Run("GetGetContact_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotGetContact_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionHubspot{}
-		obj.GetContact = nil
+		obj.FlowActionHubspotGetContact = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGetContact(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionHubspotGetContact(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGetContact_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotGetContact_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionHubspot
 		// Should not panic - getters should handle nil receiver gracefully
@@ -19774,31 +20938,31 @@ func TestGettersFlowActionHubspot(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGetContact() // Should return zero value
+		_ = obj.GetFlowActionHubspotGetContact() // Should return zero value
 	})
 
-	t.Run("GetUpsertContact", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotUpsertContact", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionHubspot{}
 		var expected *FlowActionHubspotUpsertContact
-		obj.UpsertContact = expected
+		obj.FlowActionHubspotUpsertContact = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUpsertContact(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionHubspotUpsertContact(), "getter should return the property value")
 	})
 
-	t.Run("GetUpsertContact_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotUpsertContact_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionHubspot{}
-		obj.UpsertContact = nil
+		obj.FlowActionHubspotUpsertContact = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUpsertContact(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionHubspotUpsertContact(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUpsertContact_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionHubspotUpsertContact_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionHubspot
 		// Should not panic - getters should handle nil receiver gracefully
@@ -19807,7 +20971,7 @@ func TestGettersFlowActionHubspot(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUpsertContact() // Should return zero value
+		_ = obj.GetFlowActionHubspotUpsertContact() // Should return zero value
 	})
 
 }
@@ -19834,6 +20998,14 @@ func TestSettersFlowActionHubspotEnrollContact(t *testing.T) {
 		var fernTestValueType FlowActionHubspotEnrollContactType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionHubspotEnrollContact{}
+		var fernTestValueAction FlowActionHubspotEnrollContactAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -19942,6 +21114,29 @@ func TestGettersFlowActionHubspotEnrollContact(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionHubspotEnrollContact{}
+		var expected FlowActionHubspotEnrollContactAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionHubspotEnrollContact
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -20118,6 +21313,37 @@ func TestSettersMarkExplicitFlowActionHubspotEnrollContact(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionHubspotEnrollContact{}
+		var fernTestValueAction FlowActionHubspotEnrollContactAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -20515,6 +21741,14 @@ func TestSettersFlowActionHubspotGetContact(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionHubspotGetContact{}
+		var fernTestValueAction FlowActionHubspotGetContactAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionHubspotGetContact{}
 		var fernTestValueAllowFailure *bool
@@ -20620,6 +21854,29 @@ func TestGettersFlowActionHubspotGetContact(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionHubspotGetContact{}
+		var expected FlowActionHubspotGetContactAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionHubspotGetContact
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -20796,6 +22053,37 @@ func TestSettersMarkExplicitFlowActionHubspotGetContact(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionHubspotGetContact{}
+		var fernTestValueAction FlowActionHubspotGetContactAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21072,6 +22360,14 @@ func TestSettersFlowActionHubspotUpsertContact(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionHubspotUpsertContact{}
+		var fernTestValueAction FlowActionHubspotUpsertContactAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionHubspotUpsertContact{}
 		var fernTestValueAllowFailure *bool
@@ -21177,6 +22473,29 @@ func TestGettersFlowActionHubspotUpsertContact(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionHubspotUpsertContact{}
+		var expected FlowActionHubspotUpsertContactAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionHubspotUpsertContact
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -21353,6 +22672,37 @@ func TestSettersMarkExplicitFlowActionHubspotUpsertContact(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionHubspotUpsertContact{}
+		var fernTestValueAction FlowActionHubspotUpsertContactAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21748,51 +23098,28 @@ func TestSettersMarkExplicitFlowActionHubspotUpsertContactParamsProperty(t *test
 }
 
 func TestGettersFlowActionJSON(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionJSON{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionJSON
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetCreateJSON", func(t *testing.T) {
+	t.Run("GetFlowActionJSONCreateJSON", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJSON{}
 		var expected *FlowActionJSONCreateJSON
-		obj.CreateJSON = expected
+		obj.FlowActionJSONCreateJSON = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetCreateJSON(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionJSONCreateJSON(), "getter should return the property value")
 	})
 
-	t.Run("GetCreateJSON_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionJSONCreateJSON_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJSON{}
-		obj.CreateJSON = nil
+		obj.FlowActionJSONCreateJSON = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetCreateJSON(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionJSONCreateJSON(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetCreateJSON_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionJSONCreateJSON_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionJSON
 		// Should not panic - getters should handle nil receiver gracefully
@@ -21801,31 +23128,31 @@ func TestGettersFlowActionJSON(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetCreateJSON() // Should return zero value
+		_ = obj.GetFlowActionJSONCreateJSON() // Should return zero value
 	})
 
-	t.Run("GetParseJSON", func(t *testing.T) {
+	t.Run("GetFlowActionJSONParseJSON", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJSON{}
 		var expected *FlowActionJSONParseJSON
-		obj.ParseJSON = expected
+		obj.FlowActionJSONParseJSON = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetParseJSON(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionJSONParseJSON(), "getter should return the property value")
 	})
 
-	t.Run("GetParseJSON_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionJSONParseJSON_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJSON{}
-		obj.ParseJSON = nil
+		obj.FlowActionJSONParseJSON = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetParseJSON(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionJSONParseJSON(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetParseJSON_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionJSONParseJSON_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionJSON
 		// Should not panic - getters should handle nil receiver gracefully
@@ -21834,31 +23161,31 @@ func TestGettersFlowActionJSON(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetParseJSON() // Should return zero value
+		_ = obj.GetFlowActionJSONParseJSON() // Should return zero value
 	})
 
-	t.Run("GetSerializeJSON", func(t *testing.T) {
+	t.Run("GetFlowActionJSONSerializeJSON", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJSON{}
 		var expected *FlowActionJSONSerializeJSON
-		obj.SerializeJSON = expected
+		obj.FlowActionJSONSerializeJSON = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSerializeJSON(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionJSONSerializeJSON(), "getter should return the property value")
 	})
 
-	t.Run("GetSerializeJSON_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionJSONSerializeJSON_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJSON{}
-		obj.SerializeJSON = nil
+		obj.FlowActionJSONSerializeJSON = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSerializeJSON(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionJSONSerializeJSON(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSerializeJSON_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionJSONSerializeJSON_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionJSON
 		// Should not panic - getters should handle nil receiver gracefully
@@ -21867,7 +23194,7 @@ func TestGettersFlowActionJSON(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSerializeJSON() // Should return zero value
+		_ = obj.GetFlowActionJSONSerializeJSON() // Should return zero value
 	})
 
 }
@@ -21894,6 +23221,14 @@ func TestSettersFlowActionJSONCreateJSON(t *testing.T) {
 		var fernTestValueType FlowActionJSONCreateJSONType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionJSONCreateJSON{}
+		var fernTestValueAction FlowActionJSONCreateJSONAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -22002,6 +23337,29 @@ func TestGettersFlowActionJSONCreateJSON(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJSONCreateJSON{}
+		var expected FlowActionJSONCreateJSONAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionJSONCreateJSON
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -22178,6 +23536,37 @@ func TestSettersMarkExplicitFlowActionJSONCreateJSON(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJSONCreateJSON{}
+		var fernTestValueAction FlowActionJSONCreateJSONAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -22392,6 +23781,14 @@ func TestSettersFlowActionJSONParseJSON(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionJSONParseJSON{}
+		var fernTestValueAction FlowActionJSONParseJSONAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionJSONParseJSON{}
 		var fernTestValueAllowFailure *bool
@@ -22497,6 +23894,29 @@ func TestGettersFlowActionJSONParseJSON(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJSONParseJSON{}
+		var expected FlowActionJSONParseJSONAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionJSONParseJSON
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -22673,6 +24093,37 @@ func TestSettersMarkExplicitFlowActionJSONParseJSON(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJSONParseJSON{}
+		var fernTestValueAction FlowActionJSONParseJSONAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -22887,6 +24338,14 @@ func TestSettersFlowActionJSONSerializeJSON(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionJSONSerializeJSON{}
+		var fernTestValueAction FlowActionJSONSerializeJSONAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionJSONSerializeJSON{}
 		var fernTestValueAllowFailure *bool
@@ -22992,6 +24451,29 @@ func TestGettersFlowActionJSONSerializeJSON(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJSONSerializeJSON{}
+		var expected FlowActionJSONSerializeJSONAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionJSONSerializeJSON
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -23168,6 +24650,37 @@ func TestSettersMarkExplicitFlowActionJSONSerializeJSON(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJSONSerializeJSON{}
+		var fernTestValueAction FlowActionJSONSerializeJSONAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -23417,51 +24930,28 @@ func TestGettersFlowActionJSONSerializeJSONParamsObject(t *testing.T) {
 }
 
 func TestGettersFlowActionJwt(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionJwt{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionJwt
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetDecodeJwt", func(t *testing.T) {
+	t.Run("GetFlowActionJwtDecodeJwt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJwt{}
 		var expected *FlowActionJwtDecodeJwt
-		obj.DecodeJwt = expected
+		obj.FlowActionJwtDecodeJwt = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDecodeJwt(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionJwtDecodeJwt(), "getter should return the property value")
 	})
 
-	t.Run("GetDecodeJwt_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionJwtDecodeJwt_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJwt{}
-		obj.DecodeJwt = nil
+		obj.FlowActionJwtDecodeJwt = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDecodeJwt(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionJwtDecodeJwt(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDecodeJwt_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionJwtDecodeJwt_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionJwt
 		// Should not panic - getters should handle nil receiver gracefully
@@ -23470,31 +24960,31 @@ func TestGettersFlowActionJwt(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDecodeJwt() // Should return zero value
+		_ = obj.GetFlowActionJwtDecodeJwt() // Should return zero value
 	})
 
-	t.Run("GetSignJwt", func(t *testing.T) {
+	t.Run("GetFlowActionJwtSignJwt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJwt{}
 		var expected *FlowActionJwtSignJwt
-		obj.SignJwt = expected
+		obj.FlowActionJwtSignJwt = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSignJwt(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionJwtSignJwt(), "getter should return the property value")
 	})
 
-	t.Run("GetSignJwt_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionJwtSignJwt_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJwt{}
-		obj.SignJwt = nil
+		obj.FlowActionJwtSignJwt = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSignJwt(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionJwtSignJwt(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSignJwt_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionJwtSignJwt_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionJwt
 		// Should not panic - getters should handle nil receiver gracefully
@@ -23503,31 +24993,31 @@ func TestGettersFlowActionJwt(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSignJwt() // Should return zero value
+		_ = obj.GetFlowActionJwtSignJwt() // Should return zero value
 	})
 
-	t.Run("GetVerifyJwt", func(t *testing.T) {
+	t.Run("GetFlowActionJwtVerifyJwt", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJwt{}
 		var expected *FlowActionJwtVerifyJwt
-		obj.VerifyJwt = expected
+		obj.FlowActionJwtVerifyJwt = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetVerifyJwt(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionJwtVerifyJwt(), "getter should return the property value")
 	})
 
-	t.Run("GetVerifyJwt_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionJwtVerifyJwt_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionJwt{}
-		obj.VerifyJwt = nil
+		obj.FlowActionJwtVerifyJwt = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetVerifyJwt(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionJwtVerifyJwt(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetVerifyJwt_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionJwtVerifyJwt_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionJwt
 		// Should not panic - getters should handle nil receiver gracefully
@@ -23536,7 +25026,7 @@ func TestGettersFlowActionJwt(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetVerifyJwt() // Should return zero value
+		_ = obj.GetFlowActionJwtVerifyJwt() // Should return zero value
 	})
 
 }
@@ -23563,6 +25053,14 @@ func TestSettersFlowActionJwtDecodeJwt(t *testing.T) {
 		var fernTestValueType FlowActionJwtDecodeJwtType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionJwtDecodeJwt{}
+		var fernTestValueAction FlowActionJwtDecodeJwtAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -23671,6 +25169,29 @@ func TestGettersFlowActionJwtDecodeJwt(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJwtDecodeJwt{}
+		var expected FlowActionJwtDecodeJwtAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionJwtDecodeJwt
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -23847,6 +25368,37 @@ func TestSettersMarkExplicitFlowActionJwtDecodeJwt(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJwtDecodeJwt{}
+		var fernTestValueAction FlowActionJwtDecodeJwtAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -24061,6 +25613,14 @@ func TestSettersFlowActionJwtSignJwt(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionJwtSignJwt{}
+		var fernTestValueAction FlowActionJwtSignJwtAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionJwtSignJwt{}
 		var fernTestValueAllowFailure *bool
@@ -24166,6 +25726,29 @@ func TestGettersFlowActionJwtSignJwt(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJwtSignJwt{}
+		var expected FlowActionJwtSignJwtAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionJwtSignJwt
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -24342,6 +25925,37 @@ func TestSettersMarkExplicitFlowActionJwtSignJwt(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJwtSignJwt{}
+		var fernTestValueAction FlowActionJwtSignJwtAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -24921,6 +26535,14 @@ func TestSettersFlowActionJwtVerifyJwt(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionJwtVerifyJwt{}
+		var fernTestValueAction FlowActionJwtVerifyJwtAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionJwtVerifyJwt{}
 		var fernTestValueAllowFailure *bool
@@ -25026,6 +26648,29 @@ func TestGettersFlowActionJwtVerifyJwt(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJwtVerifyJwt{}
+		var expected FlowActionJwtVerifyJwtAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionJwtVerifyJwt
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -25202,6 +26847,37 @@ func TestSettersMarkExplicitFlowActionJwtVerifyJwt(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionJwtVerifyJwt{}
+		var fernTestValueAction FlowActionJwtVerifyJwtAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -27266,51 +28942,28 @@ func TestSettersMarkExplicitFlowActionMailjetSendEmailParamsTemplateID(t *testin
 }
 
 func TestGettersFlowActionOtp(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionOtp{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionOtp
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetGenerateCode", func(t *testing.T) {
+	t.Run("GetFlowActionOtpGenerateCode", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionOtp{}
 		var expected *FlowActionOtpGenerateCode
-		obj.GenerateCode = expected
+		obj.FlowActionOtpGenerateCode = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGenerateCode(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionOtpGenerateCode(), "getter should return the property value")
 	})
 
-	t.Run("GetGenerateCode_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionOtpGenerateCode_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionOtp{}
-		obj.GenerateCode = nil
+		obj.FlowActionOtpGenerateCode = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGenerateCode(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionOtpGenerateCode(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGenerateCode_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionOtpGenerateCode_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionOtp
 		// Should not panic - getters should handle nil receiver gracefully
@@ -27319,31 +28972,31 @@ func TestGettersFlowActionOtp(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGenerateCode() // Should return zero value
+		_ = obj.GetFlowActionOtpGenerateCode() // Should return zero value
 	})
 
-	t.Run("GetVerifyCode", func(t *testing.T) {
+	t.Run("GetFlowActionOtpVerifyCode", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionOtp{}
 		var expected *FlowActionOtpVerifyCode
-		obj.VerifyCode = expected
+		obj.FlowActionOtpVerifyCode = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetVerifyCode(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionOtpVerifyCode(), "getter should return the property value")
 	})
 
-	t.Run("GetVerifyCode_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionOtpVerifyCode_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionOtp{}
-		obj.VerifyCode = nil
+		obj.FlowActionOtpVerifyCode = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetVerifyCode(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionOtpVerifyCode(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetVerifyCode_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionOtpVerifyCode_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionOtp
 		// Should not panic - getters should handle nil receiver gracefully
@@ -27352,7 +29005,7 @@ func TestGettersFlowActionOtp(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetVerifyCode() // Should return zero value
+		_ = obj.GetFlowActionOtpVerifyCode() // Should return zero value
 	})
 
 }
@@ -27379,6 +29032,14 @@ func TestSettersFlowActionOtpGenerateCode(t *testing.T) {
 		var fernTestValueType FlowActionOtpGenerateCodeType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionOtpGenerateCode{}
+		var fernTestValueAction FlowActionOtpGenerateCodeAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -27487,6 +29148,29 @@ func TestGettersFlowActionOtpGenerateCode(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionOtpGenerateCode{}
+		var expected FlowActionOtpGenerateCodeAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionOtpGenerateCode
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -27663,6 +29347,37 @@ func TestSettersMarkExplicitFlowActionOtpGenerateCode(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionOtpGenerateCode{}
+		var fernTestValueAction FlowActionOtpGenerateCodeAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -27939,6 +29654,14 @@ func TestSettersFlowActionOtpVerifyCode(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionOtpVerifyCode{}
+		var fernTestValueAction FlowActionOtpVerifyCodeAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionOtpVerifyCode{}
 		var fernTestValueAllowFailure *bool
@@ -28044,6 +29767,29 @@ func TestGettersFlowActionOtpVerifyCode(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionOtpVerifyCode{}
+		var expected FlowActionOtpVerifyCodeAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionOtpVerifyCode
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -28220,6 +29966,37 @@ func TestSettersMarkExplicitFlowActionOtpVerifyCode(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionOtpVerifyCode{}
+		var fernTestValueAction FlowActionOtpVerifyCodeAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -28531,51 +30308,28 @@ func TestGettersFlowActionOtpVerifyCodeParamsCode(t *testing.T) {
 }
 
 func TestGettersFlowActionPipedrive(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionPipedrive{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionPipedrive
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetAddDeal", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddDeal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionPipedrive{}
 		var expected *FlowActionPipedriveAddDeal
-		obj.AddDeal = expected
+		obj.FlowActionPipedriveAddDeal = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetAddDeal(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionPipedriveAddDeal(), "getter should return the property value")
 	})
 
-	t.Run("GetAddDeal_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddDeal_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionPipedrive{}
-		obj.AddDeal = nil
+		obj.FlowActionPipedriveAddDeal = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetAddDeal(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionPipedriveAddDeal(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetAddDeal_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddDeal_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionPipedrive
 		// Should not panic - getters should handle nil receiver gracefully
@@ -28584,31 +30338,31 @@ func TestGettersFlowActionPipedrive(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetAddDeal() // Should return zero value
+		_ = obj.GetFlowActionPipedriveAddDeal() // Should return zero value
 	})
 
-	t.Run("GetAddOrganization", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionPipedrive{}
 		var expected *FlowActionPipedriveAddOrganization
-		obj.AddOrganization = expected
+		obj.FlowActionPipedriveAddOrganization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetAddOrganization(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionPipedriveAddOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetAddOrganization_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionPipedrive{}
-		obj.AddOrganization = nil
+		obj.FlowActionPipedriveAddOrganization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetAddOrganization(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionPipedriveAddOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetAddOrganization_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionPipedrive
 		// Should not panic - getters should handle nil receiver gracefully
@@ -28617,31 +30371,31 @@ func TestGettersFlowActionPipedrive(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetAddOrganization() // Should return zero value
+		_ = obj.GetFlowActionPipedriveAddOrganization() // Should return zero value
 	})
 
-	t.Run("GetAddPerson", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddPerson", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionPipedrive{}
 		var expected *FlowActionPipedriveAddPerson
-		obj.AddPerson = expected
+		obj.FlowActionPipedriveAddPerson = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetAddPerson(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionPipedriveAddPerson(), "getter should return the property value")
 	})
 
-	t.Run("GetAddPerson_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddPerson_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionPipedrive{}
-		obj.AddPerson = nil
+		obj.FlowActionPipedriveAddPerson = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetAddPerson(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionPipedriveAddPerson(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetAddPerson_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionPipedriveAddPerson_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionPipedrive
 		// Should not panic - getters should handle nil receiver gracefully
@@ -28650,7 +30404,7 @@ func TestGettersFlowActionPipedrive(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetAddPerson() // Should return zero value
+		_ = obj.GetFlowActionPipedriveAddPerson() // Should return zero value
 	})
 
 }
@@ -28677,6 +30431,14 @@ func TestSettersFlowActionPipedriveAddDeal(t *testing.T) {
 		var fernTestValueType FlowActionPipedriveAddDealType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionPipedriveAddDeal{}
+		var fernTestValueAction FlowActionPipedriveAddDealAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -28785,6 +30547,29 @@ func TestGettersFlowActionPipedriveAddDeal(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionPipedriveAddDeal{}
+		var expected FlowActionPipedriveAddDealAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionPipedriveAddDeal
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -28961,6 +30746,37 @@ func TestSettersMarkExplicitFlowActionPipedriveAddDeal(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionPipedriveAddDeal{}
+		var fernTestValueAction FlowActionPipedriveAddDealAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -29871,6 +31687,14 @@ func TestSettersFlowActionPipedriveAddOrganization(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionPipedriveAddOrganization{}
+		var fernTestValueAction FlowActionPipedriveAddOrganizationAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionPipedriveAddOrganization{}
 		var fernTestValueAllowFailure *bool
@@ -29976,6 +31800,29 @@ func TestGettersFlowActionPipedriveAddOrganization(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionPipedriveAddOrganization{}
+		var expected FlowActionPipedriveAddOrganizationAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionPipedriveAddOrganization
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -30152,6 +31999,37 @@ func TestSettersMarkExplicitFlowActionPipedriveAddOrganization(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionPipedriveAddOrganization{}
+		var fernTestValueAction FlowActionPipedriveAddOrganizationAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -30623,6 +32501,14 @@ func TestSettersFlowActionPipedriveAddPerson(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionPipedriveAddPerson{}
+		var fernTestValueAction FlowActionPipedriveAddPersonAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionPipedriveAddPerson{}
 		var fernTestValueAllowFailure *bool
@@ -30728,6 +32614,29 @@ func TestGettersFlowActionPipedriveAddPerson(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionPipedriveAddPerson{}
+		var expected FlowActionPipedriveAddPersonAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionPipedriveAddPerson
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -30904,6 +32813,37 @@ func TestSettersMarkExplicitFlowActionPipedriveAddPerson(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionPipedriveAddPerson{}
+		var fernTestValueAction FlowActionPipedriveAddPersonAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -31619,51 +33559,28 @@ func TestGettersFlowActionPipedriveAddPersonParamsOwnerID(t *testing.T) {
 }
 
 func TestGettersFlowActionSalesforce(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionSalesforce{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionSalesforce
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetCreateLead", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceCreateLead", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
 		var expected *FlowActionSalesforceCreateLead
-		obj.CreateLead = expected
+		obj.FlowActionSalesforceCreateLead = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetCreateLead(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionSalesforceCreateLead(), "getter should return the property value")
 	})
 
-	t.Run("GetCreateLead_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceCreateLead_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
-		obj.CreateLead = nil
+		obj.FlowActionSalesforceCreateLead = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetCreateLead(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionSalesforceCreateLead(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetCreateLead_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceCreateLead_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionSalesforce
 		// Should not panic - getters should handle nil receiver gracefully
@@ -31672,31 +33589,31 @@ func TestGettersFlowActionSalesforce(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetCreateLead() // Should return zero value
+		_ = obj.GetFlowActionSalesforceCreateLead() // Should return zero value
 	})
 
-	t.Run("GetGetLead", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceGetLead", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
 		var expected *FlowActionSalesforceGetLead
-		obj.GetLead = expected
+		obj.FlowActionSalesforceGetLead = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGetLead(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionSalesforceGetLead(), "getter should return the property value")
 	})
 
-	t.Run("GetGetLead_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceGetLead_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
-		obj.GetLead = nil
+		obj.FlowActionSalesforceGetLead = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGetLead(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionSalesforceGetLead(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGetLead_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceGetLead_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionSalesforce
 		// Should not panic - getters should handle nil receiver gracefully
@@ -31705,31 +33622,31 @@ func TestGettersFlowActionSalesforce(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGetLead() // Should return zero value
+		_ = obj.GetFlowActionSalesforceGetLead() // Should return zero value
 	})
 
-	t.Run("GetSearchLeads", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceSearchLeads", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
 		var expected *FlowActionSalesforceSearchLeads
-		obj.SearchLeads = expected
+		obj.FlowActionSalesforceSearchLeads = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSearchLeads(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionSalesforceSearchLeads(), "getter should return the property value")
 	})
 
-	t.Run("GetSearchLeads_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceSearchLeads_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
-		obj.SearchLeads = nil
+		obj.FlowActionSalesforceSearchLeads = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSearchLeads(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionSalesforceSearchLeads(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSearchLeads_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceSearchLeads_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionSalesforce
 		// Should not panic - getters should handle nil receiver gracefully
@@ -31738,31 +33655,31 @@ func TestGettersFlowActionSalesforce(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSearchLeads() // Should return zero value
+		_ = obj.GetFlowActionSalesforceSearchLeads() // Should return zero value
 	})
 
-	t.Run("GetUpdateLead", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceUpdateLead", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
 		var expected *FlowActionSalesforceUpdateLead
-		obj.UpdateLead = expected
+		obj.FlowActionSalesforceUpdateLead = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUpdateLead(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionSalesforceUpdateLead(), "getter should return the property value")
 	})
 
-	t.Run("GetUpdateLead_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceUpdateLead_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionSalesforce{}
-		obj.UpdateLead = nil
+		obj.FlowActionSalesforceUpdateLead = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUpdateLead(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionSalesforceUpdateLead(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUpdateLead_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionSalesforceUpdateLead_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionSalesforce
 		// Should not panic - getters should handle nil receiver gracefully
@@ -31771,7 +33688,7 @@ func TestGettersFlowActionSalesforce(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUpdateLead() // Should return zero value
+		_ = obj.GetFlowActionSalesforceUpdateLead() // Should return zero value
 	})
 
 }
@@ -31798,6 +33715,14 @@ func TestSettersFlowActionSalesforceCreateLead(t *testing.T) {
 		var fernTestValueType FlowActionSalesforceCreateLeadType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionSalesforceCreateLead{}
+		var fernTestValueAction FlowActionSalesforceCreateLeadAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -31906,6 +33831,29 @@ func TestGettersFlowActionSalesforceCreateLead(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceCreateLead{}
+		var expected FlowActionSalesforceCreateLeadAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionSalesforceCreateLead
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -32082,6 +34030,37 @@ func TestSettersMarkExplicitFlowActionSalesforceCreateLead(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceCreateLead{}
+		var fernTestValueAction FlowActionSalesforceCreateLeadAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -32712,6 +34691,14 @@ func TestSettersFlowActionSalesforceGetLead(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionSalesforceGetLead{}
+		var fernTestValueAction FlowActionSalesforceGetLeadAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionSalesforceGetLead{}
 		var fernTestValueAllowFailure *bool
@@ -32817,6 +34804,29 @@ func TestGettersFlowActionSalesforceGetLead(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceGetLead{}
+		var expected FlowActionSalesforceGetLeadAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionSalesforceGetLead
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -32993,6 +35003,37 @@ func TestSettersMarkExplicitFlowActionSalesforceGetLead(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceGetLead{}
+		var fernTestValueAction FlowActionSalesforceGetLeadAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -33269,6 +35310,14 @@ func TestSettersFlowActionSalesforceSearchLeads(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionSalesforceSearchLeads{}
+		var fernTestValueAction FlowActionSalesforceSearchLeadsAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionSalesforceSearchLeads{}
 		var fernTestValueAllowFailure *bool
@@ -33374,6 +35423,29 @@ func TestGettersFlowActionSalesforceSearchLeads(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceSearchLeads{}
+		var expected FlowActionSalesforceSearchLeadsAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionSalesforceSearchLeads
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -33550,6 +35622,37 @@ func TestSettersMarkExplicitFlowActionSalesforceSearchLeads(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceSearchLeads{}
+		var fernTestValueAction FlowActionSalesforceSearchLeadsAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -33960,6 +36063,14 @@ func TestSettersFlowActionSalesforceUpdateLead(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionSalesforceUpdateLead{}
+		var fernTestValueAction FlowActionSalesforceUpdateLeadAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionSalesforceUpdateLead{}
 		var fernTestValueAllowFailure *bool
@@ -34065,6 +36176,29 @@ func TestGettersFlowActionSalesforceUpdateLead(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceUpdateLead{}
+		var expected FlowActionSalesforceUpdateLeadAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionSalesforceUpdateLead
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -34241,6 +36375,37 @@ func TestSettersMarkExplicitFlowActionSalesforceUpdateLead(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionSalesforceUpdateLead{}
+		var fernTestValueAction FlowActionSalesforceUpdateLeadAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -36630,51 +38795,28 @@ func TestSettersMarkExplicitFlowActionSlackPostMessageParamsAttachmentField(t *t
 }
 
 func TestGettersFlowActionStripe(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionStripe{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionStripe
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetAddTaxID", func(t *testing.T) {
+	t.Run("GetFlowActionStripeAddTaxID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
 		var expected *FlowActionStripeAddTaxID
-		obj.AddTaxID = expected
+		obj.FlowActionStripeAddTaxID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetAddTaxID(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionStripeAddTaxID(), "getter should return the property value")
 	})
 
-	t.Run("GetAddTaxID_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionStripeAddTaxID_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
-		obj.AddTaxID = nil
+		obj.FlowActionStripeAddTaxID = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetAddTaxID(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionStripeAddTaxID(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetAddTaxID_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionStripeAddTaxID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionStripe
 		// Should not panic - getters should handle nil receiver gracefully
@@ -36683,31 +38825,31 @@ func TestGettersFlowActionStripe(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetAddTaxID() // Should return zero value
+		_ = obj.GetFlowActionStripeAddTaxID() // Should return zero value
 	})
 
-	t.Run("GetCreateCustomer", func(t *testing.T) {
+	t.Run("GetFlowActionStripeCreateCustomer", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
 		var expected *FlowActionStripeCreateCustomer
-		obj.CreateCustomer = expected
+		obj.FlowActionStripeCreateCustomer = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetCreateCustomer(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionStripeCreateCustomer(), "getter should return the property value")
 	})
 
-	t.Run("GetCreateCustomer_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionStripeCreateCustomer_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
-		obj.CreateCustomer = nil
+		obj.FlowActionStripeCreateCustomer = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetCreateCustomer(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionStripeCreateCustomer(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetCreateCustomer_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionStripeCreateCustomer_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionStripe
 		// Should not panic - getters should handle nil receiver gracefully
@@ -36716,31 +38858,31 @@ func TestGettersFlowActionStripe(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetCreateCustomer() // Should return zero value
+		_ = obj.GetFlowActionStripeCreateCustomer() // Should return zero value
 	})
 
-	t.Run("GetCreatePortalSession", func(t *testing.T) {
+	t.Run("GetFlowActionStripeCreatePortalSession", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
 		var expected *FlowActionStripeCreatePortalSession
-		obj.CreatePortalSession = expected
+		obj.FlowActionStripeCreatePortalSession = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetCreatePortalSession(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionStripeCreatePortalSession(), "getter should return the property value")
 	})
 
-	t.Run("GetCreatePortalSession_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionStripeCreatePortalSession_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
-		obj.CreatePortalSession = nil
+		obj.FlowActionStripeCreatePortalSession = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetCreatePortalSession(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionStripeCreatePortalSession(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetCreatePortalSession_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionStripeCreatePortalSession_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionStripe
 		// Should not panic - getters should handle nil receiver gracefully
@@ -36749,31 +38891,31 @@ func TestGettersFlowActionStripe(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetCreatePortalSession() // Should return zero value
+		_ = obj.GetFlowActionStripeCreatePortalSession() // Should return zero value
 	})
 
-	t.Run("GetDeleteTaxID", func(t *testing.T) {
+	t.Run("GetFlowActionStripeDeleteTaxID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
 		var expected *FlowActionStripeDeleteTaxID
-		obj.DeleteTaxID = expected
+		obj.FlowActionStripeDeleteTaxID = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDeleteTaxID(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionStripeDeleteTaxID(), "getter should return the property value")
 	})
 
-	t.Run("GetDeleteTaxID_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionStripeDeleteTaxID_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
-		obj.DeleteTaxID = nil
+		obj.FlowActionStripeDeleteTaxID = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDeleteTaxID(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionStripeDeleteTaxID(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDeleteTaxID_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionStripeDeleteTaxID_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionStripe
 		// Should not panic - getters should handle nil receiver gracefully
@@ -36782,31 +38924,31 @@ func TestGettersFlowActionStripe(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDeleteTaxID() // Should return zero value
+		_ = obj.GetFlowActionStripeDeleteTaxID() // Should return zero value
 	})
 
-	t.Run("GetFindCustomers", func(t *testing.T) {
+	t.Run("GetFlowActionStripeFindCustomers", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
 		var expected *FlowActionStripeFindCustomers
-		obj.FindCustomers = expected
+		obj.FlowActionStripeFindCustomers = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFindCustomers(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionStripeFindCustomers(), "getter should return the property value")
 	})
 
-	t.Run("GetFindCustomers_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionStripeFindCustomers_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
-		obj.FindCustomers = nil
+		obj.FlowActionStripeFindCustomers = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFindCustomers(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionStripeFindCustomers(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFindCustomers_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionStripeFindCustomers_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionStripe
 		// Should not panic - getters should handle nil receiver gracefully
@@ -36815,31 +38957,31 @@ func TestGettersFlowActionStripe(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFindCustomers() // Should return zero value
+		_ = obj.GetFlowActionStripeFindCustomers() // Should return zero value
 	})
 
-	t.Run("GetGetCustomer", func(t *testing.T) {
+	t.Run("GetFlowActionStripeGetCustomer", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
 		var expected *FlowActionStripeGetCustomer
-		obj.GetCustomer = expected
+		obj.FlowActionStripeGetCustomer = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetGetCustomer(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionStripeGetCustomer(), "getter should return the property value")
 	})
 
-	t.Run("GetGetCustomer_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionStripeGetCustomer_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
-		obj.GetCustomer = nil
+		obj.FlowActionStripeGetCustomer = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetGetCustomer(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionStripeGetCustomer(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetGetCustomer_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionStripeGetCustomer_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionStripe
 		// Should not panic - getters should handle nil receiver gracefully
@@ -36848,31 +38990,31 @@ func TestGettersFlowActionStripe(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetGetCustomer() // Should return zero value
+		_ = obj.GetFlowActionStripeGetCustomer() // Should return zero value
 	})
 
-	t.Run("GetUpdateCustomer", func(t *testing.T) {
+	t.Run("GetFlowActionStripeUpdateCustomer", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
 		var expected *FlowActionStripeUpdateCustomer
-		obj.UpdateCustomer = expected
+		obj.FlowActionStripeUpdateCustomer = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetUpdateCustomer(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionStripeUpdateCustomer(), "getter should return the property value")
 	})
 
-	t.Run("GetUpdateCustomer_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionStripeUpdateCustomer_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionStripe{}
-		obj.UpdateCustomer = nil
+		obj.FlowActionStripeUpdateCustomer = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetUpdateCustomer(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionStripeUpdateCustomer(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetUpdateCustomer_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionStripeUpdateCustomer_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionStripe
 		// Should not panic - getters should handle nil receiver gracefully
@@ -36881,7 +39023,7 @@ func TestGettersFlowActionStripe(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetUpdateCustomer() // Should return zero value
+		_ = obj.GetFlowActionStripeUpdateCustomer() // Should return zero value
 	})
 
 }
@@ -36908,6 +39050,14 @@ func TestSettersFlowActionStripeAddTaxID(t *testing.T) {
 		var fernTestValueType FlowActionStripeAddTaxIDType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionStripeAddTaxID{}
+		var fernTestValueAction FlowActionStripeAddTaxIDAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -37016,6 +39166,29 @@ func TestGettersFlowActionStripeAddTaxID(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeAddTaxID{}
+		var expected FlowActionStripeAddTaxIDAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionStripeAddTaxID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -37192,6 +39365,37 @@ func TestSettersMarkExplicitFlowActionStripeAddTaxID(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeAddTaxID{}
+		var fernTestValueAction FlowActionStripeAddTaxIDAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -38039,6 +40243,14 @@ func TestSettersFlowActionStripeCreateCustomer(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionStripeCreateCustomer{}
+		var fernTestValueAction FlowActionStripeCreateCustomerAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionStripeCreateCustomer{}
 		var fernTestValueAllowFailure *bool
@@ -38144,6 +40356,29 @@ func TestGettersFlowActionStripeCreateCustomer(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeCreateCustomer{}
+		var expected FlowActionStripeCreateCustomerAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionStripeCreateCustomer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -38320,6 +40555,37 @@ func TestSettersMarkExplicitFlowActionStripeCreateCustomer(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeCreateCustomer{}
+		var fernTestValueAction FlowActionStripeCreateCustomerAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -39118,6 +41384,14 @@ func TestSettersFlowActionStripeCreatePortalSession(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionStripeCreatePortalSession{}
+		var fernTestValueAction FlowActionStripeCreatePortalSessionAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionStripeCreatePortalSession{}
 		var fernTestValueAllowFailure *bool
@@ -39223,6 +41497,29 @@ func TestGettersFlowActionStripeCreatePortalSession(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeCreatePortalSession{}
+		var expected FlowActionStripeCreatePortalSessionAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionStripeCreatePortalSession
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -39399,6 +41696,37 @@ func TestSettersMarkExplicitFlowActionStripeCreatePortalSession(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeCreatePortalSession{}
+		var fernTestValueAction FlowActionStripeCreatePortalSessionAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -39748,6 +42076,14 @@ func TestSettersFlowActionStripeDeleteTaxID(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionStripeDeleteTaxID{}
+		var fernTestValueAction FlowActionStripeDeleteTaxIDAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionStripeDeleteTaxID{}
 		var fernTestValueAllowFailure *bool
@@ -39853,6 +42189,29 @@ func TestGettersFlowActionStripeDeleteTaxID(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeDeleteTaxID{}
+		var expected FlowActionStripeDeleteTaxIDAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionStripeDeleteTaxID
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -40029,6 +42388,37 @@ func TestSettersMarkExplicitFlowActionStripeDeleteTaxID(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeDeleteTaxID{}
+		var fernTestValueAction FlowActionStripeDeleteTaxIDAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -40367,6 +42757,14 @@ func TestSettersFlowActionStripeFindCustomers(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionStripeFindCustomers{}
+		var fernTestValueAction FlowActionStripeFindCustomersAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionStripeFindCustomers{}
 		var fernTestValueAllowFailure *bool
@@ -40472,6 +42870,29 @@ func TestGettersFlowActionStripeFindCustomers(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeFindCustomers{}
+		var expected FlowActionStripeFindCustomersAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionStripeFindCustomers
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -40648,6 +43069,37 @@ func TestSettersMarkExplicitFlowActionStripeFindCustomers(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeFindCustomers{}
+		var fernTestValueAction FlowActionStripeFindCustomersAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -40924,6 +43376,14 @@ func TestSettersFlowActionStripeGetCustomer(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionStripeGetCustomer{}
+		var fernTestValueAction FlowActionStripeGetCustomerAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionStripeGetCustomer{}
 		var fernTestValueAllowFailure *bool
@@ -41029,6 +43489,29 @@ func TestGettersFlowActionStripeGetCustomer(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeGetCustomer{}
+		var expected FlowActionStripeGetCustomerAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionStripeGetCustomer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -41205,6 +43688,37 @@ func TestSettersMarkExplicitFlowActionStripeGetCustomer(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeGetCustomer{}
+		var fernTestValueAction FlowActionStripeGetCustomerAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -41614,6 +44128,14 @@ func TestSettersFlowActionStripeUpdateCustomer(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionStripeUpdateCustomer{}
+		var fernTestValueAction FlowActionStripeUpdateCustomerAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionStripeUpdateCustomer{}
 		var fernTestValueAllowFailure *bool
@@ -41719,6 +44241,29 @@ func TestGettersFlowActionStripeUpdateCustomer(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeUpdateCustomer{}
+		var expected FlowActionStripeUpdateCustomerAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionStripeUpdateCustomer
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -41895,6 +44440,37 @@ func TestSettersMarkExplicitFlowActionStripeUpdateCustomer(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionStripeUpdateCustomer{}
+		var fernTestValueAction FlowActionStripeUpdateCustomerAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -43339,51 +45915,28 @@ func TestSettersMarkExplicitFlowActionTelegramSendMessageParams(t *testing.T) {
 }
 
 func TestGettersFlowActionTwilio(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionTwilio{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionTwilio
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetMakeCall", func(t *testing.T) {
+	t.Run("GetFlowActionTwilioMakeCall", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionTwilio{}
 		var expected *FlowActionTwilioMakeCall
-		obj.MakeCall = expected
+		obj.FlowActionTwilioMakeCall = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMakeCall(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionTwilioMakeCall(), "getter should return the property value")
 	})
 
-	t.Run("GetMakeCall_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionTwilioMakeCall_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionTwilio{}
-		obj.MakeCall = nil
+		obj.FlowActionTwilioMakeCall = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMakeCall(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionTwilioMakeCall(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMakeCall_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionTwilioMakeCall_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionTwilio
 		// Should not panic - getters should handle nil receiver gracefully
@@ -43392,31 +45945,31 @@ func TestGettersFlowActionTwilio(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMakeCall() // Should return zero value
+		_ = obj.GetFlowActionTwilioMakeCall() // Should return zero value
 	})
 
-	t.Run("GetSendSms", func(t *testing.T) {
+	t.Run("GetFlowActionTwilioSendSms", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionTwilio{}
 		var expected *FlowActionTwilioSendSms
-		obj.SendSms = expected
+		obj.FlowActionTwilioSendSms = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSendSms(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionTwilioSendSms(), "getter should return the property value")
 	})
 
-	t.Run("GetSendSms_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionTwilioSendSms_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionTwilio{}
-		obj.SendSms = nil
+		obj.FlowActionTwilioSendSms = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSendSms(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionTwilioSendSms(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSendSms_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionTwilioSendSms_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionTwilio
 		// Should not panic - getters should handle nil receiver gracefully
@@ -43425,7 +45978,7 @@ func TestGettersFlowActionTwilio(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSendSms() // Should return zero value
+		_ = obj.GetFlowActionTwilioSendSms() // Should return zero value
 	})
 
 }
@@ -43452,6 +46005,14 @@ func TestSettersFlowActionTwilioMakeCall(t *testing.T) {
 		var fernTestValueType FlowActionTwilioMakeCallType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionTwilioMakeCall{}
+		var fernTestValueAction FlowActionTwilioMakeCallAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -43560,6 +46121,29 @@ func TestGettersFlowActionTwilioMakeCall(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionTwilioMakeCall{}
+		var expected FlowActionTwilioMakeCallAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionTwilioMakeCall
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -43736,6 +46320,37 @@ func TestSettersMarkExplicitFlowActionTwilioMakeCall(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionTwilioMakeCall{}
+		var fernTestValueAction FlowActionTwilioMakeCallAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -44136,6 +46751,14 @@ func TestSettersFlowActionTwilioSendSms(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionTwilioSendSms{}
+		var fernTestValueAction FlowActionTwilioSendSmsAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionTwilioSendSms{}
 		var fernTestValueAllowFailure *bool
@@ -44241,6 +46864,29 @@ func TestGettersFlowActionTwilioSendSms(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionTwilioSendSms{}
+		var expected FlowActionTwilioSendSmsAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionTwilioSendSms
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -44417,6 +47063,37 @@ func TestSettersMarkExplicitFlowActionTwilioSendSms(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionTwilioSendSms{}
+		var fernTestValueAction FlowActionTwilioSendSmsAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -45657,51 +48334,28 @@ func TestGettersFlowActionWhatsappSendMessageParamsPayload(t *testing.T) {
 }
 
 func TestGettersFlowActionXML(t *testing.T) {
-	t.Run("GetAction", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FlowActionXML{}
-		var expected string
-		obj.Action = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
-	})
-
-	t.Run("GetAction_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FlowActionXML
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetAction() // Should return zero value
-	})
-
-	t.Run("GetParseXML", func(t *testing.T) {
+	t.Run("GetFlowActionXMLParseXML", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionXML{}
 		var expected *FlowActionXMLParseXML
-		obj.ParseXML = expected
+		obj.FlowActionXMLParseXML = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetParseXML(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionXMLParseXML(), "getter should return the property value")
 	})
 
-	t.Run("GetParseXML_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionXMLParseXML_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionXML{}
-		obj.ParseXML = nil
+		obj.FlowActionXMLParseXML = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetParseXML(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionXMLParseXML(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetParseXML_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionXMLParseXML_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionXML
 		// Should not panic - getters should handle nil receiver gracefully
@@ -45710,31 +48364,31 @@ func TestGettersFlowActionXML(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetParseXML() // Should return zero value
+		_ = obj.GetFlowActionXMLParseXML() // Should return zero value
 	})
 
-	t.Run("GetSerializeXML", func(t *testing.T) {
+	t.Run("GetFlowActionXMLSerializeXML", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionXML{}
 		var expected *FlowActionXMLSerializeXML
-		obj.SerializeXML = expected
+		obj.FlowActionXMLSerializeXML = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSerializeXML(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlowActionXMLSerializeXML(), "getter should return the property value")
 	})
 
-	t.Run("GetSerializeXML_NilValue", func(t *testing.T) {
+	t.Run("GetFlowActionXMLSerializeXML_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FlowActionXML{}
-		obj.SerializeXML = nil
+		obj.FlowActionXMLSerializeXML = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSerializeXML(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlowActionXMLSerializeXML(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSerializeXML_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlowActionXMLSerializeXML_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FlowActionXML
 		// Should not panic - getters should handle nil receiver gracefully
@@ -45743,7 +48397,7 @@ func TestGettersFlowActionXML(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSerializeXML() // Should return zero value
+		_ = obj.GetFlowActionXMLSerializeXML() // Should return zero value
 	})
 
 }
@@ -45770,6 +48424,14 @@ func TestSettersFlowActionXMLParseXML(t *testing.T) {
 		var fernTestValueType FlowActionXMLParseXMLType
 		obj.SetType(fernTestValueType)
 		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionXMLParseXML{}
+		var fernTestValueAction FlowActionXMLParseXMLAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -45878,6 +48540,29 @@ func TestGettersFlowActionXMLParseXML(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionXMLParseXML{}
+		var expected FlowActionXMLParseXMLAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionXMLParseXML
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -46054,6 +48739,37 @@ func TestSettersMarkExplicitFlowActionXMLParseXML(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionXMLParseXML{}
+		var fernTestValueAction FlowActionXMLParseXMLAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -46268,6 +48984,14 @@ func TestSettersFlowActionXMLSerializeXML(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAction", func(t *testing.T) {
+		obj := &FlowActionXMLSerializeXML{}
+		var fernTestValueAction FlowActionXMLSerializeXMLAction
+		obj.SetAction(fernTestValueAction)
+		assert.Equal(t, fernTestValueAction, obj.Action)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetAllowFailure", func(t *testing.T) {
 		obj := &FlowActionXMLSerializeXML{}
 		var fernTestValueAllowFailure *bool
@@ -46373,6 +49097,29 @@ func TestGettersFlowActionXMLSerializeXML(t *testing.T) {
 			}
 		}()
 		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAction", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionXMLSerializeXML{}
+		var expected FlowActionXMLSerializeXMLAction
+		obj.Action = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAction(), "getter should return the property value")
+	})
+
+	t.Run("GetAction_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FlowActionXMLSerializeXML
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAction() // Should return zero value
 	})
 
 	t.Run("GetAllowFailure", func(t *testing.T) {
@@ -46549,6 +49296,37 @@ func TestSettersMarkExplicitFlowActionXMLSerializeXML(t *testing.T) {
 
 		// Act
 		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAction_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FlowActionXMLSerializeXML{}
+		var fernTestValueAction FlowActionXMLSerializeXMLAction
+
+		// Act
+		obj.SetAction(fernTestValueAction)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -55666,6 +58444,28 @@ func TestStringUpdateFlowResponseContent(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionActivecampaignListContactsAction(t *testing.T) {
+	t.Run("NewFromString_LIST_CONTACTS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionActivecampaignListContactsActionFromString("LIST_CONTACTS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionActivecampaignListContactsAction("LIST_CONTACTS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionActivecampaignListContactsActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionActivecampaignListContactsActionFromString("LIST_CONTACTS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionActivecampaignListContactsType(t *testing.T) {
 	t.Run("NewFromString_ACTIVECAMPAIGN", func(t *testing.T) {
 		t.Parallel()
@@ -55681,6 +58481,28 @@ func TestEnumFlowActionActivecampaignListContactsType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionActivecampaignListContactsTypeFromString("ACTIVECAMPAIGN")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionActivecampaignUpsertContactAction(t *testing.T) {
+	t.Run("NewFromString_UPSERT_CONTACT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionActivecampaignUpsertContactActionFromString("UPSERT_CONTACT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionActivecampaignUpsertContactAction("UPSERT_CONTACT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionActivecampaignUpsertContactActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionActivecampaignUpsertContactActionFromString("UPSERT_CONTACT")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -55710,6 +58532,28 @@ func TestEnumFlowActionActivecampaignUpsertContactType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionAirtableCreateRecordAction(t *testing.T) {
+	t.Run("NewFromString_CREATE_RECORD", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAirtableCreateRecordActionFromString("CREATE_RECORD")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAirtableCreateRecordAction("CREATE_RECORD"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAirtableCreateRecordActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAirtableCreateRecordActionFromString("CREATE_RECORD")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionAirtableCreateRecordType(t *testing.T) {
 	t.Run("NewFromString_AIRTABLE", func(t *testing.T) {
 		t.Parallel()
@@ -55725,6 +58569,28 @@ func TestEnumFlowActionAirtableCreateRecordType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionAirtableCreateRecordTypeFromString("AIRTABLE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionAirtableListRecordsAction(t *testing.T) {
+	t.Run("NewFromString_LIST_RECORDS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAirtableListRecordsActionFromString("LIST_RECORDS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAirtableListRecordsAction("LIST_RECORDS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAirtableListRecordsActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAirtableListRecordsActionFromString("LIST_RECORDS")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -55754,6 +58620,28 @@ func TestEnumFlowActionAirtableListRecordsType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionAirtableUpdateRecordAction(t *testing.T) {
+	t.Run("NewFromString_UPDATE_RECORD", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAirtableUpdateRecordActionFromString("UPDATE_RECORD")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAirtableUpdateRecordAction("UPDATE_RECORD"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAirtableUpdateRecordActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAirtableUpdateRecordActionFromString("UPDATE_RECORD")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionAirtableUpdateRecordType(t *testing.T) {
 	t.Run("NewFromString_AIRTABLE", func(t *testing.T) {
 		t.Parallel()
@@ -55769,6 +58657,28 @@ func TestEnumFlowActionAirtableUpdateRecordType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionAirtableUpdateRecordTypeFromString("AIRTABLE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionAuth0CreateUserAction(t *testing.T) {
+	t.Run("NewFromString_CREATE_USER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAuth0CreateUserActionFromString("CREATE_USER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAuth0CreateUserAction("CREATE_USER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAuth0CreateUserActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAuth0CreateUserActionFromString("CREATE_USER")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -55798,6 +58708,28 @@ func TestEnumFlowActionAuth0CreateUserType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionAuth0GetUserAction(t *testing.T) {
+	t.Run("NewFromString_GET_USER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAuth0GetUserActionFromString("GET_USER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAuth0GetUserAction("GET_USER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAuth0GetUserActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAuth0GetUserActionFromString("GET_USER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionAuth0GetUserType(t *testing.T) {
 	t.Run("NewFromString_AUTH0", func(t *testing.T) {
 		t.Parallel()
@@ -55813,6 +58745,28 @@ func TestEnumFlowActionAuth0GetUserType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionAuth0GetUserTypeFromString("AUTH0")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionAuth0MakeCallAction(t *testing.T) {
+	t.Run("NewFromString_MAKE_CALL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAuth0MakeCallActionFromString("MAKE_CALL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAuth0MakeCallAction("MAKE_CALL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAuth0MakeCallActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAuth0MakeCallActionFromString("MAKE_CALL")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -55842,6 +58796,28 @@ func TestEnumFlowActionAuth0MakeCallType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionAuth0SendEmailAction(t *testing.T) {
+	t.Run("NewFromString_SEND_EMAIL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAuth0SendEmailActionFromString("SEND_EMAIL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAuth0SendEmailAction("SEND_EMAIL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAuth0SendEmailActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAuth0SendEmailActionFromString("SEND_EMAIL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionAuth0SendEmailType(t *testing.T) {
 	t.Run("NewFromString_AUTH0", func(t *testing.T) {
 		t.Parallel()
@@ -55857,6 +58833,28 @@ func TestEnumFlowActionAuth0SendEmailType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionAuth0SendEmailTypeFromString("AUTH0")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionAuth0SendRequestAction(t *testing.T) {
+	t.Run("NewFromString_SEND_REQUEST", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAuth0SendRequestActionFromString("SEND_REQUEST")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAuth0SendRequestAction("SEND_REQUEST"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAuth0SendRequestActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAuth0SendRequestActionFromString("SEND_REQUEST")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -55936,6 +58934,28 @@ func TestEnumFlowActionAuth0SendRequestType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionAuth0SendSmsAction(t *testing.T) {
+	t.Run("NewFromString_SEND_SMS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAuth0SendSmsActionFromString("SEND_SMS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAuth0SendSmsAction("SEND_SMS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAuth0SendSmsActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAuth0SendSmsActionFromString("SEND_SMS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionAuth0SendSmsType(t *testing.T) {
 	t.Run("NewFromString_AUTH0", func(t *testing.T) {
 		t.Parallel()
@@ -55951,6 +58971,28 @@ func TestEnumFlowActionAuth0SendSmsType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionAuth0SendSmsTypeFromString("AUTH0")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionAuth0UpdateUserAction(t *testing.T) {
+	t.Run("NewFromString_UPDATE_USER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionAuth0UpdateUserActionFromString("UPDATE_USER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionAuth0UpdateUserAction("UPDATE_USER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionAuth0UpdateUserActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionAuth0UpdateUserActionFromString("UPDATE_USER")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56024,6 +59066,28 @@ func TestEnumFlowActionBigqueryInsertRowsType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionClearbitFindCompanyAction(t *testing.T) {
+	t.Run("NewFromString_FIND_COMPANY", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionClearbitFindCompanyActionFromString("FIND_COMPANY")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionClearbitFindCompanyAction("FIND_COMPANY"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionClearbitFindCompanyActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionClearbitFindCompanyActionFromString("FIND_COMPANY")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionClearbitFindCompanyType(t *testing.T) {
 	t.Run("NewFromString_CLEARBIT", func(t *testing.T) {
 		t.Parallel()
@@ -56039,6 +59103,28 @@ func TestEnumFlowActionClearbitFindCompanyType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionClearbitFindCompanyTypeFromString("CLEARBIT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionClearbitFindPersonAction(t *testing.T) {
+	t.Run("NewFromString_FIND_PERSON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionClearbitFindPersonActionFromString("FIND_PERSON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionClearbitFindPersonAction("FIND_PERSON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionClearbitFindPersonActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionClearbitFindPersonActionFromString("FIND_PERSON")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56112,6 +59198,28 @@ func TestEnumFlowActionEmailVerifyEmailType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionFlowBooleanConditionAction(t *testing.T) {
+	t.Run("NewFromString_BOOLEAN_CONDITION", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionFlowBooleanConditionActionFromString("BOOLEAN_CONDITION")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionFlowBooleanConditionAction("BOOLEAN_CONDITION"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionFlowBooleanConditionActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionFlowBooleanConditionActionFromString("BOOLEAN_CONDITION")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionFlowBooleanConditionType(t *testing.T) {
 	t.Run("NewFromString_FLOW", func(t *testing.T) {
 		t.Parallel()
@@ -56127,6 +59235,28 @@ func TestEnumFlowActionFlowBooleanConditionType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionFlowBooleanConditionTypeFromString("FLOW")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionFlowDelayFlowAction(t *testing.T) {
+	t.Run("NewFromString_DELAY_FLOW", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionFlowDelayFlowActionFromString("DELAY_FLOW")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionFlowDelayFlowAction("DELAY_FLOW"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionFlowDelayFlowActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionFlowDelayFlowActionFromString("DELAY_FLOW")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56199,6 +59329,28 @@ func TestEnumFlowActionFlowDelayFlowType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionFlowDoNothingAction(t *testing.T) {
+	t.Run("NewFromString_DO_NOTHING", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionFlowDoNothingActionFromString("DO_NOTHING")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionFlowDoNothingAction("DO_NOTHING"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionFlowDoNothingActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionFlowDoNothingActionFromString("DO_NOTHING")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionFlowDoNothingType(t *testing.T) {
 	t.Run("NewFromString_FLOW", func(t *testing.T) {
 		t.Parallel()
@@ -56214,6 +59366,28 @@ func TestEnumFlowActionFlowDoNothingType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionFlowDoNothingTypeFromString("FLOW")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionFlowErrorMessageAction(t *testing.T) {
+	t.Run("NewFromString_ERROR_MESSAGE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionFlowErrorMessageActionFromString("ERROR_MESSAGE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionFlowErrorMessageAction("ERROR_MESSAGE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionFlowErrorMessageActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionFlowErrorMessageActionFromString("ERROR_MESSAGE")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56243,6 +59417,28 @@ func TestEnumFlowActionFlowErrorMessageType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionFlowMapValueAction(t *testing.T) {
+	t.Run("NewFromString_MAP_VALUE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionFlowMapValueActionFromString("MAP_VALUE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionFlowMapValueAction("MAP_VALUE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionFlowMapValueActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionFlowMapValueActionFromString("MAP_VALUE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionFlowMapValueType(t *testing.T) {
 	t.Run("NewFromString_FLOW", func(t *testing.T) {
 		t.Parallel()
@@ -56265,6 +59461,28 @@ func TestEnumFlowActionFlowMapValueType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionFlowReturnJSONAction(t *testing.T) {
+	t.Run("NewFromString_RETURN_JSON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionFlowReturnJSONActionFromString("RETURN_JSON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionFlowReturnJSONAction("RETURN_JSON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionFlowReturnJSONActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionFlowReturnJSONActionFromString("RETURN_JSON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionFlowReturnJSONType(t *testing.T) {
 	t.Run("NewFromString_FLOW", func(t *testing.T) {
 		t.Parallel()
@@ -56280,6 +59498,28 @@ func TestEnumFlowActionFlowReturnJSONType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionFlowReturnJSONTypeFromString("FLOW")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionFlowStoreVarsAction(t *testing.T) {
+	t.Run("NewFromString_STORE_VARS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionFlowStoreVarsActionFromString("STORE_VARS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionFlowStoreVarsAction("STORE_VARS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionFlowStoreVarsActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionFlowStoreVarsActionFromString("STORE_VARS")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56483,6 +59723,28 @@ func TestEnumFlowActionHTTPSendRequestType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionHubspotEnrollContactAction(t *testing.T) {
+	t.Run("NewFromString_ENROLL_CONTACT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionHubspotEnrollContactActionFromString("ENROLL_CONTACT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionHubspotEnrollContactAction("ENROLL_CONTACT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionHubspotEnrollContactActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionHubspotEnrollContactActionFromString("ENROLL_CONTACT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionHubspotEnrollContactType(t *testing.T) {
 	t.Run("NewFromString_HUBSPOT", func(t *testing.T) {
 		t.Parallel()
@@ -56498,6 +59760,28 @@ func TestEnumFlowActionHubspotEnrollContactType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionHubspotEnrollContactTypeFromString("HUBSPOT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionHubspotGetContactAction(t *testing.T) {
+	t.Run("NewFromString_GET_CONTACT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionHubspotGetContactActionFromString("GET_CONTACT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionHubspotGetContactAction("GET_CONTACT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionHubspotGetContactActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionHubspotGetContactActionFromString("GET_CONTACT")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56527,6 +59811,28 @@ func TestEnumFlowActionHubspotGetContactType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionHubspotUpsertContactAction(t *testing.T) {
+	t.Run("NewFromString_UPSERT_CONTACT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionHubspotUpsertContactActionFromString("UPSERT_CONTACT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionHubspotUpsertContactAction("UPSERT_CONTACT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionHubspotUpsertContactActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionHubspotUpsertContactActionFromString("UPSERT_CONTACT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionHubspotUpsertContactType(t *testing.T) {
 	t.Run("NewFromString_HUBSPOT", func(t *testing.T) {
 		t.Parallel()
@@ -56542,6 +59848,28 @@ func TestEnumFlowActionHubspotUpsertContactType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionHubspotUpsertContactTypeFromString("HUBSPOT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionJSONCreateJSONAction(t *testing.T) {
+	t.Run("NewFromString_CREATE_JSON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionJSONCreateJSONActionFromString("CREATE_JSON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionJSONCreateJSONAction("CREATE_JSON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionJSONCreateJSONActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionJSONCreateJSONActionFromString("CREATE_JSON")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56571,6 +59899,28 @@ func TestEnumFlowActionJSONCreateJSONType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionJSONParseJSONAction(t *testing.T) {
+	t.Run("NewFromString_PARSE_JSON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionJSONParseJSONActionFromString("PARSE_JSON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionJSONParseJSONAction("PARSE_JSON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionJSONParseJSONActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionJSONParseJSONActionFromString("PARSE_JSON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionJSONParseJSONType(t *testing.T) {
 	t.Run("NewFromString_JSON", func(t *testing.T) {
 		t.Parallel()
@@ -56586,6 +59936,28 @@ func TestEnumFlowActionJSONParseJSONType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionJSONParseJSONTypeFromString("JSON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionJSONSerializeJSONAction(t *testing.T) {
+	t.Run("NewFromString_SERIALIZE_JSON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionJSONSerializeJSONActionFromString("SERIALIZE_JSON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionJSONSerializeJSONAction("SERIALIZE_JSON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionJSONSerializeJSONActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionJSONSerializeJSONActionFromString("SERIALIZE_JSON")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56615,6 +59987,28 @@ func TestEnumFlowActionJSONSerializeJSONType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionJwtDecodeJwtAction(t *testing.T) {
+	t.Run("NewFromString_DECODE_JWT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionJwtDecodeJwtActionFromString("DECODE_JWT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionJwtDecodeJwtAction("DECODE_JWT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionJwtDecodeJwtActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionJwtDecodeJwtActionFromString("DECODE_JWT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionJwtDecodeJwtType(t *testing.T) {
 	t.Run("NewFromString_JWT", func(t *testing.T) {
 		t.Parallel()
@@ -56637,6 +60031,28 @@ func TestEnumFlowActionJwtDecodeJwtType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionJwtSignJwtAction(t *testing.T) {
+	t.Run("NewFromString_SIGN_JWT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionJwtSignJwtActionFromString("SIGN_JWT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionJwtSignJwtAction("SIGN_JWT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionJwtSignJwtActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionJwtSignJwtActionFromString("SIGN_JWT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionJwtSignJwtType(t *testing.T) {
 	t.Run("NewFromString_JWT", func(t *testing.T) {
 		t.Parallel()
@@ -56652,6 +60068,28 @@ func TestEnumFlowActionJwtSignJwtType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionJwtSignJwtTypeFromString("JWT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionJwtVerifyJwtAction(t *testing.T) {
+	t.Run("NewFromString_VERIFY_JWT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionJwtVerifyJwtActionFromString("VERIFY_JWT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionJwtVerifyJwtAction("VERIFY_JWT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionJwtVerifyJwtActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionJwtVerifyJwtActionFromString("VERIFY_JWT")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56769,6 +60207,28 @@ func TestEnumFlowActionMailjetSendEmailType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionOtpGenerateCodeAction(t *testing.T) {
+	t.Run("NewFromString_GENERATE_CODE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionOtpGenerateCodeActionFromString("GENERATE_CODE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionOtpGenerateCodeAction("GENERATE_CODE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionOtpGenerateCodeActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionOtpGenerateCodeActionFromString("GENERATE_CODE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionOtpGenerateCodeType(t *testing.T) {
 	t.Run("NewFromString_OTP", func(t *testing.T) {
 		t.Parallel()
@@ -56784,6 +60244,28 @@ func TestEnumFlowActionOtpGenerateCodeType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionOtpGenerateCodeTypeFromString("OTP")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionOtpVerifyCodeAction(t *testing.T) {
+	t.Run("NewFromString_VERIFY_CODE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionOtpVerifyCodeActionFromString("VERIFY_CODE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionOtpVerifyCodeAction("VERIFY_CODE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionOtpVerifyCodeActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionOtpVerifyCodeActionFromString("VERIFY_CODE")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56813,6 +60295,28 @@ func TestEnumFlowActionOtpVerifyCodeType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionPipedriveAddDealAction(t *testing.T) {
+	t.Run("NewFromString_ADD_DEAL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionPipedriveAddDealActionFromString("ADD_DEAL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionPipedriveAddDealAction("ADD_DEAL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionPipedriveAddDealActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionPipedriveAddDealActionFromString("ADD_DEAL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionPipedriveAddDealType(t *testing.T) {
 	t.Run("NewFromString_PIPEDRIVE", func(t *testing.T) {
 		t.Parallel()
@@ -56828,6 +60332,28 @@ func TestEnumFlowActionPipedriveAddDealType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionPipedriveAddDealTypeFromString("PIPEDRIVE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionPipedriveAddOrganizationAction(t *testing.T) {
+	t.Run("NewFromString_ADD_ORGANIZATION", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionPipedriveAddOrganizationActionFromString("ADD_ORGANIZATION")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionPipedriveAddOrganizationAction("ADD_ORGANIZATION"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionPipedriveAddOrganizationActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionPipedriveAddOrganizationActionFromString("ADD_ORGANIZATION")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56857,6 +60383,28 @@ func TestEnumFlowActionPipedriveAddOrganizationType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionPipedriveAddPersonAction(t *testing.T) {
+	t.Run("NewFromString_ADD_PERSON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionPipedriveAddPersonActionFromString("ADD_PERSON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionPipedriveAddPersonAction("ADD_PERSON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionPipedriveAddPersonActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionPipedriveAddPersonActionFromString("ADD_PERSON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionPipedriveAddPersonType(t *testing.T) {
 	t.Run("NewFromString_PIPEDRIVE", func(t *testing.T) {
 		t.Parallel()
@@ -56872,6 +60420,28 @@ func TestEnumFlowActionPipedriveAddPersonType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionPipedriveAddPersonTypeFromString("PIPEDRIVE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionSalesforceCreateLeadAction(t *testing.T) {
+	t.Run("NewFromString_CREATE_LEAD", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionSalesforceCreateLeadActionFromString("CREATE_LEAD")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionSalesforceCreateLeadAction("CREATE_LEAD"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionSalesforceCreateLeadActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionSalesforceCreateLeadActionFromString("CREATE_LEAD")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56901,6 +60471,28 @@ func TestEnumFlowActionSalesforceCreateLeadType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionSalesforceGetLeadAction(t *testing.T) {
+	t.Run("NewFromString_GET_LEAD", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionSalesforceGetLeadActionFromString("GET_LEAD")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionSalesforceGetLeadAction("GET_LEAD"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionSalesforceGetLeadActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionSalesforceGetLeadActionFromString("GET_LEAD")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionSalesforceGetLeadType(t *testing.T) {
 	t.Run("NewFromString_SALESFORCE", func(t *testing.T) {
 		t.Parallel()
@@ -56916,6 +60508,28 @@ func TestEnumFlowActionSalesforceGetLeadType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionSalesforceGetLeadTypeFromString("SALESFORCE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionSalesforceSearchLeadsAction(t *testing.T) {
+	t.Run("NewFromString_SEARCH_LEADS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionSalesforceSearchLeadsActionFromString("SEARCH_LEADS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionSalesforceSearchLeadsAction("SEARCH_LEADS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionSalesforceSearchLeadsActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionSalesforceSearchLeadsActionFromString("SEARCH_LEADS")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -56981,6 +60595,28 @@ func TestEnumFlowActionSalesforceSearchLeadsType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionSalesforceSearchLeadsTypeFromString("SALESFORCE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionSalesforceUpdateLeadAction(t *testing.T) {
+	t.Run("NewFromString_UPDATE_LEAD", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionSalesforceUpdateLeadActionFromString("UPDATE_LEAD")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionSalesforceUpdateLeadAction("UPDATE_LEAD"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionSalesforceUpdateLeadActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionSalesforceUpdateLeadActionFromString("UPDATE_LEAD")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -57134,6 +60770,28 @@ func TestEnumFlowActionSlackPostMessageType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionStripeAddTaxIDAction(t *testing.T) {
+	t.Run("NewFromString_ADD_TAX_ID", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionStripeAddTaxIDActionFromString("ADD_TAX_ID")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionStripeAddTaxIDAction("ADD_TAX_ID"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionStripeAddTaxIDActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionStripeAddTaxIDActionFromString("ADD_TAX_ID")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionStripeAddTaxIDType(t *testing.T) {
 	t.Run("NewFromString_STRIPE", func(t *testing.T) {
 		t.Parallel()
@@ -57149,6 +60807,28 @@ func TestEnumFlowActionStripeAddTaxIDType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionStripeAddTaxIDTypeFromString("STRIPE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionStripeCreateCustomerAction(t *testing.T) {
+	t.Run("NewFromString_CREATE_CUSTOMER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionStripeCreateCustomerActionFromString("CREATE_CUSTOMER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionStripeCreateCustomerAction("CREATE_CUSTOMER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionStripeCreateCustomerActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionStripeCreateCustomerActionFromString("CREATE_CUSTOMER")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -57178,6 +60858,28 @@ func TestEnumFlowActionStripeCreateCustomerType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionStripeCreatePortalSessionAction(t *testing.T) {
+	t.Run("NewFromString_CREATE_PORTAL_SESSION", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionStripeCreatePortalSessionActionFromString("CREATE_PORTAL_SESSION")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionStripeCreatePortalSessionAction("CREATE_PORTAL_SESSION"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionStripeCreatePortalSessionActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionStripeCreatePortalSessionActionFromString("CREATE_PORTAL_SESSION")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionStripeCreatePortalSessionType(t *testing.T) {
 	t.Run("NewFromString_STRIPE", func(t *testing.T) {
 		t.Parallel()
@@ -57193,6 +60895,28 @@ func TestEnumFlowActionStripeCreatePortalSessionType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionStripeCreatePortalSessionTypeFromString("STRIPE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionStripeDeleteTaxIDAction(t *testing.T) {
+	t.Run("NewFromString_DELETE_TAX_ID", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionStripeDeleteTaxIDActionFromString("DELETE_TAX_ID")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionStripeDeleteTaxIDAction("DELETE_TAX_ID"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionStripeDeleteTaxIDActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionStripeDeleteTaxIDActionFromString("DELETE_TAX_ID")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -57222,6 +60946,28 @@ func TestEnumFlowActionStripeDeleteTaxIDType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionStripeFindCustomersAction(t *testing.T) {
+	t.Run("NewFromString_FIND_CUSTOMERS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionStripeFindCustomersActionFromString("FIND_CUSTOMERS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionStripeFindCustomersAction("FIND_CUSTOMERS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionStripeFindCustomersActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionStripeFindCustomersActionFromString("FIND_CUSTOMERS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionStripeFindCustomersType(t *testing.T) {
 	t.Run("NewFromString_STRIPE", func(t *testing.T) {
 		t.Parallel()
@@ -57244,6 +60990,28 @@ func TestEnumFlowActionStripeFindCustomersType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionStripeGetCustomerAction(t *testing.T) {
+	t.Run("NewFromString_GET_CUSTOMER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionStripeGetCustomerActionFromString("GET_CUSTOMER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionStripeGetCustomerAction("GET_CUSTOMER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionStripeGetCustomerActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionStripeGetCustomerActionFromString("GET_CUSTOMER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionStripeGetCustomerType(t *testing.T) {
 	t.Run("NewFromString_STRIPE", func(t *testing.T) {
 		t.Parallel()
@@ -57259,6 +61027,28 @@ func TestEnumFlowActionStripeGetCustomerType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionStripeGetCustomerTypeFromString("STRIPE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionStripeUpdateCustomerAction(t *testing.T) {
+	t.Run("NewFromString_UPDATE_CUSTOMER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionStripeUpdateCustomerActionFromString("UPDATE_CUSTOMER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionStripeUpdateCustomerAction("UPDATE_CUSTOMER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionStripeUpdateCustomerActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionStripeUpdateCustomerActionFromString("UPDATE_CUSTOMER")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -57332,6 +61122,28 @@ func TestEnumFlowActionTelegramSendMessageType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionTwilioMakeCallAction(t *testing.T) {
+	t.Run("NewFromString_MAKE_CALL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionTwilioMakeCallActionFromString("MAKE_CALL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionTwilioMakeCallAction("MAKE_CALL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionTwilioMakeCallActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionTwilioMakeCallActionFromString("MAKE_CALL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionTwilioMakeCallType(t *testing.T) {
 	t.Run("NewFromString_TWILIO", func(t *testing.T) {
 		t.Parallel()
@@ -57347,6 +61159,28 @@ func TestEnumFlowActionTwilioMakeCallType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionTwilioMakeCallTypeFromString("TWILIO")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionTwilioSendSmsAction(t *testing.T) {
+	t.Run("NewFromString_SEND_SMS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionTwilioSendSmsActionFromString("SEND_SMS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionTwilioSendSmsAction("SEND_SMS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionTwilioSendSmsActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionTwilioSendSmsActionFromString("SEND_SMS")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -57498,6 +61332,28 @@ func TestEnumFlowActionWhatsappSendMessageType(t *testing.T) {
 	})
 }
 
+func TestEnumFlowActionXMLParseXMLAction(t *testing.T) {
+	t.Run("NewFromString_PARSE_XML", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionXMLParseXMLActionFromString("PARSE_XML")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionXMLParseXMLAction("PARSE_XML"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionXMLParseXMLActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionXMLParseXMLActionFromString("PARSE_XML")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumFlowActionXMLParseXMLType(t *testing.T) {
 	t.Run("NewFromString_XML", func(t *testing.T) {
 		t.Parallel()
@@ -57513,6 +61369,28 @@ func TestEnumFlowActionXMLParseXMLType(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFlowActionXMLParseXMLTypeFromString("XML")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFlowActionXMLSerializeXMLAction(t *testing.T) {
+	t.Run("NewFromString_SERIALIZE_XML", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFlowActionXMLSerializeXMLActionFromString("SERIALIZE_XML")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FlowActionXMLSerializeXMLAction("SERIALIZE_XML"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFlowActionXMLSerializeXMLActionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFlowActionXMLSerializeXMLActionFromString("SERIALIZE_XML")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

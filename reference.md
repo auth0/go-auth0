@@ -6519,7 +6519,8 @@ request := &management.EventStreamsCreateRequest{
             Configuration: &management.EventStreamWebhookConfiguration{
                 WebhookEndpoint: "webhook_endpoint",
                 WebhookAuthorization: &management.EventStreamWebhookAuthorizationResponse{
-                    Basic: &management.EventStreamWebhookBasicAuth{
+                    EventStreamWebhookBasicAuth: &management.EventStreamWebhookBasicAuth{
+                        Method: management.EventStreamWebhookBasicAuthMethodEnumBasic,
                         Username: "username",
                     },
                 },
@@ -9021,7 +9022,8 @@ For a `Sumo Logic` Stream, the `sink` properties are listed in the payload below
 
 ```go
 request := &management.CreateLogStreamRequestContent{
-    HTTP: &management.CreateLogStreamHTTPRequestBody{
+    CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
+        Type: management.LogStreamHTTPEnumHTTP,
         Sink: &management.LogStreamHTTPSink{
             HTTPEndpoint: "httpEndpoint",
         },

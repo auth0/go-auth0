@@ -18,6 +18,14 @@ func TestSettersCreateLogStreamDatadogRequestBody(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamDatadogRequestBody{}
+		var fernTestValueType LogStreamDatadogEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &CreateLogStreamDatadogRequestBody{}
 		var fernTestValueIsPriority *bool
@@ -93,6 +101,29 @@ func TestGettersCreateLogStreamDatadogRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamDatadogRequestBody{}
+		var expected LogStreamDatadogEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamDatadogRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -297,6 +328,37 @@ func TestSettersMarkExplicitCreateLogStreamDatadogRequestBody(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamDatadogRequestBody{}
+		var fernTestValueType LogStreamDatadogEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -463,6 +525,14 @@ func TestSettersCreateLogStreamEventBridgeRequestBody(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamEventBridgeRequestBody{}
+		var fernTestValueType LogStreamEventBridgeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &CreateLogStreamEventBridgeRequestBody{}
 		var fernTestValueIsPriority *bool
@@ -538,6 +608,29 @@ func TestGettersCreateLogStreamEventBridgeRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamEventBridgeRequestBody{}
+		var expected LogStreamEventBridgeEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamEventBridgeRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -742,6 +835,37 @@ func TestSettersMarkExplicitCreateLogStreamEventBridgeRequestBody(t *testing.T) 
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamEventBridgeRequestBody{}
+		var fernTestValueType LogStreamEventBridgeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -908,6 +1032,14 @@ func TestSettersCreateLogStreamEventGridRequestBody(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamEventGridRequestBody{}
+		var fernTestValueType LogStreamEventGridEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &CreateLogStreamEventGridRequestBody{}
 		var fernTestValueIsPriority *bool
@@ -983,6 +1115,29 @@ func TestGettersCreateLogStreamEventGridRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamEventGridRequestBody{}
+		var expected LogStreamEventGridEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamEventGridRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -1187,6 +1342,37 @@ func TestSettersMarkExplicitCreateLogStreamEventGridRequestBody(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamEventGridRequestBody{}
+		var fernTestValueType LogStreamEventGridEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1353,6 +1539,14 @@ func TestSettersCreateLogStreamHTTPRequestBody(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamHTTPRequestBody{}
+		var fernTestValueType LogStreamHTTPEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &CreateLogStreamHTTPRequestBody{}
 		var fernTestValueIsPriority *bool
@@ -1428,6 +1622,29 @@ func TestGettersCreateLogStreamHTTPRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamHTTPRequestBody{}
+		var expected LogStreamHTTPEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamHTTPRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -1632,6 +1849,37 @@ func TestSettersMarkExplicitCreateLogStreamHTTPRequestBody(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamHTTPRequestBody{}
+		var fernTestValueType LogStreamHTTPEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -1798,6 +2046,14 @@ func TestSettersCreateLogStreamMixpanelRequestBody(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamMixpanelRequestBody{}
+		var fernTestValueType LogStreamMixpanelEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &CreateLogStreamMixpanelRequestBody{}
 		var fernTestValueIsPriority *bool
@@ -1873,6 +2129,29 @@ func TestGettersCreateLogStreamMixpanelRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamMixpanelRequestBody{}
+		var expected LogStreamMixpanelEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamMixpanelRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -2077,6 +2356,37 @@ func TestSettersMarkExplicitCreateLogStreamMixpanelRequestBody(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamMixpanelRequestBody{}
+		var fernTestValueType LogStreamMixpanelEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -2235,51 +2545,28 @@ func TestSettersMarkExplicitCreateLogStreamMixpanelRequestBody(t *testing.T) {
 }
 
 func TestGettersCreateLogStreamRequestContent(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &CreateLogStreamRequestContent{}
-		var expected string
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *CreateLogStreamRequestContent
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-	t.Run("GetHTTP", func(t *testing.T) {
+	t.Run("GetCreateLogStreamHTTPRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamHTTPRequestBody
-		obj.HTTP = expected
+		obj.CreateLogStreamHTTPRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetHTTP(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamHTTPRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetHTTP_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamHTTPRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.HTTP = nil
+		obj.CreateLogStreamHTTPRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetHTTP(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamHTTPRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetHTTP_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamHTTPRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2288,31 +2575,31 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetHTTP() // Should return zero value
+		_ = obj.GetCreateLogStreamHTTPRequestBody() // Should return zero value
 	})
 
-	t.Run("GetEventbridge", func(t *testing.T) {
+	t.Run("GetCreateLogStreamEventBridgeRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamEventBridgeRequestBody
-		obj.Eventbridge = expected
+		obj.CreateLogStreamEventBridgeRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventbridge(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamEventBridgeRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetEventbridge_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamEventBridgeRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.Eventbridge = nil
+		obj.CreateLogStreamEventBridgeRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventbridge(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamEventBridgeRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventbridge_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamEventBridgeRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2321,31 +2608,31 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventbridge() // Should return zero value
+		_ = obj.GetCreateLogStreamEventBridgeRequestBody() // Should return zero value
 	})
 
-	t.Run("GetEventgrid", func(t *testing.T) {
+	t.Run("GetCreateLogStreamEventGridRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamEventGridRequestBody
-		obj.Eventgrid = expected
+		obj.CreateLogStreamEventGridRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventgrid(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamEventGridRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetEventgrid_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamEventGridRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.Eventgrid = nil
+		obj.CreateLogStreamEventGridRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventgrid(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamEventGridRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventgrid_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamEventGridRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2354,31 +2641,31 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventgrid() // Should return zero value
+		_ = obj.GetCreateLogStreamEventGridRequestBody() // Should return zero value
 	})
 
-	t.Run("GetDatadog", func(t *testing.T) {
+	t.Run("GetCreateLogStreamDatadogRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamDatadogRequestBody
-		obj.Datadog = expected
+		obj.CreateLogStreamDatadogRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDatadog(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamDatadogRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetDatadog_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamDatadogRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.Datadog = nil
+		obj.CreateLogStreamDatadogRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDatadog(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamDatadogRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDatadog_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamDatadogRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2387,31 +2674,31 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDatadog() // Should return zero value
+		_ = obj.GetCreateLogStreamDatadogRequestBody() // Should return zero value
 	})
 
-	t.Run("GetSplunk", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSplunkRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamSplunkRequestBody
-		obj.Splunk = expected
+		obj.CreateLogStreamSplunkRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSplunk(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamSplunkRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetSplunk_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSplunkRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.Splunk = nil
+		obj.CreateLogStreamSplunkRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSplunk(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamSplunkRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSplunk_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSplunkRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2420,31 +2707,31 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSplunk() // Should return zero value
+		_ = obj.GetCreateLogStreamSplunkRequestBody() // Should return zero value
 	})
 
-	t.Run("GetSumo", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSumoRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamSumoRequestBody
-		obj.Sumo = expected
+		obj.CreateLogStreamSumoRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSumo(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamSumoRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetSumo_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSumoRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.Sumo = nil
+		obj.CreateLogStreamSumoRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSumo(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamSumoRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSumo_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSumoRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2453,31 +2740,31 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSumo() // Should return zero value
+		_ = obj.GetCreateLogStreamSumoRequestBody() // Should return zero value
 	})
 
-	t.Run("GetSegment", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSegmentRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamSegmentRequestBody
-		obj.Segment = expected
+		obj.CreateLogStreamSegmentRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSegment(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamSegmentRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetSegment_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSegmentRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.Segment = nil
+		obj.CreateLogStreamSegmentRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSegment(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamSegmentRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSegment_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamSegmentRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2486,31 +2773,31 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSegment() // Should return zero value
+		_ = obj.GetCreateLogStreamSegmentRequestBody() // Should return zero value
 	})
 
-	t.Run("GetMixpanel", func(t *testing.T) {
+	t.Run("GetCreateLogStreamMixpanelRequestBody", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
 		var expected *CreateLogStreamMixpanelRequestBody
-		obj.Mixpanel = expected
+		obj.CreateLogStreamMixpanelRequestBody = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMixpanel(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCreateLogStreamMixpanelRequestBody(), "getter should return the property value")
 	})
 
-	t.Run("GetMixpanel_NilValue", func(t *testing.T) {
+	t.Run("GetCreateLogStreamMixpanelRequestBody_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamRequestContent{}
-		obj.Mixpanel = nil
+		obj.CreateLogStreamMixpanelRequestBody = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMixpanel(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCreateLogStreamMixpanelRequestBody(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMixpanel_NilReceiver", func(t *testing.T) {
+	t.Run("GetCreateLogStreamMixpanelRequestBody_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamRequestContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2519,57 +2806,34 @@ func TestGettersCreateLogStreamRequestContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMixpanel() // Should return zero value
+		_ = obj.GetCreateLogStreamMixpanelRequestBody() // Should return zero value
 	})
 
 }
 
 func TestGettersCreateLogStreamResponseContent(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &CreateLogStreamResponseContent{}
-		var expected string
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *CreateLogStreamResponseContent
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-	t.Run("GetHTTP", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamHTTPResponseSchema
-		obj.HTTP = expected
+		obj.LogStreamHTTPResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetHTTP(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamHTTPResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetHTTP_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.HTTP = nil
+		obj.LogStreamHTTPResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetHTTP(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamHTTPResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetHTTP_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2578,31 +2842,31 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetHTTP() // Should return zero value
+		_ = obj.GetLogStreamHTTPResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventbridge", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamEventBridgeResponseSchema
-		obj.Eventbridge = expected
+		obj.LogStreamEventBridgeResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventbridge(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventbridge_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.Eventbridge = nil
+		obj.LogStreamEventBridgeResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventbridge(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventbridge_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2611,31 +2875,31 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventbridge() // Should return zero value
+		_ = obj.GetLogStreamEventBridgeResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventgrid", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamEventGridResponseSchema
-		obj.Eventgrid = expected
+		obj.LogStreamEventGridResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventgrid(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventGridResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventgrid_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.Eventgrid = nil
+		obj.LogStreamEventGridResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventgrid(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventGridResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventgrid_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2644,31 +2908,31 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventgrid() // Should return zero value
+		_ = obj.GetLogStreamEventGridResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetDatadog", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamDatadogResponseSchema
-		obj.Datadog = expected
+		obj.LogStreamDatadogResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDatadog(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamDatadogResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetDatadog_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.Datadog = nil
+		obj.LogStreamDatadogResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDatadog(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamDatadogResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDatadog_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2677,31 +2941,31 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDatadog() // Should return zero value
+		_ = obj.GetLogStreamDatadogResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSplunk", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamSplunkResponseSchema
-		obj.Splunk = expected
+		obj.LogStreamSplunkResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSplunk(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSplunkResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSplunk_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.Splunk = nil
+		obj.LogStreamSplunkResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSplunk(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSplunkResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSplunk_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2710,31 +2974,31 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSplunk() // Should return zero value
+		_ = obj.GetLogStreamSplunkResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSumo", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamSumoResponseSchema
-		obj.Sumo = expected
+		obj.LogStreamSumoResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSumo(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSumoResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSumo_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.Sumo = nil
+		obj.LogStreamSumoResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSumo(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSumoResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSumo_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2743,31 +3007,31 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSumo() // Should return zero value
+		_ = obj.GetLogStreamSumoResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSegment", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamSegmentResponseSchema
-		obj.Segment = expected
+		obj.LogStreamSegmentResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSegment(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSegmentResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSegment_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.Segment = nil
+		obj.LogStreamSegmentResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSegment(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSegmentResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSegment_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2776,31 +3040,31 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSegment() // Should return zero value
+		_ = obj.GetLogStreamSegmentResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetMixpanel", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
 		var expected *LogStreamMixpanelResponseSchema
-		obj.Mixpanel = expected
+		obj.LogStreamMixpanelResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMixpanel(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamMixpanelResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetMixpanel_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &CreateLogStreamResponseContent{}
-		obj.Mixpanel = nil
+		obj.LogStreamMixpanelResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMixpanel(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamMixpanelResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMixpanel_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *CreateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -2809,7 +3073,7 @@ func TestGettersCreateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMixpanel() // Should return zero value
+		_ = obj.GetLogStreamMixpanelResponseSchema() // Should return zero value
 	})
 
 }
@@ -2820,6 +3084,14 @@ func TestSettersCreateLogStreamSegmentRequestBody(t *testing.T) {
 		var fernTestValueName *string
 		obj.SetName(fernTestValueName)
 		assert.Equal(t, fernTestValueName, obj.Name)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamSegmentRequestBody{}
+		var fernTestValueType LogStreamSegmentEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -2898,6 +3170,29 @@ func TestGettersCreateLogStreamSegmentRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamSegmentRequestBody{}
+		var expected LogStreamSegmentEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamSegmentRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -3102,6 +3397,37 @@ func TestSettersMarkExplicitCreateLogStreamSegmentRequestBody(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamSegmentRequestBody{}
+		var fernTestValueType LogStreamSegmentEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3268,6 +3594,14 @@ func TestSettersCreateLogStreamSplunkRequestBody(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamSplunkRequestBody{}
+		var fernTestValueType LogStreamSplunkEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &CreateLogStreamSplunkRequestBody{}
 		var fernTestValueIsPriority *bool
@@ -3343,6 +3677,29 @@ func TestGettersCreateLogStreamSplunkRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamSplunkRequestBody{}
+		var expected LogStreamSplunkEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamSplunkRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -3547,6 +3904,37 @@ func TestSettersMarkExplicitCreateLogStreamSplunkRequestBody(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamSplunkRequestBody{}
+		var fernTestValueType LogStreamSplunkEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -3713,6 +4101,14 @@ func TestSettersCreateLogStreamSumoRequestBody(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &CreateLogStreamSumoRequestBody{}
+		var fernTestValueType LogStreamSumoEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &CreateLogStreamSumoRequestBody{}
 		var fernTestValueIsPriority *bool
@@ -3788,6 +4184,29 @@ func TestGettersCreateLogStreamSumoRequestBody(t *testing.T) {
 			}
 		}()
 		_ = obj.GetName() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamSumoRequestBody{}
+		var expected LogStreamSumoEnum
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateLogStreamSumoRequestBody
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -3992,6 +4411,37 @@ func TestSettersMarkExplicitCreateLogStreamSumoRequestBody(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateLogStreamSumoRequestBody{}
+		var fernTestValueType LogStreamSumoEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -4150,51 +4600,28 @@ func TestSettersMarkExplicitCreateLogStreamSumoRequestBody(t *testing.T) {
 }
 
 func TestGettersGetLogStreamResponseContent(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &GetLogStreamResponseContent{}
-		var expected string
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *GetLogStreamResponseContent
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-	t.Run("GetHTTP", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamHTTPResponseSchema
-		obj.HTTP = expected
+		obj.LogStreamHTTPResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetHTTP(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamHTTPResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetHTTP_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.HTTP = nil
+		obj.LogStreamHTTPResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetHTTP(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamHTTPResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetHTTP_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4203,31 +4630,31 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetHTTP() // Should return zero value
+		_ = obj.GetLogStreamHTTPResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventbridge", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamEventBridgeResponseSchema
-		obj.Eventbridge = expected
+		obj.LogStreamEventBridgeResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventbridge(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventbridge_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.Eventbridge = nil
+		obj.LogStreamEventBridgeResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventbridge(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventbridge_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4236,31 +4663,31 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventbridge() // Should return zero value
+		_ = obj.GetLogStreamEventBridgeResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventgrid", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamEventGridResponseSchema
-		obj.Eventgrid = expected
+		obj.LogStreamEventGridResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventgrid(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventGridResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventgrid_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.Eventgrid = nil
+		obj.LogStreamEventGridResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventgrid(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventGridResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventgrid_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4269,31 +4696,31 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventgrid() // Should return zero value
+		_ = obj.GetLogStreamEventGridResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetDatadog", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamDatadogResponseSchema
-		obj.Datadog = expected
+		obj.LogStreamDatadogResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDatadog(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamDatadogResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetDatadog_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.Datadog = nil
+		obj.LogStreamDatadogResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDatadog(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamDatadogResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDatadog_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4302,31 +4729,31 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDatadog() // Should return zero value
+		_ = obj.GetLogStreamDatadogResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSplunk", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamSplunkResponseSchema
-		obj.Splunk = expected
+		obj.LogStreamSplunkResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSplunk(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSplunkResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSplunk_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.Splunk = nil
+		obj.LogStreamSplunkResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSplunk(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSplunkResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSplunk_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4335,31 +4762,31 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSplunk() // Should return zero value
+		_ = obj.GetLogStreamSplunkResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSumo", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamSumoResponseSchema
-		obj.Sumo = expected
+		obj.LogStreamSumoResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSumo(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSumoResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSumo_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.Sumo = nil
+		obj.LogStreamSumoResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSumo(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSumoResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSumo_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4368,31 +4795,31 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSumo() // Should return zero value
+		_ = obj.GetLogStreamSumoResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSegment", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamSegmentResponseSchema
-		obj.Segment = expected
+		obj.LogStreamSegmentResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSegment(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSegmentResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSegment_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.Segment = nil
+		obj.LogStreamSegmentResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSegment(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSegmentResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSegment_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4401,31 +4828,31 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSegment() // Should return zero value
+		_ = obj.GetLogStreamSegmentResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetMixpanel", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
 		var expected *LogStreamMixpanelResponseSchema
-		obj.Mixpanel = expected
+		obj.LogStreamMixpanelResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMixpanel(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamMixpanelResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetMixpanel_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &GetLogStreamResponseContent{}
-		obj.Mixpanel = nil
+		obj.LogStreamMixpanelResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMixpanel(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamMixpanelResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMixpanel_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -4434,7 +4861,7 @@ func TestGettersGetLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMixpanel() // Should return zero value
+		_ = obj.GetLogStreamMixpanelResponseSchema() // Should return zero value
 	})
 
 }
@@ -4619,6 +5046,14 @@ func TestSettersLogStreamDatadogResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamDatadogResponseSchema{}
+		var fernTestValueType *LogStreamDatadogEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &LogStreamDatadogResponseSchema{}
 		var fernTestValueIsPriority *bool
@@ -4754,6 +5189,40 @@ func TestGettersLogStreamDatadogResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamDatadogResponseSchema{}
+		var value LogStreamDatadogEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamDatadogResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamDatadogEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamDatadogResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -4964,6 +5433,37 @@ func TestSettersMarkExplicitLogStreamDatadogResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamDatadogResponseSchema{}
+		var fernTestValueType *LogStreamDatadogEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5271,6 +5771,14 @@ func TestSettersLogStreamEventBridgeResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamEventBridgeResponseSchema{}
+		var fernTestValueType *LogStreamEventBridgeEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &LogStreamEventBridgeResponseSchema{}
 		var fernTestValueIsPriority *bool
@@ -5406,6 +5914,40 @@ func TestGettersLogStreamEventBridgeResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamEventBridgeResponseSchema{}
+		var value LogStreamEventBridgeEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamEventBridgeResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamEventBridgeEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamEventBridgeResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -5616,6 +6158,37 @@ func TestSettersMarkExplicitLogStreamEventBridgeResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamEventBridgeResponseSchema{}
+		var fernTestValueType *LogStreamEventBridgeEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5996,6 +6569,14 @@ func TestSettersLogStreamEventGridResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamEventGridResponseSchema{}
+		var fernTestValueType *LogStreamEventGridEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &LogStreamEventGridResponseSchema{}
 		var fernTestValueIsPriority *bool
@@ -6131,6 +6712,40 @@ func TestGettersLogStreamEventGridResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamEventGridResponseSchema{}
+		var value LogStreamEventGridEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamEventGridResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamEventGridEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamEventGridResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -6341,6 +6956,37 @@ func TestSettersMarkExplicitLogStreamEventGridResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamEventGridResponseSchema{}
+		var fernTestValueType *LogStreamEventGridEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -6938,6 +7584,14 @@ func TestSettersLogStreamHTTPResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamHTTPResponseSchema{}
+		var fernTestValueType *LogStreamHTTPEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &LogStreamHTTPResponseSchema{}
 		var fernTestValueIsPriority *bool
@@ -7073,6 +7727,40 @@ func TestGettersLogStreamHTTPResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamHTTPResponseSchema{}
+		var value LogStreamHTTPEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamHTTPResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamHTTPEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamHTTPResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -7283,6 +7971,37 @@ func TestSettersMarkExplicitLogStreamHTTPResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamHTTPResponseSchema{}
+		var fernTestValueType *LogStreamHTTPEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -7819,6 +8538,14 @@ func TestSettersLogStreamMixpanelResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamMixpanelResponseSchema{}
+		var fernTestValueType *LogStreamMixpanelEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &LogStreamMixpanelResponseSchema{}
 		var fernTestValueIsPriority *bool
@@ -7954,6 +8681,40 @@ func TestGettersLogStreamMixpanelResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamMixpanelResponseSchema{}
+		var value LogStreamMixpanelEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamMixpanelResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamMixpanelEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamMixpanelResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -8164,6 +8925,37 @@ func TestSettersMarkExplicitLogStreamMixpanelResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamMixpanelResponseSchema{}
+		var fernTestValueType *LogStreamMixpanelEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -9066,51 +9858,28 @@ func TestSettersMarkExplicitLogStreamPiiConfig(t *testing.T) {
 }
 
 func TestGettersLogStreamResponseSchema(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &LogStreamResponseSchema{}
-		var expected string
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *LogStreamResponseSchema
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-	t.Run("GetHTTP", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamHTTPResponseSchema
-		obj.HTTP = expected
+		obj.LogStreamHTTPResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetHTTP(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamHTTPResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetHTTP_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.HTTP = nil
+		obj.LogStreamHTTPResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetHTTP(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamHTTPResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetHTTP_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9119,31 +9888,31 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetHTTP() // Should return zero value
+		_ = obj.GetLogStreamHTTPResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventbridge", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamEventBridgeResponseSchema
-		obj.Eventbridge = expected
+		obj.LogStreamEventBridgeResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventbridge(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventbridge_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.Eventbridge = nil
+		obj.LogStreamEventBridgeResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventbridge(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventbridge_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9152,31 +9921,31 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventbridge() // Should return zero value
+		_ = obj.GetLogStreamEventBridgeResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventgrid", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamEventGridResponseSchema
-		obj.Eventgrid = expected
+		obj.LogStreamEventGridResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventgrid(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventGridResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventgrid_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.Eventgrid = nil
+		obj.LogStreamEventGridResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventgrid(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventGridResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventgrid_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9185,31 +9954,31 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventgrid() // Should return zero value
+		_ = obj.GetLogStreamEventGridResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetDatadog", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamDatadogResponseSchema
-		obj.Datadog = expected
+		obj.LogStreamDatadogResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDatadog(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamDatadogResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetDatadog_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.Datadog = nil
+		obj.LogStreamDatadogResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDatadog(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamDatadogResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDatadog_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9218,31 +9987,31 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDatadog() // Should return zero value
+		_ = obj.GetLogStreamDatadogResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSplunk", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamSplunkResponseSchema
-		obj.Splunk = expected
+		obj.LogStreamSplunkResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSplunk(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSplunkResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSplunk_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.Splunk = nil
+		obj.LogStreamSplunkResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSplunk(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSplunkResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSplunk_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9251,31 +10020,31 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSplunk() // Should return zero value
+		_ = obj.GetLogStreamSplunkResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSumo", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamSumoResponseSchema
-		obj.Sumo = expected
+		obj.LogStreamSumoResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSumo(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSumoResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSumo_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.Sumo = nil
+		obj.LogStreamSumoResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSumo(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSumoResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSumo_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9284,31 +10053,31 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSumo() // Should return zero value
+		_ = obj.GetLogStreamSumoResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSegment", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamSegmentResponseSchema
-		obj.Segment = expected
+		obj.LogStreamSegmentResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSegment(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSegmentResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSegment_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.Segment = nil
+		obj.LogStreamSegmentResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSegment(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSegmentResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSegment_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9317,31 +10086,31 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSegment() // Should return zero value
+		_ = obj.GetLogStreamSegmentResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetMixpanel", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
 		var expected *LogStreamMixpanelResponseSchema
-		obj.Mixpanel = expected
+		obj.LogStreamMixpanelResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMixpanel(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamMixpanelResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetMixpanel_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &LogStreamResponseSchema{}
-		obj.Mixpanel = nil
+		obj.LogStreamMixpanelResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMixpanel(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamMixpanelResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMixpanel_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *LogStreamResponseSchema
 		// Should not panic - getters should handle nil receiver gracefully
@@ -9350,7 +10119,7 @@ func TestGettersLogStreamResponseSchema(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMixpanel() // Should return zero value
+		_ = obj.GetLogStreamMixpanelResponseSchema() // Should return zero value
 	})
 
 }
@@ -9377,6 +10146,14 @@ func TestSettersLogStreamSegmentResponseSchema(t *testing.T) {
 		var fernTestValueStatus *LogStreamStatusEnum
 		obj.SetStatus(fernTestValueStatus)
 		assert.Equal(t, fernTestValueStatus, obj.Status)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamSegmentResponseSchema{}
+		var fernTestValueType *LogStreamSegmentEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -9515,6 +10292,40 @@ func TestGettersLogStreamSegmentResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSegmentResponseSchema{}
+		var value LogStreamSegmentEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSegmentResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamSegmentEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamSegmentResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -9725,6 +10536,37 @@ func TestSettersMarkExplicitLogStreamSegmentResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSegmentResponseSchema{}
+		var fernTestValueType *LogStreamSegmentEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -10253,6 +11095,14 @@ func TestSettersLogStreamSplunkResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamSplunkResponseSchema{}
+		var fernTestValueType *LogStreamSplunkEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &LogStreamSplunkResponseSchema{}
 		var fernTestValueIsPriority *bool
@@ -10388,6 +11238,40 @@ func TestGettersLogStreamSplunkResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSplunkResponseSchema{}
+		var value LogStreamSplunkEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSplunkResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamSplunkEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamSplunkResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -10598,6 +11482,37 @@ func TestSettersMarkExplicitLogStreamSplunkResponseSchema(t *testing.T) {
 
 		// Act
 		obj.SetStatus(fernTestValueStatus)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSplunkResponseSchema{}
+		var fernTestValueType *LogStreamSplunkEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -11029,6 +11944,14 @@ func TestSettersLogStreamSumoResponseSchema(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetType", func(t *testing.T) {
+		obj := &LogStreamSumoResponseSchema{}
+		var fernTestValueType *LogStreamSumoEnum
+		obj.SetType(fernTestValueType)
+		assert.Equal(t, fernTestValueType, obj.Type)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIsPriority", func(t *testing.T) {
 		obj := &LogStreamSumoResponseSchema{}
 		var fernTestValueIsPriority *bool
@@ -11164,6 +12087,40 @@ func TestGettersLogStreamSumoResponseSchema(t *testing.T) {
 			}
 		}()
 		_ = obj.GetStatus() // Should return zero value
+	})
+
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSumoResponseSchema{}
+		var value LogStreamSumoEnum
+		obj.Type = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetType(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetType_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSumoResponseSchema{}
+		obj.Type = nil
+		var expectedZero LogStreamSumoEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetType(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *LogStreamSumoResponseSchema
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetIsPriority", func(t *testing.T) {
@@ -11397,6 +12354,37 @@ func TestSettersMarkExplicitLogStreamSumoResponseSchema(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetType_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &LogStreamSumoResponseSchema{}
+		var fernTestValueType *LogStreamSumoEnum
+
+		// Act
+		obj.SetType(fernTestValueType)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIsPriority_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -11595,51 +12583,28 @@ func TestSettersMarkExplicitLogStreamSumoSink(t *testing.T) {
 }
 
 func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &UpdateLogStreamResponseContent{}
-		var expected string
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *UpdateLogStreamResponseContent
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
-	t.Run("GetHTTP", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamHTTPResponseSchema
-		obj.HTTP = expected
+		obj.LogStreamHTTPResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetHTTP(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamHTTPResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetHTTP_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.HTTP = nil
+		obj.LogStreamHTTPResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetHTTP(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamHTTPResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetHTTP_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamHTTPResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11648,31 +12613,31 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetHTTP() // Should return zero value
+		_ = obj.GetLogStreamHTTPResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventbridge", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamEventBridgeResponseSchema
-		obj.Eventbridge = expected
+		obj.LogStreamEventBridgeResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventbridge(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventbridge_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.Eventbridge = nil
+		obj.LogStreamEventBridgeResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventbridge(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventBridgeResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventbridge_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventBridgeResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11681,31 +12646,31 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventbridge() // Should return zero value
+		_ = obj.GetLogStreamEventBridgeResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetEventgrid", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamEventGridResponseSchema
-		obj.Eventgrid = expected
+		obj.LogStreamEventGridResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventgrid(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamEventGridResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetEventgrid_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.Eventgrid = nil
+		obj.LogStreamEventGridResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventgrid(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamEventGridResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventgrid_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamEventGridResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11714,31 +12679,31 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventgrid() // Should return zero value
+		_ = obj.GetLogStreamEventGridResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetDatadog", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamDatadogResponseSchema
-		obj.Datadog = expected
+		obj.LogStreamDatadogResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetDatadog(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamDatadogResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetDatadog_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.Datadog = nil
+		obj.LogStreamDatadogResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetDatadog(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamDatadogResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetDatadog_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamDatadogResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11747,31 +12712,31 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetDatadog() // Should return zero value
+		_ = obj.GetLogStreamDatadogResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSplunk", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamSplunkResponseSchema
-		obj.Splunk = expected
+		obj.LogStreamSplunkResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSplunk(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSplunkResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSplunk_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.Splunk = nil
+		obj.LogStreamSplunkResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSplunk(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSplunkResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSplunk_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSplunkResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11780,31 +12745,31 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSplunk() // Should return zero value
+		_ = obj.GetLogStreamSplunkResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSumo", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamSumoResponseSchema
-		obj.Sumo = expected
+		obj.LogStreamSumoResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSumo(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSumoResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSumo_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.Sumo = nil
+		obj.LogStreamSumoResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSumo(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSumoResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSumo_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSumoResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11813,31 +12778,31 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSumo() // Should return zero value
+		_ = obj.GetLogStreamSumoResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetSegment", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamSegmentResponseSchema
-		obj.Segment = expected
+		obj.LogStreamSegmentResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetSegment(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamSegmentResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetSegment_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.Segment = nil
+		obj.LogStreamSegmentResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetSegment(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamSegmentResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetSegment_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamSegmentResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11846,31 +12811,31 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetSegment() // Should return zero value
+		_ = obj.GetLogStreamSegmentResponseSchema() // Should return zero value
 	})
 
-	t.Run("GetMixpanel", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
 		var expected *LogStreamMixpanelResponseSchema
-		obj.Mixpanel = expected
+		obj.LogStreamMixpanelResponseSchema = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetMixpanel(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLogStreamMixpanelResponseSchema(), "getter should return the property value")
 	})
 
-	t.Run("GetMixpanel_NilValue", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &UpdateLogStreamResponseContent{}
-		obj.Mixpanel = nil
+		obj.LogStreamMixpanelResponseSchema = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetMixpanel(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLogStreamMixpanelResponseSchema(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetMixpanel_NilReceiver", func(t *testing.T) {
+	t.Run("GetLogStreamMixpanelResponseSchema_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *UpdateLogStreamResponseContent
 		// Should not panic - getters should handle nil receiver gracefully
@@ -11879,7 +12844,7 @@ func TestGettersUpdateLogStreamResponseContent(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetMixpanel() // Should return zero value
+		_ = obj.GetLogStreamMixpanelResponseSchema() // Should return zero value
 	})
 
 }
@@ -13305,6 +14270,28 @@ func TestStringLogStreamSumoSink(t *testing.T) {
 	})
 }
 
+func TestEnumLogStreamDatadogEnum(t *testing.T) {
+	t.Run("NewFromString_datadog", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamDatadogEnumFromString("datadog")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamDatadogEnum("datadog"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamDatadogEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamDatadogEnumFromString("datadog")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumLogStreamDatadogRegionEnum(t *testing.T) {
 	t.Run("NewFromString_us", func(t *testing.T) {
 		t.Parallel()
@@ -13341,6 +14328,28 @@ func TestEnumLogStreamDatadogRegionEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewLogStreamDatadogRegionEnumFromString("us")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamEventBridgeEnum(t *testing.T) {
+	t.Run("NewFromString_eventbridge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamEventBridgeEnumFromString("eventbridge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamEventBridgeEnum("eventbridge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamEventBridgeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamEventBridgeEnumFromString("eventbridge")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -13608,6 +14617,28 @@ func TestEnumLogStreamEventBridgeSinkRegionEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewLogStreamEventBridgeSinkRegionEnumFromString("af-south-1")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamEventGridEnum(t *testing.T) {
+	t.Run("NewFromString_eventgrid", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamEventGridEnumFromString("eventgrid")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamEventGridEnum("eventgrid"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamEventGridEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamEventGridEnumFromString("eventgrid")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -14081,6 +15112,50 @@ func TestEnumLogStreamHTTPContentFormatEnum(t *testing.T) {
 	})
 }
 
+func TestEnumLogStreamHTTPEnum(t *testing.T) {
+	t.Run("NewFromString_http", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamHTTPEnumFromString("http")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamHTTPEnum("http"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamHTTPEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamHTTPEnumFromString("http")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamMixpanelEnum(t *testing.T) {
+	t.Run("NewFromString_mixpanel", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamMixpanelEnumFromString("mixpanel")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamMixpanelEnum("mixpanel"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamMixpanelEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamMixpanelEnumFromString("mixpanel")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumLogStreamMixpanelRegionEnum(t *testing.T) {
 	t.Run("NewFromString_us", func(t *testing.T) {
 		t.Parallel()
@@ -14218,6 +15293,50 @@ func TestEnumLogStreamPiiMethodEnum(t *testing.T) {
 	})
 }
 
+func TestEnumLogStreamSegmentEnum(t *testing.T) {
+	t.Run("NewFromString_segment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSegmentEnumFromString("segment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSegmentEnum("segment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSegmentEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSegmentEnumFromString("segment")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSplunkEnum(t *testing.T) {
+	t.Run("NewFromString_splunk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSplunkEnumFromString("splunk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSplunkEnum("splunk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSplunkEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSplunkEnumFromString("splunk")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumLogStreamStatusEnum(t *testing.T) {
 	t.Run("NewFromString_active", func(t *testing.T) {
 		t.Parallel()
@@ -14247,6 +15366,28 @@ func TestEnumLogStreamStatusEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewLogStreamStatusEnumFromString("active")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSumoEnum(t *testing.T) {
+	t.Run("NewFromString_sumo", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSumoEnumFromString("sumo")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSumoEnum("sumo"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSumoEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSumoEnumFromString("sumo")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

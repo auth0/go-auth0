@@ -9162,11 +9162,14 @@ var (
 	clientOidcSupportFieldAllowedScopes  = big.NewInt(1 << 2)
 )
 
-// OIDC support configuration for this client.
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 type ClientOidcSupport struct {
-	IsAllowed      *bool                                `json:"is_allowed,omitempty" url:"is_allowed,omitempty"`
-	AllowAllScopes *bool                                `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
-	AllowedScopes  []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
+	IsAllowed *bool `json:"is_allowed,omitempty" url:"is_allowed,omitempty"`
+	// Allows the client to request all supported OIDC scopes. Mutually exclusive with allowed_scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	// OIDC scopes the client may request (`profile`, `email`, `address`, and `phone`), which determine the user profile information it can access. Mutually exclusive with allow_all_scopes.
+	AllowedScopes []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9314,11 +9317,14 @@ var (
 	clientOidcSupportPatchFieldAllowedScopes  = big.NewInt(1 << 2)
 )
 
-// OIDC support configuration for a client. Replaces the stored object entirely; send null to unset it.
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 type ClientOidcSupportPatch struct {
-	IsAllowed      bool                                 `json:"is_allowed" url:"is_allowed"`
-	AllowAllScopes *bool                                `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
-	AllowedScopes  []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
+	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
+	// Allows the client to request all supported OIDC scopes. Mutually exclusive with allowed_scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	// OIDC scopes the client may request (`profile`, `email`, `address`, and `phone`), which determine the user profile information it can access. Mutually exclusive with allow_all_scopes.
+	AllowedScopes []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -9433,11 +9439,14 @@ var (
 	clientOidcSupportPostFieldAllowedScopes  = big.NewInt(1 << 2)
 )
 
-// OIDC support configuration for a client. Controls whether OIDC flows are allowed and which scopes the client may request.
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 type ClientOidcSupportPost struct {
-	IsAllowed      bool                                 `json:"is_allowed" url:"is_allowed"`
-	AllowAllScopes *bool                                `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
-	AllowedScopes  []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
+	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
+	// Allows the client to request all supported OIDC scopes. Mutually exclusive with allowed_scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	// OIDC scopes the client may request (`profile`, `email`, `address`, and `phone`), which determine the user profile information it can access. Mutually exclusive with allow_all_scopes.
+	AllowedScopes []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`

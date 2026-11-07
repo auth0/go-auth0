@@ -785,7 +785,7 @@ func TestSettersPageComponentAuth0MediaImageConfig(t *testing.T) {
 
 	t.Run("SetPosition", func(t *testing.T) {
 		obj := &PageComponentAuth0MediaImageConfig{}
-		var fernTestValuePosition *PageComponentAuth0MediaImagePositionEnum
+		var fernTestValuePosition *Position
 		obj.SetPosition(fernTestValuePosition)
 		assert.Equal(t, fernTestValuePosition, obj.Position)
 		assert.NotNil(t, obj.explicitFields)
@@ -829,7 +829,7 @@ func TestGettersPageComponentAuth0MediaImageConfig(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PageComponentAuth0MediaImageConfig{}
-		var value PageComponentAuth0MediaImagePositionEnum
+		var value Position
 		obj.Position = &value
 
 		// Act & Assert
@@ -841,7 +841,7 @@ func TestGettersPageComponentAuth0MediaImageConfig(t *testing.T) {
 		// Arrange
 		obj := &PageComponentAuth0MediaImageConfig{}
 		obj.Position = nil
-		var expectedZero PageComponentAuth0MediaImagePositionEnum
+		var expectedZero Position
 
 		// Act & Assert
 		assert.Equal(t, expectedZero, obj.GetPosition(), "getter should return zero value when property is nil")
@@ -931,7 +931,7 @@ func TestSettersMarkExplicitPageComponentAuth0MediaImageConfig(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &PageComponentAuth0MediaImageConfig{}
-		var fernTestValuePosition *PageComponentAuth0MediaImagePositionEnum
+		var fernTestValuePosition *Position
 
 		// Act
 		obj.SetPosition(fernTestValuePosition)
@@ -7869,42 +7869,6 @@ func TestStringSidebarComponentAuth0InternalLinkV2Config(t *testing.T) {
 	})
 }
 
-func TestEnumPageComponentAuth0MediaImagePositionEnum(t *testing.T) {
-	t.Run("NewFromString_left", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewPageComponentAuth0MediaImagePositionEnumFromString("left")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, PageComponentAuth0MediaImagePositionEnum("left"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_center", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewPageComponentAuth0MediaImagePositionEnumFromString("center")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, PageComponentAuth0MediaImagePositionEnum("center"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_right", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewPageComponentAuth0MediaImagePositionEnumFromString("right")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, PageComponentAuth0MediaImagePositionEnum("right"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewPageComponentAuth0MediaImagePositionEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewPageComponentAuth0MediaImagePositionEnumFromString("left")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumPageComponentAuth0StructureSectionVariantEnum(t *testing.T) {
 	t.Run("NewFromString_card", func(t *testing.T) {
 		t.Parallel()
@@ -8007,6 +7971,42 @@ func TestEnumPortalClientSecretPostTokenEndpointAuthMethod(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewPortalClientSecretPostTokenEndpointAuthMethodFromString("client_secret_post")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumPosition(t *testing.T) {
+	t.Run("NewFromString_left", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPositionFromString("left")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, Position("left"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_center", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPositionFromString("center")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, Position("center"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_right", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewPositionFromString("right")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, Position("right"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewPositionFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewPositionFromString("left")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
