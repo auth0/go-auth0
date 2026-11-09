@@ -1,5 +1,20 @@
 # Change Log
 
+## [v3.12.0-beta.1](https://github.com/auth0/go-auth0/tree/v3.12.0-beta.1) (2026-11-09)
+
+**Beta**
+- feat!: remove the beta-only experiment and feature flag `UpdateStatus` endpoints and their request and response types (Beta)
+
+**Stable (from main)**
+- feat: add agents, client profiles, portals and network ACL key APIs
+- feat: add organization clients and organization role group listing
+- feat: add guardian settings and email and phone factor settings
+- feat: add user consent signing key endpoints
+- feat: add directory provisioning synchronized group selections
+- feat: add search for clients, client grants, organizations and resource servers
+- feat: add experiments `AdvanceRamp` and `option.WithTenantDomain`
+- feat!: event stream deliveries `List` returns a paginated result
+
 ## [v3.12.0-beta.0](https://github.com/auth0/go-auth0/tree/v3.12.0-beta.0) (2026-11-06)
 
 **Beta**
