@@ -95,7 +95,8 @@ func TestExperimentationSegmentsListWithWireMock(
 		Take: management.Int(
 			1,
 		),
-		Type: management.SegmentTypeFilterEnumAuth0.Ptr(),
+		Type:   management.SegmentTypeFilterEnumAuth0.Ptr(),
+		Status: management.SegmentStatusEnumActive.Ptr(),
 	}
 	_, invocationErr := client.Experimentation.Segments.List(
 		context.TODO(),
@@ -106,7 +107,7 @@ func TestExperimentationSegmentsListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestExperimentationSegmentsListWithWireMock", "GET", "/experimentation/segments", map[string]interface{}{"from": "from", "take": "1", "type": "auth0"}, 1)
+	VerifyRequestCount(t, "TestExperimentationSegmentsListWithWireMock", "GET", "/experimentation/segments", map[string]interface{}{"from": "from", "take": "1", "type": "auth0", "status": "active"}, 1)
 }
 
 func TestExperimentationSegmentsCreateWithWireMock(

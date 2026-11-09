@@ -216,13 +216,13 @@ func (r *RawClient) Update(
 	}, nil
 }
 
-func (r *RawClient) UpdateStatus(
+func (r *RawClient) AdvanceRamp(
 	ctx context.Context,
-	// The ID of the experiment to transition.
+	// The ID of the experiment to advance.
 	id string,
-	request *management.UpdateExperimentStatusRequestContent,
+	request *management.AdvanceRampRequestContent,
 	opts ...option.RequestOption,
-) (*core.Response[*management.UpdateExperimentStatusResponseContent], error) {
+) (*core.Response[*management.AdvanceRampResponseContent], error) {
 	options := core.NewRequestOptions(opts...)
 	baseURL := internal.ResolveBaseURL(
 		options.BaseURL,
@@ -230,7 +230,7 @@ func (r *RawClient) UpdateStatus(
 		"https://%7BTENANT%7D.auth0.com/api/v2",
 	)
 	endpointURL := internal.EncodeURL(
-		baseURL+"/experimentation/experiments/%v/status",
+		baseURL+"/experimentation/experiments/%v/advance-ramp",
 		id,
 	)
 	headers := internal.MergeHeaders(
@@ -238,7 +238,7 @@ func (r *RawClient) UpdateStatus(
 		options.ToHeader(),
 	)
 	headers.Add("Content-Type", "application/json")
-	var response *management.UpdateExperimentStatusResponseContent
+	var response *management.AdvanceRampResponseContent
 	raw, err := r.caller.Call(
 		ctx,
 		&internal.CallParams{
@@ -258,7 +258,7 @@ func (r *RawClient) UpdateStatus(
 	if err != nil {
 		return nil, err
 	}
-	return &core.Response[*management.UpdateExperimentStatusResponseContent]{
+	return &core.Response[*management.AdvanceRampResponseContent]{
 		StatusCode: raw.StatusCode,
 		Header:     raw.Header,
 		Body:       response,

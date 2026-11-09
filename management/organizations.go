@@ -9,7 +9,6 @@ import (
 	big "math/big"
 )
 
-// Connection to be added to the organization.
 var (
 	connectionForOrganizationFieldConnectionID            = big.NewInt(1 << 0)
 	connectionForOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
@@ -17,6 +16,7 @@ var (
 	connectionForOrganizationFieldIsSignupEnabled         = big.NewInt(1 << 3)
 )
 
+// Connection to be added to the organization.
 type ConnectionForOrganization struct {
 	// ID of the connection.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
@@ -70,10 +70,12 @@ func (c *ConnectionForOrganization) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionForOrganization) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -154,7 +156,9 @@ var (
 	createOrganizationResponseContentFieldMetadata               = big.NewInt(1 << 4)
 	createOrganizationResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
 	createOrganizationResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
-	createOrganizationResponseContentFieldEnabledConnections     = big.NewInt(1 << 7)
+	createOrganizationResponseContentFieldIsAppEntitlementActive = big.NewInt(1 << 7)
+	createOrganizationResponseContentFieldClient                 = big.NewInt(1 << 8)
+	createOrganizationResponseContentFieldEnabledConnections     = big.NewInt(1 << 9)
 )
 
 type CreateOrganizationResponseContent struct {
@@ -168,7 +172,10 @@ type CreateOrganizationResponseContent struct {
 	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
-	EnabledConnections     []*OrganizationEnabledConnection        `json:"enabled_connections,omitempty" url:"enabled_connections,omitempty"`
+	// Whether app entitlement is active for this organization.
+	IsAppEntitlementActive *bool                            `json:"is_app_entitlement_active,omitempty" url:"is_app_entitlement_active,omitempty"`
+	Client                 *OrganizationClientAssociation   `json:"client,omitempty" url:"client,omitempty"`
+	EnabledConnections     []*OrganizationEnabledConnection `json:"enabled_connections,omitempty" url:"enabled_connections,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -227,6 +234,20 @@ func (c *CreateOrganizationResponseContent) GetThirdPartyClientAccess() Organiza
 	return *c.ThirdPartyClientAccess
 }
 
+func (c *CreateOrganizationResponseContent) GetIsAppEntitlementActive() bool {
+	if c == nil || c.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *c.IsAppEntitlementActive
+}
+
+func (c *CreateOrganizationResponseContent) GetClient() OrganizationClientAssociation {
+	if c == nil || c.Client == nil {
+		return OrganizationClientAssociation{}
+	}
+	return *c.Client
+}
+
 func (c *CreateOrganizationResponseContent) GetEnabledConnections() []*OrganizationEnabledConnection {
 	if c == nil || c.EnabledConnections == nil {
 		return nil
@@ -242,10 +263,12 @@ func (c *CreateOrganizationResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateOrganizationResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -295,6 +318,20 @@ func (c *CreateOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota
 func (c *CreateOrganizationResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
 	c.ThirdPartyClientAccess = thirdPartyClientAccess
 	c.require(createOrganizationResponseContentFieldThirdPartyClientAccess)
+}
+
+// SetIsAppEntitlementActive sets the IsAppEntitlementActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetIsAppEntitlementActive(isAppEntitlementActive *bool) {
+	c.IsAppEntitlementActive = isAppEntitlementActive
+	c.require(createOrganizationResponseContentFieldIsAppEntitlementActive)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateOrganizationResponseContent) SetClient(client *OrganizationClientAssociation) {
+	c.Client = client
+	c.require(createOrganizationResponseContentFieldClient)
 }
 
 // SetEnabledConnections sets the EnabledConnections field and marks it as non-optional;
@@ -358,6 +395,8 @@ var (
 	getOrganizationByNameResponseContentFieldMetadata               = big.NewInt(1 << 4)
 	getOrganizationByNameResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
 	getOrganizationByNameResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
+	getOrganizationByNameResponseContentFieldIsAppEntitlementActive = big.NewInt(1 << 7)
+	getOrganizationByNameResponseContentFieldClient                 = big.NewInt(1 << 8)
 )
 
 type GetOrganizationByNameResponseContent struct {
@@ -371,6 +410,9 @@ type GetOrganizationByNameResponseContent struct {
 	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
+	// Whether app entitlement is active for this organization.
+	IsAppEntitlementActive *bool                          `json:"is_app_entitlement_active,omitempty" url:"is_app_entitlement_active,omitempty"`
+	Client                 *OrganizationClientAssociation `json:"client,omitempty" url:"client,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -429,6 +471,20 @@ func (g *GetOrganizationByNameResponseContent) GetThirdPartyClientAccess() Organ
 	return *g.ThirdPartyClientAccess
 }
 
+func (g *GetOrganizationByNameResponseContent) GetIsAppEntitlementActive() bool {
+	if g == nil || g.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *g.IsAppEntitlementActive
+}
+
+func (g *GetOrganizationByNameResponseContent) GetClient() OrganizationClientAssociation {
+	if g == nil || g.Client == nil {
+		return OrganizationClientAssociation{}
+	}
+	return *g.Client
+}
+
 func (g *GetOrganizationByNameResponseContent) GetExtraProperties() map[string]interface{} {
 	if g == nil {
 		return nil
@@ -437,10 +493,12 @@ func (g *GetOrganizationByNameResponseContent) GetExtraProperties() map[string]i
 }
 
 func (g *GetOrganizationByNameResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -490,6 +548,20 @@ func (g *GetOrganizationByNameResponseContent) SetTokenQuota(tokenQuota *TokenQu
 func (g *GetOrganizationByNameResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
 	g.ThirdPartyClientAccess = thirdPartyClientAccess
 	g.require(getOrganizationByNameResponseContentFieldThirdPartyClientAccess)
+}
+
+// SetIsAppEntitlementActive sets the IsAppEntitlementActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetIsAppEntitlementActive(isAppEntitlementActive *bool) {
+	g.IsAppEntitlementActive = isAppEntitlementActive
+	g.require(getOrganizationByNameResponseContentFieldIsAppEntitlementActive)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationByNameResponseContent) SetClient(client *OrganizationClientAssociation) {
+	g.Client = client
+	g.require(getOrganizationByNameResponseContentFieldClient)
 }
 
 func (g *GetOrganizationByNameResponseContent) UnmarshalJSON(data []byte) error {
@@ -546,6 +618,8 @@ var (
 	getOrganizationResponseContentFieldMetadata               = big.NewInt(1 << 4)
 	getOrganizationResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
 	getOrganizationResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
+	getOrganizationResponseContentFieldIsAppEntitlementActive = big.NewInt(1 << 7)
+	getOrganizationResponseContentFieldClient                 = big.NewInt(1 << 8)
 )
 
 type GetOrganizationResponseContent struct {
@@ -559,6 +633,9 @@ type GetOrganizationResponseContent struct {
 	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
+	// Whether app entitlement is active for this organization.
+	IsAppEntitlementActive *bool                          `json:"is_app_entitlement_active,omitempty" url:"is_app_entitlement_active,omitempty"`
+	Client                 *OrganizationClientAssociation `json:"client,omitempty" url:"client,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -617,6 +694,20 @@ func (g *GetOrganizationResponseContent) GetThirdPartyClientAccess() Organizatio
 	return *g.ThirdPartyClientAccess
 }
 
+func (g *GetOrganizationResponseContent) GetIsAppEntitlementActive() bool {
+	if g == nil || g.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *g.IsAppEntitlementActive
+}
+
+func (g *GetOrganizationResponseContent) GetClient() OrganizationClientAssociation {
+	if g == nil || g.Client == nil {
+		return OrganizationClientAssociation{}
+	}
+	return *g.Client
+}
+
 func (g *GetOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
 	if g == nil {
 		return nil
@@ -625,10 +716,12 @@ func (g *GetOrganizationResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (g *GetOrganizationResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -678,6 +771,20 @@ func (g *GetOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota) {
 func (g *GetOrganizationResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
 	g.ThirdPartyClientAccess = thirdPartyClientAccess
 	g.require(getOrganizationResponseContentFieldThirdPartyClientAccess)
+}
+
+// SetIsAppEntitlementActive sets the IsAppEntitlementActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetIsAppEntitlementActive(isAppEntitlementActive *bool) {
+	g.IsAppEntitlementActive = isAppEntitlementActive
+	g.require(getOrganizationResponseContentFieldIsAppEntitlementActive)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetOrganizationResponseContent) SetClient(client *OrganizationClientAssociation) {
+	g.Client = client
+	g.require(getOrganizationResponseContentFieldClient)
 }
 
 func (g *GetOrganizationResponseContent) UnmarshalJSON(data []byte) error {
@@ -764,10 +871,12 @@ func (l *ListOrganizationsPaginatedResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListOrganizationsPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -896,10 +1005,12 @@ func (o *OrganizationEnabledConnection) GetExtraProperties() map[string]interfac
 }
 
 func (o *OrganizationEnabledConnection) require(field *big.Int) {
-	if o.explicitFields == nil {
-		o.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if o.explicitFields != nil {
+		next.Set(o.explicitFields)
 	}
-	o.explicitFields.Or(o.explicitFields, field)
+	next.Or(next, field)
+	o.explicitFields = next
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -983,6 +1094,327 @@ func (o *OrganizationEnabledConnection) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Field name to sort results by in ascending order only. Defaults to insertion order (oldest first) if not provided.
+type OrganizationSortFieldEnum string
+
+const (
+	OrganizationSortFieldEnumName        OrganizationSortFieldEnum = "name"
+	OrganizationSortFieldEnumDisplayName OrganizationSortFieldEnum = "display_name"
+	OrganizationSortFieldEnumCreatedAt   OrganizationSortFieldEnum = "created_at"
+)
+
+func NewOrganizationSortFieldEnumFromString(s string) (OrganizationSortFieldEnum, error) {
+	switch s {
+	case "name":
+		return OrganizationSortFieldEnumName, nil
+	case "display_name":
+		return OrganizationSortFieldEnumDisplayName, nil
+	case "created_at":
+		return OrganizationSortFieldEnumCreatedAt, nil
+	}
+	var t OrganizationSortFieldEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (o OrganizationSortFieldEnum) Ptr() *OrganizationSortFieldEnum {
+	return &o
+}
+
+var (
+	searchOrganizationFieldID                     = big.NewInt(1 << 0)
+	searchOrganizationFieldName                   = big.NewInt(1 << 1)
+	searchOrganizationFieldDisplayName            = big.NewInt(1 << 2)
+	searchOrganizationFieldBranding               = big.NewInt(1 << 3)
+	searchOrganizationFieldTokenQuota             = big.NewInt(1 << 4)
+	searchOrganizationFieldThirdPartyClientAccess = big.NewInt(1 << 5)
+	searchOrganizationFieldIsAppEntitlementActive = big.NewInt(1 << 6)
+)
+
+type SearchOrganization struct {
+	// Organization identifier.
+	ID *string `json:"id,omitempty" url:"id,omitempty"`
+	// The name of this organization.
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Friendly name of this organization.
+	DisplayName            *string                                 `json:"display_name,omitempty" url:"display_name,omitempty"`
+	Branding               *OrganizationBranding                   `json:"branding,omitempty" url:"branding,omitempty"`
+	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
+	// Whether app entitlement is active for this organization.
+	IsAppEntitlementActive *bool `json:"is_app_entitlement_active,omitempty" url:"is_app_entitlement_active,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (s *SearchOrganization) GetID() string {
+	if s == nil || s.ID == nil {
+		return ""
+	}
+	return *s.ID
+}
+
+func (s *SearchOrganization) GetName() string {
+	if s == nil || s.Name == nil {
+		return ""
+	}
+	return *s.Name
+}
+
+func (s *SearchOrganization) GetDisplayName() string {
+	if s == nil || s.DisplayName == nil {
+		return ""
+	}
+	return *s.DisplayName
+}
+
+func (s *SearchOrganization) GetBranding() OrganizationBranding {
+	if s == nil || s.Branding == nil {
+		return OrganizationBranding{}
+	}
+	return *s.Branding
+}
+
+func (s *SearchOrganization) GetTokenQuota() TokenQuota {
+	if s == nil || s.TokenQuota == nil {
+		return TokenQuota{}
+	}
+	return *s.TokenQuota
+}
+
+func (s *SearchOrganization) GetThirdPartyClientAccess() OrganizationThirdPartyClientAccessEnum {
+	if s == nil || s.ThirdPartyClientAccess == nil {
+		return ""
+	}
+	return *s.ThirdPartyClientAccess
+}
+
+func (s *SearchOrganization) GetIsAppEntitlementActive() bool {
+	if s == nil || s.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *s.IsAppEntitlementActive
+}
+
+func (s *SearchOrganization) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.ExtraProperties
+}
+
+func (s *SearchOrganization) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetID sets the ID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetID(id *string) {
+	s.ID = id
+	s.require(searchOrganizationFieldID)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetName(name *string) {
+	s.Name = name
+	s.require(searchOrganizationFieldName)
+}
+
+// SetDisplayName sets the DisplayName field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetDisplayName(displayName *string) {
+	s.DisplayName = displayName
+	s.require(searchOrganizationFieldDisplayName)
+}
+
+// SetBranding sets the Branding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetBranding(branding *OrganizationBranding) {
+	s.Branding = branding
+	s.require(searchOrganizationFieldBranding)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetTokenQuota(tokenQuota *TokenQuota) {
+	s.TokenQuota = tokenQuota
+	s.require(searchOrganizationFieldTokenQuota)
+}
+
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
+	s.ThirdPartyClientAccess = thirdPartyClientAccess
+	s.require(searchOrganizationFieldThirdPartyClientAccess)
+}
+
+// SetIsAppEntitlementActive sets the IsAppEntitlementActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganization) SetIsAppEntitlementActive(isAppEntitlementActive *bool) {
+	s.IsAppEntitlementActive = isAppEntitlementActive
+	s.require(searchOrganizationFieldIsAppEntitlementActive)
+}
+
+func (s *SearchOrganization) UnmarshalJSON(data []byte) error {
+	type embed SearchOrganization
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*s = SearchOrganization(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.ExtraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchOrganization) MarshalJSON() ([]byte, error) {
+	type embed SearchOrganization
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, s.ExtraProperties)
+}
+
+func (s *SearchOrganization) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
+var (
+	searchOrganizationsPaginatedResponseContentFieldOrganizations = big.NewInt(1 << 0)
+	searchOrganizationsPaginatedResponseContentFieldNext          = big.NewInt(1 << 1)
+)
+
+type SearchOrganizationsPaginatedResponseContent struct {
+	// Array of organization objects matching the search criteria.
+	Organizations []*SearchOrganization `json:"organizations" url:"organizations"`
+	// Cursor for retrieving the next page of results. Absent when no more results are available.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) GetOrganizations() []*SearchOrganization {
+	if s == nil {
+		return nil
+	}
+	return s.Organizations
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) GetNext() string {
+	if s == nil || s.Next == nil {
+		return ""
+	}
+	return *s.Next
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetOrganizations sets the Organizations field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganizationsPaginatedResponseContent) SetOrganizations(organizations []*SearchOrganization) {
+	s.Organizations = organizations
+	s.require(searchOrganizationsPaginatedResponseContentFieldOrganizations)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchOrganizationsPaginatedResponseContent) SetNext(next *string) {
+	s.Next = next
+	s.require(searchOrganizationsPaginatedResponseContentFieldNext)
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchOrganizationsPaginatedResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchOrganizationsPaginatedResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SearchOrganizationsPaginatedResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SearchOrganizationsPaginatedResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
+}
+
 var (
 	updateOrganizationResponseContentFieldID                     = big.NewInt(1 << 0)
 	updateOrganizationResponseContentFieldName                   = big.NewInt(1 << 1)
@@ -991,6 +1423,8 @@ var (
 	updateOrganizationResponseContentFieldMetadata               = big.NewInt(1 << 4)
 	updateOrganizationResponseContentFieldTokenQuota             = big.NewInt(1 << 5)
 	updateOrganizationResponseContentFieldThirdPartyClientAccess = big.NewInt(1 << 6)
+	updateOrganizationResponseContentFieldIsAppEntitlementActive = big.NewInt(1 << 7)
+	updateOrganizationResponseContentFieldClient                 = big.NewInt(1 << 8)
 )
 
 type UpdateOrganizationResponseContent struct {
@@ -1004,6 +1438,9 @@ type UpdateOrganizationResponseContent struct {
 	Metadata               *OrganizationMetadata                   `json:"metadata,omitempty" url:"metadata,omitempty"`
 	TokenQuota             *TokenQuota                             `json:"token_quota,omitempty" url:"token_quota,omitempty"`
 	ThirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
+	// Whether app entitlement is active for this organization.
+	IsAppEntitlementActive *bool                          `json:"is_app_entitlement_active,omitempty" url:"is_app_entitlement_active,omitempty"`
+	Client                 *OrganizationClientAssociation `json:"client,omitempty" url:"client,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1062,6 +1499,20 @@ func (u *UpdateOrganizationResponseContent) GetThirdPartyClientAccess() Organiza
 	return *u.ThirdPartyClientAccess
 }
 
+func (u *UpdateOrganizationResponseContent) GetIsAppEntitlementActive() bool {
+	if u == nil || u.IsAppEntitlementActive == nil {
+		return false
+	}
+	return *u.IsAppEntitlementActive
+}
+
+func (u *UpdateOrganizationResponseContent) GetClient() OrganizationClientAssociation {
+	if u == nil || u.Client == nil {
+		return OrganizationClientAssociation{}
+	}
+	return *u.Client
+}
+
 func (u *UpdateOrganizationResponseContent) GetExtraProperties() map[string]interface{} {
 	if u == nil {
 		return nil
@@ -1070,10 +1521,12 @@ func (u *UpdateOrganizationResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (u *UpdateOrganizationResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1123,6 +1576,20 @@ func (u *UpdateOrganizationResponseContent) SetTokenQuota(tokenQuota *TokenQuota
 func (u *UpdateOrganizationResponseContent) SetThirdPartyClientAccess(thirdPartyClientAccess *OrganizationThirdPartyClientAccessEnum) {
 	u.ThirdPartyClientAccess = thirdPartyClientAccess
 	u.require(updateOrganizationResponseContentFieldThirdPartyClientAccess)
+}
+
+// SetIsAppEntitlementActive sets the IsAppEntitlementActive field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetIsAppEntitlementActive(isAppEntitlementActive *bool) {
+	u.IsAppEntitlementActive = isAppEntitlementActive
+	u.require(updateOrganizationResponseContentFieldIsAppEntitlementActive)
+}
+
+// SetClient sets the Client field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateOrganizationResponseContent) SetClient(client *OrganizationClientAssociation) {
+	u.Client = client
+	u.require(updateOrganizationResponseContentFieldClient)
 }
 
 func (u *UpdateOrganizationResponseContent) UnmarshalJSON(data []byte) error {

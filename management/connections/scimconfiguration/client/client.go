@@ -39,6 +39,21 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a list of SCIM configurations of a tenant.
+//
+// Example:
+//
+//	request := &management.ListSCIMConfigurationsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Connections.SCIMConfiguration.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListSCIMConfigurationsRequestParameters,
@@ -93,7 +108,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -105,6 +120,13 @@ func (c *Client) List(
 }
 
 // Retrieves a scim configuration by its `connectionId`.
+//
+// Example:
+//
+//	client.Connections.SCIMConfiguration.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the connection to retrieve its SCIM configuration
@@ -123,6 +145,15 @@ func (c *Client) Get(
 }
 
 // Create a scim configuration for a connection.
+//
+// Example:
+//
+//	request := &management.CreateSCIMConfigurationRequestContent{}
+//	client.Connections.SCIMConfiguration.Create(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to create its SCIM configuration
@@ -143,6 +174,13 @@ func (c *Client) Create(
 }
 
 // Deletes a scim configuration by its `connectionId`.
+//
+// Example:
+//
+//	client.Connections.SCIMConfiguration.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The id of the connection to delete its SCIM configuration
@@ -161,6 +199,20 @@ func (c *Client) Delete(
 }
 
 // Update a scim configuration by its `connectionId`.
+//
+// Example:
+//
+//	request := &management.UpdateSCIMConfigurationRequestContent{
+//	    UserIDAttribute: "user_id_attribute",
+//	    Mapping: []*management.SCIMMappingItem{
+//	        &management.SCIMMappingItem{},
+//	    },
+//	}
+//	client.Connections.SCIMConfiguration.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the connection to update its SCIM configuration
@@ -181,6 +233,13 @@ func (c *Client) Update(
 }
 
 // Retrieves a scim configuration's default mapping by its `connectionId`.
+//
+// Example:
+//
+//	client.Connections.SCIMConfiguration.GetDefaultMapping(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) GetDefaultMapping(
 	ctx context.Context,
 	// The id of the connection to retrieve its default SCIM mapping

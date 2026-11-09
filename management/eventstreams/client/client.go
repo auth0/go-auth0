@@ -41,6 +41,20 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.ListEventStreamsRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.EventStreams.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListEventStreamsRequestParameters,
@@ -95,7 +109,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -106,6 +120,28 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
+// Example:
+//
+//	request := &management.EventStreamsCreateRequest{
+//	    CreateEventStreamWebHookRequestContent: &management.CreateEventStreamWebHookRequestContent{
+//	        Destination: &management.EventStreamWebhookDestination{
+//	            Type: management.EventStreamWebhookDestinationTypeEnumWebhook,
+//	            Configuration: &management.EventStreamWebhookConfiguration{
+//	                WebhookEndpoint: "webhook_endpoint",
+//	                WebhookAuthorization: &management.EventStreamWebhookAuthorizationResponse{
+//	                    EventStreamWebhookBasicAuth: &management.EventStreamWebhookBasicAuth{
+//	                        Method: management.EventStreamWebhookBasicAuthMethodEnumBasic,
+//	                        Username: "username",
+//	                    },
+//	                },
+//	            },
+//	        },
+//	    },
+//	}
+//	client.EventStreams.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.EventStreamsCreateRequest,
@@ -122,6 +158,12 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.EventStreams.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Unique identifier for the event stream.
@@ -139,6 +181,12 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	client.EventStreams.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Unique identifier for the event stream.
@@ -156,6 +204,14 @@ func (c *Client) Delete(
 	return nil
 }
 
+// Example:
+//
+//	request := &management.UpdateEventStreamRequestContent{}
+//	client.EventStreams.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// Unique identifier for the event stream.
@@ -175,6 +231,16 @@ func (c *Client) Update(
 	return response.Body, nil
 }
 
+// Example:
+//
+//	request := &management.CreateEventStreamTestEventRequestContent{
+//	    EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
+//	}
+//	client.EventStreams.Test(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Test(
 	ctx context.Context,
 	// Unique identifier for the event stream.

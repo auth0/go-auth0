@@ -63,6 +63,36 @@ func NewClient(options *core.RequestOptions) *Client {
 // - **take:** Number of entries to retrieve when using the `from` parameter.
 //
 // **Important:** When fetching logs from a checkpoint log ID, any parameter other than `from` and `take` will be ignored, and date ordering is not guaranteed.
+//
+// Example:
+//
+//	request := &management.ListLogsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    Sort: management.String(
+//	        "sort",
+//	    ),
+//	    Fields: management.String(
+//	        "fields",
+//	    ),
+//	    IncludeFields: management.Bool(
+//	        true,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	    Search: management.String(
+//	        "search",
+//	    ),
+//	}
+//	client.Logs.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListLogsRequestParameters,
@@ -137,6 +167,13 @@ func (c *Client) List(
 }
 
 // Retrieve an individual log event.
+//
+// Example:
+//
+//	client.Logs.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// log_id of the log to retrieve.

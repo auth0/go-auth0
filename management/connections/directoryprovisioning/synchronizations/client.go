@@ -35,6 +35,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Request an on-demand synchronization of the directory.
+//
+// Example:
+//
+//	client.Connections.DirectoryProvisioning.Synchronizations.Create(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The id of the connection to trigger synchronization for

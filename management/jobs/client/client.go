@@ -47,6 +47,13 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieves a job. Useful to check its status.
+//
+// Example:
+//
+//	client.Jobs.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the job.

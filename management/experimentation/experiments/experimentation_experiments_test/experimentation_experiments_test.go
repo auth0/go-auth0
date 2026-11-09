@@ -129,17 +129,8 @@ func TestExperimentationExperimentsCreateWithWireMock(
 	request := &management.CreateExperimentRequestContent{
 		Name:               "name",
 		FeatureFlagID:      "feature_flag_id",
-		AuthenticationFlow: "authentication_flow",
+		AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
 		AllocationStrategy: management.AllocationStrategyEnumPercentage,
-		AssignmentConfig: &management.AssignmentConfig{
-			Subject: management.SubjectEnumDevice,
-		},
-		Allocations: []*management.AllocationRequestItem{
-			&management.AllocationRequestItem{
-				VariationID: "variation_id",
-				IsControl:   true,
-			},
-		},
 	}
 	_, invocationErr := client.Experimentation.Experiments.Create(
 		context.TODO(),
@@ -224,7 +215,7 @@ func TestExperimentationExperimentsUpdateWithWireMock(
 	VerifyRequestCount(t, "TestExperimentationExperimentsUpdateWithWireMock", "PATCH", "/experimentation/experiments/id", nil, 1)
 }
 
-func TestExperimentationExperimentsUpdateStatusWithWireMock(
+func TestExperimentationExperimentsAdvanceRampWithWireMock(
 	t *testing.T,
 ) {
 	WireMockBaseURL := os.Getenv("WIREMOCK_URL")
@@ -235,20 +226,20 @@ func TestExperimentationExperimentsUpdateStatusWithWireMock(
 		option.WithBaseURL(WireMockBaseURL),
 		option.WithToken("test-token"),
 	)
-	request := &management.UpdateExperimentStatusRequestContent{
-		Status: management.ExperimentTransitionStatusEnumActive,
+	request := &management.AdvanceRampRequestContent{
+		TargetLevel: 1,
 	}
-	_, invocationErr := client.Experimentation.Experiments.UpdateStatus(
+	_, invocationErr := client.Experimentation.Experiments.AdvanceRamp(
 		context.TODO(),
 		"id",
 		request,
 		option.WithHTTPHeader(
-			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsUpdateStatusWithWireMock"}},
+			http.Header{"X-Test-Id": []string{"TestExperimentationExperimentsAdvanceRampWithWireMock"}},
 		),
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestExperimentationExperimentsUpdateStatusWithWireMock", "POST", "/experimentation/experiments/id/status", nil, 1)
+	VerifyRequestCount(t, "TestExperimentationExperimentsAdvanceRampWithWireMock", "POST", "/experimentation/experiments/id/advance-ramp", nil, 1)
 }
 
 func TestExperimentationExperimentsValidateWithWireMock(

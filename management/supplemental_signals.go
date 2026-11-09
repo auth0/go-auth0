@@ -40,10 +40,12 @@ func (g *GetSupplementalSignalsResponseContent) GetExtraProperties() map[string]
 }
 
 func (g *GetSupplementalSignalsResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetAkamaiEnabled sets the AkamaiEnabled field and marks it as non-optional;
@@ -130,10 +132,12 @@ func (p *PatchSupplementalSignalsResponseContent) GetExtraProperties() map[strin
 }
 
 func (p *PatchSupplementalSignalsResponseContent) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetAkamaiEnabled sets the AkamaiEnabled field and marks it as non-optional;

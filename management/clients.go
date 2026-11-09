@@ -10,11 +10,100 @@ import (
 	time "time"
 )
 
+var (
+	anonymousSessionsFieldActive = big.NewInt(1 << 0)
+)
+
+// Anonymous sessions configuration for this client.
+type AnonymousSessions struct {
+	// If set to true, this client is allowed to create anonymous sessions.
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (a *AnonymousSessions) GetActive() bool {
+	if a == nil {
+		return false
+	}
+	return a.Active
+}
+
+func (a *AnonymousSessions) GetExtraProperties() map[string]interface{} {
+	if a == nil {
+		return nil
+	}
+	return a.extraProperties
+}
+
+func (a *AnonymousSessions) require(field *big.Int) {
+	next := new(big.Int)
+	if a.explicitFields != nil {
+		next.Set(a.explicitFields)
+	}
+	next.Or(next, field)
+	a.explicitFields = next
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (a *AnonymousSessions) SetActive(active bool) {
+	a.Active = active
+	a.require(anonymousSessionsFieldActive)
+}
+
+func (a *AnonymousSessions) UnmarshalJSON(data []byte) error {
+	type unmarshaler AnonymousSessions
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*a = AnonymousSessions(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *a)
+	if err != nil {
+		return err
+	}
+	a.extraProperties = extraProperties
+	a.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (a *AnonymousSessions) MarshalJSON() ([]byte, error) {
+	type embed AnonymousSessions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*a),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, a.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (a *AnonymousSessions) String() string {
+	if a == nil {
+		return "<nil>"
+	}
+	if len(a.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(a.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(a); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", a)
+}
+
 type AsyncApprovalNotificationsChannelsEnum string
 
 const (
 	AsyncApprovalNotificationsChannelsEnumGuardianPush AsyncApprovalNotificationsChannelsEnum = "guardian-push"
 	AsyncApprovalNotificationsChannelsEnumEmail        AsyncApprovalNotificationsChannelsEnum = "email"
+	AsyncApprovalNotificationsChannelsEnumMyAccount    AsyncApprovalNotificationsChannelsEnum = "my-account"
 )
 
 func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprovalNotificationsChannelsEnum, error) {
@@ -23,6 +112,8 @@ func NewAsyncApprovalNotificationsChannelsEnumFromString(s string) (AsyncApprova
 		return AsyncApprovalNotificationsChannelsEnumGuardianPush, nil
 	case "email":
 		return AsyncApprovalNotificationsChannelsEnumEmail, nil
+	case "my-account":
+		return AsyncApprovalNotificationsChannelsEnumMyAccount, nil
 	}
 	var t AsyncApprovalNotificationsChannelsEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -32,14 +123,16 @@ func (a AsyncApprovalNotificationsChannelsEnum) Ptr() *AsyncApprovalNotification
 	return &a
 }
 
-// Configuration for B2B Integration clients.
 var (
-	b2BIntegrationConfigurationFieldSSOProfiles = big.NewInt(1 << 0)
+	b2BIntegrationConfigurationFieldSSOProfiles     = big.NewInt(1 << 0)
+	b2BIntegrationConfigurationFieldIntegrationType = big.NewInt(1 << 1)
 )
 
+// Configuration for B2B Integration clients.
 type B2BIntegrationConfiguration struct {
 	// List of SSO profile IDs linked to this B2B integration client. Maximum 1 entry.
-	SSOProfiles []string `json:"sso_profiles,omitempty" url:"sso_profiles,omitempty"`
+	SSOProfiles     []string                                        `json:"sso_profiles,omitempty" url:"sso_profiles,omitempty"`
+	IntegrationType *B2BIntegrationConfigurationIntegrationTypeEnum `json:"integration_type,omitempty" url:"integration_type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -55,6 +148,13 @@ func (b *B2BIntegrationConfiguration) GetSSOProfiles() []string {
 	return b.SSOProfiles
 }
 
+func (b *B2BIntegrationConfiguration) GetIntegrationType() B2BIntegrationConfigurationIntegrationTypeEnum {
+	if b == nil || b.IntegrationType == nil {
+		return ""
+	}
+	return *b.IntegrationType
+}
+
 func (b *B2BIntegrationConfiguration) GetExtraProperties() map[string]interface{} {
 	if b == nil {
 		return nil
@@ -63,10 +163,12 @@ func (b *B2BIntegrationConfiguration) GetExtraProperties() map[string]interface{
 }
 
 func (b *B2BIntegrationConfiguration) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if b.explicitFields != nil {
+		next.Set(b.explicitFields)
 	}
-	b.explicitFields.Or(b.explicitFields, field)
+	next.Or(next, field)
+	b.explicitFields = next
 }
 
 // SetSSOProfiles sets the SSOProfiles field and marks it as non-optional;
@@ -74,6 +176,13 @@ func (b *B2BIntegrationConfiguration) require(field *big.Int) {
 func (b *B2BIntegrationConfiguration) SetSSOProfiles(ssoProfiles []string) {
 	b.SSOProfiles = ssoProfiles
 	b.require(b2BIntegrationConfigurationFieldSSOProfiles)
+}
+
+// SetIntegrationType sets the IntegrationType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (b *B2BIntegrationConfiguration) SetIntegrationType(integrationType *B2BIntegrationConfigurationIntegrationTypeEnum) {
+	b.IntegrationType = integrationType
+	b.require(b2BIntegrationConfigurationFieldIntegrationType)
 }
 
 func (b *B2BIntegrationConfiguration) UnmarshalJSON(data []byte) error {
@@ -118,90 +227,30 @@ func (b *B2BIntegrationConfiguration) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
-// Configuration for B2B Integration clients.
-var (
-	b2BIntegrationConfigurationOrNullFieldSSOProfiles = big.NewInt(1 << 0)
+// The type of integration used to connect to this B2B integration client. Must be one of `custom_auth_server`, `third_party`, or `application`.
+type B2BIntegrationConfigurationIntegrationTypeEnum string
+
+const (
+	B2BIntegrationConfigurationIntegrationTypeEnumCustomAuthServer B2BIntegrationConfigurationIntegrationTypeEnum = "custom_auth_server"
+	B2BIntegrationConfigurationIntegrationTypeEnumThirdParty       B2BIntegrationConfigurationIntegrationTypeEnum = "third_party"
+	B2BIntegrationConfigurationIntegrationTypeEnumApplication      B2BIntegrationConfigurationIntegrationTypeEnum = "application"
 )
 
-type B2BIntegrationConfigurationOrNull struct {
-	// List of SSO profile IDs linked to this B2B integration client. Maximum 1 entry.
-	SSOProfiles []string `json:"sso_profiles,omitempty" url:"sso_profiles,omitempty"`
-
-	// Private bitmask of fields set to an explicit value and therefore not to be omitted
-	explicitFields *big.Int `json:"-" url:"-"`
-
-	extraProperties map[string]interface{}
-	rawJSON         json.RawMessage
+func NewB2BIntegrationConfigurationIntegrationTypeEnumFromString(s string) (B2BIntegrationConfigurationIntegrationTypeEnum, error) {
+	switch s {
+	case "custom_auth_server":
+		return B2BIntegrationConfigurationIntegrationTypeEnumCustomAuthServer, nil
+	case "third_party":
+		return B2BIntegrationConfigurationIntegrationTypeEnumThirdParty, nil
+	case "application":
+		return B2BIntegrationConfigurationIntegrationTypeEnumApplication, nil
+	}
+	var t B2BIntegrationConfigurationIntegrationTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
 }
 
-func (b *B2BIntegrationConfigurationOrNull) GetSSOProfiles() []string {
-	if b == nil || b.SSOProfiles == nil {
-		return nil
-	}
-	return b.SSOProfiles
-}
-
-func (b *B2BIntegrationConfigurationOrNull) GetExtraProperties() map[string]interface{} {
-	if b == nil {
-		return nil
-	}
-	return b.extraProperties
-}
-
-func (b *B2BIntegrationConfigurationOrNull) require(field *big.Int) {
-	if b.explicitFields == nil {
-		b.explicitFields = big.NewInt(0)
-	}
-	b.explicitFields.Or(b.explicitFields, field)
-}
-
-// SetSSOProfiles sets the SSOProfiles field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (b *B2BIntegrationConfigurationOrNull) SetSSOProfiles(ssoProfiles []string) {
-	b.SSOProfiles = ssoProfiles
-	b.require(b2BIntegrationConfigurationOrNullFieldSSOProfiles)
-}
-
-func (b *B2BIntegrationConfigurationOrNull) UnmarshalJSON(data []byte) error {
-	type unmarshaler B2BIntegrationConfigurationOrNull
-	var value unmarshaler
-	if err := json.Unmarshal(data, &value); err != nil {
-		return err
-	}
-	*b = B2BIntegrationConfigurationOrNull(value)
-	extraProperties, err := internal.ExtractExtraProperties(data, *b)
-	if err != nil {
-		return err
-	}
-	b.extraProperties = extraProperties
-	b.rawJSON = json.RawMessage(data)
-	return nil
-}
-
-func (b *B2BIntegrationConfigurationOrNull) MarshalJSON() ([]byte, error) {
-	type embed B2BIntegrationConfigurationOrNull
-	var marshaler = struct {
-		embed
-	}{
-		embed: embed(*b),
-	}
-	explicitMarshaler := internal.HandleExplicitFields(marshaler, b.explicitFields)
-	return json.Marshal(explicitMarshaler)
-}
-
-func (b *B2BIntegrationConfigurationOrNull) String() string {
-	if b == nil {
-		return "<nil>"
-	}
-	if len(b.rawJSON) > 0 {
-		if value, err := internal.StringifyJSON(b.rawJSON); err == nil {
-			return value
-		}
-	}
-	if value, err := internal.StringifyJSON(b); err == nil {
-		return value
-	}
-	return fmt.Sprintf("%#v", b)
+func (b B2BIntegrationConfigurationIntegrationTypeEnum) Ptr() *B2BIntegrationConfigurationIntegrationTypeEnum {
+	return &b
 }
 
 var (
@@ -263,10 +312,12 @@ func (c *CertificateSubjectDnCredential) GetExtraProperties() map[string]interfa
 }
 
 func (c *CertificateSubjectDnCredential) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;
@@ -358,11 +409,34 @@ func (c CertificateSubjectDnCredentialTypeEnum) Ptr() *CertificateSubjectDnCrede
 	return &c
 }
 
-// Client authentication methods derived from the JWKS document
+// Indicates who created the client. The value <code>admin</code> indicates the client was registered via the Management API. The value <code>client</code> indicates the client was registered dynamically.
+type CimdExternalMetadataCreatedByEnum string
+
+const (
+	CimdExternalMetadataCreatedByEnumAdmin  CimdExternalMetadataCreatedByEnum = "admin"
+	CimdExternalMetadataCreatedByEnumClient CimdExternalMetadataCreatedByEnum = "client"
+)
+
+func NewCimdExternalMetadataCreatedByEnumFromString(s string) (CimdExternalMetadataCreatedByEnum, error) {
+	switch s {
+	case "admin":
+		return CimdExternalMetadataCreatedByEnumAdmin, nil
+	case "client":
+		return CimdExternalMetadataCreatedByEnumClient, nil
+	}
+	var t CimdExternalMetadataCreatedByEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c CimdExternalMetadataCreatedByEnum) Ptr() *CimdExternalMetadataCreatedByEnum {
+	return &c
+}
+
 var (
 	cimdMappedClientAuthenticationMethodsFieldPrivateKeyJwt = big.NewInt(1 << 0)
 )
 
+// Client authentication methods derived from the JWKS document
 type CimdMappedClientAuthenticationMethods struct {
 	PrivateKeyJwt *CimdMappedClientAuthenticationMethodsPrivateKeyJwt `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
 
@@ -389,10 +463,12 @@ func (c *CimdMappedClientAuthenticationMethods) GetExtraProperties() map[string]
 }
 
 func (c *CimdMappedClientAuthenticationMethods) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
@@ -448,11 +524,11 @@ func (c *CimdMappedClientAuthenticationMethods) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Private Key JWT authentication configuration
 var (
 	cimdMappedClientAuthenticationMethodsPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
 )
 
+// Private Key JWT authentication configuration
 type CimdMappedClientAuthenticationMethodsPrivateKeyJwt struct {
 	// Credentials derived from the JWKS document
 	Credentials []*CimdMappedPrivateKeyJwtCredential `json:"credentials" url:"credentials"`
@@ -480,10 +556,12 @@ func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) GetExtraProperties(
 }
 
 func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -539,7 +617,6 @@ func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Auth0 client fields mapped from the Client ID Metadata Document
 var (
 	cimdMappedClientFieldsFieldExternalClientID            = big.NewInt(1 << 0)
 	cimdMappedClientFieldsFieldName                        = big.NewInt(1 << 1)
@@ -553,6 +630,7 @@ var (
 	cimdMappedClientFieldsFieldClientAuthenticationMethods = big.NewInt(1 << 9)
 )
 
+// Auth0 client fields mapped from the Client ID Metadata Document
 type CimdMappedClientFields struct {
 	// The URL of the Client ID Metadata Document
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
@@ -660,10 +738,12 @@ func (c *CimdMappedClientFields) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CimdMappedClientFields) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -833,10 +913,12 @@ func (c *CimdMappedPrivateKeyJwtCredential) GetExtraProperties() map[string]inte
 }
 
 func (c *CimdMappedPrivateKeyJwtCredential) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;
@@ -906,13 +988,13 @@ func (c *CimdMappedPrivateKeyJwtCredential) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Validation result for the Client ID Metadata Document
 var (
 	cimdValidationResultFieldValid      = big.NewInt(1 << 0)
 	cimdValidationResultFieldViolations = big.NewInt(1 << 1)
 	cimdValidationResultFieldWarnings   = big.NewInt(1 << 2)
 )
 
+// Validation result for the Client ID Metadata Document
 type CimdValidationResult struct {
 	// Whether the metadata document passed validation
 	Valid bool `json:"valid" url:"valid"`
@@ -958,10 +1040,12 @@ func (c *CimdValidationResult) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CimdValidationResult) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetValid sets the Valid field and marks it as non-optional;
@@ -1033,75 +1117,98 @@ func (c *CimdValidationResult) String() string {
 
 var (
 	clientFieldClientID                                       = big.NewInt(1 << 0)
-	clientFieldTenant                                         = big.NewInt(1 << 1)
-	clientFieldName                                           = big.NewInt(1 << 2)
-	clientFieldDescription                                    = big.NewInt(1 << 3)
-	clientFieldGlobal                                         = big.NewInt(1 << 4)
-	clientFieldClientSecret                                   = big.NewInt(1 << 5)
-	clientFieldAppType                                        = big.NewInt(1 << 6)
-	clientFieldLogoURI                                        = big.NewInt(1 << 7)
-	clientFieldIsFirstParty                                   = big.NewInt(1 << 8)
-	clientFieldOidcConformant                                 = big.NewInt(1 << 9)
-	clientFieldCallbacks                                      = big.NewInt(1 << 10)
-	clientFieldAllowedOrigins                                 = big.NewInt(1 << 11)
-	clientFieldWebOrigins                                     = big.NewInt(1 << 12)
-	clientFieldClientAliases                                  = big.NewInt(1 << 13)
-	clientFieldAllowedClients                                 = big.NewInt(1 << 14)
-	clientFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
-	clientFieldSessionTransfer                                = big.NewInt(1 << 16)
-	clientFieldOidcLogout                                     = big.NewInt(1 << 17)
-	clientFieldGrantTypes                                     = big.NewInt(1 << 18)
-	clientFieldJwtConfiguration                               = big.NewInt(1 << 19)
-	clientFieldSigningKeys                                    = big.NewInt(1 << 20)
-	clientFieldEncryptionKey                                  = big.NewInt(1 << 21)
-	clientFieldSSO                                            = big.NewInt(1 << 22)
-	clientFieldSSODisabled                                    = big.NewInt(1 << 23)
-	clientFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
-	clientFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
-	clientFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
-	clientFieldCustomLoginPage                                = big.NewInt(1 << 27)
-	clientFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
-	clientFieldFormTemplate                                   = big.NewInt(1 << 29)
-	clientFieldAddons                                         = big.NewInt(1 << 30)
-	clientFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
-	clientFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
-	clientFieldClientMetadata                                 = big.NewInt(1 << 33)
-	clientFieldMobile                                         = big.NewInt(1 << 34)
-	clientFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	clientFieldNativeSocialLogin                              = big.NewInt(1 << 36)
-	clientFieldFedcmLogin                                     = big.NewInt(1 << 37)
-	clientFieldRefreshToken                                   = big.NewInt(1 << 38)
-	clientFieldDefaultOrganization                            = big.NewInt(1 << 39)
-	clientFieldOrganizationUsage                              = big.NewInt(1 << 40)
-	clientFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
-	clientFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
-	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
-	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
-	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
-	clientFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	clientFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
-	clientFieldComplianceLevel                                = big.NewInt(1 << 48)
-	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
-	clientFieldTokenExchange                                  = big.NewInt(1 << 50)
-	clientFieldParRequestExpiry                               = big.NewInt(1 << 51)
-	clientFieldTokenQuota                                     = big.NewInt(1 << 52)
-	clientFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
-	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	clientFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	clientFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
-	clientFieldExternalMetadataType                           = big.NewInt(1 << 61)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
-	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientFieldCreatedAt                                      = big.NewInt(1 << 1)
+	clientFieldUpdatedAt                                      = big.NewInt(1 << 2)
+	clientFieldTenant                                         = big.NewInt(1 << 3)
+	clientFieldName                                           = big.NewInt(1 << 4)
+	clientFieldDescription                                    = big.NewInt(1 << 5)
+	clientFieldGlobal                                         = big.NewInt(1 << 6)
+	clientFieldClientSecret                                   = big.NewInt(1 << 7)
+	clientFieldAppType                                        = big.NewInt(1 << 8)
+	clientFieldLogoURI                                        = big.NewInt(1 << 9)
+	clientFieldIsFirstParty                                   = big.NewInt(1 << 10)
+	clientFieldOidcConformant                                 = big.NewInt(1 << 11)
+	clientFieldCallbacks                                      = big.NewInt(1 << 12)
+	clientFieldAllowedOrigins                                 = big.NewInt(1 << 13)
+	clientFieldWebOrigins                                     = big.NewInt(1 << 14)
+	clientFieldClientAliases                                  = big.NewInt(1 << 15)
+	clientFieldAllowedClients                                 = big.NewInt(1 << 16)
+	clientFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
+	clientFieldSessionTransfer                                = big.NewInt(1 << 18)
+	clientFieldOidcLogout                                     = big.NewInt(1 << 19)
+	clientFieldGrantTypes                                     = big.NewInt(1 << 20)
+	clientFieldJwtConfiguration                               = big.NewInt(1 << 21)
+	clientFieldSigningKeys                                    = big.NewInt(1 << 22)
+	clientFieldEncryptionKey                                  = big.NewInt(1 << 23)
+	clientFieldSSO                                            = big.NewInt(1 << 24)
+	clientFieldSSODisabled                                    = big.NewInt(1 << 25)
+	clientFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
+	clientFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
+	clientFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
+	clientFieldCustomLoginPage                                = big.NewInt(1 << 29)
+	clientFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
+	clientFieldFormTemplate                                   = big.NewInt(1 << 31)
+	clientFieldAddons                                         = big.NewInt(1 << 32)
+	clientFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
+	clientFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
+	clientFieldClientMetadata                                 = big.NewInt(1 << 35)
+	clientFieldMobile                                         = big.NewInt(1 << 36)
+	clientFieldInitiateLoginURI                               = big.NewInt(1 << 37)
+	clientFieldNativeSocialLogin                              = big.NewInt(1 << 38)
+	clientFieldFedcmLogin                                     = big.NewInt(1 << 39)
+	clientFieldRefreshToken                                   = big.NewInt(1 << 40)
+	clientFieldDefaultOrganization                            = big.NewInt(1 << 41)
+	clientFieldOrganizationUsage                              = big.NewInt(1 << 42)
+	clientFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
+	clientFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
+	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
+	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
+	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
+	clientFieldSignedRequestObject                            = big.NewInt(1 << 48)
+	clientFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
+	clientFieldComplianceLevel                                = big.NewInt(1 << 50)
+	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
+	clientFieldTokenExchange                                  = big.NewInt(1 << 52)
+	clientFieldParRequestExpiry                               = big.NewInt(1 << 53)
+	clientFieldTokenQuota                                     = big.NewInt(1 << 54)
+	clientFieldExpressConfiguration                           = big.NewInt(1 << 55)
+	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
+	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
+	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
+	clientFieldAnonymousSessions                              = big.NewInt(1 << 59)
+	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
+	clientFieldOidcSupport                                    = big.NewInt(1 << 62)
+	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
+
+// clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
+var clientNullableFields = map[string]*big.Int{
+	"session_transfer":              clientFieldSessionTransfer,
+	"signing_keys":                  clientFieldSigningKeys,
+	"encryption_key":                clientFieldEncryptionKey,
+	"refresh_token":                 clientFieldRefreshToken,
+	"default_organization":          clientFieldDefaultOrganization,
+	"client_authentication_methods": clientFieldClientAuthenticationMethods,
+	"compliance_level":              clientFieldComplianceLevel,
+	"par_request_expiry":            clientFieldParRequestExpiry,
+}
 
 type Client struct {
 	// ID of this client.
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The ISO 8601 timestamp of when this client was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 timestamp of when this client was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Name of the tenant this client belongs to.
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
 	// Name of this client (min length: 1 character, does not allow `<` or `>`).
@@ -1184,19 +1291,25 @@ type Client struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
-	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
-	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                         *int                                              `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                               *TokenQuota                                       `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
+	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
+	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
+	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
+	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -1215,6 +1328,20 @@ func (c *Client) GetClientID() string {
 		return ""
 	}
 	return *c.ClientID
+}
+
+func (c *Client) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *Client) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
 }
 
 func (c *Client) GetTenant() string {
@@ -1609,11 +1736,32 @@ func (c *Client) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAutho
 	return *c.IdentityAssertionAuthorizationGrant
 }
 
+func (c *Client) GetAnonymousSessions() AnonymousSessions {
+	if c == nil || c.AnonymousSessions == nil {
+		return AnonymousSessions{}
+	}
+	return *c.AnonymousSessions
+}
+
+func (c *Client) GetEnforceAnonSessionTransferNetworkBinding() ClientAnonymousSessionTransferNetworkBindingEnum {
+	if c == nil || c.EnforceAnonSessionTransferNetworkBinding == nil {
+		return ""
+	}
+	return *c.EnforceAnonSessionTransferNetworkBinding
+}
+
 func (c *Client) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
 	if c == nil || c.ThirdPartySecurityMode == nil {
 		return ""
 	}
 	return *c.ThirdPartySecurityMode
+}
+
+func (c *Client) GetOidcSupport() ClientOidcSupport {
+	if c == nil || c.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *c.OidcSupport
 }
 
 func (c *Client) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -1651,6 +1799,20 @@ func (c *Client) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByE
 	return *c.ExternalMetadataCreatedBy
 }
 
+func (c *Client) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
+}
+
+func (c *Client) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
+}
+
 func (c *Client) GetExternalClientID() string {
 	if c == nil || c.ExternalClientID == nil {
 		return ""
@@ -1673,10 +1835,12 @@ func (c *Client) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Client) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -1684,6 +1848,20 @@ func (c *Client) require(field *big.Int) {
 func (c *Client) SetClientID(clientID *string) {
 	c.ClientID = clientID
 	c.require(clientFieldClientID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(clientFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(clientFieldUpdatedAt)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -2078,11 +2256,32 @@ func (c *Client) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthori
 	c.require(clientFieldIdentityAssertionAuthorizationGrant)
 }
 
+// SetAnonymousSessions sets the AnonymousSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetAnonymousSessions(anonymousSessions *AnonymousSessions) {
+	c.AnonymousSessions = anonymousSessions
+	c.require(clientFieldAnonymousSessions)
+}
+
+// SetEnforceAnonSessionTransferNetworkBinding sets the EnforceAnonSessionTransferNetworkBinding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetEnforceAnonSessionTransferNetworkBinding(enforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum) {
+	c.EnforceAnonSessionTransferNetworkBinding = enforceAnonSessionTransferNetworkBinding
+	c.require(clientFieldEnforceAnonSessionTransferNetworkBinding)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	c.ThirdPartySecurityMode = thirdPartySecurityMode
 	c.require(clientFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	c.OidcSupport = oidcSupport
+	c.require(clientFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -2120,6 +2319,20 @@ func (c *Client) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientE
 	c.require(clientFieldExternalMetadataCreatedBy)
 }
 
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	c.ExternalMetadataStatus = externalMetadataStatus
+	c.require(clientFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetAgentID(agentID *string) {
+	c.AgentID = agentID
+	c.require(clientFieldAgentID)
+}
+
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *Client) SetExternalClientID(externalClientID *string) {
@@ -2138,6 +2351,8 @@ func (c *Client) UnmarshalJSON(data []byte) error {
 	type embed Client
 	var unmarshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
 		embed: embed(*c),
 	}
@@ -2145,11 +2360,20 @@ func (c *Client) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = Client(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -2158,8 +2382,12 @@ func (c *Client) MarshalJSON() ([]byte, error) {
 	type embed Client
 	var marshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
-		embed: embed(*c),
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
@@ -2180,13 +2408,13 @@ func (c *Client) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// AWS addon configuration.
 var (
 	clientAddonAwsFieldPrincipal         = big.NewInt(1 << 0)
 	clientAddonAwsFieldRole              = big.NewInt(1 << 1)
 	clientAddonAwsFieldLifetimeInSeconds = big.NewInt(1 << 2)
 )
 
+// AWS addon configuration.
 type ClientAddonAws struct {
 	// AWS principal ARN, e.g. `arn:aws:iam::010616021751:saml-provider/idpname`
 	Principal *string `json:"principal,omitempty" url:"principal,omitempty"`
@@ -2232,10 +2460,12 @@ func (c *ClientAddonAws) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonAws) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPrincipal sets the Principal field and marks it as non-optional;
@@ -2305,7 +2535,6 @@ func (c *ClientAddonAws) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Azure Blob Storage addon configuration.
 var (
 	clientAddonAzureBlobFieldAccountName      = big.NewInt(1 << 0)
 	clientAddonAzureBlobFieldStorageAccessKey = big.NewInt(1 << 1)
@@ -2322,6 +2551,7 @@ var (
 	clientAddonAzureBlobFieldContainerList    = big.NewInt(1 << 12)
 )
 
+// Azure Blob Storage addon configuration.
 type ClientAddonAzureBlob struct {
 	// Your Azure storage account name. Usually first segment in your Azure storage URL. e.g. `https://acme-org.blob.core.windows.net` would be the account name `acme-org`.
 	AccountName *string `json:"accountName,omitempty" url:"accountName,omitempty"`
@@ -2457,10 +2687,12 @@ func (c *ClientAddonAzureBlob) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonAzureBlob) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAccountName sets the AccountName field and marks it as non-optional;
@@ -2600,7 +2832,6 @@ func (c *ClientAddonAzureBlob) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Azure Storage Bus addon configuration.
 var (
 	clientAddonAzureSbFieldNamespace  = big.NewInt(1 << 0)
 	clientAddonAzureSbFieldSasKeyName = big.NewInt(1 << 1)
@@ -2609,6 +2840,7 @@ var (
 	clientAddonAzureSbFieldExpiration = big.NewInt(1 << 4)
 )
 
+// Azure Storage Bus addon configuration.
 type ClientAddonAzureSb struct {
 	// Your Azure Service Bus namespace. Usually the first segment of your Service Bus URL (e.g. `https://acme-org.servicebus.windows.net` would be `acme-org`).
 	Namespace *string `json:"namespace,omitempty" url:"namespace,omitempty"`
@@ -2672,10 +2904,12 @@ func (c *ClientAddonAzureSb) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonAzureSb) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetNamespace sets the Namespace field and marks it as non-optional;
@@ -2771,11 +3005,11 @@ type ClientAddonConcur = map[string]any
 // Dropbox SSO indicator (no configuration settings needed for Dropbox SSO).
 type ClientAddonDropbox = map[string]any
 
-// Adobe EchoSign SSO configuration.
 var (
 	clientAddonEchoSignFieldDomain = big.NewInt(1 << 0)
 )
 
+// Adobe EchoSign SSO configuration.
 type ClientAddonEchoSign struct {
 	// Your custom domain found in your EchoSign URL. e.g. `https://acme-org.echosign.com` would be `acme-org`.
 	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
@@ -2803,10 +3037,12 @@ func (c *ClientAddonEchoSign) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonEchoSign) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -2862,11 +3098,11 @@ func (c *ClientAddonEchoSign) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Egnyte SSO configuration.
 var (
 	clientAddonEgnyteFieldDomain = big.NewInt(1 << 0)
 )
 
+// Egnyte SSO configuration.
 type ClientAddonEgnyte struct {
 	// Your custom domain found in your Egnyte URL. e.g. `https://acme-org.egnyte.com` would be `acme-org`.
 	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
@@ -2894,10 +3130,12 @@ func (c *ClientAddonEgnyte) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonEgnyte) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -2953,7 +3191,6 @@ func (c *ClientAddonEgnyte) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Google Firebase addon configuration.
 var (
 	clientAddonFirebaseFieldSecret            = big.NewInt(1 << 0)
 	clientAddonFirebaseFieldPrivateKeyID      = big.NewInt(1 << 1)
@@ -2962,6 +3199,7 @@ var (
 	clientAddonFirebaseFieldLifetimeInSeconds = big.NewInt(1 << 4)
 )
 
+// Google Firebase addon configuration.
 type ClientAddonFirebase struct {
 	// Google Firebase Secret. (SDK 2 only).
 	Secret *string `json:"secret,omitempty" url:"secret,omitempty"`
@@ -3025,10 +3263,12 @@ func (c *ClientAddonFirebase) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonFirebase) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetSecret sets the Secret field and marks it as non-optional;
@@ -3112,7 +3352,6 @@ func (c *ClientAddonFirebase) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Layer addon configuration.
 var (
 	clientAddonLayerFieldProviderID = big.NewInt(1 << 0)
 	clientAddonLayerFieldKeyID      = big.NewInt(1 << 1)
@@ -3121,6 +3360,7 @@ var (
 	clientAddonLayerFieldExpiration = big.NewInt(1 << 4)
 )
 
+// Layer addon configuration.
 type ClientAddonLayer struct {
 	// Provider ID of your Layer account
 	ProviderID string `json:"providerId" url:"providerId"`
@@ -3184,10 +3424,12 @@ func (c *ClientAddonLayer) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonLayer) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetProviderID sets the ProviderID field and marks it as non-optional;
@@ -3271,11 +3513,11 @@ func (c *ClientAddonLayer) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Microsoft Dynamics CRM SSO configuration.
 var (
 	clientAddonMscrmFieldURL = big.NewInt(1 << 0)
 )
 
+// Microsoft Dynamics CRM SSO configuration.
 type ClientAddonMscrm struct {
 	// Microsoft Dynamics CRM application URL.
 	URL string `json:"url" url:"url"`
@@ -3303,10 +3545,12 @@ func (c *ClientAddonMscrm) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonMscrm) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -3362,11 +3606,11 @@ func (c *ClientAddonMscrm) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// New Relic SSO configuration.
 var (
 	clientAddonNewRelicFieldAccount = big.NewInt(1 << 0)
 )
 
+// New Relic SSO configuration.
 type ClientAddonNewRelic struct {
 	// Your New Relic Account ID found in your New Relic URL after the `/accounts/` path. e.g. `https://rpm.newrelic.com/accounts/123456/query` would be `123456`.
 	Account *string `json:"account,omitempty" url:"account,omitempty"`
@@ -3394,10 +3638,12 @@ func (c *ClientAddonNewRelic) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonNewRelic) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAccount sets the Account field and marks it as non-optional;
@@ -3471,10 +3717,12 @@ func (c *ClientAddonOag) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonOag) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 func (c *ClientAddonOag) UnmarshalJSON(data []byte) error {
@@ -3519,12 +3767,12 @@ func (c *ClientAddonOag) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Microsoft Office 365 SSO configuration.
 var (
 	clientAddonOffice365FieldDomain     = big.NewInt(1 << 0)
 	clientAddonOffice365FieldConnection = big.NewInt(1 << 1)
 )
 
+// Microsoft Office 365 SSO configuration.
 type ClientAddonOffice365 struct {
 	// Your Office 365 domain name. e.g. `acme-org.com`.
 	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
@@ -3561,10 +3809,12 @@ func (c *ClientAddonOffice365) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonOffice365) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -3627,11 +3877,11 @@ func (c *ClientAddonOffice365) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Active Directory Rights Management Service SSO configuration.
 var (
 	clientAddonRmsFieldURL = big.NewInt(1 << 0)
 )
 
+// Active Directory Rights Management Service SSO configuration.
 type ClientAddonRms struct {
 	// URL of your Rights Management Server. It can be internal or external, but users will have to be able to reach it.
 	URL string `json:"url" url:"url"`
@@ -3659,10 +3909,12 @@ func (c *ClientAddonRms) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonRms) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -3718,11 +3970,11 @@ func (c *ClientAddonRms) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Salesforce SSO configuration.
 var (
 	clientAddonSalesforceFieldEntityID = big.NewInt(1 << 0)
 )
 
+// Salesforce SSO configuration.
 type ClientAddonSalesforce struct {
 	// Arbitrary logical URL that identifies the Saleforce resource. e.g. `https://acme-org.com`.
 	EntityID *string `json:"entity_id,omitempty" url:"entity_id,omitempty"`
@@ -3750,10 +4002,12 @@ func (c *ClientAddonSalesforce) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSalesforce) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEntityID sets the EntityID field and marks it as non-optional;
@@ -3809,7 +4063,6 @@ func (c *ClientAddonSalesforce) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Salesforce API addon configuration.
 var (
 	clientAddonSalesforceAPIFieldClientid            = big.NewInt(1 << 0)
 	clientAddonSalesforceAPIFieldPrincipal           = big.NewInt(1 << 1)
@@ -3817,6 +4070,7 @@ var (
 	clientAddonSalesforceAPIFieldCommunityURLSection = big.NewInt(1 << 3)
 )
 
+// Salesforce API addon configuration.
 type ClientAddonSalesforceAPI struct {
 	// Consumer Key assigned by Salesforce to the Connected App.
 	Clientid *string `json:"clientid,omitempty" url:"clientid,omitempty"`
@@ -3871,10 +4125,12 @@ func (c *ClientAddonSalesforceAPI) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSalesforceAPI) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetClientid sets the Clientid field and marks it as non-optional;
@@ -3951,7 +4207,6 @@ func (c *ClientAddonSalesforceAPI) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Salesforce Sandbox addon configuration.
 var (
 	clientAddonSalesforceSandboxAPIFieldClientid            = big.NewInt(1 << 0)
 	clientAddonSalesforceSandboxAPIFieldPrincipal           = big.NewInt(1 << 1)
@@ -3959,6 +4214,7 @@ var (
 	clientAddonSalesforceSandboxAPIFieldCommunityURLSection = big.NewInt(1 << 3)
 )
 
+// Salesforce Sandbox addon configuration.
 type ClientAddonSalesforceSandboxAPI struct {
 	// Consumer Key assigned by Salesforce to the Connected App.
 	Clientid *string `json:"clientid,omitempty" url:"clientid,omitempty"`
@@ -4013,10 +4269,12 @@ func (c *ClientAddonSalesforceSandboxAPI) GetExtraProperties() map[string]interf
 }
 
 func (c *ClientAddonSalesforceSandboxAPI) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetClientid sets the Clientid field and marks it as non-optional;
@@ -4093,7 +4351,6 @@ func (c *ClientAddonSalesforceSandboxAPI) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// SAML2 addon indicator (no configuration settings needed for SAML2 addon).
 var (
 	clientAddonSAMLFieldMappings                       = big.NewInt(1 << 0)
 	clientAddonSAMLFieldAudience                       = big.NewInt(1 << 1)
@@ -4113,6 +4370,7 @@ var (
 	clientAddonSAMLFieldAuthnContextClassRef           = big.NewInt(1 << 15)
 )
 
+// SAML2 addon indicator (no configuration settings needed for SAML2 addon).
 type ClientAddonSAML struct {
 	Mappings                       *ClientAddonSAMLMapping `json:"mappings,omitempty" url:"mappings,omitempty"`
 	Audience                       *string                 `json:"audience,omitempty" url:"audience,omitempty"`
@@ -4259,10 +4517,12 @@ func (c *ClientAddonSAML) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSAML) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMappings sets the Mappings field and marks it as non-optional;
@@ -4425,7 +4685,6 @@ func (c *ClientAddonSAML) String() string {
 
 type ClientAddonSAMLMapping = map[string]any
 
-// SAP API addon configuration.
 var (
 	clientAddonSapapiFieldClientid             = big.NewInt(1 << 0)
 	clientAddonSapapiFieldUsernameAttribute    = big.NewInt(1 << 1)
@@ -4435,6 +4694,7 @@ var (
 	clientAddonSapapiFieldNameIdentifierFormat = big.NewInt(1 << 5)
 )
 
+// SAP API addon configuration.
 type ClientAddonSapapi struct {
 	// If activated in the OAuth 2.0 client configuration (transaction SOAUTH2) the SAML attribute client_id must be set and equal the client_id form parameter of the access token request.
 	Clientid *string `json:"clientid,omitempty" url:"clientid,omitempty"`
@@ -4507,10 +4767,12 @@ func (c *ClientAddonSapapi) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSapapi) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetClientid sets the Clientid field and marks it as non-optional;
@@ -4601,12 +4863,12 @@ func (c *ClientAddonSapapi) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Sentry SSO configuration.
 var (
 	clientAddonSentryFieldOrgSlug = big.NewInt(1 << 0)
 	clientAddonSentryFieldBaseURL = big.NewInt(1 << 1)
 )
 
+// Sentry SSO configuration.
 type ClientAddonSentry struct {
 	// Generated slug for your Sentry organization. Found in your Sentry URL. e.g. `https://sentry.acme.com/acme-org/` would be `acme-org`.
 	OrgSlug *string `json:"org_slug,omitempty" url:"org_slug,omitempty"`
@@ -4643,10 +4905,12 @@ func (c *ClientAddonSentry) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSentry) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetOrgSlug sets the OrgSlug field and marks it as non-optional;
@@ -4709,12 +4973,12 @@ func (c *ClientAddonSentry) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// SharePoint SSO configuration.
 var (
 	clientAddonSharePointFieldURL         = big.NewInt(1 << 0)
 	clientAddonSharePointFieldExternalURL = big.NewInt(1 << 1)
 )
 
+// SharePoint SSO configuration.
 type ClientAddonSharePoint struct {
 	// Internal SharePoint application URL.
 	URL         *string                           `json:"url,omitempty" url:"url,omitempty"`
@@ -4750,10 +5014,12 @@ func (c *ClientAddonSharePoint) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSharePoint) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -4879,11 +5145,11 @@ func (c *ClientAddonSharePointExternalURL) Accept(visitor ClientAddonSharePointE
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
-// Slack team or workspace name usually first segment in your Slack URL. e.g. `https://acme-org.slack.com` would be `acme-org`.
 var (
 	clientAddonSlackFieldTeam = big.NewInt(1 << 0)
 )
 
+// Slack team or workspace name usually first segment in your Slack URL. e.g. `https://acme-org.slack.com` would be `acme-org`.
 type ClientAddonSlack struct {
 	// Slack team name.
 	Team string `json:"team" url:"team"`
@@ -4911,10 +5177,12 @@ func (c *ClientAddonSlack) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSlack) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetTeam sets the Team field and marks it as non-optional;
@@ -4970,11 +5238,11 @@ func (c *ClientAddonSlack) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// SpringCM SSO configuration.
 var (
 	clientAddonSpringCmFieldAcsurl = big.NewInt(1 << 0)
 )
 
+// SpringCM SSO configuration.
 type ClientAddonSpringCm struct {
 	// SpringCM ACS URL, e.g. `https://na11.springcm.com/atlas/sso/SSOEndpoint.ashx`.
 	Acsurl *string `json:"acsurl,omitempty" url:"acsurl,omitempty"`
@@ -5002,10 +5270,12 @@ func (c *ClientAddonSpringCm) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSpringCm) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAcsurl sets the Acsurl field and marks it as non-optional;
@@ -5102,10 +5372,12 @@ func (c *ClientAddonSSOIntegration) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ClientAddonSSOIntegration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -5168,11 +5440,11 @@ func (c *ClientAddonSSOIntegration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Windows Azure Mobile Services addon configuration.
 var (
 	clientAddonWamsFieldMasterkey = big.NewInt(1 << 0)
 )
 
+// Windows Azure Mobile Services addon configuration.
 type ClientAddonWams struct {
 	// Your master key for Windows Azure Mobile Services.
 	Masterkey *string `json:"masterkey,omitempty" url:"masterkey,omitempty"`
@@ -5200,10 +5472,12 @@ func (c *ClientAddonWams) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonWams) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMasterkey sets the Masterkey field and marks it as non-optional;
@@ -5262,11 +5536,11 @@ func (c *ClientAddonWams) String() string {
 // WS-Fed (WIF) addon indicator. Actual configuration is stored in `callback` and `client_aliases` properties on the client.
 type ClientAddonWsFed = map[string]any
 
-// Zendesk SSO configuration.
 var (
 	clientAddonZendeskFieldAccountName = big.NewInt(1 << 0)
 )
 
+// Zendesk SSO configuration.
 type ClientAddonZendesk struct {
 	// Zendesk account name usually first segment in your Zendesk URL. e.g. `https://acme-org.zendesk.com` would be `acme-org`.
 	AccountName *string `json:"accountName,omitempty" url:"accountName,omitempty"`
@@ -5294,10 +5568,12 @@ func (c *ClientAddonZendesk) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonZendesk) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAccountName sets the AccountName field and marks it as non-optional;
@@ -5353,11 +5629,11 @@ func (c *ClientAddonZendesk) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Zoom SSO configuration.
 var (
 	clientAddonZoomFieldAccount = big.NewInt(1 << 0)
 )
 
+// Zoom SSO configuration.
 type ClientAddonZoom struct {
 	// Zoom account name usually first segment of your Zoom URL, e.g. `https://acme-org.zoom.us` would be `acme-org`.
 	Account *string `json:"account,omitempty" url:"account,omitempty"`
@@ -5385,10 +5661,12 @@ func (c *ClientAddonZoom) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonZoom) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAccount sets the Account field and marks it as non-optional;
@@ -5444,7 +5722,6 @@ func (c *ClientAddonZoom) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Addons enabled for this client and their associated configurations.
 var (
 	clientAddonsFieldAws                  = big.NewInt(1 << 0)
 	clientAddonsFieldAzureBlob            = big.NewInt(1 << 1)
@@ -5478,6 +5755,12 @@ var (
 	clientAddonsFieldOag                  = big.NewInt(1 << 29)
 )
 
+// clientAddonsNullableFields maps the wire names of ClientAddons's nullable fields (required or optional) to their field bits.
+var clientAddonsNullableFields = map[string]*big.Int{
+	"oag": clientAddonsFieldOag,
+}
+
+// Addons enabled for this client and their associated configurations.
 type ClientAddons struct {
 	Aws                  *ClientAddonAws                  `json:"aws,omitempty" url:"aws,omitempty"`
 	AzureBlob            *ClientAddonAzureBlob            `json:"azure_blob,omitempty" url:"azure_blob,omitempty"`
@@ -5735,10 +6018,12 @@ func (c *ClientAddons) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddons) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAws sets the Aws field and marks it as non-optional;
@@ -5963,6 +6248,13 @@ func (c *ClientAddons) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientAddonsNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -5993,6 +6285,32 @@ func (c *ClientAddons) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Indicates whether network binding should be enforced when consuming an anonymous session transfer token. If set to 'ip', consumption must happen from the same IP as the issuer. If set to 'asn', consumption must happen from the same ASN as the issuer. If set to 'none', binding is not enforced. Default value is `ip`.
+type ClientAnonymousSessionTransferNetworkBindingEnum string
+
+const (
+	ClientAnonymousSessionTransferNetworkBindingEnumIP   ClientAnonymousSessionTransferNetworkBindingEnum = "ip"
+	ClientAnonymousSessionTransferNetworkBindingEnumAsn  ClientAnonymousSessionTransferNetworkBindingEnum = "asn"
+	ClientAnonymousSessionTransferNetworkBindingEnumNone ClientAnonymousSessionTransferNetworkBindingEnum = "none"
+)
+
+func NewClientAnonymousSessionTransferNetworkBindingEnumFromString(s string) (ClientAnonymousSessionTransferNetworkBindingEnum, error) {
+	switch s {
+	case "ip":
+		return ClientAnonymousSessionTransferNetworkBindingEnumIP, nil
+	case "asn":
+		return ClientAnonymousSessionTransferNetworkBindingEnumAsn, nil
+	case "none":
+		return ClientAnonymousSessionTransferNetworkBindingEnumNone, nil
+	}
+	var t ClientAnonymousSessionTransferNetworkBindingEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientAnonymousSessionTransferNetworkBindingEnum) Ptr() *ClientAnonymousSessionTransferNetworkBindingEnum {
+	return &c
+}
+
 // The type of application this client represents
 type ClientAppTypeEnum string
 
@@ -6003,7 +6321,6 @@ const (
 	ClientAppTypeEnumNonInteractive       ClientAppTypeEnum = "non_interactive"
 	ClientAppTypeEnumResourceServer       ClientAppTypeEnum = "resource_server"
 	ClientAppTypeEnumExpressConfiguration ClientAppTypeEnum = "express_configuration"
-	ClientAppTypeEnumB2BIntegration       ClientAppTypeEnum = "b2b_integration"
 	ClientAppTypeEnumRms                  ClientAppTypeEnum = "rms"
 	ClientAppTypeEnumBox                  ClientAppTypeEnum = "box"
 	ClientAppTypeEnumCloudbees            ClientAppTypeEnum = "cloudbees"
@@ -6039,8 +6356,6 @@ func NewClientAppTypeEnumFromString(s string) (ClientAppTypeEnum, error) {
 		return ClientAppTypeEnumResourceServer, nil
 	case "express_configuration":
 		return ClientAppTypeEnumExpressConfiguration, nil
-	case "b2b_integration":
-		return ClientAppTypeEnumB2BIntegration, nil
 	case "rms":
 		return ClientAppTypeEnumRms, nil
 	case "box":
@@ -6088,19 +6403,19 @@ func (c ClientAppTypeEnum) Ptr() *ClientAppTypeEnum {
 	return &c
 }
 
-// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`, `my-account`.
 type ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration = []AsyncApprovalNotificationsChannelsEnum
 
-// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`.
+// Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`, `my-account`.
 type ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration = []AsyncApprovalNotificationsChannelsEnum
 
-// Defines client authentication methods.
 var (
 	clientAuthenticationMethodFieldPrivateKeyJwt           = big.NewInt(1 << 0)
 	clientAuthenticationMethodFieldTLSClientAuth           = big.NewInt(1 << 1)
 	clientAuthenticationMethodFieldSelfSignedTLSClientAuth = big.NewInt(1 << 2)
 )
 
+// Defines client authentication methods.
 type ClientAuthenticationMethod struct {
 	PrivateKeyJwt           *ClientAuthenticationMethodPrivateKeyJwt           `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
 	TLSClientAuth           *ClientAuthenticationMethodTLSClientAuth           `json:"tls_client_auth,omitempty" url:"tls_client_auth,omitempty"`
@@ -6142,10 +6457,12 @@ func (c *ClientAuthenticationMethod) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ClientAuthenticationMethod) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
@@ -6211,11 +6528,11 @@ func (c *ClientAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 var (
 	clientAuthenticationMethodPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
 )
 
+// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 type ClientAuthenticationMethodPrivateKeyJwt struct {
 	Credentials ClientAuthenticationMethodPrivateKeyJwtCredentials `json:"credentials" url:"credentials"`
 
@@ -6241,10 +6558,12 @@ func (c *ClientAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map[strin
 }
 
 func (c *ClientAuthenticationMethodPrivateKeyJwt) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6299,11 +6618,11 @@ func (c *ClientAuthenticationMethodPrivateKeyJwt) String() string {
 // A list of unique and previously created credential IDs enabled on the client for Private Key JWT authentication.
 type ClientAuthenticationMethodPrivateKeyJwtCredentials = []*CredentialID
 
-// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 var (
 	clientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
+// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 type ClientAuthenticationMethodSelfSignedTLSClientAuth struct {
 	Credentials ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -6329,10 +6648,12 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) GetExtraProperties()
 }
 
 func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6387,11 +6708,11 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) String() string {
 // A list of unique and previously created credential IDs enabled on the client for mTLS authentication utilizing self-signed certificate.
 type ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials = []*CredentialID
 
-// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 var (
 	clientAuthenticationMethodTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
+// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 type ClientAuthenticationMethodTLSClientAuth struct {
 	Credentials ClientAuthenticationMethodTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -6417,10 +6738,12 @@ func (c *ClientAuthenticationMethodTLSClientAuth) GetExtraProperties() map[strin
 }
 
 func (c *ClientAuthenticationMethodTLSClientAuth) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6507,13 +6830,13 @@ func (c ClientComplianceLevelEnum) Ptr() *ClientComplianceLevelEnum {
 	return &c
 }
 
-// Defines client authentication methods.
 var (
 	clientCreateAuthenticationMethodFieldPrivateKeyJwt           = big.NewInt(1 << 0)
 	clientCreateAuthenticationMethodFieldTLSClientAuth           = big.NewInt(1 << 1)
 	clientCreateAuthenticationMethodFieldSelfSignedTLSClientAuth = big.NewInt(1 << 2)
 )
 
+// Defines client authentication methods.
 type ClientCreateAuthenticationMethod struct {
 	PrivateKeyJwt           *ClientCreateAuthenticationMethodPrivateKeyJwt           `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
 	TLSClientAuth           *ClientCreateAuthenticationMethodTLSClientAuth           `json:"tls_client_auth,omitempty" url:"tls_client_auth,omitempty"`
@@ -6555,10 +6878,12 @@ func (c *ClientCreateAuthenticationMethod) GetExtraProperties() map[string]inter
 }
 
 func (c *ClientCreateAuthenticationMethod) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
@@ -6624,11 +6949,11 @@ func (c *ClientCreateAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 var (
 	clientCreateAuthenticationMethodPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
 )
 
+// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 type ClientCreateAuthenticationMethodPrivateKeyJwt struct {
 	Credentials ClientCreateAuthenticationMethodPrivateKeyJwtCredentials `json:"credentials" url:"credentials"`
 
@@ -6654,10 +6979,12 @@ func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map
 }
 
 func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6712,11 +7039,11 @@ func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) String() string {
 // Fully defined credentials that will be enabled on the client for Private Key JWT authentication.
 type ClientCreateAuthenticationMethodPrivateKeyJwtCredentials = []*PublicKeyCredential
 
-// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 var (
 	clientCreateAuthenticationMethodTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
+// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 type ClientCreateAuthenticationMethodTLSClientAuth struct {
 	Credentials ClientCreateAuthenticationMethodTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -6742,10 +7069,12 @@ func (c *ClientCreateAuthenticationMethodTLSClientAuth) GetExtraProperties() map
 }
 
 func (c *ClientCreateAuthenticationMethodTLSClientAuth) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6800,12 +7129,12 @@ func (c *ClientCreateAuthenticationMethodTLSClientAuth) String() string {
 // Fully defined credentials that will be enabled on the client for CA-based mTLS authentication.
 type ClientCreateAuthenticationMethodTLSClientAuthCredentials = []*CertificateSubjectDnCredential
 
-// Defines the default Organization ID and flows
 var (
 	clientDefaultOrganizationFieldOrganizationID = big.NewInt(1 << 0)
 	clientDefaultOrganizationFieldFlows          = big.NewInt(1 << 1)
 )
 
+// Defines the default Organization ID and flows
 type ClientDefaultOrganization struct {
 	// The default Organization ID to be used
 	OrganizationID string `json:"organization_id" url:"organization_id"`
@@ -6841,10 +7170,12 @@ func (c *ClientDefaultOrganization) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ClientDefaultOrganization) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -6922,13 +7253,13 @@ func (c ClientDefaultOrganizationFlowsEnum) Ptr() *ClientDefaultOrganizationFlow
 	return &c
 }
 
-// Encryption used for WsFed responses with this client.
 var (
 	clientEncryptionKeyFieldPub     = big.NewInt(1 << 0)
 	clientEncryptionKeyFieldCert    = big.NewInt(1 << 1)
 	clientEncryptionKeyFieldSubject = big.NewInt(1 << 2)
 )
 
+// Encryption used for WsFed responses with this client.
 type ClientEncryptionKey struct {
 	// Encryption Public RSA Key.
 	Pub *string `json:"pub,omitempty" url:"pub,omitempty"`
@@ -6974,10 +7305,12 @@ func (c *ClientEncryptionKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientEncryptionKey) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPub sets the Pub field and marks it as non-optional;
@@ -7070,6 +7403,29 @@ func (c ClientExternalMetadataCreatedByEnum) Ptr() *ClientExternalMetadataCreate
 	return &c
 }
 
+// Indicates whether the Client ID Metadata Document at <code>external_client_id</code> is currently reachable. For clients with <code>external_metadata_created_by</code> set to <code>client</code> the status is calculated from the document; for <code>admin</code> it is always <code>available</code>. When absent, the status is assumed to be <code>available</code>.
+type ClientExternalMetadataStatusEnum string
+
+const (
+	ClientExternalMetadataStatusEnumAvailable   ClientExternalMetadataStatusEnum = "available"
+	ClientExternalMetadataStatusEnumUnavailable ClientExternalMetadataStatusEnum = "unavailable"
+)
+
+func NewClientExternalMetadataStatusEnumFromString(s string) (ClientExternalMetadataStatusEnum, error) {
+	switch s {
+	case "available":
+		return ClientExternalMetadataStatusEnumAvailable, nil
+	case "unavailable":
+		return ClientExternalMetadataStatusEnumUnavailable, nil
+	}
+	var t ClientExternalMetadataStatusEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientExternalMetadataStatusEnum) Ptr() *ClientExternalMetadataStatusEnum {
+	return &c
+}
+
 // Indicates the type of external metadata used to register the client. This field is omitted for regular clients. The value <code>cimd</code> identifies clients registered via a Client ID Metadata Document. The value <code>dcr</code> identifies clients registered via Dynamic Client Registration.
 type ClientExternalMetadataTypeEnum string
 
@@ -7093,7 +7449,6 @@ func (c ClientExternalMetadataTypeEnum) Ptr() *ClientExternalMetadataTypeEnum {
 	return &c
 }
 
-// Configuration related to JWTs for the client.
 var (
 	clientJwtConfigurationFieldLifetimeInSeconds = big.NewInt(1 << 0)
 	clientJwtConfigurationFieldSecretEncoded     = big.NewInt(1 << 1)
@@ -7101,6 +7456,7 @@ var (
 	clientJwtConfigurationFieldAlg               = big.NewInt(1 << 3)
 )
 
+// Configuration related to JWTs for the client.
 type ClientJwtConfiguration struct {
 	// Number of seconds the JWT will be valid for (affects `exp` claim).
 	LifetimeInSeconds *int `json:"lifetime_in_seconds,omitempty" url:"lifetime_in_seconds,omitempty"`
@@ -7153,10 +7509,12 @@ func (c *ClientJwtConfiguration) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientJwtConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetLifetimeInSeconds sets the LifetimeInSeconds field and marks it as non-optional;
@@ -7239,12 +7597,12 @@ type ClientJwtConfigurationScopes = map[string]any
 // Metadata associated with the client, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.  Field names (max 255 chars) are alphanumeric and may only include the following special characters:  :,-+=_*?"/\()<>@	[Tab] [Space]
 type ClientMetadata = map[string]any
 
-// Additional configuration for native mobile apps.
 var (
 	clientMobileFieldAndroid = big.NewInt(1 << 0)
 	clientMobileFieldIos     = big.NewInt(1 << 1)
 )
 
+// Additional configuration for native mobile apps.
 type ClientMobile struct {
 	Android *ClientMobileAndroid `json:"android,omitempty" url:"android,omitempty"`
 	Ios     *ClientMobileiOs     `json:"ios,omitempty" url:"ios,omitempty"`
@@ -7279,10 +7637,12 @@ func (c *ClientMobile) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientMobile) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAndroid sets the Android field and marks it as non-optional;
@@ -7345,12 +7705,12 @@ func (c *ClientMobile) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Android native app configuration.
 var (
 	clientMobileAndroidFieldAppPackageName         = big.NewInt(1 << 0)
 	clientMobileAndroidFieldSha256CertFingerprints = big.NewInt(1 << 1)
 )
 
+// Android native app configuration.
 type ClientMobileAndroid struct {
 	// App package name found in AndroidManifest.xml.
 	AppPackageName *string `json:"app_package_name,omitempty" url:"app_package_name,omitempty"`
@@ -7387,10 +7747,12 @@ func (c *ClientMobileAndroid) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientMobileAndroid) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAppPackageName sets the AppPackageName field and marks it as non-optional;
@@ -7453,12 +7815,12 @@ func (c *ClientMobileAndroid) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// iOS native app configuration.
 var (
 	clientMobileiOsFieldTeamID              = big.NewInt(1 << 0)
 	clientMobileiOsFieldAppBundleIdentifier = big.NewInt(1 << 1)
 )
 
+// iOS native app configuration.
 type ClientMobileiOs struct {
 	// Identifier assigned to the Apple account that signs and uploads the app to the store.
 	TeamID *string `json:"team_id,omitempty" url:"team_id,omitempty"`
@@ -7495,10 +7857,12 @@ func (c *ClientMobileiOs) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientMobileiOs) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetTeamID sets the TeamID field and marks it as non-optional;
@@ -7599,6 +7963,49 @@ func (c ClientMyOrganizationConfigurationAllowedStrategiesEnum) Ptr() *ClientMyO
 	return &c
 }
 
+// A valid third-party client access value for the My Organization Configuration.
+type ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum string
+
+const (
+	ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumAllow ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum = "allow"
+	ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumBlock ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum = "block"
+)
+
+func NewClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumFromString(s string) (ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum, error) {
+	switch s {
+	case "allow":
+		return ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumAllow, nil
+	case "block":
+		return ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnumBlock, nil
+	}
+	var t ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum) Ptr() *ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum {
+	return &c
+}
+
+// The default third-party client access value for the My Organization Configuration.
+type ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum string
+
+const (
+	ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnumBlock ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum = "block"
+)
+
+func NewClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnumFromString(s string) (ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum, error) {
+	switch s {
+	case "block":
+		return ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnumBlock, nil
+	}
+	var t ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum) Ptr() *ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum {
+	return &c
+}
+
 // The deletion behavior for this client.
 type ClientMyOrganizationDeletionBehaviorEnum string
 
@@ -7622,15 +8029,18 @@ func (c ClientMyOrganizationDeletionBehaviorEnum) Ptr() *ClientMyOrganizationDel
 	return &c
 }
 
-// Configuration related to the My Organization Configuration for the client.
 var (
-	clientMyOrganizationPatchConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
-	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
-	clientMyOrganizationPatchConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
-	clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
+	clientMyOrganizationPatchConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
+	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
+	clientMyOrganizationPatchConfigurationFieldAllowedStrategies                = big.NewInt(1 << 2)
+	clientMyOrganizationPatchConfigurationFieldThirdPartyClientAccess           = big.NewInt(1 << 3)
+	clientMyOrganizationPatchConfigurationFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
+	clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID        = big.NewInt(1 << 5)
+	clientMyOrganizationPatchConfigurationFieldEnforcePermissionCeiling         = big.NewInt(1 << 6)
+	clientMyOrganizationPatchConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
+// Configuration related to the My Organization Configuration for the client.
 type ClientMyOrganizationPatchConfiguration struct {
 	// The connection profile ID that this client should validate against.
 	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
@@ -7638,9 +8048,14 @@ type ClientMyOrganizationPatchConfiguration struct {
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ThirdPartyClientAccess     *ClientMyOrganizationThirdPartyClientAccessConfiguration `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
+	// When true, limits the permissions that organization admins can assign to members to only those held by the admin themselves.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
+	// When true, prevents organization admins from assigning permissions to themselves.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7670,6 +8085,13 @@ func (c *ClientMyOrganizationPatchConfiguration) GetAllowedStrategies() []Client
 	return c.AllowedStrategies
 }
 
+func (c *ClientMyOrganizationPatchConfiguration) GetThirdPartyClientAccess() ClientMyOrganizationThirdPartyClientAccessConfiguration {
+	if c == nil || c.ThirdPartyClientAccess == nil {
+		return ClientMyOrganizationThirdPartyClientAccessConfiguration{}
+	}
+	return *c.ThirdPartyClientAccess
+}
+
 func (c *ClientMyOrganizationPatchConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
 	if c == nil {
 		return ""
@@ -7684,6 +8106,20 @@ func (c *ClientMyOrganizationPatchConfiguration) GetInvitationLandingClientID() 
 	return *c.InvitationLandingClientID
 }
 
+func (c *ClientMyOrganizationPatchConfiguration) GetEnforcePermissionCeiling() bool {
+	if c == nil || c.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *c.EnforcePermissionCeiling
+}
+
+func (c *ClientMyOrganizationPatchConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if c == nil || c.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *c.EnforceSelfAssignmentRestriction
+}
+
 func (c *ClientMyOrganizationPatchConfiguration) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -7692,10 +8128,12 @@ func (c *ClientMyOrganizationPatchConfiguration) GetExtraProperties() map[string
 }
 
 func (c *ClientMyOrganizationPatchConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
@@ -7719,6 +8157,13 @@ func (c *ClientMyOrganizationPatchConfiguration) SetAllowedStrategies(allowedStr
 	c.require(clientMyOrganizationPatchConfigurationFieldAllowedStrategies)
 }
 
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetThirdPartyClientAccess(thirdPartyClientAccess *ClientMyOrganizationThirdPartyClientAccessConfiguration) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(clientMyOrganizationPatchConfigurationFieldThirdPartyClientAccess)
+}
+
 // SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ClientMyOrganizationPatchConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
@@ -7731,6 +8176,20 @@ func (c *ClientMyOrganizationPatchConfiguration) SetConnectionDeletionBehavior(c
 func (c *ClientMyOrganizationPatchConfiguration) SetInvitationLandingClientID(invitationLandingClientID *string) {
 	c.InvitationLandingClientID = invitationLandingClientID
 	c.require(clientMyOrganizationPatchConfigurationFieldInvitationLandingClientID)
+}
+
+// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
+	c.EnforcePermissionCeiling = enforcePermissionCeiling
+	c.require(clientMyOrganizationPatchConfigurationFieldEnforcePermissionCeiling)
+}
+
+// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPatchConfiguration) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
+	c.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
+	c.require(clientMyOrganizationPatchConfigurationFieldEnforceSelfAssignmentRestriction)
 }
 
 func (c *ClientMyOrganizationPatchConfiguration) UnmarshalJSON(data []byte) error {
@@ -7775,15 +8234,18 @@ func (c *ClientMyOrganizationPatchConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration related to the My Organization Configuration for the client.
 var (
-	clientMyOrganizationPostConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
-	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
-	clientMyOrganizationPostConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
-	clientMyOrganizationPostConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
+	clientMyOrganizationPostConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
+	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
+	clientMyOrganizationPostConfigurationFieldAllowedStrategies                = big.NewInt(1 << 2)
+	clientMyOrganizationPostConfigurationFieldThirdPartyClientAccess           = big.NewInt(1 << 3)
+	clientMyOrganizationPostConfigurationFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
+	clientMyOrganizationPostConfigurationFieldInvitationLandingClientID        = big.NewInt(1 << 5)
+	clientMyOrganizationPostConfigurationFieldEnforcePermissionCeiling         = big.NewInt(1 << 6)
+	clientMyOrganizationPostConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
+// Configuration related to the My Organization Configuration for the client.
 type ClientMyOrganizationPostConfiguration struct {
 	// The connection profile ID that this client should validate against.
 	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
@@ -7791,9 +8253,14 @@ type ClientMyOrganizationPostConfiguration struct {
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ThirdPartyClientAccess     *ClientMyOrganizationThirdPartyClientAccessConfiguration `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
+	// When true, limits the permissions that organization admins can assign to members to only those held by the admin themselves.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
+	// When true, prevents organization admins from assigning permissions to themselves.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7823,6 +8290,13 @@ func (c *ClientMyOrganizationPostConfiguration) GetAllowedStrategies() []ClientM
 	return c.AllowedStrategies
 }
 
+func (c *ClientMyOrganizationPostConfiguration) GetThirdPartyClientAccess() ClientMyOrganizationThirdPartyClientAccessConfiguration {
+	if c == nil || c.ThirdPartyClientAccess == nil {
+		return ClientMyOrganizationThirdPartyClientAccessConfiguration{}
+	}
+	return *c.ThirdPartyClientAccess
+}
+
 func (c *ClientMyOrganizationPostConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
 	if c == nil {
 		return ""
@@ -7837,6 +8311,20 @@ func (c *ClientMyOrganizationPostConfiguration) GetInvitationLandingClientID() s
 	return *c.InvitationLandingClientID
 }
 
+func (c *ClientMyOrganizationPostConfiguration) GetEnforcePermissionCeiling() bool {
+	if c == nil || c.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *c.EnforcePermissionCeiling
+}
+
+func (c *ClientMyOrganizationPostConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if c == nil || c.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *c.EnforceSelfAssignmentRestriction
+}
+
 func (c *ClientMyOrganizationPostConfiguration) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -7845,10 +8333,12 @@ func (c *ClientMyOrganizationPostConfiguration) GetExtraProperties() map[string]
 }
 
 func (c *ClientMyOrganizationPostConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
@@ -7872,6 +8362,13 @@ func (c *ClientMyOrganizationPostConfiguration) SetAllowedStrategies(allowedStra
 	c.require(clientMyOrganizationPostConfigurationFieldAllowedStrategies)
 }
 
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetThirdPartyClientAccess(thirdPartyClientAccess *ClientMyOrganizationThirdPartyClientAccessConfiguration) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(clientMyOrganizationPostConfigurationFieldThirdPartyClientAccess)
+}
+
 // SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ClientMyOrganizationPostConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
@@ -7884,6 +8381,20 @@ func (c *ClientMyOrganizationPostConfiguration) SetConnectionDeletionBehavior(co
 func (c *ClientMyOrganizationPostConfiguration) SetInvitationLandingClientID(invitationLandingClientID *string) {
 	c.InvitationLandingClientID = invitationLandingClientID
 	c.require(clientMyOrganizationPostConfigurationFieldInvitationLandingClientID)
+}
+
+// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
+	c.EnforcePermissionCeiling = enforcePermissionCeiling
+	c.require(clientMyOrganizationPostConfigurationFieldEnforcePermissionCeiling)
+}
+
+// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationPostConfiguration) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
+	c.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
+	c.require(clientMyOrganizationPostConfigurationFieldEnforceSelfAssignmentRestriction)
 }
 
 func (c *ClientMyOrganizationPostConfiguration) UnmarshalJSON(data []byte) error {
@@ -7928,15 +8439,18 @@ func (c *ClientMyOrganizationPostConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration related to the My Organization Configuration for the client.
 var (
-	clientMyOrganizationResponseConfigurationFieldConnectionProfileID        = big.NewInt(1 << 0)
-	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID     = big.NewInt(1 << 1)
-	clientMyOrganizationResponseConfigurationFieldAllowedStrategies          = big.NewInt(1 << 2)
-	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior = big.NewInt(1 << 3)
-	clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID  = big.NewInt(1 << 4)
+	clientMyOrganizationResponseConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
+	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
+	clientMyOrganizationResponseConfigurationFieldAllowedStrategies                = big.NewInt(1 << 2)
+	clientMyOrganizationResponseConfigurationFieldThirdPartyClientAccess           = big.NewInt(1 << 3)
+	clientMyOrganizationResponseConfigurationFieldConnectionDeletionBehavior       = big.NewInt(1 << 4)
+	clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID        = big.NewInt(1 << 5)
+	clientMyOrganizationResponseConfigurationFieldEnforcePermissionCeiling         = big.NewInt(1 << 6)
+	clientMyOrganizationResponseConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
+// Configuration related to the My Organization Configuration for the client.
 type ClientMyOrganizationResponseConfiguration struct {
 	// The connection profile ID that this client should validate against.
 	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
@@ -7944,9 +8458,14 @@ type ClientMyOrganizationResponseConfiguration struct {
 	UserAttributeProfileID *string `json:"user_attribute_profile_id,omitempty" url:"user_attribute_profile_id,omitempty"`
 	// The allowed connection strategies for the My Organization Configuration.
 	AllowedStrategies          []ClientMyOrganizationConfigurationAllowedStrategiesEnum `json:"allowed_strategies" url:"allowed_strategies"`
+	ThirdPartyClientAccess     *ClientMyOrganizationThirdPartyClientAccessConfiguration `json:"third_party_client_access,omitempty" url:"third_party_client_access,omitempty"`
 	ConnectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum                 `json:"connection_deletion_behavior" url:"connection_deletion_behavior"`
 	// The client ID this client uses while creating invitations through My Organization API.
 	InvitationLandingClientID *string `json:"invitation_landing_client_id,omitempty" url:"invitation_landing_client_id,omitempty"`
+	// When true, limits the permissions that organization admins can assign to members to only those held by the admin themselves.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty" url:"enforce_permission_ceiling,omitempty"`
+	// When true, prevents organization admins from assigning permissions to themselves.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty" url:"enforce_self_assignment_restriction,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7976,6 +8495,13 @@ func (c *ClientMyOrganizationResponseConfiguration) GetAllowedStrategies() []Cli
 	return c.AllowedStrategies
 }
 
+func (c *ClientMyOrganizationResponseConfiguration) GetThirdPartyClientAccess() ClientMyOrganizationThirdPartyClientAccessConfiguration {
+	if c == nil || c.ThirdPartyClientAccess == nil {
+		return ClientMyOrganizationThirdPartyClientAccessConfiguration{}
+	}
+	return *c.ThirdPartyClientAccess
+}
+
 func (c *ClientMyOrganizationResponseConfiguration) GetConnectionDeletionBehavior() ClientMyOrganizationDeletionBehaviorEnum {
 	if c == nil {
 		return ""
@@ -7990,6 +8516,20 @@ func (c *ClientMyOrganizationResponseConfiguration) GetInvitationLandingClientID
 	return *c.InvitationLandingClientID
 }
 
+func (c *ClientMyOrganizationResponseConfiguration) GetEnforcePermissionCeiling() bool {
+	if c == nil || c.EnforcePermissionCeiling == nil {
+		return false
+	}
+	return *c.EnforcePermissionCeiling
+}
+
+func (c *ClientMyOrganizationResponseConfiguration) GetEnforceSelfAssignmentRestriction() bool {
+	if c == nil || c.EnforceSelfAssignmentRestriction == nil {
+		return false
+	}
+	return *c.EnforceSelfAssignmentRestriction
+}
+
 func (c *ClientMyOrganizationResponseConfiguration) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -7998,10 +8538,12 @@ func (c *ClientMyOrganizationResponseConfiguration) GetExtraProperties() map[str
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
@@ -8025,6 +8567,13 @@ func (c *ClientMyOrganizationResponseConfiguration) SetAllowedStrategies(allowed
 	c.require(clientMyOrganizationResponseConfigurationFieldAllowedStrategies)
 }
 
+// SetThirdPartyClientAccess sets the ThirdPartyClientAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetThirdPartyClientAccess(thirdPartyClientAccess *ClientMyOrganizationThirdPartyClientAccessConfiguration) {
+	c.ThirdPartyClientAccess = thirdPartyClientAccess
+	c.require(clientMyOrganizationResponseConfigurationFieldThirdPartyClientAccess)
+}
+
 // SetConnectionDeletionBehavior sets the ConnectionDeletionBehavior field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ClientMyOrganizationResponseConfiguration) SetConnectionDeletionBehavior(connectionDeletionBehavior ClientMyOrganizationDeletionBehaviorEnum) {
@@ -8037,6 +8586,20 @@ func (c *ClientMyOrganizationResponseConfiguration) SetConnectionDeletionBehavio
 func (c *ClientMyOrganizationResponseConfiguration) SetInvitationLandingClientID(invitationLandingClientID *string) {
 	c.InvitationLandingClientID = invitationLandingClientID
 	c.require(clientMyOrganizationResponseConfigurationFieldInvitationLandingClientID)
+}
+
+// SetEnforcePermissionCeiling sets the EnforcePermissionCeiling field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetEnforcePermissionCeiling(enforcePermissionCeiling *bool) {
+	c.EnforcePermissionCeiling = enforcePermissionCeiling
+	c.require(clientMyOrganizationResponseConfigurationFieldEnforcePermissionCeiling)
+}
+
+// SetEnforceSelfAssignmentRestriction sets the EnforceSelfAssignmentRestriction field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationResponseConfiguration) SetEnforceSelfAssignmentRestriction(enforceSelfAssignmentRestriction *bool) {
+	c.EnforceSelfAssignmentRestriction = enforceSelfAssignmentRestriction
+	c.require(clientMyOrganizationResponseConfigurationFieldEnforceSelfAssignmentRestriction)
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) UnmarshalJSON(data []byte) error {
@@ -8081,12 +8644,116 @@ func (c *ClientMyOrganizationResponseConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration for OIDC backchannel logout initiators
+var (
+	clientMyOrganizationThirdPartyClientAccessConfigurationFieldDefaultValue  = big.NewInt(1 << 0)
+	clientMyOrganizationThirdPartyClientAccessConfigurationFieldAllowedValues = big.NewInt(1 << 1)
+)
+
+// The third-party client access configuration for the My Organization Configuration.
+type ClientMyOrganizationThirdPartyClientAccessConfiguration struct {
+	DefaultValue ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum `json:"default_value" url:"default_value"`
+	// The allowed third-party client access values for the My Organization Configuration.
+	AllowedValues []ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum `json:"allowed_values" url:"allowed_values"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) GetDefaultValue() ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum {
+	if c == nil {
+		return ""
+	}
+	return c.DefaultValue
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) GetAllowedValues() []ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum {
+	if c == nil {
+		return nil
+	}
+	return c.AllowedValues
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetDefaultValue sets the DefaultValue field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) SetDefaultValue(defaultValue ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum) {
+	c.DefaultValue = defaultValue
+	c.require(clientMyOrganizationThirdPartyClientAccessConfigurationFieldDefaultValue)
+}
+
+// SetAllowedValues sets the AllowedValues field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) SetAllowedValues(allowedValues []ClientMyOrganizationConfigurationThirdPartyClientAccessAllowedValuesEnum) {
+	c.AllowedValues = allowedValues
+	c.require(clientMyOrganizationThirdPartyClientAccessConfigurationFieldAllowedValues)
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientMyOrganizationThirdPartyClientAccessConfiguration
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientMyOrganizationThirdPartyClientAccessConfiguration(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) MarshalJSON() ([]byte, error) {
+	type embed ClientMyOrganizationThirdPartyClientAccessConfiguration
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	clientOidcBackchannelLogoutInitiatorsFieldMode               = big.NewInt(1 << 0)
 	clientOidcBackchannelLogoutInitiatorsFieldSelectedInitiators = big.NewInt(1 << 1)
 )
 
+// Configuration for OIDC backchannel logout initiators
 type ClientOidcBackchannelLogoutInitiators struct {
 	Mode               *ClientOidcBackchannelLogoutInitiatorsModeEnum `json:"mode,omitempty" url:"mode,omitempty"`
 	SelectedInitiators []ClientOidcBackchannelLogoutInitiatorsEnum    `json:"selected_initiators,omitempty" url:"selected_initiators,omitempty"`
@@ -8121,10 +8788,12 @@ func (c *ClientOidcBackchannelLogoutInitiators) GetExtraProperties() map[string]
 }
 
 func (c *ClientOidcBackchannelLogoutInitiators) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMode sets the Mode field and marks it as non-optional;
@@ -8200,6 +8869,7 @@ const (
 	ClientOidcBackchannelLogoutInitiatorsEnumEmailIdentifierChanged ClientOidcBackchannelLogoutInitiatorsEnum = "email-identifier-changed"
 	ClientOidcBackchannelLogoutInitiatorsEnumMfaPhoneUnenrolled     ClientOidcBackchannelLogoutInitiatorsEnum = "mfa-phone-unenrolled"
 	ClientOidcBackchannelLogoutInitiatorsEnumAccountDeactivated     ClientOidcBackchannelLogoutInitiatorsEnum = "account-deactivated"
+	ClientOidcBackchannelLogoutInitiatorsEnumProfileChanged         ClientOidcBackchannelLogoutInitiatorsEnum = "profile-changed"
 )
 
 func NewClientOidcBackchannelLogoutInitiatorsEnumFromString(s string) (ClientOidcBackchannelLogoutInitiatorsEnum, error) {
@@ -8222,6 +8892,8 @@ func NewClientOidcBackchannelLogoutInitiatorsEnumFromString(s string) (ClientOid
 		return ClientOidcBackchannelLogoutInitiatorsEnumMfaPhoneUnenrolled, nil
 	case "account-deactivated":
 		return ClientOidcBackchannelLogoutInitiatorsEnumAccountDeactivated, nil
+	case "profile-changed":
+		return ClientOidcBackchannelLogoutInitiatorsEnumProfileChanged, nil
 	}
 	var t ClientOidcBackchannelLogoutInitiatorsEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -8254,11 +8926,11 @@ func (c ClientOidcBackchannelLogoutInitiatorsModeEnum) Ptr() *ClientOidcBackchan
 	return &c
 }
 
-// Controls whether session metadata is included in the logout token. Default value is null.
 var (
 	clientOidcBackchannelLogoutSessionMetadataFieldInclude = big.NewInt(1 << 0)
 )
 
+// Controls whether session metadata is included in the logout token. Default value is null.
 type ClientOidcBackchannelLogoutSessionMetadata struct {
 	// The `include` property determines whether session metadata is included in the logout token.
 	Include *bool `json:"include,omitempty" url:"include,omitempty"`
@@ -8286,10 +8958,12 @@ func (c *ClientOidcBackchannelLogoutSessionMetadata) GetExtraProperties() map[st
 }
 
 func (c *ClientOidcBackchannelLogoutSessionMetadata) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetInclude sets the Include field and marks it as non-optional;
@@ -8345,13 +9019,18 @@ func (c *ClientOidcBackchannelLogoutSessionMetadata) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration for OIDC backchannel logout
 var (
 	clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutURLs            = big.NewInt(1 << 0)
 	clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutInitiators      = big.NewInt(1 << 1)
 	clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutSessionMetadata = big.NewInt(1 << 2)
 )
 
+// clientOidcBackchannelLogoutSettingsNullableFields maps the wire names of ClientOidcBackchannelLogoutSettings's nullable fields (required or optional) to their field bits.
+var clientOidcBackchannelLogoutSettingsNullableFields = map[string]*big.Int{
+	"backchannel_logout_session_metadata": clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutSessionMetadata,
+}
+
+// Configuration for OIDC backchannel logout
 type ClientOidcBackchannelLogoutSettings struct {
 	// Comma-separated list of URLs that are valid to call back from Auth0 for OIDC backchannel logout. Currently only one URL is allowed.
 	BackchannelLogoutURLs            []string                                    `json:"backchannel_logout_urls,omitempty" url:"backchannel_logout_urls,omitempty"`
@@ -8395,10 +9074,12 @@ func (c *ClientOidcBackchannelLogoutSettings) GetExtraProperties() map[string]in
 }
 
 func (c *ClientOidcBackchannelLogoutSettings) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetBackchannelLogoutURLs sets the BackchannelLogoutURLs field and marks it as non-optional;
@@ -8438,6 +9119,13 @@ func (c *ClientOidcBackchannelLogoutSettings) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientOidcBackchannelLogoutSettingsNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -8454,6 +9142,405 @@ func (c *ClientOidcBackchannelLogoutSettings) MarshalJSON() ([]byte, error) {
 }
 
 func (c *ClientOidcBackchannelLogoutSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	clientOidcSupportFieldIsAllowed      = big.NewInt(1 << 0)
+	clientOidcSupportFieldAllowAllScopes = big.NewInt(1 << 1)
+	clientOidcSupportFieldAllowedScopes  = big.NewInt(1 << 2)
+)
+
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
+type ClientOidcSupport struct {
+	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
+	IsAllowed *bool `json:"is_allowed,omitempty" url:"is_allowed,omitempty"`
+	// Allows the client to request all supported OIDC scopes. Mutually exclusive with allowed_scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	// OIDC scopes the client may request (`profile`, `email`, `address`, and `phone`), which determine the user profile information it can access. Mutually exclusive with allow_all_scopes.
+	AllowedScopes []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ClientOidcSupport) GetIsAllowed() bool {
+	if c == nil || c.IsAllowed == nil {
+		return false
+	}
+	return *c.IsAllowed
+}
+
+func (c *ClientOidcSupport) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
+func (c *ClientOidcSupport) GetAllowedScopes() []ClientOidcSupportAllowedScopesEnum {
+	if c == nil || c.AllowedScopes == nil {
+		return nil
+	}
+	return c.AllowedScopes
+}
+
+func (c *ClientOidcSupport) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ClientOidcSupport) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetIsAllowed sets the IsAllowed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupport) SetIsAllowed(isAllowed *bool) {
+	c.IsAllowed = isAllowed
+	c.require(clientOidcSupportFieldIsAllowed)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupport) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(clientOidcSupportFieldAllowAllScopes)
+}
+
+// SetAllowedScopes sets the AllowedScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupport) SetAllowedScopes(allowedScopes []ClientOidcSupportAllowedScopesEnum) {
+	c.AllowedScopes = allowedScopes
+	c.require(clientOidcSupportFieldAllowedScopes)
+}
+
+func (c *ClientOidcSupport) UnmarshalJSON(data []byte) error {
+	type embed ClientOidcSupport
+	var unmarshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ClientOidcSupport(unmarshaler.embed)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientOidcSupport) MarshalJSON() ([]byte, error) {
+	type embed ClientOidcSupport
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ClientOidcSupport) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+type ClientOidcSupportAllowedScopesEnum string
+
+const (
+	ClientOidcSupportAllowedScopesEnumProfile ClientOidcSupportAllowedScopesEnum = "profile"
+	ClientOidcSupportAllowedScopesEnumEmail   ClientOidcSupportAllowedScopesEnum = "email"
+	ClientOidcSupportAllowedScopesEnumAddress ClientOidcSupportAllowedScopesEnum = "address"
+	ClientOidcSupportAllowedScopesEnumPhone   ClientOidcSupportAllowedScopesEnum = "phone"
+)
+
+func NewClientOidcSupportAllowedScopesEnumFromString(s string) (ClientOidcSupportAllowedScopesEnum, error) {
+	switch s {
+	case "profile":
+		return ClientOidcSupportAllowedScopesEnumProfile, nil
+	case "email":
+		return ClientOidcSupportAllowedScopesEnumEmail, nil
+	case "address":
+		return ClientOidcSupportAllowedScopesEnumAddress, nil
+	case "phone":
+		return ClientOidcSupportAllowedScopesEnumPhone, nil
+	}
+	var t ClientOidcSupportAllowedScopesEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientOidcSupportAllowedScopesEnum) Ptr() *ClientOidcSupportAllowedScopesEnum {
+	return &c
+}
+
+var (
+	clientOidcSupportPatchFieldIsAllowed      = big.NewInt(1 << 0)
+	clientOidcSupportPatchFieldAllowAllScopes = big.NewInt(1 << 1)
+	clientOidcSupportPatchFieldAllowedScopes  = big.NewInt(1 << 2)
+)
+
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
+type ClientOidcSupportPatch struct {
+	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
+	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
+	// Allows the client to request all supported OIDC scopes. Mutually exclusive with allowed_scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	// OIDC scopes the client may request (`profile`, `email`, `address`, and `phone`), which determine the user profile information it can access. Mutually exclusive with allow_all_scopes.
+	AllowedScopes []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientOidcSupportPatch) GetIsAllowed() bool {
+	if c == nil {
+		return false
+	}
+	return c.IsAllowed
+}
+
+func (c *ClientOidcSupportPatch) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
+func (c *ClientOidcSupportPatch) GetAllowedScopes() []ClientOidcSupportAllowedScopesEnum {
+	if c == nil || c.AllowedScopes == nil {
+		return nil
+	}
+	return c.AllowedScopes
+}
+
+func (c *ClientOidcSupportPatch) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientOidcSupportPatch) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetIsAllowed sets the IsAllowed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPatch) SetIsAllowed(isAllowed bool) {
+	c.IsAllowed = isAllowed
+	c.require(clientOidcSupportPatchFieldIsAllowed)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPatch) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(clientOidcSupportPatchFieldAllowAllScopes)
+}
+
+// SetAllowedScopes sets the AllowedScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPatch) SetAllowedScopes(allowedScopes []ClientOidcSupportAllowedScopesEnum) {
+	c.AllowedScopes = allowedScopes
+	c.require(clientOidcSupportPatchFieldAllowedScopes)
+}
+
+func (c *ClientOidcSupportPatch) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientOidcSupportPatch
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientOidcSupportPatch(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientOidcSupportPatch) MarshalJSON() ([]byte, error) {
+	type embed ClientOidcSupportPatch
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientOidcSupportPatch) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	clientOidcSupportPostFieldIsAllowed      = big.NewInt(1 << 0)
+	clientOidcSupportPostFieldAllowAllScopes = big.NewInt(1 << 1)
+	clientOidcSupportPostFieldAllowedScopes  = big.NewInt(1 << 2)
+)
+
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
+type ClientOidcSupportPost struct {
+	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
+	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
+	// Allows the client to request all supported OIDC scopes. Mutually exclusive with allowed_scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty" url:"allow_all_scopes,omitempty"`
+	// OIDC scopes the client may request (`profile`, `email`, `address`, and `phone`), which determine the user profile information it can access. Mutually exclusive with allow_all_scopes.
+	AllowedScopes []ClientOidcSupportAllowedScopesEnum `json:"allowed_scopes,omitempty" url:"allowed_scopes,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ClientOidcSupportPost) GetIsAllowed() bool {
+	if c == nil {
+		return false
+	}
+	return c.IsAllowed
+}
+
+func (c *ClientOidcSupportPost) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
+func (c *ClientOidcSupportPost) GetAllowedScopes() []ClientOidcSupportAllowedScopesEnum {
+	if c == nil || c.AllowedScopes == nil {
+		return nil
+	}
+	return c.AllowedScopes
+}
+
+func (c *ClientOidcSupportPost) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ClientOidcSupportPost) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetIsAllowed sets the IsAllowed field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPost) SetIsAllowed(isAllowed bool) {
+	c.IsAllowed = isAllowed
+	c.require(clientOidcSupportPostFieldIsAllowed)
+}
+
+// SetAllowAllScopes sets the AllowAllScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPost) SetAllowAllScopes(allowAllScopes *bool) {
+	c.AllowAllScopes = allowAllScopes
+	c.require(clientOidcSupportPostFieldAllowAllScopes)
+}
+
+// SetAllowedScopes sets the AllowedScopes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientOidcSupportPost) SetAllowedScopes(allowedScopes []ClientOidcSupportAllowedScopesEnum) {
+	c.AllowedScopes = allowedScopes
+	c.require(clientOidcSupportPostFieldAllowedScopes)
+}
+
+func (c *ClientOidcSupportPost) UnmarshalJSON(data []byte) error {
+	type unmarshaler ClientOidcSupportPost
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ClientOidcSupportPost(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientOidcSupportPost) MarshalJSON() ([]byte, error) {
+	type embed ClientOidcSupportPost
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ClientOidcSupportPost) String() string {
 	if c == nil {
 		return "<nil>"
 	}
@@ -8618,7 +9705,6 @@ func (c ClientRedirectionPolicyEnum) Ptr() *ClientRedirectionPolicyEnum {
 	return &c
 }
 
-// Refresh token configuration
 var (
 	clientRefreshTokenConfigurationFieldRotationType              = big.NewInt(1 << 0)
 	clientRefreshTokenConfigurationFieldExpirationType            = big.NewInt(1 << 1)
@@ -8630,6 +9716,12 @@ var (
 	clientRefreshTokenConfigurationFieldPolicies                  = big.NewInt(1 << 7)
 )
 
+// clientRefreshTokenConfigurationNullableFields maps the wire names of ClientRefreshTokenConfiguration's nullable fields (required or optional) to their field bits.
+var clientRefreshTokenConfigurationNullableFields = map[string]*big.Int{
+	"policies": clientRefreshTokenConfigurationFieldPolicies,
+}
+
+// Refresh token configuration
 type ClientRefreshTokenConfiguration struct {
 	RotationType   RefreshTokenRotationTypeEnum   `json:"rotation_type" url:"rotation_type"`
 	ExpirationType RefreshTokenExpirationTypeEnum `json:"expiration_type" url:"expiration_type"`
@@ -8717,10 +9809,12 @@ func (c *ClientRefreshTokenConfiguration) GetExtraProperties() map[string]interf
 }
 
 func (c *ClientRefreshTokenConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetRotationType sets the RotationType field and marks it as non-optional;
@@ -8791,6 +9885,13 @@ func (c *ClientRefreshTokenConfiguration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientRefreshTokenConfigurationNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -8861,10 +9962,12 @@ func (c *ClientRefreshTokenPolicy) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientRefreshTokenPolicy) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -8923,6 +10026,1232 @@ func (c *ClientRefreshTokenPolicy) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+var (
+	clientSearchResponseFieldClientID                                       = big.NewInt(1 << 0)
+	clientSearchResponseFieldCreatedAt                                      = big.NewInt(1 << 1)
+	clientSearchResponseFieldUpdatedAt                                      = big.NewInt(1 << 2)
+	clientSearchResponseFieldTenant                                         = big.NewInt(1 << 3)
+	clientSearchResponseFieldName                                           = big.NewInt(1 << 4)
+	clientSearchResponseFieldDescription                                    = big.NewInt(1 << 5)
+	clientSearchResponseFieldGlobal                                         = big.NewInt(1 << 6)
+	clientSearchResponseFieldAppType                                        = big.NewInt(1 << 7)
+	clientSearchResponseFieldLogoURI                                        = big.NewInt(1 << 8)
+	clientSearchResponseFieldIsFirstParty                                   = big.NewInt(1 << 9)
+	clientSearchResponseFieldOidcConformant                                 = big.NewInt(1 << 10)
+	clientSearchResponseFieldCallbacks                                      = big.NewInt(1 << 11)
+	clientSearchResponseFieldAllowedOrigins                                 = big.NewInt(1 << 12)
+	clientSearchResponseFieldWebOrigins                                     = big.NewInt(1 << 13)
+	clientSearchResponseFieldClientAliases                                  = big.NewInt(1 << 14)
+	clientSearchResponseFieldAllowedClients                                 = big.NewInt(1 << 15)
+	clientSearchResponseFieldAllowedLogoutURLs                              = big.NewInt(1 << 16)
+	clientSearchResponseFieldSessionTransfer                                = big.NewInt(1 << 17)
+	clientSearchResponseFieldOidcLogout                                     = big.NewInt(1 << 18)
+	clientSearchResponseFieldGrantTypes                                     = big.NewInt(1 << 19)
+	clientSearchResponseFieldJwtConfiguration                               = big.NewInt(1 << 20)
+	clientSearchResponseFieldSSO                                            = big.NewInt(1 << 21)
+	clientSearchResponseFieldSSODisabled                                    = big.NewInt(1 << 22)
+	clientSearchResponseFieldCrossOriginAuthentication                      = big.NewInt(1 << 23)
+	clientSearchResponseFieldCrossOriginLoc                                 = big.NewInt(1 << 24)
+	clientSearchResponseFieldCustomLoginPageOn                              = big.NewInt(1 << 25)
+	clientSearchResponseFieldCustomLoginPage                                = big.NewInt(1 << 26)
+	clientSearchResponseFieldCustomLoginPagePreview                         = big.NewInt(1 << 27)
+	clientSearchResponseFieldFormTemplate                                   = big.NewInt(1 << 28)
+	clientSearchResponseFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 29)
+	clientSearchResponseFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 30)
+	clientSearchResponseFieldClientMetadata                                 = big.NewInt(1 << 31)
+	clientSearchResponseFieldMobile                                         = big.NewInt(1 << 32)
+	clientSearchResponseFieldInitiateLoginURI                               = big.NewInt(1 << 33)
+	clientSearchResponseFieldNativeSocialLogin                              = big.NewInt(1 << 34)
+	clientSearchResponseFieldFedcmLogin                                     = big.NewInt(1 << 35)
+	clientSearchResponseFieldRefreshToken                                   = big.NewInt(1 << 36)
+	clientSearchResponseFieldDefaultOrganization                            = big.NewInt(1 << 37)
+	clientSearchResponseFieldOrganizationUsage                              = big.NewInt(1 << 38)
+	clientSearchResponseFieldOrganizationRequireBehavior                    = big.NewInt(1 << 39)
+	clientSearchResponseFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 40)
+	clientSearchResponseFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
+	clientSearchResponseFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
+	clientSearchResponseFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
+	clientSearchResponseFieldSignedRequestObject                            = big.NewInt(1 << 44)
+	clientSearchResponseFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 45)
+	clientSearchResponseFieldComplianceLevel                                = big.NewInt(1 << 46)
+	clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 47)
+	clientSearchResponseFieldTokenExchange                                  = big.NewInt(1 << 48)
+	clientSearchResponseFieldParRequestExpiry                               = big.NewInt(1 << 49)
+	clientSearchResponseFieldTokenQuota                                     = big.NewInt(1 << 50)
+	clientSearchResponseFieldExpressConfiguration                           = big.NewInt(1 << 51)
+	clientSearchResponseFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 52)
+	clientSearchResponseFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
+	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 54)
+	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 55)
+	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 56)
+	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
+	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 58)
+	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 59)
+	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 60)
+	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 61)
+	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 62)
+	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 67)
+)
+
+// clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
+var clientSearchResponseNullableFields = map[string]*big.Int{
+	"session_transfer":              clientSearchResponseFieldSessionTransfer,
+	"refresh_token":                 clientSearchResponseFieldRefreshToken,
+	"default_organization":          clientSearchResponseFieldDefaultOrganization,
+	"client_authentication_methods": clientSearchResponseFieldClientAuthenticationMethods,
+	"compliance_level":              clientSearchResponseFieldComplianceLevel,
+	"par_request_expiry":            clientSearchResponseFieldParRequestExpiry,
+}
+
+type ClientSearchResponse struct {
+	// ID of this client.
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The ISO 8601 timestamp of when this client was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 timestamp of when this client was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
+	// Name of the tenant this client belongs to.
+	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
+	// Name of this client (min length: 1 character, does not allow `<` or `>`).
+	Name *string `json:"name,omitempty" url:"name,omitempty"`
+	// Free text description of this client (max length: 140 characters).
+	Description *string `json:"description,omitempty" url:"description,omitempty"`
+	// Whether this is your global 'All Applications' client representing legacy tenant settings (true) or a regular client (false).
+	Global  *bool              `json:"global,omitempty" url:"global,omitempty"`
+	AppType *ClientAppTypeEnum `json:"app_type,omitempty" url:"app_type,omitempty"`
+	// URL of the logo to display for this client. Recommended size is 150x150 pixels.
+	LogoURI *string `json:"logo_uri,omitempty" url:"logo_uri,omitempty"`
+	// Whether this client a first party client (true) or not (false).
+	IsFirstParty *bool `json:"is_first_party,omitempty" url:"is_first_party,omitempty"`
+	// Whether this client conforms to <a href='https://auth0.com/docs/api-auth/tutorials/adoption'>strict OIDC specifications</a> (true) or uses legacy features (false).
+	OidcConformant *bool `json:"oidc_conformant,omitempty" url:"oidc_conformant,omitempty"`
+	// Comma-separated list of URLs whitelisted for Auth0 to use as a callback to the client after authentication.
+	Callbacks []string `json:"callbacks,omitempty" url:"callbacks,omitempty"`
+	// Comma-separated list of URLs allowed to make requests from JavaScript to Auth0 API (typically used with CORS). By default, all your callback URLs will be allowed. This field allows you to enter other origins if necessary. You can also use wildcards at the subdomain level (e.g., https://*.contoso.com). Query strings and hash information are not taken into account when validating these URLs.
+	AllowedOrigins []string `json:"allowed_origins,omitempty" url:"allowed_origins,omitempty"`
+	// Comma-separated list of allowed origins for use with <a href='https://auth0.com/docs/cross-origin-authentication'>Cross-Origin Authentication</a>, <a href='https://auth0.com/docs/flows/concepts/device-auth'>Device Flow</a>, and <a href='https://auth0.com/docs/protocols/oauth2#how-response-mode-works'>web message response mode</a>.
+	WebOrigins []string `json:"web_origins,omitempty" url:"web_origins,omitempty"`
+	// List of audiences/realms for SAML protocol. Used by the wsfed addon.
+	ClientAliases []string `json:"client_aliases,omitempty" url:"client_aliases,omitempty"`
+	// List of allow clients and API ids that are allowed to make delegation requests. Empty means all all your clients are allowed.
+	AllowedClients []string `json:"allowed_clients,omitempty" url:"allowed_clients,omitempty"`
+	// Comma-separated list of URLs that are valid to redirect to after logout from Auth0. Wildcards are allowed for subdomains.
+	AllowedLogoutURLs []string                             `json:"allowed_logout_urls,omitempty" url:"allowed_logout_urls,omitempty"`
+	SessionTransfer   *ClientSessionTransferConfiguration  `json:"session_transfer,omitempty" url:"session_transfer,omitempty"`
+	OidcLogout        *ClientOidcBackchannelLogoutSettings `json:"oidc_logout,omitempty" url:"oidc_logout,omitempty"`
+	// List of grant types supported for this application. Can include `authorization_code`, `implicit`, `refresh_token`, `client_credentials`, `password`, `http://auth0.com/oauth/grant-type/password-realm`, `http://auth0.com/oauth/grant-type/mfa-oob`, `http://auth0.com/oauth/grant-type/mfa-otp`, `http://auth0.com/oauth/grant-type/mfa-recovery-code`, `urn:openid:params:grant-type:ciba`, `urn:ietf:params:oauth:grant-type:device_code`, and `urn:auth0:params:oauth:grant-type:token-exchange:federated-connection-access-token`.
+	GrantTypes       []string                `json:"grant_types,omitempty" url:"grant_types,omitempty"`
+	JwtConfiguration *ClientJwtConfiguration `json:"jwt_configuration,omitempty" url:"jwt_configuration,omitempty"`
+	// Applies only to SSO clients and determines whether Auth0 will handle Single Sign On (true) or whether the Identity Provider will (false).
+	SSO *bool `json:"sso,omitempty" url:"sso,omitempty"`
+	// Whether Single Sign On is disabled (true) or enabled (true). Defaults to true.
+	SSODisabled *bool `json:"sso_disabled,omitempty" url:"sso_disabled,omitempty"`
+	// Whether this client can be used to make cross-origin authentication requests (true) or it is not allowed to make such requests (false).
+	CrossOriginAuthentication *bool `json:"cross_origin_authentication,omitempty" url:"cross_origin_authentication,omitempty"`
+	// URL of the location in your site where the cross origin verification takes place for the cross-origin auth flow when performing Auth in your own domain instead of Auth0 hosted login page.
+	CrossOriginLoc *string `json:"cross_origin_loc,omitempty" url:"cross_origin_loc,omitempty"`
+	// Whether a custom login page is to be used (true) or the default provided login page (false).
+	CustomLoginPageOn *bool `json:"custom_login_page_on,omitempty" url:"custom_login_page_on,omitempty"`
+	// The content (HTML, CSS, JS) of the custom login page.
+	CustomLoginPage *string `json:"custom_login_page,omitempty" url:"custom_login_page,omitempty"`
+	// The content (HTML, CSS, JS) of the custom login page. (Used on Previews)
+	CustomLoginPagePreview *string `json:"custom_login_page_preview,omitempty" url:"custom_login_page_preview,omitempty"`
+	// HTML form template to be used for WS-Federation.
+	FormTemplate            *string                            `json:"form_template,omitempty" url:"form_template,omitempty"`
+	TokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	// If true, trust that the IP specified in the `auth0-forwarded-for` header is the end-user's IP for brute-force-protection on token endpoint.
+	IsTokenEndpointIPHeaderTrusted *bool           `json:"is_token_endpoint_ip_header_trusted,omitempty" url:"is_token_endpoint_ip_header_trusted,omitempty"`
+	ClientMetadata                 *ClientMetadata `json:"client_metadata,omitempty" url:"client_metadata,omitempty"`
+	Mobile                         *ClientMobile   `json:"mobile,omitempty" url:"mobile,omitempty"`
+	// Initiate login uri, must be https
+	InitiateLoginURI            *string                                `json:"initiate_login_uri,omitempty" url:"initiate_login_uri,omitempty"`
+	NativeSocialLogin           *NativeSocialLogin                     `json:"native_social_login,omitempty" url:"native_social_login,omitempty"`
+	FedcmLogin                  *FedCmLogin                            `json:"fedcm_login,omitempty" url:"fedcm_login,omitempty"`
+	RefreshToken                *ClientRefreshTokenConfiguration       `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
+	DefaultOrganization         *ClientDefaultOrganization             `json:"default_organization,omitempty" url:"default_organization,omitempty"`
+	OrganizationUsage           *ClientOrganizationUsageEnum           `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
+	OrganizationRequireBehavior *ClientOrganizationRequireBehaviorEnum `json:"organization_require_behavior,omitempty" url:"organization_require_behavior,omitempty"`
+	// Defines the available methods for organization discovery during the `pre_login_prompt`. Users can discover their organization either by `email`, `organization_name` or both.
+	OrganizationDiscoveryMethods []ClientOrganizationDiscoveryEnum `json:"organization_discovery_methods,omitempty" url:"organization_discovery_methods,omitempty"`
+	ClientAuthenticationMethods  *ClientAuthenticationMethod       `json:"client_authentication_methods,omitempty" url:"client_authentication_methods,omitempty"`
+	// Makes the use of Pushed Authorization Requests mandatory for this client
+	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
+	// Makes the use of Proof-of-Possession mandatory for this client
+	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
+	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
+	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
+	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
+	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
+	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
+	ParRequestExpiry                         *int                                              `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                               *TokenQuota                                       `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
+	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
+	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
+	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
+	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	// The identifier of the resource server that this client is linked to.
+	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
+	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
+	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
+	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
+	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
+	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
+	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
+	JwksURI *string `json:"jwks_uri,omitempty" url:"jwks_uri,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	ExtraProperties map[string]interface{} `json:"-" url:"-"`
+
+	rawJSON json.RawMessage
+}
+
+func (c *ClientSearchResponse) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+func (c *ClientSearchResponse) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *ClientSearchResponse) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
+}
+
+func (c *ClientSearchResponse) GetTenant() string {
+	if c == nil || c.Tenant == nil {
+		return ""
+	}
+	return *c.Tenant
+}
+
+func (c *ClientSearchResponse) GetName() string {
+	if c == nil || c.Name == nil {
+		return ""
+	}
+	return *c.Name
+}
+
+func (c *ClientSearchResponse) GetDescription() string {
+	if c == nil || c.Description == nil {
+		return ""
+	}
+	return *c.Description
+}
+
+func (c *ClientSearchResponse) GetGlobal() bool {
+	if c == nil || c.Global == nil {
+		return false
+	}
+	return *c.Global
+}
+
+func (c *ClientSearchResponse) GetAppType() ClientAppTypeEnum {
+	if c == nil || c.AppType == nil {
+		return ""
+	}
+	return *c.AppType
+}
+
+func (c *ClientSearchResponse) GetLogoURI() string {
+	if c == nil || c.LogoURI == nil {
+		return ""
+	}
+	return *c.LogoURI
+}
+
+func (c *ClientSearchResponse) GetIsFirstParty() bool {
+	if c == nil || c.IsFirstParty == nil {
+		return false
+	}
+	return *c.IsFirstParty
+}
+
+func (c *ClientSearchResponse) GetOidcConformant() bool {
+	if c == nil || c.OidcConformant == nil {
+		return false
+	}
+	return *c.OidcConformant
+}
+
+func (c *ClientSearchResponse) GetCallbacks() []string {
+	if c == nil || c.Callbacks == nil {
+		return nil
+	}
+	return c.Callbacks
+}
+
+func (c *ClientSearchResponse) GetAllowedOrigins() []string {
+	if c == nil || c.AllowedOrigins == nil {
+		return nil
+	}
+	return c.AllowedOrigins
+}
+
+func (c *ClientSearchResponse) GetWebOrigins() []string {
+	if c == nil || c.WebOrigins == nil {
+		return nil
+	}
+	return c.WebOrigins
+}
+
+func (c *ClientSearchResponse) GetClientAliases() []string {
+	if c == nil || c.ClientAliases == nil {
+		return nil
+	}
+	return c.ClientAliases
+}
+
+func (c *ClientSearchResponse) GetAllowedClients() []string {
+	if c == nil || c.AllowedClients == nil {
+		return nil
+	}
+	return c.AllowedClients
+}
+
+func (c *ClientSearchResponse) GetAllowedLogoutURLs() []string {
+	if c == nil || c.AllowedLogoutURLs == nil {
+		return nil
+	}
+	return c.AllowedLogoutURLs
+}
+
+func (c *ClientSearchResponse) GetSessionTransfer() ClientSessionTransferConfiguration {
+	if c == nil || c.SessionTransfer == nil {
+		return ClientSessionTransferConfiguration{}
+	}
+	return *c.SessionTransfer
+}
+
+func (c *ClientSearchResponse) GetOidcLogout() ClientOidcBackchannelLogoutSettings {
+	if c == nil || c.OidcLogout == nil {
+		return ClientOidcBackchannelLogoutSettings{}
+	}
+	return *c.OidcLogout
+}
+
+func (c *ClientSearchResponse) GetGrantTypes() []string {
+	if c == nil || c.GrantTypes == nil {
+		return nil
+	}
+	return c.GrantTypes
+}
+
+func (c *ClientSearchResponse) GetJwtConfiguration() ClientJwtConfiguration {
+	if c == nil || c.JwtConfiguration == nil {
+		return ClientJwtConfiguration{}
+	}
+	return *c.JwtConfiguration
+}
+
+func (c *ClientSearchResponse) GetSSO() bool {
+	if c == nil || c.SSO == nil {
+		return false
+	}
+	return *c.SSO
+}
+
+func (c *ClientSearchResponse) GetSSODisabled() bool {
+	if c == nil || c.SSODisabled == nil {
+		return false
+	}
+	return *c.SSODisabled
+}
+
+func (c *ClientSearchResponse) GetCrossOriginAuthentication() bool {
+	if c == nil || c.CrossOriginAuthentication == nil {
+		return false
+	}
+	return *c.CrossOriginAuthentication
+}
+
+func (c *ClientSearchResponse) GetCrossOriginLoc() string {
+	if c == nil || c.CrossOriginLoc == nil {
+		return ""
+	}
+	return *c.CrossOriginLoc
+}
+
+func (c *ClientSearchResponse) GetCustomLoginPageOn() bool {
+	if c == nil || c.CustomLoginPageOn == nil {
+		return false
+	}
+	return *c.CustomLoginPageOn
+}
+
+func (c *ClientSearchResponse) GetCustomLoginPage() string {
+	if c == nil || c.CustomLoginPage == nil {
+		return ""
+	}
+	return *c.CustomLoginPage
+}
+
+func (c *ClientSearchResponse) GetCustomLoginPagePreview() string {
+	if c == nil || c.CustomLoginPagePreview == nil {
+		return ""
+	}
+	return *c.CustomLoginPagePreview
+}
+
+func (c *ClientSearchResponse) GetFormTemplate() string {
+	if c == nil || c.FormTemplate == nil {
+		return ""
+	}
+	return *c.FormTemplate
+}
+
+func (c *ClientSearchResponse) GetTokenEndpointAuthMethod() ClientTokenEndpointAuthMethodEnum {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+func (c *ClientSearchResponse) GetIsTokenEndpointIPHeaderTrusted() bool {
+	if c == nil || c.IsTokenEndpointIPHeaderTrusted == nil {
+		return false
+	}
+	return *c.IsTokenEndpointIPHeaderTrusted
+}
+
+func (c *ClientSearchResponse) GetClientMetadata() ClientMetadata {
+	if c == nil || c.ClientMetadata == nil {
+		return nil
+	}
+	return *c.ClientMetadata
+}
+
+func (c *ClientSearchResponse) GetMobile() ClientMobile {
+	if c == nil || c.Mobile == nil {
+		return ClientMobile{}
+	}
+	return *c.Mobile
+}
+
+func (c *ClientSearchResponse) GetInitiateLoginURI() string {
+	if c == nil || c.InitiateLoginURI == nil {
+		return ""
+	}
+	return *c.InitiateLoginURI
+}
+
+func (c *ClientSearchResponse) GetNativeSocialLogin() NativeSocialLogin {
+	if c == nil || c.NativeSocialLogin == nil {
+		return NativeSocialLogin{}
+	}
+	return *c.NativeSocialLogin
+}
+
+func (c *ClientSearchResponse) GetFedcmLogin() FedCmLogin {
+	if c == nil || c.FedcmLogin == nil {
+		return FedCmLogin{}
+	}
+	return *c.FedcmLogin
+}
+
+func (c *ClientSearchResponse) GetRefreshToken() ClientRefreshTokenConfiguration {
+	if c == nil || c.RefreshToken == nil {
+		return ClientRefreshTokenConfiguration{}
+	}
+	return *c.RefreshToken
+}
+
+func (c *ClientSearchResponse) GetDefaultOrganization() ClientDefaultOrganization {
+	if c == nil || c.DefaultOrganization == nil {
+		return ClientDefaultOrganization{}
+	}
+	return *c.DefaultOrganization
+}
+
+func (c *ClientSearchResponse) GetOrganizationUsage() ClientOrganizationUsageEnum {
+	if c == nil || c.OrganizationUsage == nil {
+		return ""
+	}
+	return *c.OrganizationUsage
+}
+
+func (c *ClientSearchResponse) GetOrganizationRequireBehavior() ClientOrganizationRequireBehaviorEnum {
+	if c == nil || c.OrganizationRequireBehavior == nil {
+		return ""
+	}
+	return *c.OrganizationRequireBehavior
+}
+
+func (c *ClientSearchResponse) GetOrganizationDiscoveryMethods() []ClientOrganizationDiscoveryEnum {
+	if c == nil || c.OrganizationDiscoveryMethods == nil {
+		return nil
+	}
+	return c.OrganizationDiscoveryMethods
+}
+
+func (c *ClientSearchResponse) GetClientAuthenticationMethods() ClientAuthenticationMethod {
+	if c == nil || c.ClientAuthenticationMethods == nil {
+		return ClientAuthenticationMethod{}
+	}
+	return *c.ClientAuthenticationMethods
+}
+
+func (c *ClientSearchResponse) GetRequirePushedAuthorizationRequests() bool {
+	if c == nil || c.RequirePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.RequirePushedAuthorizationRequests
+}
+
+func (c *ClientSearchResponse) GetRequireProofOfPossession() bool {
+	if c == nil || c.RequireProofOfPossession == nil {
+		return false
+	}
+	return *c.RequireProofOfPossession
+}
+
+func (c *ClientSearchResponse) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
+	if c == nil || c.SignedRequestObject == nil {
+		return ClientSignedRequestObjectWithCredentialID{}
+	}
+	return *c.SignedRequestObject
+}
+
+func (c *ClientSearchResponse) GetTokenVaultPrivilegedAccess() ClientTokenVaultPrivilegedAccessWithCredentialID {
+	if c == nil || c.TokenVaultPrivilegedAccess == nil {
+		return ClientTokenVaultPrivilegedAccessWithCredentialID{}
+	}
+	return *c.TokenVaultPrivilegedAccess
+}
+
+func (c *ClientSearchResponse) GetComplianceLevel() ClientComplianceLevelEnum {
+	if c == nil || c.ComplianceLevel == nil {
+		return ""
+	}
+	return *c.ComplianceLevel
+}
+
+func (c *ClientSearchResponse) GetSkipNonVerifiableCallbackURIConfirmationPrompt() bool {
+	if c == nil || c.SkipNonVerifiableCallbackURIConfirmationPrompt == nil {
+		return false
+	}
+	return *c.SkipNonVerifiableCallbackURIConfirmationPrompt
+}
+
+func (c *ClientSearchResponse) GetTokenExchange() ClientTokenExchangeConfiguration {
+	if c == nil || c.TokenExchange == nil {
+		return ClientTokenExchangeConfiguration{}
+	}
+	return *c.TokenExchange
+}
+
+func (c *ClientSearchResponse) GetParRequestExpiry() int {
+	if c == nil || c.ParRequestExpiry == nil {
+		return 0
+	}
+	return *c.ParRequestExpiry
+}
+
+func (c *ClientSearchResponse) GetTokenQuota() TokenQuota {
+	if c == nil || c.TokenQuota == nil {
+		return TokenQuota{}
+	}
+	return *c.TokenQuota
+}
+
+func (c *ClientSearchResponse) GetExpressConfiguration() ExpressConfiguration {
+	if c == nil || c.ExpressConfiguration == nil {
+		return ExpressConfiguration{}
+	}
+	return *c.ExpressConfiguration
+}
+
+func (c *ClientSearchResponse) GetB2BIntegrationConfiguration() B2BIntegrationConfiguration {
+	if c == nil || c.B2BIntegrationConfiguration == nil {
+		return B2BIntegrationConfiguration{}
+	}
+	return *c.B2BIntegrationConfiguration
+}
+
+func (c *ClientSearchResponse) GetMyOrganizationConfiguration() ClientMyOrganizationResponseConfiguration {
+	if c == nil || c.MyOrganizationConfiguration == nil {
+		return ClientMyOrganizationResponseConfiguration{}
+	}
+	return *c.MyOrganizationConfiguration
+}
+
+func (c *ClientSearchResponse) GetIdentityAssertionAuthorizationGrant() IdentityAssertionAuthorizationGrant {
+	if c == nil || c.IdentityAssertionAuthorizationGrant == nil {
+		return IdentityAssertionAuthorizationGrant{}
+	}
+	return *c.IdentityAssertionAuthorizationGrant
+}
+
+func (c *ClientSearchResponse) GetAnonymousSessions() AnonymousSessions {
+	if c == nil || c.AnonymousSessions == nil {
+		return AnonymousSessions{}
+	}
+	return *c.AnonymousSessions
+}
+
+func (c *ClientSearchResponse) GetEnforceAnonSessionTransferNetworkBinding() ClientAnonymousSessionTransferNetworkBindingEnum {
+	if c == nil || c.EnforceAnonSessionTransferNetworkBinding == nil {
+		return ""
+	}
+	return *c.EnforceAnonSessionTransferNetworkBinding
+}
+
+func (c *ClientSearchResponse) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
+	if c == nil || c.ThirdPartySecurityMode == nil {
+		return ""
+	}
+	return *c.ThirdPartySecurityMode
+}
+
+func (c *ClientSearchResponse) GetOidcSupport() ClientOidcSupport {
+	if c == nil || c.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *c.OidcSupport
+}
+
+func (c *ClientSearchResponse) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
+	if c == nil || c.RedirectionPolicy == nil {
+		return ""
+	}
+	return *c.RedirectionPolicy
+}
+
+func (c *ClientSearchResponse) GetResourceServerIdentifier() string {
+	if c == nil || c.ResourceServerIdentifier == nil {
+		return ""
+	}
+	return *c.ResourceServerIdentifier
+}
+
+func (c *ClientSearchResponse) GetAsyncApprovalNotificationChannels() ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration {
+	if c == nil || c.AsyncApprovalNotificationChannels == nil {
+		return nil
+	}
+	return *c.AsyncApprovalNotificationChannels
+}
+
+func (c *ClientSearchResponse) GetExternalMetadataType() ClientExternalMetadataTypeEnum {
+	if c == nil || c.ExternalMetadataType == nil {
+		return ""
+	}
+	return *c.ExternalMetadataType
+}
+
+func (c *ClientSearchResponse) GetExternalMetadataCreatedBy() ClientExternalMetadataCreatedByEnum {
+	if c == nil || c.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *c.ExternalMetadataCreatedBy
+}
+
+func (c *ClientSearchResponse) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
+}
+
+func (c *ClientSearchResponse) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
+}
+
+func (c *ClientSearchResponse) GetExternalClientID() string {
+	if c == nil || c.ExternalClientID == nil {
+		return ""
+	}
+	return *c.ExternalClientID
+}
+
+func (c *ClientSearchResponse) GetJwksURI() string {
+	if c == nil || c.JwksURI == nil {
+		return ""
+	}
+	return *c.JwksURI
+}
+
+func (c *ClientSearchResponse) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.ExtraProperties
+}
+
+func (c *ClientSearchResponse) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(clientSearchResponseFieldClientID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(clientSearchResponseFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(clientSearchResponseFieldUpdatedAt)
+}
+
+// SetTenant sets the Tenant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTenant(tenant *string) {
+	c.Tenant = tenant
+	c.require(clientSearchResponseFieldTenant)
+}
+
+// SetName sets the Name field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetName(name *string) {
+	c.Name = name
+	c.require(clientSearchResponseFieldName)
+}
+
+// SetDescription sets the Description field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetDescription(description *string) {
+	c.Description = description
+	c.require(clientSearchResponseFieldDescription)
+}
+
+// SetGlobal sets the Global field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetGlobal(global *bool) {
+	c.Global = global
+	c.require(clientSearchResponseFieldGlobal)
+}
+
+// SetAppType sets the AppType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAppType(appType *ClientAppTypeEnum) {
+	c.AppType = appType
+	c.require(clientSearchResponseFieldAppType)
+}
+
+// SetLogoURI sets the LogoURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetLogoURI(logoURI *string) {
+	c.LogoURI = logoURI
+	c.require(clientSearchResponseFieldLogoURI)
+}
+
+// SetIsFirstParty sets the IsFirstParty field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetIsFirstParty(isFirstParty *bool) {
+	c.IsFirstParty = isFirstParty
+	c.require(clientSearchResponseFieldIsFirstParty)
+}
+
+// SetOidcConformant sets the OidcConformant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOidcConformant(oidcConformant *bool) {
+	c.OidcConformant = oidcConformant
+	c.require(clientSearchResponseFieldOidcConformant)
+}
+
+// SetCallbacks sets the Callbacks field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCallbacks(callbacks []string) {
+	c.Callbacks = callbacks
+	c.require(clientSearchResponseFieldCallbacks)
+}
+
+// SetAllowedOrigins sets the AllowedOrigins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowedOrigins(allowedOrigins []string) {
+	c.AllowedOrigins = allowedOrigins
+	c.require(clientSearchResponseFieldAllowedOrigins)
+}
+
+// SetWebOrigins sets the WebOrigins field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetWebOrigins(webOrigins []string) {
+	c.WebOrigins = webOrigins
+	c.require(clientSearchResponseFieldWebOrigins)
+}
+
+// SetClientAliases sets the ClientAliases field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientAliases(clientAliases []string) {
+	c.ClientAliases = clientAliases
+	c.require(clientSearchResponseFieldClientAliases)
+}
+
+// SetAllowedClients sets the AllowedClients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowedClients(allowedClients []string) {
+	c.AllowedClients = allowedClients
+	c.require(clientSearchResponseFieldAllowedClients)
+}
+
+// SetAllowedLogoutURLs sets the AllowedLogoutURLs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowedLogoutURLs(allowedLogoutURLs []string) {
+	c.AllowedLogoutURLs = allowedLogoutURLs
+	c.require(clientSearchResponseFieldAllowedLogoutURLs)
+}
+
+// SetSessionTransfer sets the SessionTransfer field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSessionTransfer(sessionTransfer *ClientSessionTransferConfiguration) {
+	c.SessionTransfer = sessionTransfer
+	c.require(clientSearchResponseFieldSessionTransfer)
+}
+
+// SetOidcLogout sets the OidcLogout field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOidcLogout(oidcLogout *ClientOidcBackchannelLogoutSettings) {
+	c.OidcLogout = oidcLogout
+	c.require(clientSearchResponseFieldOidcLogout)
+}
+
+// SetGrantTypes sets the GrantTypes field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetGrantTypes(grantTypes []string) {
+	c.GrantTypes = grantTypes
+	c.require(clientSearchResponseFieldGrantTypes)
+}
+
+// SetJwtConfiguration sets the JwtConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetJwtConfiguration(jwtConfiguration *ClientJwtConfiguration) {
+	c.JwtConfiguration = jwtConfiguration
+	c.require(clientSearchResponseFieldJwtConfiguration)
+}
+
+// SetSSO sets the SSO field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSSO(sso *bool) {
+	c.SSO = sso
+	c.require(clientSearchResponseFieldSSO)
+}
+
+// SetSSODisabled sets the SSODisabled field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSSODisabled(ssoDisabled *bool) {
+	c.SSODisabled = ssoDisabled
+	c.require(clientSearchResponseFieldSSODisabled)
+}
+
+// SetCrossOriginAuthentication sets the CrossOriginAuthentication field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCrossOriginAuthentication(crossOriginAuthentication *bool) {
+	c.CrossOriginAuthentication = crossOriginAuthentication
+	c.require(clientSearchResponseFieldCrossOriginAuthentication)
+}
+
+// SetCrossOriginLoc sets the CrossOriginLoc field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCrossOriginLoc(crossOriginLoc *string) {
+	c.CrossOriginLoc = crossOriginLoc
+	c.require(clientSearchResponseFieldCrossOriginLoc)
+}
+
+// SetCustomLoginPageOn sets the CustomLoginPageOn field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCustomLoginPageOn(customLoginPageOn *bool) {
+	c.CustomLoginPageOn = customLoginPageOn
+	c.require(clientSearchResponseFieldCustomLoginPageOn)
+}
+
+// SetCustomLoginPage sets the CustomLoginPage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCustomLoginPage(customLoginPage *string) {
+	c.CustomLoginPage = customLoginPage
+	c.require(clientSearchResponseFieldCustomLoginPage)
+}
+
+// SetCustomLoginPagePreview sets the CustomLoginPagePreview field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetCustomLoginPagePreview(customLoginPagePreview *string) {
+	c.CustomLoginPagePreview = customLoginPagePreview
+	c.require(clientSearchResponseFieldCustomLoginPagePreview)
+}
+
+// SetFormTemplate sets the FormTemplate field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetFormTemplate(formTemplate *string) {
+	c.FormTemplate = formTemplate
+	c.require(clientSearchResponseFieldFormTemplate)
+}
+
+// SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ClientTokenEndpointAuthMethodEnum) {
+	c.TokenEndpointAuthMethod = tokenEndpointAuthMethod
+	c.require(clientSearchResponseFieldTokenEndpointAuthMethod)
+}
+
+// SetIsTokenEndpointIPHeaderTrusted sets the IsTokenEndpointIPHeaderTrusted field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetIsTokenEndpointIPHeaderTrusted(isTokenEndpointIPHeaderTrusted *bool) {
+	c.IsTokenEndpointIPHeaderTrusted = isTokenEndpointIPHeaderTrusted
+	c.require(clientSearchResponseFieldIsTokenEndpointIPHeaderTrusted)
+}
+
+// SetClientMetadata sets the ClientMetadata field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientMetadata(clientMetadata *ClientMetadata) {
+	c.ClientMetadata = clientMetadata
+	c.require(clientSearchResponseFieldClientMetadata)
+}
+
+// SetMobile sets the Mobile field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetMobile(mobile *ClientMobile) {
+	c.Mobile = mobile
+	c.require(clientSearchResponseFieldMobile)
+}
+
+// SetInitiateLoginURI sets the InitiateLoginURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetInitiateLoginURI(initiateLoginURI *string) {
+	c.InitiateLoginURI = initiateLoginURI
+	c.require(clientSearchResponseFieldInitiateLoginURI)
+}
+
+// SetNativeSocialLogin sets the NativeSocialLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetNativeSocialLogin(nativeSocialLogin *NativeSocialLogin) {
+	c.NativeSocialLogin = nativeSocialLogin
+	c.require(clientSearchResponseFieldNativeSocialLogin)
+}
+
+// SetFedcmLogin sets the FedcmLogin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetFedcmLogin(fedcmLogin *FedCmLogin) {
+	c.FedcmLogin = fedcmLogin
+	c.require(clientSearchResponseFieldFedcmLogin)
+}
+
+// SetRefreshToken sets the RefreshToken field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRefreshToken(refreshToken *ClientRefreshTokenConfiguration) {
+	c.RefreshToken = refreshToken
+	c.require(clientSearchResponseFieldRefreshToken)
+}
+
+// SetDefaultOrganization sets the DefaultOrganization field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetDefaultOrganization(defaultOrganization *ClientDefaultOrganization) {
+	c.DefaultOrganization = defaultOrganization
+	c.require(clientSearchResponseFieldDefaultOrganization)
+}
+
+// SetOrganizationUsage sets the OrganizationUsage field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOrganizationUsage(organizationUsage *ClientOrganizationUsageEnum) {
+	c.OrganizationUsage = organizationUsage
+	c.require(clientSearchResponseFieldOrganizationUsage)
+}
+
+// SetOrganizationRequireBehavior sets the OrganizationRequireBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOrganizationRequireBehavior(organizationRequireBehavior *ClientOrganizationRequireBehaviorEnum) {
+	c.OrganizationRequireBehavior = organizationRequireBehavior
+	c.require(clientSearchResponseFieldOrganizationRequireBehavior)
+}
+
+// SetOrganizationDiscoveryMethods sets the OrganizationDiscoveryMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOrganizationDiscoveryMethods(organizationDiscoveryMethods []ClientOrganizationDiscoveryEnum) {
+	c.OrganizationDiscoveryMethods = organizationDiscoveryMethods
+	c.require(clientSearchResponseFieldOrganizationDiscoveryMethods)
+}
+
+// SetClientAuthenticationMethods sets the ClientAuthenticationMethods field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetClientAuthenticationMethods(clientAuthenticationMethods *ClientAuthenticationMethod) {
+	c.ClientAuthenticationMethods = clientAuthenticationMethods
+	c.require(clientSearchResponseFieldClientAuthenticationMethods)
+}
+
+// SetRequirePushedAuthorizationRequests sets the RequirePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRequirePushedAuthorizationRequests(requirePushedAuthorizationRequests *bool) {
+	c.RequirePushedAuthorizationRequests = requirePushedAuthorizationRequests
+	c.require(clientSearchResponseFieldRequirePushedAuthorizationRequests)
+}
+
+// SetRequireProofOfPossession sets the RequireProofOfPossession field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRequireProofOfPossession(requireProofOfPossession *bool) {
+	c.RequireProofOfPossession = requireProofOfPossession
+	c.require(clientSearchResponseFieldRequireProofOfPossession)
+}
+
+// SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSignedRequestObject(signedRequestObject *ClientSignedRequestObjectWithCredentialID) {
+	c.SignedRequestObject = signedRequestObject
+	c.require(clientSearchResponseFieldSignedRequestObject)
+}
+
+// SetTokenVaultPrivilegedAccess sets the TokenVaultPrivilegedAccess field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenVaultPrivilegedAccess(tokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID) {
+	c.TokenVaultPrivilegedAccess = tokenVaultPrivilegedAccess
+	c.require(clientSearchResponseFieldTokenVaultPrivilegedAccess)
+}
+
+// SetComplianceLevel sets the ComplianceLevel field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetComplianceLevel(complianceLevel *ClientComplianceLevelEnum) {
+	c.ComplianceLevel = complianceLevel
+	c.require(clientSearchResponseFieldComplianceLevel)
+}
+
+// SetSkipNonVerifiableCallbackURIConfirmationPrompt sets the SkipNonVerifiableCallbackURIConfirmationPrompt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetSkipNonVerifiableCallbackURIConfirmationPrompt(skipNonVerifiableCallbackURIConfirmationPrompt *bool) {
+	c.SkipNonVerifiableCallbackURIConfirmationPrompt = skipNonVerifiableCallbackURIConfirmationPrompt
+	c.require(clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt)
+}
+
+// SetTokenExchange sets the TokenExchange field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenExchange(tokenExchange *ClientTokenExchangeConfiguration) {
+	c.TokenExchange = tokenExchange
+	c.require(clientSearchResponseFieldTokenExchange)
+}
+
+// SetParRequestExpiry sets the ParRequestExpiry field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetParRequestExpiry(parRequestExpiry *int) {
+	c.ParRequestExpiry = parRequestExpiry
+	c.require(clientSearchResponseFieldParRequestExpiry)
+}
+
+// SetTokenQuota sets the TokenQuota field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetTokenQuota(tokenQuota *TokenQuota) {
+	c.TokenQuota = tokenQuota
+	c.require(clientSearchResponseFieldTokenQuota)
+}
+
+// SetExpressConfiguration sets the ExpressConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExpressConfiguration(expressConfiguration *ExpressConfiguration) {
+	c.ExpressConfiguration = expressConfiguration
+	c.require(clientSearchResponseFieldExpressConfiguration)
+}
+
+// SetB2BIntegrationConfiguration sets the B2BIntegrationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetB2BIntegrationConfiguration(b2BIntegrationConfiguration *B2BIntegrationConfiguration) {
+	c.B2BIntegrationConfiguration = b2BIntegrationConfiguration
+	c.require(clientSearchResponseFieldB2BIntegrationConfiguration)
+}
+
+// SetMyOrganizationConfiguration sets the MyOrganizationConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationResponseConfiguration) {
+	c.MyOrganizationConfiguration = myOrganizationConfiguration
+	c.require(clientSearchResponseFieldMyOrganizationConfiguration)
+}
+
+// SetIdentityAssertionAuthorizationGrant sets the IdentityAssertionAuthorizationGrant field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetIdentityAssertionAuthorizationGrant(identityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant) {
+	c.IdentityAssertionAuthorizationGrant = identityAssertionAuthorizationGrant
+	c.require(clientSearchResponseFieldIdentityAssertionAuthorizationGrant)
+}
+
+// SetAnonymousSessions sets the AnonymousSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAnonymousSessions(anonymousSessions *AnonymousSessions) {
+	c.AnonymousSessions = anonymousSessions
+	c.require(clientSearchResponseFieldAnonymousSessions)
+}
+
+// SetEnforceAnonSessionTransferNetworkBinding sets the EnforceAnonSessionTransferNetworkBinding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetEnforceAnonSessionTransferNetworkBinding(enforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum) {
+	c.EnforceAnonSessionTransferNetworkBinding = enforceAnonSessionTransferNetworkBinding
+	c.require(clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding)
+}
+
+// SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
+	c.ThirdPartySecurityMode = thirdPartySecurityMode
+	c.require(clientSearchResponseFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	c.OidcSupport = oidcSupport
+	c.require(clientSearchResponseFieldOidcSupport)
+}
+
+// SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetRedirectionPolicy(redirectionPolicy *ClientRedirectionPolicyEnum) {
+	c.RedirectionPolicy = redirectionPolicy
+	c.require(clientSearchResponseFieldRedirectionPolicy)
+}
+
+// SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetResourceServerIdentifier(resourceServerIdentifier *string) {
+	c.ResourceServerIdentifier = resourceServerIdentifier
+	c.require(clientSearchResponseFieldResourceServerIdentifier)
+}
+
+// SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAsyncApprovalNotificationChannels(asyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration) {
+	c.AsyncApprovalNotificationChannels = asyncApprovalNotificationChannels
+	c.require(clientSearchResponseFieldAsyncApprovalNotificationChannels)
+}
+
+// SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalMetadataType(externalMetadataType *ClientExternalMetadataTypeEnum) {
+	c.ExternalMetadataType = externalMetadataType
+	c.require(clientSearchResponseFieldExternalMetadataType)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *ClientExternalMetadataCreatedByEnum) {
+	c.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	c.require(clientSearchResponseFieldExternalMetadataCreatedBy)
+}
+
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	c.ExternalMetadataStatus = externalMetadataStatus
+	c.require(clientSearchResponseFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAgentID(agentID *string) {
+	c.AgentID = agentID
+	c.require(clientSearchResponseFieldAgentID)
+}
+
+// SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetExternalClientID(externalClientID *string) {
+	c.ExternalClientID = externalClientID
+	c.require(clientSearchResponseFieldExternalClientID)
+}
+
+// SetJwksURI sets the JwksURI field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetJwksURI(jwksURI *string) {
+	c.JwksURI = jwksURI
+	c.require(clientSearchResponseFieldJwksURI)
+}
+
+func (c *ClientSearchResponse) UnmarshalJSON(data []byte) error {
+	type embed ClientSearchResponse
+	var unmarshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed: embed(*c),
+	}
+	if err := json.Unmarshal(data, &unmarshaler); err != nil {
+		return err
+	}
+	*c = ClientSearchResponse(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientSearchResponseNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ClientSearchResponse) MarshalJSON() ([]byte, error) {
+	type embed ClientSearchResponse
+	var marshaler = struct {
+		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
+	}{
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
+}
+
+func (c *ClientSearchResponse) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 type ClientSessionTransferAllowedAuthenticationMethodsEnum string
 
 const (
@@ -8945,7 +11274,6 @@ func (c ClientSessionTransferAllowedAuthenticationMethodsEnum) Ptr() *ClientSess
 	return &c
 }
 
-// Native to Web SSO Configuration
 var (
 	clientSessionTransferConfigurationFieldCanCreateSessionTransferToken = big.NewInt(1 << 0)
 	clientSessionTransferConfigurationFieldEnforceCascadeRevocation      = big.NewInt(1 << 1)
@@ -8956,6 +11284,13 @@ var (
 	clientSessionTransferConfigurationFieldDelegation                    = big.NewInt(1 << 6)
 )
 
+// clientSessionTransferConfigurationNullableFields maps the wire names of ClientSessionTransferConfiguration's nullable fields (required or optional) to their field bits.
+var clientSessionTransferConfigurationNullableFields = map[string]*big.Int{
+	"allowed_authentication_methods": clientSessionTransferConfigurationFieldAllowedAuthenticationMethods,
+	"delegation":                     clientSessionTransferConfigurationFieldDelegation,
+}
+
+// Native to Web SSO Configuration
 type ClientSessionTransferConfiguration struct {
 	// Indicates whether an app can issue a Session Transfer Token through Token Exchange. If set to 'false', the app will not be able to issue a Session Transfer Token. Usually configured in the native application. Default value is `false`.
 	CanCreateSessionTransferToken *bool `json:"can_create_session_transfer_token,omitempty" url:"can_create_session_transfer_token,omitempty"`
@@ -9034,10 +11369,12 @@ func (c *ClientSessionTransferConfiguration) GetExtraProperties() map[string]int
 }
 
 func (c *ClientSessionTransferConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCanCreateSessionTransferToken sets the CanCreateSessionTransferToken field and marks it as non-optional;
@@ -9101,6 +11438,13 @@ func (c *ClientSessionTransferConfiguration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientSessionTransferConfigurationNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -9131,12 +11475,12 @@ func (c *ClientSessionTransferConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration for delegation (impersonation) access using Session Transfer Tokens
 var (
 	clientSessionTransferDelegationConfigurationFieldAllowDelegatedAccess = big.NewInt(1 << 0)
 	clientSessionTransferDelegationConfigurationFieldEnforceDeviceBinding = big.NewInt(1 << 1)
 )
 
+// Configuration for delegation (impersonation) access using Session Transfer Tokens
 type ClientSessionTransferDelegationConfiguration struct {
 	// Indicates whether delegation (impersonation) access is allowed using Session Transfer Tokens. Default value is `false`.
 	AllowDelegatedAccess *bool                                             `json:"allow_delegated_access,omitempty" url:"allow_delegated_access,omitempty"`
@@ -9171,10 +11515,12 @@ func (c *ClientSessionTransferDelegationConfiguration) GetExtraProperties() map[
 }
 
 func (c *ClientSessionTransferDelegationConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAllowDelegatedAccess sets the AllowDelegatedAccess field and marks it as non-optional;
@@ -9279,12 +11625,12 @@ func (c ClientSessionTransferDeviceBindingEnum) Ptr() *ClientSessionTransferDevi
 	return &c
 }
 
-// JWT-secured Authorization Requests (JAR) settings.
 var (
 	clientSignedRequestObjectWithCredentialIDFieldRequired    = big.NewInt(1 << 0)
 	clientSignedRequestObjectWithCredentialIDFieldCredentials = big.NewInt(1 << 1)
 )
 
+// JWT-secured Authorization Requests (JAR) settings.
 type ClientSignedRequestObjectWithCredentialID struct {
 	// Indicates whether the JAR requests are mandatory
 	Required    *bool           `json:"required,omitempty" url:"required,omitempty"`
@@ -9319,10 +11665,12 @@ func (c *ClientSignedRequestObjectWithCredentialID) GetExtraProperties() map[str
 }
 
 func (c *ClientSignedRequestObjectWithCredentialID) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetRequired sets the Required field and marks it as non-optional;
@@ -9381,12 +11729,12 @@ func (c *ClientSignedRequestObjectWithCredentialID) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// JWT-secured Authorization Requests (JAR) settings.
 var (
 	clientSignedRequestObjectWithPublicKeyFieldRequired    = big.NewInt(1 << 0)
 	clientSignedRequestObjectWithPublicKeyFieldCredentials = big.NewInt(1 << 1)
 )
 
+// JWT-secured Authorization Requests (JAR) settings.
 type ClientSignedRequestObjectWithPublicKey struct {
 	// Indicates whether the JAR requests are mandatory
 	Required    *bool                  `json:"required,omitempty" url:"required,omitempty"`
@@ -9421,10 +11769,12 @@ func (c *ClientSignedRequestObjectWithPublicKey) GetExtraProperties() map[string
 }
 
 func (c *ClientSignedRequestObjectWithPublicKey) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetRequired sets the Required field and marks it as non-optional;
@@ -9534,10 +11884,12 @@ func (c *ClientSigningKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientSigningKey) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPkcs7 sets the Pkcs7 field and marks it as non-optional;
@@ -9609,6 +11961,29 @@ func (c *ClientSigningKey) String() string {
 
 // Signing certificates associated with this client.
 type ClientSigningKeys = []*ClientSigningKey
+
+// Field name to sort results by in ascending order. Defaults to insertion order (oldest first) if not provided.
+type ClientSortFieldEnum string
+
+const (
+	ClientSortFieldEnumName      ClientSortFieldEnum = "name"
+	ClientSortFieldEnumUpdatedAt ClientSortFieldEnum = "updated_at"
+)
+
+func NewClientSortFieldEnumFromString(s string) (ClientSortFieldEnum, error) {
+	switch s {
+	case "name":
+		return ClientSortFieldEnumName, nil
+	case "updated_at":
+		return ClientSortFieldEnumUpdatedAt, nil
+	}
+	var t ClientSortFieldEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ClientSortFieldEnum) Ptr() *ClientSortFieldEnum {
+	return &c
+}
 
 // Security mode for third-party clients. `strict` enforces <a href="https://auth0.com/docs/get-started/applications/third-party-applications/security-controls">enhanced security controls</a>: OAuth 2.1 alignment, explicit API authorization, and a curated set of supported features. `permissive` preserves <a href="https://auth0.com/docs/get-started/applications/third-party-applications/permissive-mode">pre-existing behavior</a> and is only available to tenants with prior third-party client usage. Set on creation and cannot be modified.
 type ClientThirdPartySecurityModeEnum string
@@ -9685,11 +12060,11 @@ func (c ClientTokenEndpointAuthMethodOrNullEnum) Ptr() *ClientTokenEndpointAuthM
 	return &c
 }
 
-// Configuration for token exchange.
 var (
 	clientTokenExchangeConfigurationFieldAllowAnyProfileOfType = big.NewInt(1 << 0)
 )
 
+// Configuration for token exchange.
 type ClientTokenExchangeConfiguration struct {
 	// List the enabled token exchange types for this client.
 	AllowAnyProfileOfType []ClientTokenExchangeTypeEnum `json:"allow_any_profile_of_type,omitempty" url:"allow_any_profile_of_type,omitempty"`
@@ -9716,10 +12091,12 @@ func (c *ClientTokenExchangeConfiguration) GetExtraProperties() map[string]inter
 }
 
 func (c *ClientTokenExchangeConfiguration) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAllowAnyProfileOfType sets the AllowAnyProfileOfType field and marks it as non-optional;
@@ -9771,11 +12148,11 @@ func (c *ClientTokenExchangeConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration for token exchange.
 var (
 	clientTokenExchangeConfigurationOrNullFieldAllowAnyProfileOfType = big.NewInt(1 << 0)
 )
 
+// Configuration for token exchange.
 type ClientTokenExchangeConfigurationOrNull struct {
 	// List the enabled token exchange types for this client.
 	AllowAnyProfileOfType []ClientTokenExchangeTypeEnum `json:"allow_any_profile_of_type,omitempty" url:"allow_any_profile_of_type,omitempty"`
@@ -9802,10 +12179,12 @@ func (c *ClientTokenExchangeConfigurationOrNull) GetExtraProperties() map[string
 }
 
 func (c *ClientTokenExchangeConfigurationOrNull) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAllowAnyProfileOfType sets the AllowAnyProfileOfType field and marks it as non-optional;
@@ -9880,13 +12259,13 @@ func (c ClientTokenExchangeTypeEnum) Ptr() *ClientTokenExchangeTypeEnum {
 	return &c
 }
 
-// Settings for Token Vault Privileged Access.
 var (
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldCredentials = big.NewInt(1 << 0)
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldIPAllowlist = big.NewInt(1 << 1)
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldGrants      = big.NewInt(1 << 2)
 )
 
+// Settings for Token Vault Privileged Access.
 type ClientTokenVaultPrivilegedAccessWithCredentialID struct {
 	Credentials []*CredentialID                              `json:"credentials" url:"credentials"`
 	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
@@ -9928,10 +12307,12 @@ func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetExtraProperties() 
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -9997,13 +12378,13 @@ func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Settings for Token Vault Privileged Access.
 var (
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldCredentials = big.NewInt(1 << 0)
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldIPAllowlist = big.NewInt(1 << 1)
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldGrants      = big.NewInt(1 << 2)
 )
 
+// Settings for Token Vault Privileged Access.
 type ClientTokenVaultPrivilegedAccessWithPublicKey struct {
 	Credentials []*PublicKeyCredential                       `json:"credentials" url:"credentials"`
 	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
@@ -10045,10 +12426,12 @@ func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetExtraProperties() map
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -10114,11 +12497,99 @@ func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
+var (
+	createAnonymousSessionsFieldActive = big.NewInt(1 << 0)
+)
+
+// Anonymous sessions configuration for this client.
+type CreateAnonymousSessions struct {
+	// If set to true, this client is allowed to create anonymous sessions.
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *CreateAnonymousSessions) GetActive() bool {
+	if c == nil {
+		return false
+	}
+	return c.Active
+}
+
+func (c *CreateAnonymousSessions) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *CreateAnonymousSessions) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateAnonymousSessions) SetActive(active bool) {
+	c.Active = active
+	c.require(createAnonymousSessionsFieldActive)
+}
+
+func (c *CreateAnonymousSessions) UnmarshalJSON(data []byte) error {
+	type unmarshaler CreateAnonymousSessions
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = CreateAnonymousSessions(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *CreateAnonymousSessions) MarshalJSON() ([]byte, error) {
+	type embed CreateAnonymousSessions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *CreateAnonymousSessions) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
 var (
 	createClientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
+// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 type CreateClientAuthenticationMethodSelfSignedTLSClientAuth struct {
 	Credentials CreateClientAuthenticationMethodSelfSignedTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -10144,10 +12615,12 @@ func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) GetExtraProper
 }
 
 func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -10204,75 +12677,98 @@ type CreateClientAuthenticationMethodSelfSignedTLSClientAuthCredentials = []*X50
 
 var (
 	createClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
-	createClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
-	createClientResponseContentFieldName                                           = big.NewInt(1 << 2)
-	createClientResponseContentFieldDescription                                    = big.NewInt(1 << 3)
-	createClientResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
-	createClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
-	createClientResponseContentFieldAppType                                        = big.NewInt(1 << 6)
-	createClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
-	createClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
-	createClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
-	createClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
-	createClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
-	createClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
-	createClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
-	createClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
-	createClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
-	createClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
-	createClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
-	createClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
-	createClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
-	createClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
-	createClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
-	createClientResponseContentFieldSSO                                            = big.NewInt(1 << 22)
-	createClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
-	createClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
-	createClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
-	createClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
-	createClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
-	createClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
-	createClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
-	createClientResponseContentFieldAddons                                         = big.NewInt(1 << 30)
-	createClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
-	createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
-	createClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
-	createClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
-	createClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	createClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
-	createClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
-	createClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
-	createClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
-	createClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
-	createClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
-	createClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
-	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
-	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
-	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
-	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	createClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
-	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
-	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
-	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
-	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
-	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
-	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
-	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	createClientResponseContentFieldCreatedAt                                      = big.NewInt(1 << 1)
+	createClientResponseContentFieldUpdatedAt                                      = big.NewInt(1 << 2)
+	createClientResponseContentFieldTenant                                         = big.NewInt(1 << 3)
+	createClientResponseContentFieldName                                           = big.NewInt(1 << 4)
+	createClientResponseContentFieldDescription                                    = big.NewInt(1 << 5)
+	createClientResponseContentFieldGlobal                                         = big.NewInt(1 << 6)
+	createClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 7)
+	createClientResponseContentFieldAppType                                        = big.NewInt(1 << 8)
+	createClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
+	createClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
+	createClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
+	createClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
+	createClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
+	createClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
+	createClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
+	createClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
+	createClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
+	createClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
+	createClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
+	createClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
+	createClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
+	createClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
+	createClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
+	createClientResponseContentFieldSSO                                            = big.NewInt(1 << 24)
+	createClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
+	createClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
+	createClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
+	createClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
+	createClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
+	createClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
+	createClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
+	createClientResponseContentFieldAddons                                         = big.NewInt(1 << 32)
+	createClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
+	createClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
+	createClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
+	createClientResponseContentFieldMobile                                         = big.NewInt(1 << 36)
+	createClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
+	createClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
+	createClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
+	createClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
+	createClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
+	createClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
+	createClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
+	createClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
+	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
+	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
+	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
+	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
+	createClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
+	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
+	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
+	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
+	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
+	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
+	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
+	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
+	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
+	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
+	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
+	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
+	createClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
+
+// createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
+var createClientResponseContentNullableFields = map[string]*big.Int{
+	"session_transfer":              createClientResponseContentFieldSessionTransfer,
+	"signing_keys":                  createClientResponseContentFieldSigningKeys,
+	"encryption_key":                createClientResponseContentFieldEncryptionKey,
+	"refresh_token":                 createClientResponseContentFieldRefreshToken,
+	"default_organization":          createClientResponseContentFieldDefaultOrganization,
+	"client_authentication_methods": createClientResponseContentFieldClientAuthenticationMethods,
+	"compliance_level":              createClientResponseContentFieldComplianceLevel,
+	"par_request_expiry":            createClientResponseContentFieldParRequestExpiry,
+}
 
 type CreateClientResponseContent struct {
 	// ID of this client.
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The ISO 8601 timestamp of when this client was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 timestamp of when this client was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Name of the tenant this client belongs to.
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
 	// Name of this client (min length: 1 character, does not allow `<` or `>`).
@@ -10355,19 +12851,25 @@ type CreateClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
-	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
-	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                         *int                                              `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                               *TokenQuota                                       `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
+	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
+	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
+	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
+	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -10386,6 +12888,20 @@ func (c *CreateClientResponseContent) GetClientID() string {
 		return ""
 	}
 	return *c.ClientID
+}
+
+func (c *CreateClientResponseContent) GetCreatedAt() time.Time {
+	if c == nil || c.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *c.CreatedAt
+}
+
+func (c *CreateClientResponseContent) GetUpdatedAt() time.Time {
+	if c == nil || c.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *c.UpdatedAt
 }
 
 func (c *CreateClientResponseContent) GetTenant() string {
@@ -10780,11 +13296,32 @@ func (c *CreateClientResponseContent) GetIdentityAssertionAuthorizationGrant() I
 	return *c.IdentityAssertionAuthorizationGrant
 }
 
+func (c *CreateClientResponseContent) GetAnonymousSessions() AnonymousSessions {
+	if c == nil || c.AnonymousSessions == nil {
+		return AnonymousSessions{}
+	}
+	return *c.AnonymousSessions
+}
+
+func (c *CreateClientResponseContent) GetEnforceAnonSessionTransferNetworkBinding() ClientAnonymousSessionTransferNetworkBindingEnum {
+	if c == nil || c.EnforceAnonSessionTransferNetworkBinding == nil {
+		return ""
+	}
+	return *c.EnforceAnonSessionTransferNetworkBinding
+}
+
 func (c *CreateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
 	if c == nil || c.ThirdPartySecurityMode == nil {
 		return ""
 	}
 	return *c.ThirdPartySecurityMode
+}
+
+func (c *CreateClientResponseContent) GetOidcSupport() ClientOidcSupport {
+	if c == nil || c.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *c.OidcSupport
 }
 
 func (c *CreateClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -10822,6 +13359,20 @@ func (c *CreateClientResponseContent) GetExternalMetadataCreatedBy() ClientExter
 	return *c.ExternalMetadataCreatedBy
 }
 
+func (c *CreateClientResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if c == nil || c.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *c.ExternalMetadataStatus
+}
+
+func (c *CreateClientResponseContent) GetAgentID() string {
+	if c == nil || c.AgentID == nil {
+		return ""
+	}
+	return *c.AgentID
+}
+
 func (c *CreateClientResponseContent) GetExternalClientID() string {
 	if c == nil || c.ExternalClientID == nil {
 		return ""
@@ -10844,10 +13395,12 @@ func (c *CreateClientResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (c *CreateClientResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -10855,6 +13408,20 @@ func (c *CreateClientResponseContent) require(field *big.Int) {
 func (c *CreateClientResponseContent) SetClientID(clientID *string) {
 	c.ClientID = clientID
 	c.require(createClientResponseContentFieldClientID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetCreatedAt(createdAt *time.Time) {
+	c.CreatedAt = createdAt
+	c.require(createClientResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	c.UpdatedAt = updatedAt
+	c.require(createClientResponseContentFieldUpdatedAt)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -11249,11 +13816,32 @@ func (c *CreateClientResponseContent) SetIdentityAssertionAuthorizationGrant(ide
 	c.require(createClientResponseContentFieldIdentityAssertionAuthorizationGrant)
 }
 
+// SetAnonymousSessions sets the AnonymousSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetAnonymousSessions(anonymousSessions *AnonymousSessions) {
+	c.AnonymousSessions = anonymousSessions
+	c.require(createClientResponseContentFieldAnonymousSessions)
+}
+
+// SetEnforceAnonSessionTransferNetworkBinding sets the EnforceAnonSessionTransferNetworkBinding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetEnforceAnonSessionTransferNetworkBinding(enforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum) {
+	c.EnforceAnonSessionTransferNetworkBinding = enforceAnonSessionTransferNetworkBinding
+	c.require(createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	c.ThirdPartySecurityMode = thirdPartySecurityMode
 	c.require(createClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	c.OidcSupport = oidcSupport
+	c.require(createClientResponseContentFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -11291,6 +13879,20 @@ func (c *CreateClientResponseContent) SetExternalMetadataCreatedBy(externalMetad
 	c.require(createClientResponseContentFieldExternalMetadataCreatedBy)
 }
 
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	c.ExternalMetadataStatus = externalMetadataStatus
+	c.require(createClientResponseContentFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetAgentID(agentID *string) {
+	c.AgentID = agentID
+	c.require(createClientResponseContentFieldAgentID)
+}
+
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateClientResponseContent) SetExternalClientID(externalClientID *string) {
@@ -11309,6 +13911,8 @@ func (c *CreateClientResponseContent) UnmarshalJSON(data []byte) error {
 	type embed CreateClientResponseContent
 	var unmarshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
 		embed: embed(*c),
 	}
@@ -11316,11 +13920,20 @@ func (c *CreateClientResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*c = CreateClientResponseContent(unmarshaler.embed)
+	c.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	c.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *c)
 	if err != nil {
 		return err
 	}
 	c.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, createClientResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -11329,8 +13942,12 @@ func (c *CreateClientResponseContent) MarshalJSON() ([]byte, error) {
 	type embed CreateClientResponseContent
 	var marshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
-		embed: embed(*c),
+		embed:     embed(*c),
+		CreatedAt: internal.NewOptionalDateTime(c.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(c.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, c.ExtraProperties)
@@ -11351,11 +13968,11 @@ func (c *CreateClientResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Configuration on the use of ID-JAGs for Cross App Access.
 var (
 	createIdentityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration on the use of ID-JAGs for Cross App Access.
 type CreateIdentityAssertionAuthorizationGrant struct {
 	// If set to true, the client can exchange ID-JAGs for access tokens.
 	Active bool `json:"active" url:"active"`
@@ -11382,10 +13999,12 @@ func (c *CreateIdentityAssertionAuthorizationGrant) GetExtraProperties() map[str
 }
 
 func (c *CreateIdentityAssertionAuthorizationGrant) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -11467,10 +14086,12 @@ func (c *CredentialID) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CredentialID) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -11522,7 +14143,6 @@ func (c *CredentialID) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Application specific configuration for use with the OIN Express Configuration feature.
 var (
 	expressConfigurationFieldInitiateLoginURITemplate = big.NewInt(1 << 0)
 	expressConfigurationFieldUserAttributeProfileID   = big.NewInt(1 << 1)
@@ -11535,6 +14155,7 @@ var (
 	expressConfigurationFieldOinSubmissionID          = big.NewInt(1 << 8)
 )
 
+// Application specific configuration for use with the OIN Express Configuration feature.
 type ExpressConfiguration struct {
 	// The URI users should bookmark to log in to this application. Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
 	InitiateLoginURITemplate string `json:"initiate_login_uri_template" url:"initiate_login_uri_template"`
@@ -11633,10 +14254,12 @@ func (e *ExpressConfiguration) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *ExpressConfiguration) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetInitiateLoginURITemplate sets the InitiateLoginURITemplate field and marks it as non-optional;
@@ -11744,7 +14367,6 @@ func (e *ExpressConfiguration) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Application specific configuration for use with the OIN Express Configuration feature.
 var (
 	expressConfigurationOrNullFieldInitiateLoginURITemplate = big.NewInt(1 << 0)
 	expressConfigurationOrNullFieldUserAttributeProfileID   = big.NewInt(1 << 1)
@@ -11757,6 +14379,7 @@ var (
 	expressConfigurationOrNullFieldOinSubmissionID          = big.NewInt(1 << 8)
 )
 
+// Application specific configuration for use with the OIN Express Configuration feature.
 type ExpressConfigurationOrNull struct {
 	// The URI users should bookmark to log in to this application. Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
 	InitiateLoginURITemplate string `json:"initiate_login_uri_template" url:"initiate_login_uri_template"`
@@ -11855,10 +14478,12 @@ func (e *ExpressConfigurationOrNull) GetExtraProperties() map[string]interface{}
 }
 
 func (e *ExpressConfigurationOrNull) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetInitiateLoginURITemplate sets the InitiateLoginURITemplate field and marks it as non-optional;
@@ -11966,11 +14591,11 @@ func (e *ExpressConfigurationOrNull) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
-// Configure FedCM login settings for New Universal Login
 var (
 	fedCmLoginFieldGoogle = big.NewInt(1 << 0)
 )
 
+// Configure FedCM login settings for New Universal Login
 type FedCmLogin struct {
 	Google *FedCmLoginGoogle `json:"google,omitempty" url:"google,omitempty"`
 
@@ -11996,10 +14621,12 @@ func (f *FedCmLogin) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLogin) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetGoogle sets the Google field and marks it as non-optional;
@@ -12051,11 +14678,11 @@ func (f *FedCmLogin) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-// Google FedCM configuration for this client
 var (
 	fedCmLoginGoogleFieldIsEnabled = big.NewInt(1 << 0)
 )
 
+// Google FedCM configuration for this client
 type FedCmLoginGoogle struct {
 	// When true, shows the Google FedCM prompt on New Universal Login for this client
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
@@ -12082,10 +14709,12 @@ func (f *FedCmLoginGoogle) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLoginGoogle) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -12137,11 +14766,11 @@ func (f *FedCmLoginGoogle) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-// Google FedCM configuration for this client
 var (
 	fedCmLoginGooglePatchFieldIsEnabled = big.NewInt(1 << 0)
 )
 
+// Google FedCM configuration for this client
 type FedCmLoginGooglePatch struct {
 	// When true, shows the Google FedCM prompt on New Universal Login for this client
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
@@ -12168,10 +14797,12 @@ func (f *FedCmLoginGooglePatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLoginGooglePatch) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -12223,11 +14854,16 @@ func (f *FedCmLoginGooglePatch) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
-// Configure FedCM login settings for New Universal Login
 var (
 	fedCmLoginPatchFieldGoogle = big.NewInt(1 << 0)
 )
 
+// fedCmLoginPatchNullableFields maps the wire names of FedCmLoginPatch's nullable fields (required or optional) to their field bits.
+var fedCmLoginPatchNullableFields = map[string]*big.Int{
+	"google": fedCmLoginPatchFieldGoogle,
+}
+
+// Configure FedCM login settings for New Universal Login
 type FedCmLoginPatch struct {
 	Google *FedCmLoginGooglePatch `json:"google,omitempty" url:"google,omitempty"`
 
@@ -12253,10 +14889,12 @@ func (f *FedCmLoginPatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLoginPatch) require(field *big.Int) {
-	if f.explicitFields == nil {
-		f.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if f.explicitFields != nil {
+		next.Set(f.explicitFields)
 	}
-	f.explicitFields.Or(f.explicitFields, field)
+	next.Or(next, field)
+	f.explicitFields = next
 }
 
 // SetGoogle sets the Google field and marks it as non-optional;
@@ -12278,6 +14916,13 @@ func (f *FedCmLoginPatch) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, fedCmLoginPatchNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		f.require(presentFields)
+	}
 	f.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -12310,75 +14955,98 @@ func (f *FedCmLoginPatch) String() string {
 
 var (
 	getClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
-	getClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
-	getClientResponseContentFieldName                                           = big.NewInt(1 << 2)
-	getClientResponseContentFieldDescription                                    = big.NewInt(1 << 3)
-	getClientResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
-	getClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
-	getClientResponseContentFieldAppType                                        = big.NewInt(1 << 6)
-	getClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
-	getClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
-	getClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
-	getClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
-	getClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
-	getClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
-	getClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
-	getClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
-	getClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
-	getClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
-	getClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
-	getClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
-	getClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
-	getClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
-	getClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
-	getClientResponseContentFieldSSO                                            = big.NewInt(1 << 22)
-	getClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
-	getClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
-	getClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
-	getClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
-	getClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
-	getClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
-	getClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
-	getClientResponseContentFieldAddons                                         = big.NewInt(1 << 30)
-	getClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
-	getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
-	getClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
-	getClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
-	getClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	getClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
-	getClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
-	getClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
-	getClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
-	getClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
-	getClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
-	getClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
-	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
-	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
-	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
-	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	getClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
-	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
-	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
-	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
-	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
-	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
-	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
-	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	getClientResponseContentFieldCreatedAt                                      = big.NewInt(1 << 1)
+	getClientResponseContentFieldUpdatedAt                                      = big.NewInt(1 << 2)
+	getClientResponseContentFieldTenant                                         = big.NewInt(1 << 3)
+	getClientResponseContentFieldName                                           = big.NewInt(1 << 4)
+	getClientResponseContentFieldDescription                                    = big.NewInt(1 << 5)
+	getClientResponseContentFieldGlobal                                         = big.NewInt(1 << 6)
+	getClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 7)
+	getClientResponseContentFieldAppType                                        = big.NewInt(1 << 8)
+	getClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
+	getClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
+	getClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
+	getClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
+	getClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
+	getClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
+	getClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
+	getClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
+	getClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
+	getClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
+	getClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
+	getClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
+	getClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
+	getClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
+	getClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
+	getClientResponseContentFieldSSO                                            = big.NewInt(1 << 24)
+	getClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
+	getClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
+	getClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
+	getClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
+	getClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
+	getClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
+	getClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
+	getClientResponseContentFieldAddons                                         = big.NewInt(1 << 32)
+	getClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
+	getClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
+	getClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
+	getClientResponseContentFieldMobile                                         = big.NewInt(1 << 36)
+	getClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
+	getClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
+	getClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
+	getClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
+	getClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
+	getClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
+	getClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
+	getClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
+	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
+	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
+	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
+	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
+	getClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
+	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
+	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
+	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
+	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
+	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
+	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
+	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
+	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
+	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
+	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
+	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
+	getClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
+
+// getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
+var getClientResponseContentNullableFields = map[string]*big.Int{
+	"session_transfer":              getClientResponseContentFieldSessionTransfer,
+	"signing_keys":                  getClientResponseContentFieldSigningKeys,
+	"encryption_key":                getClientResponseContentFieldEncryptionKey,
+	"refresh_token":                 getClientResponseContentFieldRefreshToken,
+	"default_organization":          getClientResponseContentFieldDefaultOrganization,
+	"client_authentication_methods": getClientResponseContentFieldClientAuthenticationMethods,
+	"compliance_level":              getClientResponseContentFieldComplianceLevel,
+	"par_request_expiry":            getClientResponseContentFieldParRequestExpiry,
+}
 
 type GetClientResponseContent struct {
 	// ID of this client.
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The ISO 8601 timestamp of when this client was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 timestamp of when this client was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Name of the tenant this client belongs to.
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
 	// Name of this client (min length: 1 character, does not allow `<` or `>`).
@@ -12461,19 +15129,25 @@ type GetClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
-	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
-	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                         *int                                              `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                               *TokenQuota                                       `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
+	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
+	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
+	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
+	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -12492,6 +15166,20 @@ func (g *GetClientResponseContent) GetClientID() string {
 		return ""
 	}
 	return *g.ClientID
+}
+
+func (g *GetClientResponseContent) GetCreatedAt() time.Time {
+	if g == nil || g.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *g.CreatedAt
+}
+
+func (g *GetClientResponseContent) GetUpdatedAt() time.Time {
+	if g == nil || g.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *g.UpdatedAt
 }
 
 func (g *GetClientResponseContent) GetTenant() string {
@@ -12886,11 +15574,32 @@ func (g *GetClientResponseContent) GetIdentityAssertionAuthorizationGrant() Iden
 	return *g.IdentityAssertionAuthorizationGrant
 }
 
+func (g *GetClientResponseContent) GetAnonymousSessions() AnonymousSessions {
+	if g == nil || g.AnonymousSessions == nil {
+		return AnonymousSessions{}
+	}
+	return *g.AnonymousSessions
+}
+
+func (g *GetClientResponseContent) GetEnforceAnonSessionTransferNetworkBinding() ClientAnonymousSessionTransferNetworkBindingEnum {
+	if g == nil || g.EnforceAnonSessionTransferNetworkBinding == nil {
+		return ""
+	}
+	return *g.EnforceAnonSessionTransferNetworkBinding
+}
+
 func (g *GetClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
 	if g == nil || g.ThirdPartySecurityMode == nil {
 		return ""
 	}
 	return *g.ThirdPartySecurityMode
+}
+
+func (g *GetClientResponseContent) GetOidcSupport() ClientOidcSupport {
+	if g == nil || g.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *g.OidcSupport
 }
 
 func (g *GetClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -12928,6 +15637,20 @@ func (g *GetClientResponseContent) GetExternalMetadataCreatedBy() ClientExternal
 	return *g.ExternalMetadataCreatedBy
 }
 
+func (g *GetClientResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if g == nil || g.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *g.ExternalMetadataStatus
+}
+
+func (g *GetClientResponseContent) GetAgentID() string {
+	if g == nil || g.AgentID == nil {
+		return ""
+	}
+	return *g.AgentID
+}
+
 func (g *GetClientResponseContent) GetExternalClientID() string {
 	if g == nil || g.ExternalClientID == nil {
 		return ""
@@ -12950,10 +15673,12 @@ func (g *GetClientResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetClientResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -12961,6 +15686,20 @@ func (g *GetClientResponseContent) require(field *big.Int) {
 func (g *GetClientResponseContent) SetClientID(clientID *string) {
 	g.ClientID = clientID
 	g.require(getClientResponseContentFieldClientID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetCreatedAt(createdAt *time.Time) {
+	g.CreatedAt = createdAt
+	g.require(getClientResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	g.UpdatedAt = updatedAt
+	g.require(getClientResponseContentFieldUpdatedAt)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -13355,11 +16094,32 @@ func (g *GetClientResponseContent) SetIdentityAssertionAuthorizationGrant(identi
 	g.require(getClientResponseContentFieldIdentityAssertionAuthorizationGrant)
 }
 
+// SetAnonymousSessions sets the AnonymousSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetAnonymousSessions(anonymousSessions *AnonymousSessions) {
+	g.AnonymousSessions = anonymousSessions
+	g.require(getClientResponseContentFieldAnonymousSessions)
+}
+
+// SetEnforceAnonSessionTransferNetworkBinding sets the EnforceAnonSessionTransferNetworkBinding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetEnforceAnonSessionTransferNetworkBinding(enforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum) {
+	g.EnforceAnonSessionTransferNetworkBinding = enforceAnonSessionTransferNetworkBinding
+	g.require(getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	g.ThirdPartySecurityMode = thirdPartySecurityMode
 	g.require(getClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	g.OidcSupport = oidcSupport
+	g.require(getClientResponseContentFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -13397,6 +16157,20 @@ func (g *GetClientResponseContent) SetExternalMetadataCreatedBy(externalMetadata
 	g.require(getClientResponseContentFieldExternalMetadataCreatedBy)
 }
 
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	g.ExternalMetadataStatus = externalMetadataStatus
+	g.require(getClientResponseContentFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetAgentID(agentID *string) {
+	g.AgentID = agentID
+	g.require(getClientResponseContentFieldAgentID)
+}
+
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (g *GetClientResponseContent) SetExternalClientID(externalClientID *string) {
@@ -13415,6 +16189,8 @@ func (g *GetClientResponseContent) UnmarshalJSON(data []byte) error {
 	type embed GetClientResponseContent
 	var unmarshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
 		embed: embed(*g),
 	}
@@ -13422,11 +16198,20 @@ func (g *GetClientResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*g = GetClientResponseContent(unmarshaler.embed)
+	g.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	g.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *g)
 	if err != nil {
 		return err
 	}
 	g.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, getClientResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		g.require(presentFields)
+	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -13435,8 +16220,12 @@ func (g *GetClientResponseContent) MarshalJSON() ([]byte, error) {
 	type embed GetClientResponseContent
 	var marshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
-		embed: embed(*g),
+		embed:     embed(*g),
+		CreatedAt: internal.NewOptionalDateTime(g.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(g.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, g.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, g.ExtraProperties)
@@ -13457,11 +16246,11 @@ func (g *GetClientResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
-// Configuration on the use of ID-JAGs for Cross App Access.
 var (
 	identityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration on the use of ID-JAGs for Cross App Access.
 type IdentityAssertionAuthorizationGrant struct {
 	// If set to true, the client can exchange ID-JAGs for access tokens.
 	Active bool `json:"active" url:"active"`
@@ -13488,10 +16277,12 @@ func (i *IdentityAssertionAuthorizationGrant) GetExtraProperties() map[string]in
 }
 
 func (i *IdentityAssertionAuthorizationGrant) require(field *big.Int) {
-	if i.explicitFields == nil {
-		i.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if i.explicitFields != nil {
+		next.Set(i.explicitFields)
 	}
-	i.explicitFields.Or(i.explicitFields, field)
+	next.Or(next, field)
+	i.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -13543,11 +16334,11 @@ func (i *IdentityAssertionAuthorizationGrant) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
-// Configuration for linked clients in the OIN Express Configuration feature.
 var (
 	linkedClientConfigurationFieldClientID = big.NewInt(1 << 0)
 )
 
+// Configuration for linked clients in the OIN Express Configuration feature.
 type LinkedClientConfiguration struct {
 	// The ID of the linked client.
 	ClientID string `json:"client_id" url:"client_id"`
@@ -13574,10 +16365,12 @@ func (l *LinkedClientConfiguration) GetExtraProperties() map[string]interface{} 
 }
 
 func (l *LinkedClientConfiguration) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -13685,10 +16478,12 @@ func (l *ListClientsOffsetPaginatedResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListClientsOffsetPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -13761,13 +16556,13 @@ func (l *ListClientsOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
-// Configure native social settings
 var (
 	nativeSocialLoginFieldApple    = big.NewInt(1 << 0)
 	nativeSocialLoginFieldFacebook = big.NewInt(1 << 1)
 	nativeSocialLoginFieldGoogle   = big.NewInt(1 << 2)
 )
 
+// Configure native social settings
 type NativeSocialLogin struct {
 	Apple    *NativeSocialLoginApple    `json:"apple,omitempty" url:"apple,omitempty"`
 	Facebook *NativeSocialLoginFacebook `json:"facebook,omitempty" url:"facebook,omitempty"`
@@ -13809,10 +16604,12 @@ func (n *NativeSocialLogin) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLogin) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetApple sets the Apple field and marks it as non-optional;
@@ -13878,11 +16675,11 @@ func (n *NativeSocialLogin) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Native Social Login support for the Apple connection
 var (
 	nativeSocialLoginAppleFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Native Social Login support for the Apple connection
 type NativeSocialLoginApple struct {
 	// Determine whether or not to allow signing in natively using an Apple authorization code
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -13909,10 +16706,12 @@ func (n *NativeSocialLoginApple) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLoginApple) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -13964,11 +16763,11 @@ func (n *NativeSocialLoginApple) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Native Social Login support for the Apple connection
 var (
 	nativeSocialLoginApplePatchFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Native Social Login support for the Apple connection
 type NativeSocialLoginApplePatch struct {
 	// Determine whether or not to allow signing in natively using an Apple authorization code
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -13995,10 +16794,12 @@ func (n *NativeSocialLoginApplePatch) GetExtraProperties() map[string]interface{
 }
 
 func (n *NativeSocialLoginApplePatch) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -14050,11 +16851,11 @@ func (n *NativeSocialLoginApplePatch) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Native Social Login support for the Facebook connection
 var (
 	nativeSocialLoginFacebookFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Native Social Login support for the Facebook connection
 type NativeSocialLoginFacebook struct {
 	// Determine whether or not to allow signing in natively using Facebook
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -14081,10 +16882,12 @@ func (n *NativeSocialLoginFacebook) GetExtraProperties() map[string]interface{} 
 }
 
 func (n *NativeSocialLoginFacebook) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -14136,11 +16939,11 @@ func (n *NativeSocialLoginFacebook) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Native Social Login support for the Facebook connection
 var (
 	nativeSocialLoginFacebookPatchFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Native Social Login support for the Facebook connection
 type NativeSocialLoginFacebookPatch struct {
 	// Determine whether or not to allow signing in natively using Facebook
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -14167,10 +16970,12 @@ func (n *NativeSocialLoginFacebookPatch) GetExtraProperties() map[string]interfa
 }
 
 func (n *NativeSocialLoginFacebookPatch) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -14222,11 +17027,11 @@ func (n *NativeSocialLoginFacebookPatch) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Native Social Login support for the google-oauth2 connection
 var (
 	nativeSocialLoginGoogleFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Native Social Login support for the google-oauth2 connection
 type NativeSocialLoginGoogle struct {
 	// Determine whether or not to allow signing in natively using a Google ID token
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -14253,10 +17058,12 @@ func (n *NativeSocialLoginGoogle) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLoginGoogle) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -14308,11 +17115,11 @@ func (n *NativeSocialLoginGoogle) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Native Social Login support for the google-oauth2 connection
 var (
 	nativeSocialLoginGooglePatchFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Native Social Login support for the google-oauth2 connection
 type NativeSocialLoginGooglePatch struct {
 	// Determine whether or not to allow signing in natively using a Google ID token
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -14339,10 +17146,12 @@ func (n *NativeSocialLoginGooglePatch) GetExtraProperties() map[string]interface
 }
 
 func (n *NativeSocialLoginGooglePatch) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -14394,13 +17203,20 @@ func (n *NativeSocialLoginGooglePatch) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
-// Configure native social settings
 var (
 	nativeSocialLoginPatchFieldApple    = big.NewInt(1 << 0)
 	nativeSocialLoginPatchFieldFacebook = big.NewInt(1 << 1)
 	nativeSocialLoginPatchFieldGoogle   = big.NewInt(1 << 2)
 )
 
+// nativeSocialLoginPatchNullableFields maps the wire names of NativeSocialLoginPatch's nullable fields (required or optional) to their field bits.
+var nativeSocialLoginPatchNullableFields = map[string]*big.Int{
+	"apple":    nativeSocialLoginPatchFieldApple,
+	"facebook": nativeSocialLoginPatchFieldFacebook,
+	"google":   nativeSocialLoginPatchFieldGoogle,
+}
+
+// Configure native social settings
 type NativeSocialLoginPatch struct {
 	Apple    *NativeSocialLoginApplePatch    `json:"apple,omitempty" url:"apple,omitempty"`
 	Facebook *NativeSocialLoginFacebookPatch `json:"facebook,omitempty" url:"facebook,omitempty"`
@@ -14442,10 +17258,12 @@ func (n *NativeSocialLoginPatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLoginPatch) require(field *big.Int) {
-	if n.explicitFields == nil {
-		n.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if n.explicitFields != nil {
+		next.Set(n.explicitFields)
 	}
-	n.explicitFields.Or(n.explicitFields, field)
+	next.Or(next, field)
+	n.explicitFields = next
 }
 
 // SetApple sets the Apple field and marks it as non-optional;
@@ -14481,6 +17299,13 @@ func (n *NativeSocialLoginPatch) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	n.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, nativeSocialLoginPatchNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		n.require(presentFields)
+	}
 	n.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -14512,15 +17337,17 @@ func (n *NativeSocialLoginPatch) String() string {
 }
 
 var (
-	previewCimdMetadataResponseContentFieldClientID     = big.NewInt(1 << 0)
-	previewCimdMetadataResponseContentFieldErrors       = big.NewInt(1 << 1)
-	previewCimdMetadataResponseContentFieldValidation   = big.NewInt(1 << 2)
-	previewCimdMetadataResponseContentFieldMappedFields = big.NewInt(1 << 3)
+	previewCimdMetadataResponseContentFieldClientID                  = big.NewInt(1 << 0)
+	previewCimdMetadataResponseContentFieldExternalMetadataCreatedBy = big.NewInt(1 << 1)
+	previewCimdMetadataResponseContentFieldErrors                    = big.NewInt(1 << 2)
+	previewCimdMetadataResponseContentFieldValidation                = big.NewInt(1 << 3)
+	previewCimdMetadataResponseContentFieldMappedFields              = big.NewInt(1 << 4)
 )
 
 type PreviewCimdMetadataResponseContent struct {
 	// The client_id of an existing client registered with this external_client_id, if one exists.
-	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ClientID                  *string                            `json:"client_id,omitempty" url:"client_id,omitempty"`
+	ExternalMetadataCreatedBy *CimdExternalMetadataCreatedByEnum `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
 	// Array of retrieval errors (populated when the metadata document could not be fetched). When present, validation is omitted.
 	Errors       []string                `json:"errors,omitempty" url:"errors,omitempty"`
 	Validation   *CimdValidationResult   `json:"validation,omitempty" url:"validation,omitempty"`
@@ -14539,6 +17366,13 @@ func (p *PreviewCimdMetadataResponseContent) GetClientID() string {
 		return ""
 	}
 	return *p.ClientID
+}
+
+func (p *PreviewCimdMetadataResponseContent) GetExternalMetadataCreatedBy() CimdExternalMetadataCreatedByEnum {
+	if p == nil || p.ExternalMetadataCreatedBy == nil {
+		return ""
+	}
+	return *p.ExternalMetadataCreatedBy
 }
 
 func (p *PreviewCimdMetadataResponseContent) GetErrors() []string {
@@ -14570,10 +17404,12 @@ func (p *PreviewCimdMetadataResponseContent) GetExtraProperties() map[string]int
 }
 
 func (p *PreviewCimdMetadataResponseContent) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -14581,6 +17417,13 @@ func (p *PreviewCimdMetadataResponseContent) require(field *big.Int) {
 func (p *PreviewCimdMetadataResponseContent) SetClientID(clientID *string) {
 	p.ClientID = clientID
 	p.require(previewCimdMetadataResponseContentFieldClientID)
+}
+
+// SetExternalMetadataCreatedBy sets the ExternalMetadataCreatedBy field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PreviewCimdMetadataResponseContent) SetExternalMetadataCreatedBy(externalMetadataCreatedBy *CimdExternalMetadataCreatedByEnum) {
+	p.ExternalMetadataCreatedBy = externalMetadataCreatedBy
+	p.require(previewCimdMetadataResponseContentFieldExternalMetadataCreatedBy)
 }
 
 // SetErrors sets the Errors field and marks it as non-optional;
@@ -14738,10 +17581,12 @@ func (p *PublicKeyCredential) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PublicKeyCredential) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;
@@ -14909,13 +17754,13 @@ func (r RefreshTokenRotationTypeEnum) Ptr() *RefreshTokenRotationTypeEnum {
 	return &r
 }
 
-// Response after successfully registering or updating a CIMD client
 var (
 	registerCimdClientResponseContentFieldClientID     = big.NewInt(1 << 0)
 	registerCimdClientResponseContentFieldMappedFields = big.NewInt(1 << 1)
 	registerCimdClientResponseContentFieldValidation   = big.NewInt(1 << 2)
 )
 
+// Response after successfully registering or updating a CIMD client
 type RegisterCimdClientResponseContent struct {
 	// The Auth0 client_id of the created or updated client
 	ClientID     string                  `json:"client_id" url:"client_id"`
@@ -14959,10 +17804,12 @@ func (r *RegisterCimdClientResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (r *RegisterCimdClientResponseContent) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -15034,75 +17881,98 @@ func (r *RegisterCimdClientResponseContent) String() string {
 
 var (
 	rotateClientSecretResponseContentFieldClientID                                       = big.NewInt(1 << 0)
-	rotateClientSecretResponseContentFieldTenant                                         = big.NewInt(1 << 1)
-	rotateClientSecretResponseContentFieldName                                           = big.NewInt(1 << 2)
-	rotateClientSecretResponseContentFieldDescription                                    = big.NewInt(1 << 3)
-	rotateClientSecretResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
-	rotateClientSecretResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
-	rotateClientSecretResponseContentFieldAppType                                        = big.NewInt(1 << 6)
-	rotateClientSecretResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
-	rotateClientSecretResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
-	rotateClientSecretResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
-	rotateClientSecretResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
-	rotateClientSecretResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
-	rotateClientSecretResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
-	rotateClientSecretResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
-	rotateClientSecretResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
-	rotateClientSecretResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
-	rotateClientSecretResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
-	rotateClientSecretResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
-	rotateClientSecretResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
-	rotateClientSecretResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
-	rotateClientSecretResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
-	rotateClientSecretResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
-	rotateClientSecretResponseContentFieldSSO                                            = big.NewInt(1 << 22)
-	rotateClientSecretResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
-	rotateClientSecretResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
-	rotateClientSecretResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
-	rotateClientSecretResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
-	rotateClientSecretResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
-	rotateClientSecretResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
-	rotateClientSecretResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
-	rotateClientSecretResponseContentFieldAddons                                         = big.NewInt(1 << 30)
-	rotateClientSecretResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
-	rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
-	rotateClientSecretResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
-	rotateClientSecretResponseContentFieldMobile                                         = big.NewInt(1 << 34)
-	rotateClientSecretResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	rotateClientSecretResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
-	rotateClientSecretResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
-	rotateClientSecretResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
-	rotateClientSecretResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
-	rotateClientSecretResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
-	rotateClientSecretResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
-	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
-	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
-	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
-	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
-	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
-	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
-	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
-	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
-	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
-	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	rotateClientSecretResponseContentFieldCreatedAt                                      = big.NewInt(1 << 1)
+	rotateClientSecretResponseContentFieldUpdatedAt                                      = big.NewInt(1 << 2)
+	rotateClientSecretResponseContentFieldTenant                                         = big.NewInt(1 << 3)
+	rotateClientSecretResponseContentFieldName                                           = big.NewInt(1 << 4)
+	rotateClientSecretResponseContentFieldDescription                                    = big.NewInt(1 << 5)
+	rotateClientSecretResponseContentFieldGlobal                                         = big.NewInt(1 << 6)
+	rotateClientSecretResponseContentFieldClientSecret                                   = big.NewInt(1 << 7)
+	rotateClientSecretResponseContentFieldAppType                                        = big.NewInt(1 << 8)
+	rotateClientSecretResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
+	rotateClientSecretResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
+	rotateClientSecretResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
+	rotateClientSecretResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
+	rotateClientSecretResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
+	rotateClientSecretResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
+	rotateClientSecretResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
+	rotateClientSecretResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
+	rotateClientSecretResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
+	rotateClientSecretResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
+	rotateClientSecretResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
+	rotateClientSecretResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
+	rotateClientSecretResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
+	rotateClientSecretResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
+	rotateClientSecretResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
+	rotateClientSecretResponseContentFieldSSO                                            = big.NewInt(1 << 24)
+	rotateClientSecretResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
+	rotateClientSecretResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
+	rotateClientSecretResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
+	rotateClientSecretResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
+	rotateClientSecretResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
+	rotateClientSecretResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
+	rotateClientSecretResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
+	rotateClientSecretResponseContentFieldAddons                                         = big.NewInt(1 << 32)
+	rotateClientSecretResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
+	rotateClientSecretResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
+	rotateClientSecretResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
+	rotateClientSecretResponseContentFieldMobile                                         = big.NewInt(1 << 36)
+	rotateClientSecretResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
+	rotateClientSecretResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
+	rotateClientSecretResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
+	rotateClientSecretResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
+	rotateClientSecretResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
+	rotateClientSecretResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
+	rotateClientSecretResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
+	rotateClientSecretResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
+	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
+	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
+	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
+	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
+	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
+	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
+	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
+
+// rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
+var rotateClientSecretResponseContentNullableFields = map[string]*big.Int{
+	"session_transfer":              rotateClientSecretResponseContentFieldSessionTransfer,
+	"signing_keys":                  rotateClientSecretResponseContentFieldSigningKeys,
+	"encryption_key":                rotateClientSecretResponseContentFieldEncryptionKey,
+	"refresh_token":                 rotateClientSecretResponseContentFieldRefreshToken,
+	"default_organization":          rotateClientSecretResponseContentFieldDefaultOrganization,
+	"client_authentication_methods": rotateClientSecretResponseContentFieldClientAuthenticationMethods,
+	"compliance_level":              rotateClientSecretResponseContentFieldComplianceLevel,
+	"par_request_expiry":            rotateClientSecretResponseContentFieldParRequestExpiry,
+}
 
 type RotateClientSecretResponseContent struct {
 	// ID of this client.
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The ISO 8601 timestamp of when this client was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 timestamp of when this client was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Name of the tenant this client belongs to.
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
 	// Name of this client (min length: 1 character, does not allow `<` or `>`).
@@ -15185,19 +18055,25 @@ type RotateClientSecretResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
-	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
-	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                         *int                                              `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                               *TokenQuota                                       `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
+	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
+	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
+	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
+	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -15216,6 +18092,20 @@ func (r *RotateClientSecretResponseContent) GetClientID() string {
 		return ""
 	}
 	return *r.ClientID
+}
+
+func (r *RotateClientSecretResponseContent) GetCreatedAt() time.Time {
+	if r == nil || r.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *r.CreatedAt
+}
+
+func (r *RotateClientSecretResponseContent) GetUpdatedAt() time.Time {
+	if r == nil || r.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *r.UpdatedAt
 }
 
 func (r *RotateClientSecretResponseContent) GetTenant() string {
@@ -15610,11 +18500,32 @@ func (r *RotateClientSecretResponseContent) GetIdentityAssertionAuthorizationGra
 	return *r.IdentityAssertionAuthorizationGrant
 }
 
+func (r *RotateClientSecretResponseContent) GetAnonymousSessions() AnonymousSessions {
+	if r == nil || r.AnonymousSessions == nil {
+		return AnonymousSessions{}
+	}
+	return *r.AnonymousSessions
+}
+
+func (r *RotateClientSecretResponseContent) GetEnforceAnonSessionTransferNetworkBinding() ClientAnonymousSessionTransferNetworkBindingEnum {
+	if r == nil || r.EnforceAnonSessionTransferNetworkBinding == nil {
+		return ""
+	}
+	return *r.EnforceAnonSessionTransferNetworkBinding
+}
+
 func (r *RotateClientSecretResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
 	if r == nil || r.ThirdPartySecurityMode == nil {
 		return ""
 	}
 	return *r.ThirdPartySecurityMode
+}
+
+func (r *RotateClientSecretResponseContent) GetOidcSupport() ClientOidcSupport {
+	if r == nil || r.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *r.OidcSupport
 }
 
 func (r *RotateClientSecretResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -15652,6 +18563,20 @@ func (r *RotateClientSecretResponseContent) GetExternalMetadataCreatedBy() Clien
 	return *r.ExternalMetadataCreatedBy
 }
 
+func (r *RotateClientSecretResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if r == nil || r.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *r.ExternalMetadataStatus
+}
+
+func (r *RotateClientSecretResponseContent) GetAgentID() string {
+	if r == nil || r.AgentID == nil {
+		return ""
+	}
+	return *r.AgentID
+}
+
 func (r *RotateClientSecretResponseContent) GetExternalClientID() string {
 	if r == nil || r.ExternalClientID == nil {
 		return ""
@@ -15674,10 +18599,12 @@ func (r *RotateClientSecretResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (r *RotateClientSecretResponseContent) require(field *big.Int) {
-	if r.explicitFields == nil {
-		r.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if r.explicitFields != nil {
+		next.Set(r.explicitFields)
 	}
-	r.explicitFields.Or(r.explicitFields, field)
+	next.Or(next, field)
+	r.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -15685,6 +18612,20 @@ func (r *RotateClientSecretResponseContent) require(field *big.Int) {
 func (r *RotateClientSecretResponseContent) SetClientID(clientID *string) {
 	r.ClientID = clientID
 	r.require(rotateClientSecretResponseContentFieldClientID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetCreatedAt(createdAt *time.Time) {
+	r.CreatedAt = createdAt
+	r.require(rotateClientSecretResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	r.UpdatedAt = updatedAt
+	r.require(rotateClientSecretResponseContentFieldUpdatedAt)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -16079,11 +19020,32 @@ func (r *RotateClientSecretResponseContent) SetIdentityAssertionAuthorizationGra
 	r.require(rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant)
 }
 
+// SetAnonymousSessions sets the AnonymousSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetAnonymousSessions(anonymousSessions *AnonymousSessions) {
+	r.AnonymousSessions = anonymousSessions
+	r.require(rotateClientSecretResponseContentFieldAnonymousSessions)
+}
+
+// SetEnforceAnonSessionTransferNetworkBinding sets the EnforceAnonSessionTransferNetworkBinding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetEnforceAnonSessionTransferNetworkBinding(enforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum) {
+	r.EnforceAnonSessionTransferNetworkBinding = enforceAnonSessionTransferNetworkBinding
+	r.require(rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	r.ThirdPartySecurityMode = thirdPartySecurityMode
 	r.require(rotateClientSecretResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	r.OidcSupport = oidcSupport
+	r.require(rotateClientSecretResponseContentFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -16121,6 +19083,20 @@ func (r *RotateClientSecretResponseContent) SetExternalMetadataCreatedBy(externa
 	r.require(rotateClientSecretResponseContentFieldExternalMetadataCreatedBy)
 }
 
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	r.ExternalMetadataStatus = externalMetadataStatus
+	r.require(rotateClientSecretResponseContentFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetAgentID(agentID *string) {
+	r.AgentID = agentID
+	r.require(rotateClientSecretResponseContentFieldAgentID)
+}
+
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateClientSecretResponseContent) SetExternalClientID(externalClientID *string) {
@@ -16139,6 +19115,8 @@ func (r *RotateClientSecretResponseContent) UnmarshalJSON(data []byte) error {
 	type embed RotateClientSecretResponseContent
 	var unmarshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
 		embed: embed(*r),
 	}
@@ -16146,11 +19124,20 @@ func (r *RotateClientSecretResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*r = RotateClientSecretResponseContent(unmarshaler.embed)
+	r.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	r.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *r)
 	if err != nil {
 		return err
 	}
 	r.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, rotateClientSecretResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		r.require(presentFields)
+	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -16159,8 +19146,12 @@ func (r *RotateClientSecretResponseContent) MarshalJSON() ([]byte, error) {
 	type embed RotateClientSecretResponseContent
 	var marshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
-		embed: embed(*r),
+		embed:     embed(*r),
+		CreatedAt: internal.NewOptionalDateTime(r.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(r.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, r.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, r.ExtraProperties)
@@ -16179,6 +19170,110 @@ func (r *RotateClientSecretResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", r)
+}
+
+var (
+	searchClientsResponseContentFieldClients = big.NewInt(1 << 0)
+	searchClientsResponseContentFieldNext    = big.NewInt(1 << 1)
+)
+
+type SearchClientsResponseContent struct {
+	// Array of client objects matching the search criteria.
+	Clients []*ClientSearchResponse `json:"clients" url:"clients"`
+	// Cursor for retrieving the next page of results. Absent when no more results are available.
+	Next *string `json:"next,omitempty" url:"next,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SearchClientsResponseContent) GetClients() []*ClientSearchResponse {
+	if s == nil {
+		return nil
+	}
+	return s.Clients
+}
+
+func (s *SearchClientsResponseContent) GetNext() string {
+	if s == nil || s.Next == nil {
+		return ""
+	}
+	return *s.Next
+}
+
+func (s *SearchClientsResponseContent) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SearchClientsResponseContent) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetClients sets the Clients field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientsResponseContent) SetClients(clients []*ClientSearchResponse) {
+	s.Clients = clients
+	s.require(searchClientsResponseContentFieldClients)
+}
+
+// SetNext sets the Next field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SearchClientsResponseContent) SetNext(next *string) {
+	s.Next = next
+	s.require(searchClientsResponseContentFieldNext)
+}
+
+func (s *SearchClientsResponseContent) UnmarshalJSON(data []byte) error {
+	type unmarshaler SearchClientsResponseContent
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SearchClientsResponseContent(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SearchClientsResponseContent) MarshalJSON() ([]byte, error) {
+	type embed SearchClientsResponseContent
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SearchClientsResponseContent) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 var (
@@ -16219,10 +19314,12 @@ func (t *TokenVaultPrivilegedAccessGrant) GetExtraProperties() map[string]interf
 }
 
 func (t *TokenVaultPrivilegedAccessGrant) require(field *big.Int) {
-	if t.explicitFields == nil {
-		t.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if t.explicitFields != nil {
+		next.Set(t.explicitFields)
 	}
-	t.explicitFields.Or(t.explicitFields, field)
+	next.Or(next, field)
+	t.explicitFields = next
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -16284,76 +19381,187 @@ func (t *TokenVaultPrivilegedAccessGrant) String() string {
 type TokenVaultPrivilegedAccessIPAllowlistEntry = string
 
 var (
-	updateClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
-	updateClientResponseContentFieldTenant                                         = big.NewInt(1 << 1)
-	updateClientResponseContentFieldName                                           = big.NewInt(1 << 2)
-	updateClientResponseContentFieldDescription                                    = big.NewInt(1 << 3)
-	updateClientResponseContentFieldGlobal                                         = big.NewInt(1 << 4)
-	updateClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 5)
-	updateClientResponseContentFieldAppType                                        = big.NewInt(1 << 6)
-	updateClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 7)
-	updateClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 8)
-	updateClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 9)
-	updateClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 10)
-	updateClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 11)
-	updateClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 12)
-	updateClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 13)
-	updateClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 14)
-	updateClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 15)
-	updateClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 16)
-	updateClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 17)
-	updateClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 18)
-	updateClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 19)
-	updateClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 20)
-	updateClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 21)
-	updateClientResponseContentFieldSSO                                            = big.NewInt(1 << 22)
-	updateClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 23)
-	updateClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 24)
-	updateClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 25)
-	updateClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 26)
-	updateClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 27)
-	updateClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 28)
-	updateClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 29)
-	updateClientResponseContentFieldAddons                                         = big.NewInt(1 << 30)
-	updateClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 31)
-	updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 32)
-	updateClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 33)
-	updateClientResponseContentFieldMobile                                         = big.NewInt(1 << 34)
-	updateClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 35)
-	updateClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 36)
-	updateClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 37)
-	updateClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 38)
-	updateClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 39)
-	updateClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 40)
-	updateClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 41)
-	updateClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 42)
-	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 43)
-	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 44)
-	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 45)
-	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 46)
-	updateClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 47)
-	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 48)
-	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 49)
-	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 50)
-	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 51)
-	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 52)
-	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
-	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 56)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(1 << 59)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 60)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(1 << 61)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(1 << 62)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	updateAnonymousSessionsFieldActive = big.NewInt(1 << 0)
 )
+
+// Anonymous sessions configuration for this client.
+type UpdateAnonymousSessions struct {
+	// If set to true, this client is allowed to create anonymous sessions.
+	Active bool `json:"active" url:"active"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (u *UpdateAnonymousSessions) GetActive() bool {
+	if u == nil {
+		return false
+	}
+	return u.Active
+}
+
+func (u *UpdateAnonymousSessions) GetExtraProperties() map[string]interface{} {
+	if u == nil {
+		return nil
+	}
+	return u.extraProperties
+}
+
+func (u *UpdateAnonymousSessions) require(field *big.Int) {
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
+	}
+	next.Or(next, field)
+	u.explicitFields = next
+}
+
+// SetActive sets the Active field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateAnonymousSessions) SetActive(active bool) {
+	u.Active = active
+	u.require(updateAnonymousSessionsFieldActive)
+}
+
+func (u *UpdateAnonymousSessions) UnmarshalJSON(data []byte) error {
+	type unmarshaler UpdateAnonymousSessions
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*u = UpdateAnonymousSessions(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *u)
+	if err != nil {
+		return err
+	}
+	u.extraProperties = extraProperties
+	u.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (u *UpdateAnonymousSessions) MarshalJSON() ([]byte, error) {
+	type embed UpdateAnonymousSessions
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*u),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (u *UpdateAnonymousSessions) String() string {
+	if u == nil {
+		return "<nil>"
+	}
+	if len(u.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(u.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(u); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", u)
+}
+
+var (
+	updateClientResponseContentFieldClientID                                       = big.NewInt(1 << 0)
+	updateClientResponseContentFieldCreatedAt                                      = big.NewInt(1 << 1)
+	updateClientResponseContentFieldUpdatedAt                                      = big.NewInt(1 << 2)
+	updateClientResponseContentFieldTenant                                         = big.NewInt(1 << 3)
+	updateClientResponseContentFieldName                                           = big.NewInt(1 << 4)
+	updateClientResponseContentFieldDescription                                    = big.NewInt(1 << 5)
+	updateClientResponseContentFieldGlobal                                         = big.NewInt(1 << 6)
+	updateClientResponseContentFieldClientSecret                                   = big.NewInt(1 << 7)
+	updateClientResponseContentFieldAppType                                        = big.NewInt(1 << 8)
+	updateClientResponseContentFieldLogoURI                                        = big.NewInt(1 << 9)
+	updateClientResponseContentFieldIsFirstParty                                   = big.NewInt(1 << 10)
+	updateClientResponseContentFieldOidcConformant                                 = big.NewInt(1 << 11)
+	updateClientResponseContentFieldCallbacks                                      = big.NewInt(1 << 12)
+	updateClientResponseContentFieldAllowedOrigins                                 = big.NewInt(1 << 13)
+	updateClientResponseContentFieldWebOrigins                                     = big.NewInt(1 << 14)
+	updateClientResponseContentFieldClientAliases                                  = big.NewInt(1 << 15)
+	updateClientResponseContentFieldAllowedClients                                 = big.NewInt(1 << 16)
+	updateClientResponseContentFieldAllowedLogoutURLs                              = big.NewInt(1 << 17)
+	updateClientResponseContentFieldSessionTransfer                                = big.NewInt(1 << 18)
+	updateClientResponseContentFieldOidcLogout                                     = big.NewInt(1 << 19)
+	updateClientResponseContentFieldGrantTypes                                     = big.NewInt(1 << 20)
+	updateClientResponseContentFieldJwtConfiguration                               = big.NewInt(1 << 21)
+	updateClientResponseContentFieldSigningKeys                                    = big.NewInt(1 << 22)
+	updateClientResponseContentFieldEncryptionKey                                  = big.NewInt(1 << 23)
+	updateClientResponseContentFieldSSO                                            = big.NewInt(1 << 24)
+	updateClientResponseContentFieldSSODisabled                                    = big.NewInt(1 << 25)
+	updateClientResponseContentFieldCrossOriginAuthentication                      = big.NewInt(1 << 26)
+	updateClientResponseContentFieldCrossOriginLoc                                 = big.NewInt(1 << 27)
+	updateClientResponseContentFieldCustomLoginPageOn                              = big.NewInt(1 << 28)
+	updateClientResponseContentFieldCustomLoginPage                                = big.NewInt(1 << 29)
+	updateClientResponseContentFieldCustomLoginPagePreview                         = big.NewInt(1 << 30)
+	updateClientResponseContentFieldFormTemplate                                   = big.NewInt(1 << 31)
+	updateClientResponseContentFieldAddons                                         = big.NewInt(1 << 32)
+	updateClientResponseContentFieldTokenEndpointAuthMethod                        = big.NewInt(1 << 33)
+	updateClientResponseContentFieldIsTokenEndpointIPHeaderTrusted                 = big.NewInt(1 << 34)
+	updateClientResponseContentFieldClientMetadata                                 = big.NewInt(1 << 35)
+	updateClientResponseContentFieldMobile                                         = big.NewInt(1 << 36)
+	updateClientResponseContentFieldInitiateLoginURI                               = big.NewInt(1 << 37)
+	updateClientResponseContentFieldNativeSocialLogin                              = big.NewInt(1 << 38)
+	updateClientResponseContentFieldFedcmLogin                                     = big.NewInt(1 << 39)
+	updateClientResponseContentFieldRefreshToken                                   = big.NewInt(1 << 40)
+	updateClientResponseContentFieldDefaultOrganization                            = big.NewInt(1 << 41)
+	updateClientResponseContentFieldOrganizationUsage                              = big.NewInt(1 << 42)
+	updateClientResponseContentFieldOrganizationRequireBehavior                    = big.NewInt(1 << 43)
+	updateClientResponseContentFieldOrganizationDiscoveryMethods                   = big.NewInt(1 << 44)
+	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
+	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
+	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
+	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
+	updateClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
+	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
+	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
+	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
+	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
+	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
+	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
+	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
+	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
+	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
+	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
+	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
+	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+)
+
+// updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
+var updateClientResponseContentNullableFields = map[string]*big.Int{
+	"session_transfer":              updateClientResponseContentFieldSessionTransfer,
+	"signing_keys":                  updateClientResponseContentFieldSigningKeys,
+	"encryption_key":                updateClientResponseContentFieldEncryptionKey,
+	"refresh_token":                 updateClientResponseContentFieldRefreshToken,
+	"default_organization":          updateClientResponseContentFieldDefaultOrganization,
+	"client_authentication_methods": updateClientResponseContentFieldClientAuthenticationMethods,
+	"compliance_level":              updateClientResponseContentFieldComplianceLevel,
+	"par_request_expiry":            updateClientResponseContentFieldParRequestExpiry,
+}
 
 type UpdateClientResponseContent struct {
 	// ID of this client.
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// The ISO 8601 timestamp of when this client was created.
+	CreatedAt *time.Time `json:"created_at,omitempty" url:"created_at,omitempty"`
+	// The ISO 8601 timestamp of when this client was last updated.
+	UpdatedAt *time.Time `json:"updated_at,omitempty" url:"updated_at,omitempty"`
 	// Name of the tenant this client belongs to.
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
 	// Name of this client (min length: 1 character, does not allow `<` or `>`).
@@ -16436,19 +19644,25 @@ type UpdateClientResponseContent struct {
 	SkipNonVerifiableCallbackURIConfirmationPrompt *bool                             `json:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty" url:"skip_non_verifiable_callback_uri_confirmation_prompt,omitempty"`
 	TokenExchange                                  *ClientTokenExchangeConfiguration `json:"token_exchange,omitempty" url:"token_exchange,omitempty"`
 	// Specifies how long, in seconds, a Pushed Authorization Request URI remains valid
-	ParRequestExpiry                    *int                                       `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
-	TokenQuota                          *TokenQuota                                `json:"token_quota,omitempty" url:"token_quota,omitempty"`
-	ExpressConfiguration                *ExpressConfiguration                      `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
-	B2BIntegrationConfiguration         *B2BIntegrationConfiguration               `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
-	MyOrganizationConfiguration         *ClientMyOrganizationResponseConfiguration `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
-	IdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant       `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
-	ThirdPartySecurityMode              *ClientThirdPartySecurityModeEnum          `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
-	RedirectionPolicy                   *ClientRedirectionPolicyEnum               `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
+	ParRequestExpiry                         *int                                              `json:"par_request_expiry,omitempty" url:"par_request_expiry,omitempty"`
+	TokenQuota                               *TokenQuota                                       `json:"token_quota,omitempty" url:"token_quota,omitempty"`
+	ExpressConfiguration                     *ExpressConfiguration                             `json:"express_configuration,omitempty" url:"express_configuration,omitempty"`
+	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                      `json:"b2b_integration_configuration,omitempty" url:"b2b_integration_configuration,omitempty"`
+	MyOrganizationConfiguration              *ClientMyOrganizationResponseConfiguration        `json:"my_organization_configuration,omitempty" url:"my_organization_configuration,omitempty"`
+	IdentityAssertionAuthorizationGrant      *IdentityAssertionAuthorizationGrant              `json:"identity_assertion_authorization_grant,omitempty" url:"identity_assertion_authorization_grant,omitempty"`
+	AnonymousSessions                        *AnonymousSessions                                `json:"anonymous_sessions,omitempty" url:"anonymous_sessions,omitempty"`
+	EnforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum `json:"enforce_anon_session_transfer_network_binding,omitempty" url:"enforce_anon_session_transfer_network_binding,omitempty"`
+	ThirdPartySecurityMode                   *ClientThirdPartySecurityModeEnum                 `json:"third_party_security_mode,omitempty" url:"third_party_security_mode,omitempty"`
+	OidcSupport                              *ClientOidcSupport                                `json:"oidc_support,omitempty" url:"oidc_support,omitempty"`
+	RedirectionPolicy                        *ClientRedirectionPolicyEnum                      `json:"redirection_policy,omitempty" url:"redirection_policy,omitempty"`
 	// The identifier of the resource server that this client is linked to.
 	ResourceServerIdentifier          *string                                                       `json:"resource_server_identifier,omitempty" url:"resource_server_identifier,omitempty"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"async_approval_notification_channels,omitempty"`
 	ExternalMetadataType              *ClientExternalMetadataTypeEnum                               `json:"external_metadata_type,omitempty" url:"external_metadata_type,omitempty"`
 	ExternalMetadataCreatedBy         *ClientExternalMetadataCreatedByEnum                          `json:"external_metadata_created_by,omitempty" url:"external_metadata_created_by,omitempty"`
+	ExternalMetadataStatus            *ClientExternalMetadataStatusEnum                             `json:"external_metadata_status,omitempty" url:"external_metadata_status,omitempty"`
+	// ID of the agent associated with this client.
+	AgentID *string `json:"agent_id,omitempty" url:"agent_id,omitempty"`
 	// An alternate client identifier to be used during authorization flows. Only supports CIMD-based client identifiers.
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
 	// URL for the JSON Web Key Set (JWKS) containing the public keys used for private_key_jwt authentication. Only present for CIMD clients using private_key_jwt authentication.
@@ -16467,6 +19681,20 @@ func (u *UpdateClientResponseContent) GetClientID() string {
 		return ""
 	}
 	return *u.ClientID
+}
+
+func (u *UpdateClientResponseContent) GetCreatedAt() time.Time {
+	if u == nil || u.CreatedAt == nil {
+		return time.Time{}
+	}
+	return *u.CreatedAt
+}
+
+func (u *UpdateClientResponseContent) GetUpdatedAt() time.Time {
+	if u == nil || u.UpdatedAt == nil {
+		return time.Time{}
+	}
+	return *u.UpdatedAt
 }
 
 func (u *UpdateClientResponseContent) GetTenant() string {
@@ -16861,11 +20089,32 @@ func (u *UpdateClientResponseContent) GetIdentityAssertionAuthorizationGrant() I
 	return *u.IdentityAssertionAuthorizationGrant
 }
 
+func (u *UpdateClientResponseContent) GetAnonymousSessions() AnonymousSessions {
+	if u == nil || u.AnonymousSessions == nil {
+		return AnonymousSessions{}
+	}
+	return *u.AnonymousSessions
+}
+
+func (u *UpdateClientResponseContent) GetEnforceAnonSessionTransferNetworkBinding() ClientAnonymousSessionTransferNetworkBindingEnum {
+	if u == nil || u.EnforceAnonSessionTransferNetworkBinding == nil {
+		return ""
+	}
+	return *u.EnforceAnonSessionTransferNetworkBinding
+}
+
 func (u *UpdateClientResponseContent) GetThirdPartySecurityMode() ClientThirdPartySecurityModeEnum {
 	if u == nil || u.ThirdPartySecurityMode == nil {
 		return ""
 	}
 	return *u.ThirdPartySecurityMode
+}
+
+func (u *UpdateClientResponseContent) GetOidcSupport() ClientOidcSupport {
+	if u == nil || u.OidcSupport == nil {
+		return ClientOidcSupport{}
+	}
+	return *u.OidcSupport
 }
 
 func (u *UpdateClientResponseContent) GetRedirectionPolicy() ClientRedirectionPolicyEnum {
@@ -16903,6 +20152,20 @@ func (u *UpdateClientResponseContent) GetExternalMetadataCreatedBy() ClientExter
 	return *u.ExternalMetadataCreatedBy
 }
 
+func (u *UpdateClientResponseContent) GetExternalMetadataStatus() ClientExternalMetadataStatusEnum {
+	if u == nil || u.ExternalMetadataStatus == nil {
+		return ""
+	}
+	return *u.ExternalMetadataStatus
+}
+
+func (u *UpdateClientResponseContent) GetAgentID() string {
+	if u == nil || u.AgentID == nil {
+		return ""
+	}
+	return *u.AgentID
+}
+
 func (u *UpdateClientResponseContent) GetExternalClientID() string {
 	if u == nil || u.ExternalClientID == nil {
 		return ""
@@ -16925,10 +20188,12 @@ func (u *UpdateClientResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (u *UpdateClientResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -16936,6 +20201,20 @@ func (u *UpdateClientResponseContent) require(field *big.Int) {
 func (u *UpdateClientResponseContent) SetClientID(clientID *string) {
 	u.ClientID = clientID
 	u.require(updateClientResponseContentFieldClientID)
+}
+
+// SetCreatedAt sets the CreatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetCreatedAt(createdAt *time.Time) {
+	u.CreatedAt = createdAt
+	u.require(updateClientResponseContentFieldCreatedAt)
+}
+
+// SetUpdatedAt sets the UpdatedAt field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetUpdatedAt(updatedAt *time.Time) {
+	u.UpdatedAt = updatedAt
+	u.require(updateClientResponseContentFieldUpdatedAt)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -17330,11 +20609,32 @@ func (u *UpdateClientResponseContent) SetIdentityAssertionAuthorizationGrant(ide
 	u.require(updateClientResponseContentFieldIdentityAssertionAuthorizationGrant)
 }
 
+// SetAnonymousSessions sets the AnonymousSessions field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetAnonymousSessions(anonymousSessions *AnonymousSessions) {
+	u.AnonymousSessions = anonymousSessions
+	u.require(updateClientResponseContentFieldAnonymousSessions)
+}
+
+// SetEnforceAnonSessionTransferNetworkBinding sets the EnforceAnonSessionTransferNetworkBinding field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetEnforceAnonSessionTransferNetworkBinding(enforceAnonSessionTransferNetworkBinding *ClientAnonymousSessionTransferNetworkBindingEnum) {
+	u.EnforceAnonSessionTransferNetworkBinding = enforceAnonSessionTransferNetworkBinding
+	u.require(updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding)
+}
+
 // SetThirdPartySecurityMode sets the ThirdPartySecurityMode field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateClientResponseContent) SetThirdPartySecurityMode(thirdPartySecurityMode *ClientThirdPartySecurityModeEnum) {
 	u.ThirdPartySecurityMode = thirdPartySecurityMode
 	u.require(updateClientResponseContentFieldThirdPartySecurityMode)
+}
+
+// SetOidcSupport sets the OidcSupport field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetOidcSupport(oidcSupport *ClientOidcSupport) {
+	u.OidcSupport = oidcSupport
+	u.require(updateClientResponseContentFieldOidcSupport)
 }
 
 // SetRedirectionPolicy sets the RedirectionPolicy field and marks it as non-optional;
@@ -17372,6 +20672,20 @@ func (u *UpdateClientResponseContent) SetExternalMetadataCreatedBy(externalMetad
 	u.require(updateClientResponseContentFieldExternalMetadataCreatedBy)
 }
 
+// SetExternalMetadataStatus sets the ExternalMetadataStatus field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetExternalMetadataStatus(externalMetadataStatus *ClientExternalMetadataStatusEnum) {
+	u.ExternalMetadataStatus = externalMetadataStatus
+	u.require(updateClientResponseContentFieldExternalMetadataStatus)
+}
+
+// SetAgentID sets the AgentID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetAgentID(agentID *string) {
+	u.AgentID = agentID
+	u.require(updateClientResponseContentFieldAgentID)
+}
+
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateClientResponseContent) SetExternalClientID(externalClientID *string) {
@@ -17390,6 +20704,8 @@ func (u *UpdateClientResponseContent) UnmarshalJSON(data []byte) error {
 	type embed UpdateClientResponseContent
 	var unmarshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
 		embed: embed(*u),
 	}
@@ -17397,11 +20713,20 @@ func (u *UpdateClientResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	*u = UpdateClientResponseContent(unmarshaler.embed)
+	u.CreatedAt = unmarshaler.CreatedAt.TimePtr()
+	u.UpdatedAt = unmarshaler.UpdatedAt.TimePtr()
 	extraProperties, err := internal.ExtractExtraProperties(data, *u)
 	if err != nil {
 		return err
 	}
 	u.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateClientResponseContentNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -17410,8 +20735,12 @@ func (u *UpdateClientResponseContent) MarshalJSON() ([]byte, error) {
 	type embed UpdateClientResponseContent
 	var marshaler = struct {
 		embed
+		CreatedAt *internal.DateTime `json:"created_at,omitempty"`
+		UpdatedAt *internal.DateTime `json:"updated_at,omitempty"`
 	}{
-		embed: embed(*u),
+		embed:     embed(*u),
+		CreatedAt: internal.NewOptionalDateTime(u.CreatedAt),
+		UpdatedAt: internal.NewOptionalDateTime(u.UpdatedAt),
 	}
 	explicitMarshaler := internal.HandleExplicitFields(marshaler, u.explicitFields)
 	return internal.MarshalJSONWithExtraProperties(explicitMarshaler, u.ExtraProperties)
@@ -17432,11 +20761,11 @@ func (u *UpdateClientResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// Configuration on the use of ID-JAGs for Cross App Access.
 var (
 	updateIdentityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
 )
 
+// Configuration on the use of ID-JAGs for Cross App Access.
 type UpdateIdentityAssertionAuthorizationGrant struct {
 	// If set to true, the client can exchange ID-JAGs for access tokens.
 	Active bool `json:"active" url:"active"`
@@ -17463,10 +20792,12 @@ func (u *UpdateIdentityAssertionAuthorizationGrant) GetExtraProperties() map[str
 }
 
 func (u *UpdateIdentityAssertionAuthorizationGrant) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -17567,10 +20898,12 @@ func (x *X509CertificateCredential) GetExtraProperties() map[string]interface{} 
 }
 
 func (x *X509CertificateCredential) require(field *big.Int) {
-	if x.explicitFields == nil {
-		x.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if x.explicitFields != nil {
+		next.Set(x.explicitFields)
 	}
-	x.explicitFields.Or(x.explicitFields, field)
+	next.Or(next, field)
+	x.explicitFields = next
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;

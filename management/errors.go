@@ -31,6 +31,13 @@ func (b *BadRequestError) Unwrap() error {
 	return b.APIError
 }
 
+func (b *BadRequestError) GetBody() any {
+	if b == nil {
+		return nil
+	}
+	return b.Body
+}
+
 // An action module with the same name already exists.
 type ConflictError struct {
 	*core.APIError
@@ -53,6 +60,13 @@ func (c *ConflictError) MarshalJSON() ([]byte, error) {
 
 func (c *ConflictError) Unwrap() error {
 	return c.APIError
+}
+
+func (c *ConflictError) GetBody() any {
+	if c == nil {
+		return nil
+	}
+	return c.Body
 }
 
 // Payload content length greater than maximum allowed: 512000.
@@ -79,6 +93,13 @@ func (c *ContentTooLargeError) Unwrap() error {
 	return c.APIError
 }
 
+func (c *ContentTooLargeError) GetBody() any {
+	if c == nil {
+		return nil
+	}
+	return c.Body
+}
+
 // Insufficient scope, expected: read:actions.
 type ForbiddenError struct {
 	*core.APIError
@@ -101,6 +122,44 @@ func (f *ForbiddenError) MarshalJSON() ([]byte, error) {
 
 func (f *ForbiddenError) Unwrap() error {
 	return f.APIError
+}
+
+func (f *ForbiddenError) GetBody() any {
+	if f == nil {
+		return nil
+	}
+	return f.Body
+}
+
+// The search request timed out. Please simplify your query and try again.
+type GatewayTimeoutError struct {
+	*core.APIError
+	Body any
+}
+
+func (g *GatewayTimeoutError) UnmarshalJSON(data []byte) error {
+	var body any
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	g.StatusCode = 504
+	g.Body = body
+	return nil
+}
+
+func (g *GatewayTimeoutError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(g.Body)
+}
+
+func (g *GatewayTimeoutError) Unwrap() error {
+	return g.APIError
+}
+
+func (g *GatewayTimeoutError) GetBody() any {
+	if g == nil {
+		return nil
+	}
+	return g.Body
 }
 
 // Cursor points to data no longer available in the stream.
@@ -127,7 +186,14 @@ func (g *GoneError) Unwrap() error {
 	return g.APIError
 }
 
-// An internal server error occurred.
+func (g *GoneError) GetBody() any {
+	if g == nil {
+		return nil
+	}
+	return g.Body
+}
+
+// An internal server error occurred
 type InternalServerError struct {
 	*core.APIError
 	Body any
@@ -149,6 +215,13 @@ func (i *InternalServerError) MarshalJSON() ([]byte, error) {
 
 func (i *InternalServerError) Unwrap() error {
 	return i.APIError
+}
+
+func (i *InternalServerError) GetBody() any {
+	if i == nil {
+		return nil
+	}
+	return i.Body
 }
 
 // The action version does not exist.
@@ -175,6 +248,13 @@ func (n *NotFoundError) Unwrap() error {
 	return n.APIError
 }
 
+func (n *NotFoundError) GetBody() any {
+	if n == nil {
+		return nil
+	}
+	return n.Body
+}
+
 // A paid subscription is required for this feature.
 type PaymentRequiredError struct {
 	*core.APIError
@@ -197,6 +277,13 @@ func (p *PaymentRequiredError) MarshalJSON() ([]byte, error) {
 
 func (p *PaymentRequiredError) Unwrap() error {
 	return p.APIError
+}
+
+func (p *PaymentRequiredError) GetBody() any {
+	if p == nil {
+		return nil
+	}
+	return p.Body
 }
 
 // The Actions Module cannot be deleted because it is in use by one or more actions.
@@ -223,6 +310,13 @@ func (p *PreconditionFailedError) Unwrap() error {
 	return p.APIError
 }
 
+func (p *PreconditionFailedError) GetBody() any {
+	if p == nil {
+		return nil
+	}
+	return p.Body
+}
+
 // The query exceeded the timeout. Please try refining your search criteria. See https://auth0.com/docs/best-practices/search-best-practices.
 type ServiceUnavailableError struct {
 	*core.APIError
@@ -245,6 +339,13 @@ func (s *ServiceUnavailableError) MarshalJSON() ([]byte, error) {
 
 func (s *ServiceUnavailableError) Unwrap() error {
 	return s.APIError
+}
+
+func (s *ServiceUnavailableError) GetBody() any {
+	if s == nil {
+		return nil
+	}
+	return s.Body
 }
 
 // Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers.
@@ -271,6 +372,13 @@ func (t *TooManyRequestsError) Unwrap() error {
 	return t.APIError
 }
 
+func (t *TooManyRequestsError) GetBody() any {
+	if t == nil {
+		return nil
+	}
+	return t.Body
+}
+
 // Invalid token.
 type UnauthorizedError struct {
 	*core.APIError
@@ -293,4 +401,42 @@ func (u *UnauthorizedError) MarshalJSON() ([]byte, error) {
 
 func (u *UnauthorizedError) Unwrap() error {
 	return u.APIError
+}
+
+func (u *UnauthorizedError) GetBody() any {
+	if u == nil {
+		return nil
+	}
+	return u.Body
+}
+
+// MCP connections must have connected_accounts.active set to true and authentication.active set to false
+type UnprocessableEntityError struct {
+	*core.APIError
+	Body any
+}
+
+func (u *UnprocessableEntityError) UnmarshalJSON(data []byte) error {
+	var body any
+	if err := json.Unmarshal(data, &body); err != nil {
+		return err
+	}
+	u.StatusCode = 422
+	u.Body = body
+	return nil
+}
+
+func (u *UnprocessableEntityError) MarshalJSON() ([]byte, error) {
+	return json.Marshal(u.Body)
+}
+
+func (u *UnprocessableEntityError) Unwrap() error {
+	return u.APIError
+}
+
+func (u *UnprocessableEntityError) GetBody() any {
+	if u == nil {
+		return nil
+	}
+	return u.Body
 }

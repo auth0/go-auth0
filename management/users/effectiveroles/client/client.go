@@ -39,6 +39,22 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve detailed list of effective roles for a user, including roles assigned directly and through group memberships.
+//
+// Example:
+//
+//	request := &management.ListUserEffectiveRolesRequestParameters{
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.Users.EffectiveRoles.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the user to list effective roles for.
@@ -98,7 +114,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue,
+			Done:     next == zeroValue || *next == "",
 		}
 	}
 	pager := internal.NewCursorPager(

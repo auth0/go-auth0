@@ -38,6 +38,24 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get all access control list entries for your client.
+//
+// Example:
+//
+//	request := &management.ListNetworkACLsRequestParameters{
+//	    Page: management.Int(
+//	        1,
+//	    ),
+//	    PerPage: management.Int(
+//	        1,
+//	    ),
+//	    IncludeTotals: management.Bool(
+//	        true,
+//	    ),
+//	}
+//	client.NetworkACLs.List(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListNetworkACLsRequestParameters,
@@ -112,6 +130,21 @@ func (c *Client) List(
 }
 
 // Create a new access control list for your client.
+//
+// Example:
+//
+//	request := &management.CreateNetworkACLRequestContent{
+//	    Description: "description",
+//	    Active: true,
+//	    Rule: &management.NetworkACLRule{
+//	        Action: &management.NetworkACLAction{},
+//	        Scope: management.NetworkACLRuleScopeEnumManagement,
+//	    },
+//	}
+//	client.NetworkACLs.Create(
+//	    context.TODO(),
+//	    request,
+//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateNetworkACLRequestContent,
@@ -129,6 +162,13 @@ func (c *Client) Create(
 }
 
 // Get a specific access control list entry for your client.
+//
+// Example:
+//
+//	client.NetworkACLs.Get(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the access control list to retrieve.
@@ -147,6 +187,22 @@ func (c *Client) Get(
 }
 
 // Update existing access control list for your client.
+//
+// Example:
+//
+//	request := &management.SetNetworkACLRequestContent{
+//	    Description: "description",
+//	    Active: true,
+//	    Rule: &management.NetworkACLRule{
+//	        Action: &management.NetworkACLAction{},
+//	        Scope: management.NetworkACLRuleScopeEnumManagement,
+//	    },
+//	}
+//	client.NetworkACLs.Set(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// The id of the ACL to update.
@@ -167,6 +223,13 @@ func (c *Client) Set(
 }
 
 // Delete existing access control list for your client.
+//
+// Example:
+//
+//	client.NetworkACLs.Delete(
+//	    context.TODO(),
+//	    "id",
+//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The id of the ACL to delete
@@ -185,6 +248,15 @@ func (c *Client) Delete(
 }
 
 // Update existing access control list for your client.
+//
+// Example:
+//
+//	request := &management.UpdateNetworkACLRequestContent{}
+//	client.NetworkACLs.Update(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the ACL to update.

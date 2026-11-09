@@ -4,6 +4,7 @@ package deliveries
 
 import (
 	context "context"
+	http "net/http"
 
 	management "github.com/auth0/go-auth0/v3/management"
 	core "github.com/auth0/go-auth0/v3/management/core"
@@ -34,25 +35,110 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
+// Example:
+//
+//	request := &management.ListEventStreamDeliveriesRequestParameters{
+//	    Statuses: management.String(
+//	        "statuses",
+//	    ),
+//	    EventTypes: management.String(
+//	        "event_types",
+//	    ),
+//	    DateFrom: management.String(
+//	        "date_from",
+//	    ),
+//	    DateTo: management.String(
+//	        "date_to",
+//	    ),
+//	    From: management.String(
+//	        "from",
+//	    ),
+//	    Take: management.Int(
+//	        1,
+//	    ),
+//	}
+//	client.EventStreams.Deliveries.List(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Unique identifier for the event stream.
 	id string,
 	request *management.ListEventStreamDeliveriesRequestParameters,
 	opts ...option.RequestOption,
-) ([]*management.EventStreamDelivery, error) {
-	response, err := c.WithRawResponse.List(
-		ctx,
+) (*core.Page[*string, *management.EventStreamDelivery, *management.ListEventStreamDeliveriesResponseContent], error) {
+	options := core.NewRequestOptions(opts...)
+	baseURL := internal.ResolveBaseURL(
+		options.BaseURL,
+		c.baseURL,
+		"https://%7BTENANT%7D.auth0.com/api/v2",
+	)
+	endpointURL := internal.EncodeURL(
+		baseURL+"/event-streams/%v/deliveries",
 		id,
+	)
+	queryParams, err := internal.QueryValuesWithDefaults(
 		request,
-		opts...,
+		map[string]any{
+			"take": 50,
+		},
 	)
 	if err != nil {
 		return nil, err
 	}
-	return response.Body, nil
+	headers := internal.MergeHeaders(
+		c.options.ToHeader(),
+		options.ToHeader(),
+	)
+	prepareCall := func(pageRequest *core.PageRequest[*string]) *internal.CallParams {
+		if pageRequest.Cursor != nil {
+			queryParams.Set("from", *pageRequest.Cursor)
+		}
+		nextURL := endpointURL
+		if len(queryParams) > 0 {
+			nextURL += "?" + queryParams.Encode()
+		}
+		return &internal.CallParams{
+			URL:             nextURL,
+			Method:          http.MethodGet,
+			Headers:         headers,
+			MaxAttempts:     options.MaxAttempts,
+			DisableRetries:  options.DisableRetries,
+			BodyProperties:  options.BodyProperties,
+			QueryParameters: options.QueryParameters,
+			Client:          options.HTTPClient,
+			Response:        pageRequest.Response,
+			ErrorDecoder:    internal.NewErrorDecoder(management.ErrorCodes),
+		}
+	}
+	readPageResponse := func(response *management.ListEventStreamDeliveriesResponseContent) *core.PageResponse[*string, *management.EventStreamDelivery, *management.ListEventStreamDeliveriesResponseContent] {
+		var zeroValue *string
+		next := response.Next
+		results := response.Deliveries
+		return &core.PageResponse[*string, *management.EventStreamDelivery, *management.ListEventStreamDeliveriesResponseContent]{
+			Results:  results,
+			Response: response,
+			Next:     next,
+			Done:     next == zeroValue || *next == "",
+		}
+	}
+	pager := internal.NewCursorPager(
+		c.caller,
+		prepareCall,
+		readPageResponse,
+	)
+	return pager.GetPage(ctx, request.From)
 }
 
+// Example:
+//
+//	client.EventStreams.Deliveries.GetHistory(
+//	    context.TODO(),
+//	    "id",
+//	    "event_id",
+//	)
 func (c *Client) GetHistory(
 	ctx context.Context,
 	// Unique identifier for the event stream.

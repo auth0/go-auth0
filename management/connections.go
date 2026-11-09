@@ -52,12 +52,12 @@ func (c ConnectionAssertionDecryptionAlgorithmProfileEnum) Ptr() *ConnectionAsse
 	return &c
 }
 
-// Settings for SAML assertion decryption.
 var (
 	connectionAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 0)
 	connectionAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 1)
 )
 
+// Settings for SAML assertion decryption.
 type ConnectionAssertionDecryptionSettings struct {
 	AlgorithmProfile ConnectionAssertionDecryptionAlgorithmProfileEnum `json:"algorithm_profile" url:"algorithm_profile"`
 	// A list of insecure algorithms to allow for SAML assertion decryption.
@@ -92,10 +92,12 @@ func (c *ConnectionAssertionDecryptionSettings) GetExtraProperties() map[string]
 }
 
 func (c *ConnectionAssertionDecryptionSettings) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAlgorithmProfile sets the AlgorithmProfile field and marks it as non-optional;
@@ -154,13 +156,13 @@ func (c *ConnectionAssertionDecryptionSettings) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Attribute configuration
 var (
 	connectionAttributesFieldEmail       = big.NewInt(1 << 0)
 	connectionAttributesFieldPhoneNumber = big.NewInt(1 << 1)
 	connectionAttributesFieldUsername    = big.NewInt(1 << 2)
 )
 
+// Attribute configuration
 type ConnectionAttributes struct {
 	Email       *EmailAttribute    `json:"email,omitempty" url:"email,omitempty"`
 	PhoneNumber *PhoneAttribute    `json:"phone_number,omitempty" url:"phone_number,omitempty"`
@@ -202,10 +204,12 @@ func (c *ConnectionAttributes) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionAttributes) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -271,7 +275,6 @@ func (c *ConnectionAttributes) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Options for enabling authentication methods.
 var (
 	connectionAuthenticationMethodsFieldPassword = big.NewInt(1 << 0)
 	connectionAuthenticationMethodsFieldPasskey  = big.NewInt(1 << 1)
@@ -279,6 +282,7 @@ var (
 	connectionAuthenticationMethodsFieldPhoneOtp = big.NewInt(1 << 3)
 )
 
+// Options for enabling authentication methods.
 type ConnectionAuthenticationMethods struct {
 	Password *ConnectionPasswordAuthenticationMethod `json:"password,omitempty" url:"password,omitempty"`
 	Passkey  *ConnectionPasskeyAuthenticationMethod  `json:"passkey,omitempty" url:"passkey,omitempty"`
@@ -328,10 +332,12 @@ func (c *ConnectionAuthenticationMethods) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionAuthenticationMethods) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetPassword sets the Password field and marks it as non-optional;
@@ -404,7 +410,6 @@ func (c *ConnectionAuthenticationMethods) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// A map of scripts used to integrate with a custom database.
 var (
 	connectionCustomScriptsFieldLogin             = big.NewInt(1 << 0)
 	connectionCustomScriptsFieldGetUser           = big.NewInt(1 << 1)
@@ -417,6 +422,7 @@ var (
 	connectionCustomScriptsFieldChangePhoneNumber = big.NewInt(1 << 8)
 )
 
+// A map of scripts used to integrate with a custom database.
 type ConnectionCustomScripts struct {
 	Login             *string `json:"login,omitempty" url:"login,omitempty"`
 	GetUser           *string `json:"get_user,omitempty" url:"get_user,omitempty"`
@@ -507,10 +513,12 @@ func (c *ConnectionCustomScripts) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionCustomScripts) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetLogin sets the Login field and marks it as non-optional;
@@ -651,11 +659,11 @@ func (c ConnectionDpopSigningAlgEnum) Ptr() *ConnectionDpopSigningAlgEnum {
 	return &c
 }
 
-// Email OTP authentication enablement
 var (
 	connectionEmailOtpAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Email OTP authentication enablement
 type ConnectionEmailOtpAuthenticationMethod struct {
 	// Determines whether email OTP is enabled
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -682,10 +690,12 @@ func (c *ConnectionEmailOtpAuthenticationMethod) GetExtraProperties() map[string
 }
 
 func (c *ConnectionEmailOtpAuthenticationMethod) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -737,7 +747,9 @@ func (c *ConnectionEmailOtpAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Token-based authentication settings to be applied when connection is using an sms strategy.
+// When true, the server uses Pushed Authorization Requests (PAR) to start the authorization transaction with the identity provider, pushing authorization parameters over back-channel HTTP and redirecting with only a request_uri.
+type ConnectionEnablePushedAuthorizationRequests = bool
+
 var (
 	connectionGatewayAuthenticationFieldMethod              = big.NewInt(1 << 0)
 	connectionGatewayAuthenticationFieldSubject             = big.NewInt(1 << 1)
@@ -746,6 +758,7 @@ var (
 	connectionGatewayAuthenticationFieldSecretBase64Encoded = big.NewInt(1 << 4)
 )
 
+// Token-based authentication settings to be applied when connection is using an sms strategy.
 type ConnectionGatewayAuthentication struct {
 	// The Authorization header type.
 	Method string `json:"method" url:"method"`
@@ -809,10 +822,12 @@ func (c *ConnectionGatewayAuthentication) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionGatewayAuthentication) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -1025,6 +1040,15 @@ const (
 	ConnectionIdentityProviderEnumWordpress           ConnectionIdentityProviderEnum = "wordpress"
 	ConnectionIdentityProviderEnumYahoo               ConnectionIdentityProviderEnum = "yahoo"
 	ConnectionIdentityProviderEnumYandex              ConnectionIdentityProviderEnum = "yandex"
+	ConnectionIdentityProviderEnumNotionMcp           ConnectionIdentityProviderEnum = "notion-mcp"
+	ConnectionIdentityProviderEnumAsana               ConnectionIdentityProviderEnum = "asana"
+	ConnectionIdentityProviderEnumAtlassian           ConnectionIdentityProviderEnum = "atlassian"
+	ConnectionIdentityProviderEnumCloudflareMcp       ConnectionIdentityProviderEnum = "cloudflare-mcp"
+	ConnectionIdentityProviderEnumGitlab              ConnectionIdentityProviderEnum = "gitlab"
+	ConnectionIdentityProviderEnumHubspotMcp          ConnectionIdentityProviderEnum = "hubspot-mcp"
+	ConnectionIdentityProviderEnumLinearMcp           ConnectionIdentityProviderEnum = "linear-mcp"
+	ConnectionIdentityProviderEnumSentryMcp           ConnectionIdentityProviderEnum = "sentry-mcp"
+	ConnectionIdentityProviderEnumSlack               ConnectionIdentityProviderEnum = "slack"
 )
 
 func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityProviderEnum, error) {
@@ -1139,6 +1163,24 @@ func NewConnectionIdentityProviderEnumFromString(s string) (ConnectionIdentityPr
 		return ConnectionIdentityProviderEnumYahoo, nil
 	case "yandex":
 		return ConnectionIdentityProviderEnumYandex, nil
+	case "notion-mcp":
+		return ConnectionIdentityProviderEnumNotionMcp, nil
+	case "asana":
+		return ConnectionIdentityProviderEnumAsana, nil
+	case "atlassian":
+		return ConnectionIdentityProviderEnumAtlassian, nil
+	case "cloudflare-mcp":
+		return ConnectionIdentityProviderEnumCloudflareMcp, nil
+	case "gitlab":
+		return ConnectionIdentityProviderEnumGitlab, nil
+	case "hubspot-mcp":
+		return ConnectionIdentityProviderEnumHubspotMcp, nil
+	case "linear-mcp":
+		return ConnectionIdentityProviderEnumLinearMcp, nil
+	case "sentry-mcp":
+		return ConnectionIdentityProviderEnumSentryMcp, nil
+	case "slack":
+		return ConnectionIdentityProviderEnumSlack, nil
 	}
 	var t ConnectionIdentityProviderEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -1148,14 +1190,225 @@ func (c ConnectionIdentityProviderEnum) Ptr() *ConnectionIdentityProviderEnum {
 	return &c
 }
 
-// Passkey authentication enablement
 var (
-	connectionPasskeyAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
+	connectionOtpChannelSettingsFieldOtpLength = big.NewInt(1 << 0)
+	connectionOtpChannelSettingsFieldOtpExpiry = big.NewInt(1 << 1)
 )
 
+// OTP settings for a delivery channel.
+type ConnectionOtpChannelSettings struct {
+	// Number of digits in the generated one-time password.
+	OtpLength *int `json:"otp_length,omitempty" url:"otp_length,omitempty"`
+	// Number of seconds before the one-time password expires.
+	OtpExpiry *int `json:"otp_expiry,omitempty" url:"otp_expiry,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionOtpChannelSettings) GetOtpLength() int {
+	if c == nil || c.OtpLength == nil {
+		return 0
+	}
+	return *c.OtpLength
+}
+
+func (c *ConnectionOtpChannelSettings) GetOtpExpiry() int {
+	if c == nil || c.OtpExpiry == nil {
+		return 0
+	}
+	return *c.OtpExpiry
+}
+
+func (c *ConnectionOtpChannelSettings) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionOtpChannelSettings) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetOtpLength sets the OtpLength field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpChannelSettings) SetOtpLength(otpLength *int) {
+	c.OtpLength = otpLength
+	c.require(connectionOtpChannelSettingsFieldOtpLength)
+}
+
+// SetOtpExpiry sets the OtpExpiry field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpChannelSettings) SetOtpExpiry(otpExpiry *int) {
+	c.OtpExpiry = otpExpiry
+	c.require(connectionOtpChannelSettingsFieldOtpExpiry)
+}
+
+func (c *ConnectionOtpChannelSettings) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionOtpChannelSettings
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionOtpChannelSettings(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionOtpChannelSettings) MarshalJSON() ([]byte, error) {
+	type embed ConnectionOtpChannelSettings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionOtpChannelSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	connectionOtpSettingsFieldEmail = big.NewInt(1 << 0)
+	connectionOtpSettingsFieldPhone = big.NewInt(1 << 1)
+)
+
+// One-time password settings, configurable per delivery channel.
+type ConnectionOtpSettings struct {
+	Email *ConnectionOtpChannelSettings `json:"email,omitempty" url:"email,omitempty"`
+	Phone *ConnectionOtpChannelSettings `json:"phone,omitempty" url:"phone,omitempty"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (c *ConnectionOtpSettings) GetEmail() ConnectionOtpChannelSettings {
+	if c == nil || c.Email == nil {
+		return ConnectionOtpChannelSettings{}
+	}
+	return *c.Email
+}
+
+func (c *ConnectionOtpSettings) GetPhone() ConnectionOtpChannelSettings {
+	if c == nil || c.Phone == nil {
+		return ConnectionOtpChannelSettings{}
+	}
+	return *c.Phone
+}
+
+func (c *ConnectionOtpSettings) GetExtraProperties() map[string]interface{} {
+	if c == nil {
+		return nil
+	}
+	return c.extraProperties
+}
+
+func (c *ConnectionOtpSettings) require(field *big.Int) {
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
+	}
+	next.Or(next, field)
+	c.explicitFields = next
+}
+
+// SetEmail sets the Email field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpSettings) SetEmail(email *ConnectionOtpChannelSettings) {
+	c.Email = email
+	c.require(connectionOtpSettingsFieldEmail)
+}
+
+// SetPhone sets the Phone field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOtpSettings) SetPhone(phone *ConnectionOtpChannelSettings) {
+	c.Phone = phone
+	c.require(connectionOtpSettingsFieldPhone)
+}
+
+func (c *ConnectionOtpSettings) UnmarshalJSON(data []byte) error {
+	type unmarshaler ConnectionOtpSettings
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*c = ConnectionOtpSettings(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *c)
+	if err != nil {
+		return err
+	}
+	c.extraProperties = extraProperties
+	c.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (c *ConnectionOtpSettings) MarshalJSON() ([]byte, error) {
+	type embed ConnectionOtpSettings
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*c),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, c.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (c *ConnectionOtpSettings) String() string {
+	if c == nil {
+		return "<nil>"
+	}
+	if len(c.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(c.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(c); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", c)
+}
+
+var (
+	connectionPasskeyAuthenticationMethodFieldEnabled        = big.NewInt(1 << 0)
+	connectionPasskeyAuthenticationMethodFieldSignupBehavior = big.NewInt(1 << 1)
+)
+
+// Passkey authentication enablement
 type ConnectionPasskeyAuthenticationMethod struct {
 	// Determines whether passkeys are enabled
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+	// Specifies the signup behavior for passkey authentication
+	SignupBehavior *ConnectionSignupBehaviorEnum `json:"signup_behavior,omitempty" url:"signup_behavior,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1171,6 +1424,13 @@ func (c *ConnectionPasskeyAuthenticationMethod) GetEnabled() bool {
 	return *c.Enabled
 }
 
+func (c *ConnectionPasskeyAuthenticationMethod) GetSignupBehavior() ConnectionSignupBehaviorEnum {
+	if c == nil || c.SignupBehavior == nil {
+		return ""
+	}
+	return *c.SignupBehavior
+}
+
 func (c *ConnectionPasskeyAuthenticationMethod) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -1179,10 +1439,12 @@ func (c *ConnectionPasskeyAuthenticationMethod) GetExtraProperties() map[string]
 }
 
 func (c *ConnectionPasskeyAuthenticationMethod) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -1190,6 +1452,13 @@ func (c *ConnectionPasskeyAuthenticationMethod) require(field *big.Int) {
 func (c *ConnectionPasskeyAuthenticationMethod) SetEnabled(enabled *bool) {
 	c.Enabled = enabled
 	c.require(connectionPasskeyAuthenticationMethodFieldEnabled)
+}
+
+// SetSignupBehavior sets the SignupBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasskeyAuthenticationMethod) SetSignupBehavior(signupBehavior *ConnectionSignupBehaviorEnum) {
+	c.SignupBehavior = signupBehavior
+	c.require(connectionPasskeyAuthenticationMethodFieldSignupBehavior)
 }
 
 func (c *ConnectionPasskeyAuthenticationMethod) UnmarshalJSON(data []byte) error {
@@ -1260,13 +1529,13 @@ func (c ConnectionPasskeyChallengeUIEnum) Ptr() *ConnectionPasskeyChallengeUIEnu
 	return &c
 }
 
-// Options for the passkey authentication method
 var (
 	connectionPasskeyOptionsFieldChallengeUI                  = big.NewInt(1 << 0)
 	connectionPasskeyOptionsFieldProgressiveEnrollmentEnabled = big.NewInt(1 << 1)
 	connectionPasskeyOptionsFieldLocalEnrollmentEnabled       = big.NewInt(1 << 2)
 )
 
+// Options for the passkey authentication method
 type ConnectionPasskeyOptions struct {
 	ChallengeUI *ConnectionPasskeyChallengeUIEnum `json:"challenge_ui,omitempty" url:"challenge_ui,omitempty"`
 	// Enables or disables progressive enrollment of passkeys for the connection.
@@ -1310,10 +1579,12 @@ func (c *ConnectionPasskeyOptions) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionPasskeyOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetChallengeUI sets the ChallengeUI field and marks it as non-optional;
@@ -1379,13 +1650,13 @@ func (c *ConnectionPasskeyOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Password authentication enablement
 var (
 	connectionPasswordAuthenticationMethodFieldEnabled        = big.NewInt(1 << 0)
 	connectionPasswordAuthenticationMethodFieldAPIBehavior    = big.NewInt(1 << 1)
 	connectionPasswordAuthenticationMethodFieldSignupBehavior = big.NewInt(1 << 2)
 )
 
+// Password authentication enablement
 type ConnectionPasswordAuthenticationMethod struct {
 	// Determines whether passwords are enabled
 	Enabled        *bool                         `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -1428,10 +1699,12 @@ func (c *ConnectionPasswordAuthenticationMethod) GetExtraProperties() map[string
 }
 
 func (c *ConnectionPasswordAuthenticationMethod) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -1497,11 +1770,11 @@ func (c *ConnectionPasswordAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Password complexity options
 var (
 	connectionPasswordComplexityOptionsFieldMinLength = big.NewInt(1 << 0)
 )
 
+// Password complexity options
 type ConnectionPasswordComplexityOptions struct {
 	// Minimum password length
 	MinLength *int `json:"min_length,omitempty" url:"min_length,omitempty"`
@@ -1528,10 +1801,12 @@ func (c *ConnectionPasswordComplexityOptions) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordComplexityOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMinLength sets the MinLength field and marks it as non-optional;
@@ -1583,12 +1858,12 @@ func (c *ConnectionPasswordComplexityOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Options for password dictionary policy
 var (
 	connectionPasswordDictionaryOptionsFieldEnable     = big.NewInt(1 << 0)
 	connectionPasswordDictionaryOptionsFieldDictionary = big.NewInt(1 << 1)
 )
 
+// Options for password dictionary policy
 type ConnectionPasswordDictionaryOptions struct {
 	Enable bool `json:"enable" url:"enable"`
 	// Custom Password Dictionary. An array of up to 200 entries.
@@ -1623,10 +1898,12 @@ func (c *ConnectionPasswordDictionaryOptions) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordDictionaryOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnable sets the Enable field and marks it as non-optional;
@@ -1685,12 +1962,12 @@ func (c *ConnectionPasswordDictionaryOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Options for password history policy
 var (
 	connectionPasswordHistoryOptionsFieldEnable = big.NewInt(1 << 0)
 	connectionPasswordHistoryOptionsFieldSize   = big.NewInt(1 << 1)
 )
 
+// Options for password history policy
 type ConnectionPasswordHistoryOptions struct {
 	Enable bool `json:"enable" url:"enable"`
 	Size   *int `json:"size,omitempty" url:"size,omitempty"`
@@ -1724,10 +2001,12 @@ func (c *ConnectionPasswordHistoryOptions) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionPasswordHistoryOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnable sets the Enable field and marks it as non-optional;
@@ -1786,11 +2065,11 @@ func (c *ConnectionPasswordHistoryOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Options for personal info in passwords policy
 var (
 	connectionPasswordNoPersonalInfoOptionsFieldEnable = big.NewInt(1 << 0)
 )
 
+// Options for personal info in passwords policy
 type ConnectionPasswordNoPersonalInfoOptions struct {
 	Enable bool `json:"enable" url:"enable"`
 
@@ -1816,10 +2095,12 @@ func (c *ConnectionPasswordNoPersonalInfoOptions) GetExtraProperties() map[strin
 }
 
 func (c *ConnectionPasswordNoPersonalInfoOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnable sets the Enable field and marks it as non-optional;
@@ -1871,7 +2152,6 @@ func (c *ConnectionPasswordNoPersonalInfoOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Password policy options for flexible password policy configuration
 var (
 	connectionPasswordOptionsFieldComplexity  = big.NewInt(1 << 0)
 	connectionPasswordOptionsFieldDictionary  = big.NewInt(1 << 1)
@@ -1879,6 +2159,7 @@ var (
 	connectionPasswordOptionsFieldProfileData = big.NewInt(1 << 3)
 )
 
+// Password policy options for flexible password policy configuration
 type ConnectionPasswordOptions struct {
 	Complexity  *ConnectionPasswordOptionsComplexity  `json:"complexity,omitempty" url:"complexity,omitempty"`
 	Dictionary  *ConnectionPasswordOptionsDictionary  `json:"dictionary,omitempty" url:"dictionary,omitempty"`
@@ -1928,10 +2209,12 @@ func (c *ConnectionPasswordOptions) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionPasswordOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetComplexity sets the Complexity field and marks it as non-optional;
@@ -2004,7 +2287,6 @@ func (c *ConnectionPasswordOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Password complexity requirements configuration
 var (
 	connectionPasswordOptionsComplexityFieldMinLength            = big.NewInt(1 << 0)
 	connectionPasswordOptionsComplexityFieldCharacterTypes       = big.NewInt(1 << 1)
@@ -2014,6 +2296,7 @@ var (
 	connectionPasswordOptionsComplexityFieldMaxLengthExceeded    = big.NewInt(1 << 5)
 )
 
+// Password complexity requirements configuration
 type ConnectionPasswordOptionsComplexity struct {
 	// Minimum password length required (1-72 characters)
 	MinLength *int `json:"min_length,omitempty" url:"min_length,omitempty"`
@@ -2081,10 +2364,12 @@ func (c *ConnectionPasswordOptionsComplexity) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordOptionsComplexity) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMinLength sets the MinLength field and marks it as non-optional;
@@ -2171,13 +2456,13 @@ func (c *ConnectionPasswordOptionsComplexity) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Dictionary-based password restriction policy to prevent common passwords
 var (
 	connectionPasswordOptionsDictionaryFieldActive  = big.NewInt(1 << 0)
 	connectionPasswordOptionsDictionaryFieldCustom  = big.NewInt(1 << 1)
 	connectionPasswordOptionsDictionaryFieldDefault = big.NewInt(1 << 2)
 )
 
+// Dictionary-based password restriction policy to prevent common passwords
 type ConnectionPasswordOptionsDictionary struct {
 	// Enables dictionary checking to prevent use of common passwords and custom blocked words
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
@@ -2221,10 +2506,12 @@ func (c *ConnectionPasswordOptionsDictionary) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordOptionsDictionary) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -2290,12 +2577,12 @@ func (c *ConnectionPasswordOptionsDictionary) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Password history policy configuration to prevent password reuse
 var (
 	connectionPasswordOptionsHistoryFieldActive = big.NewInt(1 << 0)
 	connectionPasswordOptionsHistoryFieldSize   = big.NewInt(1 << 1)
 )
 
+// Password history policy configuration to prevent password reuse
 type ConnectionPasswordOptionsHistory struct {
 	// Enables password history checking to prevent users from reusing recent passwords
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
@@ -2331,10 +2618,12 @@ func (c *ConnectionPasswordOptionsHistory) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionPasswordOptionsHistory) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -2393,12 +2682,12 @@ func (c *ConnectionPasswordOptionsHistory) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Personal information restriction policy to prevent use of profile data in passwords
 var (
 	connectionPasswordOptionsProfileDataFieldActive        = big.NewInt(1 << 0)
 	connectionPasswordOptionsProfileDataFieldBlockedFields = big.NewInt(1 << 1)
 )
 
+// Personal information restriction policy to prevent use of profile data in passwords
 type ConnectionPasswordOptionsProfileData struct {
 	// Prevents users from including profile data (like name, email) in their passwords
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
@@ -2434,10 +2723,12 @@ func (c *ConnectionPasswordOptionsProfileData) GetExtraProperties() map[string]i
 }
 
 func (c *ConnectionPasswordOptionsProfileData) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -2528,11 +2819,11 @@ func (c ConnectionPasswordPolicyEnum) Ptr() *ConnectionPasswordPolicyEnum {
 	return &c
 }
 
-// Phone OTP authentication enablement
 var (
 	connectionPhoneOtpAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
 )
 
+// Phone OTP authentication enablement
 type ConnectionPhoneOtpAuthenticationMethod struct {
 	// Determines whether phone OTP is enabled
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -2559,10 +2850,12 @@ func (c *ConnectionPhoneOtpAuthenticationMethod) GetExtraProperties() map[string
 }
 
 func (c *ConnectionPhoneOtpAuthenticationMethod) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -2614,49 +2907,76 @@ func (c *ConnectionPhoneOtpAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// The connection's options (depend on the connection strategy)
 var (
-	connectionPropertiesOptionsFieldValidation                       = big.NewInt(1 << 0)
-	connectionPropertiesOptionsFieldNonPersistentAttrs               = big.NewInt(1 << 1)
-	connectionPropertiesOptionsFieldPrecedence                       = big.NewInt(1 << 2)
-	connectionPropertiesOptionsFieldAttributes                       = big.NewInt(1 << 3)
-	connectionPropertiesOptionsFieldEnableScriptContext              = big.NewInt(1 << 4)
-	connectionPropertiesOptionsFieldEnabledDatabaseCustomization     = big.NewInt(1 << 5)
-	connectionPropertiesOptionsFieldImportMode                       = big.NewInt(1 << 6)
-	connectionPropertiesOptionsFieldConfiguration                    = big.NewInt(1 << 7)
-	connectionPropertiesOptionsFieldCustomScripts                    = big.NewInt(1 << 8)
-	connectionPropertiesOptionsFieldAuthenticationMethods            = big.NewInt(1 << 9)
-	connectionPropertiesOptionsFieldPasskeyOptions                   = big.NewInt(1 << 10)
-	connectionPropertiesOptionsFieldPasswordPolicy                   = big.NewInt(1 << 11)
-	connectionPropertiesOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 12)
-	connectionPropertiesOptionsFieldPasswordHistory                  = big.NewInt(1 << 13)
-	connectionPropertiesOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
-	connectionPropertiesOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
-	connectionPropertiesOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
-	connectionPropertiesOptionsFieldAPIEnableGroups                  = big.NewInt(1 << 17)
-	connectionPropertiesOptionsFieldBasicProfile                     = big.NewInt(1 << 18)
-	connectionPropertiesOptionsFieldExtAdmin                         = big.NewInt(1 << 19)
-	connectionPropertiesOptionsFieldExtIsSuspended                   = big.NewInt(1 << 20)
-	connectionPropertiesOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 21)
-	connectionPropertiesOptionsFieldExtGroups                        = big.NewInt(1 << 22)
-	connectionPropertiesOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 23)
-	connectionPropertiesOptionsFieldExtProfile                       = big.NewInt(1 << 24)
-	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 25)
-	connectionPropertiesOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
-	connectionPropertiesOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
-	connectionPropertiesOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
-	connectionPropertiesOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
-	connectionPropertiesOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 30)
-	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
-	connectionPropertiesOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 32)
-	connectionPropertiesOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
-	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
-	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
-	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
-	connectionPropertiesOptionsFieldDiscoveryURL                     = big.NewInt(1 << 37)
-	connectionPropertiesOptionsFieldOidcMetadata                     = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldValidation                         = big.NewInt(1 << 0)
+	connectionPropertiesOptionsFieldNonPersistentAttrs                 = big.NewInt(1 << 1)
+	connectionPropertiesOptionsFieldPrecedence                         = big.NewInt(1 << 2)
+	connectionPropertiesOptionsFieldAttributes                         = big.NewInt(1 << 3)
+	connectionPropertiesOptionsFieldEnableScriptContext                = big.NewInt(1 << 4)
+	connectionPropertiesOptionsFieldEnabledDatabaseCustomization       = big.NewInt(1 << 5)
+	connectionPropertiesOptionsFieldImportMode                         = big.NewInt(1 << 6)
+	connectionPropertiesOptionsFieldConfiguration                      = big.NewInt(1 << 7)
+	connectionPropertiesOptionsFieldCustomScripts                      = big.NewInt(1 << 8)
+	connectionPropertiesOptionsFieldOtpSettings                        = big.NewInt(1 << 9)
+	connectionPropertiesOptionsFieldAuthenticationMethods              = big.NewInt(1 << 10)
+	connectionPropertiesOptionsFieldPasskeyOptions                     = big.NewInt(1 << 11)
+	connectionPropertiesOptionsFieldPasswordPolicy                     = big.NewInt(1 << 12)
+	connectionPropertiesOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 13)
+	connectionPropertiesOptionsFieldPasswordHistory                    = big.NewInt(1 << 14)
+	connectionPropertiesOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 15)
+	connectionPropertiesOptionsFieldPasswordDictionary                 = big.NewInt(1 << 16)
+	connectionPropertiesOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 17)
+	connectionPropertiesOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 18)
+	connectionPropertiesOptionsFieldBasicProfile                       = big.NewInt(1 << 19)
+	connectionPropertiesOptionsFieldExtAdmin                           = big.NewInt(1 << 20)
+	connectionPropertiesOptionsFieldExtIsSuspended                     = big.NewInt(1 << 21)
+	connectionPropertiesOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 22)
+	connectionPropertiesOptionsFieldExtGroups                          = big.NewInt(1 << 23)
+	connectionPropertiesOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 24)
+	connectionPropertiesOptionsFieldExtProfile                         = big.NewInt(1 << 25)
+	connectionPropertiesOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 26)
+	connectionPropertiesOptionsFieldUpstreamParams                     = big.NewInt(1 << 27)
+	connectionPropertiesOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 28)
+	connectionPropertiesOptionsFieldGatewayAuthentication              = big.NewInt(1 << 29)
+	connectionPropertiesOptionsFieldPasswordOptions                    = big.NewInt(1 << 30)
+	connectionPropertiesOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 31)
+	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 32)
+	connectionPropertiesOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 33)
+	connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 35)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 36)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 37)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
+	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
+	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
+	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
+	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 43)
+	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
 )
 
+// connectionPropertiesOptionsNullableFields maps the wire names of ConnectionPropertiesOptions's nullable fields (required or optional) to their field bits.
+var connectionPropertiesOptionsNullableFields = map[string]*big.Int{
+	"validation":                      connectionPropertiesOptionsFieldValidation,
+	"non_persistent_attrs":            connectionPropertiesOptionsFieldNonPersistentAttrs,
+	"configuration":                   connectionPropertiesOptionsFieldConfiguration,
+	"authentication_methods":          connectionPropertiesOptionsFieldAuthenticationMethods,
+	"passkey_options":                 connectionPropertiesOptionsFieldPasskeyOptions,
+	"passwordPolicy":                  connectionPropertiesOptionsFieldPasswordPolicy,
+	"password_complexity_options":     connectionPropertiesOptionsFieldPasswordComplexityOptions,
+	"password_history":                connectionPropertiesOptionsFieldPasswordHistory,
+	"password_no_personal_info":       connectionPropertiesOptionsFieldPasswordNoPersonalInfo,
+	"password_dictionary":             connectionPropertiesOptionsFieldPasswordDictionary,
+	"upstream_params":                 connectionPropertiesOptionsFieldUpstreamParams,
+	"gateway_authentication":          connectionPropertiesOptionsFieldGatewayAuthentication,
+	"id_token_signed_response_algs":   connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs,
+	"token_endpoint_auth_method":      connectionPropertiesOptionsFieldTokenEndpointAuthMethod,
+	"token_endpoint_auth_signing_alg": connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg,
+	"discovery_url":                   connectionPropertiesOptionsFieldDiscoveryURL,
+	"oidc_metadata":                   connectionPropertiesOptionsFieldOidcMetadata,
+}
+
+// The connection's options (depend on the connection strategy)
 type ConnectionPropertiesOptions struct {
 	Validation *ConnectionValidationOptions `json:"validation,omitempty" url:"validation,omitempty"`
 	// An array of user fields that should not be stored in the Auth0 database (https://auth0.com/docs/security/data-security/denylist)
@@ -2671,38 +2991,44 @@ type ConnectionPropertiesOptions struct {
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
 	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
 	// Stores encrypted string only configurations for connections
-	Configuration                    map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
-	CustomScripts                    *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
-	AuthenticationMethods            *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
-	PasskeyOptions                   *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
-	PasswordPolicy                   *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
-	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
-	PasswordHistory                  *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
-	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
-	PasswordDictionary               *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	APIEnableUsers                   *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
-	APIEnableGroups                  *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
-	BasicProfile                     *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
-	ExtAdmin                         *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
-	ExtIsSuspended                   *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
-	ExtAgreedTerms                   *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
-	ExtGroups                        *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
-	ExtAssignedPlans                 *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
-	ExtProfile                       *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
-	DisableSelfServiceChangePassword *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
-	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
-	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
-	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
-	DpopSigningAlg                   *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
-	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
-	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
-	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
-	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Configuration                      map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
+	CustomScripts                      *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	OtpSettings                        *ConnectionOtpSettings                         `json:"otp_settings,omitempty" url:"otp_settings,omitempty"`
+	AuthenticationMethods              *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PasskeyOptions                     *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
+	PasswordPolicy                     *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
+	PasswordComplexityOptions          *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
+	PasswordHistory                    *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
+	PasswordNoPersonalInfo             *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
+	PasswordDictionary                 *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
+	APIEnableUsers                     *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                    *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
+	BasicProfile                       *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
+	ExtAdmin                           *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
+	ExtIsSuspended                     *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
+	ExtAgreedTerms                     *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
+	ExtGroups                          *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
+	ExtAssignedPlans                   *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
+	ExtProfile                         *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
+	DisableSelfServiceChangePassword   *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
+	UpstreamParams                     *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	GatewayAuthentication              *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
+	PasswordOptions                    *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	AssertionDecryptionSettings        *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
+	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
+	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg        *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
+	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2773,6 +3099,13 @@ func (c *ConnectionPropertiesOptions) GetCustomScripts() ConnectionCustomScripts
 		return ConnectionCustomScripts{}
 	}
 	return *c.CustomScripts
+}
+
+func (c *ConnectionPropertiesOptions) GetOtpSettings() ConnectionOtpSettings {
+	if c == nil || c.OtpSettings == nil {
+		return ConnectionOtpSettings{}
+	}
+	return *c.OtpSettings
 }
 
 func (c *ConnectionPropertiesOptions) GetAuthenticationMethods() ConnectionAuthenticationMethods {
@@ -2943,6 +3276,20 @@ func (c *ConnectionPropertiesOptions) GetDpopSigningAlg() ConnectionDpopSigningA
 	return *c.DpopSigningAlg
 }
 
+func (c *ConnectionPropertiesOptions) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
+	if c == nil || c.EnablePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.EnablePushedAuthorizationRequests
+}
+
+func (c *ConnectionPropertiesOptions) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
+}
+
 func (c *ConnectionPropertiesOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
 	if c == nil || c.TokenEndpointAuthMethod == nil {
 		return ""
@@ -2971,6 +3318,13 @@ func (c *ConnectionPropertiesOptions) GetIDTokenSessionExpirySupported() Connect
 	return *c.IDTokenSessionExpirySupported
 }
 
+func (c *ConnectionPropertiesOptions) GetUseOauthSpecScope() ConnectionUseOauthSpecScope {
+	if c == nil || c.UseOauthSpecScope == nil {
+		return false
+	}
+	return *c.UseOauthSpecScope
+}
+
 func (c *ConnectionPropertiesOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
 	if c == nil || c.DiscoveryURL == nil {
 		return nil
@@ -2985,6 +3339,20 @@ func (c *ConnectionPropertiesOptions) GetOidcMetadata() ConnectionsOidcMetadata 
 	return *c.OidcMetadata
 }
 
+func (c *ConnectionPropertiesOptions) GetThumbprints() ConnectionThumbprints {
+	if c == nil || c.Thumbprints == nil {
+		return nil
+	}
+	return *c.Thumbprints
+}
+
+func (c *ConnectionPropertiesOptions) GetThumbprintsSha384() ConnectionThumbprintsSha384 {
+	if c == nil || c.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *c.ThumbprintsSha384
+}
+
 func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{} {
 	if c == nil {
 		return nil
@@ -2993,10 +3361,12 @@ func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionPropertiesOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetValidation sets the Validation field and marks it as non-optional;
@@ -3060,6 +3430,13 @@ func (c *ConnectionPropertiesOptions) SetConfiguration(configuration map[string]
 func (c *ConnectionPropertiesOptions) SetCustomScripts(customScripts *ConnectionCustomScripts) {
 	c.CustomScripts = customScripts
 	c.require(connectionPropertiesOptionsFieldCustomScripts)
+}
+
+// SetOtpSettings sets the OtpSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetOtpSettings(otpSettings *ConnectionOtpSettings) {
+	c.OtpSettings = otpSettings
+	c.require(connectionPropertiesOptionsFieldOtpSettings)
 }
 
 // SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
@@ -3230,6 +3607,20 @@ func (c *ConnectionPropertiesOptions) SetDpopSigningAlg(dpopSigningAlg *Connecti
 	c.require(connectionPropertiesOptionsFieldDpopSigningAlg)
 }
 
+// SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetEnablePushedAuthorizationRequests(enablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests) {
+	c.EnablePushedAuthorizationRequests = enablePushedAuthorizationRequests
+	c.require(connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint)
+}
+
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionPropertiesOptions) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum) {
@@ -3258,6 +3649,13 @@ func (c *ConnectionPropertiesOptions) SetIDTokenSessionExpirySupported(idTokenSe
 	c.require(connectionPropertiesOptionsFieldIDTokenSessionExpirySupported)
 }
 
+// SetUseOauthSpecScope sets the UseOauthSpecScope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
+	c.UseOauthSpecScope = useOauthSpecScope
+	c.require(connectionPropertiesOptionsFieldUseOauthSpecScope)
+}
+
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionPropertiesOptions) SetDiscoveryURL(discoveryURL *ConnectionsDiscoveryURL) {
@@ -3270,6 +3668,20 @@ func (c *ConnectionPropertiesOptions) SetDiscoveryURL(discoveryURL *ConnectionsD
 func (c *ConnectionPropertiesOptions) SetOidcMetadata(oidcMetadata *ConnectionsOidcMetadata) {
 	c.OidcMetadata = oidcMetadata
 	c.require(connectionPropertiesOptionsFieldOidcMetadata)
+}
+
+// SetThumbprints sets the Thumbprints field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetThumbprints(thumbprints *ConnectionThumbprints) {
+	c.Thumbprints = thumbprints
+	c.require(connectionPropertiesOptionsFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384) {
+	c.ThumbprintsSha384 = thumbprintsSha384
+	c.require(connectionPropertiesOptionsFieldThumbprintsSha384)
 }
 
 func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
@@ -3288,6 +3700,13 @@ func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionPropertiesOptionsNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -3317,6 +3736,9 @@ func (c *ConnectionPropertiesOptions) String() string {
 	}
 	return fmt.Sprintf("%#v", c)
 }
+
+// URL of the identity provider's Pushed Authorization Request (PAR) endpoint, as per https://datatracker.ietf.org/doc/html/rfc9126. Must use HTTPS scheme.
+type ConnectionPushedAuthorizationRequestEndpoint = string
 
 // When using an external IdP, this flag determines  whether 'name', 'given_name', 'family_name', 'nickname', and 'picture' attributes are updated. In addition, it also determines whether the user is created when user doesnt exist previously. Possible values are 'on_each_login' (default value, it configures the connection to automatically create the user if necessary and update the root attributes from the external IdP with each user login. When this setting is used, root attributes cannot be independently updated), 'on_first_login' (configures the connection to create the user and set the root attributes on first login only, allowing them to be independently updated thereafter), and 'never_on_login' (configures the connection not to create the user and not to set the root attributes from the external IdP, allowing them to be independently updated).
 type ConnectionSetUserRootAttributesEnum string
@@ -3366,6 +3788,12 @@ func NewConnectionSignupBehaviorEnumFromString(s string) (ConnectionSignupBehavi
 func (c ConnectionSignupBehaviorEnum) Ptr() *ConnectionSignupBehaviorEnum {
 	return &c
 }
+
+// Array of certificate thumbprints (SHA-128 hex hashes) for validating SAML signatures. Used with WS-Federation protocol. Maximum 20 thumbprints. Each thumbprint must be a hexadecimal string.
+type ConnectionThumbprints = []string
+
+// Array of certificate thumbprints (SHA-384 hex hashes) for validating SAML signatures. Used with WS-Federation protocol. Maximum 20 thumbprints. Each thumbprint must be a 96-character hexadecimal string.
+type ConnectionThumbprintsSha384 = []string
 
 // Authentication method used at the identity provider's token endpoint. 'client_secret_post' sends credentials in the request body; 'private_key_jwt' uses a signed JWT assertion for enhanced security.
 type ConnectionTokenEndpointAuthMethodEnum string
@@ -3428,7 +3856,7 @@ func (c ConnectionTokenEndpointAuthSigningAlgEnum) Ptr() *ConnectionTokenEndpoin
 	return &c
 }
 
-// Specifies the format of the aud (audience) claim included in the JWT used for client authentication at the token endpoint. Accepted values are: 'issuer' (the aud claim is set to the OIDC issuer URL) or 'token_endpoint' (the aud claim is set to the token endpoint URL).
+// Specifies the format of the aud (audience) claim included in the JWT used for client authentication at the token endpoint. Accepted values are: 'issuer' (the aud claim is set to the identity provider's issuer URL) or 'token_endpoint' (the aud claim is set to the token endpoint URL).
 type ConnectionTokenEndpointJwtcaAudFormatEnumOidc string
 
 const (
@@ -3473,6 +3901,22 @@ func (c *ConnectionUpstreamAdditionalProperties) GetConnectionUpstreamValue() *C
 }
 
 func (c *ConnectionUpstreamAdditionalProperties) UnmarshalJSON(data []byte) error {
+	if internal.MatchesObjectKeys(data, []string{"alias"}, []string{}) {
+		valueConnectionUpstreamAlias := new(ConnectionUpstreamAlias)
+		if err := json.Unmarshal(data, &valueConnectionUpstreamAlias); err == nil {
+			c.typ = "ConnectionUpstreamAlias"
+			c.ConnectionUpstreamAlias = valueConnectionUpstreamAlias
+			return nil
+		}
+	}
+	if internal.MatchesObjectKeys(data, []string{"value"}, []string{}) {
+		valueConnectionUpstreamValue := new(ConnectionUpstreamValue)
+		if err := json.Unmarshal(data, &valueConnectionUpstreamValue); err == nil {
+			c.typ = "ConnectionUpstreamValue"
+			c.ConnectionUpstreamValue = valueConnectionUpstreamValue
+			return nil
+		}
+	}
 	valueConnectionUpstreamAlias := new(ConnectionUpstreamAlias)
 	if err := json.Unmarshal(data, &valueConnectionUpstreamAlias); err == nil {
 		c.typ = "ConnectionUpstreamAlias"
@@ -3542,10 +3986,12 @@ func (c *ConnectionUpstreamAlias) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionUpstreamAlias) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetAlias sets the Alias field and marks it as non-optional;
@@ -3681,10 +4127,12 @@ func (c *ConnectionUpstreamValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionUpstreamValue) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -3736,6 +4184,9 @@ func (c *ConnectionUpstreamValue) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// When true, uses space-delimited scopes (per OAuth 2.0 spec) instead of comma-delimited when calling the identity provider's authorization endpoint. Only relevant when using the connection_scope parameter. See https://auth0.com/docs/authenticate/identity-providers/adding-scopes-for-an-external-idp#pass-scopes-to-authorize-endpoint
+type ConnectionUseOauthSpecScope = bool
+
 var (
 	connectionUsernameValidationOptionsFieldMin = big.NewInt(1 << 0)
 	connectionUsernameValidationOptionsFieldMax = big.NewInt(1 << 1)
@@ -3774,10 +4225,12 @@ func (c *ConnectionUsernameValidationOptions) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionUsernameValidationOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetMin sets the Min field and marks it as non-optional;
@@ -3836,11 +4289,16 @@ func (c *ConnectionUsernameValidationOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Options for validation
 var (
 	connectionValidationOptionsFieldUsername = big.NewInt(1 << 0)
 )
 
+// connectionValidationOptionsNullableFields maps the wire names of ConnectionValidationOptions's nullable fields (required or optional) to their field bits.
+var connectionValidationOptionsNullableFields = map[string]*big.Int{
+	"username": connectionValidationOptionsFieldUsername,
+}
+
+// Options for validation
 type ConnectionValidationOptions struct {
 	Username *ConnectionUsernameValidationOptions `json:"username,omitempty" url:"username,omitempty"`
 
@@ -3866,10 +4324,12 @@ func (c *ConnectionValidationOptions) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionValidationOptions) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -3891,6 +4351,13 @@ func (c *ConnectionValidationOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionValidationOptionsNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -3924,7 +4391,6 @@ func (c *ConnectionValidationOptions) String() string {
 // URL of the identity provider's OIDC Discovery endpoint (/.well-known/openid-configuration). When provided and oidc_metadata is empty, Auth0 automatically retrieves the provider's configuration including endpoints and supported features. Only applicable when strategy=oidc, okta, or samlp.
 type ConnectionsDiscoveryURL = *string
 
-// Additional OIDC metadata to include in the discovery document. Only applicable when strategy=oidc, okta, or samlp.
 var (
 	connectionsOidcMetadataFieldIssuer                                     = big.NewInt(1 << 0)
 	connectionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -3962,9 +4428,18 @@ var (
 	connectionsOidcMetadataFieldOpPolicyURI                                = big.NewInt(1 << 33)
 	connectionsOidcMetadataFieldOpTosURI                                   = big.NewInt(1 << 34)
 	connectionsOidcMetadataFieldEndSessionEndpoint                         = big.NewInt(1 << 35)
-	connectionsOidcMetadataFieldDpopSigningAlgValuesSupported              = big.NewInt(1 << 36)
+	connectionsOidcMetadataFieldPushedAuthorizationRequestEndpoint         = big.NewInt(1 << 36)
+	connectionsOidcMetadataFieldRequirePushedAuthorizationRequests         = big.NewInt(1 << 37)
+	connectionsOidcMetadataFieldDpopSigningAlgValuesSupported              = big.NewInt(1 << 38)
 )
 
+// connectionsOidcMetadataNullableFields maps the wire names of ConnectionsOidcMetadata's nullable fields (required or optional) to their field bits.
+var connectionsOidcMetadataNullableFields = map[string]*big.Int{
+	"scopes_supported":        connectionsOidcMetadataFieldScopesSupported,
+	"subject_types_supported": connectionsOidcMetadataFieldSubjectTypesSupported,
+}
+
+// Additional OIDC metadata to include in the discovery document. Only applicable when strategy=oidc, okta, or samlp.
 type ConnectionsOidcMetadata struct {
 	// The identity provider's unique issuer identifier URL (e.g., https://accounts.google.com). Must match the 'iss' claim in ID tokens from the identity provider.
 	Issuer *string `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -4038,6 +4513,10 @@ type ConnectionsOidcMetadata struct {
 	OpTosURI *string `json:"op_tos_uri,omitempty" url:"op_tos_uri,omitempty"`
 	// URL of the identity provider's logout/end session endpoint. When configured as a static URL, users are redirected here after logging out from Auth0. Must use HTTPS scheme.
 	EndSessionEndpoint *string `json:"end_session_endpoint,omitempty" url:"end_session_endpoint,omitempty"`
+	// URL of the identity provider's Pushed Authorization Request (PAR) endpoint, as per https://datatracker.ietf.org/doc/html/rfc9126. Must use HTTPS scheme.
+	PushedAuthorizationRequestEndpoint *string `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	// Boolean parameter indicating whether the identity provider requires Pushed Authorization Requests (PAR), as per https://datatracker.ietf.org/doc/html/rfc9126. Discovered from the identity provider's metadata; not used to decide whether the server performs PAR.
+	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// JSON array containing a list of the JWS signing algorithms (alg values) supported for DPoP proof JWT signing.
 	DpopSigningAlgValuesSupported []string `json:"dpop_signing_alg_values_supported,omitempty" url:"dpop_signing_alg_values_supported,omitempty"`
 
@@ -4301,6 +4780,20 @@ func (c *ConnectionsOidcMetadata) GetEndSessionEndpoint() string {
 	return *c.EndSessionEndpoint
 }
 
+func (c *ConnectionsOidcMetadata) GetPushedAuthorizationRequestEndpoint() string {
+	if c == nil || c.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *c.PushedAuthorizationRequestEndpoint
+}
+
+func (c *ConnectionsOidcMetadata) GetRequirePushedAuthorizationRequests() bool {
+	if c == nil || c.RequirePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *c.RequirePushedAuthorizationRequests
+}
+
 func (c *ConnectionsOidcMetadata) GetDpopSigningAlgValuesSupported() []string {
 	if c == nil || c.DpopSigningAlgValuesSupported == nil {
 		return nil
@@ -4316,10 +4809,12 @@ func (c *ConnectionsOidcMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionsOidcMetadata) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetIssuer sets the Issuer field and marks it as non-optional;
@@ -4574,6 +5069,20 @@ func (c *ConnectionsOidcMetadata) SetEndSessionEndpoint(endSessionEndpoint *stri
 	c.require(connectionsOidcMetadataFieldEndSessionEndpoint)
 }
 
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *string) {
+	c.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	c.require(connectionsOidcMetadataFieldPushedAuthorizationRequestEndpoint)
+}
+
+// SetRequirePushedAuthorizationRequests sets the RequirePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionsOidcMetadata) SetRequirePushedAuthorizationRequests(requirePushedAuthorizationRequests *bool) {
+	c.RequirePushedAuthorizationRequests = requirePushedAuthorizationRequests
+	c.require(connectionsOidcMetadataFieldRequirePushedAuthorizationRequests)
+}
+
 // SetDpopSigningAlgValuesSupported sets the DpopSigningAlgValuesSupported field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *ConnectionsOidcMetadata) SetDpopSigningAlgValuesSupported(dpopSigningAlgValuesSupported []string) {
@@ -4597,6 +5106,13 @@ func (c *ConnectionsOidcMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionsOidcMetadataNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		c.require(presentFields)
+	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -4781,10 +5297,12 @@ func (c *CreateConnectionResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (c *CreateConnectionResponseContent) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -4927,11 +5445,11 @@ func (c *CreateConnectionResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Cross App Access - Resource App settings that apply to this connection.
 var (
 	createCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
 )
 
+// Cross App Access - Resource App settings that apply to this connection.
 type CreateCrossAppAccessResourceApp struct {
 	Status CrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
 
@@ -4957,10 +5475,12 @@ func (c *CreateCrossAppAccessResourceApp) GetExtraProperties() map[string]interf
 }
 
 func (c *CreateCrossAppAccessResourceApp) require(field *big.Int) {
-	if c.explicitFields == nil {
-		c.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if c.explicitFields != nil {
+		next.Set(c.explicitFields)
 	}
-	c.explicitFields.Or(c.explicitFields, field)
+	next.Or(next, field)
+	c.explicitFields = next
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -5058,7 +5578,6 @@ func (d DefaultMethodPhoneNumberIdentifierEnum) Ptr() *DefaultMethodPhoneNumberI
 	return &d
 }
 
-// Configuration for the email attribute for users.
 var (
 	emailAttributeFieldIdentifier         = big.NewInt(1 << 0)
 	emailAttributeFieldUnique             = big.NewInt(1 << 1)
@@ -5067,6 +5586,7 @@ var (
 	emailAttributeFieldSignup             = big.NewInt(1 << 4)
 )
 
+// Configuration for the email attribute for users.
 type EmailAttribute struct {
 	Identifier *EmailAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if the attribute is unique in a given connection
@@ -5126,10 +5646,12 @@ func (e *EmailAttribute) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EmailAttribute) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -5248,10 +5770,12 @@ func (e *EmailAttributeIdentifier) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EmailAttributeIdentifier) require(field *big.Int) {
-	if e.explicitFields == nil {
-		e.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if e.explicitFields != nil {
+		next.Set(e.explicitFields)
 	}
-	e.explicitFields.Or(e.explicitFields, field)
+	next.Or(next, field)
+	e.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -5464,10 +5988,12 @@ func (g *GetConnectionResponseContent) GetExtraProperties() map[string]interface
 }
 
 func (g *GetConnectionResponseContent) require(field *big.Int) {
-	if g.explicitFields == nil {
-		g.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if g.explicitFields != nil {
+		next.Set(g.explicitFields)
 	}
-	g.explicitFields.Or(g.explicitFields, field)
+	next.Or(next, field)
+	g.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -5649,10 +6175,12 @@ func (l *ListConnectionsCheckpointPaginatedResponseContent) GetExtraProperties()
 }
 
 func (l *ListConnectionsCheckpointPaginatedResponseContent) require(field *big.Int) {
-	if l.explicitFields == nil {
-		l.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if l.explicitFields != nil {
+		next.Set(l.explicitFields)
 	}
-	l.explicitFields.Or(l.explicitFields, field)
+	next.Or(next, field)
+	l.explicitFields = next
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -5854,13 +6382,13 @@ func (p PasswordSequentialCharactersPolicyEnum) Ptr() *PasswordSequentialCharact
 	return &p
 }
 
-// Configuration for the phone number attribute for users.
 var (
 	phoneAttributeFieldIdentifier      = big.NewInt(1 << 0)
 	phoneAttributeFieldProfileRequired = big.NewInt(1 << 1)
 	phoneAttributeFieldSignup          = big.NewInt(1 << 2)
 )
 
+// Configuration for the phone number attribute for users.
 type PhoneAttribute struct {
 	Identifier *PhoneAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if property should be required for users
@@ -5903,10 +6431,12 @@ func (p *PhoneAttribute) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PhoneAttribute) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -6011,10 +6541,12 @@ func (p *PhoneAttributeIdentifier) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PhoneAttributeIdentifier) require(field *big.Int) {
-	if p.explicitFields == nil {
-		p.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if p.explicitFields != nil {
+		next.Set(p.explicitFields)
 	}
-	p.explicitFields.Or(p.explicitFields, field)
+	next.Or(next, field)
+	p.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -6102,10 +6634,12 @@ func (s *SignupSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SignupSchema) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -6211,10 +6745,12 @@ func (s *SignupVerification) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SignupVerification) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -6304,10 +6840,12 @@ func (s *SignupVerified) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SignupVerified) require(field *big.Int) {
-	if s.explicitFields == nil {
-		s.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
 	}
-	s.explicitFields.Or(s.explicitFields, field)
+	next.Or(next, field)
+	s.explicitFields = next
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -6366,49 +6904,76 @@ func (s *SignupVerified) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
-// The connection's options (depend on the connection strategy). To update these options, the `update:connections_options` scope must be present. To verify your changes, also include the `read:connections_options` scope. If this scope is not specified, you will not be able to review the updated object.
 var (
-	updateConnectionOptionsFieldValidation                       = big.NewInt(1 << 0)
-	updateConnectionOptionsFieldNonPersistentAttrs               = big.NewInt(1 << 1)
-	updateConnectionOptionsFieldPrecedence                       = big.NewInt(1 << 2)
-	updateConnectionOptionsFieldAttributes                       = big.NewInt(1 << 3)
-	updateConnectionOptionsFieldEnableScriptContext              = big.NewInt(1 << 4)
-	updateConnectionOptionsFieldEnabledDatabaseCustomization     = big.NewInt(1 << 5)
-	updateConnectionOptionsFieldImportMode                       = big.NewInt(1 << 6)
-	updateConnectionOptionsFieldConfiguration                    = big.NewInt(1 << 7)
-	updateConnectionOptionsFieldCustomScripts                    = big.NewInt(1 << 8)
-	updateConnectionOptionsFieldAuthenticationMethods            = big.NewInt(1 << 9)
-	updateConnectionOptionsFieldPasskeyOptions                   = big.NewInt(1 << 10)
-	updateConnectionOptionsFieldPasswordPolicy                   = big.NewInt(1 << 11)
-	updateConnectionOptionsFieldPasswordComplexityOptions        = big.NewInt(1 << 12)
-	updateConnectionOptionsFieldPasswordHistory                  = big.NewInt(1 << 13)
-	updateConnectionOptionsFieldPasswordNoPersonalInfo           = big.NewInt(1 << 14)
-	updateConnectionOptionsFieldPasswordDictionary               = big.NewInt(1 << 15)
-	updateConnectionOptionsFieldAPIEnableUsers                   = big.NewInt(1 << 16)
-	updateConnectionOptionsFieldAPIEnableGroups                  = big.NewInt(1 << 17)
-	updateConnectionOptionsFieldBasicProfile                     = big.NewInt(1 << 18)
-	updateConnectionOptionsFieldExtAdmin                         = big.NewInt(1 << 19)
-	updateConnectionOptionsFieldExtIsSuspended                   = big.NewInt(1 << 20)
-	updateConnectionOptionsFieldExtAgreedTerms                   = big.NewInt(1 << 21)
-	updateConnectionOptionsFieldExtGroups                        = big.NewInt(1 << 22)
-	updateConnectionOptionsFieldExtAssignedPlans                 = big.NewInt(1 << 23)
-	updateConnectionOptionsFieldExtProfile                       = big.NewInt(1 << 24)
-	updateConnectionOptionsFieldDisableSelfServiceChangePassword = big.NewInt(1 << 25)
-	updateConnectionOptionsFieldUpstreamParams                   = big.NewInt(1 << 26)
-	updateConnectionOptionsFieldSetUserRootAttributes            = big.NewInt(1 << 27)
-	updateConnectionOptionsFieldGatewayAuthentication            = big.NewInt(1 << 28)
-	updateConnectionOptionsFieldPasswordOptions                  = big.NewInt(1 << 29)
-	updateConnectionOptionsFieldAssertionDecryptionSettings      = big.NewInt(1 << 30)
-	updateConnectionOptionsFieldIDTokenSignedResponseAlgs        = big.NewInt(1 << 31)
-	updateConnectionOptionsFieldDpopSigningAlg                   = big.NewInt(1 << 32)
-	updateConnectionOptionsFieldTokenEndpointAuthMethod          = big.NewInt(1 << 33)
-	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg      = big.NewInt(1 << 34)
-	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat      = big.NewInt(1 << 35)
-	updateConnectionOptionsFieldIDTokenSessionExpirySupported    = big.NewInt(1 << 36)
-	updateConnectionOptionsFieldDiscoveryURL                     = big.NewInt(1 << 37)
-	updateConnectionOptionsFieldOidcMetadata                     = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldValidation                         = big.NewInt(1 << 0)
+	updateConnectionOptionsFieldNonPersistentAttrs                 = big.NewInt(1 << 1)
+	updateConnectionOptionsFieldPrecedence                         = big.NewInt(1 << 2)
+	updateConnectionOptionsFieldAttributes                         = big.NewInt(1 << 3)
+	updateConnectionOptionsFieldEnableScriptContext                = big.NewInt(1 << 4)
+	updateConnectionOptionsFieldEnabledDatabaseCustomization       = big.NewInt(1 << 5)
+	updateConnectionOptionsFieldImportMode                         = big.NewInt(1 << 6)
+	updateConnectionOptionsFieldConfiguration                      = big.NewInt(1 << 7)
+	updateConnectionOptionsFieldCustomScripts                      = big.NewInt(1 << 8)
+	updateConnectionOptionsFieldOtpSettings                        = big.NewInt(1 << 9)
+	updateConnectionOptionsFieldAuthenticationMethods              = big.NewInt(1 << 10)
+	updateConnectionOptionsFieldPasskeyOptions                     = big.NewInt(1 << 11)
+	updateConnectionOptionsFieldPasswordPolicy                     = big.NewInt(1 << 12)
+	updateConnectionOptionsFieldPasswordComplexityOptions          = big.NewInt(1 << 13)
+	updateConnectionOptionsFieldPasswordHistory                    = big.NewInt(1 << 14)
+	updateConnectionOptionsFieldPasswordNoPersonalInfo             = big.NewInt(1 << 15)
+	updateConnectionOptionsFieldPasswordDictionary                 = big.NewInt(1 << 16)
+	updateConnectionOptionsFieldAPIEnableUsers                     = big.NewInt(1 << 17)
+	updateConnectionOptionsFieldAPIEnableGroups                    = big.NewInt(1 << 18)
+	updateConnectionOptionsFieldBasicProfile                       = big.NewInt(1 << 19)
+	updateConnectionOptionsFieldExtAdmin                           = big.NewInt(1 << 20)
+	updateConnectionOptionsFieldExtIsSuspended                     = big.NewInt(1 << 21)
+	updateConnectionOptionsFieldExtAgreedTerms                     = big.NewInt(1 << 22)
+	updateConnectionOptionsFieldExtGroups                          = big.NewInt(1 << 23)
+	updateConnectionOptionsFieldExtAssignedPlans                   = big.NewInt(1 << 24)
+	updateConnectionOptionsFieldExtProfile                         = big.NewInt(1 << 25)
+	updateConnectionOptionsFieldDisableSelfServiceChangePassword   = big.NewInt(1 << 26)
+	updateConnectionOptionsFieldUpstreamParams                     = big.NewInt(1 << 27)
+	updateConnectionOptionsFieldSetUserRootAttributes              = big.NewInt(1 << 28)
+	updateConnectionOptionsFieldGatewayAuthentication              = big.NewInt(1 << 29)
+	updateConnectionOptionsFieldPasswordOptions                    = big.NewInt(1 << 30)
+	updateConnectionOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 31)
+	updateConnectionOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 32)
+	updateConnectionOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 33)
+	updateConnectionOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 35)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 36)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 37)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
+	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
+	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
+	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
+	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 43)
+	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
 )
 
+// updateConnectionOptionsNullableFields maps the wire names of UpdateConnectionOptions's nullable fields (required or optional) to their field bits.
+var updateConnectionOptionsNullableFields = map[string]*big.Int{
+	"validation":                      updateConnectionOptionsFieldValidation,
+	"non_persistent_attrs":            updateConnectionOptionsFieldNonPersistentAttrs,
+	"configuration":                   updateConnectionOptionsFieldConfiguration,
+	"authentication_methods":          updateConnectionOptionsFieldAuthenticationMethods,
+	"passkey_options":                 updateConnectionOptionsFieldPasskeyOptions,
+	"passwordPolicy":                  updateConnectionOptionsFieldPasswordPolicy,
+	"password_complexity_options":     updateConnectionOptionsFieldPasswordComplexityOptions,
+	"password_history":                updateConnectionOptionsFieldPasswordHistory,
+	"password_no_personal_info":       updateConnectionOptionsFieldPasswordNoPersonalInfo,
+	"password_dictionary":             updateConnectionOptionsFieldPasswordDictionary,
+	"upstream_params":                 updateConnectionOptionsFieldUpstreamParams,
+	"gateway_authentication":          updateConnectionOptionsFieldGatewayAuthentication,
+	"id_token_signed_response_algs":   updateConnectionOptionsFieldIDTokenSignedResponseAlgs,
+	"token_endpoint_auth_method":      updateConnectionOptionsFieldTokenEndpointAuthMethod,
+	"token_endpoint_auth_signing_alg": updateConnectionOptionsFieldTokenEndpointAuthSigningAlg,
+	"discovery_url":                   updateConnectionOptionsFieldDiscoveryURL,
+	"oidc_metadata":                   updateConnectionOptionsFieldOidcMetadata,
+}
+
+// The connection's options (depend on the connection strategy). To update these options, the `update:connections_options` scope must be present. To verify your changes, also include the `read:connections_options` scope. If this scope is not specified, you will not be able to review the updated object.
 type UpdateConnectionOptions struct {
 	Validation *ConnectionValidationOptions `json:"validation,omitempty" url:"validation,omitempty"`
 	// An array of user fields that should not be stored in the Auth0 database (https://auth0.com/docs/security/data-security/denylist)
@@ -6423,38 +6988,44 @@ type UpdateConnectionOptions struct {
 	// Enable this if you have a legacy user store and you want to gradually migrate those users to the Auth0 user store
 	ImportMode *bool `json:"import_mode,omitempty" url:"import_mode,omitempty"`
 	// Stores encrypted string only configurations for connections
-	Configuration                    map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
-	CustomScripts                    *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
-	AuthenticationMethods            *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
-	PasskeyOptions                   *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
-	PasswordPolicy                   *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
-	PasswordComplexityOptions        *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
-	PasswordHistory                  *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
-	PasswordNoPersonalInfo           *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
-	PasswordDictionary               *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
-	APIEnableUsers                   *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
-	APIEnableGroups                  *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
-	BasicProfile                     *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
-	ExtAdmin                         *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
-	ExtIsSuspended                   *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
-	ExtAgreedTerms                   *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
-	ExtGroups                        *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
-	ExtAssignedPlans                 *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
-	ExtProfile                       *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
-	DisableSelfServiceChangePassword *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
-	UpstreamParams                   *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
-	SetUserRootAttributes            *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
-	GatewayAuthentication            *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
-	PasswordOptions                  *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
-	AssertionDecryptionSettings      *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
-	IDTokenSignedResponseAlgs        *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
-	DpopSigningAlg                   *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
-	TokenEndpointAuthMethod          *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
-	TokenEndpointAuthSigningAlg      *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
-	TokenEndpointJwtcaAudFormat      *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
-	IDTokenSessionExpirySupported    *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
-	DiscoveryURL                     *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                     *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Configuration                      map[string]*string                             `json:"configuration,omitempty" url:"configuration,omitempty"`
+	CustomScripts                      *ConnectionCustomScripts                       `json:"customScripts,omitempty" url:"customScripts,omitempty"`
+	OtpSettings                        *ConnectionOtpSettings                         `json:"otp_settings,omitempty" url:"otp_settings,omitempty"`
+	AuthenticationMethods              *ConnectionAuthenticationMethods               `json:"authentication_methods,omitempty" url:"authentication_methods,omitempty"`
+	PasskeyOptions                     *ConnectionPasskeyOptions                      `json:"passkey_options,omitempty" url:"passkey_options,omitempty"`
+	PasswordPolicy                     *ConnectionPasswordPolicyEnum                  `json:"passwordPolicy,omitempty" url:"passwordPolicy,omitempty"`
+	PasswordComplexityOptions          *ConnectionPasswordComplexityOptions           `json:"password_complexity_options,omitempty" url:"password_complexity_options,omitempty"`
+	PasswordHistory                    *ConnectionPasswordHistoryOptions              `json:"password_history,omitempty" url:"password_history,omitempty"`
+	PasswordNoPersonalInfo             *ConnectionPasswordNoPersonalInfoOptions       `json:"password_no_personal_info,omitempty" url:"password_no_personal_info,omitempty"`
+	PasswordDictionary                 *ConnectionPasswordDictionaryOptions           `json:"password_dictionary,omitempty" url:"password_dictionary,omitempty"`
+	APIEnableUsers                     *bool                                          `json:"api_enable_users,omitempty" url:"api_enable_users,omitempty"`
+	APIEnableGroups                    *bool                                          `json:"api_enable_groups,omitempty" url:"api_enable_groups,omitempty"`
+	BasicProfile                       *bool                                          `json:"basic_profile,omitempty" url:"basic_profile,omitempty"`
+	ExtAdmin                           *bool                                          `json:"ext_admin,omitempty" url:"ext_admin,omitempty"`
+	ExtIsSuspended                     *bool                                          `json:"ext_is_suspended,omitempty" url:"ext_is_suspended,omitempty"`
+	ExtAgreedTerms                     *bool                                          `json:"ext_agreed_terms,omitempty" url:"ext_agreed_terms,omitempty"`
+	ExtGroups                          *bool                                          `json:"ext_groups,omitempty" url:"ext_groups,omitempty"`
+	ExtAssignedPlans                   *bool                                          `json:"ext_assigned_plans,omitempty" url:"ext_assigned_plans,omitempty"`
+	ExtProfile                         *bool                                          `json:"ext_profile,omitempty" url:"ext_profile,omitempty"`
+	DisableSelfServiceChangePassword   *bool                                          `json:"disable_self_service_change_password,omitempty" url:"disable_self_service_change_password,omitempty"`
+	UpstreamParams                     *ConnectionUpstreamParams                      `json:"upstream_params,omitempty" url:"upstream_params,omitempty"`
+	SetUserRootAttributes              *ConnectionSetUserRootAttributesEnum           `json:"set_user_root_attributes,omitempty" url:"set_user_root_attributes,omitempty"`
+	GatewayAuthentication              *ConnectionGatewayAuthentication               `json:"gateway_authentication,omitempty" url:"gateway_authentication,omitempty"`
+	PasswordOptions                    *ConnectionPasswordOptions                     `json:"password_options,omitempty" url:"password_options,omitempty"`
+	AssertionDecryptionSettings        *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
+	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
+	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
+	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
+	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
+	TokenEndpointAuthSigningAlg        *ConnectionTokenEndpointAuthSigningAlgEnum     `json:"token_endpoint_auth_signing_alg,omitempty" url:"token_endpoint_auth_signing_alg,omitempty"`
+	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
+	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
+	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
+	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -6525,6 +7096,13 @@ func (u *UpdateConnectionOptions) GetCustomScripts() ConnectionCustomScripts {
 		return ConnectionCustomScripts{}
 	}
 	return *u.CustomScripts
+}
+
+func (u *UpdateConnectionOptions) GetOtpSettings() ConnectionOtpSettings {
+	if u == nil || u.OtpSettings == nil {
+		return ConnectionOtpSettings{}
+	}
+	return *u.OtpSettings
 }
 
 func (u *UpdateConnectionOptions) GetAuthenticationMethods() ConnectionAuthenticationMethods {
@@ -6695,6 +7273,20 @@ func (u *UpdateConnectionOptions) GetDpopSigningAlg() ConnectionDpopSigningAlgEn
 	return *u.DpopSigningAlg
 }
 
+func (u *UpdateConnectionOptions) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
+	if u == nil || u.EnablePushedAuthorizationRequests == nil {
+		return false
+	}
+	return *u.EnablePushedAuthorizationRequests
+}
+
+func (u *UpdateConnectionOptions) GetPushedAuthorizationRequestEndpoint() ConnectionPushedAuthorizationRequestEndpoint {
+	if u == nil || u.PushedAuthorizationRequestEndpoint == nil {
+		return ""
+	}
+	return *u.PushedAuthorizationRequestEndpoint
+}
+
 func (u *UpdateConnectionOptions) GetTokenEndpointAuthMethod() ConnectionTokenEndpointAuthMethodEnum {
 	if u == nil || u.TokenEndpointAuthMethod == nil {
 		return ""
@@ -6723,6 +7315,13 @@ func (u *UpdateConnectionOptions) GetIDTokenSessionExpirySupported() ConnectionI
 	return *u.IDTokenSessionExpirySupported
 }
 
+func (u *UpdateConnectionOptions) GetUseOauthSpecScope() ConnectionUseOauthSpecScope {
+	if u == nil || u.UseOauthSpecScope == nil {
+		return false
+	}
+	return *u.UseOauthSpecScope
+}
+
 func (u *UpdateConnectionOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
 	if u == nil || u.DiscoveryURL == nil {
 		return nil
@@ -6737,6 +7336,20 @@ func (u *UpdateConnectionOptions) GetOidcMetadata() ConnectionsOidcMetadata {
 	return *u.OidcMetadata
 }
 
+func (u *UpdateConnectionOptions) GetThumbprints() ConnectionThumbprints {
+	if u == nil || u.Thumbprints == nil {
+		return nil
+	}
+	return *u.Thumbprints
+}
+
+func (u *UpdateConnectionOptions) GetThumbprintsSha384() ConnectionThumbprintsSha384 {
+	if u == nil || u.ThumbprintsSha384 == nil {
+		return nil
+	}
+	return *u.ThumbprintsSha384
+}
+
 func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
 	if u == nil {
 		return nil
@@ -6745,10 +7358,12 @@ func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateConnectionOptions) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetValidation sets the Validation field and marks it as non-optional;
@@ -6812,6 +7427,13 @@ func (u *UpdateConnectionOptions) SetConfiguration(configuration map[string]*str
 func (u *UpdateConnectionOptions) SetCustomScripts(customScripts *ConnectionCustomScripts) {
 	u.CustomScripts = customScripts
 	u.require(updateConnectionOptionsFieldCustomScripts)
+}
+
+// SetOtpSettings sets the OtpSettings field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetOtpSettings(otpSettings *ConnectionOtpSettings) {
+	u.OtpSettings = otpSettings
+	u.require(updateConnectionOptionsFieldOtpSettings)
 }
 
 // SetAuthenticationMethods sets the AuthenticationMethods field and marks it as non-optional;
@@ -6982,6 +7604,20 @@ func (u *UpdateConnectionOptions) SetDpopSigningAlg(dpopSigningAlg *ConnectionDp
 	u.require(updateConnectionOptionsFieldDpopSigningAlg)
 }
 
+// SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetEnablePushedAuthorizationRequests(enablePushedAuthorizationRequests *ConnectionEnablePushedAuthorizationRequests) {
+	u.EnablePushedAuthorizationRequests = enablePushedAuthorizationRequests
+	u.require(updateConnectionOptionsFieldEnablePushedAuthorizationRequests)
+}
+
+// SetPushedAuthorizationRequestEndpoint sets the PushedAuthorizationRequestEndpoint field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetPushedAuthorizationRequestEndpoint(pushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint) {
+	u.PushedAuthorizationRequestEndpoint = pushedAuthorizationRequestEndpoint
+	u.require(updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint)
+}
+
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateConnectionOptions) SetTokenEndpointAuthMethod(tokenEndpointAuthMethod *ConnectionTokenEndpointAuthMethodEnum) {
@@ -7010,6 +7646,13 @@ func (u *UpdateConnectionOptions) SetIDTokenSessionExpirySupported(idTokenSessio
 	u.require(updateConnectionOptionsFieldIDTokenSessionExpirySupported)
 }
 
+// SetUseOauthSpecScope sets the UseOauthSpecScope field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
+	u.UseOauthSpecScope = useOauthSpecScope
+	u.require(updateConnectionOptionsFieldUseOauthSpecScope)
+}
+
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (u *UpdateConnectionOptions) SetDiscoveryURL(discoveryURL *ConnectionsDiscoveryURL) {
@@ -7022,6 +7665,20 @@ func (u *UpdateConnectionOptions) SetDiscoveryURL(discoveryURL *ConnectionsDisco
 func (u *UpdateConnectionOptions) SetOidcMetadata(oidcMetadata *ConnectionsOidcMetadata) {
 	u.OidcMetadata = oidcMetadata
 	u.require(updateConnectionOptionsFieldOidcMetadata)
+}
+
+// SetThumbprints sets the Thumbprints field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetThumbprints(thumbprints *ConnectionThumbprints) {
+	u.Thumbprints = thumbprints
+	u.require(updateConnectionOptionsFieldThumbprints)
+}
+
+// SetThumbprintsSha384 sets the ThumbprintsSha384 field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetThumbprintsSha384(thumbprintsSha384 *ConnectionThumbprintsSha384) {
+	u.ThumbprintsSha384 = thumbprintsSha384
+	u.require(updateConnectionOptionsFieldThumbprintsSha384)
 }
 
 func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {
@@ -7040,6 +7697,13 @@ func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.ExtraProperties = extraProperties
+	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateConnectionOptionsNullableFields)
+	if err != nil {
+		return err
+	}
+	if presentFields != nil {
+		u.require(presentFields)
+	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -7224,10 +7888,12 @@ func (u *UpdateConnectionResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (u *UpdateConnectionResponseContent) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -7370,11 +8036,11 @@ func (u *UpdateConnectionResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// Cross App Access - Resource App settings that apply to this connection.
 var (
 	updateCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
 )
 
+// Cross App Access - Resource App settings that apply to this connection.
 type UpdateCrossAppAccessResourceApp struct {
 	Status CrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
 
@@ -7400,10 +8066,12 @@ func (u *UpdateCrossAppAccessResourceApp) GetExtraProperties() map[string]interf
 }
 
 func (u *UpdateCrossAppAccessResourceApp) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -7493,10 +8161,12 @@ func (u *UsernameAllowedTypes) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameAllowedTypes) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -7555,7 +8225,6 @@ func (u *UsernameAllowedTypes) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
-// Configuration for the username attribute for users.
 var (
 	usernameAttributeFieldIdentifier      = big.NewInt(1 << 0)
 	usernameAttributeFieldProfileRequired = big.NewInt(1 << 1)
@@ -7563,6 +8232,7 @@ var (
 	usernameAttributeFieldValidation      = big.NewInt(1 << 3)
 )
 
+// Configuration for the username attribute for users.
 type UsernameAttribute struct {
 	Identifier *UsernameAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if property should be required for users
@@ -7613,10 +8283,12 @@ func (u *UsernameAttribute) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameAttribute) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -7719,10 +8391,12 @@ func (u *UsernameAttributeIdentifier) GetExtraProperties() map[string]interface{
 }
 
 func (u *UsernameAttributeIdentifier) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -7823,10 +8497,12 @@ func (u *UsernameValidation) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameValidation) require(field *big.Int) {
-	if u.explicitFields == nil {
-		u.explicitFields = big.NewInt(0)
+	next := new(big.Int)
+	if u.explicitFields != nil {
+		next.Set(u.explicitFields)
 	}
-	u.explicitFields.Or(u.explicitFields, field)
+	next.Or(next, field)
+	u.explicitFields = next
 }
 
 // SetMinLength sets the MinLength field and marks it as non-optional;

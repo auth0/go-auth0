@@ -35,6 +35,20 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Clear risk assessment assessors for a specific user
+//
+// Example:
+//
+//	request := &management.ClearAssessorsRequestContent{
+//	    Connection: "connection",
+//	    Assessors: []management.AssessorsTypeEnum{
+//	        management.AssessorsTypeEnumNewDevice,
+//	    },
+//	}
+//	client.Users.RiskAssessments.Clear(
+//	    context.TODO(),
+//	    "id",
+//	    request,
+//	)
 func (c *Client) Clear(
 	ctx context.Context,
 	// ID of the user to clear assessors for.

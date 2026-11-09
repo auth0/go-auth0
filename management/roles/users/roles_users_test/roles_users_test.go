@@ -89,6 +89,9 @@ func TestRolesUsersListWithWireMock(
 		option.WithToken("test-token"),
 	)
 	request := &management.ListRoleUsersRequestParameters{
+		IncludeTotals: management.Bool(
+			true,
+		),
 		From: management.String(
 			"from",
 		),
@@ -106,7 +109,7 @@ func TestRolesUsersListWithWireMock(
 	)
 
 	require.NoError(t, invocationErr, "Client method call should succeed")
-	VerifyRequestCount(t, "TestRolesUsersListWithWireMock", "GET", "/roles/id/users", map[string]interface{}{"from": "from", "take": "1"}, 1)
+	VerifyRequestCount(t, "TestRolesUsersListWithWireMock", "GET", "/roles/id/users", map[string]interface{}{"include_totals": "true", "from": "from", "take": "1"}, 1)
 }
 
 func TestRolesUsersAssignWithWireMock(
