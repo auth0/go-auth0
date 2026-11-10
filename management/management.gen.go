@@ -1454,6 +1454,14 @@ func (b *BrandingThemeColors) GetBaseHoverColor() string {
 	return *b.BaseHoverColor
 }
 
+// GetReadOnlyBackground returns the ReadOnlyBackground field if it's non-nil, zero value otherwise.
+func (b *BrandingThemeColors) GetReadOnlyBackground() string {
+	if b == nil || b.ReadOnlyBackground == nil {
+		return ""
+	}
+	return *b.ReadOnlyBackground
+}
+
 // String returns a string representation of BrandingThemeColors.
 func (b *BrandingThemeColors) String() string {
 	return Stringify(b)

@@ -47,6 +47,7 @@ type BrandingThemeColors struct {
 	LinksFocusedComponents  string  `json:"links_focused_components"`
 	PrimaryButton           string  `json:"primary_button"`
 	PrimaryButtonLabel      string  `json:"primary_button_label"`
+	ReadOnlyBackground      *string `json:"read_only_background,omitempty"`
 	SecondaryButtonBorder   string  `json:"secondary_button_border"`
 	SecondaryButtonLabel    string  `json:"secondary_button_label"`
 	Success                 string  `json:"success"`
