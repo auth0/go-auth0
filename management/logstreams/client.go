@@ -112,12 +112,6 @@ func NewClient(options *core.RequestOptions) *Client {
 //	}]
 //
 // ```
-//
-// Example:
-//
-//	client.LogStreams.List(
-//	    context.TODO(),
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -353,21 +347,6 @@ func (c *Client) List(
 //	}
 //
 // ```
-//
-// Example:
-//
-//	request := &management.CreateLogStreamRequestContent{
-//	    CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
-//	        Type: management.LogStreamHTTPEnumHTTP,
-//	        Sink: &management.LogStreamHTTPSink{
-//	            HTTPEndpoint: "httpEndpoint",
-//	        },
-//	    },
-//	}
-//	client.LogStreams.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateLogStreamRequestContent,
@@ -554,13 +533,6 @@ func (c *Client) Create(
 // 1. `active` - Stream is currently enabled.
 // 2. `paused` - Stream is currently user disabled and will not attempt log delivery.
 // 3. `suspended` - Stream is currently disabled because of errors and will not attempt log delivery.
-//
-// Example:
-//
-//	client.LogStreams.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The id of the log stream to get
@@ -579,13 +551,6 @@ func (c *Client) Get(
 }
 
 // Delete a log stream.
-//
-// Example:
-//
-//	client.LogStreams.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The id of the log stream to delete
@@ -689,15 +654,6 @@ func (c *Client) Delete(
 //	}
 //
 // ```
-//
-// Example:
-//
-//	request := &management.UpdateLogStreamRequestContent{}
-//	client.LogStreams.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The id of the log stream to get

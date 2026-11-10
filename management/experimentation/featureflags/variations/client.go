@@ -35,13 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve all variations defined for a specific feature flag.
-//
-// Example:
-//
-//	client.Experimentation.FeatureFlags.Variations.List(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// The ID of the parent feature flag.
@@ -60,20 +53,6 @@ func (c *Client) List(
 }
 
 // Create a new variation with parameter overrides for a specific feature flag.
-//
-// Example:
-//
-//	request := &management.CreateVariationRequestContent{
-//	    Name: "name",
-//	    Overrides: map[string]any{
-//	        "key": "value",
-//	    },
-//	}
-//	client.Experimentation.FeatureFlags.Variations.Create(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The ID of the parent feature flag.
@@ -94,14 +73,6 @@ func (c *Client) Create(
 }
 
 // Retrieve a single variation by its ID.
-//
-// Example:
-//
-//	client.Experimentation.FeatureFlags.Variations.Get(
-//	    context.TODO(),
-//	    "id",
-//	    "vid",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the parent feature flag.
@@ -123,14 +94,6 @@ func (c *Client) Get(
 }
 
 // Delete a variation by ID. Returns 204 if the variation does not exist. Returns 404 if the parent feature flag does not exist.
-//
-// Example:
-//
-//	client.Experimentation.FeatureFlags.Variations.Delete(
-//	    context.TODO(),
-//	    "id",
-//	    "vid",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the parent feature flag.
@@ -152,16 +115,6 @@ func (c *Client) Delete(
 }
 
 // Partially update a variation by ID. Only provided fields are updated.
-//
-// Example:
-//
-//	request := &management.UpdateVariationRequestContent{}
-//	client.Experimentation.FeatureFlags.Variations.Update(
-//	    context.TODO(),
-//	    "id",
-//	    "vid",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the parent feature flag.

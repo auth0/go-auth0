@@ -36,21 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List verifiable credential templates.
-//
-// Example:
-//
-//	request := &management.ListVerifiableCredentialTemplatesRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.VerifiableCredentials.Verification.Templates.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListVerifiableCredentialTemplatesRequestParameters,
@@ -105,7 +90,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -117,24 +102,6 @@ func (c *Client) List(
 }
 
 // Create a verifiable credential template.
-//
-// Example:
-//
-//	request := &management.CreateVerifiableCredentialTemplateRequestContent{
-//	    Name: "name",
-//	    Type: "type",
-//	    Dialect: "dialect",
-//	    Presentation: &management.MdlPresentationRequest{
-//	        OrgIso1801351MDl: &management.MdlPresentationRequestProperties{
-//	            OrgIso1801351: &management.MdlPresentationProperties{},
-//	        },
-//	    },
-//	    WellKnownTrustedIssuers: "well_known_trusted_issuers",
-//	}
-//	client.VerifiableCredentials.Verification.Templates.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateVerifiableCredentialTemplateRequestContent,
@@ -152,13 +119,6 @@ func (c *Client) Create(
 }
 
 // Get a verifiable credential template.
-//
-// Example:
-//
-//	client.VerifiableCredentials.Verification.Templates.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the template to retrieve.
@@ -177,13 +137,6 @@ func (c *Client) Get(
 }
 
 // Delete a verifiable credential template.
-//
-// Example:
-//
-//	client.VerifiableCredentials.Verification.Templates.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the template to retrieve.
@@ -202,15 +155,6 @@ func (c *Client) Delete(
 }
 
 // Update a verifiable credential template.
-//
-// Example:
-//
-//	request := &management.UpdateVerifiableCredentialTemplateRequestContent{}
-//	client.VerifiableCredentials.Verification.Templates.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the template to retrieve.

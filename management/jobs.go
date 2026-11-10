@@ -138,12 +138,10 @@ func (g *GetJobResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetJobResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -269,6 +267,7 @@ func (g *GetJobResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Job execution summary.
 var (
 	getJobSummaryFieldFailed   = big.NewInt(1 << 0)
 	getJobSummaryFieldUpdated  = big.NewInt(1 << 1)
@@ -276,7 +275,6 @@ var (
 	getJobSummaryFieldTotal    = big.NewInt(1 << 3)
 )
 
-// Job execution summary.
 type GetJobSummary struct {
 	// Number of failed operations.
 	Failed *int `json:"failed,omitempty" url:"failed,omitempty"`
@@ -331,12 +329,10 @@ func (g *GetJobSummary) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetJobSummary) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFailed sets the Failed field and marks it as non-optional;

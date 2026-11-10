@@ -50,12 +50,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of all <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors">multi-factor authentication factors</a> associated with your tenant.
-//
-// Example:
-//
-//	client.Guardian.Factors.List(
-//	    context.TODO(),
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -71,17 +65,6 @@ func (c *Client) List(
 }
 
 // Update the status (i.e., enabled or disabled) of a specific multi-factor authentication factor.
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorRequestContent{
-//	    Enabled: true,
-//	}
-//	client.Guardian.Factors.Set(
-//	    context.TODO(),
-//	    management.GuardianFactorNameEnumPushNotification.Ptr(),
-//	    request,
-//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// Factor name. Can be `sms`, `push-notification`, `email`, `duo`, `otp`, `webauthn-roaming`, `webauthn-platform`, `recovery-code`, or `passkey`.

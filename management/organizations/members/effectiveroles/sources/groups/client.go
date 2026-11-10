@@ -36,24 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Lists the groups which grant the org member a given role.
-//
-// Example:
-//
-//	request := &management.ListOrganizationMemberRoleSourceGroupsRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	    RoleID: "role_id",
-//	}
-//	client.Organizations.Members.EffectiveRoles.Sources.Groups.List(
-//	    context.TODO(),
-//	    "id",
-//	    "user_id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
@@ -116,7 +98,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

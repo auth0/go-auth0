@@ -100,12 +100,10 @@ func (c *CreateTokenExchangeProfileResponseContent) GetExtraProperties() map[str
 }
 
 func (c *CreateTokenExchangeProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -301,12 +299,10 @@ func (g *GetTokenExchangeProfileResponseContent) GetExtraProperties() map[string
 }
 
 func (g *GetTokenExchangeProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -451,12 +447,10 @@ func (l *ListTokenExchangeProfileResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListTokenExchangeProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -605,12 +599,10 @@ func (t *TokenExchangeProfileResponseContent) GetExtraProperties() map[string]in
 }
 
 func (t *TokenExchangeProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

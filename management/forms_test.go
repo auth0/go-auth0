@@ -925,28 +925,51 @@ func TestSettersMarkExplicitCreateFormResponseContent(t *testing.T) {
 }
 
 func TestGettersFormBlock(t *testing.T) {
-	t.Run("GetFormBlockDivider", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormBlock{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FormBlock
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetDivider", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockDivider
-		obj.FormBlockDivider = expected
+		obj.Divider = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockDivider(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetDivider(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockDivider_NilValue", func(t *testing.T) {
+	t.Run("GetDivider_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockDivider = nil
+		obj.Divider = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockDivider(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetDivider(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockDivider_NilReceiver", func(t *testing.T) {
+	t.Run("GetDivider_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -955,31 +978,31 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockDivider() // Should return zero value
+		_ = obj.GetDivider() // Should return zero value
 	})
 
-	t.Run("GetFormBlockHTML", func(t *testing.T) {
+	t.Run("GetHTML", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockHTML
-		obj.FormBlockHTML = expected
+		obj.HTML = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockHTML(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetHTML(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockHTML_NilValue", func(t *testing.T) {
+	t.Run("GetHTML_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockHTML = nil
+		obj.HTML = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockHTML(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetHTML(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockHTML_NilReceiver", func(t *testing.T) {
+	t.Run("GetHTML_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -988,31 +1011,31 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockHTML() // Should return zero value
+		_ = obj.GetHTML() // Should return zero value
 	})
 
-	t.Run("GetFormBlockImage", func(t *testing.T) {
+	t.Run("GetImage", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockImage
-		obj.FormBlockImage = expected
+		obj.Image = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockImage(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetImage(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockImage_NilValue", func(t *testing.T) {
+	t.Run("GetImage_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockImage = nil
+		obj.Image = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockImage(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetImage(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockImage_NilReceiver", func(t *testing.T) {
+	t.Run("GetImage_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1021,31 +1044,31 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockImage() // Should return zero value
+		_ = obj.GetImage() // Should return zero value
 	})
 
-	t.Run("GetFormBlockJumpButton", func(t *testing.T) {
+	t.Run("GetJumpButton", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockJumpButton
-		obj.FormBlockJumpButton = expected
+		obj.JumpButton = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockJumpButton(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetJumpButton(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockJumpButton_NilValue", func(t *testing.T) {
+	t.Run("GetJumpButton_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockJumpButton = nil
+		obj.JumpButton = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockJumpButton(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetJumpButton(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockJumpButton_NilReceiver", func(t *testing.T) {
+	t.Run("GetJumpButton_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1054,31 +1077,31 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockJumpButton() // Should return zero value
+		_ = obj.GetJumpButton() // Should return zero value
 	})
 
-	t.Run("GetFormBlockResendButton", func(t *testing.T) {
+	t.Run("GetResendButton", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockResendButton
-		obj.FormBlockResendButton = expected
+		obj.ResendButton = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockResendButton(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetResendButton(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockResendButton_NilValue", func(t *testing.T) {
+	t.Run("GetResendButton_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockResendButton = nil
+		obj.ResendButton = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockResendButton(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetResendButton(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockResendButton_NilReceiver", func(t *testing.T) {
+	t.Run("GetResendButton_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1087,31 +1110,31 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockResendButton() // Should return zero value
+		_ = obj.GetResendButton() // Should return zero value
 	})
 
-	t.Run("GetFormBlockNextButton", func(t *testing.T) {
+	t.Run("GetNextButton", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockNextButton
-		obj.FormBlockNextButton = expected
+		obj.NextButton = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockNextButton(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetNextButton(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockNextButton_NilValue", func(t *testing.T) {
+	t.Run("GetNextButton_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockNextButton = nil
+		obj.NextButton = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockNextButton(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetNextButton(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockNextButton_NilReceiver", func(t *testing.T) {
+	t.Run("GetNextButton_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1120,31 +1143,31 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockNextButton() // Should return zero value
+		_ = obj.GetNextButton() // Should return zero value
 	})
 
-	t.Run("GetFormBlockPreviousButton", func(t *testing.T) {
+	t.Run("GetPreviousButton", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockPreviousButton
-		obj.FormBlockPreviousButton = expected
+		obj.PreviousButton = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockPreviousButton(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPreviousButton(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockPreviousButton_NilValue", func(t *testing.T) {
+	t.Run("GetPreviousButton_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockPreviousButton = nil
+		obj.PreviousButton = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockPreviousButton(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPreviousButton(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockPreviousButton_NilReceiver", func(t *testing.T) {
+	t.Run("GetPreviousButton_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1153,31 +1176,31 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockPreviousButton() // Should return zero value
+		_ = obj.GetPreviousButton() // Should return zero value
 	})
 
-	t.Run("GetFormBlockRichText", func(t *testing.T) {
+	t.Run("GetRichText", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
 		var expected *FormBlockRichText
-		obj.FormBlockRichText = expected
+		obj.RichText = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormBlockRichText(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetRichText(), "getter should return the property value")
 	})
 
-	t.Run("GetFormBlockRichText_NilValue", func(t *testing.T) {
+	t.Run("GetRichText_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormBlock{}
-		obj.FormBlockRichText = nil
+		obj.RichText = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormBlockRichText(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetRichText(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormBlockRichText_NilReceiver", func(t *testing.T) {
+	t.Run("GetRichText_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormBlock
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1186,7 +1209,7 @@ func TestGettersFormBlock(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormBlockRichText() // Should return zero value
+		_ = obj.GetRichText() // Should return zero value
 	})
 
 }
@@ -1205,14 +1228,6 @@ func TestSettersFormBlockDivider(t *testing.T) {
 		var fernTestValueCategory FormComponentCategoryBlockConst
 		obj.SetCategory(fernTestValueCategory)
 		assert.Equal(t, fernTestValueCategory, obj.Category)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockDivider{}
-		var fernTestValueType FormBlockTypeDividerConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1271,29 +1286,6 @@ func TestGettersFormBlockDivider(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockDivider{}
-		var expected FormBlockTypeDividerConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockDivider
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -1372,37 +1364,6 @@ func TestSettersMarkExplicitFormBlockDivider(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockDivider{}
-		var fernTestValueType FormBlockTypeDividerConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1558,14 +1519,6 @@ func TestSettersFormBlockHTML(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockHTML{}
-		var fernTestValueType FormBlockTypeHTMLConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormBlockHTML{}
 		var fernTestValueConfig *FormBlockHTMLConfig
@@ -1621,29 +1574,6 @@ func TestGettersFormBlockHTML(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockHTML{}
-		var expected FormBlockTypeHTMLConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockHTML
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -1722,37 +1652,6 @@ func TestSettersMarkExplicitFormBlockHTML(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockHTML{}
-		var fernTestValueType FormBlockTypeHTMLConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -1908,14 +1807,6 @@ func TestSettersFormBlockImage(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockImage{}
-		var fernTestValueType FormBlockTypeImageConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormBlockImage{}
 		var fernTestValueConfig *FormBlockImageConfig
@@ -1971,29 +1862,6 @@ func TestGettersFormBlockImage(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockImage{}
-		var expected FormBlockTypeImageConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockImage
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -2072,37 +1940,6 @@ func TestSettersMarkExplicitFormBlockImage(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockImage{}
-		var fernTestValueType FormBlockTypeImageConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2393,14 +2230,6 @@ func TestSettersFormBlockJumpButton(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockJumpButton{}
-		var fernTestValueType FormBlockTypeJumpButtonConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormBlockJumpButton{}
 		var fernTestValueConfig *FormBlockJumpButtonConfig
@@ -2456,29 +2285,6 @@ func TestGettersFormBlockJumpButton(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockJumpButton{}
-		var expected FormBlockTypeJumpButtonConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockJumpButton
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -2556,37 +2362,6 @@ func TestSettersMarkExplicitFormBlockJumpButton(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockJumpButton{}
-		var fernTestValueType FormBlockTypeJumpButtonConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -2958,14 +2733,6 @@ func TestSettersFormBlockNextButton(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockNextButton{}
-		var fernTestValueType FormBlockTypeNextButtonConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormBlockNextButton{}
 		var fernTestValueConfig *FormBlockNextButtonConfig
@@ -3021,29 +2788,6 @@ func TestGettersFormBlockNextButton(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockNextButton{}
-		var expected FormBlockTypeNextButtonConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockNextButton
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -3121,37 +2865,6 @@ func TestSettersMarkExplicitFormBlockNextButton(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockNextButton{}
-		var fernTestValueType FormBlockTypeNextButtonConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3296,14 +3009,6 @@ func TestSettersFormBlockPreviousButton(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockPreviousButton{}
-		var fernTestValueType FormBlockTypePreviousButtonConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormBlockPreviousButton{}
 		var fernTestValueConfig *FormBlockPreviousButtonConfig
@@ -3359,29 +3064,6 @@ func TestGettersFormBlockPreviousButton(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockPreviousButton{}
-		var expected FormBlockTypePreviousButtonConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockPreviousButton
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -3459,37 +3141,6 @@ func TestSettersMarkExplicitFormBlockPreviousButton(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockPreviousButton{}
-		var fernTestValueType FormBlockTypePreviousButtonConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -3634,14 +3285,6 @@ func TestSettersFormBlockResendButton(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockResendButton{}
-		var fernTestValueType FormBlockTypeResendButtonConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormBlockResendButton{}
 		var fernTestValueConfig *FormBlockResendButtonConfig
@@ -3697,29 +3340,6 @@ func TestGettersFormBlockResendButton(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockResendButton{}
-		var expected FormBlockTypeResendButtonConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockResendButton
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -3797,37 +3417,6 @@ func TestSettersMarkExplicitFormBlockResendButton(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockResendButton{}
-		var fernTestValueType FormBlockTypeResendButtonConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -4377,14 +3966,6 @@ func TestSettersFormBlockRichText(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormBlockRichText{}
-		var fernTestValueType FormBlockTypeRichTextConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormBlockRichText{}
 		var fernTestValueConfig *FormBlockRichTextConfig
@@ -4440,29 +4021,6 @@ func TestGettersFormBlockRichText(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockRichText{}
-		var expected FormBlockTypeRichTextConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormBlockRichText
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -4541,37 +4099,6 @@ func TestSettersMarkExplicitFormBlockRichText(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormBlockRichText{}
-		var fernTestValueType FormBlockTypeRichTextConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -5340,28 +4867,51 @@ func TestSettersMarkExplicitFormEndingNodeRedirection(t *testing.T) {
 }
 
 func TestGettersFormField(t *testing.T) {
-	t.Run("GetFormFieldBoolean", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormField{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FormField
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetBoolean", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldBoolean
-		obj.FormFieldBoolean = expected
+		obj.Boolean = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldBoolean(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetBoolean(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldBoolean_NilValue", func(t *testing.T) {
+	t.Run("GetBoolean_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldBoolean = nil
+		obj.Boolean = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldBoolean(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetBoolean(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldBoolean_NilReceiver", func(t *testing.T) {
+	t.Run("GetBoolean_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5370,31 +4920,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldBoolean() // Should return zero value
+		_ = obj.GetBoolean() // Should return zero value
 	})
 
-	t.Run("GetFormFieldCards", func(t *testing.T) {
+	t.Run("GetCards", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldCards
-		obj.FormFieldCards = expected
+		obj.Cards = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldCards(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCards(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldCards_NilValue", func(t *testing.T) {
+	t.Run("GetCards_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldCards = nil
+		obj.Cards = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldCards(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCards(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldCards_NilReceiver", func(t *testing.T) {
+	t.Run("GetCards_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5403,31 +4953,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldCards() // Should return zero value
+		_ = obj.GetCards() // Should return zero value
 	})
 
-	t.Run("GetFormFieldChoice", func(t *testing.T) {
+	t.Run("GetChoice", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldChoice
-		obj.FormFieldChoice = expected
+		obj.Choice = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldChoice(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetChoice(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldChoice_NilValue", func(t *testing.T) {
+	t.Run("GetChoice_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldChoice = nil
+		obj.Choice = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldChoice(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetChoice(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldChoice_NilReceiver", func(t *testing.T) {
+	t.Run("GetChoice_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5436,31 +4986,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldChoice() // Should return zero value
+		_ = obj.GetChoice() // Should return zero value
 	})
 
-	t.Run("GetFormFieldCustom", func(t *testing.T) {
+	t.Run("GetCustom", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldCustom
-		obj.FormFieldCustom = expected
+		obj.Custom = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldCustom(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetCustom(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldCustom_NilValue", func(t *testing.T) {
+	t.Run("GetCustom_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldCustom = nil
+		obj.Custom = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldCustom(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetCustom(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldCustom_NilReceiver", func(t *testing.T) {
+	t.Run("GetCustom_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5469,31 +5019,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldCustom() // Should return zero value
+		_ = obj.GetCustom() // Should return zero value
 	})
 
-	t.Run("GetFormFieldDate", func(t *testing.T) {
+	t.Run("GetDate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldDate
-		obj.FormFieldDate = expected
+		obj.Date = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldDate(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetDate(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldDate_NilValue", func(t *testing.T) {
+	t.Run("GetDate_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldDate = nil
+		obj.Date = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldDate(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetDate(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldDate_NilReceiver", func(t *testing.T) {
+	t.Run("GetDate_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5502,31 +5052,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldDate() // Should return zero value
+		_ = obj.GetDate() // Should return zero value
 	})
 
-	t.Run("GetFormFieldDropdown", func(t *testing.T) {
+	t.Run("GetDropdown", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldDropdown
-		obj.FormFieldDropdown = expected
+		obj.Dropdown = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldDropdown(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetDropdown(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldDropdown_NilValue", func(t *testing.T) {
+	t.Run("GetDropdown_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldDropdown = nil
+		obj.Dropdown = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldDropdown(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetDropdown(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldDropdown_NilReceiver", func(t *testing.T) {
+	t.Run("GetDropdown_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5535,31 +5085,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldDropdown() // Should return zero value
+		_ = obj.GetDropdown() // Should return zero value
 	})
 
-	t.Run("GetFormFieldEmail", func(t *testing.T) {
+	t.Run("GetEmail", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldEmail
-		obj.FormFieldEmail = expected
+		obj.Email = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldEmail(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetEmail(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldEmail_NilValue", func(t *testing.T) {
+	t.Run("GetEmail_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldEmail = nil
+		obj.Email = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldEmail(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetEmail(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldEmail_NilReceiver", func(t *testing.T) {
+	t.Run("GetEmail_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5568,31 +5118,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldEmail() // Should return zero value
+		_ = obj.GetEmail() // Should return zero value
 	})
 
-	t.Run("GetFormFieldFile", func(t *testing.T) {
+	t.Run("GetFile", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldFile
-		obj.FormFieldFile = expected
+		obj.File = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldFile(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFile(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldFile_NilValue", func(t *testing.T) {
+	t.Run("GetFile_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldFile = nil
+		obj.File = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldFile(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFile(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldFile_NilReceiver", func(t *testing.T) {
+	t.Run("GetFile_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5601,31 +5151,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldFile() // Should return zero value
+		_ = obj.GetFile() // Should return zero value
 	})
 
-	t.Run("GetFormFieldLegal", func(t *testing.T) {
+	t.Run("GetLegal", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldLegal
-		obj.FormFieldLegal = expected
+		obj.Legal = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldLegal(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetLegal(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldLegal_NilValue", func(t *testing.T) {
+	t.Run("GetLegal_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldLegal = nil
+		obj.Legal = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldLegal(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetLegal(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldLegal_NilReceiver", func(t *testing.T) {
+	t.Run("GetLegal_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5634,31 +5184,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldLegal() // Should return zero value
+		_ = obj.GetLegal() // Should return zero value
 	})
 
-	t.Run("GetFormFieldNumber", func(t *testing.T) {
+	t.Run("GetNumber", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldNumber
-		obj.FormFieldNumber = expected
+		obj.Number = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldNumber(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetNumber(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldNumber_NilValue", func(t *testing.T) {
+	t.Run("GetNumber_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldNumber = nil
+		obj.Number = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldNumber(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetNumber(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldNumber_NilReceiver", func(t *testing.T) {
+	t.Run("GetNumber_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5667,31 +5217,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldNumber() // Should return zero value
+		_ = obj.GetNumber() // Should return zero value
 	})
 
-	t.Run("GetFormFieldPassword", func(t *testing.T) {
+	t.Run("GetPassword", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldPassword
-		obj.FormFieldPassword = expected
+		obj.Password = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldPassword(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPassword(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldPassword_NilValue", func(t *testing.T) {
+	t.Run("GetPassword_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldPassword = nil
+		obj.Password = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldPassword(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPassword(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldPassword_NilReceiver", func(t *testing.T) {
+	t.Run("GetPassword_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5700,31 +5250,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldPassword() // Should return zero value
+		_ = obj.GetPassword() // Should return zero value
 	})
 
-	t.Run("GetFormFieldPayment", func(t *testing.T) {
+	t.Run("GetPayment", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldPayment
-		obj.FormFieldPayment = expected
+		obj.Payment = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldPayment(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPayment(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldPayment_NilValue", func(t *testing.T) {
+	t.Run("GetPayment_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldPayment = nil
+		obj.Payment = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldPayment(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPayment(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldPayment_NilReceiver", func(t *testing.T) {
+	t.Run("GetPayment_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5733,31 +5283,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldPayment() // Should return zero value
+		_ = obj.GetPayment() // Should return zero value
 	})
 
-	t.Run("GetFormFieldSocial", func(t *testing.T) {
+	t.Run("GetSocial", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldSocial
-		obj.FormFieldSocial = expected
+		obj.Social = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldSocial(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSocial(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldSocial_NilValue", func(t *testing.T) {
+	t.Run("GetSocial_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldSocial = nil
+		obj.Social = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldSocial(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSocial(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldSocial_NilReceiver", func(t *testing.T) {
+	t.Run("GetSocial_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5766,31 +5316,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldSocial() // Should return zero value
+		_ = obj.GetSocial() // Should return zero value
 	})
 
-	t.Run("GetFormFieldTel", func(t *testing.T) {
+	t.Run("GetTel", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldTel
-		obj.FormFieldTel = expected
+		obj.Tel = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldTel(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTel(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldTel_NilValue", func(t *testing.T) {
+	t.Run("GetTel_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldTel = nil
+		obj.Tel = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldTel(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTel(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldTel_NilReceiver", func(t *testing.T) {
+	t.Run("GetTel_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5799,31 +5349,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldTel() // Should return zero value
+		_ = obj.GetTel() // Should return zero value
 	})
 
-	t.Run("GetFormFieldText", func(t *testing.T) {
+	t.Run("GetText", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldText
-		obj.FormFieldText = expected
+		obj.Text = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldText(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetText(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldText_NilValue", func(t *testing.T) {
+	t.Run("GetText_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldText = nil
+		obj.Text = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldText(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetText(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldText_NilReceiver", func(t *testing.T) {
+	t.Run("GetText_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5832,31 +5382,31 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldText() // Should return zero value
+		_ = obj.GetText() // Should return zero value
 	})
 
-	t.Run("GetFormFieldURL", func(t *testing.T) {
+	t.Run("GetURL", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
 		var expected *FormFieldURL
-		obj.FormFieldURL = expected
+		obj.URL = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldURL(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetURL(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldURL_NilValue", func(t *testing.T) {
+	t.Run("GetURL_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormField{}
-		obj.FormFieldURL = nil
+		obj.URL = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldURL(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetURL(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldURL_NilReceiver", func(t *testing.T) {
+	t.Run("GetURL_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormField
 		// Should not panic - getters should handle nil receiver gracefully
@@ -5865,7 +5415,7 @@ func TestGettersFormField(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldURL() // Should return zero value
+		_ = obj.GetURL() // Should return zero value
 	})
 
 }
@@ -5884,14 +5434,6 @@ func TestSettersFormFieldBoolean(t *testing.T) {
 		var fernTestValueCategory FormComponentCategoryFieldConst
 		obj.SetCategory(fernTestValueCategory)
 		assert.Equal(t, fernTestValueCategory, obj.Category)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldBoolean{}
-		var fernTestValueType FormFieldTypeBooleanConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -5982,29 +5524,6 @@ func TestGettersFormFieldBoolean(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldBoolean{}
-		var expected FormFieldTypeBooleanConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldBoolean
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -6218,37 +5737,6 @@ func TestSettersMarkExplicitFormFieldBoolean(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldBoolean{}
-		var fernTestValueType FormFieldTypeBooleanConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -6756,14 +6244,6 @@ func TestSettersFormFieldCards(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldCards{}
-		var fernTestValueType FormFieldTypeCardsConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldCards{}
 		var fernTestValueConfig *FormFieldCardsConfig
@@ -6851,29 +6331,6 @@ func TestGettersFormFieldCards(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldCards{}
-		var expected FormFieldTypeCardsConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldCards
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -7088,37 +6545,6 @@ func TestSettersMarkExplicitFormFieldCards(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldCards{}
-		var fernTestValueType FormFieldTypeCardsConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -7738,14 +7164,6 @@ func TestSettersFormFieldChoice(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldChoice{}
-		var fernTestValueType FormFieldTypeChoiceConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldChoice{}
 		var fernTestValueConfig *FormFieldChoiceConfig
@@ -7833,29 +7251,6 @@ func TestGettersFormFieldChoice(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldChoice{}
-		var expected FormFieldTypeChoiceConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldChoice
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -8070,37 +7465,6 @@ func TestSettersMarkExplicitFormFieldChoice(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldChoice{}
-		var fernTestValueType FormFieldTypeChoiceConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -8886,14 +8250,6 @@ func TestSettersFormFieldCustom(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldCustom{}
-		var fernTestValueType FormFieldTypeCustomConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldCustom{}
 		var fernTestValueConfig *FormFieldCustomConfig
@@ -8981,29 +8337,6 @@ func TestGettersFormFieldCustom(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldCustom{}
-		var expected FormFieldTypeCustomConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldCustom
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -9217,37 +8550,6 @@ func TestSettersMarkExplicitFormFieldCustom(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldCustom{}
-		var fernTestValueType FormFieldTypeCustomConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -9724,14 +9026,6 @@ func TestSettersFormFieldDate(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldDate{}
-		var fernTestValueType FormFieldTypeDateConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldDate{}
 		var fernTestValueConfig *FormFieldDateConfig
@@ -9819,29 +9113,6 @@ func TestGettersFormFieldDate(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldDate{}
-		var expected FormFieldTypeDateConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldDate
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -10055,37 +9326,6 @@ func TestSettersMarkExplicitFormFieldDate(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldDate{}
-		var fernTestValueType FormFieldTypeDateConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -10438,14 +9678,6 @@ func TestSettersFormFieldDropdown(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldDropdown{}
-		var fernTestValueType FormFieldTypeDropdownConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldDropdown{}
 		var fernTestValueConfig *FormFieldDropdownConfig
@@ -10533,29 +9765,6 @@ func TestGettersFormFieldDropdown(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldDropdown{}
-		var expected FormFieldTypeDropdownConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldDropdown
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -10770,37 +9979,6 @@ func TestSettersMarkExplicitFormFieldDropdown(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldDropdown{}
-		var fernTestValueType FormFieldTypeDropdownConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -11358,14 +10536,6 @@ func TestSettersFormFieldEmail(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldEmail{}
-		var fernTestValueType FormFieldTypeEmailConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldEmail{}
 		var fernTestValueConfig *FormFieldEmailConfig
@@ -11453,29 +10623,6 @@ func TestGettersFormFieldEmail(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldEmail{}
-		var expected FormFieldTypeEmailConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldEmail
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -11690,37 +10837,6 @@ func TestSettersMarkExplicitFormFieldEmail(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldEmail{}
-		var fernTestValueType FormFieldTypeEmailConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -12073,14 +11189,6 @@ func TestSettersFormFieldFile(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldFile{}
-		var fernTestValueType FormFieldTypeFileConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldFile{}
 		var fernTestValueConfig *FormFieldFileConfig
@@ -12168,29 +11276,6 @@ func TestGettersFormFieldFile(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldFile{}
-		var expected FormFieldTypeFileConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldFile
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -12405,37 +11490,6 @@ func TestSettersMarkExplicitFormFieldFile(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldFile{}
-		var fernTestValueType FormFieldTypeFileConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -13149,14 +12203,6 @@ func TestSettersFormFieldLegal(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldLegal{}
-		var fernTestValueType FormFieldTypeLegalConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldLegal{}
 		var fernTestValueConfig *FormFieldLegalConfig
@@ -13244,29 +12290,6 @@ func TestGettersFormFieldLegal(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldLegal{}
-		var expected FormFieldTypeLegalConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldLegal
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -13481,37 +12504,6 @@ func TestSettersMarkExplicitFormFieldLegal(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldLegal{}
-		var fernTestValueType FormFieldTypeLegalConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -13791,14 +12783,6 @@ func TestSettersFormFieldNumber(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldNumber{}
-		var fernTestValueType FormFieldTypeNumberConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldNumber{}
 		var fernTestValueConfig *FormFieldNumberConfig
@@ -13886,29 +12870,6 @@ func TestGettersFormFieldNumber(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldNumber{}
-		var expected FormFieldTypeNumberConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldNumber
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -14123,37 +13084,6 @@ func TestSettersMarkExplicitFormFieldNumber(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldNumber{}
-		var fernTestValueType FormFieldTypeNumberConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -14652,14 +13582,6 @@ func TestSettersFormFieldPassword(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldPassword{}
-		var fernTestValueType FormFieldTypePasswordConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldPassword{}
 		var fernTestValueConfig *FormFieldPasswordConfig
@@ -14747,29 +13669,6 @@ func TestGettersFormFieldPassword(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPassword{}
-		var expected FormFieldTypePasswordConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldPassword
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -14983,37 +13882,6 @@ func TestSettersMarkExplicitFormFieldPassword(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPassword{}
-		var fernTestValueType FormFieldTypePasswordConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -15731,14 +14599,6 @@ func TestSettersFormFieldPayment(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldPayment{}
-		var fernTestValueType FormFieldTypePaymentConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldPayment{}
 		var fernTestValueConfig *FormFieldPaymentConfig
@@ -15826,29 +14686,6 @@ func TestGettersFormFieldPayment(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPayment{}
-		var expected FormFieldTypePaymentConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldPayment
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -16062,37 +14899,6 @@ func TestSettersMarkExplicitFormFieldPayment(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPayment{}
-		var fernTestValueType FormFieldTypePaymentConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -16646,28 +15452,51 @@ func TestSettersMarkExplicitFormFieldPaymentConfig(t *testing.T) {
 }
 
 func TestGettersFormFieldPaymentConfigCharge(t *testing.T) {
-	t.Run("GetFormFieldPaymentConfigChargeOneOff", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormFieldPaymentConfigCharge{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FormFieldPaymentConfigCharge
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetOneOff", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormFieldPaymentConfigCharge{}
 		var expected *FormFieldPaymentConfigChargeOneOff
-		obj.FormFieldPaymentConfigChargeOneOff = expected
+		obj.OneOff = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldPaymentConfigChargeOneOff(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOneOff(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldPaymentConfigChargeOneOff_NilValue", func(t *testing.T) {
+	t.Run("GetOneOff_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormFieldPaymentConfigCharge{}
-		obj.FormFieldPaymentConfigChargeOneOff = nil
+		obj.OneOff = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldPaymentConfigChargeOneOff(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOneOff(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldPaymentConfigChargeOneOff_NilReceiver", func(t *testing.T) {
+	t.Run("GetOneOff_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormFieldPaymentConfigCharge
 		// Should not panic - getters should handle nil receiver gracefully
@@ -16676,31 +15505,31 @@ func TestGettersFormFieldPaymentConfigCharge(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldPaymentConfigChargeOneOff() // Should return zero value
+		_ = obj.GetOneOff() // Should return zero value
 	})
 
-	t.Run("GetFormFieldPaymentConfigChargeSubscription", func(t *testing.T) {
+	t.Run("GetSubscription", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormFieldPaymentConfigCharge{}
 		var expected *FormFieldPaymentConfigChargeSubscription
-		obj.FormFieldPaymentConfigChargeSubscription = expected
+		obj.Subscription = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFieldPaymentConfigChargeSubscription(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSubscription(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFieldPaymentConfigChargeSubscription_NilValue", func(t *testing.T) {
+	t.Run("GetSubscription_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormFieldPaymentConfigCharge{}
-		obj.FormFieldPaymentConfigChargeSubscription = nil
+		obj.Subscription = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFieldPaymentConfigChargeSubscription(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSubscription(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFieldPaymentConfigChargeSubscription_NilReceiver", func(t *testing.T) {
+	t.Run("GetSubscription_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormFieldPaymentConfigCharge
 		// Should not panic - getters should handle nil receiver gracefully
@@ -16709,20 +15538,12 @@ func TestGettersFormFieldPaymentConfigCharge(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFieldPaymentConfigChargeSubscription() // Should return zero value
+		_ = obj.GetSubscription() // Should return zero value
 	})
 
 }
 
 func TestSettersFormFieldPaymentConfigChargeOneOff(t *testing.T) {
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldPaymentConfigChargeOneOff{}
-		var fernTestValueType FormFieldPaymentConfigChargeTypeOneOffConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetOneOff", func(t *testing.T) {
 		obj := &FormFieldPaymentConfigChargeOneOff{}
 		var fernTestValueOneOff *FormFieldPaymentConfigChargeOneOffOneOff
@@ -16734,29 +15555,6 @@ func TestSettersFormFieldPaymentConfigChargeOneOff(t *testing.T) {
 }
 
 func TestGettersFormFieldPaymentConfigChargeOneOff(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPaymentConfigChargeOneOff{}
-		var expected FormFieldPaymentConfigChargeTypeOneOffConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldPaymentConfigChargeOneOff
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 	t.Run("GetOneOff", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -16793,37 +15591,6 @@ func TestGettersFormFieldPaymentConfigChargeOneOff(t *testing.T) {
 }
 
 func TestSettersMarkExplicitFormFieldPaymentConfigChargeOneOff(t *testing.T) {
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPaymentConfigChargeOneOff{}
-		var fernTestValueType FormFieldPaymentConfigChargeTypeOneOffConst
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOneOff_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -17050,14 +15817,6 @@ func TestGettersFormFieldPaymentConfigChargeOneOffOneOffAmount(t *testing.T) {
 }
 
 func TestSettersFormFieldPaymentConfigChargeSubscription(t *testing.T) {
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldPaymentConfigChargeSubscription{}
-		var fernTestValueType FormFieldPaymentConfigChargeTypeSubscriptionConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetSubscription", func(t *testing.T) {
 		obj := &FormFieldPaymentConfigChargeSubscription{}
 		var fernTestValueSubscription FormFieldPaymentConfigSubscription
@@ -17069,29 +15828,6 @@ func TestSettersFormFieldPaymentConfigChargeSubscription(t *testing.T) {
 }
 
 func TestGettersFormFieldPaymentConfigChargeSubscription(t *testing.T) {
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPaymentConfigChargeSubscription{}
-		var expected FormFieldPaymentConfigChargeTypeSubscriptionConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldPaymentConfigChargeSubscription
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 	t.Run("GetSubscription", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -17118,37 +15854,6 @@ func TestGettersFormFieldPaymentConfigChargeSubscription(t *testing.T) {
 }
 
 func TestSettersMarkExplicitFormFieldPaymentConfigChargeSubscription(t *testing.T) {
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldPaymentConfigChargeSubscription{}
-		var fernTestValueType FormFieldPaymentConfigChargeTypeSubscriptionConst
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetSubscription_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -17788,14 +16493,6 @@ func TestSettersFormFieldSocial(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldSocial{}
-		var fernTestValueType FormFieldTypeSocialConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldSocial{}
 		var fernTestValueConfig *FormFieldSocialConfig
@@ -17883,29 +16580,6 @@ func TestGettersFormFieldSocial(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldSocial{}
-		var expected FormFieldTypeSocialConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldSocial
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -18143,37 +16817,6 @@ func TestSettersMarkExplicitFormFieldSocial(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldSocial{}
-		var fernTestValueType FormFieldTypeSocialConst
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConfig_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -18348,14 +16991,6 @@ func TestSettersFormFieldTel(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldTel{}
-		var fernTestValueType FormFieldTypeTelConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldTel{}
 		var fernTestValueConfig *FormFieldTelConfig
@@ -18443,29 +17078,6 @@ func TestGettersFormFieldTel(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldTel{}
-		var expected FormFieldTypeTelConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldTel
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -18680,37 +17292,6 @@ func TestSettersMarkExplicitFormFieldTel(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldTel{}
-		var fernTestValueType FormFieldTypeTelConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -19437,14 +18018,6 @@ func TestSettersFormFieldText(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldText{}
-		var fernTestValueType FormFieldTypeTextConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldText{}
 		var fernTestValueConfig *FormFieldTextConfig
@@ -19532,29 +18105,6 @@ func TestGettersFormFieldText(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldText{}
-		var expected FormFieldTypeTextConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldText
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -19769,37 +18319,6 @@ func TestSettersMarkExplicitFormFieldText(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldText{}
-		var fernTestValueType FormFieldTypeTextConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -20371,14 +18890,6 @@ func TestSettersFormFieldURL(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFieldURL{}
-		var fernTestValueType FormFieldTypeURLConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormFieldURL{}
 		var fernTestValueConfig *FormFieldURLConfig
@@ -20466,29 +18977,6 @@ func TestGettersFormFieldURL(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldURL{}
-		var expected FormFieldTypeURLConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFieldURL
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -20703,37 +19191,6 @@ func TestSettersMarkExplicitFormFieldURL(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFieldURL{}
-		var fernTestValueType FormFieldTypeURLConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21078,14 +19535,6 @@ func TestSettersFormFlow(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormFlow{}
-		var fernTestValueType FormNodeTypeFlowConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetCoordinates", func(t *testing.T) {
 		obj := &FormFlow{}
 		var fernTestValueCoordinates *FormNodeCoordinates
@@ -21134,29 +19583,6 @@ func TestGettersFormFlow(t *testing.T) {
 			}
 		}()
 		_ = obj.GetID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFlow{}
-		var expected FormNodeTypeFlowConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormFlow
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetCoordinates", func(t *testing.T) {
@@ -21271,37 +19697,6 @@ func TestSettersMarkExplicitFormFlow(t *testing.T) {
 
 		// Act
 		obj.SetID(fernTestValueID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormFlow{}
-		var fernTestValueType FormNodeTypeFlowConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -22019,28 +20414,51 @@ func TestSettersMarkExplicitFormMessages(t *testing.T) {
 }
 
 func TestGettersFormNode(t *testing.T) {
-	t.Run("GetFormFlow", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormNode{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FormNode
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetFlow", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormNode{}
 		var expected *FormFlow
-		obj.FormFlow = expected
+		obj.Flow = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormFlow(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetFlow(), "getter should return the property value")
 	})
 
-	t.Run("GetFormFlow_NilValue", func(t *testing.T) {
+	t.Run("GetFlow_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormNode{}
-		obj.FormFlow = nil
+		obj.Flow = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormFlow(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetFlow(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormFlow_NilReceiver", func(t *testing.T) {
+	t.Run("GetFlow_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormNode
 		// Should not panic - getters should handle nil receiver gracefully
@@ -22049,31 +20467,31 @@ func TestGettersFormNode(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormFlow() // Should return zero value
+		_ = obj.GetFlow() // Should return zero value
 	})
 
-	t.Run("GetFormRouter", func(t *testing.T) {
+	t.Run("GetRouter", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormNode{}
 		var expected *FormRouter
-		obj.FormRouter = expected
+		obj.Router = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormRouter(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetRouter(), "getter should return the property value")
 	})
 
-	t.Run("GetFormRouter_NilValue", func(t *testing.T) {
+	t.Run("GetRouter_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormNode{}
-		obj.FormRouter = nil
+		obj.Router = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormRouter(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetRouter(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormRouter_NilReceiver", func(t *testing.T) {
+	t.Run("GetRouter_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormNode
 		// Should not panic - getters should handle nil receiver gracefully
@@ -22082,31 +20500,31 @@ func TestGettersFormNode(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormRouter() // Should return zero value
+		_ = obj.GetRouter() // Should return zero value
 	})
 
-	t.Run("GetFormStep", func(t *testing.T) {
+	t.Run("GetStep", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormNode{}
 		var expected *FormStep
-		obj.FormStep = expected
+		obj.Step = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormStep(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetStep(), "getter should return the property value")
 	})
 
-	t.Run("GetFormStep_NilValue", func(t *testing.T) {
+	t.Run("GetStep_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormNode{}
-		obj.FormStep = nil
+		obj.Step = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormStep(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetStep(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormStep_NilReceiver", func(t *testing.T) {
+	t.Run("GetStep_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormNode
 		// Should not panic - getters should handle nil receiver gracefully
@@ -22115,7 +20533,7 @@ func TestGettersFormNode(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormStep() // Should return zero value
+		_ = obj.GetStep() // Should return zero value
 	})
 
 }
@@ -22311,14 +20729,6 @@ func TestSettersFormRouter(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormRouter{}
-		var fernTestValueType FormNodeTypeRouterConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetCoordinates", func(t *testing.T) {
 		obj := &FormRouter{}
 		var fernTestValueCoordinates *FormNodeCoordinates
@@ -22367,29 +20777,6 @@ func TestGettersFormRouter(t *testing.T) {
 			}
 		}()
 		_ = obj.GetID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormRouter{}
-		var expected FormNodeTypeRouterConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormRouter
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetCoordinates", func(t *testing.T) {
@@ -22505,37 +20892,6 @@ func TestSettersMarkExplicitFormRouter(t *testing.T) {
 
 		// Act
 		obj.SetID(fernTestValueID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormRouter{}
-		var fernTestValueType FormNodeTypeRouterConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -23261,14 +21617,6 @@ func TestSettersFormStep(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormStep{}
-		var fernTestValueType FormNodeTypeStepConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetCoordinates", func(t *testing.T) {
 		obj := &FormStep{}
 		var fernTestValueCoordinates *FormNodeCoordinates
@@ -23317,29 +21665,6 @@ func TestGettersFormStep(t *testing.T) {
 			}
 		}()
 		_ = obj.GetID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormStep{}
-		var expected FormNodeTypeStepConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormStep
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetCoordinates", func(t *testing.T) {
@@ -23455,37 +21780,6 @@ func TestSettersMarkExplicitFormStep(t *testing.T) {
 
 		// Act
 		obj.SetID(fernTestValueID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormStep{}
-		var fernTestValueType FormNodeTypeStepConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -24245,28 +22539,51 @@ func TestSettersMarkExplicitFormSummary(t *testing.T) {
 }
 
 func TestGettersFormWidget(t *testing.T) {
-	t.Run("GetFormWidgetAuth0VerifiableCredentials", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &FormWidget{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *FormWidget
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetAuth0VerifiableCredentials", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormWidget{}
 		var expected *FormWidgetAuth0VerifiableCredentials
-		obj.FormWidgetAuth0VerifiableCredentials = expected
+		obj.Auth0VerifiableCredentials = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormWidgetAuth0VerifiableCredentials(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAuth0VerifiableCredentials(), "getter should return the property value")
 	})
 
-	t.Run("GetFormWidgetAuth0VerifiableCredentials_NilValue", func(t *testing.T) {
+	t.Run("GetAuth0VerifiableCredentials_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormWidget{}
-		obj.FormWidgetAuth0VerifiableCredentials = nil
+		obj.Auth0VerifiableCredentials = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormWidgetAuth0VerifiableCredentials(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAuth0VerifiableCredentials(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormWidgetAuth0VerifiableCredentials_NilReceiver", func(t *testing.T) {
+	t.Run("GetAuth0VerifiableCredentials_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormWidget
 		// Should not panic - getters should handle nil receiver gracefully
@@ -24275,31 +22592,31 @@ func TestGettersFormWidget(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormWidgetAuth0VerifiableCredentials() // Should return zero value
+		_ = obj.GetAuth0VerifiableCredentials() // Should return zero value
 	})
 
-	t.Run("GetFormWidgetGMapsAddress", func(t *testing.T) {
+	t.Run("GetGmapsAddress", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormWidget{}
 		var expected *FormWidgetGMapsAddress
-		obj.FormWidgetGMapsAddress = expected
+		obj.GmapsAddress = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormWidgetGMapsAddress(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGmapsAddress(), "getter should return the property value")
 	})
 
-	t.Run("GetFormWidgetGMapsAddress_NilValue", func(t *testing.T) {
+	t.Run("GetGmapsAddress_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormWidget{}
-		obj.FormWidgetGMapsAddress = nil
+		obj.GmapsAddress = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormWidgetGMapsAddress(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetGmapsAddress(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormWidgetGMapsAddress_NilReceiver", func(t *testing.T) {
+	t.Run("GetGmapsAddress_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormWidget
 		// Should not panic - getters should handle nil receiver gracefully
@@ -24308,31 +22625,31 @@ func TestGettersFormWidget(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormWidgetGMapsAddress() // Should return zero value
+		_ = obj.GetGmapsAddress() // Should return zero value
 	})
 
-	t.Run("GetFormWidgetRecaptcha", func(t *testing.T) {
+	t.Run("GetRecaptcha", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormWidget{}
 		var expected *FormWidgetRecaptcha
-		obj.FormWidgetRecaptcha = expected
+		obj.Recaptcha = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetFormWidgetRecaptcha(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetRecaptcha(), "getter should return the property value")
 	})
 
-	t.Run("GetFormWidgetRecaptcha_NilValue", func(t *testing.T) {
+	t.Run("GetRecaptcha_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &FormWidget{}
-		obj.FormWidgetRecaptcha = nil
+		obj.Recaptcha = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetFormWidgetRecaptcha(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetRecaptcha(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetFormWidgetRecaptcha_NilReceiver", func(t *testing.T) {
+	t.Run("GetRecaptcha_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *FormWidget
 		// Should not panic - getters should handle nil receiver gracefully
@@ -24341,7 +22658,7 @@ func TestGettersFormWidget(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetFormWidgetRecaptcha() // Should return zero value
+		_ = obj.GetRecaptcha() // Should return zero value
 	})
 
 }
@@ -24360,14 +22677,6 @@ func TestSettersFormWidgetAuth0VerifiableCredentials(t *testing.T) {
 		var fernTestValueCategory FormComponentCategoryWidgetConst
 		obj.SetCategory(fernTestValueCategory)
 		assert.Equal(t, fernTestValueCategory, obj.Category)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormWidgetAuth0VerifiableCredentials{}
-		var fernTestValueType FormWidgetTypeAuth0VerifiableCredentialsConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -24458,29 +22767,6 @@ func TestGettersFormWidgetAuth0VerifiableCredentials(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormWidgetAuth0VerifiableCredentials{}
-		var expected FormWidgetTypeAuth0VerifiableCredentialsConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormWidgetAuth0VerifiableCredentials
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -24694,37 +22980,6 @@ func TestSettersMarkExplicitFormWidgetAuth0VerifiableCredentials(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormWidgetAuth0VerifiableCredentials{}
-		var fernTestValueType FormWidgetTypeAuth0VerifiableCredentialsConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -25325,14 +23580,6 @@ func TestSettersFormWidgetGMapsAddress(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormWidgetGMapsAddress{}
-		var fernTestValueType FormWidgetTypeGMapsAddressConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormWidgetGMapsAddress{}
 		var fernTestValueConfig *FormWidgetGMapsAddressConfig
@@ -25420,29 +23667,6 @@ func TestGettersFormWidgetGMapsAddress(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormWidgetGMapsAddress{}
-		var expected FormWidgetTypeGMapsAddressConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormWidgetGMapsAddress
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -25656,37 +23880,6 @@ func TestSettersMarkExplicitFormWidgetGMapsAddress(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormWidgetGMapsAddress{}
-		var fernTestValueType FormWidgetTypeGMapsAddressConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -26028,14 +24221,6 @@ func TestSettersFormWidgetRecaptcha(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetType", func(t *testing.T) {
-		obj := &FormWidgetRecaptcha{}
-		var fernTestValueType FormWidgetTypeRecaptchaConst
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetConfig", func(t *testing.T) {
 		obj := &FormWidgetRecaptcha{}
 		var fernTestValueConfig *FormWidgetRecaptchaConfig
@@ -26123,29 +24308,6 @@ func TestGettersFormWidgetRecaptcha(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCategory() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormWidgetRecaptcha{}
-		var expected FormWidgetTypeRecaptchaConst
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *FormWidgetRecaptcha
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConfig", func(t *testing.T) {
@@ -26359,37 +24521,6 @@ func TestSettersMarkExplicitFormWidgetRecaptcha(t *testing.T) {
 
 		// Act
 		obj.SetCategory(fernTestValueCategory)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &FormWidgetRecaptcha{}
-		var fernTestValueType FormWidgetTypeRecaptchaConst
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -33264,182 +31395,6 @@ func TestEnumFormBlockResendButtonConfigTextAlignmentEnum(t *testing.T) {
 	})
 }
 
-func TestEnumFormBlockTypeDividerConst(t *testing.T) {
-	t.Run("NewFromString_DIVIDER", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypeDividerConstFromString("DIVIDER")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypeDividerConst("DIVIDER"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypeDividerConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypeDividerConstFromString("DIVIDER")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormBlockTypeHTMLConst(t *testing.T) {
-	t.Run("NewFromString_HTML", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypeHTMLConstFromString("HTML")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypeHTMLConst("HTML"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypeHTMLConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypeHTMLConstFromString("HTML")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormBlockTypeImageConst(t *testing.T) {
-	t.Run("NewFromString_IMAGE", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypeImageConstFromString("IMAGE")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypeImageConst("IMAGE"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypeImageConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypeImageConstFromString("IMAGE")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormBlockTypeJumpButtonConst(t *testing.T) {
-	t.Run("NewFromString_JUMP_BUTTON", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypeJumpButtonConstFromString("JUMP_BUTTON")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypeJumpButtonConst("JUMP_BUTTON"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypeJumpButtonConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypeJumpButtonConstFromString("JUMP_BUTTON")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormBlockTypeNextButtonConst(t *testing.T) {
-	t.Run("NewFromString_NEXT_BUTTON", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypeNextButtonConstFromString("NEXT_BUTTON")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypeNextButtonConst("NEXT_BUTTON"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypeNextButtonConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypeNextButtonConstFromString("NEXT_BUTTON")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormBlockTypePreviousButtonConst(t *testing.T) {
-	t.Run("NewFromString_PREVIOUS_BUTTON", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypePreviousButtonConstFromString("PREVIOUS_BUTTON")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypePreviousButtonConst("PREVIOUS_BUTTON"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypePreviousButtonConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypePreviousButtonConstFromString("PREVIOUS_BUTTON")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormBlockTypeResendButtonConst(t *testing.T) {
-	t.Run("NewFromString_RESEND_BUTTON", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypeResendButtonConstFromString("RESEND_BUTTON")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypeResendButtonConst("RESEND_BUTTON"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypeResendButtonConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypeResendButtonConstFromString("RESEND_BUTTON")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormBlockTypeRichTextConst(t *testing.T) {
-	t.Run("NewFromString_RICH_TEXT", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormBlockTypeRichTextConstFromString("RICH_TEXT")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormBlockTypeRichTextConst("RICH_TEXT"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormBlockTypeRichTextConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormBlockTypeRichTextConstFromString("RICH_TEXT")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumFormComponentCategoryBlockConst(t *testing.T) {
 	t.Run("NewFromString_BLOCK", func(t *testing.T) {
 		t.Parallel()
@@ -33764,50 +31719,6 @@ func TestEnumFormFieldPaymentConfigChargeOneOffCurrencyEnum(t *testing.T) {
 	})
 }
 
-func TestEnumFormFieldPaymentConfigChargeTypeOneOffConst(t *testing.T) {
-	t.Run("NewFromString_ONE_OFF", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("ONE_OFF")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldPaymentConfigChargeTypeOneOffConst("ONE_OFF"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("ONE_OFF")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldPaymentConfigChargeTypeSubscriptionConst(t *testing.T) {
-	t.Run("NewFromString_SUBSCRIPTION", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("SUBSCRIPTION")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldPaymentConfigChargeTypeSubscriptionConst("SUBSCRIPTION"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("SUBSCRIPTION")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumFormFieldPaymentConfigProviderEnum(t *testing.T) {
 	t.Run("NewFromString_STRIPE", func(t *testing.T) {
 		t.Parallel()
@@ -33823,490 +31734,6 @@ func TestEnumFormFieldPaymentConfigProviderEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewFormFieldPaymentConfigProviderEnumFromString("STRIPE")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeBooleanConst(t *testing.T) {
-	t.Run("NewFromString_BOOLEAN", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeBooleanConstFromString("BOOLEAN")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeBooleanConst("BOOLEAN"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeBooleanConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeBooleanConstFromString("BOOLEAN")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeCardsConst(t *testing.T) {
-	t.Run("NewFromString_CARDS", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeCardsConstFromString("CARDS")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeCardsConst("CARDS"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeCardsConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeCardsConstFromString("CARDS")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeChoiceConst(t *testing.T) {
-	t.Run("NewFromString_CHOICE", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeChoiceConstFromString("CHOICE")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeChoiceConst("CHOICE"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeChoiceConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeChoiceConstFromString("CHOICE")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeCustomConst(t *testing.T) {
-	t.Run("NewFromString_CUSTOM", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeCustomConstFromString("CUSTOM")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeCustomConst("CUSTOM"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeCustomConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeCustomConstFromString("CUSTOM")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeDateConst(t *testing.T) {
-	t.Run("NewFromString_DATE", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeDateConstFromString("DATE")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeDateConst("DATE"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeDateConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeDateConstFromString("DATE")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeDropdownConst(t *testing.T) {
-	t.Run("NewFromString_DROPDOWN", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeDropdownConstFromString("DROPDOWN")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeDropdownConst("DROPDOWN"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeDropdownConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeDropdownConstFromString("DROPDOWN")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeEmailConst(t *testing.T) {
-	t.Run("NewFromString_EMAIL", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeEmailConstFromString("EMAIL")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeEmailConst("EMAIL"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeEmailConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeEmailConstFromString("EMAIL")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeFileConst(t *testing.T) {
-	t.Run("NewFromString_FILE", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeFileConstFromString("FILE")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeFileConst("FILE"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeFileConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeFileConstFromString("FILE")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeLegalConst(t *testing.T) {
-	t.Run("NewFromString_LEGAL", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeLegalConstFromString("LEGAL")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeLegalConst("LEGAL"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeLegalConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeLegalConstFromString("LEGAL")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeNumberConst(t *testing.T) {
-	t.Run("NewFromString_NUMBER", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeNumberConstFromString("NUMBER")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeNumberConst("NUMBER"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeNumberConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeNumberConstFromString("NUMBER")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypePasswordConst(t *testing.T) {
-	t.Run("NewFromString_PASSWORD", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypePasswordConstFromString("PASSWORD")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypePasswordConst("PASSWORD"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypePasswordConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypePasswordConstFromString("PASSWORD")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypePaymentConst(t *testing.T) {
-	t.Run("NewFromString_PAYMENT", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypePaymentConstFromString("PAYMENT")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypePaymentConst("PAYMENT"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypePaymentConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypePaymentConstFromString("PAYMENT")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeSocialConst(t *testing.T) {
-	t.Run("NewFromString_SOCIAL", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeSocialConstFromString("SOCIAL")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeSocialConst("SOCIAL"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeSocialConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeSocialConstFromString("SOCIAL")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeTelConst(t *testing.T) {
-	t.Run("NewFromString_TEL", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeTelConstFromString("TEL")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeTelConst("TEL"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeTelConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeTelConstFromString("TEL")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeTextConst(t *testing.T) {
-	t.Run("NewFromString_TEXT", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeTextConstFromString("TEXT")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeTextConst("TEXT"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeTextConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeTextConstFromString("TEXT")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormFieldTypeURLConst(t *testing.T) {
-	t.Run("NewFromString_URL", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormFieldTypeURLConstFromString("URL")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormFieldTypeURLConst("URL"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormFieldTypeURLConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormFieldTypeURLConstFromString("URL")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormNodeTypeFlowConst(t *testing.T) {
-	t.Run("NewFromString_FLOW", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormNodeTypeFlowConstFromString("FLOW")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormNodeTypeFlowConst("FLOW"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormNodeTypeFlowConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormNodeTypeFlowConstFromString("FLOW")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormNodeTypeRouterConst(t *testing.T) {
-	t.Run("NewFromString_ROUTER", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormNodeTypeRouterConstFromString("ROUTER")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormNodeTypeRouterConst("ROUTER"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormNodeTypeRouterConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormNodeTypeRouterConstFromString("ROUTER")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormNodeTypeStepConst(t *testing.T) {
-	t.Run("NewFromString_STEP", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormNodeTypeStepConstFromString("STEP")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormNodeTypeStepConst("STEP"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormNodeTypeStepConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormNodeTypeStepConstFromString("STEP")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormWidgetTypeAuth0VerifiableCredentialsConst(t *testing.T) {
-	t.Run("NewFromString_AUTH0_VERIFIABLE_CREDENTIALS", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("AUTH0_VERIFIABLE_CREDENTIALS")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormWidgetTypeAuth0VerifiableCredentialsConst("AUTH0_VERIFIABLE_CREDENTIALS"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("AUTH0_VERIFIABLE_CREDENTIALS")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormWidgetTypeGMapsAddressConst(t *testing.T) {
-	t.Run("NewFromString_GMAPS_ADDRESS", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormWidgetTypeGMapsAddressConstFromString("GMAPS_ADDRESS")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormWidgetTypeGMapsAddressConst("GMAPS_ADDRESS"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormWidgetTypeGMapsAddressConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormWidgetTypeGMapsAddressConstFromString("GMAPS_ADDRESS")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumFormWidgetTypeRecaptchaConst(t *testing.T) {
-	t.Run("NewFromString_RECAPTCHA", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewFormWidgetTypeRecaptchaConstFromString("RECAPTCHA")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, FormWidgetTypeRecaptchaConst("RECAPTCHA"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewFormWidgetTypeRecaptchaConstFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewFormWidgetTypeRecaptchaConstFromString("RECAPTCHA")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

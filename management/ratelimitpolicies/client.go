@@ -35,25 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Example:
-//
-//	request := &management.ListRateLimitPoliciesRequestParameters{
-//	    Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI.Ptr(),
-//	    Consumer: management.RateLimitPolicyConsumerEnumClient.Ptr(),
-//	    ConsumerSelector: management.String(
-//	        "consumer_selector",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	}
-//	client.RateLimitPolicies.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListRateLimitPoliciesRequestParameters,
@@ -108,7 +89,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -119,22 +100,6 @@ func (c *Client) List(
 	return pager.GetPage(ctx, request.From)
 }
 
-// Example:
-//
-//	request := &management.CreateRateLimitPolicyRequestContent{
-//	    Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI,
-//	    Consumer: management.RateLimitPolicyConsumerEnumClient,
-//	    ConsumerSelector: "consumer_selector",
-//	    Configuration: &management.RateLimitPolicyConfiguration{
-//	        RateLimitPolicyConfigurationZero: &management.RateLimitPolicyConfigurationZero{
-//	            Action: management.RateLimitPolicyConfigurationZeroActionAllow,
-//	        },
-//	    },
-//	}
-//	client.RateLimitPolicies.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateRateLimitPolicyRequestContent,
@@ -151,12 +116,6 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.RateLimitPolicies.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Unique identifier for the Rate Limit Policy.
@@ -174,12 +133,6 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.RateLimitPolicies.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Unique identifier for the Rate Limit Policy.
@@ -197,20 +150,6 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Example:
-//
-//	request := &management.PatchRateLimitPolicyRequestContent{
-//	    Configuration: &management.PatchRateLimitPolicyConfigurationRequestContent{
-//	        PatchRateLimitPolicyConfigurationRequestContentZero: &management.PatchRateLimitPolicyConfigurationRequestContentZero{
-//	            Action: management.PatchRateLimitPolicyConfigurationRequestContentZeroActionAllow,
-//	        },
-//	    },
-//	}
-//	client.RateLimitPolicies.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// Unique identifier for the Rate Limit Policy.

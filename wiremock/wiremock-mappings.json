@@ -2403,7 +2403,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"eventStreams\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"subscriptions\": [\n        {}\n      ],\n      \"destination\": {\n        \"type\": \"webhook\",\n        \"configuration\": {\n          \"webhook_endpoint\": \"webhook_endpoint\",\n          \"webhook_authorization\": {\n            \"method\": \"basic\",\n            \"username\": \"username\"\n          }\n        }\n      },\n      \"status\": \"enabled\",\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\"\n    }\n  ],\n  \"next\": \"next\"\n}",
+        "body": "{\n  \"eventStreams\": [\n    {\n      \"id\": \"id\",\n      \"name\": \"name\",\n      \"subscriptions\": [\n        {}\n      ],\n      \"destination\": {\n        \"type\": \"webhook\",\n        \"configuration\": {\n          \"webhook_endpoint\": \"webhook_endpoint\",\n          \"webhook_authorization\": {\n            \"username\": \"username\",\n            \"method\": \"basic\"\n          }\n        }\n      },\n      \"status\": \"enabled\",\n      \"created_at\": \"2024-01-15T09:30:00Z\",\n      \"updated_at\": \"2024-01-15T09:30:00Z\"\n    }\n  ],\n  \"next\": \"next\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2435,7 +2435,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"subscriptions\": [\n    {\n      \"event_type\": \"event_type\"\n    }\n  ],\n  \"destination\": {\n    \"type\": \"webhook\",\n    \"configuration\": {\n      \"webhook_endpoint\": \"webhook_endpoint\",\n      \"webhook_authorization\": {\n        \"method\": \"basic\",\n        \"username\": \"username\"\n      }\n    }\n  },\n  \"status\": \"enabled\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"subscriptions\": [\n    {\n      \"event_type\": \"event_type\"\n    }\n  ],\n  \"destination\": {\n    \"type\": \"webhook\",\n    \"configuration\": {\n      \"webhook_endpoint\": \"webhook_endpoint\",\n      \"webhook_authorization\": {\n        \"username\": \"username\",\n        \"method\": \"basic\"\n      }\n    }\n  },\n  \"status\": \"enabled\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2471,7 +2471,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"subscriptions\": [\n    {\n      \"event_type\": \"event_type\"\n    }\n  ],\n  \"destination\": {\n    \"type\": \"webhook\",\n    \"configuration\": {\n      \"webhook_endpoint\": \"webhook_endpoint\",\n      \"webhook_authorization\": {\n        \"method\": \"basic\",\n        \"username\": \"username\"\n      }\n    }\n  },\n  \"status\": \"enabled\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"subscriptions\": [\n    {\n      \"event_type\": \"event_type\"\n    }\n  ],\n  \"destination\": {\n    \"type\": \"webhook\",\n    \"configuration\": {\n      \"webhook_endpoint\": \"webhook_endpoint\",\n      \"webhook_authorization\": {\n        \"username\": \"username\",\n        \"method\": \"basic\"\n      }\n    }\n  },\n  \"status\": \"enabled\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2543,7 +2543,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"subscriptions\": [\n    {\n      \"event_type\": \"event_type\"\n    }\n  ],\n  \"destination\": {\n    \"type\": \"webhook\",\n    \"configuration\": {\n      \"webhook_endpoint\": \"webhook_endpoint\",\n      \"webhook_authorization\": {\n        \"method\": \"basic\",\n        \"username\": \"username\"\n      }\n    }\n  },\n  \"status\": \"enabled\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"subscriptions\": [\n    {\n      \"event_type\": \"event_type\"\n    }\n  ],\n  \"destination\": {\n    \"type\": \"webhook\",\n    \"configuration\": {\n      \"webhook_endpoint\": \"webhook_endpoint\",\n      \"webhook_authorization\": {\n        \"username\": \"username\",\n        \"method\": \"basic\"\n      }\n    }\n  },\n  \"status\": \"enabled\",\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2710,7 +2710,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"actions\": [\n    {\n      \"id\": \"id\",\n      \"alias\": \"alias\",\n      \"type\": \"ACTIVECAMPAIGN\",\n      \"action\": \"LIST_CONTACTS\",\n      \"allow_failure\": true,\n      \"mask_output\": true,\n      \"params\": {\n        \"connection_id\": \"connection_id\",\n        \"email\": \"email\"\n      }\n    }\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"executed_at\": \"executed_at\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"actions\": [\n    {\n      \"id\": \"id\",\n      \"alias\": \"alias\",\n      \"type\": \"ACTIVECAMPAIGN\",\n      \"allow_failure\": true,\n      \"mask_output\": true,\n      \"params\": {\n        \"connection_id\": \"connection_id\",\n        \"email\": \"email\"\n      },\n      \"action\": \"LIST_CONTACTS\"\n    }\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"executed_at\": \"executed_at\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2755,7 +2755,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"actions\": [\n    {\n      \"id\": \"id\",\n      \"alias\": \"alias\",\n      \"type\": \"ACTIVECAMPAIGN\",\n      \"action\": \"LIST_CONTACTS\",\n      \"allow_failure\": true,\n      \"mask_output\": true,\n      \"params\": {\n        \"connection_id\": \"connection_id\",\n        \"email\": \"email\"\n      }\n    }\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"executed_at\": \"executed_at\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"actions\": [\n    {\n      \"id\": \"id\",\n      \"alias\": \"alias\",\n      \"type\": \"ACTIVECAMPAIGN\",\n      \"allow_failure\": true,\n      \"mask_output\": true,\n      \"params\": {\n        \"connection_id\": \"connection_id\",\n        \"email\": \"email\"\n      },\n      \"action\": \"LIST_CONTACTS\"\n    }\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"executed_at\": \"executed_at\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2827,7 +2827,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"actions\": [\n    {\n      \"id\": \"id\",\n      \"alias\": \"alias\",\n      \"type\": \"ACTIVECAMPAIGN\",\n      \"action\": \"LIST_CONTACTS\",\n      \"allow_failure\": true,\n      \"mask_output\": true,\n      \"params\": {\n        \"connection_id\": \"connection_id\",\n        \"email\": \"email\"\n      }\n    }\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"executed_at\": \"executed_at\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"actions\": [\n    {\n      \"id\": \"id\",\n      \"alias\": \"alias\",\n      \"type\": \"ACTIVECAMPAIGN\",\n      \"allow_failure\": true,\n      \"mask_output\": true,\n      \"params\": {\n        \"connection_id\": \"connection_id\",\n        \"email\": \"email\"\n      },\n      \"action\": \"LIST_CONTACTS\"\n    }\n  ],\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"executed_at\": \"executed_at\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2908,7 +2908,7 @@
       },
       "response": {
         "status": 201,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"messages\": {\n    \"errors\": {\n      \"key\": \"value\"\n    },\n    \"custom\": {\n      \"key\": \"value\"\n    }\n  },\n  \"languages\": {\n    \"primary\": \"primary\",\n    \"default\": \"default\"\n  },\n  \"translations\": {\n    \"key\": {\n      \"key\": \"value\"\n    }\n  },\n  \"nodes\": [\n    {\n      \"id\": \"id\",\n      \"type\": \"FLOW\",\n      \"coordinates\": {\n        \"x\": 1,\n        \"y\": 1\n      },\n      \"alias\": \"alias\",\n      \"config\": {\n        \"flow_id\": \"flow_id\"\n      }\n    }\n  ],\n  \"start\": {\n    \"hidden_fields\": [\n      {\n        \"key\": \"key\"\n      }\n    ],\n    \"next_node\": \"$ending\",\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    }\n  },\n  \"ending\": {\n    \"redirection\": {\n      \"delay\": 1,\n      \"target\": \"target\"\n    },\n    \"after_submit\": {\n      \"flow_id\": \"flow_id\"\n    },\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    },\n    \"resume_flow\": true\n  },\n  \"style\": {\n    \"css\": \"css\"\n  },\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"embedded_at\": \"embedded_at\",\n  \"submitted_at\": \"submitted_at\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"messages\": {\n    \"errors\": {\n      \"key\": \"value\"\n    },\n    \"custom\": {\n      \"key\": \"value\"\n    }\n  },\n  \"languages\": {\n    \"primary\": \"primary\",\n    \"default\": \"default\"\n  },\n  \"translations\": {\n    \"key\": {\n      \"key\": \"value\"\n    }\n  },\n  \"nodes\": [\n    {\n      \"id\": \"id\",\n      \"coordinates\": {\n        \"x\": 1,\n        \"y\": 1\n      },\n      \"alias\": \"alias\",\n      \"config\": {\n        \"flow_id\": \"flow_id\"\n      },\n      \"type\": \"FLOW\"\n    }\n  ],\n  \"start\": {\n    \"hidden_fields\": [\n      {\n        \"key\": \"key\"\n      }\n    ],\n    \"next_node\": \"$ending\",\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    }\n  },\n  \"ending\": {\n    \"redirection\": {\n      \"delay\": 1,\n      \"target\": \"target\"\n    },\n    \"after_submit\": {\n      \"flow_id\": \"flow_id\"\n    },\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    },\n    \"resume_flow\": true\n  },\n  \"style\": {\n    \"css\": \"css\"\n  },\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"embedded_at\": \"embedded_at\",\n  \"submitted_at\": \"submitted_at\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -2953,7 +2953,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"messages\": {\n    \"errors\": {\n      \"key\": \"value\"\n    },\n    \"custom\": {\n      \"key\": \"value\"\n    }\n  },\n  \"languages\": {\n    \"primary\": \"primary\",\n    \"default\": \"default\"\n  },\n  \"translations\": {\n    \"key\": {\n      \"key\": \"value\"\n    }\n  },\n  \"nodes\": [\n    {\n      \"id\": \"id\",\n      \"type\": \"FLOW\",\n      \"coordinates\": {\n        \"x\": 1,\n        \"y\": 1\n      },\n      \"alias\": \"alias\",\n      \"config\": {\n        \"flow_id\": \"flow_id\"\n      }\n    }\n  ],\n  \"start\": {\n    \"hidden_fields\": [\n      {\n        \"key\": \"key\"\n      }\n    ],\n    \"next_node\": \"$ending\",\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    }\n  },\n  \"ending\": {\n    \"redirection\": {\n      \"delay\": 1,\n      \"target\": \"target\"\n    },\n    \"after_submit\": {\n      \"flow_id\": \"flow_id\"\n    },\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    },\n    \"resume_flow\": true\n  },\n  \"style\": {\n    \"css\": \"css\"\n  },\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"embedded_at\": \"embedded_at\",\n  \"submitted_at\": \"submitted_at\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"messages\": {\n    \"errors\": {\n      \"key\": \"value\"\n    },\n    \"custom\": {\n      \"key\": \"value\"\n    }\n  },\n  \"languages\": {\n    \"primary\": \"primary\",\n    \"default\": \"default\"\n  },\n  \"translations\": {\n    \"key\": {\n      \"key\": \"value\"\n    }\n  },\n  \"nodes\": [\n    {\n      \"id\": \"id\",\n      \"coordinates\": {\n        \"x\": 1,\n        \"y\": 1\n      },\n      \"alias\": \"alias\",\n      \"config\": {\n        \"flow_id\": \"flow_id\"\n      },\n      \"type\": \"FLOW\"\n    }\n  ],\n  \"start\": {\n    \"hidden_fields\": [\n      {\n        \"key\": \"key\"\n      }\n    ],\n    \"next_node\": \"$ending\",\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    }\n  },\n  \"ending\": {\n    \"redirection\": {\n      \"delay\": 1,\n      \"target\": \"target\"\n    },\n    \"after_submit\": {\n      \"flow_id\": \"flow_id\"\n    },\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    },\n    \"resume_flow\": true\n  },\n  \"style\": {\n    \"css\": \"css\"\n  },\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"embedded_at\": \"embedded_at\",\n  \"submitted_at\": \"submitted_at\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -3025,7 +3025,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"messages\": {\n    \"errors\": {\n      \"key\": \"value\"\n    },\n    \"custom\": {\n      \"key\": \"value\"\n    }\n  },\n  \"languages\": {\n    \"primary\": \"primary\",\n    \"default\": \"default\"\n  },\n  \"translations\": {\n    \"key\": {\n      \"key\": \"value\"\n    }\n  },\n  \"nodes\": [\n    {\n      \"id\": \"id\",\n      \"type\": \"FLOW\",\n      \"coordinates\": {\n        \"x\": 1,\n        \"y\": 1\n      },\n      \"alias\": \"alias\",\n      \"config\": {\n        \"flow_id\": \"flow_id\"\n      }\n    }\n  ],\n  \"start\": {\n    \"hidden_fields\": [\n      {\n        \"key\": \"key\"\n      }\n    ],\n    \"next_node\": \"$ending\",\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    }\n  },\n  \"ending\": {\n    \"redirection\": {\n      \"delay\": 1,\n      \"target\": \"target\"\n    },\n    \"after_submit\": {\n      \"flow_id\": \"flow_id\"\n    },\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    },\n    \"resume_flow\": true\n  },\n  \"style\": {\n    \"css\": \"css\"\n  },\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"embedded_at\": \"embedded_at\",\n  \"submitted_at\": \"submitted_at\"\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"messages\": {\n    \"errors\": {\n      \"key\": \"value\"\n    },\n    \"custom\": {\n      \"key\": \"value\"\n    }\n  },\n  \"languages\": {\n    \"primary\": \"primary\",\n    \"default\": \"default\"\n  },\n  \"translations\": {\n    \"key\": {\n      \"key\": \"value\"\n    }\n  },\n  \"nodes\": [\n    {\n      \"id\": \"id\",\n      \"coordinates\": {\n        \"x\": 1,\n        \"y\": 1\n      },\n      \"alias\": \"alias\",\n      \"config\": {\n        \"flow_id\": \"flow_id\"\n      },\n      \"type\": \"FLOW\"\n    }\n  ],\n  \"start\": {\n    \"hidden_fields\": [\n      {\n        \"key\": \"key\"\n      }\n    ],\n    \"next_node\": \"$ending\",\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    }\n  },\n  \"ending\": {\n    \"redirection\": {\n      \"delay\": 1,\n      \"target\": \"target\"\n    },\n    \"after_submit\": {\n      \"flow_id\": \"flow_id\"\n    },\n    \"coordinates\": {\n      \"x\": 1,\n      \"y\": 1\n    },\n    \"resume_flow\": true\n  },\n  \"style\": {\n    \"css\": \"css\"\n  },\n  \"created_at\": \"2024-01-15T09:30:00Z\",\n  \"updated_at\": \"2024-01-15T09:30:00Z\",\n  \"embedded_at\": \"embedded_at\",\n  \"submitted_at\": \"submitted_at\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -3608,7 +3608,7 @@
       },
       "response": {
         "status": 200,
-        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"status\": \"active\",\n    \"type\": \"http\",\n    \"isPriority\": true,\n    \"filters\": [\n      {}\n    ],\n    \"pii_config\": {\n      \"log_fields\": [\n        \"first_name\"\n      ],\n      \"method\": \"mask\",\n      \"algorithm\": \"xxhash\"\n    },\n    \"sink\": {\n      \"httpAuthorization\": \"httpAuthorization\",\n      \"httpContentFormat\": \"JSONARRAY\",\n      \"httpContentType\": \"httpContentType\",\n      \"httpEndpoint\": \"httpEndpoint\",\n      \"httpCustomHeaders\": [\n        {}\n      ]\n    }\n  }\n]",
+        "body": "[\n  {\n    \"id\": \"id\",\n    \"name\": \"name\",\n    \"status\": \"active\",\n    \"isPriority\": true,\n    \"filters\": [\n      {}\n    ],\n    \"pii_config\": {\n      \"log_fields\": [\n        \"first_name\"\n      ],\n      \"method\": \"mask\",\n      \"algorithm\": \"xxhash\"\n    },\n    \"sink\": {\n      \"httpAuthorization\": \"httpAuthorization\",\n      \"httpContentFormat\": \"JSONARRAY\",\n      \"httpContentType\": \"httpContentType\",\n      \"httpEndpoint\": \"httpEndpoint\",\n      \"httpCustomHeaders\": [\n        {}\n      ]\n    },\n    \"type\": \"http\"\n  }\n]",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -3640,7 +3640,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"type\": \"http\",\n  \"isPriority\": true,\n  \"filters\": [\n    {\n      \"type\": \"category\",\n      \"name\": \"auth.login.fail\"\n    }\n  ],\n  \"pii_config\": {\n    \"log_fields\": [\n      \"first_name\"\n    ],\n    \"method\": \"mask\",\n    \"algorithm\": \"xxhash\"\n  },\n  \"sink\": {\n    \"httpAuthorization\": \"httpAuthorization\",\n    \"httpContentFormat\": \"JSONARRAY\",\n    \"httpContentType\": \"httpContentType\",\n    \"httpEndpoint\": \"httpEndpoint\",\n    \"httpCustomHeaders\": [\n      {}\n    ]\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"isPriority\": true,\n  \"filters\": [\n    {\n      \"type\": \"category\",\n      \"name\": \"auth.login.fail\"\n    }\n  ],\n  \"pii_config\": {\n    \"log_fields\": [\n      \"first_name\"\n    ],\n    \"method\": \"mask\",\n    \"algorithm\": \"xxhash\"\n  },\n  \"sink\": {\n    \"httpAuthorization\": \"httpAuthorization\",\n    \"httpContentFormat\": \"JSONARRAY\",\n    \"httpContentType\": \"httpContentType\",\n    \"httpEndpoint\": \"httpEndpoint\",\n    \"httpCustomHeaders\": [\n      {}\n    ]\n  },\n  \"type\": \"http\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -3676,7 +3676,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"type\": \"http\",\n  \"isPriority\": true,\n  \"filters\": [\n    {\n      \"type\": \"category\",\n      \"name\": \"auth.login.fail\"\n    }\n  ],\n  \"pii_config\": {\n    \"log_fields\": [\n      \"first_name\"\n    ],\n    \"method\": \"mask\",\n    \"algorithm\": \"xxhash\"\n  },\n  \"sink\": {\n    \"httpAuthorization\": \"httpAuthorization\",\n    \"httpContentFormat\": \"JSONARRAY\",\n    \"httpContentType\": \"httpContentType\",\n    \"httpEndpoint\": \"httpEndpoint\",\n    \"httpCustomHeaders\": [\n      {}\n    ]\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"isPriority\": true,\n  \"filters\": [\n    {\n      \"type\": \"category\",\n      \"name\": \"auth.login.fail\"\n    }\n  ],\n  \"pii_config\": {\n    \"log_fields\": [\n      \"first_name\"\n    ],\n    \"method\": \"mask\",\n    \"algorithm\": \"xxhash\"\n  },\n  \"sink\": {\n    \"httpAuthorization\": \"httpAuthorization\",\n    \"httpContentFormat\": \"JSONARRAY\",\n    \"httpContentType\": \"httpContentType\",\n    \"httpEndpoint\": \"httpEndpoint\",\n    \"httpCustomHeaders\": [\n      {}\n    ]\n  },\n  \"type\": \"http\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }
@@ -3748,7 +3748,7 @@
       },
       "response": {
         "status": 200,
-        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"type\": \"http\",\n  \"isPriority\": true,\n  \"filters\": [\n    {\n      \"type\": \"category\",\n      \"name\": \"auth.login.fail\"\n    }\n  ],\n  \"pii_config\": {\n    \"log_fields\": [\n      \"first_name\"\n    ],\n    \"method\": \"mask\",\n    \"algorithm\": \"xxhash\"\n  },\n  \"sink\": {\n    \"httpAuthorization\": \"httpAuthorization\",\n    \"httpContentFormat\": \"JSONARRAY\",\n    \"httpContentType\": \"httpContentType\",\n    \"httpEndpoint\": \"httpEndpoint\",\n    \"httpCustomHeaders\": [\n      {}\n    ]\n  }\n}",
+        "body": "{\n  \"id\": \"id\",\n  \"name\": \"name\",\n  \"status\": \"active\",\n  \"isPriority\": true,\n  \"filters\": [\n    {\n      \"type\": \"category\",\n      \"name\": \"auth.login.fail\"\n    }\n  ],\n  \"pii_config\": {\n    \"log_fields\": [\n      \"first_name\"\n    ],\n    \"method\": \"mask\",\n    \"algorithm\": \"xxhash\"\n  },\n  \"sink\": {\n    \"httpAuthorization\": \"httpAuthorization\",\n    \"httpContentFormat\": \"JSONARRAY\",\n    \"httpContentType\": \"httpContentType\",\n    \"httpEndpoint\": \"httpEndpoint\",\n    \"httpCustomHeaders\": [\n      {}\n    ]\n  },\n  \"type\": \"http\"\n}",
         "headers": {
           "Content-Type": "application/json"
         }

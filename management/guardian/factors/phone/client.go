@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve list of <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">phone-type MFA factors</a> (i.e., sms and voice) that are enabled for your tenant.
-//
-// Example:
-//
-//	client.Guardian.Factors.Phone.GetMessageTypes(
-//	    context.TODO(),
-//	)
 func (c *Client) GetMessageTypes(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,18 +50,6 @@ func (c *Client) GetMessageTypes(
 }
 
 // Replace the list of <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">phone-type MFA factors</a> (i.e., sms and voice) that are enabled for your tenant.
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorPhoneMessageTypesRequestContent{
-//	    MessageTypes: []management.GuardianFactorPhoneFactorMessageTypeEnum{
-//	        management.GuardianFactorPhoneFactorMessageTypeEnumSms,
-//	    },
-//	}
-//	client.Guardian.Factors.Phone.SetMessageTypes(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetMessageTypes(
 	ctx context.Context,
 	request *management.SetGuardianFactorPhoneMessageTypesRequestContent,
@@ -85,12 +67,6 @@ func (c *Client) SetMessageTypes(
 }
 
 // Retrieve configuration details for a Twilio phone provider that has been set up in your tenant. To learn more, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">Configure SMS and Voice Notifications for MFA</a>.
-//
-// Example:
-//
-//	client.Guardian.Factors.Phone.GetTwilioProvider(
-//	    context.TODO(),
-//	)
 func (c *Client) GetTwilioProvider(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -106,14 +82,6 @@ func (c *Client) GetTwilioProvider(
 }
 
 // Update the configuration of a Twilio phone provider that has been set up in your tenant. To learn more, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-sms-voice-notifications-mfa">Configure SMS and Voice Notifications for MFA</a>.
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorsProviderPhoneTwilioRequestContent{}
-//	client.Guardian.Factors.Phone.SetTwilioProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetTwilioProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPhoneTwilioRequestContent,
@@ -131,12 +99,6 @@ func (c *Client) SetTwilioProvider(
 }
 
 // Retrieve details of the multi-factor authentication phone provider configured for your tenant.
-//
-// Example:
-//
-//	client.Guardian.Factors.Phone.GetSelectedProvider(
-//	    context.TODO(),
-//	)
 func (c *Client) GetSelectedProvider(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -151,15 +113,6 @@ func (c *Client) GetSelectedProvider(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	request := &management.SetGuardianFactorsProviderPhoneRequestContent{
-//	    Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
-//	}
-//	client.Guardian.Factors.Phone.SetProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPhoneRequestContent,
@@ -177,12 +130,6 @@ func (c *Client) SetProvider(
 }
 
 // TODO: Link this endpoint to relevant documentation when available.
-//
-// Example:
-//
-//	client.Guardian.Factors.Phone.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -198,17 +145,6 @@ func (c *Client) Get(
 }
 
 // TODO: Link this endpoint to relevant documentation when available.
-//
-// Example:
-//
-//	request := &management.SetPhoneFactorSettingsRequestContent{
-//	    OtpLength: 1,
-//	    OtpExpirationTime: 1,
-//	}
-//	client.Guardian.Factors.Phone.Set(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Set(
 	ctx context.Context,
 	request *management.SetPhoneFactorSettingsRequestContent,
@@ -226,12 +162,6 @@ func (c *Client) Set(
 }
 
 // Retrieve details of the multi-factor authentication enrollment and verification templates for phone-type factors available in your tenant.
-//
-// Example:
-//
-//	client.Guardian.Factors.Phone.GetTemplates(
-//	    context.TODO(),
-//	)
 func (c *Client) GetTemplates(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -247,17 +177,6 @@ func (c *Client) GetTemplates(
 }
 
 // Customize the messages sent to complete phone enrollment and verification (subscription required).
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorPhoneTemplatesRequestContent{
-//	    EnrollmentMessage: "enrollment_message",
-//	    VerificationMessage: "verification_message",
-//	}
-//	client.Guardian.Factors.Phone.SetTemplates(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetTemplates(
 	ctx context.Context,
 	request *management.SetGuardianFactorPhoneTemplatesRequestContent,

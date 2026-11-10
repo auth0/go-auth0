@@ -32,12 +32,10 @@ type AddOrganizationConnectionRequestContent struct {
 }
 
 func (a *AddOrganizationConnectionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -102,12 +100,10 @@ type AddRolePermissionsRequestContent struct {
 }
 
 func (a *AddRolePermissionsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetPermissions sets the Permissions field and marks it as non-optional;
@@ -151,12 +147,10 @@ type AddSynchronizedGroupsRequestContent struct {
 }
 
 func (a *AddSynchronizedGroupsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -200,12 +194,10 @@ type AdvanceRampRequestContent struct {
 }
 
 func (a *AdvanceRampRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetTargetLevel sets the TargetLevel field and marks it as non-optional;
@@ -249,12 +241,10 @@ type AssignOrganizationMemberRolesRequestContent struct {
 }
 
 func (a *AssignOrganizationMemberRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -298,12 +288,10 @@ type AssignUserRolesRequestContent struct {
 }
 
 func (a *AssignUserRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -347,12 +335,10 @@ type AssignRoleUsersRequestContent struct {
 }
 
 func (a *AssignRoleUsersRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetUsers sets the Users field and marks it as non-optional;
@@ -395,12 +381,10 @@ type BulkUpdateAculRequestContent struct {
 }
 
 func (b *BulkUpdateAculRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetConfigs sets the Configs field and marks it as non-optional;
@@ -470,12 +454,10 @@ type ChangePasswordTicketRequestContent struct {
 }
 
 func (c *ChangePasswordTicketRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetResultURL sets the ResultURL field and marks it as non-optional;
@@ -585,12 +567,10 @@ type ClearAssessorsRequestContent struct {
 }
 
 func (c *ClearAssessorsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -648,12 +628,10 @@ type CreateNetworkACLRequestContent struct {
 }
 
 func (c *CreateNetworkACLRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDescription sets the Description field and marks it as non-optional;
@@ -739,12 +717,10 @@ type CreateClientGrantRequestContent struct {
 }
 
 func (c *CreateClientGrantRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -886,12 +862,10 @@ type CreateUserAuthenticationMethodRequestContent struct {
 }
 
 func (c *CreateUserAuthenticationMethodRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -1046,12 +1020,10 @@ type CreateSegmentRequestContent struct {
 }
 
 func (c *CreateSegmentRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1155,12 +1127,10 @@ type CreateUserRequestContent struct {
 }
 
 func (c *CreateUserRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -1324,12 +1294,10 @@ type CreateAgentRequestContent struct {
 }
 
 func (c *CreateAgentRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1407,12 +1375,10 @@ type CreateFormRequestContent struct {
 }
 
 func (c *CreateFormRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1511,12 +1477,10 @@ type CreateVariationRequestContent struct {
 }
 
 func (c *CreateVariationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1577,12 +1541,10 @@ type CreateUserAttributeProfileRequestContent struct {
 }
 
 func (c *CreateUserAttributeProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1648,12 +1610,10 @@ type CreateTokenExchangeProfileRequestContent struct {
 }
 
 func (c *CreateTokenExchangeProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1723,12 +1683,10 @@ type CreateFeatureFlagRequestContent struct {
 }
 
 func (c *CreateFeatureFlagRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1807,12 +1765,10 @@ type CreateActionRequestContent struct {
 }
 
 func (c *CreateActionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1905,12 +1861,10 @@ type CreateGroupRolesRequestParameters struct {
 }
 
 func (c *CreateGroupRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -1976,12 +1930,10 @@ type CreateSelfServiceProfileSSOTicketRequestContent struct {
 }
 
 func (c *CreateSelfServiceProfileSSOTicketRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -2102,12 +2054,10 @@ type CreateSelfServiceProfileRequestContent struct {
 }
 
 func (c *CreateSelfServiceProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2192,12 +2142,10 @@ type CreateBrandingPhoneProviderRequestContent struct {
 }
 
 func (c *CreateBrandingPhoneProviderRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2282,12 +2230,10 @@ type CreateExperimentRequestContent struct {
 }
 
 func (c *CreateExperimentRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2389,12 +2335,10 @@ type CreateRuleRequestContent struct {
 }
 
 func (c *CreateRuleRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2459,12 +2403,10 @@ type CreateUserPermissionsRequestContent struct {
 }
 
 func (c *CreateUserPermissionsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPermissions sets the Permissions field and marks it as non-optional;
@@ -2512,12 +2454,10 @@ type CreatePhoneTemplateRequestContent struct {
 }
 
 func (c *CreatePhoneTemplateRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -2584,12 +2524,10 @@ type CreateEventStreamRedeliveryRequestContent struct {
 }
 
 func (c *CreateEventStreamRedeliveryRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDateFrom sets the DateFrom field and marks it as non-optional;
@@ -2621,20 +2559,12 @@ func (c *CreateEventStreamRedeliveryRequestContent) SetEventTypes(eventTypes []E
 }
 
 func (c *CreateEventStreamRedeliveryRequestContent) UnmarshalJSON(data []byte) error {
-	type embed CreateEventStreamRedeliveryRequestContent
-	var body = struct {
-		embed
-		DateFrom *internal.DateTime `json:"date_from,omitempty"`
-		DateTo   *internal.DateTime `json:"date_to,omitempty"`
-	}{
-		embed: embed(*c),
-	}
+	type unmarshaler CreateEventStreamRedeliveryRequestContent
+	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*c = CreateEventStreamRedeliveryRequestContent(body.embed)
-	c.DateFrom = body.DateFrom.TimePtr()
-	c.DateTo = body.DateTo.TimePtr()
+	*c = CreateEventStreamRedeliveryRequestContent(body)
 	return nil
 }
 
@@ -2677,12 +2607,10 @@ type CreateHookRequestContent struct {
 }
 
 func (c *CreateHookRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2766,12 +2694,10 @@ type CreateBrandingThemeRequestContent struct {
 }
 
 func (c *CreateBrandingThemeRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetBorders sets the Borders field and marks it as non-optional;
@@ -2865,12 +2791,10 @@ type CreateExportUsersRequestContent struct {
 }
 
 func (c *CreateExportUsersRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -2935,12 +2859,10 @@ type AssignRoleGroupsRequestContent struct {
 }
 
 func (a *AssignRoleGroupsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -3013,12 +2935,10 @@ type CreateConnectionRequestContent struct {
 }
 
 func (c *CreateConnectionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3149,12 +3069,10 @@ type CreateImportUsersRequestContent struct {
 }
 
 func (c *CreateImportUsersRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 var (
@@ -3179,12 +3097,10 @@ type CreateRoleRequestContent struct {
 }
 
 func (c *CreateRoleRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3257,12 +3173,10 @@ type CreateVerificationEmailRequestContent struct {
 }
 
 func (c *CreateVerificationEmailRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -3336,12 +3250,10 @@ type CreateEmailProviderRequestContent struct {
 }
 
 func (c *CreateEmailProviderRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3418,12 +3330,10 @@ type CreateClientProfileRequestContent struct {
 }
 
 func (c *CreateClientProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3494,12 +3404,10 @@ type CreateRateLimitPolicyRequestContent struct {
 }
 
 func (c *CreateRateLimitPolicyRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetResource sets the Resource field and marks it as non-optional;
@@ -3579,12 +3487,10 @@ type CreateActionModuleRequestContent struct {
 }
 
 func (c *CreateActionModuleRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3814,12 +3720,10 @@ type CreateClientRequestContent struct {
 }
 
 func (c *CreateClientRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -4292,12 +4196,10 @@ type CreatePortalRequestContent struct {
 }
 
 func (c *CreatePortalRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetSlug sets the Slug field and marks it as non-optional;
@@ -4375,12 +4277,10 @@ type CreateEncryptionKeyRequestContent struct {
 }
 
 func (c *CreateEncryptionKeyRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -4447,12 +4347,10 @@ type CreateEmailTemplateRequestContent struct {
 }
 
 func (c *CreateEmailTemplateRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -4557,12 +4455,10 @@ type CreateKeysNetworkACLsRequestContent struct {
 }
 
 func (c *CreateKeysNetworkACLsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -4621,12 +4517,10 @@ type CreateFlowRequestContent struct {
 }
 
 func (c *CreateFlowRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -4694,12 +4588,10 @@ type CreateOrganizationRequestContent struct {
 }
 
 func (c *CreateOrganizationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -4811,12 +4703,10 @@ type PostClientCredentialRequestContent struct {
 }
 
 func (p *PostClientCredentialRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;
@@ -4876,18 +4766,12 @@ func (p *PostClientCredentialRequestContent) SetKid(kid *string) {
 }
 
 func (p *PostClientCredentialRequestContent) UnmarshalJSON(data []byte) error {
-	type embed PostClientCredentialRequestContent
-	var body = struct {
-		embed
-		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
-	}{
-		embed: embed(*p),
-	}
+	type unmarshaler PostClientCredentialRequestContent
+	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*p = PostClientCredentialRequestContent(body.embed)
-	p.ExpiresAt = body.ExpiresAt.TimePtr()
+	*p = PostClientCredentialRequestContent(body)
 	return nil
 }
 
@@ -4917,12 +4801,10 @@ type CreateOrganizationMemberRequestContent struct {
 }
 
 func (c *CreateOrganizationMemberRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMembers sets the Members field and marks it as non-optional;
@@ -4979,12 +4861,10 @@ type CreateCustomDomainRequestContent struct {
 }
 
 func (c *CreateCustomDomainRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -5083,12 +4963,10 @@ type CreateConnectionProfileRequestContent struct {
 }
 
 func (c *CreateConnectionProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -5181,12 +5059,10 @@ type AssociateOrganizationClientGrantRequestContent struct {
 }
 
 func (a *AssociateOrganizationClientGrantRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetGrantID sets the GrantID field and marks it as non-optional;
@@ -5285,12 +5161,10 @@ type CreateResourceServerRequestContent struct {
 }
 
 func (c *CreateResourceServerRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -5508,12 +5382,10 @@ type CreateOrganizationInvitationRequestContent struct {
 }
 
 func (c *CreateOrganizationInvitationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetInviter sets the Inviter field and marks it as non-optional;
@@ -5616,12 +5488,10 @@ type CreateSCIMTokenRequestContent struct {
 }
 
 func (c *CreateSCIMTokenRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetScopes sets the Scopes field and marks it as non-optional;
@@ -5672,12 +5542,10 @@ type CreateOrganizationGroupRolesRequestContent struct {
 }
 
 func (c *CreateOrganizationGroupRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -5721,12 +5589,10 @@ type CreateOrganizationClientsRequestContent struct {
 }
 
 func (c *CreateOrganizationClientsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClients sets the Clients field and marks it as non-optional;
@@ -5779,12 +5645,10 @@ type CreateVerifiableCredentialTemplateRequestContent struct {
 }
 
 func (c *CreateVerifiableCredentialTemplateRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -5868,12 +5732,10 @@ type CreateOrganizationDiscoveryDomainRequestContent struct {
 }
 
 func (c *CreateOrganizationDiscoveryDomainRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -5950,12 +5812,10 @@ type CreateOrganizationAllConnectionRequestParameters struct {
 }
 
 func (c *CreateOrganizationAllConnectionRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
@@ -6059,12 +5919,10 @@ type CreatePublicKeyDeviceCredentialRequestContent struct {
 }
 
 func (c *CreatePublicKeyDeviceCredentialRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDeviceName sets the DeviceName field and marks it as non-optional;
@@ -6150,12 +6008,10 @@ type CreateGuardianEnrollmentTicketRequestContent struct {
 }
 
 func (c *CreateGuardianEnrollmentTicketRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -6234,12 +6090,10 @@ type DeleteRoleGroupsRequestContent struct {
 }
 
 func (d *DeleteRoleGroupsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -6283,12 +6137,10 @@ type DeleteUserRolesRequestContent struct {
 }
 
 func (d *DeleteUserRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -6332,12 +6184,10 @@ type DeleteOrganizationGroupRolesRequestContent struct {
 }
 
 func (d *DeleteOrganizationGroupRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -6381,12 +6231,10 @@ type DeleteActionRequestParameters struct {
 }
 
 func (d *DeleteActionRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetForce sets the Force field and marks it as non-optional;
@@ -6409,12 +6257,10 @@ type DeleteOrganizationMemberRolesRequestContent struct {
 }
 
 func (d *DeleteOrganizationMemberRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -6458,12 +6304,10 @@ type DeleteGroupRolesRequestContent struct {
 }
 
 func (d *DeleteGroupRolesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -6507,12 +6351,10 @@ type DeleteOrganizationClientsRequestContent struct {
 }
 
 func (d *DeleteOrganizationClientsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetClients sets the Clients field and marks it as non-optional;
@@ -6556,12 +6398,10 @@ type DeleteOrganizationMembersRequestContent struct {
 }
 
 func (d *DeleteOrganizationMembersRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetMembers sets the Members field and marks it as non-optional;
@@ -6605,12 +6445,10 @@ type DeleteRolePermissionsRequestContent struct {
 }
 
 func (d *DeleteRolePermissionsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetPermissions sets the Permissions field and marks it as non-optional;
@@ -6654,12 +6492,10 @@ type DeleteUserPermissionsRequestContent struct {
 }
 
 func (d *DeleteUserPermissionsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetPermissions sets the Permissions field and marks it as non-optional;
@@ -6703,12 +6539,10 @@ type DeleteConnectionUsersByEmailQueryParameters struct {
 }
 
 func (d *DeleteConnectionUsersByEmailQueryParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -6731,12 +6565,10 @@ type DeleteUserBlocksByIdentifierRequestParameters struct {
 }
 
 func (d *DeleteUserBlocksByIdentifierRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -6759,12 +6591,10 @@ type DeleteUserGrantByUserIDRequestParameters struct {
 }
 
 func (d *DeleteUserGrantByUserIDRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -6787,12 +6617,10 @@ type DeleteSynchronizedGroupsRequestContent struct {
 }
 
 func (d *DeleteSynchronizedGroupsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -6839,12 +6667,10 @@ type ListRoleGroupsParameters struct {
 }
 
 func (l *ListRoleGroupsParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -6877,12 +6703,10 @@ type GetRuleRequestParameters struct {
 }
 
 func (g *GetRuleRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -6912,12 +6736,10 @@ type GetResourceServerRequestParameters struct {
 }
 
 func (g *GetResourceServerRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetIncludeFields sets the IncludeFields field and marks it as non-optional;
@@ -6943,12 +6765,10 @@ type GetConnectionRequestParameters struct {
 }
 
 func (g *GetConnectionRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -6978,12 +6798,10 @@ type GetHookRequestParameters struct {
 }
 
 func (g *GetHookRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7009,12 +6827,10 @@ type GetEmailProviderRequestParameters struct {
 }
 
 func (g *GetEmailProviderRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7047,12 +6863,10 @@ type GetClientRequestParameters struct {
 }
 
 func (g *GetClientRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7094,12 +6908,10 @@ type ConnectionsGetRequest struct {
 }
 
 func (c *ConnectionsGetRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStrategy sets the Strategy field and marks it as non-optional;
@@ -7153,12 +6965,10 @@ type GetOrganizationInvitationRequestParameters struct {
 }
 
 func (g *GetOrganizationInvitationRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7191,12 +7001,10 @@ type GetUserRequestParameters struct {
 }
 
 func (g *GetUserRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7226,12 +7034,10 @@ type GetFlowExecutionRequestParameters struct {
 }
 
 func (g *GetFlowExecutionRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetHydrate sets the Hydrate field and marks it as non-optional;
@@ -7257,12 +7063,10 @@ type GetTenantSettingsRequestParameters struct {
 }
 
 func (g *GetTenantSettingsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7301,12 +7105,10 @@ type GetGroupMembersRequestParameters struct {
 }
 
 func (g *GetGroupMembersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7350,12 +7152,10 @@ type GetFlowRequestParameters struct {
 }
 
 func (g *GetFlowRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetHydrate sets the Hydrate field and marks it as non-optional;
@@ -7378,12 +7178,10 @@ type GetFormRequestParameters struct {
 }
 
 func (g *GetFormRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetHydrate sets the Hydrate field and marks it as non-optional;
@@ -7418,12 +7216,10 @@ type GetUserGroupsRequestParameters struct {
 }
 
 func (g *GetUserGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -7477,12 +7273,10 @@ type GetConnectionEnabledClientsRequestParameters struct {
 }
 
 func (g *GetConnectionEnabledClientsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetTake sets the Take field and marks it as non-optional;
@@ -7515,12 +7309,10 @@ type GetDailyStatsRequestParameters struct {
 }
 
 func (g *GetDailyStatsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -7550,12 +7342,10 @@ type ImportEncryptionKeyRequestContent struct {
 }
 
 func (i *ImportEncryptionKeyRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetWrappedKey sets the WrappedKey field and marks it as non-optional;
@@ -7608,12 +7398,10 @@ type LinkUserIdentityRequestContent struct {
 }
 
 func (l *LinkUserIdentityRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -7687,12 +7475,10 @@ type ListCustomDomainsRequestParameters struct {
 }
 
 func (l *ListCustomDomainsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetQ sets the Q field and marks it as non-optional;
@@ -7751,12 +7537,10 @@ type ListEventStreamDeliveriesRequestParameters struct {
 }
 
 func (l *ListEventStreamDeliveriesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStatuses sets the Statuses field and marks it as non-optional;
@@ -7817,12 +7601,10 @@ type ListVerifiableCredentialTemplatesRequestParameters struct {
 }
 
 func (l *ListVerifiableCredentialTemplatesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -7858,12 +7640,10 @@ type ListUserSessionsRequestParameters struct {
 }
 
 func (l *ListUserSessionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -7906,12 +7686,10 @@ type ListFlowExecutionsRequestParameters struct {
 }
 
 func (l *ListFlowExecutionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -7957,12 +7735,10 @@ type ListSegmentsRequestParameters struct {
 }
 
 func (l *ListSegmentsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -8012,12 +7788,10 @@ type ListFlowsVaultConnectionsRequestParameters struct {
 }
 
 func (l *ListFlowsVaultConnectionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8057,12 +7831,10 @@ type GetActionModulesRequestParameters struct {
 }
 
 func (g *GetActionModulesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8101,12 +7873,10 @@ type ListFormsRequestParameters struct {
 }
 
 func (l *ListFormsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8156,12 +7926,10 @@ type ListUserRolesRequestParameters struct {
 }
 
 func (l *ListUserRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPerPage sets the PerPage field and marks it as non-optional;
@@ -8204,12 +7972,10 @@ type ListRefreshTokensRequestParameters struct {
 }
 
 func (l *ListRefreshTokensRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -8261,12 +8027,10 @@ type ListOrganizationInvitationsRequestParameters struct {
 }
 
 func (l *ListOrganizationInvitationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8348,12 +8112,10 @@ type ListGroupsRequestParameters struct {
 }
 
 func (l *ListGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -8441,12 +8203,10 @@ type ListFeatureFlagsRequestParameters struct {
 }
 
 func (l *ListFeatureFlagsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -8493,12 +8253,10 @@ type ListGroupRolesRequestParameters struct {
 }
 
 func (l *ListGroupRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -8534,12 +8292,10 @@ type ListUserPermissionsRequestParameters struct {
 }
 
 func (l *ListUserPermissionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPerPage sets the PerPage field and marks it as non-optional;
@@ -8588,12 +8344,10 @@ type ListExperimentsRequestParameters struct {
 }
 
 func (l *ListExperimentsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -8650,12 +8404,10 @@ type ListUserOrganizationsRequestParameters struct {
 }
 
 func (l *ListUserOrganizationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8701,12 +8453,10 @@ type ListUserLogsRequestParameters struct {
 }
 
 func (l *ListUserLogsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8753,12 +8503,10 @@ type GetActionModuleVersionsRequestParameters struct {
 }
 
 func (g *GetActionModuleVersionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8791,12 +8539,10 @@ type ListActionTriggerBindingsRequestParameters struct {
 }
 
 func (l *ListActionTriggerBindingsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -8832,12 +8578,10 @@ type ListUserRoleSourceGroupsRequestParameters struct {
 }
 
 func (l *ListUserRoleSourceGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetRoleID sets the RoleID field and marks it as non-optional;
@@ -8877,12 +8621,10 @@ type ListUserEffectiveRolesRequestParameters struct {
 }
 
 func (l *ListUserEffectiveRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -8921,12 +8663,10 @@ type ListUserEffectivePermissionRoleSourceRequestParameters struct {
 }
 
 func (l *ListUserEffectivePermissionRoleSourceRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -8976,12 +8716,10 @@ type ListUserEffectivePermissionsRequestParameters struct {
 }
 
 func (l *ListUserEffectivePermissionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9021,12 +8759,10 @@ type GetUserConnectedAccountsRequestParameters struct {
 }
 
 func (g *GetUserConnectedAccountsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9062,12 +8798,10 @@ type ListUserAuthenticationMethodsRequestParameters struct {
 }
 
 func (l *ListUserAuthenticationMethodsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -9107,12 +8841,10 @@ type ListActionVersionsRequestParameters struct {
 }
 
 func (l *ListActionVersionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -9160,12 +8892,10 @@ type ListConnectionsQueryParameters struct {
 }
 
 func (l *ListConnectionsQueryParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -9233,12 +8963,10 @@ type ListAgentsRequestParameters struct {
 }
 
 func (l *ListAgentsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9295,12 +9023,10 @@ type ListUsersRequestParameters struct {
 }
 
 func (l *ListUsersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -9401,12 +9127,10 @@ type ListUserGrantsRequestParameters struct {
 }
 
 func (l *ListUserGrantsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPerPage sets the PerPage field and marks it as non-optional;
@@ -9465,12 +9189,10 @@ type ListUserBlocksRequestParameters struct {
 }
 
 func (l *ListUserBlocksRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetConsiderBruteForceEnablement sets the ConsiderBruteForceEnablement field and marks it as non-optional;
@@ -9505,12 +9227,10 @@ type ListOrganizationMembersRequestParameters struct {
 }
 
 func (l *ListOrganizationMembersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -9564,12 +9284,10 @@ type ListUserAttributeProfileRequestParameters struct {
 }
 
 func (l *ListUserAttributeProfileRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9602,12 +9320,10 @@ type TokenExchangeProfilesListRequest struct {
 }
 
 func (t *TokenExchangeProfilesListRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9640,12 +9356,10 @@ type ListOrganizationGroupRolesRequestParameters struct {
 }
 
 func (l *ListOrganizationGroupRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9678,12 +9392,10 @@ type ListOrganizationGroupsRequestParameters struct {
 }
 
 func (l *ListOrganizationGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9713,12 +9425,10 @@ type ListBrandingPhoneProvidersRequestParameters struct {
 }
 
 func (l *ListBrandingPhoneProvidersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetDisabled sets the Disabled field and marks it as non-optional;
@@ -9747,12 +9457,10 @@ type ListSelfServiceProfilesRequestParameters struct {
 }
 
 func (l *ListSelfServiceProfilesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -9804,12 +9512,10 @@ type ListHooksRequestParameters struct {
 }
 
 func (l *ListHooksRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -9870,12 +9576,10 @@ type ListConnectionProfileRequestParameters struct {
 }
 
 func (l *ListConnectionProfileRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -9920,12 +9624,10 @@ type ListRulesRequestParameters struct {
 }
 
 func (l *ListRulesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -9983,12 +9685,10 @@ type ListPhoneTemplatesRequestParameters struct {
 }
 
 func (l *ListPhoneTemplatesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetDisabled sets the Disabled field and marks it as non-optional;
@@ -10017,12 +9717,10 @@ type ListRoleUsersRequestParameters struct {
 }
 
 func (l *ListRoleUsersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -10062,12 +9760,10 @@ type ListEventStreamsRequestParameters struct {
 }
 
 func (l *ListEventStreamsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -10103,12 +9799,10 @@ type ListRolePermissionsRequestParameters struct {
 }
 
 func (l *ListRolePermissionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPerPage sets the PerPage field and marks it as non-optional;
@@ -10166,12 +9860,10 @@ type ListClientGrantsRequestParameters struct {
 }
 
 func (l *ListClientGrantsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -10249,12 +9941,10 @@ type ListEncryptionKeysRequestParameters struct {
 }
 
 func (l *ListEncryptionKeysRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -10306,12 +9996,10 @@ type ListRolesRequestParameters struct {
 }
 
 func (l *ListRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPerPage sets the PerPage field and marks it as non-optional;
@@ -10375,12 +10063,10 @@ type ListClientGrantOrganizationsRequestParameters struct {
 }
 
 func (l *ListClientGrantOrganizationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -10438,12 +10124,10 @@ type ListDeviceCredentialsRequestParameters struct {
 }
 
 func (l *ListDeviceCredentialsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -10518,12 +10202,10 @@ type ListClientProfilesRequestParameters struct {
 }
 
 func (l *ListClientProfilesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -10573,12 +10255,10 @@ type ListLogsRequestParameters struct {
 }
 
 func (l *ListLogsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -10649,12 +10329,10 @@ type ListNetworkACLsRequestParameters struct {
 }
 
 func (l *ListNetworkACLsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -10703,12 +10381,10 @@ type ListResourceServerRequestParameters struct {
 }
 
 func (l *ListResourceServerRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIdentifiers sets the Identifiers field and marks it as non-optional;
@@ -10774,12 +10450,10 @@ type GetRefreshTokensRequestParameters struct {
 }
 
 func (g *GetRefreshTokensRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -10849,12 +10523,10 @@ type ListRateLimitPoliciesRequestParameters struct {
 }
 
 func (l *ListRateLimitPoliciesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetResource sets the Resource field and marks it as non-optional;
@@ -10917,12 +10589,10 @@ type ListOrganizationsRequestParameters struct {
 }
 
 func (l *ListOrganizationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIncludeTotals sets the IncludeTotals field and marks it as non-optional;
@@ -11003,12 +10673,10 @@ type ListClientsRequestParameters struct {
 }
 
 func (l *ListClientsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -11122,12 +10790,10 @@ type ListAculsRequestParameters struct {
 }
 
 func (l *ListAculsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -11202,12 +10868,10 @@ type ListOrganizationMemberEffectiveRolesRequestParameters struct {
 }
 
 func (l *ListOrganizationMemberEffectiveRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11252,12 +10916,10 @@ type ListOrganizationClientGrantsRequestParameters struct {
 }
 
 func (l *ListOrganizationClientGrantsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -11330,12 +10992,10 @@ type ListActionsRequestParameters struct {
 }
 
 func (l *ListActionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTriggerID sets the TriggerID field and marks it as non-optional;
@@ -11396,12 +11056,10 @@ type ListOrganizationClientsRequestParameters struct {
 }
 
 func (l *ListOrganizationClientsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11440,12 +11098,10 @@ type ListOrganizationRoleMembersRequestParameters struct {
 }
 
 func (l *ListOrganizationRoleMembersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11492,12 +11148,10 @@ type ListSCIMConfigurationsRequestParameters struct {
 }
 
 func (l *ListSCIMConfigurationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11530,12 +11184,10 @@ type ListOrganizationRoleGroupsRequestParameters struct {
 }
 
 func (l *ListOrganizationRoleGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11574,12 +11226,10 @@ type ListOrganizationAllConnectionsRequestParameters struct {
 }
 
 func (l *ListOrganizationAllConnectionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -11635,12 +11285,10 @@ type ListFlowsRequestParameters struct {
 }
 
 func (l *ListFlowsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -11697,12 +11345,10 @@ type ListOrganizationMemberRolesRequestParameters struct {
 }
 
 func (l *ListOrganizationMemberRolesRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -11742,12 +11388,10 @@ type ListOrganizationDiscoveryDomainsRequestParameters struct {
 }
 
 func (l *ListOrganizationDiscoveryDomainsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11780,12 +11424,10 @@ type ListDirectoryProvisioningsRequestParameters struct {
 }
 
 func (l *ListDirectoryProvisioningsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11821,12 +11463,10 @@ type ListOrganizationMemberRoleSourceGroupsRequestParameters struct {
 }
 
 func (l *ListOrganizationMemberRoleSourceGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -11869,12 +11509,10 @@ type ListOrganizationConnectionsRequestParameters struct {
 }
 
 func (l *ListOrganizationConnectionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -11914,12 +11552,10 @@ type GetActionModuleActionsRequestParameters struct {
 }
 
 func (g *GetActionModuleActionsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetPage sets the Page field and marks it as non-optional;
@@ -11953,12 +11589,10 @@ type ListUserBlocksByIdentifierRequestParameters struct {
 }
 
 func (l *ListUserBlocksByIdentifierRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -11994,12 +11628,10 @@ type ListSynchronizedGroupsRequestParameters struct {
 }
 
 func (l *ListSynchronizedGroupsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -12042,12 +11674,10 @@ type ListUsersByEmailRequestParameters struct {
 }
 
 func (l *ListUsersByEmailRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFields sets the Fields field and marks it as non-optional;
@@ -12084,12 +11714,10 @@ type UpdateSupplementalSignalsRequestContent struct {
 }
 
 func (u *UpdateSupplementalSignalsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetAkamaiEnabled sets the AkamaiEnabled field and marks it as non-optional;
@@ -12132,12 +11760,10 @@ type PatchPhoneProviderProtectionRequestContent struct {
 }
 
 func (p *PatchPhoneProviderProtectionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -12181,12 +11807,10 @@ type PreviewCimdMetadataRequestContent struct {
 }
 
 func (p *PreviewCimdMetadataRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -12230,12 +11854,10 @@ type RegisterCimdClientRequestContent struct {
 }
 
 func (r *RegisterCimdClientRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -12288,12 +11910,10 @@ type RevokeRefreshTokensRequestContent struct {
 }
 
 func (r *RevokeRefreshTokensRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetIDs sets the IDs field and marks it as non-optional;
@@ -12361,12 +11981,10 @@ type RevokeUserAccessRequestContent struct {
 }
 
 func (r *RevokeUserAccessRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetSessionID sets the SessionID field and marks it as non-optional;
@@ -12417,12 +12035,10 @@ type RollbackActionModuleRequestParameters struct {
 }
 
 func (r *RollbackActionModuleRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetModuleVersionID sets the ModuleVersionID field and marks it as non-optional;
@@ -12484,12 +12100,10 @@ type SearchClientsRequestParameters struct {
 }
 
 func (s *SearchClientsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetQ sets the Q field and marks it as non-optional;
@@ -12572,12 +12186,10 @@ type SearchClientGrantsRequestParameters struct {
 }
 
 func (s *SearchClientGrantsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetQ sets the Q field and marks it as non-optional;
@@ -12660,12 +12272,10 @@ type SearchResourceServersRequestParameters struct {
 }
 
 func (s *SearchResourceServersRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetQ sets the Q field and marks it as non-optional;
@@ -12742,12 +12352,10 @@ type SearchOrganizationsRequestParameters struct {
 }
 
 func (s *SearchOrganizationsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetQ sets the Q field and marks it as non-optional;
@@ -12798,12 +12406,10 @@ type ReplaceSynchronizedGroupsRequestContent struct {
 }
 
 func (r *ReplaceSynchronizedGroupsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -12854,12 +12460,10 @@ type SetNetworkACLRequestContent struct {
 }
 
 func (s *SetNetworkACLRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetDescription sets the Description field and marks it as non-optional;
@@ -12927,12 +12531,10 @@ type SetEmailFactorSettingsRequestContent struct {
 }
 
 func (s *SetEmailFactorSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -12983,12 +12585,10 @@ type SetCustomSigningKeysRequestContent struct {
 }
 
 func (s *SetCustomSigningKeysRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetKeys sets the Keys field and marks it as non-optional;
@@ -13032,12 +12632,10 @@ type SetRulesConfigRequestContent struct {
 }
 
 func (s *SetRulesConfigRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -13104,12 +12702,10 @@ type SetEmailTemplateRequestContent struct {
 }
 
 func (s *SetEmailTemplateRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -13212,12 +12808,10 @@ type SetPhoneFactorSettingsRequestContent struct {
 }
 
 func (s *SetPhoneFactorSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -13271,12 +12865,10 @@ type SetGuardianFactorDuoSettingsRequestContent struct {
 }
 
 func (s *SetGuardianFactorDuoSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetIkey sets the Ikey field and marks it as non-optional;
@@ -13343,12 +12935,10 @@ type SetGuardianSettingsRequestContent struct {
 }
 
 func (s *SetGuardianSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetDisplayRememberMeCheckbox sets the DisplayRememberMeCheckbox field and marks it as non-optional;
@@ -13413,12 +13003,10 @@ type SetGuardianFactorRequestContent struct {
 }
 
 func (s *SetGuardianFactorRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -13465,12 +13053,10 @@ type SetGuardianFactorsProviderPushNotificationApnsRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationApnsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetSandbox sets the Sandbox field and marks it as non-optional;
@@ -13528,12 +13114,10 @@ type SetDefaultCustomDomainRequestContent struct {
 }
 
 func (s *SetDefaultCustomDomainRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -13576,12 +13160,10 @@ type SetGuardianFactorsProviderPushNotificationFcmRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationFcmRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetServerKey sets the ServerKey field and marks it as non-optional;
@@ -13624,12 +13206,10 @@ type SetGuardianFactorsProviderPushNotificationFcmv1RequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationFcmv1RequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetServerCredentials sets the ServerCredentials field and marks it as non-optional;
@@ -13673,12 +13253,10 @@ type SetGuardianFactorPhoneMessageTypesRequestContent struct {
 }
 
 func (s *SetGuardianFactorPhoneMessageTypesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMessageTypes sets the MessageTypes field and marks it as non-optional;
@@ -13721,12 +13299,10 @@ type SetGuardianFactorsProviderPhoneRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderPhoneRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -13769,12 +13345,10 @@ type SetGuardianFactorsProviderSmsRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderSmsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -13817,12 +13391,10 @@ type SetGuardianFactorsProviderPushNotificationRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -13873,12 +13445,10 @@ type SetGuardianFactorsProviderPushNotificationSnsRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationSnsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
@@ -13953,12 +13523,10 @@ type SetGuardianFactorSmsTemplatesRequestContent struct {
 }
 
 func (s *SetGuardianFactorSmsTemplatesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
@@ -14012,12 +13580,10 @@ type SetGuardianFactorPhoneTemplatesRequestContent struct {
 }
 
 func (s *SetGuardianFactorPhoneTemplatesRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
@@ -14077,12 +13643,10 @@ type SetGuardianFactorsProviderSmsTwilioRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderSmsTwilioRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -14156,12 +13720,10 @@ type SetGuardianFactorsProviderPhoneTwilioRequestContent struct {
 }
 
 func (s *SetGuardianFactorsProviderPhoneTwilioRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -14232,12 +13794,10 @@ type SubscribeEventsRequestParameters struct {
 }
 
 func (s *SubscribeEventsRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -14276,12 +13836,10 @@ type CreatePhoneProviderSendTestRequestContent struct {
 }
 
 func (c *CreatePhoneProviderSendTestRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTo sets the To field and marks it as non-optional;
@@ -14333,12 +13891,10 @@ type CreateEventStreamTestEventRequestContent struct {
 }
 
 func (c *CreateEventStreamTestEventRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEventType sets the EventType field and marks it as non-optional;
@@ -14388,12 +13944,10 @@ type TestActionRequestContent struct {
 }
 
 func (t *TestActionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetPayload sets the Payload field and marks it as non-optional;
@@ -14440,12 +13994,10 @@ type CreatePhoneTemplateTestNotificationRequestContent struct {
 }
 
 func (c *CreatePhoneTemplateTestNotificationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTo sets the To field and marks it as non-optional;
@@ -14503,12 +14055,10 @@ type UpdateCustomDomainRequestContent struct {
 }
 
 func (u *UpdateCustomDomainRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetTLSPolicy sets the TLSPolicy field and marks it as non-optional;
@@ -14576,12 +14126,10 @@ type PatchAgentRequestParameters struct {
 }
 
 func (p *PatchAgentRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -14644,12 +14192,10 @@ type UpdateBrandingThemeRequestContent struct {
 }
 
 func (u *UpdateBrandingThemeRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetBorders sets the Borders field and marks it as non-optional;
@@ -14737,12 +14283,10 @@ type UpdatePhoneTemplateRequestContent struct {
 }
 
 func (u *UpdatePhoneTemplateRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetContent sets the Content field and marks it as non-optional;
@@ -14800,12 +14344,10 @@ type UpdateEventStreamRequestContent struct {
 }
 
 func (u *UpdateEventStreamRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -14878,12 +14420,10 @@ type UpdateHookRequestContent struct {
 }
 
 func (u *UpdateHookRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -14951,12 +14491,10 @@ type UpdateRoleRequestContent struct {
 }
 
 func (u *UpdateRoleRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -15018,12 +14556,10 @@ type UpdateClientGrantRequestContent struct {
 }
 
 func (u *UpdateClientGrantRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetScope sets the Scope field and marks it as non-optional;
@@ -15101,12 +14637,10 @@ type UpdateBrandingPhoneProviderRequestContent struct {
 }
 
 func (u *UpdateBrandingPhoneProviderRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -15180,12 +14714,10 @@ type UpdateRuleRequestContent struct {
 }
 
 func (u *UpdateRuleRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetScript sets the Script field and marks it as non-optional;
@@ -15273,12 +14805,10 @@ type UpdateEmailTemplateRequestContent struct {
 }
 
 func (u *UpdateEmailTemplateRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -15378,12 +14908,10 @@ type UpdateRiskAssessmentsSettingsNewDeviceRequestContent struct {
 }
 
 func (u *UpdateRiskAssessmentsSettingsNewDeviceRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetRememberFor sets the RememberFor field and marks it as non-optional;
@@ -15427,12 +14955,10 @@ type UpdateRiskAssessmentsSettingsRequestContent struct {
 }
 
 func (u *UpdateRiskAssessmentsSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -15488,12 +15014,10 @@ type UpdateSelfServiceProfileRequestContent struct {
 }
 
 func (u *UpdateSelfServiceProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -15579,12 +15103,10 @@ type UpdateBrandingRequestContent struct {
 }
 
 func (u *UpdateBrandingRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetColors sets the Colors field and marks it as non-optional;
@@ -15649,12 +15171,10 @@ type UpdateSessionRequestContent struct {
 }
 
 func (u *UpdateSessionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetSessionMetadata sets the SessionMetadata field and marks it as non-optional;
@@ -15707,12 +15227,10 @@ type UpdateSuspiciousIPThrottlingSettingsRequestContent struct {
 }
 
 func (u *UpdateSuspiciousIPThrottlingSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -15829,12 +15347,10 @@ type UpdateResourceServerRequestContent struct {
 }
 
 func (u *UpdateResourceServerRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -16037,12 +15553,10 @@ type UpdateLogStreamRequestContent struct {
 }
 
 func (u *UpdateLogStreamRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -16244,12 +15758,10 @@ type UpdateTenantSettingsRequestContent struct {
 }
 
 func (u *UpdateTenantSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetChangePassword sets the ChangePassword field and marks it as non-optional;
@@ -16617,12 +16129,10 @@ type UpdateVerifiableCredentialTemplateRequestContent struct {
 }
 
 func (u *UpdateVerifiableCredentialTemplateRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -16714,12 +16224,10 @@ type UpdateAttackProtectionCaptchaRequestContent struct {
 }
 
 func (u *UpdateAttackProtectionCaptchaRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
@@ -16830,12 +16338,10 @@ type UpdateActionRequestContent struct {
 }
 
 func (u *UpdateActionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -16936,12 +16442,10 @@ type UpdateBruteForceSettingsRequestContent struct {
 }
 
 func (u *UpdateBruteForceSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -17023,12 +16527,10 @@ type UpdateTokenExchangeProfileRequestContent struct {
 }
 
 func (u *UpdateTokenExchangeProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17092,12 +16594,10 @@ type UpdateConnectionProfileRequestContent struct {
 }
 
 func (u *UpdateConnectionProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17204,12 +16704,10 @@ type UpdateBreachedPasswordDetectionSettingsRequestContent struct {
 }
 
 func (u *UpdateBreachedPasswordDetectionSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -17284,12 +16782,10 @@ type UpdateUserAttributeProfileRequestContent struct {
 }
 
 func (u *UpdateUserAttributeProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17356,12 +16852,10 @@ type UpdateSegmentRequestContent struct {
 }
 
 func (u *UpdateSegmentRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17435,12 +16929,10 @@ type UpdateBotDetectionSettingsRequestContent struct {
 }
 
 func (u *UpdateBotDetectionSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetBotDetectionLevel sets the BotDetectionLevel field and marks it as non-optional;
@@ -17519,12 +17011,10 @@ type UpdateRefreshTokenRequestContent struct {
 }
 
 func (u *UpdateRefreshTokenRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetRefreshTokenMetadata sets the RefreshTokenMetadata field and marks it as non-optional;
@@ -17569,12 +17059,10 @@ type UpdateFlowRequestContent struct {
 }
 
 func (u *UpdateFlowRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17634,12 +17122,10 @@ type UpdateEmailProviderRequestContent struct {
 }
 
 func (u *UpdateEmailProviderRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17710,12 +17196,10 @@ type PatchRateLimitPolicyRequestContent struct {
 }
 
 func (p *PatchRateLimitPolicyRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfiguration sets the Configuration field and marks it as non-optional;
@@ -17783,12 +17267,10 @@ type UpdateConnectionRequestContent struct {
 }
 
 func (u *UpdateConnectionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -17907,12 +17389,10 @@ type UpdateClientProfileRequestContent struct {
 }
 
 func (u *UpdateClientProfileRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -17984,12 +17464,10 @@ type UpdateNetworkACLRequestContent struct {
 }
 
 func (u *UpdateNetworkACLRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDescription sets the Description field and marks it as non-optional;
@@ -18105,12 +17583,10 @@ type UpdateUserRequestContent struct {
 }
 
 func (u *UpdateUserRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetBlocked sets the Blocked field and marks it as non-optional;
@@ -18286,12 +17762,10 @@ type UpdateAculRequestContent struct {
 }
 
 func (u *UpdateAculRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetRenderingMode sets the RenderingMode field and marks it as non-optional;
@@ -18372,12 +17846,10 @@ type UpdateFlowsVaultConnectionRequestContent struct {
 }
 
 func (u *UpdateFlowsVaultConnectionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -18433,12 +17905,10 @@ type UpdateVariationRequestContent struct {
 }
 
 func (u *UpdateVariationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -18499,12 +17969,10 @@ type UpdateUserAuthenticationMethodRequestContent struct {
 }
 
 func (u *UpdateUserAuthenticationMethodRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -18564,12 +18032,10 @@ type UpdatePortalRequestContent struct {
 }
 
 func (u *UpdatePortalRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetSlug sets the Slug field and marks it as non-optional;
@@ -18662,12 +18128,10 @@ type UpdateOrganizationRequestContent struct {
 }
 
 func (u *UpdateOrganizationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -18756,12 +18220,10 @@ type UpdateSCIMConfigurationRequestContent struct {
 }
 
 func (u *UpdateSCIMConfigurationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
@@ -18812,12 +18274,10 @@ type UpdateOrganizationClientRequestContent struct {
 }
 
 func (u *UpdateOrganizationClientRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
@@ -18864,12 +18324,10 @@ type UpdateGuardianFactorDuoSettingsRequestContent struct {
 }
 
 func (u *UpdateGuardianFactorDuoSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetIkey sets the Ikey field and marks it as non-optional;
@@ -18943,12 +18401,10 @@ type UpdateOrganizationConnectionRequestParameters struct {
 }
 
 func (u *UpdateOrganizationConnectionRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
@@ -19036,12 +18492,10 @@ type UpdateOrganizationDiscoveryDomainRequestContent struct {
 }
 
 func (u *UpdateOrganizationDiscoveryDomainRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -19098,12 +18552,10 @@ type UpdateOrganizationConnectionRequestContent struct {
 }
 
 func (u *UpdateOrganizationConnectionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetAssignMembershipOnLogin sets the AssignMembershipOnLogin field and marks it as non-optional;
@@ -19314,12 +18766,10 @@ type UpdateClientRequestContent struct {
 }
 
 func (u *UpdateClientRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -19800,12 +19250,10 @@ type UpdateExperimentRequestParameters struct {
 }
 
 func (u *UpdateExperimentRequestParameters) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -19891,12 +19339,10 @@ type PatchClientCredentialRequestContent struct {
 }
 
 func (p *PatchClientCredentialRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetExpiresAt sets the ExpiresAt field and marks it as non-optional;
@@ -19907,18 +19353,12 @@ func (p *PatchClientCredentialRequestContent) SetExpiresAt(expiresAt *time.Time)
 }
 
 func (p *PatchClientCredentialRequestContent) UnmarshalJSON(data []byte) error {
-	type embed PatchClientCredentialRequestContent
-	var body = struct {
-		embed
-		ExpiresAt *internal.DateTime `json:"expires_at,omitempty"`
-	}{
-		embed: embed(*p),
-	}
+	type unmarshaler PatchClientCredentialRequestContent
+	var body unmarshaler
 	if err := json.Unmarshal(data, &body); err != nil {
 		return err
 	}
-	*p = PatchClientCredentialRequestContent(body.embed)
-	p.ExpiresAt = body.ExpiresAt.TimePtr()
+	*p = PatchClientCredentialRequestContent(body)
 	return nil
 }
 
@@ -19961,12 +19401,10 @@ type UpdateFormRequestContent struct {
 }
 
 func (u *UpdateFormRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -20067,12 +19505,10 @@ type UpdateFeatureFlagRequestContent struct {
 }
 
 func (u *UpdateFeatureFlagRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -20143,12 +19579,10 @@ type UpdateActionModuleRequestContent struct {
 }
 
 func (u *UpdateActionModuleRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -20209,12 +19643,10 @@ type UpdateGuardianFactorsProviderPushNotificationApnsRequestContent struct {
 }
 
 func (u *UpdateGuardianFactorsProviderPushNotificationApnsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetSandbox sets the Sandbox field and marks it as non-optional;
@@ -20271,12 +19703,10 @@ type UpdateGuardianFactorsProviderPushNotificationFcmRequestContent struct {
 }
 
 func (u *UpdateGuardianFactorsProviderPushNotificationFcmRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetServerKey sets the ServerKey field and marks it as non-optional;
@@ -20319,12 +19749,10 @@ type UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent struct {
 }
 
 func (u *UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetServerCredentials sets the ServerCredentials field and marks it as non-optional;
@@ -20368,12 +19796,10 @@ type UpdateActionBindingsRequestContent struct {
 }
 
 func (u *UpdateActionBindingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetBindings sets the Bindings field and marks it as non-optional;
@@ -20422,12 +19848,10 @@ type UpdateSettingsRequestContent struct {
 }
 
 func (u *UpdateSettingsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetUniversalLoginExperience sets the UniversalLoginExperience field and marks it as non-optional;
@@ -20492,12 +19916,10 @@ type UpdateGuardianFactorsProviderPushNotificationSnsRequestContent struct {
 }
 
 func (u *UpdateGuardianFactorsProviderPushNotificationSnsRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
@@ -20586,12 +20008,10 @@ type VerifyEmailTicketRequestContent struct {
 }
 
 func (v *VerifyEmailTicketRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if v.explicitFields != nil {
-		next.Set(v.explicitFields)
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	v.explicitFields = next
+	v.explicitFields.Or(v.explicitFields, field)
 }
 
 // SetResultURL sets the ResultURL field and marks it as non-optional;

@@ -35,24 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Example:
-//
-//	request := &management.ListClientGrantOrganizationsRequestParameters{
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.ClientGrants.Organizations.List(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the client grant
@@ -113,7 +95,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

@@ -68,48 +68,6 @@ func NewClient(options *core.RequestOptions) *Client {
 //     `read:client_keys` or `read:client_credentials` scope:
 //     `encryption_key`, `encryption_key.pub`, `encryption_key.cert`,
 //     `client_secret`, `client_authentication_methods` and `signing_key`.
-//
-// Example:
-//
-//	request := &management.ListClientsRequestParameters{
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	    IsGlobal: management.Bool(
-//	        true,
-//	    ),
-//	    IsFirstParty: management.Bool(
-//	        true,
-//	    ),
-//	    AppType: management.String(
-//	        "app_type",
-//	    ),
-//	    ExternalClientID: management.String(
-//	        "external_client_id",
-//	    ),
-//	    AgentID: management.String(
-//	        "agent_id",
-//	    ),
-//	    Q: management.String(
-//	        "q",
-//	    ),
-//	}
-//	client.Clients.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListClientsRequestParameters,
@@ -197,16 +155,6 @@ func (c *Client) List(
 // - To configure `client_authentication_methods`, the property `jwt_configuration.alg` must be set to RS256.
 //
 // SSO Integrations created via this endpoint will accept login requests and share user profile information.
-//
-// Example:
-//
-//	request := &management.CreateClientRequestContent{
-//	    Name: "name",
-//	}
-//	client.Clients.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateClientRequestContent,
@@ -226,16 +174,6 @@ func (c *Client) Create(
 //	Fetches and validates a Client ID Metadata Document without creating a client.
 //	Returns the raw metadata and how it would be mapped to Auth0 client fields.
 //	This endpoint is useful for testing metadata URIs before creating CIMD clients.
-//
-// Example:
-//
-//	request := &management.PreviewCimdMetadataRequestContent{
-//	    ExternalClientID: "external_client_id",
-//	}
-//	client.Clients.PreviewCimdMetadata(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) PreviewCimdMetadata(
 	ctx context.Context,
 	request *management.PreviewCimdMetadataRequestContent,
@@ -263,16 +201,6 @@ func (c *Client) PreviewCimdMetadata(
 // - Maps CIMD fields to Auth0 client configuration
 // - Creates/rotates credentials from the JWKS
 // - Enforces CIMD security policies (HTTPS-only, no shared secrets)
-//
-// Example:
-//
-//	request := &management.RegisterCimdClientRequestContent{
-//	    ExternalClientID: "external_client_id",
-//	}
-//	client.Clients.RegisterCimdClient(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) RegisterCimdClient(
 	ctx context.Context,
 	request *management.RegisterCimdClientRequestContent,
@@ -301,32 +229,6 @@ func (c *Client) RegisterCimdClient(
 //   - `signing_keys`
 //   - `owners`
 //   - `addons`
-//
-// Example:
-//
-//	request := &management.SearchClientsRequestParameters{
-//	    Q: management.String(
-//	        "q",
-//	    ),
-//	    Parser: management.SearchParserEnumSCIM.Ptr(),
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Sort: management.ClientSortFieldEnumName.Ptr(),
-//	}
-//	client.Clients.Search(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Search(
 	ctx context.Context,
 	request *management.SearchClientsRequestParameters,
@@ -381,7 +283,7 @@ func (c *Client) Search(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -416,22 +318,6 @@ func (c *Client) Search(
 //   - The following properties can only be retrieved with the `read:client_keys` or `read:client_credentials` scopes:
 //     `encryption_key`, `encryption_key.pub`, `encryption_key.cert`,
 //     `client_secret`, `client_authentication_methods` and `signing_key`.
-//
-// Example:
-//
-//	request := &management.GetClientRequestParameters{
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Clients.Get(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client to retrieve.
@@ -452,13 +338,6 @@ func (c *Client) Get(
 }
 
 // Delete a client and related configuration (rules, connections, etc).
-//
-// Example:
-//
-//	client.Clients.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the client to delete.
@@ -485,15 +364,6 @@ func (c *Client) Delete(
 // - To configure `client_authentication_methods`, the `update:client_credentials` scope is required.
 // - To configure `client_authentication_methods`, the property `jwt_configuration.alg` must be set to RS256.
 // - To change a client's `is_first_party` property to `false`, the `organization_usage` and `organization_require_behavior` properties must be unset.
-//
-// Example:
-//
-//	request := &management.UpdateClientRequestContent{}
-//	client.Clients.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the client to update.
@@ -518,13 +388,6 @@ func (c *Client) Update(
 // This endpoint cannot be used with clients configured with Private Key JWT authentication method (client_authentication_methods configured with private_key_jwt). The generated secret is NOT base64 encoded.
 //
 // For more information, read [Rotate Client Secrets](https://www.auth0.com/docs/get-started/applications/rotate-client-secret).
-//
-// Example:
-//
-//	client.Clients.RotateSecret(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) RotateSecret(
 	ctx context.Context,
 	// ID of the client that will rotate secrets.

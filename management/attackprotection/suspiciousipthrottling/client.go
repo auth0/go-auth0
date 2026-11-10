@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of the Suspicious IP Throttling configuration of your tenant.
-//
-// Example:
-//
-//	client.AttackProtection.SuspiciousIPThrottling.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,14 +50,6 @@ func (c *Client) Get(
 }
 
 // Update the details of the Suspicious IP Throttling configuration of your tenant.
-//
-// Example:
-//
-//	request := &management.UpdateSuspiciousIPThrottlingSettingsRequestContent{}
-//	client.AttackProtection.SuspiciousIPThrottling.Update(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateSuspiciousIPThrottlingSettingsRequestContent,

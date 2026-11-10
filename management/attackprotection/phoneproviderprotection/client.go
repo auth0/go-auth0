@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get the phone provider protection configuration for a tenant.
-//
-// Example:
-//
-//	client.AttackProtection.PhoneProviderProtection.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,16 +50,6 @@ func (c *Client) Get(
 }
 
 // Update the phone provider protection configuration for a tenant.
-//
-// Example:
-//
-//	request := &management.PatchPhoneProviderProtectionRequestContent{
-//	    Type: management.PhoneProviderProtectionBackoffStrategyEnumExponential,
-//	}
-//	client.AttackProtection.PhoneProviderProtection.Patch(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Patch(
 	ctx context.Context,
 	request *management.PatchPhoneProviderProtectionRequestContent,

@@ -35,13 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve error details of a failed job.
-//
-// Example:
-//
-//	client.Jobs.Errors.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the job.

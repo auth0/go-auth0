@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Gets the risk assessment settings for the new device assessor
-//
-// Example:
-//
-//	client.RiskAssessments.Settings.NewDevice.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,16 +50,6 @@ func (c *Client) Get(
 }
 
 // Updates the risk assessment settings for the new device assessor
-//
-// Example:
-//
-//	request := &management.UpdateRiskAssessmentsSettingsNewDeviceRequestContent{
-//	    RememberFor: 1,
-//	}
-//	client.RiskAssessments.Settings.NewDevice.Update(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateRiskAssessmentsSettingsNewDeviceRequestContent,

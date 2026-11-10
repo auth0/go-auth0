@@ -38,25 +38,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve detailed list of authentication methods associated with a specified user.
-//
-// Example:
-//
-//	request := &management.ListUserAuthenticationMethodsRequestParameters{
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Users.AuthenticationMethods.List(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// The ID of the user in question.
@@ -136,17 +117,6 @@ func (c *Client) List(
 }
 
 // Create an authentication method. Authentication methods created via this endpoint will be auto confirmed and should already have verification completed.
-//
-// Example:
-//
-//	request := &management.CreateUserAuthenticationMethodRequestContent{
-//	    Type: management.CreatedUserAuthenticationMethodTypeEnumPhone,
-//	}
-//	client.Users.AuthenticationMethods.Create(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The ID of the user to whom the new authentication method will be assigned.
@@ -169,19 +139,6 @@ func (c *Client) Create(
 // Replace the specified user <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors"> authentication methods</a> with supplied values.
 //
 //	<b>Note</b>: Authentication methods supplied through this action do not iterate on existing methods. Instead, any methods passed will overwrite the user&#8217s existing settings.
-//
-// Example:
-//
-//	request := []*management.SetUserAuthenticationMethods{
-//	    &management.SetUserAuthenticationMethods{
-//	        Type: management.AuthenticationTypeEnumPhone,
-//	    },
-//	}
-//	client.Users.AuthenticationMethods.Set(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// The ID of the user in question.
@@ -202,13 +159,6 @@ func (c *Client) Set(
 }
 
 // Remove all authentication methods (i.e., enrolled MFA factors) from the specified user account. This action cannot be undone.
-//
-// Example:
-//
-//	client.Users.AuthenticationMethods.DeleteAll(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) DeleteAll(
 	ctx context.Context,
 	// The ID of the user in question.
@@ -226,13 +176,6 @@ func (c *Client) DeleteAll(
 	return nil
 }
 
-// Example:
-//
-//	client.Users.AuthenticationMethods.Get(
-//	    context.TODO(),
-//	    "id",
-//	    "authentication_method_id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the user in question.
@@ -254,14 +197,6 @@ func (c *Client) Get(
 }
 
 // Remove the authentication method with the given ID from the specified user. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/manage-mfa-auth0-apis/manage-authentication-methods-with-management-api">Manage Authentication Methods with Management API</a>.
-//
-// Example:
-//
-//	client.Users.AuthenticationMethods.Delete(
-//	    context.TODO(),
-//	    "id",
-//	    "authentication_method_id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the user in question.
@@ -283,16 +218,6 @@ func (c *Client) Delete(
 }
 
 // Modify the authentication method with the given ID from the specified user. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/manage-mfa-auth0-apis/manage-authentication-methods-with-management-api">Manage Authentication Methods with Management API</a>.
-//
-// Example:
-//
-//	request := &management.UpdateUserAuthenticationMethodRequestContent{}
-//	client.Users.AuthenticationMethods.Update(
-//	    context.TODO(),
-//	    "id",
-//	    "authentication_method_id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the user in question.

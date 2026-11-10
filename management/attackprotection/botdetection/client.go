@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get the Bot Detection configuration of your tenant.
-//
-// Example:
-//
-//	client.AttackProtection.BotDetection.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,14 +50,6 @@ func (c *Client) Get(
 }
 
 // Update the Bot Detection configuration of your tenant.
-//
-// Example:
-//
-//	request := &management.UpdateBotDetectionSettingsRequestContent{}
-//	client.AttackProtection.BotDetection.Update(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateBotDetectionSettingsRequestContent,

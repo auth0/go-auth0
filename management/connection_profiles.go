@@ -113,12 +113,10 @@ func (c *ConnectionProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionProfile) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -244,12 +242,10 @@ func (c *ConnectionProfileConfig) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionProfileConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 func (c *ConnectionProfileConfig) UnmarshalJSON(data []byte) error {
@@ -294,11 +290,11 @@ func (c *ConnectionProfileConfig) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Controls whether organization admins may enable Cross App Access (XAA) on their Identity Providers.
 var (
 	connectionProfileCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
 )
 
-// Controls whether organization admins may enable Cross App Access (XAA) on their Identity Providers.
 type ConnectionProfileCrossAppAccessResourceApp struct {
 	Status *ConnectionProfileCrossAppAccessResourceAppStatus `json:"status" url:"status"`
 
@@ -324,12 +320,10 @@ func (c *ConnectionProfileCrossAppAccessResourceApp) GetExtraProperties() map[st
 }
 
 func (c *ConnectionProfileCrossAppAccessResourceApp) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -381,12 +375,12 @@ func (c *ConnectionProfileCrossAppAccessResourceApp) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// The Cross App Access resource app status configuration.
 var (
 	connectionProfileCrossAppAccessResourceAppStatusFieldDefaultValue  = big.NewInt(1 << 0)
 	connectionProfileCrossAppAccessResourceAppStatusFieldAllowedValues = big.NewInt(1 << 1)
 )
 
-// The Cross App Access resource app status configuration.
 type ConnectionProfileCrossAppAccessResourceAppStatus struct {
 	DefaultValue  ConnectionProfileCrossAppAccessResourceAppStatusDefaultValueEnum   `json:"default_value" url:"default_value"`
 	AllowedValues *ConnectionProfileCrossAppAccessResourceAppStatusAllowedValuesEnum `json:"allowed_values,omitempty" url:"allowed_values,omitempty"`
@@ -420,12 +414,10 @@ func (c *ConnectionProfileCrossAppAccessResourceAppStatus) GetExtraProperties() 
 }
 
 func (c *ConnectionProfileCrossAppAccessResourceAppStatus) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -542,12 +534,12 @@ type ConnectionProfileID = string
 // The name of the connection profile.
 type ConnectionProfileName = string
 
+// The organization of the connection profile.
 var (
 	connectionProfileOrganizationFieldShowAsButton            = big.NewInt(1 << 0)
 	connectionProfileOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
 )
 
-// The organization of the connection profile.
 type ConnectionProfileOrganization struct {
 	ShowAsButton            *ConnectionProfileOrganizationShowAsButtonEnum            `json:"show_as_button,omitempty" url:"show_as_button,omitempty"`
 	AssignMembershipOnLogin *ConnectionProfileOrganizationAssignMembershipOnLoginEnum `json:"assign_membership_on_login,omitempty" url:"assign_membership_on_login,omitempty"`
@@ -581,12 +573,10 @@ func (c *ConnectionProfileOrganization) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionProfileOrganization) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetShowAsButton sets the ShowAsButton field and marks it as non-optional;
@@ -697,12 +687,12 @@ func (c ConnectionProfileOrganizationShowAsButtonEnum) Ptr() *ConnectionProfileO
 	return &c
 }
 
+// Provisioning settings for connections created from this profile.
 var (
 	connectionProfileProvisioningFieldSCIM            = big.NewInt(1 << 0)
 	connectionProfileProvisioningFieldGoogleWorkspace = big.NewInt(1 << 1)
 )
 
-// Provisioning settings for connections created from this profile.
 type ConnectionProfileProvisioning struct {
 	SCIM            *ConnectionProfileProvisioningSCIM            `json:"scim,omitempty" url:"scim,omitempty"`
 	GoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace `json:"google_workspace,omitempty" url:"google_workspace,omitempty"`
@@ -736,12 +726,10 @@ func (c *ConnectionProfileProvisioning) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionProfileProvisioning) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetSCIM sets the SCIM field and marks it as non-optional;
@@ -800,11 +788,11 @@ func (c *ConnectionProfileProvisioning) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Google Workspace provisioning settings.
 var (
 	connectionProfileProvisioningGoogleWorkspaceFieldSyncUsers = big.NewInt(1 << 0)
 )
 
-// Google Workspace provisioning settings.
 type ConnectionProfileProvisioningGoogleWorkspace struct {
 	SyncUsers ConnectionProfileProvisioningGoogleWorkspaceSyncUsers `json:"sync_users" url:"sync_users"`
 
@@ -830,12 +818,10 @@ func (c *ConnectionProfileProvisioningGoogleWorkspace) GetExtraProperties() map[
 }
 
 func (c *ConnectionProfileProvisioningGoogleWorkspace) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetSyncUsers sets the SyncUsers field and marks it as non-optional;
@@ -890,11 +876,11 @@ func (c *ConnectionProfileProvisioningGoogleWorkspace) String() string {
 // Whether the connection is authorized to run Google Workspace user provisioning.
 type ConnectionProfileProvisioningGoogleWorkspaceSyncUsers = bool
 
+// SCIM provisioning settings.
 var (
 	connectionProfileProvisioningSCIMFieldTokens = big.NewInt(1 << 0)
 )
 
-// SCIM provisioning settings.
 type ConnectionProfileProvisioningSCIM struct {
 	Tokens *ConnectionProfileProvisioningSCIMTokens `json:"tokens" url:"tokens"`
 
@@ -920,12 +906,10 @@ func (c *ConnectionProfileProvisioningSCIM) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionProfileProvisioningSCIM) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTokens sets the Tokens field and marks it as non-optional;
@@ -1018,19 +1002,13 @@ func (c ConnectionProfileProvisioningSCIMTokenScopeEnum) Ptr() *ConnectionProfil
 // The scopes granted to SCIM tokens.
 type ConnectionProfileProvisioningSCIMTokenScopes = []ConnectionProfileProvisioningSCIMTokenScopeEnum
 
+// SCIM token settings for connections created from this profile.
 var (
 	connectionProfileProvisioningSCIMTokensFieldScopes           = big.NewInt(1 << 0)
 	connectionProfileProvisioningSCIMTokensFieldDefaultExpiry    = big.NewInt(1 << 1)
 	connectionProfileProvisioningSCIMTokensFieldMaxAllowedExpiry = big.NewInt(1 << 2)
 )
 
-// connectionProfileProvisioningSCIMTokensNullableFields maps the wire names of ConnectionProfileProvisioningSCIMTokens's nullable fields (required or optional) to their field bits.
-var connectionProfileProvisioningSCIMTokensNullableFields = map[string]*big.Int{
-	"default_expiry":     connectionProfileProvisioningSCIMTokensFieldDefaultExpiry,
-	"max_allowed_expiry": connectionProfileProvisioningSCIMTokensFieldMaxAllowedExpiry,
-}
-
-// SCIM token settings for connections created from this profile.
 type ConnectionProfileProvisioningSCIMTokens struct {
 	Scopes           ConnectionProfileProvisioningSCIMTokenScopes            `json:"scopes" url:"scopes"`
 	DefaultExpiry    *ConnectionProfileProvisioningSCIMTokenDefaultExpiry    `json:"default_expiry,omitempty" url:"default_expiry,omitempty"`
@@ -1072,12 +1050,10 @@ func (c *ConnectionProfileProvisioningSCIMTokens) GetExtraProperties() map[strin
 }
 
 func (c *ConnectionProfileProvisioningSCIMTokens) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetScopes sets the Scopes field and marks it as non-optional;
@@ -1113,13 +1089,6 @@ func (c *ConnectionProfileProvisioningSCIMTokens) UnmarshalJSON(data []byte) err
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionProfileProvisioningSCIMTokensNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -1150,13 +1119,13 @@ func (c *ConnectionProfileProvisioningSCIMTokens) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Connection Profile Strategy Override
 var (
 	connectionProfileStrategyOverrideFieldEnabledFeatures  = big.NewInt(1 << 0)
 	connectionProfileStrategyOverrideFieldConnectionConfig = big.NewInt(1 << 1)
 	connectionProfileStrategyOverrideFieldProvisioning     = big.NewInt(1 << 2)
 )
 
-// Connection Profile Strategy Override
 type ConnectionProfileStrategyOverride struct {
 	EnabledFeatures  *ConnectionProfileStrategyOverridesEnabledFeatures  `json:"enabled_features,omitempty" url:"enabled_features,omitempty"`
 	ConnectionConfig *ConnectionProfileStrategyOverridesConnectionConfig `json:"connection_config,omitempty" url:"connection_config,omitempty"`
@@ -1198,12 +1167,10 @@ func (c *ConnectionProfileStrategyOverride) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionProfileStrategyOverride) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
@@ -1269,6 +1236,7 @@ func (c *ConnectionProfileStrategyOverride) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Strategy-specific overrides for this attribute
 var (
 	connectionProfileStrategyOverridesFieldPingfederate = big.NewInt(1 << 0)
 	connectionProfileStrategyOverridesFieldAd           = big.NewInt(1 << 1)
@@ -1280,7 +1248,6 @@ var (
 	connectionProfileStrategyOverridesFieldSamlp        = big.NewInt(1 << 7)
 )
 
-// Strategy-specific overrides for this attribute
 type ConnectionProfileStrategyOverrides struct {
 	Pingfederate *ConnectionProfileStrategyOverride `json:"pingfederate,omitempty" url:"pingfederate,omitempty"`
 	Ad           *ConnectionProfileStrategyOverride `json:"ad,omitempty" url:"ad,omitempty"`
@@ -1362,12 +1329,10 @@ func (c *ConnectionProfileStrategyOverrides) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionProfileStrategyOverrides) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPingfederate sets the Pingfederate field and marks it as non-optional;
@@ -1486,12 +1451,10 @@ func (c *ConnectionProfileStrategyOverridesConnectionConfig) GetExtraProperties(
 }
 
 func (c *ConnectionProfileStrategyOverridesConnectionConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 func (c *ConnectionProfileStrategyOverridesConnectionConfig) UnmarshalJSON(data []byte) error {
@@ -1539,12 +1502,12 @@ func (c *ConnectionProfileStrategyOverridesConnectionConfig) String() string {
 // Enabled features for a connections profile strategy override.
 type ConnectionProfileStrategyOverridesEnabledFeatures = []EnabledFeaturesEnum
 
+// Provisioning settings for a connection profile strategy override.
 var (
 	connectionProfileStrategyOverridesProvisioningFieldSCIM            = big.NewInt(1 << 0)
 	connectionProfileStrategyOverridesProvisioningFieldGoogleWorkspace = big.NewInt(1 << 1)
 )
 
-// Provisioning settings for a connection profile strategy override.
 type ConnectionProfileStrategyOverridesProvisioning struct {
 	SCIM            *ConnectionProfileProvisioningSCIM            `json:"scim,omitempty" url:"scim,omitempty"`
 	GoogleWorkspace *ConnectionProfileProvisioningGoogleWorkspace `json:"google_workspace,omitempty" url:"google_workspace,omitempty"`
@@ -1578,12 +1541,10 @@ func (c *ConnectionProfileStrategyOverridesProvisioning) GetExtraProperties() ma
 }
 
 func (c *ConnectionProfileStrategyOverridesProvisioning) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetSCIM sets the SCIM field and marks it as non-optional;
@@ -1642,6 +1603,7 @@ func (c *ConnectionProfileStrategyOverridesProvisioning) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// The structure of the template, which can be used as the payload for creating or updating a Connection Profile.
 var (
 	connectionProfileTemplateFieldName                         = big.NewInt(1 << 0)
 	connectionProfileTemplateFieldOrganization                 = big.NewInt(1 << 1)
@@ -1652,7 +1614,6 @@ var (
 	connectionProfileTemplateFieldProvisioning                 = big.NewInt(1 << 6)
 )
 
-// The structure of the template, which can be used as the payload for creating or updating a Connection Profile.
 type ConnectionProfileTemplate struct {
 	Name                         *ConnectionProfileName              `json:"name,omitempty" url:"name,omitempty"`
 	Organization                 *ConnectionProfileOrganization      `json:"organization,omitempty" url:"organization,omitempty"`
@@ -1726,12 +1687,10 @@ func (c *ConnectionProfileTemplate) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionProfileTemplate) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1874,12 +1833,10 @@ func (c *ConnectionProfileTemplateItem) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionProfileTemplateItem) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2046,12 +2003,10 @@ func (c *CreateConnectionProfileResponseContent) GetExtraProperties() map[string
 }
 
 func (c *CreateConnectionProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2286,12 +2241,10 @@ func (g *GetConnectionProfileResponseContent) GetExtraProperties() map[string]in
 }
 
 func (g *GetConnectionProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2448,12 +2401,10 @@ func (g *GetConnectionProfileTemplateResponseContent) GetExtraProperties() map[s
 }
 
 func (g *GetConnectionProfileTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2548,12 +2499,10 @@ func (l *ListConnectionProfileTemplateResponseContent) GetExtraProperties() map[
 }
 
 func (l *ListConnectionProfileTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetConnectionProfileTemplates sets the ConnectionProfileTemplates field and marks it as non-optional;
@@ -2644,12 +2593,10 @@ func (l *ListConnectionProfilesPaginatedResponseContent) GetExtraProperties() ma
 }
 
 func (l *ListConnectionProfilesPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -2809,12 +2756,10 @@ func (u *UpdateConnectionProfileResponseContent) GetExtraProperties() map[string
 }
 
 func (u *UpdateConnectionProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

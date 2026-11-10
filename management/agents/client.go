@@ -36,21 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get agents
-//
-// Example:
-//
-//	request := &management.ListAgentsRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.Agents.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListAgentsRequestParameters,
@@ -105,7 +90,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -117,16 +102,6 @@ func (c *Client) List(
 }
 
 // Create an agent
-//
-// Example:
-//
-//	request := &management.CreateAgentRequestContent{
-//	    Name: "name",
-//	}
-//	client.Agents.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateAgentRequestContent,
@@ -144,13 +119,6 @@ func (c *Client) Create(
 }
 
 // Get an agent
-//
-// Example:
-//
-//	client.Agents.Read(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Read(
 	ctx context.Context,
 	// The agent ID
@@ -169,13 +137,6 @@ func (c *Client) Read(
 }
 
 // Delete an agent
-//
-// Example:
-//
-//	client.Agents.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The agent ID
@@ -194,15 +155,6 @@ func (c *Client) Delete(
 }
 
 // Update an agent
-//
-// Example:
-//
-//	request := &management.PatchAgentRequestParameters{}
-//	client.Agents.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The agent ID

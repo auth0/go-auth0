@@ -31,13 +31,6 @@ func (b *BadRequestError) Unwrap() error {
 	return b.APIError
 }
 
-func (b *BadRequestError) GetBody() any {
-	if b == nil {
-		return nil
-	}
-	return b.Body
-}
-
 // An action module with the same name already exists.
 type ConflictError struct {
 	*core.APIError
@@ -60,13 +53,6 @@ func (c *ConflictError) MarshalJSON() ([]byte, error) {
 
 func (c *ConflictError) Unwrap() error {
 	return c.APIError
-}
-
-func (c *ConflictError) GetBody() any {
-	if c == nil {
-		return nil
-	}
-	return c.Body
 }
 
 // Payload content length greater than maximum allowed: 512000.
@@ -93,13 +79,6 @@ func (c *ContentTooLargeError) Unwrap() error {
 	return c.APIError
 }
 
-func (c *ContentTooLargeError) GetBody() any {
-	if c == nil {
-		return nil
-	}
-	return c.Body
-}
-
 // Insufficient scope, expected: read:actions.
 type ForbiddenError struct {
 	*core.APIError
@@ -122,13 +101,6 @@ func (f *ForbiddenError) MarshalJSON() ([]byte, error) {
 
 func (f *ForbiddenError) Unwrap() error {
 	return f.APIError
-}
-
-func (f *ForbiddenError) GetBody() any {
-	if f == nil {
-		return nil
-	}
-	return f.Body
 }
 
 // The search request timed out. Please simplify your query and try again.
@@ -155,13 +127,6 @@ func (g *GatewayTimeoutError) Unwrap() error {
 	return g.APIError
 }
 
-func (g *GatewayTimeoutError) GetBody() any {
-	if g == nil {
-		return nil
-	}
-	return g.Body
-}
-
 // Cursor points to data no longer available in the stream.
 type GoneError struct {
 	*core.APIError
@@ -184,13 +149,6 @@ func (g *GoneError) MarshalJSON() ([]byte, error) {
 
 func (g *GoneError) Unwrap() error {
 	return g.APIError
-}
-
-func (g *GoneError) GetBody() any {
-	if g == nil {
-		return nil
-	}
-	return g.Body
 }
 
 // An internal server error occurred
@@ -217,13 +175,6 @@ func (i *InternalServerError) Unwrap() error {
 	return i.APIError
 }
 
-func (i *InternalServerError) GetBody() any {
-	if i == nil {
-		return nil
-	}
-	return i.Body
-}
-
 // The action version does not exist.
 type NotFoundError struct {
 	*core.APIError
@@ -246,13 +197,6 @@ func (n *NotFoundError) MarshalJSON() ([]byte, error) {
 
 func (n *NotFoundError) Unwrap() error {
 	return n.APIError
-}
-
-func (n *NotFoundError) GetBody() any {
-	if n == nil {
-		return nil
-	}
-	return n.Body
 }
 
 // A paid subscription is required for this feature.
@@ -279,13 +223,6 @@ func (p *PaymentRequiredError) Unwrap() error {
 	return p.APIError
 }
 
-func (p *PaymentRequiredError) GetBody() any {
-	if p == nil {
-		return nil
-	}
-	return p.Body
-}
-
 // The Actions Module cannot be deleted because it is in use by one or more actions.
 type PreconditionFailedError struct {
 	*core.APIError
@@ -308,13 +245,6 @@ func (p *PreconditionFailedError) MarshalJSON() ([]byte, error) {
 
 func (p *PreconditionFailedError) Unwrap() error {
 	return p.APIError
-}
-
-func (p *PreconditionFailedError) GetBody() any {
-	if p == nil {
-		return nil
-	}
-	return p.Body
 }
 
 // The query exceeded the timeout. Please try refining your search criteria. See https://auth0.com/docs/best-practices/search-best-practices.
@@ -341,13 +271,6 @@ func (s *ServiceUnavailableError) Unwrap() error {
 	return s.APIError
 }
 
-func (s *ServiceUnavailableError) GetBody() any {
-	if s == nil {
-		return nil
-	}
-	return s.Body
-}
-
 // Too many requests. Check the X-RateLimit-Limit, X-RateLimit-Remaining and X-RateLimit-Reset headers.
 type TooManyRequestsError struct {
 	*core.APIError
@@ -370,13 +293,6 @@ func (t *TooManyRequestsError) MarshalJSON() ([]byte, error) {
 
 func (t *TooManyRequestsError) Unwrap() error {
 	return t.APIError
-}
-
-func (t *TooManyRequestsError) GetBody() any {
-	if t == nil {
-		return nil
-	}
-	return t.Body
 }
 
 // Invalid token.
@@ -403,13 +319,6 @@ func (u *UnauthorizedError) Unwrap() error {
 	return u.APIError
 }
 
-func (u *UnauthorizedError) GetBody() any {
-	if u == nil {
-		return nil
-	}
-	return u.Body
-}
-
 // MCP connections must have connected_accounts.active set to true and authentication.active set to false
 type UnprocessableEntityError struct {
 	*core.APIError
@@ -432,11 +341,4 @@ func (u *UnprocessableEntityError) MarshalJSON() ([]byte, error) {
 
 func (u *UnprocessableEntityError) Unwrap() error {
 	return u.APIError
-}
-
-func (u *UnprocessableEntityError) GetBody() any {
-	if u == nil {
-		return nil
-	}
-	return u.Body
 }

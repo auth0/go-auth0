@@ -365218,4423 +365218,6 @@ func TestJSONMarshalingXSSProtectionConfig(t *testing.T) {
 	})
 }
 
-func TestOptionalNullableRoundTripAculConfigsItem(t *testing.T) {
-	optionalNullableKeys := []string{
-		"context_configuration",
-		"default_head_tags_disabled",
-		"use_page_template",
-		"head_tags",
-		"filters",
-	}
-	marshalToMap := func(t *testing.T, obj *AculConfigsItem) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj AculConfigsItem
-		require.NoError(t, json.Unmarshal([]byte(`{"context_configuration":null,"default_head_tags_disabled":null,"use_page_template":null,"head_tags":null,"filters":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj AculConfigsItem
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &AculConfigsItem{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripAllocationItem(t *testing.T) {
-	optionalNullableKeys := []string{
-		"variation_snapshot",
-		"segment_snapshot",
-	}
-	marshalToMap := func(t *testing.T, obj *AllocationItem) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj AllocationItem
-		require.NoError(t, json.Unmarshal([]byte(`{"variation_snapshot":null,"segment_snapshot":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj AllocationItem
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &AllocationItem{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsAd(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsAd) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAd
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAd
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsAd{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsAdfs(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsAdfs) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAdfs
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAdfs
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsAdfs{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsAmazon(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsAmazon) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAmazon
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAmazon
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsAmazon{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsApple(t *testing.T) {
-	optionalNullableKeys := []string{
-		"app_secret",
-		"client_id",
-		"kid",
-		"team_id",
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsApple) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsApple
-		require.NoError(t, json.Unmarshal([]byte(`{"app_secret":null,"client_id":null,"kid":null,"team_id":null,"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsApple
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsApple{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsAuth0(t *testing.T) {
-	optionalNullableKeys := []string{
-		"authentication_methods",
-		"passkey_options",
-		"passwordPolicy",
-		"password_complexity_options",
-		"password_dictionary",
-		"password_history",
-		"password_no_personal_info",
-		"validation",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsAuth0) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAuth0
-		require.NoError(t, json.Unmarshal([]byte(`{"authentication_methods":null,"passkey_options":null,"passwordPolicy":null,"password_complexity_options":null,"password_dictionary":null,"password_history":null,"password_no_personal_info":null,"validation":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAuth0
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsAuth0{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsAzureAd(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsAzureAd) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAzureAd
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsAzureAd
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsAzureAd{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsBaidu(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsBaidu) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsBaidu
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsBaidu
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsBaidu{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsBitly(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsBitly) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsBitly
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsBitly
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsBitly{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsBox(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsBox) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsBox
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsBox
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsBox{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsCommonOidc(t *testing.T) {
-	optionalNullableKeys := []string{
-		"id_token_signed_response_algs",
-		"token_endpoint_auth_method",
-		"token_endpoint_auth_signing_alg",
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsCommonOidc) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsCommonOidc
-		require.NoError(t, json.Unmarshal([]byte(`{"id_token_signed_response_algs":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null,"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsCommonOidc
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsCommonOidc{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsCommonSAML(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsCommonSAML) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsCommonSAML
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsCommonSAML
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsCommonSAML{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsDaccount(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsDaccount) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsDaccount
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsDaccount
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsDaccount{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsDropbox(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsDropbox) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsDropbox
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsDropbox
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsDropbox{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsDwolla(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsDwolla) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsDwolla
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsDwolla
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsDwolla{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsEvernote(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsEvernote) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsEvernote
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsEvernote
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsEvernote{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsExact(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsExact) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsExact
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsExact
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsExact{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsFitbit(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsFitbit) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsFitbit
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsFitbit
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsFitbit{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsGitHub(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsGitHub) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsGitHub
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsGitHub
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsGitHub{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsGoogleApps(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsGoogleApps) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsGoogleApps
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsGoogleApps
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsGoogleApps{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsGoogleOAuth2(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsGoogleOAuth2) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsGoogleOAuth2
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsGoogleOAuth2
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsGoogleOAuth2{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsInstagram(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsInstagram) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsInstagram
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsInstagram
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsInstagram{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsLine(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsLine) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsLine
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsLine
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsLine{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsLinkedin(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsLinkedin) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsLinkedin
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsLinkedin
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsLinkedin{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsOAuth1(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsOAuth1) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth1
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth1
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsOAuth1{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsOAuth1Common(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsOAuth1Common) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth1Common
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth1Common
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsOAuth1Common{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsOAuth2(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsOAuth2) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth2
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth2
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsOAuth2{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsOAuth2Common(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsOAuth2Common) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth2Common
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOAuth2Common
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsOAuth2Common{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsOidc(t *testing.T) {
-	optionalNullableKeys := []string{
-		"id_token_signed_response_algs",
-		"token_endpoint_auth_method",
-		"token_endpoint_auth_signing_alg",
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsOidc) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOidc
-		require.NoError(t, json.Unmarshal([]byte(`{"id_token_signed_response_algs":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null,"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOidc
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsOidc{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsOidcMetadata(t *testing.T) {
-	optionalNullableKeys := []string{
-		"scopes_supported",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsOidcMetadata) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOidcMetadata
-		require.NoError(t, json.Unmarshal([]byte(`{"scopes_supported":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOidcMetadata
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsOidcMetadata{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsOkta(t *testing.T) {
-	optionalNullableKeys := []string{
-		"id_token_signed_response_algs",
-		"token_endpoint_auth_method",
-		"token_endpoint_auth_signing_alg",
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsOkta) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOkta
-		require.NoError(t, json.Unmarshal([]byte(`{"id_token_signed_response_algs":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null,"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsOkta
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsOkta{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsPingFederate(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsPingFederate) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsPingFederate
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsPingFederate
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsPingFederate{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsPlanningCenter(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsPlanningCenter) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsPlanningCenter
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsPlanningCenter
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsPlanningCenter{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsSAML(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-		"token_endpoint_auth_method",
-		"token_endpoint_auth_signing_alg",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsSAML) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSAML
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null,"token_endpoint_auth_method":null,"token_endpoint_auth_signing_alg":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSAML
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsSAML{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsSalesforce(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsSalesforce) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSalesforce
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSalesforce
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsSalesforce{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsSalesforceCommunity(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsSalesforceCommunity) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSalesforceCommunity
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSalesforceCommunity
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsSalesforceCommunity{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsSharepoint(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsSharepoint) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSharepoint
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSharepoint
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsSharepoint{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsShop(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsShop) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsShop
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsShop
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsShop{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsShopify(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsShopify) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsShopify
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsShopify
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsShopify{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsSms(t *testing.T) {
-	optionalNullableKeys := []string{
-		"gateway_authentication",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsSms) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSms
-		require.NoError(t, json.Unmarshal([]byte(`{"gateway_authentication":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSms
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsSms{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsSoundcloud(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsSoundcloud) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSoundcloud
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsSoundcloud
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsSoundcloud{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsThirtySevenSignals(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsThirtySevenSignals) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsThirtySevenSignals
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsThirtySevenSignals
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsThirtySevenSignals{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsTwitter(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsTwitter) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsTwitter
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsTwitter
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsTwitter{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsUntappd(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsUntappd) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsUntappd
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsUntappd
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsUntappd{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsVkontakte(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsVkontakte) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsVkontakte
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsVkontakte
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsVkontakte{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsWeibo(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsWeibo) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsWeibo
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsWeibo
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsWeibo{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsWindowsLive(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsWindowsLive) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsWindowsLive
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsWindowsLive
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsWindowsLive{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsWordpress(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsWordpress) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsWordpress
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsWordpress
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsWordpress{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsYahoo(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsYahoo) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsYahoo
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsYahoo
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsYahoo{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionOptionsYandex(t *testing.T) {
-	optionalNullableKeys := []string{
-		"upstream_params",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionOptionsYandex) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsYandex
-		require.NoError(t, json.Unmarshal([]byte(`{"upstream_params":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionOptionsYandex
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionOptionsYandex{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionResponseContentOidc(t *testing.T) {
-	optionalNullableKeys := []string{
-		"cross_app_access_resource_app",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionResponseContentOidc) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionResponseContentOidc
-		require.NoError(t, json.Unmarshal([]byte(`{"cross_app_access_resource_app":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionResponseContentOidc
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionResponseContentOidc{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripConnectionResponseContentSAML(t *testing.T) {
-	optionalNullableKeys := []string{
-		"cross_app_access_resource_app",
-	}
-	marshalToMap := func(t *testing.T, obj *ConnectionResponseContentSAML) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionResponseContentSAML
-		require.NoError(t, json.Unmarshal([]byte(`{"cross_app_access_resource_app":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ConnectionResponseContentSAML
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ConnectionResponseContentSAML{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripContentSecurityPolicyConfig(t *testing.T) {
-	optionalNullableKeys := []string{
-		"reporting_infrastructure",
-	}
-	marshalToMap := func(t *testing.T, obj *ContentSecurityPolicyConfig) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ContentSecurityPolicyConfig
-		require.NoError(t, json.Unmarshal([]byte(`{"reporting_infrastructure":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ContentSecurityPolicyConfig
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ContentSecurityPolicyConfig{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripCreateConnectionRequestContentOidc(t *testing.T) {
-	optionalNullableKeys := []string{
-		"cross_app_access_resource_app",
-	}
-	marshalToMap := func(t *testing.T, obj *CreateConnectionRequestContentOidc) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateConnectionRequestContentOidc
-		require.NoError(t, json.Unmarshal([]byte(`{"cross_app_access_resource_app":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateConnectionRequestContentOidc
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &CreateConnectionRequestContentOidc{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripCreateConnectionRequestContentSAML(t *testing.T) {
-	optionalNullableKeys := []string{
-		"cross_app_access_resource_app",
-	}
-	marshalToMap := func(t *testing.T, obj *CreateConnectionRequestContentSAML) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateConnectionRequestContentSAML
-		require.NoError(t, json.Unmarshal([]byte(`{"cross_app_access_resource_app":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateConnectionRequestContentSAML
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &CreateConnectionRequestContentSAML{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripCreateEncryptionKeyResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"parent_kid",
-		"public_key",
-	}
-	marshalToMap := func(t *testing.T, obj *CreateEncryptionKeyResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateEncryptionKeyResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"parent_kid":null,"public_key":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateEncryptionKeyResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &CreateEncryptionKeyResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripCreateExperimentResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"feature_flag_snapshot",
-		"current_level",
-	}
-	marshalToMap := func(t *testing.T, obj *CreateExperimentResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateExperimentResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"feature_flag_snapshot":null,"current_level":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateExperimentResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &CreateExperimentResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripCreateVerifiableCredentialTemplateResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"custom_certificate_authority",
-		"well_known_trusted_issuers",
-	}
-	marshalToMap := func(t *testing.T, obj *CreateVerifiableCredentialTemplateResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateVerifiableCredentialTemplateResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"custom_certificate_authority":null,"well_known_trusted_issuers":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj CreateVerifiableCredentialTemplateResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &CreateVerifiableCredentialTemplateResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripCspPolicy(t *testing.T) {
-	optionalNullableKeys := []string{
-		"reporting",
-	}
-	marshalToMap := func(t *testing.T, obj *CspPolicy) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj CspPolicy
-		require.NoError(t, json.Unmarshal([]byte(`{"reporting":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj CspPolicy
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &CspPolicy{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripCspReportingInfrastructure(t *testing.T) {
-	optionalNullableKeys := []string{
-		"report_to",
-	}
-	marshalToMap := func(t *testing.T, obj *CspReportingInfrastructure) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj CspReportingInfrastructure
-		require.NoError(t, json.Unmarshal([]byte(`{"report_to":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj CspReportingInfrastructure
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &CspReportingInfrastructure{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripEncryptionKey(t *testing.T) {
-	optionalNullableKeys := []string{
-		"parent_kid",
-		"public_key",
-	}
-	marshalToMap := func(t *testing.T, obj *EncryptionKey) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj EncryptionKey
-		require.NoError(t, json.Unmarshal([]byte(`{"parent_kid":null,"public_key":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj EncryptionKey
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &EncryptionKey{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripExperimentListItem(t *testing.T) {
-	optionalNullableKeys := []string{
-		"feature_flag_snapshot",
-		"current_level",
-	}
-	marshalToMap := func(t *testing.T, obj *ExperimentListItem) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ExperimentListItem
-		require.NoError(t, json.Unmarshal([]byte(`{"feature_flag_snapshot":null,"current_level":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ExperimentListItem
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ExperimentListItem{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetAculResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"context_configuration",
-		"default_head_tags_disabled",
-		"use_page_template",
-		"head_tags",
-		"filters",
-	}
-	marshalToMap := func(t *testing.T, obj *GetAculResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetAculResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"context_configuration":null,"default_head_tags_disabled":null,"use_page_template":null,"head_tags":null,"filters":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetAculResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetAculResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetEncryptionKeyResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"parent_kid",
-		"public_key",
-	}
-	marshalToMap := func(t *testing.T, obj *GetEncryptionKeyResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetEncryptionKeyResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"parent_kid":null,"public_key":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetEncryptionKeyResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetEncryptionKeyResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetExperimentResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"feature_flag_snapshot",
-		"current_level",
-	}
-	marshalToMap := func(t *testing.T, obj *GetExperimentResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetExperimentResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"feature_flag_snapshot":null,"current_level":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetExperimentResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetExperimentResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetGuardianFactorsProviderApnsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"bundle_id",
-	}
-	marshalToMap := func(t *testing.T, obj *GetGuardianFactorsProviderApnsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderApnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"bundle_id":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderApnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetGuardianFactorsProviderApnsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetGuardianFactorsProviderPhoneTwilioResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"from",
-		"messaging_service_sid",
-		"auth_token",
-		"sid",
-	}
-	marshalToMap := func(t *testing.T, obj *GetGuardianFactorsProviderPhoneTwilioResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderPhoneTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"from":null,"messaging_service_sid":null,"auth_token":null,"sid":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderPhoneTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetGuardianFactorsProviderPhoneTwilioResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetGuardianFactorsProviderSmsTwilioResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"from",
-		"messaging_service_sid",
-		"auth_token",
-		"sid",
-	}
-	marshalToMap := func(t *testing.T, obj *GetGuardianFactorsProviderSmsTwilioResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderSmsTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"from":null,"messaging_service_sid":null,"auth_token":null,"sid":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderSmsTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetGuardianFactorsProviderSmsTwilioResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetGuardianFactorsProviderSnsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"aws_access_key_id",
-		"aws_secret_access_key",
-		"aws_region",
-		"sns_apns_platform_application_arn",
-		"sns_gcm_platform_application_arn",
-	}
-	marshalToMap := func(t *testing.T, obj *GetGuardianFactorsProviderSnsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderSnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"aws_access_key_id":null,"aws_secret_access_key":null,"aws_region":null,"sns_apns_platform_application_arn":null,"sns_gcm_platform_application_arn":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetGuardianFactorsProviderSnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetGuardianFactorsProviderSnsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetTenantSettingsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"change_password",
-		"guardian_mfa_page",
-		"error_page",
-		"device_flow",
-		"default_token_quota",
-		"access_token",
-		"security_headers",
-		"session_cookie",
-		"sessions",
-		"acr_values_supported",
-		"mtls",
-		"authorization_response_iss_parameter_supported",
-		"dpop_strict_refresh_token_binding",
-		"skip_non_verifiable_callback_uri_confirmation_prompt",
-	}
-	marshalToMap := func(t *testing.T, obj *GetTenantSettingsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetTenantSettingsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"change_password":null,"guardian_mfa_page":null,"error_page":null,"device_flow":null,"default_token_quota":null,"access_token":null,"security_headers":null,"session_cookie":null,"sessions":null,"acr_values_supported":null,"mtls":null,"authorization_response_iss_parameter_supported":null,"dpop_strict_refresh_token_binding":null,"skip_non_verifiable_callback_uri_confirmation_prompt":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetTenantSettingsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetTenantSettingsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripGetVerifiableCredentialTemplateResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"custom_certificate_authority",
-		"well_known_trusted_issuers",
-	}
-	marshalToMap := func(t *testing.T, obj *GetVerifiableCredentialTemplateResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj GetVerifiableCredentialTemplateResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"custom_certificate_authority":null,"well_known_trusted_issuers":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj GetVerifiableCredentialTemplateResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &GetVerifiableCredentialTemplateResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripImportEncryptionKeyResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"parent_kid",
-		"public_key",
-	}
-	marshalToMap := func(t *testing.T, obj *ImportEncryptionKeyResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ImportEncryptionKeyResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"parent_kid":null,"public_key":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ImportEncryptionKeyResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ImportEncryptionKeyResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripListAculsResponseContentItem(t *testing.T) {
-	optionalNullableKeys := []string{
-		"context_configuration",
-		"default_head_tags_disabled",
-		"use_page_template",
-		"head_tags",
-		"filters",
-	}
-	marshalToMap := func(t *testing.T, obj *ListAculsResponseContentItem) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ListAculsResponseContentItem
-		require.NoError(t, json.Unmarshal([]byte(`{"context_configuration":null,"default_head_tags_disabled":null,"use_page_template":null,"head_tags":null,"filters":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ListAculsResponseContentItem
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ListAculsResponseContentItem{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripListVerifiableCredentialTemplatesPaginatedResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"next",
-	}
-	marshalToMap := func(t *testing.T, obj *ListVerifiableCredentialTemplatesPaginatedResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj ListVerifiableCredentialTemplatesPaginatedResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"next":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj ListVerifiableCredentialTemplatesPaginatedResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &ListVerifiableCredentialTemplatesPaginatedResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripLog(t *testing.T) {
-	optionalNullableKeys := []string{
-		"description",
-	}
-	marshalToMap := func(t *testing.T, obj *Log) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj Log
-		require.NoError(t, json.Unmarshal([]byte(`{"description":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj Log
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &Log{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripOrganizationClientMetadata(t *testing.T) {
-	optionalNullableKeys := []string{
-		"logo_uri",
-	}
-	marshalToMap := func(t *testing.T, obj *OrganizationClientMetadata) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj OrganizationClientMetadata
-		require.NoError(t, json.Unmarshal([]byte(`{"logo_uri":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj OrganizationClientMetadata
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &OrganizationClientMetadata{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripRefreshTokenResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"created_at",
-		"idle_expires_at",
-		"expires_at",
-		"session_id",
-		"refresh_token_metadata",
-		"last_exchanged_at",
-	}
-	marshalToMap := func(t *testing.T, obj *RefreshTokenResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj RefreshTokenResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"created_at":null,"idle_expires_at":null,"expires_at":null,"session_id":null,"refresh_token_metadata":null,"last_exchanged_at":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj RefreshTokenResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &RefreshTokenResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripRoleGroup(t *testing.T) {
-	optionalNullableKeys := []string{
-		"organization_id",
-		"description",
-	}
-	marshalToMap := func(t *testing.T, obj *RoleGroup) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj RoleGroup
-		require.NoError(t, json.Unmarshal([]byte(`{"organization_id":null,"description":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj RoleGroup
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &RoleGroup{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSelfServiceProfileSSOTicketConnectionConfig(t *testing.T) {
-	optionalNullableKeys := []string{
-		"options",
-	}
-	marshalToMap := func(t *testing.T, obj *SelfServiceProfileSSOTicketConnectionConfig) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SelfServiceProfileSSOTicketConnectionConfig
-		require.NoError(t, json.Unmarshal([]byte(`{"options":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SelfServiceProfileSSOTicketConnectionConfig
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SelfServiceProfileSSOTicketConnectionConfig{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSelfServiceProfileSSOTicketConnectionOptions(t *testing.T) {
-	optionalNullableKeys := []string{
-		"icon_url",
-		"domain_aliases",
-		"idpinitiated",
-	}
-	marshalToMap := func(t *testing.T, obj *SelfServiceProfileSSOTicketConnectionOptions) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SelfServiceProfileSSOTicketConnectionOptions
-		require.NoError(t, json.Unmarshal([]byte(`{"icon_url":null,"domain_aliases":null,"idpinitiated":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SelfServiceProfileSSOTicketConnectionOptions
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SelfServiceProfileSSOTicketConnectionOptions{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSelfServiceProfileSSOTicketProvisioningConfig(t *testing.T) {
-	optionalNullableKeys := []string{
-		"token_lifetime",
-	}
-	marshalToMap := func(t *testing.T, obj *SelfServiceProfileSSOTicketProvisioningConfig) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SelfServiceProfileSSOTicketProvisioningConfig
-		require.NoError(t, json.Unmarshal([]byte(`{"token_lifetime":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SelfServiceProfileSSOTicketProvisioningConfig
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SelfServiceProfileSSOTicketProvisioningConfig{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSessionAuthenticationSignal(t *testing.T) {
-	optionalNullableKeys := []string{
-		"timestamp",
-	}
-	marshalToMap := func(t *testing.T, obj *SessionAuthenticationSignal) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SessionAuthenticationSignal
-		require.NoError(t, json.Unmarshal([]byte(`{"timestamp":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SessionAuthenticationSignal
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SessionAuthenticationSignal{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSessionDeviceMetadata(t *testing.T) {
-	optionalNullableKeys := []string{
-		"initial_ip",
-		"last_ip",
-	}
-	marshalToMap := func(t *testing.T, obj *SessionDeviceMetadata) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SessionDeviceMetadata
-		require.NoError(t, json.Unmarshal([]byte(`{"initial_ip":null,"last_ip":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SessionDeviceMetadata
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SessionDeviceMetadata{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSessionResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"created_at",
-		"updated_at",
-		"authenticated_at",
-		"idle_expires_at",
-		"expires_at",
-		"last_interacted_at",
-		"session_metadata",
-	}
-	marshalToMap := func(t *testing.T, obj *SessionResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SessionResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"created_at":null,"updated_at":null,"authenticated_at":null,"idle_expires_at":null,"expires_at":null,"last_interacted_at":null,"session_metadata":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SessionResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SessionResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSetGuardianFactorsProviderPhoneTwilioResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"from",
-		"messaging_service_sid",
-		"auth_token",
-		"sid",
-	}
-	marshalToMap := func(t *testing.T, obj *SetGuardianFactorsProviderPhoneTwilioResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderPhoneTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"from":null,"messaging_service_sid":null,"auth_token":null,"sid":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderPhoneTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SetGuardianFactorsProviderPhoneTwilioResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSetGuardianFactorsProviderPushNotificationApnsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"bundle_id",
-	}
-	marshalToMap := func(t *testing.T, obj *SetGuardianFactorsProviderPushNotificationApnsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderPushNotificationApnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"bundle_id":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderPushNotificationApnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SetGuardianFactorsProviderPushNotificationApnsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSetGuardianFactorsProviderPushNotificationSnsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"aws_access_key_id",
-		"aws_secret_access_key",
-		"aws_region",
-		"sns_apns_platform_application_arn",
-		"sns_gcm_platform_application_arn",
-	}
-	marshalToMap := func(t *testing.T, obj *SetGuardianFactorsProviderPushNotificationSnsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderPushNotificationSnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"aws_access_key_id":null,"aws_secret_access_key":null,"aws_region":null,"sns_apns_platform_application_arn":null,"sns_gcm_platform_application_arn":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderPushNotificationSnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SetGuardianFactorsProviderPushNotificationSnsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripSetGuardianFactorsProviderSmsTwilioResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"from",
-		"messaging_service_sid",
-		"auth_token",
-		"sid",
-	}
-	marshalToMap := func(t *testing.T, obj *SetGuardianFactorsProviderSmsTwilioResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderSmsTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"from":null,"messaging_service_sid":null,"auth_token":null,"sid":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj SetGuardianFactorsProviderSmsTwilioResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &SetGuardianFactorsProviderSmsTwilioResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripTenantSettingsNullableSecurityHeaders(t *testing.T) {
-	optionalNullableKeys := []string{
-		"content_security_policy",
-		"x_xss_protection",
-	}
-	marshalToMap := func(t *testing.T, obj *TenantSettingsNullableSecurityHeaders) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj TenantSettingsNullableSecurityHeaders
-		require.NoError(t, json.Unmarshal([]byte(`{"content_security_policy":null,"x_xss_protection":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj TenantSettingsNullableSecurityHeaders
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &TenantSettingsNullableSecurityHeaders{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripTenantSettingsSessions(t *testing.T) {
-	optionalNullableKeys := []string{
-		"anonymous",
-	}
-	marshalToMap := func(t *testing.T, obj *TenantSettingsSessions) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj TenantSettingsSessions
-		require.NoError(t, json.Unmarshal([]byte(`{"anonymous":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj TenantSettingsSessions
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &TenantSettingsSessions{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateAculResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"context_configuration",
-		"default_head_tags_disabled",
-		"use_page_template",
-		"head_tags",
-		"filters",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateAculResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateAculResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"context_configuration":null,"default_head_tags_disabled":null,"use_page_template":null,"head_tags":null,"filters":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateAculResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateAculResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateConnectionRequestContentOidc(t *testing.T) {
-	optionalNullableKeys := []string{
-		"cross_app_access_resource_app",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateConnectionRequestContentOidc) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateConnectionRequestContentOidc
-		require.NoError(t, json.Unmarshal([]byte(`{"cross_app_access_resource_app":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateConnectionRequestContentOidc
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateConnectionRequestContentOidc{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateConnectionRequestContentSAML(t *testing.T) {
-	optionalNullableKeys := []string{
-		"cross_app_access_resource_app",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateConnectionRequestContentSAML) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateConnectionRequestContentSAML
-		require.NoError(t, json.Unmarshal([]byte(`{"cross_app_access_resource_app":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateConnectionRequestContentSAML
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateConnectionRequestContentSAML{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateExperimentResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"feature_flag_snapshot",
-		"current_level",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateExperimentResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateExperimentResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"feature_flag_snapshot":null,"current_level":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateExperimentResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateExperimentResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateGuardianFactorsProviderPushNotificationApnsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"bundle_id",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateGuardianFactorsProviderPushNotificationApnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"bundle_id":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateGuardianFactorsProviderPushNotificationApnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateGuardianFactorsProviderPushNotificationApnsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateGuardianFactorsProviderPushNotificationSnsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"aws_access_key_id",
-		"aws_secret_access_key",
-		"aws_region",
-		"sns_apns_platform_application_arn",
-		"sns_gcm_platform_application_arn",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateGuardianFactorsProviderPushNotificationSnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"aws_access_key_id":null,"aws_secret_access_key":null,"aws_region":null,"sns_apns_platform_application_arn":null,"sns_gcm_platform_application_arn":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateGuardianFactorsProviderPushNotificationSnsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateGuardianFactorsProviderPushNotificationSnsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateTenantSettingsResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"change_password",
-		"guardian_mfa_page",
-		"error_page",
-		"device_flow",
-		"default_token_quota",
-		"access_token",
-		"security_headers",
-		"session_cookie",
-		"sessions",
-		"acr_values_supported",
-		"mtls",
-		"authorization_response_iss_parameter_supported",
-		"dpop_strict_refresh_token_binding",
-		"skip_non_verifiable_callback_uri_confirmation_prompt",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateTenantSettingsResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateTenantSettingsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"change_password":null,"guardian_mfa_page":null,"error_page":null,"device_flow":null,"default_token_quota":null,"access_token":null,"security_headers":null,"session_cookie":null,"sessions":null,"acr_values_supported":null,"mtls":null,"authorization_response_iss_parameter_supported":null,"dpop_strict_refresh_token_binding":null,"skip_non_verifiable_callback_uri_confirmation_prompt":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateTenantSettingsResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateTenantSettingsResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripUpdateVerifiableCredentialTemplateResponseContent(t *testing.T) {
-	optionalNullableKeys := []string{
-		"custom_certificate_authority",
-		"well_known_trusted_issuers",
-	}
-	marshalToMap := func(t *testing.T, obj *UpdateVerifiableCredentialTemplateResponseContent) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateVerifiableCredentialTemplateResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{"custom_certificate_authority":null,"well_known_trusted_issuers":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj UpdateVerifiableCredentialTemplateResponseContent
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &UpdateVerifiableCredentialTemplateResponseContent{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
-func TestOptionalNullableRoundTripVerifiableCredentialTemplateResponse(t *testing.T) {
-	optionalNullableKeys := []string{
-		"custom_certificate_authority",
-		"well_known_trusted_issuers",
-	}
-	marshalToMap := func(t *testing.T, obj *VerifiableCredentialTemplateResponse) map[string]json.RawMessage {
-		data, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed")
-		var result map[string]json.RawMessage
-		require.NoError(t, json.Unmarshal(data, &result), "marshaled data should be a JSON object")
-		return result
-	}
-
-	t.Run("NullPreserved", func(t *testing.T) {
-		t.Parallel()
-		var obj VerifiableCredentialTemplateResponse
-		require.NoError(t, json.Unmarshal([]byte(`{"custom_certificate_authority":null,"well_known_trusted_issuers":null}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			value, ok := result[key]
-			require.True(t, ok, "optional nullable field %q received as null should be present in the output", key)
-			assert.Equal(t, "null", string(value), "optional nullable field %q received as null should be null in the output", key)
-		}
-	})
-
-	t.Run("AbsentStaysAbsent", func(t *testing.T) {
-		t.Parallel()
-		var obj VerifiableCredentialTemplateResponse
-		require.NoError(t, json.Unmarshal([]byte(`{}`), &obj))
-		result := marshalToMap(t, &obj)
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q absent from the input should be absent from the output", key)
-		}
-	})
-
-	t.Run("FreshValueOmits", func(t *testing.T) {
-		t.Parallel()
-		result := marshalToMap(t, &VerifiableCredentialTemplateResponse{})
-		for _, key := range optionalNullableKeys {
-			assert.NotContains(t, result, key, "optional nullable field %q should be omitted from a freshly constructed value", key)
-		}
-	})
-}
-
 func TestStringAction(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -387741,6 +383324,358 @@ func TestEnumEncryptionKeyType(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventConnectionCreatedObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventConnectionCreatedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_connection_created", func(t *testing.T) {
 		t.Parallel()
@@ -387763,6 +383698,358 @@ func TestEnumEventStreamCloudEventConnectionCreatedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventConnectionDeletedObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventConnectionDeletedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_connection_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -387778,6 +384065,358 @@ func TestEnumEventStreamCloudEventConnectionDeletedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedTypeEnumFromString("connection.deleted")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_oidc", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("oidc")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_okta", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("okta")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_samlp", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("samlp")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_pingfederate", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("pingfederate")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_adfs", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("adfs")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_ad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_google_apps", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("google-apps")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum(t *testing.T) {
+	t.Run("NewFromString_waad", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("waad")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -387829,6 +384468,138 @@ func TestEnumEventStreamCloudEventErrorMessageTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupCreatedObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedPreviousObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedPreviousObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupCreatedPreviousObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupCreatedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_created", func(t *testing.T) {
 		t.Parallel()
@@ -387844,6 +384615,138 @@ func TestEnumEventStreamCloudEventGroupCreatedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupCreatedTypeEnumFromString("group.created")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedPreviousObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedPreviousObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupDeletedPreviousObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -387873,6 +384776,226 @@ func TestEnumEventStreamCloudEventGroupDeletedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupMemberAddedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_member_added", func(t *testing.T) {
 		t.Parallel()
@@ -387888,6 +385011,226 @@ func TestEnumEventStreamCloudEventGroupMemberAddedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupMemberAddedTypeEnumFromString("group.member.added")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_user", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("user")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("connection")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -387917,6 +385260,138 @@ func TestEnumEventStreamCloudEventGroupMemberDeletedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupRoleAssignedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_role_assigned", func(t *testing.T) {
 		t.Parallel()
@@ -387939,6 +385414,138 @@ func TestEnumEventStreamCloudEventGroupRoleAssignedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventGroupRoleDeletedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_role_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -387954,6 +385561,138 @@ func TestEnumEventStreamCloudEventGroupRoleDeletedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupRoleDeletedTypeEnumFromString("group.role.deleted")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -388115,6 +385854,138 @@ func TestEnumEventStreamCloudEventOrgDeletedTypeEnum(t *testing.T) {
 	})
 }
 
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumEventStreamCloudEventOrgGroupRoleAssignedTypeEnum(t *testing.T) {
 	t.Run("NewFromString_organization_group_role_assigned", func(t *testing.T) {
 		t.Parallel()
@@ -388130,6 +386001,138 @@ func TestEnumEventStreamCloudEventOrgGroupRoleAssignedTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedTypeEnumFromString("organization.group.role.assigned")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
+	t.Run("NewFromString_connection", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
+	t.Run("NewFromString_organization", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
+	t.Run("NewFromString_tenant", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -388730,6 +386733,72 @@ func TestEnumEventStreamEventTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamEventTypeEnumFromString("connection.created")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamWebhookBasicAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_basic", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamWebhookBasicAuthMethodEnumFromString("basic")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamWebhookBasicAuthMethodEnum("basic"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamWebhookBasicAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamWebhookBasicAuthMethodEnumFromString("basic")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamWebhookBearerAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_bearer", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamWebhookBearerAuthMethodEnumFromString("bearer")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamWebhookBearerAuthMethodEnum("bearer"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamWebhookBearerAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamWebhookBearerAuthMethodEnumFromString("bearer")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumEventStreamWebhookCustomHeaderAuthMethodEnum(t *testing.T) {
+	t.Run("NewFromString_custom_header", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("custom_header")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, EventStreamWebhookCustomHeaderAuthMethodEnum("custom_header"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString("custom_header")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -389821,6 +387890,710 @@ func TestEnumForbiddenSchemaError(t *testing.T) {
 	})
 }
 
+func TestEnumFormBlockTypeDividerConst(t *testing.T) {
+	t.Run("NewFromString_DIVIDER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeDividerConstFromString("DIVIDER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeDividerConst("DIVIDER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeDividerConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeDividerConstFromString("DIVIDER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeHTMLConst(t *testing.T) {
+	t.Run("NewFromString_HTML", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeHTMLConstFromString("HTML")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeHTMLConst("HTML"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeHTMLConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeHTMLConstFromString("HTML")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeImageConst(t *testing.T) {
+	t.Run("NewFromString_IMAGE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeImageConstFromString("IMAGE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeImageConst("IMAGE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeImageConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeImageConstFromString("IMAGE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeJumpButtonConst(t *testing.T) {
+	t.Run("NewFromString_JUMP_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeJumpButtonConstFromString("JUMP_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeJumpButtonConst("JUMP_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeJumpButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeJumpButtonConstFromString("JUMP_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeNextButtonConst(t *testing.T) {
+	t.Run("NewFromString_NEXT_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeNextButtonConstFromString("NEXT_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeNextButtonConst("NEXT_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeNextButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeNextButtonConstFromString("NEXT_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypePreviousButtonConst(t *testing.T) {
+	t.Run("NewFromString_PREVIOUS_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypePreviousButtonConstFromString("PREVIOUS_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypePreviousButtonConst("PREVIOUS_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypePreviousButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypePreviousButtonConstFromString("PREVIOUS_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeResendButtonConst(t *testing.T) {
+	t.Run("NewFromString_RESEND_BUTTON", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeResendButtonConstFromString("RESEND_BUTTON")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeResendButtonConst("RESEND_BUTTON"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeResendButtonConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeResendButtonConstFromString("RESEND_BUTTON")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormBlockTypeRichTextConst(t *testing.T) {
+	t.Run("NewFromString_RICH_TEXT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormBlockTypeRichTextConstFromString("RICH_TEXT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormBlockTypeRichTextConst("RICH_TEXT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormBlockTypeRichTextConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormBlockTypeRichTextConstFromString("RICH_TEXT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldPaymentConfigChargeTypeOneOffConst(t *testing.T) {
+	t.Run("NewFromString_ONE_OFF", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("ONE_OFF")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldPaymentConfigChargeTypeOneOffConst("ONE_OFF"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldPaymentConfigChargeTypeOneOffConstFromString("ONE_OFF")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldPaymentConfigChargeTypeSubscriptionConst(t *testing.T) {
+	t.Run("NewFromString_SUBSCRIPTION", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("SUBSCRIPTION")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldPaymentConfigChargeTypeSubscriptionConst("SUBSCRIPTION"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString("SUBSCRIPTION")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeBooleanConst(t *testing.T) {
+	t.Run("NewFromString_BOOLEAN", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeBooleanConstFromString("BOOLEAN")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeBooleanConst("BOOLEAN"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeBooleanConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeBooleanConstFromString("BOOLEAN")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeCardsConst(t *testing.T) {
+	t.Run("NewFromString_CARDS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeCardsConstFromString("CARDS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeCardsConst("CARDS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeCardsConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeCardsConstFromString("CARDS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeChoiceConst(t *testing.T) {
+	t.Run("NewFromString_CHOICE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeChoiceConstFromString("CHOICE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeChoiceConst("CHOICE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeChoiceConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeChoiceConstFromString("CHOICE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeCustomConst(t *testing.T) {
+	t.Run("NewFromString_CUSTOM", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeCustomConstFromString("CUSTOM")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeCustomConst("CUSTOM"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeCustomConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeCustomConstFromString("CUSTOM")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeDateConst(t *testing.T) {
+	t.Run("NewFromString_DATE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeDateConstFromString("DATE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeDateConst("DATE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeDateConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeDateConstFromString("DATE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeDropdownConst(t *testing.T) {
+	t.Run("NewFromString_DROPDOWN", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeDropdownConstFromString("DROPDOWN")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeDropdownConst("DROPDOWN"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeDropdownConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeDropdownConstFromString("DROPDOWN")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeEmailConst(t *testing.T) {
+	t.Run("NewFromString_EMAIL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeEmailConstFromString("EMAIL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeEmailConst("EMAIL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeEmailConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeEmailConstFromString("EMAIL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeFileConst(t *testing.T) {
+	t.Run("NewFromString_FILE", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeFileConstFromString("FILE")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeFileConst("FILE"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeFileConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeFileConstFromString("FILE")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeLegalConst(t *testing.T) {
+	t.Run("NewFromString_LEGAL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeLegalConstFromString("LEGAL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeLegalConst("LEGAL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeLegalConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeLegalConstFromString("LEGAL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeNumberConst(t *testing.T) {
+	t.Run("NewFromString_NUMBER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeNumberConstFromString("NUMBER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeNumberConst("NUMBER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeNumberConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeNumberConstFromString("NUMBER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypePasswordConst(t *testing.T) {
+	t.Run("NewFromString_PASSWORD", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypePasswordConstFromString("PASSWORD")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypePasswordConst("PASSWORD"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypePasswordConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypePasswordConstFromString("PASSWORD")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypePaymentConst(t *testing.T) {
+	t.Run("NewFromString_PAYMENT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypePaymentConstFromString("PAYMENT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypePaymentConst("PAYMENT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypePaymentConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypePaymentConstFromString("PAYMENT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeSocialConst(t *testing.T) {
+	t.Run("NewFromString_SOCIAL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeSocialConstFromString("SOCIAL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeSocialConst("SOCIAL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeSocialConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeSocialConstFromString("SOCIAL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeTelConst(t *testing.T) {
+	t.Run("NewFromString_TEL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeTelConstFromString("TEL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeTelConst("TEL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeTelConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeTelConstFromString("TEL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeTextConst(t *testing.T) {
+	t.Run("NewFromString_TEXT", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeTextConstFromString("TEXT")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeTextConst("TEXT"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeTextConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeTextConstFromString("TEXT")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormFieldTypeURLConst(t *testing.T) {
+	t.Run("NewFromString_URL", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormFieldTypeURLConstFromString("URL")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormFieldTypeURLConst("URL"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormFieldTypeURLConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormFieldTypeURLConstFromString("URL")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormNodeTypeFlowConst(t *testing.T) {
+	t.Run("NewFromString_FLOW", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormNodeTypeFlowConstFromString("FLOW")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormNodeTypeFlowConst("FLOW"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormNodeTypeFlowConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormNodeTypeFlowConstFromString("FLOW")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormNodeTypeRouterConst(t *testing.T) {
+	t.Run("NewFromString_ROUTER", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormNodeTypeRouterConstFromString("ROUTER")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormNodeTypeRouterConst("ROUTER"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormNodeTypeRouterConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormNodeTypeRouterConstFromString("ROUTER")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormNodeTypeStepConst(t *testing.T) {
+	t.Run("NewFromString_STEP", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormNodeTypeStepConstFromString("STEP")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormNodeTypeStepConst("STEP"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormNodeTypeStepConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormNodeTypeStepConstFromString("STEP")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormWidgetTypeAuth0VerifiableCredentialsConst(t *testing.T) {
+	t.Run("NewFromString_AUTH0_VERIFIABLE_CREDENTIALS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("AUTH0_VERIFIABLE_CREDENTIALS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormWidgetTypeAuth0VerifiableCredentialsConst("AUTH0_VERIFIABLE_CREDENTIALS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString("AUTH0_VERIFIABLE_CREDENTIALS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormWidgetTypeGMapsAddressConst(t *testing.T) {
+	t.Run("NewFromString_GMAPS_ADDRESS", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormWidgetTypeGMapsAddressConstFromString("GMAPS_ADDRESS")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormWidgetTypeGMapsAddressConst("GMAPS_ADDRESS"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormWidgetTypeGMapsAddressConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormWidgetTypeGMapsAddressConstFromString("GMAPS_ADDRESS")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumFormWidgetTypeRecaptchaConst(t *testing.T) {
+	t.Run("NewFromString_RECAPTCHA", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewFormWidgetTypeRecaptchaConstFromString("RECAPTCHA")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, FormWidgetTypeRecaptchaConst("RECAPTCHA"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewFormWidgetTypeRecaptchaConstFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewFormWidgetTypeRecaptchaConstFromString("RECAPTCHA")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
 func TestEnumGetFlowExecutionRequestParametersHydrateEnum(t *testing.T) {
 	t.Run("NewFromString_debug", func(t *testing.T) {
 		t.Parallel()
@@ -390703,6 +389476,182 @@ func TestEnumJobFileFormatEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewJobFileFormatEnumFromString("json")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamDatadogEnum(t *testing.T) {
+	t.Run("NewFromString_datadog", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamDatadogEnumFromString("datadog")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamDatadogEnum("datadog"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamDatadogEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamDatadogEnumFromString("datadog")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamEventBridgeEnum(t *testing.T) {
+	t.Run("NewFromString_eventbridge", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamEventBridgeEnumFromString("eventbridge")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamEventBridgeEnum("eventbridge"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamEventBridgeEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamEventBridgeEnumFromString("eventbridge")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamEventGridEnum(t *testing.T) {
+	t.Run("NewFromString_eventgrid", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamEventGridEnumFromString("eventgrid")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamEventGridEnum("eventgrid"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamEventGridEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamEventGridEnumFromString("eventgrid")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamHTTPEnum(t *testing.T) {
+	t.Run("NewFromString_http", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamHTTPEnumFromString("http")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamHTTPEnum("http"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamHTTPEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamHTTPEnumFromString("http")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamMixpanelEnum(t *testing.T) {
+	t.Run("NewFromString_mixpanel", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamMixpanelEnumFromString("mixpanel")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamMixpanelEnum("mixpanel"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamMixpanelEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamMixpanelEnumFromString("mixpanel")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSegmentEnum(t *testing.T) {
+	t.Run("NewFromString_segment", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSegmentEnumFromString("segment")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSegmentEnum("segment"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSegmentEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSegmentEnumFromString("segment")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSplunkEnum(t *testing.T) {
+	t.Run("NewFromString_splunk", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSplunkEnumFromString("splunk")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSplunkEnum("splunk"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSplunkEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSplunkEnumFromString("splunk")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumLogStreamSumoEnum(t *testing.T) {
+	t.Run("NewFromString_sumo", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamSumoEnumFromString("sumo")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamSumoEnum("sumo"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewLogStreamSumoEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewLogStreamSumoEnumFromString("sumo")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

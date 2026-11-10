@@ -35,13 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get template partials for a prompt
-//
-// Example:
-//
-//	client.Prompts.Partials.Get(
-//	    context.TODO(),
-//	    management.PartialGroupsEnumLogin.Ptr(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Name of the prompt.
@@ -60,17 +53,6 @@ func (c *Client) Get(
 }
 
 // Set template partials for a prompt
-//
-// Example:
-//
-//	request := map[string]any{
-//	    "key": "value",
-//	}
-//	client.Prompts.Partials.Set(
-//	    context.TODO(),
-//	    management.PartialGroupsEnumLogin.Ptr(),
-//	    request,
-//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// Name of the prompt.

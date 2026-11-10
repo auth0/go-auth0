@@ -980,28 +980,51 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedData(t *testin
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject0", func(t *testing.T) {
+	t.Run("GetStrategy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionCreatedObject{}
+		var expected string
+		obj.Strategy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
+	})
+
+	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventConnectionCreatedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetOidc", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject0
-		obj.EventStreamCloudEventConnectionCreatedObject0 = expected
+		obj.Oidc = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOidc(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject0_NilValue", func(t *testing.T) {
+	t.Run("GetOidc_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject0 = nil
+		obj.Oidc = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOidc(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetOidc_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1010,31 +1033,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject0() // Should return zero value
+		_ = obj.GetOidc() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject1", func(t *testing.T) {
+	t.Run("GetOkta", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject1
-		obj.EventStreamCloudEventConnectionCreatedObject1 = expected
+		obj.Okta = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOkta(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOkta_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject1 = nil
+		obj.Okta = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOkta(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOkta_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1043,31 +1066,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject1() // Should return zero value
+		_ = obj.GetOkta() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject2", func(t *testing.T) {
+	t.Run("GetSamlp", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject2
-		obj.EventStreamCloudEventConnectionCreatedObject2 = expected
+		obj.Samlp = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSamlp(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject2_NilValue", func(t *testing.T) {
+	t.Run("GetSamlp_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject2 = nil
+		obj.Samlp = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSamlp(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetSamlp_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1076,31 +1099,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject2() // Should return zero value
+		_ = obj.GetSamlp() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject3", func(t *testing.T) {
+	t.Run("GetPingfederate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject3
-		obj.EventStreamCloudEventConnectionCreatedObject3 = expected
+		obj.Pingfederate = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject3(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPingfederate(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject3_NilValue", func(t *testing.T) {
+	t.Run("GetPingfederate_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject3 = nil
+		obj.Pingfederate = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject3(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPingfederate(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject3_NilReceiver", func(t *testing.T) {
+	t.Run("GetPingfederate_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1109,31 +1132,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject3() // Should return zero value
+		_ = obj.GetPingfederate() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject4", func(t *testing.T) {
+	t.Run("GetAdfs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject4
-		obj.EventStreamCloudEventConnectionCreatedObject4 = expected
+		obj.Adfs = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject4(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAdfs(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject4_NilValue", func(t *testing.T) {
+	t.Run("GetAdfs_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject4 = nil
+		obj.Adfs = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject4(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAdfs(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject4_NilReceiver", func(t *testing.T) {
+	t.Run("GetAdfs_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1142,31 +1165,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject4() // Should return zero value
+		_ = obj.GetAdfs() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject5", func(t *testing.T) {
+	t.Run("GetAd", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject5
-		obj.EventStreamCloudEventConnectionCreatedObject5 = expected
+		obj.Ad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject5(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAd(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject5_NilValue", func(t *testing.T) {
+	t.Run("GetAd_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject5 = nil
+		obj.Ad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject5(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAd(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject5_NilReceiver", func(t *testing.T) {
+	t.Run("GetAd_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1175,31 +1198,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject5() // Should return zero value
+		_ = obj.GetAd() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject6", func(t *testing.T) {
+	t.Run("GetGoogleApps", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject6
-		obj.EventStreamCloudEventConnectionCreatedObject6 = expected
+		obj.GoogleApps = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject6(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGoogleApps(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject6_NilValue", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject6 = nil
+		obj.GoogleApps = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject6(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetGoogleApps(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject6_NilReceiver", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1208,31 +1231,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject6() // Should return zero value
+		_ = obj.GetGoogleApps() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject7", func(t *testing.T) {
+	t.Run("GetWaad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
 		var expected *EventStreamCloudEventConnectionCreatedObject7
-		obj.EventStreamCloudEventConnectionCreatedObject7 = expected
+		obj.Waad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedObject7(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetWaad(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject7_NilValue", func(t *testing.T) {
+	t.Run("GetWaad_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedObject{}
-		obj.EventStreamCloudEventConnectionCreatedObject7 = nil
+		obj.Waad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedObject7(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetWaad(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedObject7_NilReceiver", func(t *testing.T) {
+	t.Run("GetWaad_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -1241,7 +1264,7 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedObject7() // Should return zero value
+		_ = obj.GetWaad() // Should return zero value
 	})
 
 }
@@ -1332,14 +1355,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject0(t *testing.T) {
 		var fernTestValueShowAsButton *bool
 		obj.SetShowAsButton(fernTestValueShowAsButton)
 		assert.Equal(t, fernTestValueShowAsButton, obj.ShowAsButton)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject0StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -1696,29 +1711,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject0(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject0{}
-		var expected EventStreamCloudEventConnectionCreatedObject0StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject0(t *testing.T) {
@@ -2040,37 +2032,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject0(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject0StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -7546,14 +7507,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject1(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject1StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject1(t *testing.T) {
@@ -7907,29 +7860,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject1(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject1{}
-		var expected EventStreamCloudEventConnectionCreatedObject1StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject1(t *testing.T) {
@@ -8251,37 +8181,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject1(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject1StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -13684,14 +13583,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject2(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject2StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject2(t *testing.T) {
@@ -14045,29 +13936,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject2(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject2{}
-		var expected EventStreamCloudEventConnectionCreatedObject2StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject2(t *testing.T) {
@@ -14389,37 +14257,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject2(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject2StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -20480,14 +20317,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject3(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject3StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject3(t *testing.T) {
@@ -20841,29 +20670,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject3(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject3{}
-		var expected EventStreamCloudEventConnectionCreatedObject3StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject3
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject3(t *testing.T) {
@@ -21185,37 +20991,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject3(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject3StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -23444,14 +23219,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject4(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject4StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject4(t *testing.T) {
@@ -23805,29 +23572,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject4(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject4{}
-		var expected EventStreamCloudEventConnectionCreatedObject4StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject4
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject4(t *testing.T) {
@@ -24149,37 +23893,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject4(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject4StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -25528,14 +25241,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject5(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject5StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject5(t *testing.T) {
@@ -25855,29 +25560,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject5(t *testing.T) {
 		_ = obj.GetOptions() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject5{}
-		var expected EventStreamCloudEventConnectionCreatedObject5StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject5
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject5(t *testing.T) {
@@ -26168,37 +25850,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject5(t *tes
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject5StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -27846,14 +27497,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject6(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject6StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject6(t *testing.T) {
@@ -28207,29 +27850,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject6(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject6{}
-		var expected EventStreamCloudEventConnectionCreatedObject6StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject6
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject6(t *testing.T) {
@@ -28551,37 +28171,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject6(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject6StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -30583,14 +30172,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedObject7(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject7StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedObject7(t *testing.T) {
@@ -30944,29 +30525,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedObject7(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject7{}
-		var expected EventStreamCloudEventConnectionCreatedObject7StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedObject7
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject7(t *testing.T) {
@@ -31288,37 +30846,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject7(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedObject7StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -33596,28 +33123,51 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedObject7Options
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject0", func(t *testing.T) {
+	t.Run("GetStrategy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
+		var expected string
+		obj.Strategy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
+	})
+
+	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetOidc", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject0
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject0 = expected
+		obj.Oidc = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOidc(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject0_NilValue", func(t *testing.T) {
+	t.Run("GetOidc_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject0 = nil
+		obj.Oidc = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOidc(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetOidc_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33626,31 +33176,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject0() // Should return zero value
+		_ = obj.GetOidc() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject1", func(t *testing.T) {
+	t.Run("GetOkta", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject1
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject1 = expected
+		obj.Okta = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOkta(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOkta_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject1 = nil
+		obj.Okta = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOkta(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOkta_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33659,31 +33209,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject1() // Should return zero value
+		_ = obj.GetOkta() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject2", func(t *testing.T) {
+	t.Run("GetSamlp", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject2
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject2 = expected
+		obj.Samlp = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSamlp(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject2_NilValue", func(t *testing.T) {
+	t.Run("GetSamlp_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject2 = nil
+		obj.Samlp = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSamlp(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetSamlp_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33692,31 +33242,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject2() // Should return zero value
+		_ = obj.GetSamlp() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject3", func(t *testing.T) {
+	t.Run("GetPingfederate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject3
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject3 = expected
+		obj.Pingfederate = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject3(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPingfederate(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject3_NilValue", func(t *testing.T) {
+	t.Run("GetPingfederate_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject3 = nil
+		obj.Pingfederate = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject3(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPingfederate(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject3_NilReceiver", func(t *testing.T) {
+	t.Run("GetPingfederate_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33725,31 +33275,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject3() // Should return zero value
+		_ = obj.GetPingfederate() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject4", func(t *testing.T) {
+	t.Run("GetAdfs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject4
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject4 = expected
+		obj.Adfs = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject4(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAdfs(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject4_NilValue", func(t *testing.T) {
+	t.Run("GetAdfs_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject4 = nil
+		obj.Adfs = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject4(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAdfs(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject4_NilReceiver", func(t *testing.T) {
+	t.Run("GetAdfs_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33758,31 +33308,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject4() // Should return zero value
+		_ = obj.GetAdfs() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject5", func(t *testing.T) {
+	t.Run("GetAd", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject5
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject5 = expected
+		obj.Ad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject5(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAd(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject5_NilValue", func(t *testing.T) {
+	t.Run("GetAd_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject5 = nil
+		obj.Ad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject5(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAd(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject5_NilReceiver", func(t *testing.T) {
+	t.Run("GetAd_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33791,31 +33341,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject5() // Should return zero value
+		_ = obj.GetAd() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject6", func(t *testing.T) {
+	t.Run("GetGoogleApps", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject6
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject6 = expected
+		obj.GoogleApps = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject6(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGoogleApps(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject6_NilValue", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject6 = nil
+		obj.GoogleApps = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject6(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetGoogleApps(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject6_NilReceiver", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33824,31 +33374,31 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject6() // Should return zero value
+		_ = obj.GetGoogleApps() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject7", func(t *testing.T) {
+	t.Run("GetWaad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionCreatedPreviousObject7
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject7 = expected
+		obj.Waad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject7(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetWaad(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject7_NilValue", func(t *testing.T) {
+	t.Run("GetWaad_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionCreatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionCreatedPreviousObject7 = nil
+		obj.Waad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionCreatedPreviousObject7(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetWaad(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionCreatedPreviousObject7_NilReceiver", func(t *testing.T) {
+	t.Run("GetWaad_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -33857,7 +33407,7 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionCreatedPreviousObject7() // Should return zero value
+		_ = obj.GetWaad() // Should return zero value
 	})
 
 }
@@ -33948,14 +33498,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject0(t *testing
 		var fernTestValueShowAsButton *bool
 		obj.SetShowAsButton(fernTestValueShowAsButton)
 		assert.Equal(t, fernTestValueShowAsButton, obj.ShowAsButton)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -34312,29 +33854,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject0(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject0{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject0(t *testing.T) {
@@ -34656,37 +34175,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -40162,14 +39650,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject1(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject1(t *testing.T) {
@@ -40523,29 +40003,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject1(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject1{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject1(t *testing.T) {
@@ -40867,37 +40324,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -46300,14 +45726,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject2(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject2(t *testing.T) {
@@ -46661,29 +46079,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject2(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject2{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject2(t *testing.T) {
@@ -47005,37 +46400,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -53096,14 +52460,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject3(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject3(t *testing.T) {
@@ -53457,29 +52813,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject3(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject3{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject3
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject3(t *testing.T) {
@@ -53801,37 +53134,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -56060,14 +55362,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject4(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject4(t *testing.T) {
@@ -56421,29 +55715,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject4(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject4{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject4
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject4(t *testing.T) {
@@ -56765,37 +56036,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -58144,14 +57384,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject5(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject5(t *testing.T) {
@@ -58471,29 +57703,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject5(t *testing
 		_ = obj.GetOptions() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject5{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject5
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject5(t *testing.T) {
@@ -58784,37 +57993,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -60462,14 +59640,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject6(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject6(t *testing.T) {
@@ -60823,29 +59993,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject6(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject6{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject6
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject6(t *testing.T) {
@@ -61167,37 +60314,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -63199,14 +62315,6 @@ func TestSettersEventStreamCloudEventConnectionCreatedPreviousObject7(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject7(t *testing.T) {
@@ -63560,29 +62668,6 @@ func TestGettersEventStreamCloudEventConnectionCreatedPreviousObject7(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject7{}
-		var expected EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionCreatedPreviousObject7
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject7(t *testing.T) {
@@ -63904,37 +62989,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionCreatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionCreatedPreviousObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -67181,28 +66235,51 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedData(t *testin
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject0", func(t *testing.T) {
+	t.Run("GetStrategy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionDeletedObject{}
+		var expected string
+		obj.Strategy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
+	})
+
+	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventConnectionDeletedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetOidc", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject0
-		obj.EventStreamCloudEventConnectionDeletedObject0 = expected
+		obj.Oidc = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOidc(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject0_NilValue", func(t *testing.T) {
+	t.Run("GetOidc_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject0 = nil
+		obj.Oidc = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOidc(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetOidc_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67211,31 +66288,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject0() // Should return zero value
+		_ = obj.GetOidc() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject1", func(t *testing.T) {
+	t.Run("GetOkta", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject1
-		obj.EventStreamCloudEventConnectionDeletedObject1 = expected
+		obj.Okta = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOkta(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOkta_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject1 = nil
+		obj.Okta = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOkta(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOkta_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67244,31 +66321,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject1() // Should return zero value
+		_ = obj.GetOkta() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject2", func(t *testing.T) {
+	t.Run("GetSamlp", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject2
-		obj.EventStreamCloudEventConnectionDeletedObject2 = expected
+		obj.Samlp = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSamlp(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject2_NilValue", func(t *testing.T) {
+	t.Run("GetSamlp_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject2 = nil
+		obj.Samlp = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSamlp(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetSamlp_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67277,31 +66354,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject2() // Should return zero value
+		_ = obj.GetSamlp() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject3", func(t *testing.T) {
+	t.Run("GetPingfederate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject3
-		obj.EventStreamCloudEventConnectionDeletedObject3 = expected
+		obj.Pingfederate = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject3(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPingfederate(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject3_NilValue", func(t *testing.T) {
+	t.Run("GetPingfederate_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject3 = nil
+		obj.Pingfederate = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject3(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPingfederate(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject3_NilReceiver", func(t *testing.T) {
+	t.Run("GetPingfederate_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67310,31 +66387,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject3() // Should return zero value
+		_ = obj.GetPingfederate() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject4", func(t *testing.T) {
+	t.Run("GetAdfs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject4
-		obj.EventStreamCloudEventConnectionDeletedObject4 = expected
+		obj.Adfs = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject4(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAdfs(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject4_NilValue", func(t *testing.T) {
+	t.Run("GetAdfs_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject4 = nil
+		obj.Adfs = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject4(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAdfs(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject4_NilReceiver", func(t *testing.T) {
+	t.Run("GetAdfs_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67343,31 +66420,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject4() // Should return zero value
+		_ = obj.GetAdfs() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject5", func(t *testing.T) {
+	t.Run("GetAd", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject5
-		obj.EventStreamCloudEventConnectionDeletedObject5 = expected
+		obj.Ad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject5(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAd(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject5_NilValue", func(t *testing.T) {
+	t.Run("GetAd_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject5 = nil
+		obj.Ad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject5(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAd(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject5_NilReceiver", func(t *testing.T) {
+	t.Run("GetAd_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67376,31 +66453,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject5() // Should return zero value
+		_ = obj.GetAd() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject6", func(t *testing.T) {
+	t.Run("GetGoogleApps", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject6
-		obj.EventStreamCloudEventConnectionDeletedObject6 = expected
+		obj.GoogleApps = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject6(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGoogleApps(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject6_NilValue", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject6 = nil
+		obj.GoogleApps = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject6(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetGoogleApps(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject6_NilReceiver", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67409,31 +66486,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject6() // Should return zero value
+		_ = obj.GetGoogleApps() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject7", func(t *testing.T) {
+	t.Run("GetWaad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
 		var expected *EventStreamCloudEventConnectionDeletedObject7
-		obj.EventStreamCloudEventConnectionDeletedObject7 = expected
+		obj.Waad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedObject7(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetWaad(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject7_NilValue", func(t *testing.T) {
+	t.Run("GetWaad_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedObject{}
-		obj.EventStreamCloudEventConnectionDeletedObject7 = nil
+		obj.Waad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedObject7(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetWaad(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedObject7_NilReceiver", func(t *testing.T) {
+	t.Run("GetWaad_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -67442,7 +66519,7 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedObject7() // Should return zero value
+		_ = obj.GetWaad() // Should return zero value
 	})
 
 }
@@ -67533,14 +66610,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject0(t *testing.T) {
 		var fernTestValueShowAsButton *bool
 		obj.SetShowAsButton(fernTestValueShowAsButton)
 		assert.Equal(t, fernTestValueShowAsButton, obj.ShowAsButton)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject0StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -67897,29 +66966,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject0(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject0{}
-		var expected EventStreamCloudEventConnectionDeletedObject0StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject0(t *testing.T) {
@@ -68241,37 +67287,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject0(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject0StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -73747,14 +72762,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject1(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject1StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject1(t *testing.T) {
@@ -74108,29 +73115,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject1(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject1{}
-		var expected EventStreamCloudEventConnectionDeletedObject1StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject1(t *testing.T) {
@@ -74452,37 +73436,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject1(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject1StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -79885,14 +78838,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject2(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject2StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject2(t *testing.T) {
@@ -80246,29 +79191,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject2(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject2{}
-		var expected EventStreamCloudEventConnectionDeletedObject2StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject2(t *testing.T) {
@@ -80590,37 +79512,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject2(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject2StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -86681,14 +85572,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject3(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject3StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject3(t *testing.T) {
@@ -87042,29 +85925,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject3(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject3{}
-		var expected EventStreamCloudEventConnectionDeletedObject3StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject3
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject3(t *testing.T) {
@@ -87386,37 +86246,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject3(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject3StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -89645,14 +88474,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject4(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject4StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject4(t *testing.T) {
@@ -90006,29 +88827,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject4(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject4{}
-		var expected EventStreamCloudEventConnectionDeletedObject4StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject4
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject4(t *testing.T) {
@@ -90350,37 +89148,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject4(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject4StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -91729,14 +90496,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject5(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject5StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject5(t *testing.T) {
@@ -92056,29 +90815,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject5(t *testing.T) {
 		_ = obj.GetOptions() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject5{}
-		var expected EventStreamCloudEventConnectionDeletedObject5StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject5
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject5(t *testing.T) {
@@ -92369,37 +91105,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject5(t *tes
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject5StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -94047,14 +92752,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject6(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject6StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject6(t *testing.T) {
@@ -94408,29 +93105,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject6(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject6{}
-		var expected EventStreamCloudEventConnectionDeletedObject6StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject6
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject6(t *testing.T) {
@@ -94752,37 +93426,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject6(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject6StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -96784,14 +95427,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedObject7(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject7StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedObject7(t *testing.T) {
@@ -97145,29 +95780,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedObject7(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject7{}
-		var expected EventStreamCloudEventConnectionDeletedObject7StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedObject7
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject7(t *testing.T) {
@@ -97489,37 +96101,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject7(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedObject7StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -99797,28 +98378,51 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedObject7Options
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject0", func(t *testing.T) {
+	t.Run("GetStrategy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
+		var expected string
+		obj.Strategy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
+	})
+
+	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetOidc", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject0
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject0 = expected
+		obj.Oidc = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOidc(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject0_NilValue", func(t *testing.T) {
+	t.Run("GetOidc_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject0 = nil
+		obj.Oidc = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOidc(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetOidc_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -99827,31 +98431,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject0() // Should return zero value
+		_ = obj.GetOidc() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject1", func(t *testing.T) {
+	t.Run("GetOkta", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject1
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject1 = expected
+		obj.Okta = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOkta(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOkta_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject1 = nil
+		obj.Okta = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOkta(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOkta_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -99860,31 +98464,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject1() // Should return zero value
+		_ = obj.GetOkta() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject2", func(t *testing.T) {
+	t.Run("GetSamlp", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject2
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject2 = expected
+		obj.Samlp = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSamlp(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject2_NilValue", func(t *testing.T) {
+	t.Run("GetSamlp_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject2 = nil
+		obj.Samlp = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSamlp(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetSamlp_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -99893,31 +98497,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject2() // Should return zero value
+		_ = obj.GetSamlp() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject3", func(t *testing.T) {
+	t.Run("GetPingfederate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject3
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject3 = expected
+		obj.Pingfederate = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject3(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPingfederate(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject3_NilValue", func(t *testing.T) {
+	t.Run("GetPingfederate_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject3 = nil
+		obj.Pingfederate = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject3(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPingfederate(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject3_NilReceiver", func(t *testing.T) {
+	t.Run("GetPingfederate_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -99926,31 +98530,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject3() // Should return zero value
+		_ = obj.GetPingfederate() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject4", func(t *testing.T) {
+	t.Run("GetAdfs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject4
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject4 = expected
+		obj.Adfs = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject4(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAdfs(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject4_NilValue", func(t *testing.T) {
+	t.Run("GetAdfs_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject4 = nil
+		obj.Adfs = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject4(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAdfs(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject4_NilReceiver", func(t *testing.T) {
+	t.Run("GetAdfs_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -99959,31 +98563,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject4() // Should return zero value
+		_ = obj.GetAdfs() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject5", func(t *testing.T) {
+	t.Run("GetAd", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject5
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject5 = expected
+		obj.Ad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject5(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAd(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject5_NilValue", func(t *testing.T) {
+	t.Run("GetAd_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject5 = nil
+		obj.Ad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject5(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAd(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject5_NilReceiver", func(t *testing.T) {
+	t.Run("GetAd_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -99992,31 +98596,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject5() // Should return zero value
+		_ = obj.GetAd() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject6", func(t *testing.T) {
+	t.Run("GetGoogleApps", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject6
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject6 = expected
+		obj.GoogleApps = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject6(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGoogleApps(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject6_NilValue", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject6 = nil
+		obj.GoogleApps = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject6(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetGoogleApps(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject6_NilReceiver", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -100025,31 +98629,31 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject6() // Should return zero value
+		_ = obj.GetGoogleApps() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject7", func(t *testing.T) {
+	t.Run("GetWaad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionDeletedPreviousObject7
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject7 = expected
+		obj.Waad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject7(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetWaad(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject7_NilValue", func(t *testing.T) {
+	t.Run("GetWaad_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionDeletedPreviousObject{}
-		obj.EventStreamCloudEventConnectionDeletedPreviousObject7 = nil
+		obj.Waad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionDeletedPreviousObject7(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetWaad(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionDeletedPreviousObject7_NilReceiver", func(t *testing.T) {
+	t.Run("GetWaad_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -100058,7 +98662,7 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionDeletedPreviousObject7() // Should return zero value
+		_ = obj.GetWaad() // Should return zero value
 	})
 
 }
@@ -100149,14 +98753,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject0(t *testing
 		var fernTestValueShowAsButton *bool
 		obj.SetShowAsButton(fernTestValueShowAsButton)
 		assert.Equal(t, fernTestValueShowAsButton, obj.ShowAsButton)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -100513,29 +99109,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject0(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject0{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject0(t *testing.T) {
@@ -100857,37 +99430,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -106363,14 +104905,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject1(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject1(t *testing.T) {
@@ -106724,29 +105258,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject1(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject1{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject1(t *testing.T) {
@@ -107068,37 +105579,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -112501,14 +110981,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject2(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject2(t *testing.T) {
@@ -112862,29 +111334,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject2(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject2{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject2(t *testing.T) {
@@ -113206,37 +111655,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -119297,14 +117715,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject3(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject3(t *testing.T) {
@@ -119658,29 +118068,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject3(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject3{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject3
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject3(t *testing.T) {
@@ -120002,37 +118389,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -122261,14 +120617,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject4(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject4(t *testing.T) {
@@ -122622,29 +120970,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject4(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject4{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject4
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject4(t *testing.T) {
@@ -122966,37 +121291,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -124345,14 +122639,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject5(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject5(t *testing.T) {
@@ -124672,29 +122958,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject5(t *testing
 		_ = obj.GetOptions() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject5{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject5
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject5(t *testing.T) {
@@ -124985,37 +123248,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -126663,14 +124895,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject6(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject6(t *testing.T) {
@@ -127024,29 +125248,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject6(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject6{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject6
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject6(t *testing.T) {
@@ -127368,37 +125569,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -129400,14 +127570,6 @@ func TestSettersEventStreamCloudEventConnectionDeletedPreviousObject7(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject7(t *testing.T) {
@@ -129761,29 +127923,6 @@ func TestGettersEventStreamCloudEventConnectionDeletedPreviousObject7(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject7{}
-		var expected EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionDeletedPreviousObject7
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject7(t *testing.T) {
@@ -130105,37 +128244,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionDeletedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionDeletedPreviousObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -133382,28 +131490,51 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedData(t *testin
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject0", func(t *testing.T) {
+	t.Run("GetStrategy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionUpdatedObject{}
+		var expected string
+		obj.Strategy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
+	})
+
+	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventConnectionUpdatedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetOidc", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject0
-		obj.EventStreamCloudEventConnectionUpdatedObject0 = expected
+		obj.Oidc = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOidc(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject0_NilValue", func(t *testing.T) {
+	t.Run("GetOidc_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject0 = nil
+		obj.Oidc = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOidc(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetOidc_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133412,31 +131543,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject0() // Should return zero value
+		_ = obj.GetOidc() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject1", func(t *testing.T) {
+	t.Run("GetOkta", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject1
-		obj.EventStreamCloudEventConnectionUpdatedObject1 = expected
+		obj.Okta = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOkta(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOkta_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject1 = nil
+		obj.Okta = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOkta(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOkta_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133445,31 +131576,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject1() // Should return zero value
+		_ = obj.GetOkta() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject2", func(t *testing.T) {
+	t.Run("GetSamlp", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject2
-		obj.EventStreamCloudEventConnectionUpdatedObject2 = expected
+		obj.Samlp = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSamlp(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject2_NilValue", func(t *testing.T) {
+	t.Run("GetSamlp_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject2 = nil
+		obj.Samlp = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSamlp(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetSamlp_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133478,31 +131609,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject2() // Should return zero value
+		_ = obj.GetSamlp() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject3", func(t *testing.T) {
+	t.Run("GetPingfederate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject3
-		obj.EventStreamCloudEventConnectionUpdatedObject3 = expected
+		obj.Pingfederate = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject3(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPingfederate(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject3_NilValue", func(t *testing.T) {
+	t.Run("GetPingfederate_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject3 = nil
+		obj.Pingfederate = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject3(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPingfederate(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject3_NilReceiver", func(t *testing.T) {
+	t.Run("GetPingfederate_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133511,31 +131642,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject3() // Should return zero value
+		_ = obj.GetPingfederate() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject4", func(t *testing.T) {
+	t.Run("GetAdfs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject4
-		obj.EventStreamCloudEventConnectionUpdatedObject4 = expected
+		obj.Adfs = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject4(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAdfs(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject4_NilValue", func(t *testing.T) {
+	t.Run("GetAdfs_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject4 = nil
+		obj.Adfs = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject4(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAdfs(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject4_NilReceiver", func(t *testing.T) {
+	t.Run("GetAdfs_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133544,31 +131675,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject4() // Should return zero value
+		_ = obj.GetAdfs() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject5", func(t *testing.T) {
+	t.Run("GetAd", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject5
-		obj.EventStreamCloudEventConnectionUpdatedObject5 = expected
+		obj.Ad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject5(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAd(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject5_NilValue", func(t *testing.T) {
+	t.Run("GetAd_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject5 = nil
+		obj.Ad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject5(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAd(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject5_NilReceiver", func(t *testing.T) {
+	t.Run("GetAd_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133577,31 +131708,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject5() // Should return zero value
+		_ = obj.GetAd() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject6", func(t *testing.T) {
+	t.Run("GetGoogleApps", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject6
-		obj.EventStreamCloudEventConnectionUpdatedObject6 = expected
+		obj.GoogleApps = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject6(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGoogleApps(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject6_NilValue", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject6 = nil
+		obj.GoogleApps = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject6(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetGoogleApps(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject6_NilReceiver", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133610,31 +131741,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject6() // Should return zero value
+		_ = obj.GetGoogleApps() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject7", func(t *testing.T) {
+	t.Run("GetWaad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedObject7
-		obj.EventStreamCloudEventConnectionUpdatedObject7 = expected
+		obj.Waad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedObject7(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetWaad(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject7_NilValue", func(t *testing.T) {
+	t.Run("GetWaad_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedObject{}
-		obj.EventStreamCloudEventConnectionUpdatedObject7 = nil
+		obj.Waad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedObject7(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetWaad(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedObject7_NilReceiver", func(t *testing.T) {
+	t.Run("GetWaad_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -133643,7 +131774,7 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedObject7() // Should return zero value
+		_ = obj.GetWaad() // Should return zero value
 	})
 
 }
@@ -133734,14 +131865,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject0(t *testing.T) {
 		var fernTestValueShowAsButton *bool
 		obj.SetShowAsButton(fernTestValueShowAsButton)
 		assert.Equal(t, fernTestValueShowAsButton, obj.ShowAsButton)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject0StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -134098,29 +132221,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject0(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject0{}
-		var expected EventStreamCloudEventConnectionUpdatedObject0StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject0(t *testing.T) {
@@ -134442,37 +132542,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject0(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject0StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -139948,14 +138017,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject1(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject1StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject1(t *testing.T) {
@@ -140309,29 +138370,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject1(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject1{}
-		var expected EventStreamCloudEventConnectionUpdatedObject1StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject1(t *testing.T) {
@@ -140653,37 +138691,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject1(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject1StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -146086,14 +144093,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject2(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject2StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject2(t *testing.T) {
@@ -146447,29 +144446,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject2(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject2{}
-		var expected EventStreamCloudEventConnectionUpdatedObject2StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject2(t *testing.T) {
@@ -146791,37 +144767,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject2(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject2StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -152882,14 +150827,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject3(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject3StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject3(t *testing.T) {
@@ -153243,29 +151180,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject3(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject3{}
-		var expected EventStreamCloudEventConnectionUpdatedObject3StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject3
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject3(t *testing.T) {
@@ -153587,37 +151501,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject3(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject3StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -155846,14 +153729,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject4(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject4StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject4(t *testing.T) {
@@ -156207,29 +154082,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject4(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject4{}
-		var expected EventStreamCloudEventConnectionUpdatedObject4StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject4
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject4(t *testing.T) {
@@ -156551,37 +154403,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject4(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject4StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -157930,14 +155751,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject5(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject5StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject5(t *testing.T) {
@@ -158257,29 +156070,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject5(t *testing.T) {
 		_ = obj.GetOptions() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject5{}
-		var expected EventStreamCloudEventConnectionUpdatedObject5StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject5
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject5(t *testing.T) {
@@ -158570,37 +156360,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject5(t *tes
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject5StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -160248,14 +158007,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject6(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject6StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject6(t *testing.T) {
@@ -160609,29 +158360,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject6(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject6{}
-		var expected EventStreamCloudEventConnectionUpdatedObject6StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject6
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject6(t *testing.T) {
@@ -160953,37 +158681,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject6(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject6StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -162985,14 +160682,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedObject7(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject7StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedObject7(t *testing.T) {
@@ -163346,29 +161035,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedObject7(t *testing.T) {
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject7{}
-		var expected EventStreamCloudEventConnectionUpdatedObject7StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedObject7
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject7(t *testing.T) {
@@ -163690,37 +161356,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject7(t *tes
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedObject7StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -165998,28 +163633,51 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedObject7Options
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject0", func(t *testing.T) {
+	t.Run("GetStrategy", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
+		var expected string
+		obj.Strategy = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
+	})
+
+	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetStrategy() // Should return zero value
+	})
+
+	t.Run("GetOidc", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject0
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject0 = expected
+		obj.Oidc = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOidc(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject0_NilValue", func(t *testing.T) {
+	t.Run("GetOidc_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject0 = nil
+		obj.Oidc = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOidc(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetOidc_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166028,31 +163686,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject0() // Should return zero value
+		_ = obj.GetOidc() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject1", func(t *testing.T) {
+	t.Run("GetOkta", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject1
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject1 = expected
+		obj.Okta = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOkta(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOkta_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject1 = nil
+		obj.Okta = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOkta(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOkta_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166061,31 +163719,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject1() // Should return zero value
+		_ = obj.GetOkta() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject2", func(t *testing.T) {
+	t.Run("GetSamlp", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject2
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject2 = expected
+		obj.Samlp = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetSamlp(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject2_NilValue", func(t *testing.T) {
+	t.Run("GetSamlp_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject2 = nil
+		obj.Samlp = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetSamlp(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetSamlp_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166094,31 +163752,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject2() // Should return zero value
+		_ = obj.GetSamlp() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject3", func(t *testing.T) {
+	t.Run("GetPingfederate", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject3
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject3 = expected
+		obj.Pingfederate = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject3(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetPingfederate(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject3_NilValue", func(t *testing.T) {
+	t.Run("GetPingfederate_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject3 = nil
+		obj.Pingfederate = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject3(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetPingfederate(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject3_NilReceiver", func(t *testing.T) {
+	t.Run("GetPingfederate_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166127,31 +163785,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject3() // Should return zero value
+		_ = obj.GetPingfederate() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject4", func(t *testing.T) {
+	t.Run("GetAdfs", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject4
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject4 = expected
+		obj.Adfs = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject4(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAdfs(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject4_NilValue", func(t *testing.T) {
+	t.Run("GetAdfs_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject4 = nil
+		obj.Adfs = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject4(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAdfs(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject4_NilReceiver", func(t *testing.T) {
+	t.Run("GetAdfs_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166160,31 +163818,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject4() // Should return zero value
+		_ = obj.GetAdfs() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject5", func(t *testing.T) {
+	t.Run("GetAd", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject5
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject5 = expected
+		obj.Ad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject5(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetAd(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject5_NilValue", func(t *testing.T) {
+	t.Run("GetAd_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject5 = nil
+		obj.Ad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject5(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetAd(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject5_NilReceiver", func(t *testing.T) {
+	t.Run("GetAd_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166193,31 +163851,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject5() // Should return zero value
+		_ = obj.GetAd() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject6", func(t *testing.T) {
+	t.Run("GetGoogleApps", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject6
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject6 = expected
+		obj.GoogleApps = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject6(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetGoogleApps(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject6_NilValue", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject6 = nil
+		obj.GoogleApps = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject6(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetGoogleApps(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject6_NilReceiver", func(t *testing.T) {
+	t.Run("GetGoogleApps_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166226,31 +163884,31 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject6() // Should return zero value
+		_ = obj.GetGoogleApps() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject7", func(t *testing.T) {
+	t.Run("GetWaad", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventConnectionUpdatedPreviousObject7
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject7 = expected
+		obj.Waad = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject7(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetWaad(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject7_NilValue", func(t *testing.T) {
+	t.Run("GetWaad_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject{}
-		obj.EventStreamCloudEventConnectionUpdatedPreviousObject7 = nil
+		obj.Waad = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject7(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetWaad(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventConnectionUpdatedPreviousObject7_NilReceiver", func(t *testing.T) {
+	t.Run("GetWaad_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -166259,7 +163917,7 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventConnectionUpdatedPreviousObject7() // Should return zero value
+		_ = obj.GetWaad() // Should return zero value
 	})
 
 }
@@ -166350,14 +164008,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject0(t *testing
 		var fernTestValueShowAsButton *bool
 		obj.SetShowAsButton(fernTestValueShowAsButton)
 		assert.Equal(t, fernTestValueShowAsButton, obj.ShowAsButton)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -166714,29 +164364,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject0(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject0{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject0(t *testing.T) {
@@ -167058,37 +164685,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject0{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -172564,14 +170160,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject1(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject1(t *testing.T) {
@@ -172925,29 +170513,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject1(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject1{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject1(t *testing.T) {
@@ -173269,37 +170834,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject1{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -178702,14 +176236,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject2(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject2(t *testing.T) {
@@ -179063,29 +176589,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject2(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject2{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject2(t *testing.T) {
@@ -179407,37 +176910,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject2{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -185498,14 +182970,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject3(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject3(t *testing.T) {
@@ -185859,29 +183323,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject3(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject3{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject3
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject3(t *testing.T) {
@@ -186203,37 +183644,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject3{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -188462,14 +185872,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject4(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject4(t *testing.T) {
@@ -188823,29 +186225,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject4(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject4{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject4
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject4(t *testing.T) {
@@ -189167,37 +186546,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject4{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -190546,14 +187894,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject5(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject5(t *testing.T) {
@@ -190873,29 +188213,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject5(t *testing
 		_ = obj.GetOptions() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject5{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject5
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject5(t *testing.T) {
@@ -191186,37 +188503,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetOptions(fernTestValueOptions)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject5{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -192864,14 +190150,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject6(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject6(t *testing.T) {
@@ -193225,29 +190503,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject6(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject6{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject6
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject6(t *testing.T) {
@@ -193569,37 +190824,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject6{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -195601,14 +192825,6 @@ func TestSettersEventStreamCloudEventConnectionUpdatedPreviousObject7(t *testing
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetStrategy", func(t *testing.T) {
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum
-		obj.SetStrategy(fernTestValueStrategy)
-		assert.Equal(t, fernTestValueStrategy, obj.Strategy)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 }
 
 func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject7(t *testing.T) {
@@ -195962,29 +193178,6 @@ func TestGettersEventStreamCloudEventConnectionUpdatedPreviousObject7(t *testing
 		_ = obj.GetShowAsButton() // Should return zero value
 	})
 
-	t.Run("GetStrategy", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject7{}
-		var expected EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum
-		obj.Strategy = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetStrategy(), "getter should return the property value")
-	})
-
-	t.Run("GetStrategy_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventConnectionUpdatedPreviousObject7
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetStrategy() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject7(t *testing.T) {
@@ -196306,37 +193499,6 @@ func TestSettersMarkExplicitEventStreamCloudEventConnectionUpdatedPreviousObject
 
 		// Act
 		obj.SetShowAsButton(fernTestValueShowAsButton)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetStrategy_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventConnectionUpdatedPreviousObject7{}
-		var fernTestValueStrategy EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum
-
-		// Act
-		obj.SetStrategy(fernTestValueStrategy)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -202568,28 +199730,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedData(t *testing.T) 
 }
 
 func TestGettersEventStreamCloudEventGroupCreatedObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupCreatedObject0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupCreatedObject{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupCreatedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedObject{}
 		var expected *EventStreamCloudEventGroupCreatedObject0
-		obj.EventStreamCloudEventGroupCreatedObject0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupCreatedObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedObject{}
-		obj.EventStreamCloudEventGroupCreatedObject0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupCreatedObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -202598,31 +199783,31 @@ func TestGettersEventStreamCloudEventGroupCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupCreatedObject0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedObject{}
 		var expected *EventStreamCloudEventGroupCreatedObject1
-		obj.EventStreamCloudEventGroupCreatedObject1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupCreatedObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedObject{}
-		obj.EventStreamCloudEventGroupCreatedObject1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupCreatedObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -202631,31 +199816,31 @@ func TestGettersEventStreamCloudEventGroupCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupCreatedObject1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedObject{}
 		var expected *EventStreamCloudEventGroupCreatedObject2
-		obj.EventStreamCloudEventGroupCreatedObject2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupCreatedObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedObject{}
-		obj.EventStreamCloudEventGroupCreatedObject2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupCreatedObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupCreatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -202664,7 +199849,7 @@ func TestGettersEventStreamCloudEventGroupCreatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupCreatedObject2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -202699,14 +199884,6 @@ func TestSettersEventStreamCloudEventGroupCreatedObject0(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupCreatedObject0{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedObject0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -202822,29 +199999,6 @@ func TestGettersEventStreamCloudEventGroupCreatedObject0(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedObject0{}
-		var expected EventStreamCloudEventGroupCreatedObject0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupCreatedObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -202997,37 +200151,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedObject0(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedObject0{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedObject0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -203091,14 +200214,6 @@ func TestSettersEventStreamCloudEventGroupCreatedObject1(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupCreatedObject1{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedObject1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -203214,29 +200329,6 @@ func TestGettersEventStreamCloudEventGroupCreatedObject1(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedObject1{}
-		var expected EventStreamCloudEventGroupCreatedObject1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupCreatedObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -203389,37 +200481,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedObject1(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedObject1{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedObject1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -203483,14 +200544,6 @@ func TestSettersEventStreamCloudEventGroupCreatedObject2(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupCreatedObject2{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedObject2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -203598,29 +200651,6 @@ func TestGettersEventStreamCloudEventGroupCreatedObject2(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedObject2{}
-		var expected EventStreamCloudEventGroupCreatedObject2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupCreatedObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 }
@@ -203750,62 +200780,54 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedObject2(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedObject2{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedObject2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 }
 
 func TestGettersEventStreamCloudEventGroupCreatedPreviousObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupCreatedPreviousObject{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupCreatedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedPreviousObject{}
 		var expected *EventStreamCloudEventGroupCreatedPreviousObject0
-		obj.EventStreamCloudEventGroupCreatedPreviousObject0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupCreatedPreviousObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedPreviousObject{}
-		obj.EventStreamCloudEventGroupCreatedPreviousObject0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupCreatedPreviousObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -203814,31 +200836,31 @@ func TestGettersEventStreamCloudEventGroupCreatedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupCreatedPreviousObject0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedPreviousObject{}
 		var expected *EventStreamCloudEventGroupCreatedPreviousObject1
-		obj.EventStreamCloudEventGroupCreatedPreviousObject1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupCreatedPreviousObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedPreviousObject{}
-		obj.EventStreamCloudEventGroupCreatedPreviousObject1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupCreatedPreviousObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -203847,31 +200869,31 @@ func TestGettersEventStreamCloudEventGroupCreatedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupCreatedPreviousObject1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedPreviousObject{}
 		var expected *EventStreamCloudEventGroupCreatedPreviousObject2
-		obj.EventStreamCloudEventGroupCreatedPreviousObject2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupCreatedPreviousObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupCreatedPreviousObject{}
-		obj.EventStreamCloudEventGroupCreatedPreviousObject2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupCreatedPreviousObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupCreatedPreviousObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupCreatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -203880,7 +200902,7 @@ func TestGettersEventStreamCloudEventGroupCreatedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupCreatedPreviousObject2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -203915,14 +200937,6 @@ func TestSettersEventStreamCloudEventGroupCreatedPreviousObject0(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject0{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -204038,29 +201052,6 @@ func TestGettersEventStreamCloudEventGroupCreatedPreviousObject0(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject0{}
-		var expected EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupCreatedPreviousObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -204213,37 +201204,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedPreviousObject0(t *
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject0{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -204307,14 +201267,6 @@ func TestSettersEventStreamCloudEventGroupCreatedPreviousObject1(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject1{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -204430,29 +201382,6 @@ func TestGettersEventStreamCloudEventGroupCreatedPreviousObject1(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject1{}
-		var expected EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupCreatedPreviousObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -204605,37 +201534,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedPreviousObject1(t *
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject1{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -204699,14 +201597,6 @@ func TestSettersEventStreamCloudEventGroupCreatedPreviousObject2(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject2{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -204816,29 +201706,6 @@ func TestGettersEventStreamCloudEventGroupCreatedPreviousObject2(t *testing.T) {
 		_ = obj.GetCreatedAt() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject2{}
-		var expected EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupCreatedPreviousObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedPreviousObject2(t *testing.T) {
@@ -204943,37 +201810,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupCreatedPreviousObject2(t *
 
 		// Act
 		obj.SetCreatedAt(fernTestValueCreatedAt)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupCreatedPreviousObject2{}
-		var fernTestValueType EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -205969,28 +202805,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedData(t *testing.T) 
 }
 
 func TestGettersEventStreamCloudEventGroupDeletedObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupDeletedObject0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupDeletedObject{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupDeletedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedObject{}
 		var expected *EventStreamCloudEventGroupDeletedObject0
-		obj.EventStreamCloudEventGroupDeletedObject0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupDeletedObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedObject{}
-		obj.EventStreamCloudEventGroupDeletedObject0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupDeletedObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -205999,31 +202858,31 @@ func TestGettersEventStreamCloudEventGroupDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupDeletedObject0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedObject{}
 		var expected *EventStreamCloudEventGroupDeletedObject1
-		obj.EventStreamCloudEventGroupDeletedObject1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupDeletedObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedObject{}
-		obj.EventStreamCloudEventGroupDeletedObject1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupDeletedObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -206032,31 +202891,31 @@ func TestGettersEventStreamCloudEventGroupDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupDeletedObject1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedObject{}
 		var expected *EventStreamCloudEventGroupDeletedObject2
-		obj.EventStreamCloudEventGroupDeletedObject2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupDeletedObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedObject{}
-		obj.EventStreamCloudEventGroupDeletedObject2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupDeletedObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupDeletedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -206065,7 +202924,7 @@ func TestGettersEventStreamCloudEventGroupDeletedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupDeletedObject2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -206100,14 +202959,6 @@ func TestSettersEventStreamCloudEventGroupDeletedObject0(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupDeletedObject0{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedObject0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -206231,29 +203082,6 @@ func TestGettersEventStreamCloudEventGroupDeletedObject0(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedObject0{}
-		var expected EventStreamCloudEventGroupDeletedObject0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupDeletedObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -206429,37 +203257,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedObject0(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedObject0{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedObject0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -206554,14 +203351,6 @@ func TestSettersEventStreamCloudEventGroupDeletedObject1(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupDeletedObject1{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedObject1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -206685,29 +203474,6 @@ func TestGettersEventStreamCloudEventGroupDeletedObject1(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedObject1{}
-		var expected EventStreamCloudEventGroupDeletedObject1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupDeletedObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -206883,37 +203649,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedObject1(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedObject1{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedObject1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -207008,14 +203743,6 @@ func TestSettersEventStreamCloudEventGroupDeletedObject2(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupDeletedObject2{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedObject2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -207131,29 +203858,6 @@ func TestGettersEventStreamCloudEventGroupDeletedObject2(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedObject2{}
-		var expected EventStreamCloudEventGroupDeletedObject2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupDeletedObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetUpdatedAt", func(t *testing.T) {
@@ -207306,37 +204010,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedObject2(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedObject2{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedObject2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetUpdatedAt_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -207371,28 +204044,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedObject2(t *testing.
 }
 
 func TestGettersEventStreamCloudEventGroupDeletedPreviousObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupDeletedPreviousObject{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupDeletedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedPreviousObject{}
 		var expected *EventStreamCloudEventGroupDeletedPreviousObject0
-		obj.EventStreamCloudEventGroupDeletedPreviousObject0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupDeletedPreviousObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedPreviousObject{}
-		obj.EventStreamCloudEventGroupDeletedPreviousObject0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupDeletedPreviousObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -207401,31 +204097,31 @@ func TestGettersEventStreamCloudEventGroupDeletedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupDeletedPreviousObject0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedPreviousObject{}
 		var expected *EventStreamCloudEventGroupDeletedPreviousObject1
-		obj.EventStreamCloudEventGroupDeletedPreviousObject1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupDeletedPreviousObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedPreviousObject{}
-		obj.EventStreamCloudEventGroupDeletedPreviousObject1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupDeletedPreviousObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -207434,31 +204130,31 @@ func TestGettersEventStreamCloudEventGroupDeletedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupDeletedPreviousObject1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedPreviousObject{}
 		var expected *EventStreamCloudEventGroupDeletedPreviousObject2
-		obj.EventStreamCloudEventGroupDeletedPreviousObject2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupDeletedPreviousObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupDeletedPreviousObject{}
-		obj.EventStreamCloudEventGroupDeletedPreviousObject2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupDeletedPreviousObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupDeletedPreviousObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupDeletedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -207467,7 +204163,7 @@ func TestGettersEventStreamCloudEventGroupDeletedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupDeletedPreviousObject2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -207502,14 +204198,6 @@ func TestSettersEventStreamCloudEventGroupDeletedPreviousObject0(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject0{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -207633,29 +204321,6 @@ func TestGettersEventStreamCloudEventGroupDeletedPreviousObject0(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject0{}
-		var expected EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupDeletedPreviousObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -207831,37 +204496,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedPreviousObject0(t *
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject0{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -207956,14 +204590,6 @@ func TestSettersEventStreamCloudEventGroupDeletedPreviousObject1(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject1{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -208087,29 +204713,6 @@ func TestGettersEventStreamCloudEventGroupDeletedPreviousObject1(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject1{}
-		var expected EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupDeletedPreviousObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -208285,37 +204888,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedPreviousObject1(t *
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject1{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -208410,14 +204982,6 @@ func TestSettersEventStreamCloudEventGroupDeletedPreviousObject2(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject2{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -208533,29 +205097,6 @@ func TestGettersEventStreamCloudEventGroupDeletedPreviousObject2(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject2{}
-		var expected EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupDeletedPreviousObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetUpdatedAt", func(t *testing.T) {
@@ -208685,37 +205226,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupDeletedPreviousObject2(t *
 
 		// Act
 		obj.SetCreatedAt(fernTestValueCreatedAt)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupDeletedPreviousObject2{}
-		var fernTestValueType EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -209895,28 +206405,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedObject(t *testi
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberAddedObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberAddedObjectGroup0
-		obj.EventStreamCloudEventGroupMemberAddedObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberAddedObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -209925,31 +206458,31 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectGroup(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberAddedObjectGroup1
-		obj.EventStreamCloudEventGroupMemberAddedObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberAddedObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -209958,31 +206491,31 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectGroup(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberAddedObjectGroup2
-		obj.EventStreamCloudEventGroupMemberAddedObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberAddedObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -209991,7 +206524,7 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectGroup(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -210010,14 +206543,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedObjectGroup0(t *testing.T) 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -210087,29 +206612,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectGroup0(t *testing.T) 
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup0{}
-		var expected EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -210200,37 +206702,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedObjectGroup0(t 
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -210278,14 +206749,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedObjectGroup1(t *testing.T) 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -210355,29 +206818,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectGroup1(t *testing.T) 
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup1{}
-		var expected EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -210468,37 +206908,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedObjectGroup1(t 
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -210546,14 +206955,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedObjectGroup2(t *testing.T) 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -210615,29 +207016,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectGroup2(t *testing.T) 
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup2{}
-		var expected EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 }
@@ -210705,62 +207083,54 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedObjectGroup2(t 
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedObjectMember(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectMember0", func(t *testing.T) {
+	t.Run("GetMemberType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberAddedObjectMember{}
+		var expected string
+		obj.MemberType = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
+	})
+
+	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberAddedObjectMember
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMemberType() // Should return zero value
+	})
+
+	t.Run("GetUser", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberAddedObjectMember0
-		obj.EventStreamCloudEventGroupMemberAddedObjectMember0 = expected
+		obj.User = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedObjectMember0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUser(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectMember0_NilValue", func(t *testing.T) {
+	t.Run("GetUser_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectMember{}
-		obj.EventStreamCloudEventGroupMemberAddedObjectMember0 = nil
+		obj.User = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedObjectMember0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetUser(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectMember0_NilReceiver", func(t *testing.T) {
+	t.Run("GetUser_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -210769,31 +207139,31 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectMember(t *testing.T) 
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedObjectMember0() // Should return zero value
+		_ = obj.GetUser() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectMember1", func(t *testing.T) {
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberAddedObjectMember1
-		obj.EventStreamCloudEventGroupMemberAddedObjectMember1 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedObjectMember1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectMember1_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedObjectMember{}
-		obj.EventStreamCloudEventGroupMemberAddedObjectMember1 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedObjectMember1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedObjectMember1_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -210802,20 +207172,12 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectMember(t *testing.T) 
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedObjectMember1() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
 }
 
 func TestSettersEventStreamCloudEventGroupMemberAddedObjectMember0(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberAddedObjectMember0{}
 		var fernTestValueID string
@@ -210827,29 +207189,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedObjectMember0(t *testing.T)
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedObjectMember0(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectMember0{}
-		var expected EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedObjectMember0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -210876,37 +207215,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectMember0(t *testing.T)
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedObjectMember0(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -210941,14 +207249,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedObjectMember0(t
 }
 
 func TestSettersEventStreamCloudEventGroupMemberAddedObjectMember1(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberAddedObjectMember1{}
 		var fernTestValueID string
@@ -210976,29 +207276,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedObjectMember1(t *testing.T)
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedObjectMember1(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectMember1{}
-		var expected EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedObjectMember1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -211071,37 +207348,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedObjectMember1(t *testing.T)
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedObjectMember1(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -211351,28 +207597,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedPreviousObject(
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -211381,31 +207650,31 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup(t *test
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -211414,31 +207683,31 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup(t *test
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -211447,7 +207716,7 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup(t *test
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -211466,14 +207735,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0(t *tes
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -211543,29 +207804,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0(t *tes
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0{}
-		var expected EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -211656,37 +207894,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedPreviousObjectG
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -211734,14 +207941,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1(t *tes
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -211811,29 +208010,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1(t *tes
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1{}
-		var expected EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -211924,37 +208100,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedPreviousObjectG
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -212002,14 +208147,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2(t *tes
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -212071,29 +208208,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2(t *tes
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2{}
-		var expected EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 }
@@ -212161,62 +208275,54 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedPreviousObjectG
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember0", func(t *testing.T) {
+	t.Run("GetMemberType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember{}
+		var expected string
+		obj.MemberType = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
+	})
+
+	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectMember
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMemberType() // Should return zero value
+	})
+
+	t.Run("GetUser", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 = expected
+		obj.User = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUser(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember0_NilValue", func(t *testing.T) {
+	t.Run("GetUser_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember{}
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectMember0 = nil
+		obj.User = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetUser(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember0_NilReceiver", func(t *testing.T) {
+	t.Run("GetUser_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -212225,31 +208331,31 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember(t *tes
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember0() // Should return zero value
+		_ = obj.GetUser() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember1", func(t *testing.T) {
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember1_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember{}
-		obj.EventStreamCloudEventGroupMemberAddedPreviousObjectMember1 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember1_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -212258,20 +208364,12 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember(t *tes
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberAddedPreviousObjectMember1() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
 }
 
 func TestSettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember0{}
 		var fernTestValueID string
@@ -212283,29 +208381,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(t *te
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember0{}
-		var expected EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -212332,37 +208407,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(t *te
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedPreviousObjectMember0(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -212397,14 +208441,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedPreviousObjectM
 }
 
 func TestSettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember1{}
 		var fernTestValueID string
@@ -212432,29 +208468,6 @@ func TestSettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(t *te
 }
 
 func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember1{}
-		var expected EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -212527,37 +208540,6 @@ func TestGettersEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(t *te
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberAddedPreviousObjectMember1(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberAddedPreviousObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -213776,28 +209758,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedObject(t *tes
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberDeletedObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberDeletedObjectGroup0
-		obj.EventStreamCloudEventGroupMemberDeletedObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberDeletedObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -213806,31 +209811,31 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectGroup(t *testing.T)
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberDeletedObjectGroup1
-		obj.EventStreamCloudEventGroupMemberDeletedObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberDeletedObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -213839,31 +209844,31 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectGroup(t *testing.T)
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberDeletedObjectGroup2
-		obj.EventStreamCloudEventGroupMemberDeletedObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberDeletedObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -213872,7 +209877,7 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectGroup(t *testing.T)
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -213891,14 +209896,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedObjectGroup0(t *testing.T
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -213968,29 +209965,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectGroup0(t *testing.T
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup0{}
-		var expected EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -214081,37 +210055,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedObjectGroup0(
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -214159,14 +210102,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedObjectGroup1(t *testing.T
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -214236,29 +210171,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectGroup1(t *testing.T
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup1{}
-		var expected EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -214349,37 +210261,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedObjectGroup1(
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -214427,14 +210308,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedObjectGroup2(t *testing.T
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -214496,29 +210369,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectGroup2(t *testing.T
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup2{}
-		var expected EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 }
@@ -214586,62 +210436,54 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedObjectGroup2(
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedObjectMember(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectMember0", func(t *testing.T) {
+	t.Run("GetMemberType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember{}
+		var expected string
+		obj.MemberType = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
+	})
+
+	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberDeletedObjectMember
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMemberType() // Should return zero value
+	})
+
+	t.Run("GetUser", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberDeletedObjectMember0
-		obj.EventStreamCloudEventGroupMemberDeletedObjectMember0 = expected
+		obj.User = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedObjectMember0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUser(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectMember0_NilValue", func(t *testing.T) {
+	t.Run("GetUser_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember{}
-		obj.EventStreamCloudEventGroupMemberDeletedObjectMember0 = nil
+		obj.User = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedObjectMember0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetUser(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectMember0_NilReceiver", func(t *testing.T) {
+	t.Run("GetUser_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -214650,31 +210492,31 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectMember(t *testing.T
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedObjectMember0() // Should return zero value
+		_ = obj.GetUser() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectMember1", func(t *testing.T) {
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberDeletedObjectMember1
-		obj.EventStreamCloudEventGroupMemberDeletedObjectMember1 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedObjectMember1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectMember1_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember{}
-		obj.EventStreamCloudEventGroupMemberDeletedObjectMember1 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedObjectMember1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedObjectMember1_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -214683,20 +210525,12 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectMember(t *testing.T
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedObjectMember1() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
 }
 
 func TestSettersEventStreamCloudEventGroupMemberDeletedObjectMember0(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember0{}
 		var fernTestValueID string
@@ -214708,29 +210542,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedObjectMember0(t *testing.
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedObjectMember0(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember0{}
-		var expected EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedObjectMember0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -214757,37 +210568,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectMember0(t *testing.
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedObjectMember0(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -214822,14 +210602,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedObjectMember0
 }
 
 func TestSettersEventStreamCloudEventGroupMemberDeletedObjectMember1(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember1{}
 		var fernTestValueID string
@@ -214857,29 +210629,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedObjectMember1(t *testing.
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedObjectMember1(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember1{}
-		var expected EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedObjectMember1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -214952,37 +210701,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedObjectMember1(t *testing.
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedObjectMember1(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -215232,28 +210950,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedPreviousObjec
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -215262,31 +211003,31 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup(t *te
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -215295,31 +211036,31 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup(t *te
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -215328,7 +211069,7 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup(t *te
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -215347,14 +211088,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0(t *t
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -215424,29 +211157,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0(t *t
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0{}
-		var expected EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -215537,37 +211247,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedPreviousObjec
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -215615,14 +211294,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1(t *t
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -215692,29 +211363,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1(t *t
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1{}
-		var expected EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -215805,37 +211453,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedPreviousObjec
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -215883,14 +211500,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2(t *t
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -215952,29 +211561,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2(t *t
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2{}
-		var expected EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 }
@@ -216042,62 +211628,54 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedPreviousObjec
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0", func(t *testing.T) {
+	t.Run("GetMemberType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember{}
+		var expected string
+		obj.MemberType = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
+	})
+
+	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetMemberType() // Should return zero value
+	})
+
+	t.Run("GetUser", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 = expected
+		obj.User = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetUser(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0_NilValue", func(t *testing.T) {
+	t.Run("GetUser_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember{}
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0 = nil
+		obj.User = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetUser(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0_NilReceiver", func(t *testing.T) {
+	t.Run("GetUser_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -216106,31 +211684,31 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember(t *t
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0() // Should return zero value
+		_ = obj.GetUser() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1", func(t *testing.T) {
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember{}
 		var expected *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember{}
-		obj.EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember
 		// Should not panic - getters should handle nil receiver gracefully
@@ -216139,20 +211717,12 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember(t *t
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
 }
 
 func TestSettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0{}
 		var fernTestValueID string
@@ -216164,29 +211734,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(t *
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0{}
-		var expected EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -216213,37 +211760,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(t *
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -216278,14 +211794,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedPreviousObjec
 }
 
 func TestSettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(t *testing.T) {
-	t.Run("SetMemberType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum
-		obj.SetMemberType(fernTestValueMemberType)
-		assert.Equal(t, fernTestValueMemberType, obj.MemberType)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetID", func(t *testing.T) {
 		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1{}
 		var fernTestValueID string
@@ -216313,29 +211821,6 @@ func TestSettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(t *
 }
 
 func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(t *testing.T) {
-	t.Run("GetMemberType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1{}
-		var expected EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum
-		obj.MemberType = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetMemberType(), "getter should return the property value")
-	})
-
-	t.Run("GetMemberType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetMemberType() // Should return zero value
-	})
-
 	t.Run("GetID", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -216408,37 +211893,6 @@ func TestGettersEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(t *
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1(t *testing.T) {
-	t.Run("SetMemberType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1{}
-		var fernTestValueMemberType EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum
-
-		// Act
-		obj.SetMemberType(fernTestValueMemberType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -217719,28 +213173,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedObject(t *test
 }
 
 func TestGettersEventStreamCloudEventGroupRoleAssignedObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupRoleAssignedObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleAssignedObjectGroup0
-		obj.EventStreamCloudEventGroupRoleAssignedObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleAssignedObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleAssignedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -217749,31 +213226,31 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedObjectGroup(t *testing.T) 
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleAssignedObjectGroup1
-		obj.EventStreamCloudEventGroupRoleAssignedObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleAssignedObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleAssignedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -217782,31 +213259,31 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedObjectGroup(t *testing.T) 
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleAssignedObjectGroup2
-		obj.EventStreamCloudEventGroupRoleAssignedObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleAssignedObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleAssignedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -217815,7 +213292,7 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedObjectGroup(t *testing.T) 
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleAssignedObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -217834,14 +213311,6 @@ func TestSettersEventStreamCloudEventGroupRoleAssignedObjectGroup0(t *testing.T)
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -217911,29 +213380,6 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedObjectGroup0(t *testing.T)
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup0{}
-		var expected EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleAssignedObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -218024,37 +213470,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedObjectGroup0(t
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -218102,14 +213517,6 @@ func TestSettersEventStreamCloudEventGroupRoleAssignedObjectGroup1(t *testing.T)
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -218179,29 +213586,6 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedObjectGroup1(t *testing.T)
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup1{}
-		var expected EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleAssignedObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -218292,37 +213676,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedObjectGroup1(t
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -218370,14 +213723,6 @@ func TestSettersEventStreamCloudEventGroupRoleAssignedObjectGroup2(t *testing.T)
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -218441,29 +213786,6 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedObjectGroup2(t *testing.T)
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup2{}
-		var expected EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleAssignedObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedObjectGroup2(t *testing.T) {
@@ -218506,37 +213828,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedObjectGroup2(t
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -218911,28 +214202,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedPreviousObject
 }
 
 func TestGettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
-		obj.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -218941,31 +214255,31 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup(t *tes
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
-		obj.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -218974,31 +214288,31 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup(t *tes
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
-		obj.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -219007,7 +214321,7 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup(t *tes
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -219026,14 +214340,6 @@ func TestSettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0(t *te
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -219103,29 +214409,6 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0(t *te
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0{}
-		var expected EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -219216,37 +214499,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedPreviousObject
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -219294,14 +214546,6 @@ func TestSettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1(t *te
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -219371,29 +214615,6 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1(t *te
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1{}
-		var expected EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -219484,37 +214705,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedPreviousObject
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -219562,14 +214752,6 @@ func TestSettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2(t *te
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -219633,29 +214815,6 @@ func TestGettersEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2(t *te
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2{}
-		var expected EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2(t *testing.T) {
@@ -219698,37 +214857,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleAssignedPreviousObject
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -221072,28 +216200,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedObject(t *testi
 }
 
 func TestGettersEventStreamCloudEventGroupRoleDeletedObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupRoleDeletedObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleDeletedObjectGroup0
-		obj.EventStreamCloudEventGroupRoleDeletedObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleDeletedObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -221102,31 +216253,31 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedObjectGroup(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleDeletedObjectGroup1
-		obj.EventStreamCloudEventGroupRoleDeletedObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleDeletedObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -221135,31 +216286,31 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedObjectGroup(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleDeletedObjectGroup2
-		obj.EventStreamCloudEventGroupRoleDeletedObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleDeletedObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -221168,7 +216319,7 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedObjectGroup(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleDeletedObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -221187,14 +216338,6 @@ func TestSettersEventStreamCloudEventGroupRoleDeletedObjectGroup0(t *testing.T) 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -221264,29 +216407,6 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedObjectGroup0(t *testing.T) 
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup0{}
-		var expected EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleDeletedObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -221377,37 +216497,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedObjectGroup0(t 
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -221455,14 +216544,6 @@ func TestSettersEventStreamCloudEventGroupRoleDeletedObjectGroup1(t *testing.T) 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -221532,29 +216613,6 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedObjectGroup1(t *testing.T) 
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup1{}
-		var expected EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleDeletedObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -221645,37 +216703,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedObjectGroup1(t 
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -221723,14 +216750,6 @@ func TestSettersEventStreamCloudEventGroupRoleDeletedObjectGroup2(t *testing.T) 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -221794,29 +216813,6 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedObjectGroup2(t *testing.T) 
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup2{}
-		var expected EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleDeletedObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedObjectGroup2(t *testing.T) {
@@ -221859,37 +216855,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedObjectGroup2(t 
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -222202,28 +217167,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedPreviousObject(
 }
 
 func TestGettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
-		obj.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -222232,31 +217220,31 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup(t *test
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
-		obj.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -222265,31 +217253,31 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup(t *test
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
-		obj.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -222298,7 +217286,7 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup(t *test
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -222317,14 +217305,6 @@ func TestSettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0(t *tes
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -222394,29 +217374,6 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0(t *tes
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0{}
-		var expected EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -222507,37 +217464,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedPreviousObjectG
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -222585,14 +217511,6 @@ func TestSettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1(t *tes
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -222662,29 +217580,6 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1(t *tes
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1{}
-		var expected EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -222775,37 +217670,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedPreviousObjectG
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -222853,14 +217717,6 @@ func TestSettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2(t *tes
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -222924,29 +217780,6 @@ func TestGettersEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2(t *tes
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2{}
-		var expected EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2(t *testing.T) {
@@ -222989,37 +217822,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupRoleDeletedPreviousObjectG
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -224148,28 +218950,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedData(t *testing.T) 
 }
 
 func TestGettersEventStreamCloudEventGroupUpdatedObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupUpdatedObject{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupUpdatedObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedObject{}
 		var expected *EventStreamCloudEventGroupUpdatedObject0
-		obj.EventStreamCloudEventGroupUpdatedObject0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupUpdatedObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedObject{}
-		obj.EventStreamCloudEventGroupUpdatedObject0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupUpdatedObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -224178,31 +219003,31 @@ func TestGettersEventStreamCloudEventGroupUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupUpdatedObject0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedObject{}
 		var expected *EventStreamCloudEventGroupUpdatedObject1
-		obj.EventStreamCloudEventGroupUpdatedObject1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupUpdatedObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedObject{}
-		obj.EventStreamCloudEventGroupUpdatedObject1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupUpdatedObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -224211,31 +219036,31 @@ func TestGettersEventStreamCloudEventGroupUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupUpdatedObject1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedObject{}
 		var expected *EventStreamCloudEventGroupUpdatedObject2
-		obj.EventStreamCloudEventGroupUpdatedObject2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupUpdatedObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedObject{}
-		obj.EventStreamCloudEventGroupUpdatedObject2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupUpdatedObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupUpdatedObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -224244,7 +219069,7 @@ func TestGettersEventStreamCloudEventGroupUpdatedObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupUpdatedObject2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -224279,14 +219104,6 @@ func TestSettersEventStreamCloudEventGroupUpdatedObject0(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupUpdatedObject0{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedObject0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -224410,29 +219227,6 @@ func TestGettersEventStreamCloudEventGroupUpdatedObject0(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedObject0{}
-		var expected EventStreamCloudEventGroupUpdatedObject0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupUpdatedObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -224608,37 +219402,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedObject0(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedObject0{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedObject0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -224733,14 +219496,6 @@ func TestSettersEventStreamCloudEventGroupUpdatedObject1(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupUpdatedObject1{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedObject1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -224864,29 +219619,6 @@ func TestGettersEventStreamCloudEventGroupUpdatedObject1(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedObject1{}
-		var expected EventStreamCloudEventGroupUpdatedObject1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupUpdatedObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -225062,37 +219794,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedObject1(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedObject1{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedObject1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -225187,14 +219888,6 @@ func TestSettersEventStreamCloudEventGroupUpdatedObject2(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupUpdatedObject2{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedObject2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -225310,29 +220003,6 @@ func TestGettersEventStreamCloudEventGroupUpdatedObject2(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedObject2{}
-		var expected EventStreamCloudEventGroupUpdatedObject2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupUpdatedObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetUpdatedAt", func(t *testing.T) {
@@ -225485,37 +220155,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedObject2(t *testing.
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedObject2{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedObject2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetUpdatedAt_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -225550,28 +220189,51 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedObject2(t *testing.
 }
 
 func TestGettersEventStreamCloudEventGroupUpdatedPreviousObject(t *testing.T) {
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventGroupUpdatedPreviousObject{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventGroupUpdatedPreviousObject
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventGroupUpdatedPreviousObject0
-		obj.EventStreamCloudEventGroupUpdatedPreviousObject0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupUpdatedPreviousObject0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedPreviousObject{}
-		obj.EventStreamCloudEventGroupUpdatedPreviousObject0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupUpdatedPreviousObject0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -225580,31 +220242,31 @@ func TestGettersEventStreamCloudEventGroupUpdatedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupUpdatedPreviousObject0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventGroupUpdatedPreviousObject1
-		obj.EventStreamCloudEventGroupUpdatedPreviousObject1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupUpdatedPreviousObject1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedPreviousObject{}
-		obj.EventStreamCloudEventGroupUpdatedPreviousObject1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupUpdatedPreviousObject1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -225613,31 +220275,31 @@ func TestGettersEventStreamCloudEventGroupUpdatedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupUpdatedPreviousObject1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedPreviousObject{}
 		var expected *EventStreamCloudEventGroupUpdatedPreviousObject2
-		obj.EventStreamCloudEventGroupUpdatedPreviousObject2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventGroupUpdatedPreviousObject2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventGroupUpdatedPreviousObject{}
-		obj.EventStreamCloudEventGroupUpdatedPreviousObject2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventGroupUpdatedPreviousObject2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventGroupUpdatedPreviousObject2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventGroupUpdatedPreviousObject
 		// Should not panic - getters should handle nil receiver gracefully
@@ -225646,7 +220308,7 @@ func TestGettersEventStreamCloudEventGroupUpdatedPreviousObject(t *testing.T) {
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventGroupUpdatedPreviousObject2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -225681,14 +220343,6 @@ func TestSettersEventStreamCloudEventGroupUpdatedPreviousObject0(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject0{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -225812,29 +220466,6 @@ func TestGettersEventStreamCloudEventGroupUpdatedPreviousObject0(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject0{}
-		var expected EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupUpdatedPreviousObject0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -226010,37 +220641,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedPreviousObject0(t *
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject0{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -226135,14 +220735,6 @@ func TestSettersEventStreamCloudEventGroupUpdatedPreviousObject1(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject1{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -226266,29 +220858,6 @@ func TestGettersEventStreamCloudEventGroupUpdatedPreviousObject1(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject1{}
-		var expected EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupUpdatedPreviousObject1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -226464,37 +221033,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedPreviousObject1(t *
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject1{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -226589,14 +221127,6 @@ func TestSettersEventStreamCloudEventGroupUpdatedPreviousObject2(t *testing.T) {
 		var fernTestValueCreatedAt time.Time
 		obj.SetCreatedAt(fernTestValueCreatedAt)
 		assert.Equal(t, fernTestValueCreatedAt, obj.CreatedAt)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject2{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -226712,29 +221242,6 @@ func TestGettersEventStreamCloudEventGroupUpdatedPreviousObject2(t *testing.T) {
 			}
 		}()
 		_ = obj.GetCreatedAt() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject2{}
-		var expected EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventGroupUpdatedPreviousObject2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetUpdatedAt", func(t *testing.T) {
@@ -226864,37 +221371,6 @@ func TestSettersMarkExplicitEventStreamCloudEventGroupUpdatedPreviousObject2(t *
 
 		// Act
 		obj.SetCreatedAt(fernTestValueCreatedAt)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventGroupUpdatedPreviousObject2{}
-		var fernTestValueType EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -239770,28 +234246,51 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedObject(t *t
 }
 
 func TestGettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
-		obj.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -239800,31 +234299,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
-		obj.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -239833,31 +234332,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
-		obj.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -239866,7 +234365,7 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup(t *testing.
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -239885,14 +234384,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0(t *testing
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -239962,29 +234453,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0(t *testing
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0{}
-		var expected EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -240075,37 +234543,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -240153,14 +234590,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1(t *testing
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -240230,29 +234659,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1(t *testing
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1{}
-		var expected EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -240343,37 +234749,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -240421,14 +234796,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2(t *testing
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -240492,29 +234859,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2(t *testing
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2{}
-		var expected EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2(t *testing.T) {
@@ -240557,37 +234901,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedObjectGroup
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -241105,28 +235418,51 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedPreviousObj
 }
 
 func TestGettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
-		obj.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -241135,31 +235471,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup(t *
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
-		obj.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -241168,31 +235504,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup(t *
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
-		obj.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -241201,7 +235537,7 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup(t *
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -241220,14 +235556,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0(t 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -241297,29 +235625,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0(t 
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0{}
-		var expected EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -241410,37 +235715,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedPreviousObj
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -241488,14 +235762,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1(t 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -241565,29 +235831,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1(t 
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1{}
-		var expected EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -241678,37 +235921,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedPreviousObj
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -241756,14 +235968,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2(t 
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -241827,29 +236031,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2(t 
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2{}
-		var expected EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2(t *testing.T) {
@@ -241892,37 +236073,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleAssignedPreviousObj
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -243409,28 +237559,51 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedObject(t *te
 }
 
 func TestGettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
-		obj.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -243439,31 +237612,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup(t *testing.T
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
-		obj.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -243472,31 +237645,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup(t *testing.T
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
-		obj.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -243505,7 +237678,7 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup(t *testing.T
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -243524,14 +237697,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0(t *testing.
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -243601,29 +237766,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0(t *testing.
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0{}
-		var expected EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -243714,37 +237856,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -243792,14 +237903,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1(t *testing.
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -243869,29 +237972,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1(t *testing.
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1{}
-		var expected EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -243982,37 +238062,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -244060,14 +238109,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2(t *testing.
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -244131,29 +238172,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2(t *testing.
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2{}
-		var expected EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2(t *testing.T) {
@@ -244196,37 +238214,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -244682,28 +238669,51 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedPreviousObje
 }
 
 func TestGettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup(t *testing.T) {
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0", func(t *testing.T) {
+	t.Run("GetType", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup{}
+		var expected string
+		obj.Type = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
+	})
+
+	t.Run("GetType_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetType() // Should return zero value
+	})
+
+	t.Run("GetConnection", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
-		obj.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 = expected
+		obj.Connection = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetConnection(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0_NilValue", func(t *testing.T) {
+	t.Run("GetConnection_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0 = nil
+		obj.Connection = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetConnection(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0_NilReceiver", func(t *testing.T) {
+	t.Run("GetConnection_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -244712,31 +238722,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup(t *t
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0() // Should return zero value
+		_ = obj.GetConnection() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1", func(t *testing.T) {
+	t.Run("GetOrganization", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
-		obj.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 = expected
+		obj.Organization = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetOrganization(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1_NilValue", func(t *testing.T) {
+	t.Run("GetOrganization_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1 = nil
+		obj.Organization = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetOrganization(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1_NilReceiver", func(t *testing.T) {
+	t.Run("GetOrganization_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -244745,31 +238755,31 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup(t *t
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1() // Should return zero value
+		_ = obj.GetOrganization() // Should return zero value
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2", func(t *testing.T) {
+	t.Run("GetTenant", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup{}
 		var expected *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
-		obj.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 = expected
+		obj.Tenant = expected
 
 		// Act & Assert
-		assert.Equal(t, expected, obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2(), "getter should return the property value")
+		assert.Equal(t, expected, obj.GetTenant(), "getter should return the property value")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2_NilValue", func(t *testing.T) {
+	t.Run("GetTenant_NilValue", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
 		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup{}
-		obj.EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2 = nil
+		obj.Tenant = nil
 
 		// Act & Assert
-		assert.Nil(t, obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2(), "getter should return nil when property is nil")
+		assert.Nil(t, obj.GetTenant(), "getter should return nil when property is nil")
 	})
 
-	t.Run("GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2_NilReceiver", func(t *testing.T) {
+	t.Run("GetTenant_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup
 		// Should not panic - getters should handle nil receiver gracefully
@@ -244778,7 +238788,7 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup(t *t
 				t.Errorf("Getter panicked on nil receiver: %v", r)
 			}
 		}()
-		_ = obj.GetEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2() // Should return zero value
+		_ = obj.GetTenant() // Should return zero value
 	})
 
 }
@@ -244797,14 +238807,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0(t *
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -244874,29 +238876,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0(t *
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0{}
-		var expected EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetConnectionID", func(t *testing.T) {
@@ -244987,37 +238966,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedPreviousObje
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetConnectionID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -245065,14 +239013,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1(t *
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -245142,29 +239082,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1(t *
 			}
 		}()
 		_ = obj.GetExternalID() // Should return zero value
-	})
-
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1{}
-		var expected EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
 	})
 
 	t.Run("GetOrganizationID", func(t *testing.T) {
@@ -245255,37 +239172,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedPreviousObje
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
 	t.Run("SetOrganizationID_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -245333,14 +239219,6 @@ func TestSettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2(t *
 		var fernTestValueExternalID *string
 		obj.SetExternalID(fernTestValueExternalID)
 		assert.Equal(t, fernTestValueExternalID, obj.ExternalID)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
-	t.Run("SetType", func(t *testing.T) {
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum
-		obj.SetType(fernTestValueType)
-		assert.Equal(t, fernTestValueType, obj.Type)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -245404,29 +239282,6 @@ func TestGettersEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2(t *
 		_ = obj.GetExternalID() // Should return zero value
 	})
 
-	t.Run("GetType", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2{}
-		var expected EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum
-		obj.Type = expected
-
-		// Act & Assert
-		assert.Equal(t, expected, obj.GetType(), "getter should return the property value")
-	})
-
-	t.Run("GetType_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetType() // Should return zero value
-	})
-
 }
 
 func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2(t *testing.T) {
@@ -245469,37 +239324,6 @@ func TestSettersMarkExplicitEventStreamCloudEventOrgGroupRoleDeletedPreviousObje
 
 		// Act
 		obj.SetExternalID(fernTestValueExternalID)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetType_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2{}
-		var fernTestValueType EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum
-
-		// Act
-		obj.SetType(fernTestValueType)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -330538,28 +324362,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject0OptionsTypeEnum(t *tes
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedObject0StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_oidc", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedObject1OptionsAttributeMapMappingModeEnum(t *testing.T) {
 	t.Run("NewFromString_basic_profile", func(t *testing.T) {
 		t.Parallel()
@@ -330948,28 +324750,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject1OptionsTypeEnum(t *tes
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedObject1StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_okta", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedObject2OptionsAssertionDecryptionSettingsAlgorithmProfileEnum(t *testing.T) {
 	t.Run("NewFromString_v2026_1", func(t *testing.T) {
 		t.Parallel()
@@ -331144,28 +324924,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject2OptionsSignatureAlgori
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionCreatedObject2OptionsSignatureAlgorithmEnumFromString("rsa-sha1")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionCreatedObject2StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_samlp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("samlp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString("samlp")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -331354,28 +325112,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject3OptionsSignatureAlgori
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedObject3StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_pingfederate", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedObject4OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -331441,28 +325177,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject4OptionsShouldTrustEmai
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedObject4StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_adfs", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedObject5OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -331499,28 +325213,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject5OptionsSetUserRootAttr
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedObject5StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_ad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedObject6OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -331550,28 +325242,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject6OptionsSetUserRootAttr
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionCreatedObject6OptionsSetUserRootAttributesEnumFromString("on_each_login")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionCreatedObject6StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_google_apps", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("google-apps")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString("google-apps")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -331724,28 +325394,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedObject7OptionsWaadProtocolEnu
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionCreatedObject7OptionsWaadProtocolEnumFromString("ws-federation")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionCreatedObject7StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_waad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("waad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -332148,28 +325796,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject0OptionsTypeEnu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_oidc", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject1OptionsAttributeMapMappingModeEnum(t *testing.T) {
 	t.Run("NewFromString_basic_profile", func(t *testing.T) {
 		t.Parallel()
@@ -332558,28 +326184,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject1OptionsTypeEnu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_okta", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject2OptionsAssertionDecryptionSettingsAlgorithmProfileEnum(t *testing.T) {
 	t.Run("NewFromString_v2026_1", func(t *testing.T) {
 		t.Parallel()
@@ -332754,28 +326358,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject2OptionsSignatu
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2OptionsSignatureAlgorithmEnumFromString("rsa-sha1")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_samlp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("samlp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString("samlp")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -332964,28 +326546,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject3OptionsSignatu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_pingfederate", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject4OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -333051,28 +326611,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject4OptionsShouldT
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_adfs", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject5OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -333109,28 +326647,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject5OptionsSetUser
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_ad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject6OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -333160,28 +326676,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject6OptionsSetUser
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6OptionsSetUserRootAttributesEnumFromString("on_each_login")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_google_apps", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("google-apps")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString("google-apps")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -333334,28 +326828,6 @@ func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject7OptionsWaadPro
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7OptionsWaadProtocolEnumFromString("ws-federation")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_waad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("waad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -333780,28 +327252,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject0OptionsTypeEnum(t *tes
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedObject0StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_oidc", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedObject1OptionsAttributeMapMappingModeEnum(t *testing.T) {
 	t.Run("NewFromString_basic_profile", func(t *testing.T) {
 		t.Parallel()
@@ -334190,28 +327640,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject1OptionsTypeEnum(t *tes
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedObject1StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_okta", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedObject2OptionsAssertionDecryptionSettingsAlgorithmProfileEnum(t *testing.T) {
 	t.Run("NewFromString_v2026_1", func(t *testing.T) {
 		t.Parallel()
@@ -334386,28 +327814,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject2OptionsSignatureAlgori
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedObject2OptionsSignatureAlgorithmEnumFromString("rsa-sha1")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionDeletedObject2StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_samlp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("samlp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString("samlp")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -334596,28 +328002,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject3OptionsSignatureAlgori
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedObject3StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_pingfederate", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedObject4OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -334683,28 +328067,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject4OptionsShouldTrustEmai
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedObject4StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_adfs", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedObject5OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -334741,28 +328103,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject5OptionsSetUserRootAttr
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedObject5StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_ad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedObject6OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -334792,28 +328132,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject6OptionsSetUserRootAttr
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedObject6OptionsSetUserRootAttributesEnumFromString("on_each_login")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionDeletedObject6StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_google_apps", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("google-apps")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString("google-apps")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -334966,28 +328284,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedObject7OptionsWaadProtocolEnu
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedObject7OptionsWaadProtocolEnumFromString("ws-federation")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionDeletedObject7StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_waad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("waad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -335390,28 +328686,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject0OptionsTypeEnu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_oidc", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject1OptionsAttributeMapMappingModeEnum(t *testing.T) {
 	t.Run("NewFromString_basic_profile", func(t *testing.T) {
 		t.Parallel()
@@ -335800,28 +329074,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject1OptionsTypeEnu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_okta", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject2OptionsAssertionDecryptionSettingsAlgorithmProfileEnum(t *testing.T) {
 	t.Run("NewFromString_v2026_1", func(t *testing.T) {
 		t.Parallel()
@@ -335996,28 +329248,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject2OptionsSignatu
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2OptionsSignatureAlgorithmEnumFromString("rsa-sha1")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_samlp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("samlp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString("samlp")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -336206,28 +329436,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject3OptionsSignatu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_pingfederate", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject4OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -336293,28 +329501,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject4OptionsShouldT
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_adfs", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject5OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -336351,28 +329537,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject5OptionsSetUser
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_ad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject6OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -336402,28 +329566,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject6OptionsSetUser
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6OptionsSetUserRootAttributesEnumFromString("on_each_login")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_google_apps", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("google-apps")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString("google-apps")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -336576,28 +329718,6 @@ func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject7OptionsWaadPro
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7OptionsWaadProtocolEnumFromString("ws-federation")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_waad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("waad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -337022,28 +330142,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject0OptionsTypeEnum(t *tes
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedObject0StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_oidc", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedObject1OptionsAttributeMapMappingModeEnum(t *testing.T) {
 	t.Run("NewFromString_basic_profile", func(t *testing.T) {
 		t.Parallel()
@@ -337432,28 +330530,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject1OptionsTypeEnum(t *tes
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedObject1StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_okta", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedObject2OptionsAssertionDecryptionSettingsAlgorithmProfileEnum(t *testing.T) {
 	t.Run("NewFromString_v2026_1", func(t *testing.T) {
 		t.Parallel()
@@ -337628,28 +330704,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject2OptionsSignatureAlgori
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionUpdatedObject2OptionsSignatureAlgorithmEnumFromString("rsa-sha1")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionUpdatedObject2StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_samlp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("samlp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString("samlp")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -337838,28 +330892,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject3OptionsSignatureAlgori
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedObject3StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_pingfederate", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedObject4OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -337925,28 +330957,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject4OptionsShouldTrustEmai
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedObject4StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_adfs", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedObject5OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -337983,28 +330993,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject5OptionsSetUserRootAttr
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedObject5StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_ad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedObject6OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -338034,28 +331022,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject6OptionsSetUserRootAttr
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionUpdatedObject6OptionsSetUserRootAttributesEnumFromString("on_each_login")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionUpdatedObject6StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_google_apps", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("google-apps")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString("google-apps")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -338208,28 +331174,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedObject7OptionsWaadProtocolEnu
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionUpdatedObject7OptionsWaadProtocolEnumFromString("ws-federation")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionUpdatedObject7StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_waad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("waad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -338632,28 +331576,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject0OptionsTypeEnu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_oidc", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum("oidc"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString("oidc")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject1OptionsAttributeMapMappingModeEnum(t *testing.T) {
 	t.Run("NewFromString_basic_profile", func(t *testing.T) {
 		t.Parallel()
@@ -339042,28 +331964,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject1OptionsTypeEnu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_okta", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum("okta"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString("okta")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject2OptionsAssertionDecryptionSettingsAlgorithmProfileEnum(t *testing.T) {
 	t.Run("NewFromString_v2026_1", func(t *testing.T) {
 		t.Parallel()
@@ -339238,28 +332138,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject2OptionsSignatu
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2OptionsSignatureAlgorithmEnumFromString("rsa-sha1")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_samlp", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("samlp")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum("samlp"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString("samlp")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -339448,28 +332326,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject3OptionsSignatu
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_pingfederate", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum("pingfederate"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString("pingfederate")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject4OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -339535,28 +332391,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject4OptionsShouldT
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_adfs", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum("adfs"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString("adfs")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject5OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -339593,28 +332427,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject5OptionsSetUser
 	})
 }
 
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_ad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum("ad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString("ad")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject6OptionsSetUserRootAttributesEnum(t *testing.T) {
 	t.Run("NewFromString_on_each_login", func(t *testing.T) {
 		t.Parallel()
@@ -339644,28 +332456,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject6OptionsSetUser
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6OptionsSetUserRootAttributesEnumFromString("on_each_login")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_google_apps", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("google-apps")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum("google-apps"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString("google-apps")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -339818,28 +332608,6 @@ func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject7OptionsWaadPro
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7OptionsWaadProtocolEnumFromString("ws-federation")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum(t *testing.T) {
-	t.Run("NewFromString_waad", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("waad")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum("waad"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString("waad")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -340118,138 +332886,6 @@ func TestEnumEventStreamCloudEventGroupCreatedCloudEventTypeEnum(t *testing.T) {
 	})
 }
 
-func TestEnumEventStreamCloudEventGroupCreatedObject0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupCreatedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupCreatedObject1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupCreatedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupCreatedObject2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupCreatedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupCreatedPreviousObject0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupCreatedPreviousObject1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupCreatedPreviousObject2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventGroupDeletedCloudEventTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -340265,138 +332901,6 @@ func TestEnumEventStreamCloudEventGroupDeletedCloudEventTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupDeletedCloudEventTypeEnumFromString("group.deleted")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupDeletedObject0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupDeletedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupDeletedObject1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupDeletedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupDeletedObject2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupDeletedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupDeletedPreviousObject0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupDeletedPreviousObject1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupDeletedPreviousObject2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -340426,226 +332930,6 @@ func TestEnumEventStreamCloudEventGroupMemberAddedCloudEventTypeEnum(t *testing.
 	})
 }
 
-func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_user", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_user", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventGroupMemberDeletedCloudEventTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_member_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -340661,226 +332945,6 @@ func TestEnumEventStreamCloudEventGroupMemberDeletedCloudEventTypeEnum(t *testin
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupMemberDeletedCloudEventTypeEnumFromString("group.member.deleted")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_user", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_user", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum("user"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString("user")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString("connection")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -340910,138 +332974,6 @@ func TestEnumEventStreamCloudEventGroupRoleAssignedCloudEventTypeEnum(t *testing
 	})
 }
 
-func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventGroupRoleDeletedCloudEventTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_role_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -341064,138 +332996,6 @@ func TestEnumEventStreamCloudEventGroupRoleDeletedCloudEventTypeEnum(t *testing.
 	})
 }
 
-func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventGroupUpdatedCloudEventTypeEnum(t *testing.T) {
 	t.Run("NewFromString_group_updated", func(t *testing.T) {
 		t.Parallel()
@@ -341211,138 +333011,6 @@ func TestEnumEventStreamCloudEventGroupUpdatedCloudEventTypeEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventGroupUpdatedCloudEventTypeEnumFromString("group.updated")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupUpdatedObject0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupUpdatedObject1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupUpdatedObject2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupUpdatedObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -342186,138 +333854,6 @@ func TestEnumEventStreamCloudEventOrgGroupRoleAssignedCloudEventTypeEnum(t *test
 	})
 }
 
-func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
 func TestEnumEventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnum(t *testing.T) {
 	t.Run("NewFromString_organization_group_role_deleted", func(t *testing.T) {
 		t.Parallel()
@@ -342333,138 +333869,6 @@ func TestEnumEventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnum(t *testi
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedCloudEventTypeEnumFromString("organization.group.role.deleted")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum(t *testing.T) {
-	t.Run("NewFromString_connection", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum("connection"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString("connection")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum(t *testing.T) {
-	t.Run("NewFromString_organization", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum("organization"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString("organization")
-		assert.NoError(t, err)
-		ptr := val.Ptr()
-		assert.NotNil(t, ptr)
-		assert.Equal(t, val, *ptr)
-	})
-}
-
-func TestEnumEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum(t *testing.T) {
-	t.Run("NewFromString_tenant", func(t *testing.T) {
-		t.Parallel()
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
-		assert.NoError(t, err, "valid enum value should not return error")
-		assert.Equal(t, EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum("tenant"), val, "enum value should match expected wire value")
-	})
-
-	t.Run("NewFromString_Invalid", func(t *testing.T) {
-		_, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("invalid_value_that_does_not_exist")
-		assert.Error(t, err)
-	})
-
-	t.Run("Ptr", func(t *testing.T) {
-		val, err := NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString("tenant")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)

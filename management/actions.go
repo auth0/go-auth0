@@ -197,12 +197,10 @@ func (c *CreateActionResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (c *CreateActionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -560,12 +558,10 @@ func (d *DeployActionResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (d *DeployActionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -925,12 +921,10 @@ func (g *GetActionResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetActionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1170,12 +1164,10 @@ func (l *ListActionsPaginatedResponseContent) GetExtraProperties() map[string]in
 }
 
 func (l *ListActionsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTotal sets the Total field and marks it as non-optional;
@@ -1280,12 +1272,10 @@ func (t *TestActionResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (t *TestActionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetPayload sets the Payload field and marks it as non-optional;
@@ -1527,12 +1517,10 @@ func (u *UpdateActionResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (u *UpdateActionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

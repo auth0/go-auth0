@@ -43,29 +43,6 @@ func NewClient(options *core.RequestOptions) *Client {
 //	</li>
 //
 // </ul>
-//
-// Example:
-//
-//	request := &management.ListOrganizationRoleMembersRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Organizations.Roles.Members.List(
-//	    context.TODO(),
-//	    "id",
-//	    "role_id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization.
@@ -129,7 +106,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

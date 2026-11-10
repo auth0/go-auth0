@@ -70,12 +70,10 @@ func (c *ConsentSigningKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConsentSigningKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -409,12 +407,10 @@ func (c *CreateUserResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CreateUserResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -893,12 +889,10 @@ func (g *GetUserResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetUserResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -1158,12 +1152,10 @@ func (l *ListUserConsentSigningKeysResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListUserConsentSigningKeysResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetKeys sets the Keys field and marks it as non-optional;
@@ -1280,12 +1272,10 @@ func (l *ListUsersOffsetPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListUsersOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -1396,12 +1386,10 @@ func (r *RegenerateUsersRecoveryCodeResponseContent) GetExtraProperties() map[st
 }
 
 func (r *RegenerateUsersRecoveryCodeResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetRecoveryCode sets the RecoveryCode field and marks it as non-optional;
@@ -1732,12 +1720,10 @@ func (u *UpdateUserResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UpdateUserResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -2067,12 +2053,10 @@ func (u *UserIdentitySchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserIdentitySchema) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -2425,12 +2409,10 @@ func (u *UserResponseSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserResponseSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;

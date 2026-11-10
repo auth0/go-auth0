@@ -90,12 +90,10 @@ func (d *DailyStats) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DailyStats) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetDate sets the Date field and marks it as non-optional;

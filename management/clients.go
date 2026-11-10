@@ -10,11 +10,11 @@ import (
 	time "time"
 )
 
+// Anonymous sessions configuration for this client.
 var (
 	anonymousSessionsFieldActive = big.NewInt(1 << 0)
 )
 
-// Anonymous sessions configuration for this client.
 type AnonymousSessions struct {
 	// If set to true, this client is allowed to create anonymous sessions.
 	Active bool `json:"active" url:"active"`
@@ -41,12 +41,10 @@ func (a *AnonymousSessions) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AnonymousSessions) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -123,12 +121,12 @@ func (a AsyncApprovalNotificationsChannelsEnum) Ptr() *AsyncApprovalNotification
 	return &a
 }
 
+// Configuration for B2B Integration clients.
 var (
 	b2BIntegrationConfigurationFieldSSOProfiles     = big.NewInt(1 << 0)
 	b2BIntegrationConfigurationFieldIntegrationType = big.NewInt(1 << 1)
 )
 
-// Configuration for B2B Integration clients.
 type B2BIntegrationConfiguration struct {
 	// List of SSO profile IDs linked to this B2B integration client. Maximum 1 entry.
 	SSOProfiles     []string                                        `json:"sso_profiles,omitempty" url:"sso_profiles,omitempty"`
@@ -163,12 +161,10 @@ func (b *B2BIntegrationConfiguration) GetExtraProperties() map[string]interface{
 }
 
 func (b *B2BIntegrationConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetSSOProfiles sets the SSOProfiles field and marks it as non-optional;
@@ -312,12 +308,10 @@ func (c *CertificateSubjectDnCredential) GetExtraProperties() map[string]interfa
 }
 
 func (c *CertificateSubjectDnCredential) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;
@@ -432,11 +426,11 @@ func (c CimdExternalMetadataCreatedByEnum) Ptr() *CimdExternalMetadataCreatedByE
 	return &c
 }
 
+// Client authentication methods derived from the JWKS document
 var (
 	cimdMappedClientAuthenticationMethodsFieldPrivateKeyJwt = big.NewInt(1 << 0)
 )
 
-// Client authentication methods derived from the JWKS document
 type CimdMappedClientAuthenticationMethods struct {
 	PrivateKeyJwt *CimdMappedClientAuthenticationMethodsPrivateKeyJwt `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
 
@@ -463,12 +457,10 @@ func (c *CimdMappedClientAuthenticationMethods) GetExtraProperties() map[string]
 }
 
 func (c *CimdMappedClientAuthenticationMethods) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
@@ -524,11 +516,11 @@ func (c *CimdMappedClientAuthenticationMethods) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Private Key JWT authentication configuration
 var (
 	cimdMappedClientAuthenticationMethodsPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
 )
 
-// Private Key JWT authentication configuration
 type CimdMappedClientAuthenticationMethodsPrivateKeyJwt struct {
 	// Credentials derived from the JWKS document
 	Credentials []*CimdMappedPrivateKeyJwtCredential `json:"credentials" url:"credentials"`
@@ -556,12 +548,10 @@ func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) GetExtraProperties(
 }
 
 func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -617,6 +607,7 @@ func (c *CimdMappedClientAuthenticationMethodsPrivateKeyJwt) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Auth0 client fields mapped from the Client ID Metadata Document
 var (
 	cimdMappedClientFieldsFieldExternalClientID            = big.NewInt(1 << 0)
 	cimdMappedClientFieldsFieldName                        = big.NewInt(1 << 1)
@@ -630,7 +621,6 @@ var (
 	cimdMappedClientFieldsFieldClientAuthenticationMethods = big.NewInt(1 << 9)
 )
 
-// Auth0 client fields mapped from the Client ID Metadata Document
 type CimdMappedClientFields struct {
 	// The URL of the Client ID Metadata Document
 	ExternalClientID *string `json:"external_client_id,omitempty" url:"external_client_id,omitempty"`
@@ -738,12 +728,10 @@ func (c *CimdMappedClientFields) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CimdMappedClientFields) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetExternalClientID sets the ExternalClientID field and marks it as non-optional;
@@ -913,12 +901,10 @@ func (c *CimdMappedPrivateKeyJwtCredential) GetExtraProperties() map[string]inte
 }
 
 func (c *CimdMappedPrivateKeyJwtCredential) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;
@@ -988,13 +974,13 @@ func (c *CimdMappedPrivateKeyJwtCredential) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Validation result for the Client ID Metadata Document
 var (
 	cimdValidationResultFieldValid      = big.NewInt(1 << 0)
 	cimdValidationResultFieldViolations = big.NewInt(1 << 1)
 	cimdValidationResultFieldWarnings   = big.NewInt(1 << 2)
 )
 
-// Validation result for the Client ID Metadata Document
 type CimdValidationResult struct {
 	// Whether the metadata document passed validation
 	Valid bool `json:"valid" url:"valid"`
@@ -1040,12 +1026,10 @@ func (c *CimdValidationResult) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CimdValidationResult) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetValid sets the Valid field and marks it as non-optional;
@@ -1189,18 +1173,6 @@ var (
 	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
 	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
-
-// clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
-var clientNullableFields = map[string]*big.Int{
-	"session_transfer":              clientFieldSessionTransfer,
-	"signing_keys":                  clientFieldSigningKeys,
-	"encryption_key":                clientFieldEncryptionKey,
-	"refresh_token":                 clientFieldRefreshToken,
-	"default_organization":          clientFieldDefaultOrganization,
-	"client_authentication_methods": clientFieldClientAuthenticationMethods,
-	"compliance_level":              clientFieldComplianceLevel,
-	"par_request_expiry":            clientFieldParRequestExpiry,
-}
 
 type Client struct {
 	// ID of this client.
@@ -1835,12 +1807,10 @@ func (c *Client) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *Client) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -2367,13 +2337,6 @@ func (c *Client) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -2408,13 +2371,13 @@ func (c *Client) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// AWS addon configuration.
 var (
 	clientAddonAwsFieldPrincipal         = big.NewInt(1 << 0)
 	clientAddonAwsFieldRole              = big.NewInt(1 << 1)
 	clientAddonAwsFieldLifetimeInSeconds = big.NewInt(1 << 2)
 )
 
-// AWS addon configuration.
 type ClientAddonAws struct {
 	// AWS principal ARN, e.g. `arn:aws:iam::010616021751:saml-provider/idpname`
 	Principal *string `json:"principal,omitempty" url:"principal,omitempty"`
@@ -2460,12 +2423,10 @@ func (c *ClientAddonAws) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonAws) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPrincipal sets the Principal field and marks it as non-optional;
@@ -2535,6 +2496,7 @@ func (c *ClientAddonAws) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Azure Blob Storage addon configuration.
 var (
 	clientAddonAzureBlobFieldAccountName      = big.NewInt(1 << 0)
 	clientAddonAzureBlobFieldStorageAccessKey = big.NewInt(1 << 1)
@@ -2551,7 +2513,6 @@ var (
 	clientAddonAzureBlobFieldContainerList    = big.NewInt(1 << 12)
 )
 
-// Azure Blob Storage addon configuration.
 type ClientAddonAzureBlob struct {
 	// Your Azure storage account name. Usually first segment in your Azure storage URL. e.g. `https://acme-org.blob.core.windows.net` would be the account name `acme-org`.
 	AccountName *string `json:"accountName,omitempty" url:"accountName,omitempty"`
@@ -2687,12 +2648,10 @@ func (c *ClientAddonAzureBlob) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonAzureBlob) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAccountName sets the AccountName field and marks it as non-optional;
@@ -2832,6 +2791,7 @@ func (c *ClientAddonAzureBlob) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Azure Storage Bus addon configuration.
 var (
 	clientAddonAzureSbFieldNamespace  = big.NewInt(1 << 0)
 	clientAddonAzureSbFieldSasKeyName = big.NewInt(1 << 1)
@@ -2840,7 +2800,6 @@ var (
 	clientAddonAzureSbFieldExpiration = big.NewInt(1 << 4)
 )
 
-// Azure Storage Bus addon configuration.
 type ClientAddonAzureSb struct {
 	// Your Azure Service Bus namespace. Usually the first segment of your Service Bus URL (e.g. `https://acme-org.servicebus.windows.net` would be `acme-org`).
 	Namespace *string `json:"namespace,omitempty" url:"namespace,omitempty"`
@@ -2904,12 +2863,10 @@ func (c *ClientAddonAzureSb) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonAzureSb) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNamespace sets the Namespace field and marks it as non-optional;
@@ -3005,11 +2962,11 @@ type ClientAddonConcur = map[string]any
 // Dropbox SSO indicator (no configuration settings needed for Dropbox SSO).
 type ClientAddonDropbox = map[string]any
 
+// Adobe EchoSign SSO configuration.
 var (
 	clientAddonEchoSignFieldDomain = big.NewInt(1 << 0)
 )
 
-// Adobe EchoSign SSO configuration.
 type ClientAddonEchoSign struct {
 	// Your custom domain found in your EchoSign URL. e.g. `https://acme-org.echosign.com` would be `acme-org`.
 	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
@@ -3037,12 +2994,10 @@ func (c *ClientAddonEchoSign) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonEchoSign) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -3098,11 +3053,11 @@ func (c *ClientAddonEchoSign) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Egnyte SSO configuration.
 var (
 	clientAddonEgnyteFieldDomain = big.NewInt(1 << 0)
 )
 
-// Egnyte SSO configuration.
 type ClientAddonEgnyte struct {
 	// Your custom domain found in your Egnyte URL. e.g. `https://acme-org.egnyte.com` would be `acme-org`.
 	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
@@ -3130,12 +3085,10 @@ func (c *ClientAddonEgnyte) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonEgnyte) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -3191,6 +3144,7 @@ func (c *ClientAddonEgnyte) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Google Firebase addon configuration.
 var (
 	clientAddonFirebaseFieldSecret            = big.NewInt(1 << 0)
 	clientAddonFirebaseFieldPrivateKeyID      = big.NewInt(1 << 1)
@@ -3199,7 +3153,6 @@ var (
 	clientAddonFirebaseFieldLifetimeInSeconds = big.NewInt(1 << 4)
 )
 
-// Google Firebase addon configuration.
 type ClientAddonFirebase struct {
 	// Google Firebase Secret. (SDK 2 only).
 	Secret *string `json:"secret,omitempty" url:"secret,omitempty"`
@@ -3263,12 +3216,10 @@ func (c *ClientAddonFirebase) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonFirebase) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetSecret sets the Secret field and marks it as non-optional;
@@ -3352,6 +3303,7 @@ func (c *ClientAddonFirebase) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Layer addon configuration.
 var (
 	clientAddonLayerFieldProviderID = big.NewInt(1 << 0)
 	clientAddonLayerFieldKeyID      = big.NewInt(1 << 1)
@@ -3360,7 +3312,6 @@ var (
 	clientAddonLayerFieldExpiration = big.NewInt(1 << 4)
 )
 
-// Layer addon configuration.
 type ClientAddonLayer struct {
 	// Provider ID of your Layer account
 	ProviderID string `json:"providerId" url:"providerId"`
@@ -3424,12 +3375,10 @@ func (c *ClientAddonLayer) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonLayer) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetProviderID sets the ProviderID field and marks it as non-optional;
@@ -3513,11 +3462,11 @@ func (c *ClientAddonLayer) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Microsoft Dynamics CRM SSO configuration.
 var (
 	clientAddonMscrmFieldURL = big.NewInt(1 << 0)
 )
 
-// Microsoft Dynamics CRM SSO configuration.
 type ClientAddonMscrm struct {
 	// Microsoft Dynamics CRM application URL.
 	URL string `json:"url" url:"url"`
@@ -3545,12 +3494,10 @@ func (c *ClientAddonMscrm) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonMscrm) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -3606,11 +3553,11 @@ func (c *ClientAddonMscrm) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// New Relic SSO configuration.
 var (
 	clientAddonNewRelicFieldAccount = big.NewInt(1 << 0)
 )
 
-// New Relic SSO configuration.
 type ClientAddonNewRelic struct {
 	// Your New Relic Account ID found in your New Relic URL after the `/accounts/` path. e.g. `https://rpm.newrelic.com/accounts/123456/query` would be `123456`.
 	Account *string `json:"account,omitempty" url:"account,omitempty"`
@@ -3638,12 +3585,10 @@ func (c *ClientAddonNewRelic) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonNewRelic) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAccount sets the Account field and marks it as non-optional;
@@ -3717,12 +3662,10 @@ func (c *ClientAddonOag) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonOag) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 func (c *ClientAddonOag) UnmarshalJSON(data []byte) error {
@@ -3767,12 +3710,12 @@ func (c *ClientAddonOag) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Microsoft Office 365 SSO configuration.
 var (
 	clientAddonOffice365FieldDomain     = big.NewInt(1 << 0)
 	clientAddonOffice365FieldConnection = big.NewInt(1 << 1)
 )
 
-// Microsoft Office 365 SSO configuration.
 type ClientAddonOffice365 struct {
 	// Your Office 365 domain name. e.g. `acme-org.com`.
 	Domain *string `json:"domain,omitempty" url:"domain,omitempty"`
@@ -3809,12 +3752,10 @@ func (c *ClientAddonOffice365) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonOffice365) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDomain sets the Domain field and marks it as non-optional;
@@ -3877,11 +3818,11 @@ func (c *ClientAddonOffice365) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Active Directory Rights Management Service SSO configuration.
 var (
 	clientAddonRmsFieldURL = big.NewInt(1 << 0)
 )
 
-// Active Directory Rights Management Service SSO configuration.
 type ClientAddonRms struct {
 	// URL of your Rights Management Server. It can be internal or external, but users will have to be able to reach it.
 	URL string `json:"url" url:"url"`
@@ -3909,12 +3850,10 @@ func (c *ClientAddonRms) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonRms) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -3970,11 +3909,11 @@ func (c *ClientAddonRms) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Salesforce SSO configuration.
 var (
 	clientAddonSalesforceFieldEntityID = big.NewInt(1 << 0)
 )
 
-// Salesforce SSO configuration.
 type ClientAddonSalesforce struct {
 	// Arbitrary logical URL that identifies the Saleforce resource. e.g. `https://acme-org.com`.
 	EntityID *string `json:"entity_id,omitempty" url:"entity_id,omitempty"`
@@ -4002,12 +3941,10 @@ func (c *ClientAddonSalesforce) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSalesforce) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEntityID sets the EntityID field and marks it as non-optional;
@@ -4063,6 +4000,7 @@ func (c *ClientAddonSalesforce) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Salesforce API addon configuration.
 var (
 	clientAddonSalesforceAPIFieldClientid            = big.NewInt(1 << 0)
 	clientAddonSalesforceAPIFieldPrincipal           = big.NewInt(1 << 1)
@@ -4070,7 +4008,6 @@ var (
 	clientAddonSalesforceAPIFieldCommunityURLSection = big.NewInt(1 << 3)
 )
 
-// Salesforce API addon configuration.
 type ClientAddonSalesforceAPI struct {
 	// Consumer Key assigned by Salesforce to the Connected App.
 	Clientid *string `json:"clientid,omitempty" url:"clientid,omitempty"`
@@ -4125,12 +4062,10 @@ func (c *ClientAddonSalesforceAPI) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSalesforceAPI) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientid sets the Clientid field and marks it as non-optional;
@@ -4207,6 +4142,7 @@ func (c *ClientAddonSalesforceAPI) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Salesforce Sandbox addon configuration.
 var (
 	clientAddonSalesforceSandboxAPIFieldClientid            = big.NewInt(1 << 0)
 	clientAddonSalesforceSandboxAPIFieldPrincipal           = big.NewInt(1 << 1)
@@ -4214,7 +4150,6 @@ var (
 	clientAddonSalesforceSandboxAPIFieldCommunityURLSection = big.NewInt(1 << 3)
 )
 
-// Salesforce Sandbox addon configuration.
 type ClientAddonSalesforceSandboxAPI struct {
 	// Consumer Key assigned by Salesforce to the Connected App.
 	Clientid *string `json:"clientid,omitempty" url:"clientid,omitempty"`
@@ -4269,12 +4204,10 @@ func (c *ClientAddonSalesforceSandboxAPI) GetExtraProperties() map[string]interf
 }
 
 func (c *ClientAddonSalesforceSandboxAPI) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientid sets the Clientid field and marks it as non-optional;
@@ -4351,6 +4284,7 @@ func (c *ClientAddonSalesforceSandboxAPI) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// SAML2 addon indicator (no configuration settings needed for SAML2 addon).
 var (
 	clientAddonSAMLFieldMappings                       = big.NewInt(1 << 0)
 	clientAddonSAMLFieldAudience                       = big.NewInt(1 << 1)
@@ -4370,7 +4304,6 @@ var (
 	clientAddonSAMLFieldAuthnContextClassRef           = big.NewInt(1 << 15)
 )
 
-// SAML2 addon indicator (no configuration settings needed for SAML2 addon).
 type ClientAddonSAML struct {
 	Mappings                       *ClientAddonSAMLMapping `json:"mappings,omitempty" url:"mappings,omitempty"`
 	Audience                       *string                 `json:"audience,omitempty" url:"audience,omitempty"`
@@ -4517,12 +4450,10 @@ func (c *ClientAddonSAML) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSAML) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMappings sets the Mappings field and marks it as non-optional;
@@ -4685,6 +4616,7 @@ func (c *ClientAddonSAML) String() string {
 
 type ClientAddonSAMLMapping = map[string]any
 
+// SAP API addon configuration.
 var (
 	clientAddonSapapiFieldClientid             = big.NewInt(1 << 0)
 	clientAddonSapapiFieldUsernameAttribute    = big.NewInt(1 << 1)
@@ -4694,7 +4626,6 @@ var (
 	clientAddonSapapiFieldNameIdentifierFormat = big.NewInt(1 << 5)
 )
 
-// SAP API addon configuration.
 type ClientAddonSapapi struct {
 	// If activated in the OAuth 2.0 client configuration (transaction SOAUTH2) the SAML attribute client_id must be set and equal the client_id form parameter of the access token request.
 	Clientid *string `json:"clientid,omitempty" url:"clientid,omitempty"`
@@ -4767,12 +4698,10 @@ func (c *ClientAddonSapapi) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSapapi) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientid sets the Clientid field and marks it as non-optional;
@@ -4863,12 +4792,12 @@ func (c *ClientAddonSapapi) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Sentry SSO configuration.
 var (
 	clientAddonSentryFieldOrgSlug = big.NewInt(1 << 0)
 	clientAddonSentryFieldBaseURL = big.NewInt(1 << 1)
 )
 
-// Sentry SSO configuration.
 type ClientAddonSentry struct {
 	// Generated slug for your Sentry organization. Found in your Sentry URL. e.g. `https://sentry.acme.com/acme-org/` would be `acme-org`.
 	OrgSlug *string `json:"org_slug,omitempty" url:"org_slug,omitempty"`
@@ -4905,12 +4834,10 @@ func (c *ClientAddonSentry) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSentry) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetOrgSlug sets the OrgSlug field and marks it as non-optional;
@@ -4973,12 +4900,12 @@ func (c *ClientAddonSentry) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// SharePoint SSO configuration.
 var (
 	clientAddonSharePointFieldURL         = big.NewInt(1 << 0)
 	clientAddonSharePointFieldExternalURL = big.NewInt(1 << 1)
 )
 
-// SharePoint SSO configuration.
 type ClientAddonSharePoint struct {
 	// Internal SharePoint application URL.
 	URL         *string                           `json:"url,omitempty" url:"url,omitempty"`
@@ -5014,12 +4941,10 @@ func (c *ClientAddonSharePoint) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSharePoint) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -5145,11 +5070,11 @@ func (c *ClientAddonSharePointExternalURL) Accept(visitor ClientAddonSharePointE
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+// Slack team or workspace name usually first segment in your Slack URL. e.g. `https://acme-org.slack.com` would be `acme-org`.
 var (
 	clientAddonSlackFieldTeam = big.NewInt(1 << 0)
 )
 
-// Slack team or workspace name usually first segment in your Slack URL. e.g. `https://acme-org.slack.com` would be `acme-org`.
 type ClientAddonSlack struct {
 	// Slack team name.
 	Team string `json:"team" url:"team"`
@@ -5177,12 +5102,10 @@ func (c *ClientAddonSlack) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSlack) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTeam sets the Team field and marks it as non-optional;
@@ -5238,11 +5161,11 @@ func (c *ClientAddonSlack) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// SpringCM SSO configuration.
 var (
 	clientAddonSpringCmFieldAcsurl = big.NewInt(1 << 0)
 )
 
-// SpringCM SSO configuration.
 type ClientAddonSpringCm struct {
 	// SpringCM ACS URL, e.g. `https://na11.springcm.com/atlas/sso/SSOEndpoint.ashx`.
 	Acsurl *string `json:"acsurl,omitempty" url:"acsurl,omitempty"`
@@ -5270,12 +5193,10 @@ func (c *ClientAddonSpringCm) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonSpringCm) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAcsurl sets the Acsurl field and marks it as non-optional;
@@ -5372,12 +5293,10 @@ func (c *ClientAddonSSOIntegration) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ClientAddonSSOIntegration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -5440,11 +5359,11 @@ func (c *ClientAddonSSOIntegration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Windows Azure Mobile Services addon configuration.
 var (
 	clientAddonWamsFieldMasterkey = big.NewInt(1 << 0)
 )
 
-// Windows Azure Mobile Services addon configuration.
 type ClientAddonWams struct {
 	// Your master key for Windows Azure Mobile Services.
 	Masterkey *string `json:"masterkey,omitempty" url:"masterkey,omitempty"`
@@ -5472,12 +5391,10 @@ func (c *ClientAddonWams) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonWams) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMasterkey sets the Masterkey field and marks it as non-optional;
@@ -5536,11 +5453,11 @@ func (c *ClientAddonWams) String() string {
 // WS-Fed (WIF) addon indicator. Actual configuration is stored in `callback` and `client_aliases` properties on the client.
 type ClientAddonWsFed = map[string]any
 
+// Zendesk SSO configuration.
 var (
 	clientAddonZendeskFieldAccountName = big.NewInt(1 << 0)
 )
 
-// Zendesk SSO configuration.
 type ClientAddonZendesk struct {
 	// Zendesk account name usually first segment in your Zendesk URL. e.g. `https://acme-org.zendesk.com` would be `acme-org`.
 	AccountName *string `json:"accountName,omitempty" url:"accountName,omitempty"`
@@ -5568,12 +5485,10 @@ func (c *ClientAddonZendesk) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonZendesk) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAccountName sets the AccountName field and marks it as non-optional;
@@ -5629,11 +5544,11 @@ func (c *ClientAddonZendesk) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Zoom SSO configuration.
 var (
 	clientAddonZoomFieldAccount = big.NewInt(1 << 0)
 )
 
-// Zoom SSO configuration.
 type ClientAddonZoom struct {
 	// Zoom account name usually first segment of your Zoom URL, e.g. `https://acme-org.zoom.us` would be `acme-org`.
 	Account *string `json:"account,omitempty" url:"account,omitempty"`
@@ -5661,12 +5576,10 @@ func (c *ClientAddonZoom) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddonZoom) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAccount sets the Account field and marks it as non-optional;
@@ -5722,6 +5635,7 @@ func (c *ClientAddonZoom) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Addons enabled for this client and their associated configurations.
 var (
 	clientAddonsFieldAws                  = big.NewInt(1 << 0)
 	clientAddonsFieldAzureBlob            = big.NewInt(1 << 1)
@@ -5755,12 +5669,6 @@ var (
 	clientAddonsFieldOag                  = big.NewInt(1 << 29)
 )
 
-// clientAddonsNullableFields maps the wire names of ClientAddons's nullable fields (required or optional) to their field bits.
-var clientAddonsNullableFields = map[string]*big.Int{
-	"oag": clientAddonsFieldOag,
-}
-
-// Addons enabled for this client and their associated configurations.
 type ClientAddons struct {
 	Aws                  *ClientAddonAws                  `json:"aws,omitempty" url:"aws,omitempty"`
 	AzureBlob            *ClientAddonAzureBlob            `json:"azure_blob,omitempty" url:"azure_blob,omitempty"`
@@ -6018,12 +5926,10 @@ func (c *ClientAddons) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientAddons) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAws sets the Aws field and marks it as non-optional;
@@ -6248,13 +6154,6 @@ func (c *ClientAddons) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientAddonsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -6409,13 +6308,13 @@ type ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration = []AsyncAppr
 // Array of notification channels for contacting the user when their approval is required. Valid values are `guardian-push`, `email`, `my-account`.
 type ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration = []AsyncApprovalNotificationsChannelsEnum
 
+// Defines client authentication methods.
 var (
 	clientAuthenticationMethodFieldPrivateKeyJwt           = big.NewInt(1 << 0)
 	clientAuthenticationMethodFieldTLSClientAuth           = big.NewInt(1 << 1)
 	clientAuthenticationMethodFieldSelfSignedTLSClientAuth = big.NewInt(1 << 2)
 )
 
-// Defines client authentication methods.
 type ClientAuthenticationMethod struct {
 	PrivateKeyJwt           *ClientAuthenticationMethodPrivateKeyJwt           `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
 	TLSClientAuth           *ClientAuthenticationMethodTLSClientAuth           `json:"tls_client_auth,omitempty" url:"tls_client_auth,omitempty"`
@@ -6457,12 +6356,10 @@ func (c *ClientAuthenticationMethod) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ClientAuthenticationMethod) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
@@ -6528,11 +6425,11 @@ func (c *ClientAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 var (
 	clientAuthenticationMethodPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
 )
 
-// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 type ClientAuthenticationMethodPrivateKeyJwt struct {
 	Credentials ClientAuthenticationMethodPrivateKeyJwtCredentials `json:"credentials" url:"credentials"`
 
@@ -6558,12 +6455,10 @@ func (c *ClientAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map[strin
 }
 
 func (c *ClientAuthenticationMethodPrivateKeyJwt) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6618,11 +6513,11 @@ func (c *ClientAuthenticationMethodPrivateKeyJwt) String() string {
 // A list of unique and previously created credential IDs enabled on the client for Private Key JWT authentication.
 type ClientAuthenticationMethodPrivateKeyJwtCredentials = []*CredentialID
 
+// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 var (
 	clientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
-// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 type ClientAuthenticationMethodSelfSignedTLSClientAuth struct {
 	Credentials ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -6648,12 +6543,10 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) GetExtraProperties()
 }
 
 func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6708,11 +6601,11 @@ func (c *ClientAuthenticationMethodSelfSignedTLSClientAuth) String() string {
 // A list of unique and previously created credential IDs enabled on the client for mTLS authentication utilizing self-signed certificate.
 type ClientAuthenticationMethodSelfSignedTLSClientAuthCredentials = []*CredentialID
 
+// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 var (
 	clientAuthenticationMethodTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
-// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 type ClientAuthenticationMethodTLSClientAuth struct {
 	Credentials ClientAuthenticationMethodTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -6738,12 +6631,10 @@ func (c *ClientAuthenticationMethodTLSClientAuth) GetExtraProperties() map[strin
 }
 
 func (c *ClientAuthenticationMethodTLSClientAuth) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -6830,13 +6721,13 @@ func (c ClientComplianceLevelEnum) Ptr() *ClientComplianceLevelEnum {
 	return &c
 }
 
+// Defines client authentication methods.
 var (
 	clientCreateAuthenticationMethodFieldPrivateKeyJwt           = big.NewInt(1 << 0)
 	clientCreateAuthenticationMethodFieldTLSClientAuth           = big.NewInt(1 << 1)
 	clientCreateAuthenticationMethodFieldSelfSignedTLSClientAuth = big.NewInt(1 << 2)
 )
 
-// Defines client authentication methods.
 type ClientCreateAuthenticationMethod struct {
 	PrivateKeyJwt           *ClientCreateAuthenticationMethodPrivateKeyJwt           `json:"private_key_jwt,omitempty" url:"private_key_jwt,omitempty"`
 	TLSClientAuth           *ClientCreateAuthenticationMethodTLSClientAuth           `json:"tls_client_auth,omitempty" url:"tls_client_auth,omitempty"`
@@ -6878,12 +6769,10 @@ func (c *ClientCreateAuthenticationMethod) GetExtraProperties() map[string]inter
 }
 
 func (c *ClientCreateAuthenticationMethod) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPrivateKeyJwt sets the PrivateKeyJwt field and marks it as non-optional;
@@ -6949,11 +6838,11 @@ func (c *ClientCreateAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 var (
 	clientCreateAuthenticationMethodPrivateKeyJwtFieldCredentials = big.NewInt(1 << 0)
 )
 
-// Defines `private_key_jwt` client authentication method. If this property is defined, the client is enabled to use the Private Key JWT authentication method.
 type ClientCreateAuthenticationMethodPrivateKeyJwt struct {
 	Credentials ClientCreateAuthenticationMethodPrivateKeyJwtCredentials `json:"credentials" url:"credentials"`
 
@@ -6979,12 +6868,10 @@ func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) GetExtraProperties() map
 }
 
 func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -7039,11 +6926,11 @@ func (c *ClientCreateAuthenticationMethodPrivateKeyJwt) String() string {
 // Fully defined credentials that will be enabled on the client for Private Key JWT authentication.
 type ClientCreateAuthenticationMethodPrivateKeyJwtCredentials = []*PublicKeyCredential
 
+// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 var (
 	clientCreateAuthenticationMethodTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
-// Defines `tls_client_auth` client authentication method. If the property is defined, the client is configured to use CA-based mTLS authentication method.
 type ClientCreateAuthenticationMethodTLSClientAuth struct {
 	Credentials ClientCreateAuthenticationMethodTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -7069,12 +6956,10 @@ func (c *ClientCreateAuthenticationMethodTLSClientAuth) GetExtraProperties() map
 }
 
 func (c *ClientCreateAuthenticationMethodTLSClientAuth) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -7129,12 +7014,12 @@ func (c *ClientCreateAuthenticationMethodTLSClientAuth) String() string {
 // Fully defined credentials that will be enabled on the client for CA-based mTLS authentication.
 type ClientCreateAuthenticationMethodTLSClientAuthCredentials = []*CertificateSubjectDnCredential
 
+// Defines the default Organization ID and flows
 var (
 	clientDefaultOrganizationFieldOrganizationID = big.NewInt(1 << 0)
 	clientDefaultOrganizationFieldFlows          = big.NewInt(1 << 1)
 )
 
-// Defines the default Organization ID and flows
 type ClientDefaultOrganization struct {
 	// The default Organization ID to be used
 	OrganizationID string `json:"organization_id" url:"organization_id"`
@@ -7170,12 +7055,10 @@ func (c *ClientDefaultOrganization) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ClientDefaultOrganization) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -7253,13 +7136,13 @@ func (c ClientDefaultOrganizationFlowsEnum) Ptr() *ClientDefaultOrganizationFlow
 	return &c
 }
 
+// Encryption used for WsFed responses with this client.
 var (
 	clientEncryptionKeyFieldPub     = big.NewInt(1 << 0)
 	clientEncryptionKeyFieldCert    = big.NewInt(1 << 1)
 	clientEncryptionKeyFieldSubject = big.NewInt(1 << 2)
 )
 
-// Encryption used for WsFed responses with this client.
 type ClientEncryptionKey struct {
 	// Encryption Public RSA Key.
 	Pub *string `json:"pub,omitempty" url:"pub,omitempty"`
@@ -7305,12 +7188,10 @@ func (c *ClientEncryptionKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientEncryptionKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPub sets the Pub field and marks it as non-optional;
@@ -7449,6 +7330,7 @@ func (c ClientExternalMetadataTypeEnum) Ptr() *ClientExternalMetadataTypeEnum {
 	return &c
 }
 
+// Configuration related to JWTs for the client.
 var (
 	clientJwtConfigurationFieldLifetimeInSeconds = big.NewInt(1 << 0)
 	clientJwtConfigurationFieldSecretEncoded     = big.NewInt(1 << 1)
@@ -7456,7 +7338,6 @@ var (
 	clientJwtConfigurationFieldAlg               = big.NewInt(1 << 3)
 )
 
-// Configuration related to JWTs for the client.
 type ClientJwtConfiguration struct {
 	// Number of seconds the JWT will be valid for (affects `exp` claim).
 	LifetimeInSeconds *int `json:"lifetime_in_seconds,omitempty" url:"lifetime_in_seconds,omitempty"`
@@ -7509,12 +7390,10 @@ func (c *ClientJwtConfiguration) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientJwtConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetLifetimeInSeconds sets the LifetimeInSeconds field and marks it as non-optional;
@@ -7597,12 +7476,12 @@ type ClientJwtConfigurationScopes = map[string]any
 // Metadata associated with the client, in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.  Field names (max 255 chars) are alphanumeric and may only include the following special characters:  :,-+=_*?"/\()<>@	[Tab] [Space]
 type ClientMetadata = map[string]any
 
+// Additional configuration for native mobile apps.
 var (
 	clientMobileFieldAndroid = big.NewInt(1 << 0)
 	clientMobileFieldIos     = big.NewInt(1 << 1)
 )
 
-// Additional configuration for native mobile apps.
 type ClientMobile struct {
 	Android *ClientMobileAndroid `json:"android,omitempty" url:"android,omitempty"`
 	Ios     *ClientMobileiOs     `json:"ios,omitempty" url:"ios,omitempty"`
@@ -7637,12 +7516,10 @@ func (c *ClientMobile) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientMobile) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAndroid sets the Android field and marks it as non-optional;
@@ -7705,12 +7582,12 @@ func (c *ClientMobile) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Android native app configuration.
 var (
 	clientMobileAndroidFieldAppPackageName         = big.NewInt(1 << 0)
 	clientMobileAndroidFieldSha256CertFingerprints = big.NewInt(1 << 1)
 )
 
-// Android native app configuration.
 type ClientMobileAndroid struct {
 	// App package name found in AndroidManifest.xml.
 	AppPackageName *string `json:"app_package_name,omitempty" url:"app_package_name,omitempty"`
@@ -7747,12 +7624,10 @@ func (c *ClientMobileAndroid) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientMobileAndroid) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAppPackageName sets the AppPackageName field and marks it as non-optional;
@@ -7815,12 +7690,12 @@ func (c *ClientMobileAndroid) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// iOS native app configuration.
 var (
 	clientMobileiOsFieldTeamID              = big.NewInt(1 << 0)
 	clientMobileiOsFieldAppBundleIdentifier = big.NewInt(1 << 1)
 )
 
-// iOS native app configuration.
 type ClientMobileiOs struct {
 	// Identifier assigned to the Apple account that signs and uploads the app to the store.
 	TeamID *string `json:"team_id,omitempty" url:"team_id,omitempty"`
@@ -7857,12 +7732,10 @@ func (c *ClientMobileiOs) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientMobileiOs) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTeamID sets the TeamID field and marks it as non-optional;
@@ -8029,6 +7902,7 @@ func (c ClientMyOrganizationDeletionBehaviorEnum) Ptr() *ClientMyOrganizationDel
 	return &c
 }
 
+// Configuration related to the My Organization Configuration for the client.
 var (
 	clientMyOrganizationPatchConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
 	clientMyOrganizationPatchConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
@@ -8040,7 +7914,6 @@ var (
 	clientMyOrganizationPatchConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
-// Configuration related to the My Organization Configuration for the client.
 type ClientMyOrganizationPatchConfiguration struct {
 	// The connection profile ID that this client should validate against.
 	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
@@ -8128,12 +8001,10 @@ func (c *ClientMyOrganizationPatchConfiguration) GetExtraProperties() map[string
 }
 
 func (c *ClientMyOrganizationPatchConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
@@ -8234,6 +8105,7 @@ func (c *ClientMyOrganizationPatchConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configuration related to the My Organization Configuration for the client.
 var (
 	clientMyOrganizationPostConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
 	clientMyOrganizationPostConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
@@ -8245,7 +8117,6 @@ var (
 	clientMyOrganizationPostConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
-// Configuration related to the My Organization Configuration for the client.
 type ClientMyOrganizationPostConfiguration struct {
 	// The connection profile ID that this client should validate against.
 	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
@@ -8333,12 +8204,10 @@ func (c *ClientMyOrganizationPostConfiguration) GetExtraProperties() map[string]
 }
 
 func (c *ClientMyOrganizationPostConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
@@ -8439,6 +8308,7 @@ func (c *ClientMyOrganizationPostConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configuration related to the My Organization Configuration for the client.
 var (
 	clientMyOrganizationResponseConfigurationFieldConnectionProfileID              = big.NewInt(1 << 0)
 	clientMyOrganizationResponseConfigurationFieldUserAttributeProfileID           = big.NewInt(1 << 1)
@@ -8450,7 +8320,6 @@ var (
 	clientMyOrganizationResponseConfigurationFieldEnforceSelfAssignmentRestriction = big.NewInt(1 << 7)
 )
 
-// Configuration related to the My Organization Configuration for the client.
 type ClientMyOrganizationResponseConfiguration struct {
 	// The connection profile ID that this client should validate against.
 	ConnectionProfileID *string `json:"connection_profile_id,omitempty" url:"connection_profile_id,omitempty"`
@@ -8538,12 +8407,10 @@ func (c *ClientMyOrganizationResponseConfiguration) GetExtraProperties() map[str
 }
 
 func (c *ClientMyOrganizationResponseConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionProfileID sets the ConnectionProfileID field and marks it as non-optional;
@@ -8644,12 +8511,12 @@ func (c *ClientMyOrganizationResponseConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// The third-party client access configuration for the My Organization Configuration.
 var (
 	clientMyOrganizationThirdPartyClientAccessConfigurationFieldDefaultValue  = big.NewInt(1 << 0)
 	clientMyOrganizationThirdPartyClientAccessConfigurationFieldAllowedValues = big.NewInt(1 << 1)
 )
 
-// The third-party client access configuration for the My Organization Configuration.
 type ClientMyOrganizationThirdPartyClientAccessConfiguration struct {
 	DefaultValue ClientMyOrganizationConfigurationThirdPartyClientAccessDefaultValueEnum `json:"default_value" url:"default_value"`
 	// The allowed third-party client access values for the My Organization Configuration.
@@ -8684,12 +8551,10 @@ func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) GetExtraProper
 }
 
 func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -8748,12 +8613,12 @@ func (c *ClientMyOrganizationThirdPartyClientAccessConfiguration) String() strin
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configuration for OIDC backchannel logout initiators
 var (
 	clientOidcBackchannelLogoutInitiatorsFieldMode               = big.NewInt(1 << 0)
 	clientOidcBackchannelLogoutInitiatorsFieldSelectedInitiators = big.NewInt(1 << 1)
 )
 
-// Configuration for OIDC backchannel logout initiators
 type ClientOidcBackchannelLogoutInitiators struct {
 	Mode               *ClientOidcBackchannelLogoutInitiatorsModeEnum `json:"mode,omitempty" url:"mode,omitempty"`
 	SelectedInitiators []ClientOidcBackchannelLogoutInitiatorsEnum    `json:"selected_initiators,omitempty" url:"selected_initiators,omitempty"`
@@ -8788,12 +8653,10 @@ func (c *ClientOidcBackchannelLogoutInitiators) GetExtraProperties() map[string]
 }
 
 func (c *ClientOidcBackchannelLogoutInitiators) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMode sets the Mode field and marks it as non-optional;
@@ -8926,11 +8789,11 @@ func (c ClientOidcBackchannelLogoutInitiatorsModeEnum) Ptr() *ClientOidcBackchan
 	return &c
 }
 
+// Controls whether session metadata is included in the logout token. Default value is null.
 var (
 	clientOidcBackchannelLogoutSessionMetadataFieldInclude = big.NewInt(1 << 0)
 )
 
-// Controls whether session metadata is included in the logout token. Default value is null.
 type ClientOidcBackchannelLogoutSessionMetadata struct {
 	// The `include` property determines whether session metadata is included in the logout token.
 	Include *bool `json:"include,omitempty" url:"include,omitempty"`
@@ -8958,12 +8821,10 @@ func (c *ClientOidcBackchannelLogoutSessionMetadata) GetExtraProperties() map[st
 }
 
 func (c *ClientOidcBackchannelLogoutSessionMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetInclude sets the Include field and marks it as non-optional;
@@ -9019,18 +8880,13 @@ func (c *ClientOidcBackchannelLogoutSessionMetadata) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configuration for OIDC backchannel logout
 var (
 	clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutURLs            = big.NewInt(1 << 0)
 	clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutInitiators      = big.NewInt(1 << 1)
 	clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutSessionMetadata = big.NewInt(1 << 2)
 )
 
-// clientOidcBackchannelLogoutSettingsNullableFields maps the wire names of ClientOidcBackchannelLogoutSettings's nullable fields (required or optional) to their field bits.
-var clientOidcBackchannelLogoutSettingsNullableFields = map[string]*big.Int{
-	"backchannel_logout_session_metadata": clientOidcBackchannelLogoutSettingsFieldBackchannelLogoutSessionMetadata,
-}
-
-// Configuration for OIDC backchannel logout
 type ClientOidcBackchannelLogoutSettings struct {
 	// Comma-separated list of URLs that are valid to call back from Auth0 for OIDC backchannel logout. Currently only one URL is allowed.
 	BackchannelLogoutURLs            []string                                    `json:"backchannel_logout_urls,omitempty" url:"backchannel_logout_urls,omitempty"`
@@ -9074,12 +8930,10 @@ func (c *ClientOidcBackchannelLogoutSettings) GetExtraProperties() map[string]in
 }
 
 func (c *ClientOidcBackchannelLogoutSettings) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetBackchannelLogoutURLs sets the BackchannelLogoutURLs field and marks it as non-optional;
@@ -9119,13 +8973,6 @@ func (c *ClientOidcBackchannelLogoutSettings) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientOidcBackchannelLogoutSettingsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -9156,13 +9003,13 @@ func (c *ClientOidcBackchannelLogoutSettings) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 var (
 	clientOidcSupportFieldIsAllowed      = big.NewInt(1 << 0)
 	clientOidcSupportFieldAllowAllScopes = big.NewInt(1 << 1)
 	clientOidcSupportFieldAllowedScopes  = big.NewInt(1 << 2)
 )
 
-// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 type ClientOidcSupport struct {
 	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
 	IsAllowed *bool `json:"is_allowed,omitempty" url:"is_allowed,omitempty"`
@@ -9208,12 +9055,10 @@ func (c *ClientOidcSupport) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientOidcSupport) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetIsAllowed sets the IsAllowed field and marks it as non-optional;
@@ -9311,13 +9156,13 @@ func (c ClientOidcSupportAllowedScopesEnum) Ptr() *ClientOidcSupportAllowedScope
 	return &c
 }
 
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 var (
 	clientOidcSupportPatchFieldIsAllowed      = big.NewInt(1 << 0)
 	clientOidcSupportPatchFieldAllowAllScopes = big.NewInt(1 << 1)
 	clientOidcSupportPatchFieldAllowedScopes  = big.NewInt(1 << 2)
 )
 
-// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 type ClientOidcSupportPatch struct {
 	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
 	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
@@ -9362,12 +9207,10 @@ func (c *ClientOidcSupportPatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientOidcSupportPatch) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetIsAllowed sets the IsAllowed field and marks it as non-optional;
@@ -9433,13 +9276,13 @@ func (c *ClientOidcSupportPatch) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 var (
 	clientOidcSupportPostFieldIsAllowed      = big.NewInt(1 << 0)
 	clientOidcSupportPostFieldAllowAllScopes = big.NewInt(1 << 1)
 	clientOidcSupportPostFieldAllowedScopes  = big.NewInt(1 << 2)
 )
 
-// Controls whether the client can receive ID tokens and use the UserInfo endpoint, and which user profile information it can request through OIDC scopes.
 type ClientOidcSupportPost struct {
 	// Allows the client to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
 	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
@@ -9484,12 +9327,10 @@ func (c *ClientOidcSupportPost) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientOidcSupportPost) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetIsAllowed sets the IsAllowed field and marks it as non-optional;
@@ -9705,6 +9546,7 @@ func (c ClientRedirectionPolicyEnum) Ptr() *ClientRedirectionPolicyEnum {
 	return &c
 }
 
+// Refresh token configuration
 var (
 	clientRefreshTokenConfigurationFieldRotationType              = big.NewInt(1 << 0)
 	clientRefreshTokenConfigurationFieldExpirationType            = big.NewInt(1 << 1)
@@ -9716,12 +9558,6 @@ var (
 	clientRefreshTokenConfigurationFieldPolicies                  = big.NewInt(1 << 7)
 )
 
-// clientRefreshTokenConfigurationNullableFields maps the wire names of ClientRefreshTokenConfiguration's nullable fields (required or optional) to their field bits.
-var clientRefreshTokenConfigurationNullableFields = map[string]*big.Int{
-	"policies": clientRefreshTokenConfigurationFieldPolicies,
-}
-
-// Refresh token configuration
 type ClientRefreshTokenConfiguration struct {
 	RotationType   RefreshTokenRotationTypeEnum   `json:"rotation_type" url:"rotation_type"`
 	ExpirationType RefreshTokenExpirationTypeEnum `json:"expiration_type" url:"expiration_type"`
@@ -9809,12 +9645,10 @@ func (c *ClientRefreshTokenConfiguration) GetExtraProperties() map[string]interf
 }
 
 func (c *ClientRefreshTokenConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetRotationType sets the RotationType field and marks it as non-optional;
@@ -9885,13 +9719,6 @@ func (c *ClientRefreshTokenConfiguration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientRefreshTokenConfigurationNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -9962,12 +9789,10 @@ func (c *ClientRefreshTokenPolicy) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientRefreshTokenPolicy) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -10096,16 +9921,6 @@ var (
 	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 66)
 	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 67)
 )
-
-// clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
-var clientSearchResponseNullableFields = map[string]*big.Int{
-	"session_transfer":              clientSearchResponseFieldSessionTransfer,
-	"refresh_token":                 clientSearchResponseFieldRefreshToken,
-	"default_organization":          clientSearchResponseFieldDefaultOrganization,
-	"client_authentication_methods": clientSearchResponseFieldClientAuthenticationMethods,
-	"compliance_level":              clientSearchResponseFieldComplianceLevel,
-	"par_request_expiry":            clientSearchResponseFieldParRequestExpiry,
-}
 
 type ClientSearchResponse struct {
 	// ID of this client.
@@ -10707,12 +10522,10 @@ func (c *ClientSearchResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientSearchResponse) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -11211,13 +11024,6 @@ func (c *ClientSearchResponse) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientSearchResponseNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -11274,6 +11080,7 @@ func (c ClientSessionTransferAllowedAuthenticationMethodsEnum) Ptr() *ClientSess
 	return &c
 }
 
+// Native to Web SSO Configuration
 var (
 	clientSessionTransferConfigurationFieldCanCreateSessionTransferToken = big.NewInt(1 << 0)
 	clientSessionTransferConfigurationFieldEnforceCascadeRevocation      = big.NewInt(1 << 1)
@@ -11284,13 +11091,6 @@ var (
 	clientSessionTransferConfigurationFieldDelegation                    = big.NewInt(1 << 6)
 )
 
-// clientSessionTransferConfigurationNullableFields maps the wire names of ClientSessionTransferConfiguration's nullable fields (required or optional) to their field bits.
-var clientSessionTransferConfigurationNullableFields = map[string]*big.Int{
-	"allowed_authentication_methods": clientSessionTransferConfigurationFieldAllowedAuthenticationMethods,
-	"delegation":                     clientSessionTransferConfigurationFieldDelegation,
-}
-
-// Native to Web SSO Configuration
 type ClientSessionTransferConfiguration struct {
 	// Indicates whether an app can issue a Session Transfer Token through Token Exchange. If set to 'false', the app will not be able to issue a Session Transfer Token. Usually configured in the native application. Default value is `false`.
 	CanCreateSessionTransferToken *bool `json:"can_create_session_transfer_token,omitempty" url:"can_create_session_transfer_token,omitempty"`
@@ -11369,12 +11169,10 @@ func (c *ClientSessionTransferConfiguration) GetExtraProperties() map[string]int
 }
 
 func (c *ClientSessionTransferConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCanCreateSessionTransferToken sets the CanCreateSessionTransferToken field and marks it as non-optional;
@@ -11438,13 +11236,6 @@ func (c *ClientSessionTransferConfiguration) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientSessionTransferConfigurationNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -11475,12 +11266,12 @@ func (c *ClientSessionTransferConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configuration for delegation (impersonation) access using Session Transfer Tokens
 var (
 	clientSessionTransferDelegationConfigurationFieldAllowDelegatedAccess = big.NewInt(1 << 0)
 	clientSessionTransferDelegationConfigurationFieldEnforceDeviceBinding = big.NewInt(1 << 1)
 )
 
-// Configuration for delegation (impersonation) access using Session Transfer Tokens
 type ClientSessionTransferDelegationConfiguration struct {
 	// Indicates whether delegation (impersonation) access is allowed using Session Transfer Tokens. Default value is `false`.
 	AllowDelegatedAccess *bool                                             `json:"allow_delegated_access,omitempty" url:"allow_delegated_access,omitempty"`
@@ -11515,12 +11306,10 @@ func (c *ClientSessionTransferDelegationConfiguration) GetExtraProperties() map[
 }
 
 func (c *ClientSessionTransferDelegationConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAllowDelegatedAccess sets the AllowDelegatedAccess field and marks it as non-optional;
@@ -11625,12 +11414,12 @@ func (c ClientSessionTransferDeviceBindingEnum) Ptr() *ClientSessionTransferDevi
 	return &c
 }
 
+// JWT-secured Authorization Requests (JAR) settings.
 var (
 	clientSignedRequestObjectWithCredentialIDFieldRequired    = big.NewInt(1 << 0)
 	clientSignedRequestObjectWithCredentialIDFieldCredentials = big.NewInt(1 << 1)
 )
 
-// JWT-secured Authorization Requests (JAR) settings.
 type ClientSignedRequestObjectWithCredentialID struct {
 	// Indicates whether the JAR requests are mandatory
 	Required    *bool           `json:"required,omitempty" url:"required,omitempty"`
@@ -11665,12 +11454,10 @@ func (c *ClientSignedRequestObjectWithCredentialID) GetExtraProperties() map[str
 }
 
 func (c *ClientSignedRequestObjectWithCredentialID) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetRequired sets the Required field and marks it as non-optional;
@@ -11729,12 +11516,12 @@ func (c *ClientSignedRequestObjectWithCredentialID) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// JWT-secured Authorization Requests (JAR) settings.
 var (
 	clientSignedRequestObjectWithPublicKeyFieldRequired    = big.NewInt(1 << 0)
 	clientSignedRequestObjectWithPublicKeyFieldCredentials = big.NewInt(1 << 1)
 )
 
-// JWT-secured Authorization Requests (JAR) settings.
 type ClientSignedRequestObjectWithPublicKey struct {
 	// Indicates whether the JAR requests are mandatory
 	Required    *bool                  `json:"required,omitempty" url:"required,omitempty"`
@@ -11769,12 +11556,10 @@ func (c *ClientSignedRequestObjectWithPublicKey) GetExtraProperties() map[string
 }
 
 func (c *ClientSignedRequestObjectWithPublicKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetRequired sets the Required field and marks it as non-optional;
@@ -11884,12 +11669,10 @@ func (c *ClientSigningKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientSigningKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPkcs7 sets the Pkcs7 field and marks it as non-optional;
@@ -12060,11 +11843,11 @@ func (c ClientTokenEndpointAuthMethodOrNullEnum) Ptr() *ClientTokenEndpointAuthM
 	return &c
 }
 
+// Configuration for token exchange.
 var (
 	clientTokenExchangeConfigurationFieldAllowAnyProfileOfType = big.NewInt(1 << 0)
 )
 
-// Configuration for token exchange.
 type ClientTokenExchangeConfiguration struct {
 	// List the enabled token exchange types for this client.
 	AllowAnyProfileOfType []ClientTokenExchangeTypeEnum `json:"allow_any_profile_of_type,omitempty" url:"allow_any_profile_of_type,omitempty"`
@@ -12091,12 +11874,10 @@ func (c *ClientTokenExchangeConfiguration) GetExtraProperties() map[string]inter
 }
 
 func (c *ClientTokenExchangeConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAllowAnyProfileOfType sets the AllowAnyProfileOfType field and marks it as non-optional;
@@ -12148,11 +11929,11 @@ func (c *ClientTokenExchangeConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configuration for token exchange.
 var (
 	clientTokenExchangeConfigurationOrNullFieldAllowAnyProfileOfType = big.NewInt(1 << 0)
 )
 
-// Configuration for token exchange.
 type ClientTokenExchangeConfigurationOrNull struct {
 	// List the enabled token exchange types for this client.
 	AllowAnyProfileOfType []ClientTokenExchangeTypeEnum `json:"allow_any_profile_of_type,omitempty" url:"allow_any_profile_of_type,omitempty"`
@@ -12179,12 +11960,10 @@ func (c *ClientTokenExchangeConfigurationOrNull) GetExtraProperties() map[string
 }
 
 func (c *ClientTokenExchangeConfigurationOrNull) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAllowAnyProfileOfType sets the AllowAnyProfileOfType field and marks it as non-optional;
@@ -12259,13 +12038,13 @@ func (c ClientTokenExchangeTypeEnum) Ptr() *ClientTokenExchangeTypeEnum {
 	return &c
 }
 
+// Settings for Token Vault Privileged Access.
 var (
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldCredentials = big.NewInt(1 << 0)
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldIPAllowlist = big.NewInt(1 << 1)
 	clientTokenVaultPrivilegedAccessWithCredentialIDFieldGrants      = big.NewInt(1 << 2)
 )
 
-// Settings for Token Vault Privileged Access.
 type ClientTokenVaultPrivilegedAccessWithCredentialID struct {
 	Credentials []*CredentialID                              `json:"credentials" url:"credentials"`
 	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
@@ -12307,12 +12086,10 @@ func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) GetExtraProperties() 
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -12378,13 +12155,13 @@ func (c *ClientTokenVaultPrivilegedAccessWithCredentialID) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Settings for Token Vault Privileged Access.
 var (
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldCredentials = big.NewInt(1 << 0)
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldIPAllowlist = big.NewInt(1 << 1)
 	clientTokenVaultPrivilegedAccessWithPublicKeyFieldGrants      = big.NewInt(1 << 2)
 )
 
-// Settings for Token Vault Privileged Access.
 type ClientTokenVaultPrivilegedAccessWithPublicKey struct {
 	Credentials []*PublicKeyCredential                       `json:"credentials" url:"credentials"`
 	IPAllowlist []TokenVaultPrivilegedAccessIPAllowlistEntry `json:"ip_allowlist,omitempty" url:"ip_allowlist,omitempty"`
@@ -12426,12 +12203,10 @@ func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) GetExtraProperties() map
 }
 
 func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -12497,11 +12272,11 @@ func (c *ClientTokenVaultPrivilegedAccessWithPublicKey) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Anonymous sessions configuration for this client.
 var (
 	createAnonymousSessionsFieldActive = big.NewInt(1 << 0)
 )
 
-// Anonymous sessions configuration for this client.
 type CreateAnonymousSessions struct {
 	// If set to true, this client is allowed to create anonymous sessions.
 	Active bool `json:"active" url:"active"`
@@ -12528,12 +12303,10 @@ func (c *CreateAnonymousSessions) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateAnonymousSessions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -12585,11 +12358,11 @@ func (c *CreateAnonymousSessions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 var (
 	createClientAuthenticationMethodSelfSignedTLSClientAuthFieldCredentials = big.NewInt(1 << 0)
 )
 
-// Defines `self_signed_tls_client_auth` client authentication method. If the property is defined, the client is configured to use mTLS authentication method utilizing self-signed certificate.
 type CreateClientAuthenticationMethodSelfSignedTLSClientAuth struct {
 	Credentials CreateClientAuthenticationMethodSelfSignedTLSClientAuthCredentials `json:"credentials" url:"credentials"`
 
@@ -12615,12 +12388,10 @@ func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) GetExtraProper
 }
 
 func (c *CreateClientAuthenticationMethodSelfSignedTLSClientAuth) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCredentials sets the Credentials field and marks it as non-optional;
@@ -12749,18 +12520,6 @@ var (
 	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
 	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
-
-// createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
-var createClientResponseContentNullableFields = map[string]*big.Int{
-	"session_transfer":              createClientResponseContentFieldSessionTransfer,
-	"signing_keys":                  createClientResponseContentFieldSigningKeys,
-	"encryption_key":                createClientResponseContentFieldEncryptionKey,
-	"refresh_token":                 createClientResponseContentFieldRefreshToken,
-	"default_organization":          createClientResponseContentFieldDefaultOrganization,
-	"client_authentication_methods": createClientResponseContentFieldClientAuthenticationMethods,
-	"compliance_level":              createClientResponseContentFieldComplianceLevel,
-	"par_request_expiry":            createClientResponseContentFieldParRequestExpiry,
-}
 
 type CreateClientResponseContent struct {
 	// ID of this client.
@@ -13395,12 +13154,10 @@ func (c *CreateClientResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (c *CreateClientResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -13927,13 +13684,6 @@ func (c *CreateClientResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, createClientResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -13968,11 +13718,11 @@ func (c *CreateClientResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configuration on the use of ID-JAGs for Cross App Access.
 var (
 	createIdentityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
 )
 
-// Configuration on the use of ID-JAGs for Cross App Access.
 type CreateIdentityAssertionAuthorizationGrant struct {
 	// If set to true, the client can exchange ID-JAGs for access tokens.
 	Active bool `json:"active" url:"active"`
@@ -13999,12 +13749,10 @@ func (c *CreateIdentityAssertionAuthorizationGrant) GetExtraProperties() map[str
 }
 
 func (c *CreateIdentityAssertionAuthorizationGrant) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -14086,12 +13834,10 @@ func (c *CredentialID) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CredentialID) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -14143,6 +13889,7 @@ func (c *CredentialID) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Application specific configuration for use with the OIN Express Configuration feature.
 var (
 	expressConfigurationFieldInitiateLoginURITemplate = big.NewInt(1 << 0)
 	expressConfigurationFieldUserAttributeProfileID   = big.NewInt(1 << 1)
@@ -14155,7 +13902,6 @@ var (
 	expressConfigurationFieldOinSubmissionID          = big.NewInt(1 << 8)
 )
 
-// Application specific configuration for use with the OIN Express Configuration feature.
 type ExpressConfiguration struct {
 	// The URI users should bookmark to log in to this application. Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
 	InitiateLoginURITemplate string `json:"initiate_login_uri_template" url:"initiate_login_uri_template"`
@@ -14254,12 +14000,10 @@ func (e *ExpressConfiguration) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *ExpressConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetInitiateLoginURITemplate sets the InitiateLoginURITemplate field and marks it as non-optional;
@@ -14367,6 +14111,7 @@ func (e *ExpressConfiguration) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+// Application specific configuration for use with the OIN Express Configuration feature.
 var (
 	expressConfigurationOrNullFieldInitiateLoginURITemplate = big.NewInt(1 << 0)
 	expressConfigurationOrNullFieldUserAttributeProfileID   = big.NewInt(1 << 1)
@@ -14379,7 +14124,6 @@ var (
 	expressConfigurationOrNullFieldOinSubmissionID          = big.NewInt(1 << 8)
 )
 
-// Application specific configuration for use with the OIN Express Configuration feature.
 type ExpressConfigurationOrNull struct {
 	// The URI users should bookmark to log in to this application. Variable substitution is permitted for the following properties: organization_name, organization_id, and connection_name.
 	InitiateLoginURITemplate string `json:"initiate_login_uri_template" url:"initiate_login_uri_template"`
@@ -14478,12 +14222,10 @@ func (e *ExpressConfigurationOrNull) GetExtraProperties() map[string]interface{}
 }
 
 func (e *ExpressConfigurationOrNull) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetInitiateLoginURITemplate sets the InitiateLoginURITemplate field and marks it as non-optional;
@@ -14591,11 +14333,11 @@ func (e *ExpressConfigurationOrNull) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+// Configure FedCM login settings for New Universal Login
 var (
 	fedCmLoginFieldGoogle = big.NewInt(1 << 0)
 )
 
-// Configure FedCM login settings for New Universal Login
 type FedCmLogin struct {
 	Google *FedCmLoginGoogle `json:"google,omitempty" url:"google,omitempty"`
 
@@ -14621,12 +14363,10 @@ func (f *FedCmLogin) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLogin) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetGoogle sets the Google field and marks it as non-optional;
@@ -14678,11 +14418,11 @@ func (f *FedCmLogin) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+// Google FedCM configuration for this client
 var (
 	fedCmLoginGoogleFieldIsEnabled = big.NewInt(1 << 0)
 )
 
-// Google FedCM configuration for this client
 type FedCmLoginGoogle struct {
 	// When true, shows the Google FedCM prompt on New Universal Login for this client
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
@@ -14709,12 +14449,10 @@ func (f *FedCmLoginGoogle) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLoginGoogle) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -14766,11 +14504,11 @@ func (f *FedCmLoginGoogle) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+// Google FedCM configuration for this client
 var (
 	fedCmLoginGooglePatchFieldIsEnabled = big.NewInt(1 << 0)
 )
 
-// Google FedCM configuration for this client
 type FedCmLoginGooglePatch struct {
 	// When true, shows the Google FedCM prompt on New Universal Login for this client
 	IsEnabled *bool `json:"is_enabled,omitempty" url:"is_enabled,omitempty"`
@@ -14797,12 +14535,10 @@ func (f *FedCmLoginGooglePatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLoginGooglePatch) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetIsEnabled sets the IsEnabled field and marks it as non-optional;
@@ -14854,16 +14590,11 @@ func (f *FedCmLoginGooglePatch) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+// Configure FedCM login settings for New Universal Login
 var (
 	fedCmLoginPatchFieldGoogle = big.NewInt(1 << 0)
 )
 
-// fedCmLoginPatchNullableFields maps the wire names of FedCmLoginPatch's nullable fields (required or optional) to their field bits.
-var fedCmLoginPatchNullableFields = map[string]*big.Int{
-	"google": fedCmLoginPatchFieldGoogle,
-}
-
-// Configure FedCM login settings for New Universal Login
 type FedCmLoginPatch struct {
 	Google *FedCmLoginGooglePatch `json:"google,omitempty" url:"google,omitempty"`
 
@@ -14889,12 +14620,10 @@ func (f *FedCmLoginPatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FedCmLoginPatch) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetGoogle sets the Google field and marks it as non-optional;
@@ -14916,13 +14645,6 @@ func (f *FedCmLoginPatch) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	f.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, fedCmLoginPatchNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		f.require(presentFields)
-	}
 	f.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -15027,18 +14749,6 @@ var (
 	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
 	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
-
-// getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
-var getClientResponseContentNullableFields = map[string]*big.Int{
-	"session_transfer":              getClientResponseContentFieldSessionTransfer,
-	"signing_keys":                  getClientResponseContentFieldSigningKeys,
-	"encryption_key":                getClientResponseContentFieldEncryptionKey,
-	"refresh_token":                 getClientResponseContentFieldRefreshToken,
-	"default_organization":          getClientResponseContentFieldDefaultOrganization,
-	"client_authentication_methods": getClientResponseContentFieldClientAuthenticationMethods,
-	"compliance_level":              getClientResponseContentFieldComplianceLevel,
-	"par_request_expiry":            getClientResponseContentFieldParRequestExpiry,
-}
 
 type GetClientResponseContent struct {
 	// ID of this client.
@@ -15673,12 +15383,10 @@ func (g *GetClientResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetClientResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -16205,13 +15913,6 @@ func (g *GetClientResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getClientResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -16246,11 +15947,11 @@ func (g *GetClientResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Configuration on the use of ID-JAGs for Cross App Access.
 var (
 	identityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
 )
 
-// Configuration on the use of ID-JAGs for Cross App Access.
 type IdentityAssertionAuthorizationGrant struct {
 	// If set to true, the client can exchange ID-JAGs for access tokens.
 	Active bool `json:"active" url:"active"`
@@ -16277,12 +15978,10 @@ func (i *IdentityAssertionAuthorizationGrant) GetExtraProperties() map[string]in
 }
 
 func (i *IdentityAssertionAuthorizationGrant) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -16334,11 +16033,11 @@ func (i *IdentityAssertionAuthorizationGrant) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
+// Configuration for linked clients in the OIN Express Configuration feature.
 var (
 	linkedClientConfigurationFieldClientID = big.NewInt(1 << 0)
 )
 
-// Configuration for linked clients in the OIN Express Configuration feature.
 type LinkedClientConfiguration struct {
 	// The ID of the linked client.
 	ClientID string `json:"client_id" url:"client_id"`
@@ -16365,12 +16064,10 @@ func (l *LinkedClientConfiguration) GetExtraProperties() map[string]interface{} 
 }
 
 func (l *LinkedClientConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -16478,12 +16175,10 @@ func (l *ListClientsOffsetPaginatedResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListClientsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -16556,13 +16251,13 @@ func (l *ListClientsOffsetPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+// Configure native social settings
 var (
 	nativeSocialLoginFieldApple    = big.NewInt(1 << 0)
 	nativeSocialLoginFieldFacebook = big.NewInt(1 << 1)
 	nativeSocialLoginFieldGoogle   = big.NewInt(1 << 2)
 )
 
-// Configure native social settings
 type NativeSocialLogin struct {
 	Apple    *NativeSocialLoginApple    `json:"apple,omitempty" url:"apple,omitempty"`
 	Facebook *NativeSocialLoginFacebook `json:"facebook,omitempty" url:"facebook,omitempty"`
@@ -16604,12 +16299,10 @@ func (n *NativeSocialLogin) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLogin) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetApple sets the Apple field and marks it as non-optional;
@@ -16675,11 +16368,11 @@ func (n *NativeSocialLogin) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the Apple connection
 var (
 	nativeSocialLoginAppleFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Native Social Login support for the Apple connection
 type NativeSocialLoginApple struct {
 	// Determine whether or not to allow signing in natively using an Apple authorization code
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -16706,12 +16399,10 @@ func (n *NativeSocialLoginApple) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLoginApple) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -16763,11 +16454,11 @@ func (n *NativeSocialLoginApple) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the Apple connection
 var (
 	nativeSocialLoginApplePatchFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Native Social Login support for the Apple connection
 type NativeSocialLoginApplePatch struct {
 	// Determine whether or not to allow signing in natively using an Apple authorization code
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -16794,12 +16485,10 @@ func (n *NativeSocialLoginApplePatch) GetExtraProperties() map[string]interface{
 }
 
 func (n *NativeSocialLoginApplePatch) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -16851,11 +16540,11 @@ func (n *NativeSocialLoginApplePatch) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the Facebook connection
 var (
 	nativeSocialLoginFacebookFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Native Social Login support for the Facebook connection
 type NativeSocialLoginFacebook struct {
 	// Determine whether or not to allow signing in natively using Facebook
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -16882,12 +16571,10 @@ func (n *NativeSocialLoginFacebook) GetExtraProperties() map[string]interface{} 
 }
 
 func (n *NativeSocialLoginFacebook) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -16939,11 +16626,11 @@ func (n *NativeSocialLoginFacebook) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the Facebook connection
 var (
 	nativeSocialLoginFacebookPatchFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Native Social Login support for the Facebook connection
 type NativeSocialLoginFacebookPatch struct {
 	// Determine whether or not to allow signing in natively using Facebook
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -16970,12 +16657,10 @@ func (n *NativeSocialLoginFacebookPatch) GetExtraProperties() map[string]interfa
 }
 
 func (n *NativeSocialLoginFacebookPatch) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -17027,11 +16712,11 @@ func (n *NativeSocialLoginFacebookPatch) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the google-oauth2 connection
 var (
 	nativeSocialLoginGoogleFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Native Social Login support for the google-oauth2 connection
 type NativeSocialLoginGoogle struct {
 	// Determine whether or not to allow signing in natively using a Google ID token
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -17058,12 +16743,10 @@ func (n *NativeSocialLoginGoogle) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLoginGoogle) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -17115,11 +16798,11 @@ func (n *NativeSocialLoginGoogle) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Native Social Login support for the google-oauth2 connection
 var (
 	nativeSocialLoginGooglePatchFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Native Social Login support for the google-oauth2 connection
 type NativeSocialLoginGooglePatch struct {
 	// Determine whether or not to allow signing in natively using a Google ID token
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -17146,12 +16829,10 @@ func (n *NativeSocialLoginGooglePatch) GetExtraProperties() map[string]interface
 }
 
 func (n *NativeSocialLoginGooglePatch) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -17203,20 +16884,13 @@ func (n *NativeSocialLoginGooglePatch) String() string {
 	return fmt.Sprintf("%#v", n)
 }
 
+// Configure native social settings
 var (
 	nativeSocialLoginPatchFieldApple    = big.NewInt(1 << 0)
 	nativeSocialLoginPatchFieldFacebook = big.NewInt(1 << 1)
 	nativeSocialLoginPatchFieldGoogle   = big.NewInt(1 << 2)
 )
 
-// nativeSocialLoginPatchNullableFields maps the wire names of NativeSocialLoginPatch's nullable fields (required or optional) to their field bits.
-var nativeSocialLoginPatchNullableFields = map[string]*big.Int{
-	"apple":    nativeSocialLoginPatchFieldApple,
-	"facebook": nativeSocialLoginPatchFieldFacebook,
-	"google":   nativeSocialLoginPatchFieldGoogle,
-}
-
-// Configure native social settings
 type NativeSocialLoginPatch struct {
 	Apple    *NativeSocialLoginApplePatch    `json:"apple,omitempty" url:"apple,omitempty"`
 	Facebook *NativeSocialLoginFacebookPatch `json:"facebook,omitempty" url:"facebook,omitempty"`
@@ -17258,12 +16932,10 @@ func (n *NativeSocialLoginPatch) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NativeSocialLoginPatch) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetApple sets the Apple field and marks it as non-optional;
@@ -17299,13 +16971,6 @@ func (n *NativeSocialLoginPatch) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	n.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, nativeSocialLoginPatchNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		n.require(presentFields)
-	}
 	n.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -17404,12 +17069,10 @@ func (p *PreviewCimdMetadataResponseContent) GetExtraProperties() map[string]int
 }
 
 func (p *PreviewCimdMetadataResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -17581,12 +17244,10 @@ func (p *PublicKeyCredential) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PublicKeyCredential) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;
@@ -17754,13 +17415,13 @@ func (r RefreshTokenRotationTypeEnum) Ptr() *RefreshTokenRotationTypeEnum {
 	return &r
 }
 
+// Response after successfully registering or updating a CIMD client
 var (
 	registerCimdClientResponseContentFieldClientID     = big.NewInt(1 << 0)
 	registerCimdClientResponseContentFieldMappedFields = big.NewInt(1 << 1)
 	registerCimdClientResponseContentFieldValidation   = big.NewInt(1 << 2)
 )
 
-// Response after successfully registering or updating a CIMD client
 type RegisterCimdClientResponseContent struct {
 	// The Auth0 client_id of the created or updated client
 	ClientID     string                  `json:"client_id" url:"client_id"`
@@ -17804,12 +17465,10 @@ func (r *RegisterCimdClientResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (r *RegisterCimdClientResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -17953,18 +17612,6 @@ var (
 	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
 	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
-
-// rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
-var rotateClientSecretResponseContentNullableFields = map[string]*big.Int{
-	"session_transfer":              rotateClientSecretResponseContentFieldSessionTransfer,
-	"signing_keys":                  rotateClientSecretResponseContentFieldSigningKeys,
-	"encryption_key":                rotateClientSecretResponseContentFieldEncryptionKey,
-	"refresh_token":                 rotateClientSecretResponseContentFieldRefreshToken,
-	"default_organization":          rotateClientSecretResponseContentFieldDefaultOrganization,
-	"client_authentication_methods": rotateClientSecretResponseContentFieldClientAuthenticationMethods,
-	"compliance_level":              rotateClientSecretResponseContentFieldComplianceLevel,
-	"par_request_expiry":            rotateClientSecretResponseContentFieldParRequestExpiry,
-}
 
 type RotateClientSecretResponseContent struct {
 	// ID of this client.
@@ -18599,12 +18246,10 @@ func (r *RotateClientSecretResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (r *RotateClientSecretResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -19131,13 +18776,6 @@ func (r *RotateClientSecretResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, rotateClientSecretResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		r.require(presentFields)
-	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -19212,12 +18850,10 @@ func (s *SearchClientsResponseContent) GetExtraProperties() map[string]interface
 }
 
 func (s *SearchClientsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetClients sets the Clients field and marks it as non-optional;
@@ -19314,12 +18950,10 @@ func (t *TokenVaultPrivilegedAccessGrant) GetExtraProperties() map[string]interf
 }
 
 func (t *TokenVaultPrivilegedAccessGrant) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -19380,11 +19014,11 @@ func (t *TokenVaultPrivilegedAccessGrant) String() string {
 
 type TokenVaultPrivilegedAccessIPAllowlistEntry = string
 
+// Anonymous sessions configuration for this client.
 var (
 	updateAnonymousSessionsFieldActive = big.NewInt(1 << 0)
 )
 
-// Anonymous sessions configuration for this client.
 type UpdateAnonymousSessions struct {
 	// If set to true, this client is allowed to create anonymous sessions.
 	Active bool `json:"active" url:"active"`
@@ -19411,12 +19045,10 @@ func (u *UpdateAnonymousSessions) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateAnonymousSessions) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -19542,18 +19174,6 @@ var (
 	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
 	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
 )
-
-// updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
-var updateClientResponseContentNullableFields = map[string]*big.Int{
-	"session_transfer":              updateClientResponseContentFieldSessionTransfer,
-	"signing_keys":                  updateClientResponseContentFieldSigningKeys,
-	"encryption_key":                updateClientResponseContentFieldEncryptionKey,
-	"refresh_token":                 updateClientResponseContentFieldRefreshToken,
-	"default_organization":          updateClientResponseContentFieldDefaultOrganization,
-	"client_authentication_methods": updateClientResponseContentFieldClientAuthenticationMethods,
-	"compliance_level":              updateClientResponseContentFieldComplianceLevel,
-	"par_request_expiry":            updateClientResponseContentFieldParRequestExpiry,
-}
 
 type UpdateClientResponseContent struct {
 	// ID of this client.
@@ -20188,12 +19808,10 @@ func (u *UpdateClientResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (u *UpdateClientResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -20720,13 +20338,6 @@ func (u *UpdateClientResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateClientResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -20761,11 +20372,11 @@ func (u *UpdateClientResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Configuration on the use of ID-JAGs for Cross App Access.
 var (
 	updateIdentityAssertionAuthorizationGrantFieldActive = big.NewInt(1 << 0)
 )
 
-// Configuration on the use of ID-JAGs for Cross App Access.
 type UpdateIdentityAssertionAuthorizationGrant struct {
 	// If set to true, the client can exchange ID-JAGs for access tokens.
 	Active bool `json:"active" url:"active"`
@@ -20792,12 +20403,10 @@ func (u *UpdateIdentityAssertionAuthorizationGrant) GetExtraProperties() map[str
 }
 
 func (u *UpdateIdentityAssertionAuthorizationGrant) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -20898,12 +20507,10 @@ func (x *X509CertificateCredential) GetExtraProperties() map[string]interface{} 
 }
 
 func (x *X509CertificateCredential) require(field *big.Int) {
-	next := new(big.Int)
-	if x.explicitFields != nil {
-		next.Set(x.explicitFields)
+	if x.explicitFields == nil {
+		x.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	x.explicitFields = next
+	x.explicitFields.Or(x.explicitFields, field)
 }
 
 // SetCredentialType sets the CredentialType field and marks it as non-optional;

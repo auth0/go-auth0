@@ -101,43 +101,6 @@ func NewClient(options *core.RequestOptions) *Client {
 // Use the `q` query parameter to match users with [query string syntax](https://auth0.com/docs/manage-users/user-search/user-search-query-syntax). For full instructions and guidance, see [How to List and Search Users](https://auth0.com/docs/manage-users/user-search/list-and-search-users).
 //
 // For efficient queries, prefer indexed top-level fields and exact matches. Certain kinds of queries can be slow and may time out, such as filtering on freeform or multi-value fields (like user-defined attributes in `app_metadata` or `user_metadata`) or using leading wildcards.
-//
-// Example:
-//
-//	request := &management.ListUsersRequestParameters{
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	    Sort: management.String(
-//	        "sort",
-//	    ),
-//	    Connection: management.String(
-//	        "connection",
-//	    ),
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	    Q: management.String(
-//	        "q",
-//	    ),
-//	    SearchEngine: management.SearchEngineVersionsEnumV1.Ptr(),
-//	    PrimaryOrder: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Users.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListUsersRequestParameters,
@@ -214,16 +177,6 @@ func (c *Client) List(
 // Create a new user for a given [database](https://auth0.com/docs/connections/database) or [passwordless](https://auth0.com/docs/connections/passwordless) connection.
 //
 // Note: `connection` is required but other parameters such as `email` and `password` are dependent upon the type of connection.
-//
-// Example:
-//
-//	request := &management.CreateUserRequestContent{
-//	    Connection: "connection",
-//	}
-//	client.Users.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateUserRequestContent,
@@ -245,22 +198,6 @@ func (c *Client) Create(
 // For example, if you register a user as JohnSmith@example.com, Auth0 saves the user's email as johnsmith@example.com.
 //
 // Therefore, when using this endpoint, make sure that you are searching for users via email addresses using the correct case.
-//
-// Example:
-//
-//	request := &management.ListUsersByEmailRequestParameters{
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	    Email: "email",
-//	}
-//	client.Users.ListUsersByEmail(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) ListUsersByEmail(
 	ctx context.Context,
 	request *management.ListUsersByEmailRequestParameters,
@@ -278,22 +215,6 @@ func (c *Client) ListUsersByEmail(
 }
 
 // Retrieve user details. A list of fields to include or exclude may also be specified. For more information, see [Retrieve Users with the Get Users Endpoint](https://auth0.com/docs/manage-users/user-search/retrieve-users-with-get-users-endpoint).
-//
-// Example:
-//
-//	request := &management.GetUserRequestParameters{
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Users.Get(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the user to retrieve.
@@ -314,13 +235,6 @@ func (c *Client) Get(
 }
 
 // Delete a user by user ID. This action cannot be undone. For Auth0 Dashboard instructions, see [Delete Users](https://auth0.com/docs/manage-users/user-accounts/delete-users).
-//
-// Example:
-//
-//	client.Users.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the user to delete.
@@ -435,15 +349,6 @@ func (c *Client) Delete(
 //	}
 //
 // ```
-//
-// Example:
-//
-//	request := &management.UpdateUserRequestContent{}
-//	client.Users.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the user to update.
@@ -464,13 +369,6 @@ func (c *Client) Update(
 }
 
 // Retrieve all consent signing keys registered for a user. Returns an empty `keys` array when the user has no keys registered.
-//
-// Example:
-//
-//	client.Users.ListConsentSigningKeys(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) ListConsentSigningKeys(
 	ctx context.Context,
 	// The ID of the user.
@@ -489,14 +387,6 @@ func (c *Client) ListConsentSigningKeys(
 }
 
 // Retrieve a single consent signing key for a user by its key identifier (kid). Returns 404 if the key does not exist.
-//
-// Example:
-//
-//	client.Users.GetConsentSigningKey(
-//	    context.TODO(),
-//	    "id",
-//	    "kid",
-//	)
 func (c *Client) GetConsentSigningKey(
 	ctx context.Context,
 	// The ID of the user.
@@ -518,14 +408,6 @@ func (c *Client) GetConsentSigningKey(
 }
 
 // Remove a single consent signing key for a user by its key identifier (kid). The operation is idempotent and returns 204 whether or not the key existed.
-//
-// Example:
-//
-//	client.Users.DeleteConsentSigningKey(
-//	    context.TODO(),
-//	    "id",
-//	    "kid",
-//	)
 func (c *Client) DeleteConsentSigningKey(
 	ctx context.Context,
 	// The ID of the user.
@@ -547,13 +429,6 @@ func (c *Client) DeleteConsentSigningKey(
 }
 
 // Remove an existing multi-factor authentication (MFA) [recovery code](https://auth0.com/docs/secure/multi-factor-authentication/reset-user-mfa) and generate a new one. If a user cannot access the original device or account used for MFA enrollment, they can use a recovery code to authenticate.
-//
-// Example:
-//
-//	client.Users.RegenerateRecoveryCode(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) RegenerateRecoveryCode(
 	ctx context.Context,
 	// ID of the user to regenerate a multi-factor authentication recovery code for.
@@ -572,15 +447,6 @@ func (c *Client) RegenerateRecoveryCode(
 }
 
 // Revokes selected resources related to a user (sessions, refresh tokens, ...).
-//
-// Example:
-//
-//	request := &management.RevokeUserAccessRequestContent{}
-//	client.Users.RevokeAccess(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) RevokeAccess(
 	ctx context.Context,
 	// ID of the user.

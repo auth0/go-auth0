@@ -97,12 +97,10 @@ func (c *CreateRateLimitPolicyResponseContent) GetExtraProperties() map[string]i
 }
 
 func (c *CreateRateLimitPolicyResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -295,12 +293,10 @@ func (g *GetRateLimitPolicyResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (g *GetRateLimitPolicyResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -445,12 +441,10 @@ func (l *ListRateLimitPoliciesPaginatedResponseContent) GetExtraProperties() map
 }
 
 func (l *ListRateLimitPoliciesPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetRateLimitPolicies sets the RateLimitPolicies field and marks it as non-optional;
@@ -539,54 +533,6 @@ func (p *PatchRateLimitPolicyConfigurationRequestContent) GetPatchRateLimitPolic
 }
 
 func (p *PatchRateLimitPolicyConfigurationRequestContent) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"action"}, []string{"action"}) {
-		valuePatchRateLimitPolicyConfigurationRequestContentZero := new(PatchRateLimitPolicyConfigurationRequestContentZero)
-		if err := json.Unmarshal(data, &valuePatchRateLimitPolicyConfigurationRequestContentZero); err == nil {
-			p.typ = "PatchRateLimitPolicyConfigurationRequestContentZero"
-			p.PatchRateLimitPolicyConfigurationRequestContentZero = valuePatchRateLimitPolicyConfigurationRequestContentZero
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"action", "limit"}, []string{"action", "limit"}) {
-		valuePatchRateLimitPolicyConfigurationRequestContentOne := new(PatchRateLimitPolicyConfigurationRequestContentOne)
-		if err := json.Unmarshal(data, &valuePatchRateLimitPolicyConfigurationRequestContentOne); err == nil {
-			p.typ = "PatchRateLimitPolicyConfigurationRequestContentOne"
-			p.PatchRateLimitPolicyConfigurationRequestContentOne = valuePatchRateLimitPolicyConfigurationRequestContentOne
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"action", "limit", "redirect_uri"}, []string{"action", "limit", "redirect_uri"}) {
-		valuePatchRateLimitPolicyConfigurationRequestContentAction := new(PatchRateLimitPolicyConfigurationRequestContentAction)
-		if err := json.Unmarshal(data, &valuePatchRateLimitPolicyConfigurationRequestContentAction); err == nil {
-			p.typ = "PatchRateLimitPolicyConfigurationRequestContentAction"
-			p.PatchRateLimitPolicyConfigurationRequestContentAction = valuePatchRateLimitPolicyConfigurationRequestContentAction
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"action"}) {
-		valuePatchRateLimitPolicyConfigurationRequestContentZero := new(PatchRateLimitPolicyConfigurationRequestContentZero)
-		if err := json.Unmarshal(data, &valuePatchRateLimitPolicyConfigurationRequestContentZero); err == nil {
-			p.typ = "PatchRateLimitPolicyConfigurationRequestContentZero"
-			p.PatchRateLimitPolicyConfigurationRequestContentZero = valuePatchRateLimitPolicyConfigurationRequestContentZero
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"action", "limit"}) {
-		valuePatchRateLimitPolicyConfigurationRequestContentOne := new(PatchRateLimitPolicyConfigurationRequestContentOne)
-		if err := json.Unmarshal(data, &valuePatchRateLimitPolicyConfigurationRequestContentOne); err == nil {
-			p.typ = "PatchRateLimitPolicyConfigurationRequestContentOne"
-			p.PatchRateLimitPolicyConfigurationRequestContentOne = valuePatchRateLimitPolicyConfigurationRequestContentOne
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"action", "limit", "redirect_uri"}) {
-		valuePatchRateLimitPolicyConfigurationRequestContentAction := new(PatchRateLimitPolicyConfigurationRequestContentAction)
-		if err := json.Unmarshal(data, &valuePatchRateLimitPolicyConfigurationRequestContentAction); err == nil {
-			p.typ = "PatchRateLimitPolicyConfigurationRequestContentAction"
-			p.PatchRateLimitPolicyConfigurationRequestContentAction = valuePatchRateLimitPolicyConfigurationRequestContentAction
-			return nil
-		}
-	}
 	valuePatchRateLimitPolicyConfigurationRequestContentZero := new(PatchRateLimitPolicyConfigurationRequestContentZero)
 	if err := json.Unmarshal(data, &valuePatchRateLimitPolicyConfigurationRequestContentZero); err == nil {
 		p.typ = "PatchRateLimitPolicyConfigurationRequestContentZero"
@@ -690,12 +636,10 @@ func (p *PatchRateLimitPolicyConfigurationRequestContentAction) GetExtraProperti
 }
 
 func (p *PatchRateLimitPolicyConfigurationRequestContentAction) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetAction sets the Action field and marks it as non-optional;
@@ -821,12 +765,10 @@ func (p *PatchRateLimitPolicyConfigurationRequestContentOne) GetExtraProperties(
 }
 
 func (p *PatchRateLimitPolicyConfigurationRequestContentOne) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetAction sets the Action field and marks it as non-optional;
@@ -938,12 +880,10 @@ func (p *PatchRateLimitPolicyConfigurationRequestContentZero) GetExtraProperties
 }
 
 func (p *PatchRateLimitPolicyConfigurationRequestContentZero) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetAction sets the Action field and marks it as non-optional;
@@ -1102,12 +1042,10 @@ func (r *RateLimitPolicy) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RateLimitPolicy) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1244,54 +1182,6 @@ func (r *RateLimitPolicyConfiguration) GetRateLimitPolicyConfigurationAction() *
 }
 
 func (r *RateLimitPolicyConfiguration) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"action"}, []string{"action"}) {
-		valueRateLimitPolicyConfigurationZero := new(RateLimitPolicyConfigurationZero)
-		if err := json.Unmarshal(data, &valueRateLimitPolicyConfigurationZero); err == nil {
-			r.typ = "RateLimitPolicyConfigurationZero"
-			r.RateLimitPolicyConfigurationZero = valueRateLimitPolicyConfigurationZero
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"action", "limit"}, []string{"action", "limit"}) {
-		valueRateLimitPolicyConfigurationOne := new(RateLimitPolicyConfigurationOne)
-		if err := json.Unmarshal(data, &valueRateLimitPolicyConfigurationOne); err == nil {
-			r.typ = "RateLimitPolicyConfigurationOne"
-			r.RateLimitPolicyConfigurationOne = valueRateLimitPolicyConfigurationOne
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"action", "limit", "redirect_uri"}, []string{"action", "limit", "redirect_uri"}) {
-		valueRateLimitPolicyConfigurationAction := new(RateLimitPolicyConfigurationAction)
-		if err := json.Unmarshal(data, &valueRateLimitPolicyConfigurationAction); err == nil {
-			r.typ = "RateLimitPolicyConfigurationAction"
-			r.RateLimitPolicyConfigurationAction = valueRateLimitPolicyConfigurationAction
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"action"}) {
-		valueRateLimitPolicyConfigurationZero := new(RateLimitPolicyConfigurationZero)
-		if err := json.Unmarshal(data, &valueRateLimitPolicyConfigurationZero); err == nil {
-			r.typ = "RateLimitPolicyConfigurationZero"
-			r.RateLimitPolicyConfigurationZero = valueRateLimitPolicyConfigurationZero
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"action", "limit"}) {
-		valueRateLimitPolicyConfigurationOne := new(RateLimitPolicyConfigurationOne)
-		if err := json.Unmarshal(data, &valueRateLimitPolicyConfigurationOne); err == nil {
-			r.typ = "RateLimitPolicyConfigurationOne"
-			r.RateLimitPolicyConfigurationOne = valueRateLimitPolicyConfigurationOne
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"action", "limit", "redirect_uri"}) {
-		valueRateLimitPolicyConfigurationAction := new(RateLimitPolicyConfigurationAction)
-		if err := json.Unmarshal(data, &valueRateLimitPolicyConfigurationAction); err == nil {
-			r.typ = "RateLimitPolicyConfigurationAction"
-			r.RateLimitPolicyConfigurationAction = valueRateLimitPolicyConfigurationAction
-			return nil
-		}
-	}
 	valueRateLimitPolicyConfigurationZero := new(RateLimitPolicyConfigurationZero)
 	if err := json.Unmarshal(data, &valueRateLimitPolicyConfigurationZero); err == nil {
 		r.typ = "RateLimitPolicyConfigurationZero"
@@ -1395,12 +1285,10 @@ func (r *RateLimitPolicyConfigurationAction) GetExtraProperties() map[string]int
 }
 
 func (r *RateLimitPolicyConfigurationAction) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetAction sets the Action field and marks it as non-optional;
@@ -1526,12 +1414,10 @@ func (r *RateLimitPolicyConfigurationOne) GetExtraProperties() map[string]interf
 }
 
 func (r *RateLimitPolicyConfigurationOne) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetAction sets the Action field and marks it as non-optional;
@@ -1643,12 +1529,10 @@ func (r *RateLimitPolicyConfigurationZero) GetExtraProperties() map[string]inter
 }
 
 func (r *RateLimitPolicyConfigurationZero) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetAction sets the Action field and marks it as non-optional;
@@ -1847,12 +1731,10 @@ func (u *UpdateRateLimitPolicyResponseContent) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateRateLimitPolicyResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

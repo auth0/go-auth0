@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Get entire jwks representation of custom signing keys.
-//
-// Example:
-//
-//	client.Keys.CustomSigning.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,20 +50,6 @@ func (c *Client) Get(
 }
 
 // Create or replace entire jwks representation of custom signing keys.
-//
-// Example:
-//
-//	request := &management.SetCustomSigningKeysRequestContent{
-//	    Keys: []*management.CustomSigningKeyJwk{
-//	        &management.CustomSigningKeyJwk{
-//	            Kty: management.CustomSigningKeyTypeEnumEc,
-//	        },
-//	    },
-//	}
-//	client.Keys.CustomSigning.Set(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Set(
 	ctx context.Context,
 	request *management.SetCustomSigningKeysRequestContent,
@@ -87,12 +67,6 @@ func (c *Client) Set(
 }
 
 // Delete entire jwks representation of custom signing keys.
-//
-// Example:
-//
-//	client.Keys.CustomSigning.Delete(
-//	    context.TODO(),
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	opts ...option.RequestOption,
