@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // TODO: Link this endpoint to relevant documentation when available.
-//
-// Example:
-//
-//	client.Guardian.Factors.Email.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,17 +50,6 @@ func (c *Client) Get(
 }
 
 // TODO: Link this endpoint to relevant documentation when available.
-//
-// Example:
-//
-//	request := &management.SetEmailFactorSettingsRequestContent{
-//	    OtpLength: 1,
-//	    OtpExpirationTime: 1,
-//	}
-//	client.Guardian.Factors.Email.Set(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Set(
 	ctx context.Context,
 	request *management.SetEmailFactorSettingsRequestContent,

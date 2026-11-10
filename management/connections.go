@@ -52,12 +52,12 @@ func (c ConnectionAssertionDecryptionAlgorithmProfileEnum) Ptr() *ConnectionAsse
 	return &c
 }
 
+// Settings for SAML assertion decryption.
 var (
 	connectionAssertionDecryptionSettingsFieldAlgorithmProfile    = big.NewInt(1 << 0)
 	connectionAssertionDecryptionSettingsFieldAlgorithmExceptions = big.NewInt(1 << 1)
 )
 
-// Settings for SAML assertion decryption.
 type ConnectionAssertionDecryptionSettings struct {
 	AlgorithmProfile ConnectionAssertionDecryptionAlgorithmProfileEnum `json:"algorithm_profile" url:"algorithm_profile"`
 	// A list of insecure algorithms to allow for SAML assertion decryption.
@@ -92,12 +92,10 @@ func (c *ConnectionAssertionDecryptionSettings) GetExtraProperties() map[string]
 }
 
 func (c *ConnectionAssertionDecryptionSettings) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAlgorithmProfile sets the AlgorithmProfile field and marks it as non-optional;
@@ -156,13 +154,13 @@ func (c *ConnectionAssertionDecryptionSettings) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Attribute configuration
 var (
 	connectionAttributesFieldEmail       = big.NewInt(1 << 0)
 	connectionAttributesFieldPhoneNumber = big.NewInt(1 << 1)
 	connectionAttributesFieldUsername    = big.NewInt(1 << 2)
 )
 
-// Attribute configuration
 type ConnectionAttributes struct {
 	Email       *EmailAttribute    `json:"email,omitempty" url:"email,omitempty"`
 	PhoneNumber *PhoneAttribute    `json:"phone_number,omitempty" url:"phone_number,omitempty"`
@@ -204,12 +202,10 @@ func (c *ConnectionAttributes) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionAttributes) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -275,6 +271,7 @@ func (c *ConnectionAttributes) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for enabling authentication methods.
 var (
 	connectionAuthenticationMethodsFieldPassword = big.NewInt(1 << 0)
 	connectionAuthenticationMethodsFieldPasskey  = big.NewInt(1 << 1)
@@ -282,7 +279,6 @@ var (
 	connectionAuthenticationMethodsFieldPhoneOtp = big.NewInt(1 << 3)
 )
 
-// Options for enabling authentication methods.
 type ConnectionAuthenticationMethods struct {
 	Password *ConnectionPasswordAuthenticationMethod `json:"password,omitempty" url:"password,omitempty"`
 	Passkey  *ConnectionPasskeyAuthenticationMethod  `json:"passkey,omitempty" url:"passkey,omitempty"`
@@ -332,12 +328,10 @@ func (c *ConnectionAuthenticationMethods) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionAuthenticationMethods) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPassword sets the Password field and marks it as non-optional;
@@ -410,6 +404,7 @@ func (c *ConnectionAuthenticationMethods) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// A map of scripts used to integrate with a custom database.
 var (
 	connectionCustomScriptsFieldLogin             = big.NewInt(1 << 0)
 	connectionCustomScriptsFieldGetUser           = big.NewInt(1 << 1)
@@ -422,7 +417,6 @@ var (
 	connectionCustomScriptsFieldChangePhoneNumber = big.NewInt(1 << 8)
 )
 
-// A map of scripts used to integrate with a custom database.
 type ConnectionCustomScripts struct {
 	Login             *string `json:"login,omitempty" url:"login,omitempty"`
 	GetUser           *string `json:"get_user,omitempty" url:"get_user,omitempty"`
@@ -513,12 +507,10 @@ func (c *ConnectionCustomScripts) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionCustomScripts) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetLogin sets the Login field and marks it as non-optional;
@@ -659,11 +651,11 @@ func (c ConnectionDpopSigningAlgEnum) Ptr() *ConnectionDpopSigningAlgEnum {
 	return &c
 }
 
+// Email OTP authentication enablement
 var (
 	connectionEmailOtpAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Email OTP authentication enablement
 type ConnectionEmailOtpAuthenticationMethod struct {
 	// Determines whether email OTP is enabled
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -690,12 +682,10 @@ func (c *ConnectionEmailOtpAuthenticationMethod) GetExtraProperties() map[string
 }
 
 func (c *ConnectionEmailOtpAuthenticationMethod) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -750,6 +740,7 @@ func (c *ConnectionEmailOtpAuthenticationMethod) String() string {
 // When true, the server uses Pushed Authorization Requests (PAR) to start the authorization transaction with the identity provider, pushing authorization parameters over back-channel HTTP and redirecting with only a request_uri.
 type ConnectionEnablePushedAuthorizationRequests = bool
 
+// Token-based authentication settings to be applied when connection is using an sms strategy.
 var (
 	connectionGatewayAuthenticationFieldMethod              = big.NewInt(1 << 0)
 	connectionGatewayAuthenticationFieldSubject             = big.NewInt(1 << 1)
@@ -758,7 +749,6 @@ var (
 	connectionGatewayAuthenticationFieldSecretBase64Encoded = big.NewInt(1 << 4)
 )
 
-// Token-based authentication settings to be applied when connection is using an sms strategy.
 type ConnectionGatewayAuthentication struct {
 	// The Authorization header type.
 	Method string `json:"method" url:"method"`
@@ -822,12 +812,10 @@ func (c *ConnectionGatewayAuthentication) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionGatewayAuthentication) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMethod sets the Method field and marks it as non-optional;
@@ -1190,12 +1178,12 @@ func (c ConnectionIdentityProviderEnum) Ptr() *ConnectionIdentityProviderEnum {
 	return &c
 }
 
+// OTP settings for a delivery channel.
 var (
 	connectionOtpChannelSettingsFieldOtpLength = big.NewInt(1 << 0)
 	connectionOtpChannelSettingsFieldOtpExpiry = big.NewInt(1 << 1)
 )
 
-// OTP settings for a delivery channel.
 type ConnectionOtpChannelSettings struct {
 	// Number of digits in the generated one-time password.
 	OtpLength *int `json:"otp_length,omitempty" url:"otp_length,omitempty"`
@@ -1231,12 +1219,10 @@ func (c *ConnectionOtpChannelSettings) GetExtraProperties() map[string]interface
 }
 
 func (c *ConnectionOtpChannelSettings) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -1295,12 +1281,12 @@ func (c *ConnectionOtpChannelSettings) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// One-time password settings, configurable per delivery channel.
 var (
 	connectionOtpSettingsFieldEmail = big.NewInt(1 << 0)
 	connectionOtpSettingsFieldPhone = big.NewInt(1 << 1)
 )
 
-// One-time password settings, configurable per delivery channel.
 type ConnectionOtpSettings struct {
 	Email *ConnectionOtpChannelSettings `json:"email,omitempty" url:"email,omitempty"`
 	Phone *ConnectionOtpChannelSettings `json:"phone,omitempty" url:"phone,omitempty"`
@@ -1334,12 +1320,10 @@ func (c *ConnectionOtpSettings) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOtpSettings) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -1398,12 +1382,12 @@ func (c *ConnectionOtpSettings) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Passkey authentication enablement
 var (
 	connectionPasskeyAuthenticationMethodFieldEnabled        = big.NewInt(1 << 0)
 	connectionPasskeyAuthenticationMethodFieldSignupBehavior = big.NewInt(1 << 1)
 )
 
-// Passkey authentication enablement
 type ConnectionPasskeyAuthenticationMethod struct {
 	// Determines whether passkeys are enabled
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -1439,12 +1423,10 @@ func (c *ConnectionPasskeyAuthenticationMethod) GetExtraProperties() map[string]
 }
 
 func (c *ConnectionPasskeyAuthenticationMethod) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -1529,13 +1511,13 @@ func (c ConnectionPasskeyChallengeUIEnum) Ptr() *ConnectionPasskeyChallengeUIEnu
 	return &c
 }
 
+// Options for the passkey authentication method
 var (
 	connectionPasskeyOptionsFieldChallengeUI                  = big.NewInt(1 << 0)
 	connectionPasskeyOptionsFieldProgressiveEnrollmentEnabled = big.NewInt(1 << 1)
 	connectionPasskeyOptionsFieldLocalEnrollmentEnabled       = big.NewInt(1 << 2)
 )
 
-// Options for the passkey authentication method
 type ConnectionPasskeyOptions struct {
 	ChallengeUI *ConnectionPasskeyChallengeUIEnum `json:"challenge_ui,omitempty" url:"challenge_ui,omitempty"`
 	// Enables or disables progressive enrollment of passkeys for the connection.
@@ -1579,12 +1561,10 @@ func (c *ConnectionPasskeyOptions) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionPasskeyOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetChallengeUI sets the ChallengeUI field and marks it as non-optional;
@@ -1650,13 +1630,13 @@ func (c *ConnectionPasskeyOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Password authentication enablement
 var (
 	connectionPasswordAuthenticationMethodFieldEnabled        = big.NewInt(1 << 0)
 	connectionPasswordAuthenticationMethodFieldAPIBehavior    = big.NewInt(1 << 1)
 	connectionPasswordAuthenticationMethodFieldSignupBehavior = big.NewInt(1 << 2)
 )
 
-// Password authentication enablement
 type ConnectionPasswordAuthenticationMethod struct {
 	// Determines whether passwords are enabled
 	Enabled        *bool                         `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -1699,12 +1679,10 @@ func (c *ConnectionPasswordAuthenticationMethod) GetExtraProperties() map[string
 }
 
 func (c *ConnectionPasswordAuthenticationMethod) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -1770,11 +1748,11 @@ func (c *ConnectionPasswordAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Password complexity options
 var (
 	connectionPasswordComplexityOptionsFieldMinLength = big.NewInt(1 << 0)
 )
 
-// Password complexity options
 type ConnectionPasswordComplexityOptions struct {
 	// Minimum password length
 	MinLength *int `json:"min_length,omitempty" url:"min_length,omitempty"`
@@ -1801,12 +1779,10 @@ func (c *ConnectionPasswordComplexityOptions) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordComplexityOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMinLength sets the MinLength field and marks it as non-optional;
@@ -1858,12 +1834,12 @@ func (c *ConnectionPasswordComplexityOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for password dictionary policy
 var (
 	connectionPasswordDictionaryOptionsFieldEnable     = big.NewInt(1 << 0)
 	connectionPasswordDictionaryOptionsFieldDictionary = big.NewInt(1 << 1)
 )
 
-// Options for password dictionary policy
 type ConnectionPasswordDictionaryOptions struct {
 	Enable bool `json:"enable" url:"enable"`
 	// Custom Password Dictionary. An array of up to 200 entries.
@@ -1898,12 +1874,10 @@ func (c *ConnectionPasswordDictionaryOptions) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordDictionaryOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnable sets the Enable field and marks it as non-optional;
@@ -1962,12 +1936,12 @@ func (c *ConnectionPasswordDictionaryOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for password history policy
 var (
 	connectionPasswordHistoryOptionsFieldEnable = big.NewInt(1 << 0)
 	connectionPasswordHistoryOptionsFieldSize   = big.NewInt(1 << 1)
 )
 
-// Options for password history policy
 type ConnectionPasswordHistoryOptions struct {
 	Enable bool `json:"enable" url:"enable"`
 	Size   *int `json:"size,omitempty" url:"size,omitempty"`
@@ -2001,12 +1975,10 @@ func (c *ConnectionPasswordHistoryOptions) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionPasswordHistoryOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnable sets the Enable field and marks it as non-optional;
@@ -2065,11 +2037,11 @@ func (c *ConnectionPasswordHistoryOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for personal info in passwords policy
 var (
 	connectionPasswordNoPersonalInfoOptionsFieldEnable = big.NewInt(1 << 0)
 )
 
-// Options for personal info in passwords policy
 type ConnectionPasswordNoPersonalInfoOptions struct {
 	Enable bool `json:"enable" url:"enable"`
 
@@ -2095,12 +2067,10 @@ func (c *ConnectionPasswordNoPersonalInfoOptions) GetExtraProperties() map[strin
 }
 
 func (c *ConnectionPasswordNoPersonalInfoOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnable sets the Enable field and marks it as non-optional;
@@ -2152,6 +2122,7 @@ func (c *ConnectionPasswordNoPersonalInfoOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Password policy options for flexible password policy configuration
 var (
 	connectionPasswordOptionsFieldComplexity  = big.NewInt(1 << 0)
 	connectionPasswordOptionsFieldDictionary  = big.NewInt(1 << 1)
@@ -2159,7 +2130,6 @@ var (
 	connectionPasswordOptionsFieldProfileData = big.NewInt(1 << 3)
 )
 
-// Password policy options for flexible password policy configuration
 type ConnectionPasswordOptions struct {
 	Complexity  *ConnectionPasswordOptionsComplexity  `json:"complexity,omitempty" url:"complexity,omitempty"`
 	Dictionary  *ConnectionPasswordOptionsDictionary  `json:"dictionary,omitempty" url:"dictionary,omitempty"`
@@ -2209,12 +2179,10 @@ func (c *ConnectionPasswordOptions) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionPasswordOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetComplexity sets the Complexity field and marks it as non-optional;
@@ -2287,6 +2255,7 @@ func (c *ConnectionPasswordOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Password complexity requirements configuration
 var (
 	connectionPasswordOptionsComplexityFieldMinLength            = big.NewInt(1 << 0)
 	connectionPasswordOptionsComplexityFieldCharacterTypes       = big.NewInt(1 << 1)
@@ -2296,7 +2265,6 @@ var (
 	connectionPasswordOptionsComplexityFieldMaxLengthExceeded    = big.NewInt(1 << 5)
 )
 
-// Password complexity requirements configuration
 type ConnectionPasswordOptionsComplexity struct {
 	// Minimum password length required (1-72 characters)
 	MinLength *int `json:"min_length,omitempty" url:"min_length,omitempty"`
@@ -2364,12 +2332,10 @@ func (c *ConnectionPasswordOptionsComplexity) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordOptionsComplexity) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMinLength sets the MinLength field and marks it as non-optional;
@@ -2456,13 +2422,13 @@ func (c *ConnectionPasswordOptionsComplexity) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Dictionary-based password restriction policy to prevent common passwords
 var (
 	connectionPasswordOptionsDictionaryFieldActive  = big.NewInt(1 << 0)
 	connectionPasswordOptionsDictionaryFieldCustom  = big.NewInt(1 << 1)
 	connectionPasswordOptionsDictionaryFieldDefault = big.NewInt(1 << 2)
 )
 
-// Dictionary-based password restriction policy to prevent common passwords
 type ConnectionPasswordOptionsDictionary struct {
 	// Enables dictionary checking to prevent use of common passwords and custom blocked words
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
@@ -2506,12 +2472,10 @@ func (c *ConnectionPasswordOptionsDictionary) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionPasswordOptionsDictionary) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -2577,12 +2541,12 @@ func (c *ConnectionPasswordOptionsDictionary) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Password history policy configuration to prevent password reuse
 var (
 	connectionPasswordOptionsHistoryFieldActive = big.NewInt(1 << 0)
 	connectionPasswordOptionsHistoryFieldSize   = big.NewInt(1 << 1)
 )
 
-// Password history policy configuration to prevent password reuse
 type ConnectionPasswordOptionsHistory struct {
 	// Enables password history checking to prevent users from reusing recent passwords
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
@@ -2618,12 +2582,10 @@ func (c *ConnectionPasswordOptionsHistory) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionPasswordOptionsHistory) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -2682,12 +2644,12 @@ func (c *ConnectionPasswordOptionsHistory) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Personal information restriction policy to prevent use of profile data in passwords
 var (
 	connectionPasswordOptionsProfileDataFieldActive        = big.NewInt(1 << 0)
 	connectionPasswordOptionsProfileDataFieldBlockedFields = big.NewInt(1 << 1)
 )
 
-// Personal information restriction policy to prevent use of profile data in passwords
 type ConnectionPasswordOptionsProfileData struct {
 	// Prevents users from including profile data (like name, email) in their passwords
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
@@ -2723,12 +2685,10 @@ func (c *ConnectionPasswordOptionsProfileData) GetExtraProperties() map[string]i
 }
 
 func (c *ConnectionPasswordOptionsProfileData) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -2819,11 +2779,11 @@ func (c ConnectionPasswordPolicyEnum) Ptr() *ConnectionPasswordPolicyEnum {
 	return &c
 }
 
+// Phone OTP authentication enablement
 var (
 	connectionPhoneOtpAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
 )
 
-// Phone OTP authentication enablement
 type ConnectionPhoneOtpAuthenticationMethod struct {
 	// Determines whether phone OTP is enabled
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -2850,12 +2810,10 @@ func (c *ConnectionPhoneOtpAuthenticationMethod) GetExtraProperties() map[string
 }
 
 func (c *ConnectionPhoneOtpAuthenticationMethod) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -2907,6 +2865,7 @@ func (c *ConnectionPhoneOtpAuthenticationMethod) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// The connection's options (depend on the connection strategy)
 var (
 	connectionPropertiesOptionsFieldValidation                         = big.NewInt(1 << 0)
 	connectionPropertiesOptionsFieldNonPersistentAttrs                 = big.NewInt(1 << 1)
@@ -2955,28 +2914,6 @@ var (
 	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
 )
 
-// connectionPropertiesOptionsNullableFields maps the wire names of ConnectionPropertiesOptions's nullable fields (required or optional) to their field bits.
-var connectionPropertiesOptionsNullableFields = map[string]*big.Int{
-	"validation":                      connectionPropertiesOptionsFieldValidation,
-	"non_persistent_attrs":            connectionPropertiesOptionsFieldNonPersistentAttrs,
-	"configuration":                   connectionPropertiesOptionsFieldConfiguration,
-	"authentication_methods":          connectionPropertiesOptionsFieldAuthenticationMethods,
-	"passkey_options":                 connectionPropertiesOptionsFieldPasskeyOptions,
-	"passwordPolicy":                  connectionPropertiesOptionsFieldPasswordPolicy,
-	"password_complexity_options":     connectionPropertiesOptionsFieldPasswordComplexityOptions,
-	"password_history":                connectionPropertiesOptionsFieldPasswordHistory,
-	"password_no_personal_info":       connectionPropertiesOptionsFieldPasswordNoPersonalInfo,
-	"password_dictionary":             connectionPropertiesOptionsFieldPasswordDictionary,
-	"upstream_params":                 connectionPropertiesOptionsFieldUpstreamParams,
-	"gateway_authentication":          connectionPropertiesOptionsFieldGatewayAuthentication,
-	"id_token_signed_response_algs":   connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs,
-	"token_endpoint_auth_method":      connectionPropertiesOptionsFieldTokenEndpointAuthMethod,
-	"token_endpoint_auth_signing_alg": connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg,
-	"discovery_url":                   connectionPropertiesOptionsFieldDiscoveryURL,
-	"oidc_metadata":                   connectionPropertiesOptionsFieldOidcMetadata,
-}
-
-// The connection's options (depend on the connection strategy)
 type ConnectionPropertiesOptions struct {
 	Validation *ConnectionValidationOptions `json:"validation,omitempty" url:"validation,omitempty"`
 	// An array of user fields that should not be stored in the Auth0 database (https://auth0.com/docs/security/data-security/denylist)
@@ -3361,12 +3298,10 @@ func (c *ConnectionPropertiesOptions) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionPropertiesOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetValidation sets the Validation field and marks it as non-optional;
@@ -3700,13 +3635,6 @@ func (c *ConnectionPropertiesOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionPropertiesOptionsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -3901,22 +3829,6 @@ func (c *ConnectionUpstreamAdditionalProperties) GetConnectionUpstreamValue() *C
 }
 
 func (c *ConnectionUpstreamAdditionalProperties) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"alias"}, []string{}) {
-		valueConnectionUpstreamAlias := new(ConnectionUpstreamAlias)
-		if err := json.Unmarshal(data, &valueConnectionUpstreamAlias); err == nil {
-			c.typ = "ConnectionUpstreamAlias"
-			c.ConnectionUpstreamAlias = valueConnectionUpstreamAlias
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"value"}, []string{}) {
-		valueConnectionUpstreamValue := new(ConnectionUpstreamValue)
-		if err := json.Unmarshal(data, &valueConnectionUpstreamValue); err == nil {
-			c.typ = "ConnectionUpstreamValue"
-			c.ConnectionUpstreamValue = valueConnectionUpstreamValue
-			return nil
-		}
-	}
 	valueConnectionUpstreamAlias := new(ConnectionUpstreamAlias)
 	if err := json.Unmarshal(data, &valueConnectionUpstreamAlias); err == nil {
 		c.typ = "ConnectionUpstreamAlias"
@@ -3986,12 +3898,10 @@ func (c *ConnectionUpstreamAlias) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionUpstreamAlias) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAlias sets the Alias field and marks it as non-optional;
@@ -4127,12 +4037,10 @@ func (c *ConnectionUpstreamValue) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionUpstreamValue) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -4225,12 +4133,10 @@ func (c *ConnectionUsernameValidationOptions) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionUsernameValidationOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMin sets the Min field and marks it as non-optional;
@@ -4289,16 +4195,11 @@ func (c *ConnectionUsernameValidationOptions) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for validation
 var (
 	connectionValidationOptionsFieldUsername = big.NewInt(1 << 0)
 )
 
-// connectionValidationOptionsNullableFields maps the wire names of ConnectionValidationOptions's nullable fields (required or optional) to their field bits.
-var connectionValidationOptionsNullableFields = map[string]*big.Int{
-	"username": connectionValidationOptionsFieldUsername,
-}
-
-// Options for validation
 type ConnectionValidationOptions struct {
 	Username *ConnectionUsernameValidationOptions `json:"username,omitempty" url:"username,omitempty"`
 
@@ -4324,12 +4225,10 @@ func (c *ConnectionValidationOptions) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionValidationOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetUsername sets the Username field and marks it as non-optional;
@@ -4351,13 +4250,6 @@ func (c *ConnectionValidationOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionValidationOptionsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -4391,6 +4283,7 @@ func (c *ConnectionValidationOptions) String() string {
 // URL of the identity provider's OIDC Discovery endpoint (/.well-known/openid-configuration). When provided and oidc_metadata is empty, Auth0 automatically retrieves the provider's configuration including endpoints and supported features. Only applicable when strategy=oidc, okta, or samlp.
 type ConnectionsDiscoveryURL = *string
 
+// Additional OIDC metadata to include in the discovery document. Only applicable when strategy=oidc, okta, or samlp.
 var (
 	connectionsOidcMetadataFieldIssuer                                     = big.NewInt(1 << 0)
 	connectionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -4433,13 +4326,6 @@ var (
 	connectionsOidcMetadataFieldDpopSigningAlgValuesSupported              = big.NewInt(1 << 38)
 )
 
-// connectionsOidcMetadataNullableFields maps the wire names of ConnectionsOidcMetadata's nullable fields (required or optional) to their field bits.
-var connectionsOidcMetadataNullableFields = map[string]*big.Int{
-	"scopes_supported":        connectionsOidcMetadataFieldScopesSupported,
-	"subject_types_supported": connectionsOidcMetadataFieldSubjectTypesSupported,
-}
-
-// Additional OIDC metadata to include in the discovery document. Only applicable when strategy=oidc, okta, or samlp.
 type ConnectionsOidcMetadata struct {
 	// The identity provider's unique issuer identifier URL (e.g., https://accounts.google.com). Must match the 'iss' claim in ID tokens from the identity provider.
 	Issuer *string `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -4809,12 +4695,10 @@ func (c *ConnectionsOidcMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionsOidcMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetIssuer sets the Issuer field and marks it as non-optional;
@@ -5106,13 +4990,6 @@ func (c *ConnectionsOidcMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionsOidcMetadataNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -5297,12 +5174,10 @@ func (c *CreateConnectionResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (c *CreateConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -5445,11 +5320,11 @@ func (c *CreateConnectionResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Cross App Access - Resource App settings that apply to this connection.
 var (
 	createCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
 )
 
-// Cross App Access - Resource App settings that apply to this connection.
 type CreateCrossAppAccessResourceApp struct {
 	Status CrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
 
@@ -5475,12 +5350,10 @@ func (c *CreateCrossAppAccessResourceApp) GetExtraProperties() map[string]interf
 }
 
 func (c *CreateCrossAppAccessResourceApp) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -5578,6 +5451,7 @@ func (d DefaultMethodPhoneNumberIdentifierEnum) Ptr() *DefaultMethodPhoneNumberI
 	return &d
 }
 
+// Configuration for the email attribute for users.
 var (
 	emailAttributeFieldIdentifier         = big.NewInt(1 << 0)
 	emailAttributeFieldUnique             = big.NewInt(1 << 1)
@@ -5586,7 +5460,6 @@ var (
 	emailAttributeFieldSignup             = big.NewInt(1 << 4)
 )
 
-// Configuration for the email attribute for users.
 type EmailAttribute struct {
 	Identifier *EmailAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if the attribute is unique in a given connection
@@ -5646,12 +5519,10 @@ func (e *EmailAttribute) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EmailAttribute) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -5770,12 +5641,10 @@ func (e *EmailAttributeIdentifier) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EmailAttributeIdentifier) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -5988,12 +5857,10 @@ func (g *GetConnectionResponseContent) GetExtraProperties() map[string]interface
 }
 
 func (g *GetConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -6175,12 +6042,10 @@ func (l *ListConnectionsCheckpointPaginatedResponseContent) GetExtraProperties()
 }
 
 func (l *ListConnectionsCheckpointPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -6382,13 +6247,13 @@ func (p PasswordSequentialCharactersPolicyEnum) Ptr() *PasswordSequentialCharact
 	return &p
 }
 
+// Configuration for the phone number attribute for users.
 var (
 	phoneAttributeFieldIdentifier      = big.NewInt(1 << 0)
 	phoneAttributeFieldProfileRequired = big.NewInt(1 << 1)
 	phoneAttributeFieldSignup          = big.NewInt(1 << 2)
 )
 
-// Configuration for the phone number attribute for users.
 type PhoneAttribute struct {
 	Identifier *PhoneAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if property should be required for users
@@ -6431,12 +6296,10 @@ func (p *PhoneAttribute) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PhoneAttribute) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -6541,12 +6404,10 @@ func (p *PhoneAttributeIdentifier) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PhoneAttributeIdentifier) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -6634,12 +6495,10 @@ func (s *SignupSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SignupSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -6745,12 +6604,10 @@ func (s *SignupVerification) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SignupVerification) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -6840,12 +6697,10 @@ func (s *SignupVerified) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SignupVerified) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -6904,6 +6759,7 @@ func (s *SignupVerified) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// The connection's options (depend on the connection strategy). To update these options, the `update:connections_options` scope must be present. To verify your changes, also include the `read:connections_options` scope. If this scope is not specified, you will not be able to review the updated object.
 var (
 	updateConnectionOptionsFieldValidation                         = big.NewInt(1 << 0)
 	updateConnectionOptionsFieldNonPersistentAttrs                 = big.NewInt(1 << 1)
@@ -6952,28 +6808,6 @@ var (
 	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
 )
 
-// updateConnectionOptionsNullableFields maps the wire names of UpdateConnectionOptions's nullable fields (required or optional) to their field bits.
-var updateConnectionOptionsNullableFields = map[string]*big.Int{
-	"validation":                      updateConnectionOptionsFieldValidation,
-	"non_persistent_attrs":            updateConnectionOptionsFieldNonPersistentAttrs,
-	"configuration":                   updateConnectionOptionsFieldConfiguration,
-	"authentication_methods":          updateConnectionOptionsFieldAuthenticationMethods,
-	"passkey_options":                 updateConnectionOptionsFieldPasskeyOptions,
-	"passwordPolicy":                  updateConnectionOptionsFieldPasswordPolicy,
-	"password_complexity_options":     updateConnectionOptionsFieldPasswordComplexityOptions,
-	"password_history":                updateConnectionOptionsFieldPasswordHistory,
-	"password_no_personal_info":       updateConnectionOptionsFieldPasswordNoPersonalInfo,
-	"password_dictionary":             updateConnectionOptionsFieldPasswordDictionary,
-	"upstream_params":                 updateConnectionOptionsFieldUpstreamParams,
-	"gateway_authentication":          updateConnectionOptionsFieldGatewayAuthentication,
-	"id_token_signed_response_algs":   updateConnectionOptionsFieldIDTokenSignedResponseAlgs,
-	"token_endpoint_auth_method":      updateConnectionOptionsFieldTokenEndpointAuthMethod,
-	"token_endpoint_auth_signing_alg": updateConnectionOptionsFieldTokenEndpointAuthSigningAlg,
-	"discovery_url":                   updateConnectionOptionsFieldDiscoveryURL,
-	"oidc_metadata":                   updateConnectionOptionsFieldOidcMetadata,
-}
-
-// The connection's options (depend on the connection strategy). To update these options, the `update:connections_options` scope must be present. To verify your changes, also include the `read:connections_options` scope. If this scope is not specified, you will not be able to review the updated object.
 type UpdateConnectionOptions struct {
 	Validation *ConnectionValidationOptions `json:"validation,omitempty" url:"validation,omitempty"`
 	// An array of user fields that should not be stored in the Auth0 database (https://auth0.com/docs/security/data-security/denylist)
@@ -7358,12 +7192,10 @@ func (u *UpdateConnectionOptions) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateConnectionOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetValidation sets the Validation field and marks it as non-optional;
@@ -7697,13 +7529,6 @@ func (u *UpdateConnectionOptions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateConnectionOptionsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -7888,12 +7713,10 @@ func (u *UpdateConnectionResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (u *UpdateConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -8036,11 +7859,11 @@ func (u *UpdateConnectionResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Cross App Access - Resource App settings that apply to this connection.
 var (
 	updateCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
 )
 
-// Cross App Access - Resource App settings that apply to this connection.
 type UpdateCrossAppAccessResourceApp struct {
 	Status CrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
 
@@ -8066,12 +7889,10 @@ func (u *UpdateCrossAppAccessResourceApp) GetExtraProperties() map[string]interf
 }
 
 func (u *UpdateCrossAppAccessResourceApp) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -8161,12 +7982,10 @@ func (u *UsernameAllowedTypes) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameAllowedTypes) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -8225,6 +8044,7 @@ func (u *UsernameAllowedTypes) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Configuration for the username attribute for users.
 var (
 	usernameAttributeFieldIdentifier      = big.NewInt(1 << 0)
 	usernameAttributeFieldProfileRequired = big.NewInt(1 << 1)
@@ -8232,7 +8052,6 @@ var (
 	usernameAttributeFieldValidation      = big.NewInt(1 << 3)
 )
 
-// Configuration for the username attribute for users.
 type UsernameAttribute struct {
 	Identifier *UsernameAttributeIdentifier `json:"identifier,omitempty" url:"identifier,omitempty"`
 	// Determines if property should be required for users
@@ -8283,12 +8102,10 @@ func (u *UsernameAttribute) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameAttribute) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetIdentifier sets the Identifier field and marks it as non-optional;
@@ -8391,12 +8208,10 @@ func (u *UsernameAttributeIdentifier) GetExtraProperties() map[string]interface{
 }
 
 func (u *UsernameAttributeIdentifier) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -8497,12 +8312,10 @@ func (u *UsernameValidation) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsernameValidation) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetMinLength sets the MinLength field and marks it as non-optional;

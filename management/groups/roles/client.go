@@ -36,22 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Lists the [roles](https://auth0.com/docs/manage-users/access-control/rbac) assigned to a group.
-//
-// Example:
-//
-//	request := &management.ListGroupRolesRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.Groups.Roles.List(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Unique identifier for the group (service-generated).
@@ -111,7 +95,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -123,19 +107,6 @@ func (c *Client) List(
 }
 
 // Assign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) to a specified group.
-//
-// Example:
-//
-//	request := &management.CreateGroupRolesRequestParameters{
-//	    Roles: []string{
-//	        "roles",
-//	    },
-//	}
-//	client.Groups.Roles.Create(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// Unique identifier for the group (service-generated).
@@ -156,19 +127,6 @@ func (c *Client) Create(
 }
 
 // Unassign one or more [roles](https://auth0.com/docs/manage-users/access-control/rbac) from a specified group.
-//
-// Example:
-//
-//	request := &management.DeleteGroupRolesRequestContent{
-//	    Roles: []string{
-//	        "roles",
-//	    },
-//	}
-//	client.Groups.Roles.Delete(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Unique identifier for the group (service-generated).

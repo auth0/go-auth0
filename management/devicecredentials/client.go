@@ -38,37 +38,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve device credential information (`public_key`, `refresh_token`, or `rotating_refresh_token`) associated with a specific user.
-//
-// Example:
-//
-//	request := &management.ListDeviceCredentialsRequestParameters{
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	    UserID: management.String(
-//	        "user_id",
-//	    ),
-//	    ClientID: management.String(
-//	        "client_id",
-//	    ),
-//	    Type: management.DeviceCredentialTypeEnumPublicKey.Ptr(),
-//	}
-//	client.DeviceCredentials.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListDeviceCredentialsRequestParameters,
@@ -145,19 +114,6 @@ func (c *Client) List(
 // Create a device credential public key to manage refresh token rotation for a given `user_id`. Device Credentials APIs are designed for ad-hoc administrative use only and paging is by default enabled for GET requests.
 //
 // When refresh token rotation is enabled, the endpoint becomes consistent. For more information, read [Signing Keys](https://auth0.com/docs/get-started/tenant-settings/signing-keys).
-//
-// Example:
-//
-//	request := &management.CreatePublicKeyDeviceCredentialRequestContent{
-//	    DeviceName: "device_name",
-//	    Type: management.DeviceCredentialPublicKeyTypeEnumPublicKey,
-//	    Value: "value",
-//	    DeviceID: "device_id",
-//	}
-//	client.DeviceCredentials.CreatePublicKey(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) CreatePublicKey(
 	ctx context.Context,
 	request *management.CreatePublicKeyDeviceCredentialRequestContent,
@@ -175,13 +131,6 @@ func (c *Client) CreatePublicKey(
 }
 
 // Permanently delete a device credential (such as a refresh token or public key) with the given ID.
-//
-// Example:
-//
-//	client.DeviceCredentials.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the credential to delete.

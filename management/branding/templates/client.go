@@ -34,11 +34,6 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Example:
-//
-//	client.Branding.Templates.GetUniversalLogin(
-//	    context.TODO(),
-//	)
 func (c *Client) GetUniversalLogin(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -81,16 +76,6 @@ func (c *Client) GetUniversalLogin(
 //
 // </html>
 // ```
-//
-// Example:
-//
-//	request := &management.UpdateUniversalLoginTemplateRequestContent{
-//	    String: "string",
-//	}
-//	client.Branding.Templates.UpdateUniversalLogin(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) UpdateUniversalLogin(
 	ctx context.Context,
 	request *management.UpdateUniversalLoginTemplateRequestContent,
@@ -107,11 +92,6 @@ func (c *Client) UpdateUniversalLogin(
 	return nil
 }
 
-// Example:
-//
-//	client.Branding.Templates.DeleteUniversalLogin(
-//	    context.TODO(),
-//	)
 func (c *Client) DeleteUniversalLogin(
 	ctx context.Context,
 	opts ...option.RequestOption,

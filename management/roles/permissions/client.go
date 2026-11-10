@@ -38,25 +38,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve detailed list (name, description, resource server) of permissions granted by a specified user role.
-//
-// Example:
-//
-//	request := &management.ListRolePermissionsRequestParameters{
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Roles.Permissions.List(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the role to list granted permissions.
@@ -136,22 +117,6 @@ func (c *Client) List(
 }
 
 // Add one or more [permissions](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/manage-permissions) to a specified user role.
-//
-// Example:
-//
-//	request := &management.AddRolePermissionsRequestContent{
-//	    Permissions: []*management.PermissionRequestPayload{
-//	        &management.PermissionRequestPayload{
-//	            ResourceServerIdentifier: "resource_server_identifier",
-//	            PermissionName: "permission_name",
-//	        },
-//	    },
-//	}
-//	client.Roles.Permissions.Add(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Add(
 	ctx context.Context,
 	// ID of the role to add permissions to.
@@ -172,22 +137,6 @@ func (c *Client) Add(
 }
 
 // Remove one or more [permissions](https://auth0.com/docs/manage-users/access-control/configure-core-rbac/manage-permissions) from a specified user role.
-//
-// Example:
-//
-//	request := &management.DeleteRolePermissionsRequestContent{
-//	    Permissions: []*management.PermissionRequestPayload{
-//	        &management.PermissionRequestPayload{
-//	            ResourceServerIdentifier: "resource_server_identifier",
-//	            PermissionName: "permission_name",
-//	        },
-//	    },
-//	}
-//	client.Roles.Permissions.Delete(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the role to remove permissions from.

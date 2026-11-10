@@ -28,27 +28,28 @@ Retrieve all actions.
 
 ```go
 request := &management.ListActionsRequestParameters{
-    TriggerID: management.ActionTriggerTypeEnumPostLogin.Ptr(),
-    ActionName: management.String(
-        "actionName",
-    ),
-    Deployed: management.Bool(
-        true,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    Installed: management.Bool(
-        true,
-    ),
-}
+        TriggerID: management.ActionTriggerTypeEnumPostLogin.Ptr(),
+        ActionName: management.String(
+            "actionName",
+        ),
+        Deployed: management.Bool(
+            true,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        Installed: management.Bool(
+            true,
+        ),
+    }
 client.Actions.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -143,17 +144,18 @@ Create an action. Once an action is created, it must be deployed, and then bound
 
 ```go
 request := &management.CreateActionRequestContent{
-    Name: "name",
-    SupportedTriggers: []*management.ActionTrigger{
-        &management.ActionTrigger{
-            ID: management.ActionTriggerTypeEnumPostLogin,
+        Name: "name",
+        SupportedTriggers: []*management.ActionTrigger{
+            &management.ActionTrigger{
+                ID: management.ActionTriggerTypeEnumPostLogin,
+            },
         },
-    },
-}
+    }
 client.Actions.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -264,9 +266,10 @@ Retrieve an action by its ID.
 
 ```go
 client.Actions.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -321,15 +324,16 @@ Deletes an action and all of its associated versions. An action must be unbound 
 
 ```go
 request := &management.DeleteActionRequestParameters{
-    Force: management.Bool(
-        true,
-    ),
-}
+        Force: management.Bool(
+            true,
+        ),
+    }
 client.Actions.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -393,10 +397,11 @@ Update an existing action. If this action is currently bound to a trigger, updat
 ```go
 request := &management.UpdateActionRequestContent{}
 client.Actions.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -507,9 +512,10 @@ Deploy an action. Deploying an action will create a new immutable version of the
 
 ```go
 client.Actions.Deploy(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -564,15 +570,16 @@ Test an action. After updating an action, it can be tested prior to being deploy
 
 ```go
 request := &management.TestActionRequestContent{
-    Payload: map[string]any{
-        "key": "value",
-    },
-}
+        Payload: map[string]any{
+            "key": "value",
+        },
+    }
 client.Actions.Test(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -636,17 +643,18 @@ Get agents
 
 ```go
 request := &management.ListAgentsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Agents.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -709,12 +717,13 @@ Create an agent
 
 ```go
 request := &management.CreateAgentRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.Agents.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -793,9 +802,10 @@ Get an agent
 
 ```go
 client.Agents.Read(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -850,9 +860,10 @@ Delete an agent
 
 ```go
 client.Agents.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -908,10 +919,11 @@ Update an agent
 ```go
 request := &management.PatchAgentRequestParameters{}
 client.Agents.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -983,8 +995,9 @@ Retrieve branding settings.
 
 ```go
 client.Branding.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -1025,9 +1038,10 @@ Update branding settings.
 ```go
 request := &management.UpdateBrandingRequestContent{}
 client.Branding.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -1107,31 +1121,32 @@ Retrieve a list of [client grants](https://auth0.com/docs/get-started/applicatio
 
 ```go
 request := &management.ListClientGrantsRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Audience: management.String(
-        "audience",
-    ),
-    ClientID: management.String(
-        "client_id",
-    ),
-    AllowAnyOrganization: management.Bool(
-        true,
-    ),
-    SubjectType: management.ClientGrantSubjectTypeEnumClient.Ptr(),
-    DefaultFor: management.ClientGrantDefaultForEnumThirdPartyClients.Ptr(),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Audience: management.String(
+            "audience",
+        ),
+        ClientID: management.String(
+            "client_id",
+        ),
+        AllowAnyOrganization: management.Bool(
+            true,
+        ),
+        SubjectType: management.ClientGrantSubjectTypeEnumClient.Ptr(),
+        DefaultFor: management.ClientGrantDefaultForEnumThirdPartyClients.Ptr(),
+    }
 client.ClientGrants.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -1242,12 +1257,13 @@ Create a client grant for a machine-to-machine login flow. To learn more, read [
 
 ```go
 request := &management.CreateClientGrantRequestContent{
-    Audience: "audience",
-}
+        Audience: "audience",
+    }
 client.ClientGrants.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -1367,28 +1383,29 @@ Results may not reflect recent updates immediately.
 
 ```go
 request := &management.SearchClientGrantsRequestParameters{
-    Q: management.String(
-        "q",
-    ),
-    Parser: management.SearchParserEnumSCIM.Ptr(),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Take: management.Int(
-        1,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Sort: management.ClientGrantSortFieldEnumAudience.Ptr(),
-}
+        Q: management.String(
+            "q",
+        ),
+        Parser: management.SearchParserEnumSCIM.Ptr(),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Sort: management.ClientGrantSortFieldEnumAudience.Ptr(),
+    }
 client.ClientGrants.Search(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -1492,9 +1509,10 @@ scopes associated with the application/API pair.
 
 ```go
 client.ClientGrants.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -1549,9 +1567,10 @@ Delete the [Client Credential Flow](https://www.auth0.com/docs/get-started/authe
 
 ```go
 client.ClientGrants.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -1607,10 +1626,11 @@ Update a client grant.
 ```go
 request := &management.UpdateClientGrantRequestContent{}
 client.ClientGrants.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -1706,17 +1726,18 @@ Retrieve a paginated list of client profiles for the tenant. Uses checkpoint pag
 
 ```go
 request := &management.ListClientProfilesRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.ClientProfiles.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -1779,17 +1800,18 @@ Create a client profile. At most one profile is allowed per tenant in this relea
 
 ```go
 request := &management.CreateClientProfileRequestContent{
-    Name: "name",
-    ClientConfiguration: &management.ClientProfileClientConfiguration{},
-    ApplyPolicy: &management.ClientProfileApplyPolicy{
-        ExternalMetadataType: management.ClientProfileApplyPolicyExternalMetadataTypeEnumCimd,
-        ExternalMetadataCreatedBy: management.ClientProfileApplyPolicyExternalMetadataCreatedByEnumClient,
-    },
-}
+        Name: "name",
+        ClientConfiguration: &management.ClientProfileClientConfiguration{},
+        ApplyPolicy: &management.ClientProfileApplyPolicy{
+            ExternalMetadataType: management.ClientProfileApplyPolicyExternalMetadataTypeEnumCimd,
+            ExternalMetadataCreatedBy: management.ClientProfileApplyPolicyExternalMetadataCreatedByEnumClient,
+        },
+    }
 client.ClientProfiles.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -1868,9 +1890,10 @@ Retrieve a single client profile by its identifier. Returns <code>404</code> if 
 
 ```go
 client.ClientProfiles.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -1925,9 +1948,10 @@ Delete a client profile. Idempotent: returns <code>204 No Content</code> whether
 
 ```go
 client.ClientProfiles.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -1983,10 +2007,11 @@ Update a client profile. Supports partial updates at the top level (JSON Merge P
 ```go
 request := &management.UpdateClientProfileRequestContent{}
 client.ClientProfiles.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -2098,44 +2123,45 @@ For more information, read [Applications in Auth0](https://www.auth0.com/docs/ge
 
 ```go
 request := &management.ListClientsRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    IsGlobal: management.Bool(
-        true,
-    ),
-    IsFirstParty: management.Bool(
-        true,
-    ),
-    AppType: management.String(
-        "app_type",
-    ),
-    ExternalClientID: management.String(
-        "external_client_id",
-    ),
-    AgentID: management.String(
-        "agent_id",
-    ),
-    Q: management.String(
-        "q",
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        IsGlobal: management.Bool(
+            true,
+        ),
+        IsFirstParty: management.Bool(
+            true,
+        ),
+        AppType: management.String(
+            "app_type",
+        ),
+        ExternalClientID: management.String(
+            "external_client_id",
+        ),
+        AgentID: management.String(
+            "agent_id",
+        ),
+        Q: management.String(
+            "q",
+        ),
+    }
 client.Clients.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -2283,12 +2309,13 @@ SSO Integrations created via this endpoint will accept login requests and share 
 
 ```go
 request := &management.CreateClientRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.Clients.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -2607,7 +2634,7 @@ client.Clients.Create(
 <dl>
 <dd>
 
-**organizationDiscoveryMethods:** `[]management.ClientOrganizationDiscoveryEnum` — Defines the available methods for organization discovery during the `pre_login_prompt`. Users can discover their organization either by `email`, `organization_name` or both.
+**organizationDiscoveryMethods:** `[]*management.ClientOrganizationDiscoveryEnum` — Defines the available methods for organization discovery during the `pre_login_prompt`. Users can discover their organization either by `email`, `organization_name` or both.
     
 </dd>
 </dl>
@@ -2831,12 +2858,13 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
 
 ```go
 request := &management.PreviewCimdMetadataRequestContent{
-    ExternalClientID: "external_client_id",
-}
+        ExternalClientID: "external_client_id",
+    }
 client.Clients.PreviewCimdMetadata(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -2901,12 +2929,13 @@ This endpoint automatically:
 
 ```go
 request := &management.RegisterCimdClientRequestContent{
-    ExternalClientID: "external_client_id",
-}
+        ExternalClientID: "external_client_id",
+    }
 client.Clients.RegisterCimdClient(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -2972,28 +3001,29 @@ for complex queries. Results may not reflect recent updates immediately.
 
 ```go
 request := &management.SearchClientsRequestParameters{
-    Q: management.String(
-        "q",
-    ),
-    Parser: management.SearchParserEnumSCIM.Ptr(),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Take: management.Int(
-        1,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Sort: management.ClientSortFieldEnumName.Ptr(),
-}
+        Q: management.String(
+            "q",
+        ),
+        Parser: management.SearchParserEnumSCIM.Ptr(),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Sort: management.ClientSortFieldEnumName.Ptr(),
+    }
 client.Clients.Search(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -3119,18 +3149,19 @@ For more information, read [Applications in Auth0](https://www.auth0.com/docs/ge
 
 ```go
 request := &management.GetClientRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Clients.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -3201,9 +3232,10 @@ Delete a client and related configuration (rules, connections, etc).
 
 ```go
 client.Clients.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -3267,10 +3299,11 @@ Notes:
 ```go
 request := &management.UpdateClientRequestContent{}
 client.Clients.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -3637,7 +3670,7 @@ client.Clients.Update(
 <dl>
 <dd>
 
-**organizationDiscoveryMethods:** `[]management.ClientOrganizationDiscoveryEnum` — Defines the available methods for organization discovery during the `pre_login_prompt`. Users can discover their organization either by `email`, `organization_name` or both.
+**organizationDiscoveryMethods:** `[]*management.ClientOrganizationDiscoveryEnum` — Defines the available methods for organization discovery during the `pre_login_prompt`. Users can discover their organization either by `email`, `organization_name` or both.
     
 </dd>
 </dl>
@@ -3821,9 +3854,10 @@ For more information, read [Rotate Client Secrets](https://www.auth0.com/docs/ge
 
 ```go
 client.Clients.RotateSecret(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -3879,17 +3913,18 @@ Retrieve a list of Connection Profiles. This endpoint supports Checkpoint pagina
 
 ```go
 request := &management.ListConnectionProfileRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.ConnectionProfiles.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -3952,12 +3987,13 @@ Create a Connection Profile.
 
 ```go
 request := &management.CreateConnectionProfileRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.ConnectionProfiles.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -4068,8 +4104,9 @@ Retrieve a list of Connection Profile Templates.
 
 ```go
 client.ConnectionProfiles.ListTemplates(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -4109,9 +4146,10 @@ Retrieve a Connection Profile Template.
 
 ```go
 client.ConnectionProfiles.GetTemplate(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -4166,9 +4204,10 @@ Retrieve details about a single Connection Profile specified by ID.
 
 ```go
 client.ConnectionProfiles.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -4223,9 +4262,10 @@ Delete a single Connection Profile specified by ID.
 
 ```go
 client.ConnectionProfiles.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -4281,10 +4321,11 @@ Update the details of a specific Connection Profile.
 ```go
 request := &management.UpdateConnectionProfileRequestContent{}
 client.ConnectionProfiles.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -4420,32 +4461,33 @@ To search by checkpoint, use the following parameters:
 
 ```go
 request := &management.ListConnectionsQueryParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Strategy: []*management.ConnectionStrategyEnum{
-        management.ConnectionStrategyEnumAd.Ptr(),
-    },
-    Name: management.String(
-        "name",
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Strategy: []*management.ConnectionStrategyEnum{
+            management.ConnectionStrategyEnumAd.Ptr(),
+        },
+        Name: management.String(
+            "name",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Connections.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -4550,13 +4592,14 @@ Creates a new connection according to the JSON object received in `body`.
 
 ```go
 request := &management.CreateConnectionRequestContent{
-    Name: "name",
-    Strategy: management.ConnectionIdentityProviderEnumAd,
-}
+        Name: "name",
+        Strategy: management.ConnectionIdentityProviderEnumAd,
+    }
 client.Connections.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -4587,7 +4630,7 @@ client.Connections.Create(
 <dl>
 <dd>
 
-**strategy:** `management.ConnectionIdentityProviderEnum` 
+**strategy:** `*management.ConnectionIdentityProviderEnum` 
     
 </dd>
 </dl>
@@ -4707,18 +4750,19 @@ Retrieve details for a specified [connection](https://auth0.com/docs/authenticat
 
 ```go
 request := &management.GetConnectionRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Connections.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -4791,9 +4835,10 @@ Removes a specific [connection](https://auth0.com/docs/authenticate/identity-pro
 
 ```go
 client.Connections.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -4851,10 +4896,11 @@ Update details for a specific [connection](https://auth0.com/docs/authenticate/i
 ```go
 request := &management.UpdateConnectionRequestContent{}
 client.Connections.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -4997,9 +5043,10 @@ Retrieves the status of an ad/ldap connection referenced by its `ID`. `200 OK` h
 
 ```go
 client.Connections.CheckStatus(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -5055,23 +5102,24 @@ Retrieve details on [custom domains](https://auth0.com/docs/custom-domains).
 
 ```go
 request := &management.ListCustomDomainsRequestParameters{
-    Q: management.String(
-        "q",
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Sort: management.String(
-        "sort",
-    ),
-}
+        Q: management.String(
+            "q",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+    }
 client.CustomDomains.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -5162,13 +5210,14 @@ TLS Policies:
 
 ```go
 request := &management.CreateCustomDomainRequestContent{
-    Domain: "domain",
-    Type: management.CustomDomainProvisioningTypeEnumAuth0ManagedCerts,
-}
+        Domain: "domain",
+        Type: management.CustomDomainProvisioningTypeEnumAuth0ManagedCerts,
+    }
 client.CustomDomains.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -5191,7 +5240,7 @@ client.CustomDomains.Create(
 <dl>
 <dd>
 
-**type_:** `management.CustomDomainProvisioningTypeEnum` 
+**type_:** `*management.CustomDomainProvisioningTypeEnum` 
     
 </dd>
 </dl>
@@ -5271,8 +5320,9 @@ Retrieve the tenant's default domain.
 
 ```go
 client.CustomDomains.GetDefault(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -5312,12 +5362,13 @@ Set the default custom domain for the tenant.
 
 ```go
 request := &management.SetDefaultCustomDomainRequestContent{
-    Domain: "domain",
-}
+        Domain: "domain",
+    }
 client.CustomDomains.SetDefault(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -5372,9 +5423,10 @@ Retrieve a custom domain configuration and status.
 
 ```go
 client.CustomDomains.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -5429,9 +5481,10 @@ Delete a custom domain and stop serving requests for it.
 
 ```go
 client.CustomDomains.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -5518,10 +5571,11 @@ Some considerations:
 ```go
 request := &management.UpdateCustomDomainRequestContent{}
 client.CustomDomains.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -5608,9 +5662,10 @@ Run the test process on a custom domain.
 
 ```go
 client.CustomDomains.Test(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -5672,9 +5727,10 @@ For `self_managed_certs`, when the custom domain is verified for the first time,
 
 ```go
 client.CustomDomains.Verify(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -5730,33 +5786,34 @@ Retrieve device credential information (`public_key`, `refresh_token`, or `rotat
 
 ```go
 request := &management.ListDeviceCredentialsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    UserID: management.String(
-        "user_id",
-    ),
-    ClientID: management.String(
-        "client_id",
-    ),
-    Type: management.DeviceCredentialTypeEnumPublicKey.Ptr(),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        UserID: management.String(
+            "user_id",
+        ),
+        ClientID: management.String(
+            "client_id",
+        ),
+        Type: management.DeviceCredentialTypeEnumPublicKey.Ptr(),
+    }
 client.DeviceCredentials.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -5869,15 +5926,16 @@ When refresh token rotation is enabled, the endpoint becomes consistent. For mor
 
 ```go
 request := &management.CreatePublicKeyDeviceCredentialRequestContent{
-    DeviceName: "device_name",
-    Type: management.DeviceCredentialPublicKeyTypeEnumPublicKey,
-    Value: "value",
-    DeviceID: "device_id",
-}
+        DeviceName: "device_name",
+        Type: management.DeviceCredentialPublicKeyTypeEnumPublicKey,
+        Value: "value",
+        DeviceID: "device_id",
+    }
 client.DeviceCredentials.CreatePublicKey(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -5900,7 +5958,7 @@ client.DeviceCredentials.CreatePublicKey(
 <dl>
 <dd>
 
-**type_:** `management.DeviceCredentialPublicKeyTypeEnum` 
+**type_:** `*management.DeviceCredentialPublicKeyTypeEnum` 
     
 </dd>
 </dl>
@@ -5964,9 +6022,10 @@ Permanently delete a device credential (such as a refresh token or public key) w
 
 ```go
 client.DeviceCredentials.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -6022,12 +6081,13 @@ Create an email template.
 
 ```go
 request := &management.CreateEmailTemplateRequestContent{
-    Template: management.EmailTemplateNameEnumVerifyEmail,
-}
+        Template: management.EmailTemplateNameEnumVerifyEmail,
+    }
 client.EmailTemplates.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6042,7 +6102,7 @@ client.EmailTemplates.Create(
 <dl>
 <dd>
 
-**template:** `management.EmailTemplateNameEnum` 
+**template:** `*management.EmailTemplateNameEnum` 
     
 </dd>
 </dl>
@@ -6146,9 +6206,10 @@ Retrieve an email template by pre-defined name. These names are `verify_email`, 
 
 ```go
 client.EmailTemplates.Get(
-    context.TODO(),
-    management.EmailTemplateNameEnumVerifyEmail.Ptr(),
-)
+        context.TODO(),
+        management.EmailTemplateNameEnumVerifyEmail.Ptr(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -6203,13 +6264,14 @@ Update an email template.
 
 ```go
 request := &management.SetEmailTemplateRequestContent{
-    Template: management.EmailTemplateNameEnumVerifyEmail,
-}
+        Template: management.EmailTemplateNameEnumVerifyEmail,
+    }
 client.EmailTemplates.Set(
-    context.TODO(),
-    management.EmailTemplateNameEnumVerifyEmail.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.EmailTemplateNameEnumVerifyEmail.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6232,7 +6294,7 @@ client.EmailTemplates.Set(
 <dl>
 <dd>
 
-**template:** `management.EmailTemplateNameEnum` 
+**template:** `*management.EmailTemplateNameEnum` 
     
 </dd>
 </dl>
@@ -6337,10 +6399,11 @@ Modify an email template.
 ```go
 request := &management.UpdateEmailTemplateRequestContent{}
 client.EmailTemplates.Update(
-    context.TODO(),
-    management.EmailTemplateNameEnumVerifyEmail.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.EmailTemplateNameEnumVerifyEmail.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6454,17 +6517,18 @@ client.EmailTemplates.Update(
 
 ```go
 request := &management.ListEventStreamsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.EventStreams.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6513,25 +6577,25 @@ client.EventStreams.List(
 
 ```go
 request := &management.EventStreamsCreateRequest{
-    CreateEventStreamWebHookRequestContent: &management.CreateEventStreamWebHookRequestContent{
-        Destination: &management.EventStreamWebhookDestination{
-            Type: management.EventStreamWebhookDestinationTypeEnumWebhook,
-            Configuration: &management.EventStreamWebhookConfiguration{
-                WebhookEndpoint: "webhook_endpoint",
-                WebhookAuthorization: &management.EventStreamWebhookAuthorizationResponse{
-                    EventStreamWebhookBasicAuth: &management.EventStreamWebhookBasicAuth{
-                        Method: management.EventStreamWebhookBasicAuthMethodEnumBasic,
-                        Username: "username",
+        CreateEventStreamWebHookRequestContent: &management.CreateEventStreamWebHookRequestContent{
+            Destination: &management.EventStreamWebhookDestination{
+                Type: management.EventStreamWebhookDestinationTypeEnumWebhook,
+                Configuration: &management.EventStreamWebhookConfiguration{
+                    WebhookEndpoint: "webhook_endpoint",
+                    WebhookAuthorization: &management.EventStreamWebhookAuthorizationResponse{
+                        Basic: &management.EventStreamWebhookBasicAuth{
+                            Username: "username",
+                        },
                     },
                 },
             },
         },
-    },
-}
+    }
 client.EventStreams.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6572,9 +6636,10 @@ client.EventStreams.Create(
 
 ```go
 client.EventStreams.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -6615,9 +6680,10 @@ client.EventStreams.Get(
 
 ```go
 client.EventStreams.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -6659,10 +6725,11 @@ client.EventStreams.Delete(
 ```go
 request := &management.UpdateEventStreamRequestContent{}
 client.EventStreams.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6735,13 +6802,14 @@ client.EventStreams.Update(
 
 ```go
 request := &management.CreateEventStreamTestEventRequestContent{
-    EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
-}
+        EventType: management.EventStreamTestEventTypeEnumConnectionCreated,
+    }
 client.EventStreams.Test(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6764,7 +6832,7 @@ client.EventStreams.Test(
 <dl>
 <dd>
 
-**eventType:** `management.EventStreamTestEventTypeEnum` 
+**eventType:** `*management.EventStreamTestEventTypeEnum` 
     
 </dd>
 </dl>
@@ -6813,20 +6881,21 @@ Subscribe to events via Server-Sent Events (SSE)
 
 ```go
 request := &management.SubscribeEventsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    FromTimestamp: management.String(
-        "from_timestamp",
-    ),
-    EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
-        management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
-    },
-}
+        From: management.String(
+            "from",
+        ),
+        FromTimestamp: management.String(
+            "from_timestamp",
+        ),
+        EventType: []*management.EventStreamSubscribeEventsEventTypeEnum{
+            management.EventStreamSubscribeEventsEventTypeEnumConnectionCreated.Ptr(),
+        },
+    }
 client.Events.Subscribe(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6884,26 +6953,27 @@ client.Events.Subscribe(
 
 ```go
 request := &management.ListFlowsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Hydrate: []*management.ListFlowsRequestParametersHydrateEnum{
-        management.ListFlowsRequestParametersHydrateEnumFormCount.Ptr(),
-    },
-    Synchronous: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Hydrate: []*management.ListFlowsRequestParametersHydrateEnum{
+            management.ListFlowsRequestParametersHydrateEnumFormCount.Ptr(),
+        },
+        Synchronous: management.Bool(
+            true,
+        ),
+    }
 client.Flows.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -6976,12 +7046,13 @@ client.Flows.List(
 
 ```go
 request := &management.CreateFlowRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.Flows.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7030,15 +7101,16 @@ client.Flows.Create(
 
 ```go
 request := &management.GetFlowRequestParameters{
-    Hydrate: []*management.GetFlowRequestParametersHydrateEnum{
-        management.GetFlowRequestParametersHydrateEnumFormCount.Ptr(),
-    },
-}
+        Hydrate: []*management.GetFlowRequestParametersHydrateEnum{
+            management.GetFlowRequestParametersHydrateEnumFormCount.Ptr(),
+        },
+    }
 client.Flows.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7087,9 +7159,10 @@ client.Flows.Get(
 
 ```go
 client.Flows.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -7131,10 +7204,11 @@ client.Flows.Delete(
 ```go
 request := &management.UpdateFlowRequestContent{}
 client.Flows.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7192,23 +7266,24 @@ client.Flows.Update(
 
 ```go
 request := &management.ListFormsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Hydrate: []*management.FormsRequestParametersHydrateEnum{
-        management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
-    },
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Hydrate: []*management.FormsRequestParametersHydrateEnum{
+            management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
+        },
+    }
 client.Forms.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7273,12 +7348,13 @@ client.Forms.List(
 
 ```go
 request := &management.CreateFormRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.Forms.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7375,15 +7451,16 @@ client.Forms.Create(
 
 ```go
 request := &management.GetFormRequestParameters{
-    Hydrate: []*management.FormsRequestParametersHydrateEnum{
-        management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
-    },
-}
+        Hydrate: []*management.FormsRequestParametersHydrateEnum{
+            management.FormsRequestParametersHydrateEnumFlowCount.Ptr(),
+        },
+    }
 client.Forms.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7432,9 +7509,10 @@ client.Forms.Get(
 
 ```go
 client.Forms.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -7476,10 +7554,11 @@ client.Forms.Delete(
 ```go
 request := &management.UpdateFormRequestContent{}
 client.Forms.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7599,29 +7678,30 @@ Retrieve the [grants](https://auth0.com/docs/api-auth/which-oauth-flow-to-use) a
 
 ```go
 request := &management.ListUserGrantsRequestParameters{
-    PerPage: management.Int(
-        1,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    UserID: management.String(
-        "user_id",
-    ),
-    ClientID: management.String(
-        "client_id",
-    ),
-    Audience: management.String(
-        "audience",
-    ),
-}
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        UserID: management.String(
+            "user_id",
+        ),
+        ClientID: management.String(
+            "client_id",
+        ),
+        Audience: management.String(
+            "audience",
+        ),
+    }
 client.UserGrants.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7716,12 +7796,13 @@ Delete a grant associated with your account.
 
 ```go
 request := &management.DeleteUserGrantByUserIDRequestParameters{
-    UserID: "user_id",
-}
+        UserID: "user_id",
+    }
 client.UserGrants.DeleteByUserID(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7776,9 +7857,10 @@ Delete a grant associated with your account.
 
 ```go
 client.UserGrants.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -7834,38 +7916,39 @@ List all groups in your tenant.
 
 ```go
 request := &management.ListGroupsRequestParameters{
-    ConnectionID: management.String(
-        "connection_id",
-    ),
-    Name: management.String(
-        "name",
-    ),
-    ExternalID: management.String(
-        "external_id",
-    ),
-    Search: management.String(
-        "search",
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        ConnectionID: management.String(
+            "connection_id",
+        ),
+        Name: management.String(
+            "name",
+        ),
+        ExternalID: management.String(
+            "external_id",
+        ),
+        Search: management.String(
+            "search",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Groups.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -7984,9 +8067,10 @@ Retrieve a group by its ID.
 
 ```go
 client.Groups.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -8041,9 +8125,10 @@ Delete a group by its ID.
 
 ```go
 client.Groups.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -8099,8 +8184,9 @@ TODO: Link this endpoint to relevant documentation when available.
 
 ```go
 client.Guardian.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -8140,15 +8226,16 @@ Update a tenant's guardian settings such as Remember Me
 
 ```go
 request := &management.SetGuardianSettingsRequestContent{
-    DisplayRememberMeCheckbox: true,
-    RememberMeDefaultValue: true,
-    MfaSessionInactivityTimeout: 1,
-    MfaSessionOverallTimeout: 1,
-}
+        DisplayRememberMeCheckbox: true,
+        RememberMeDefaultValue: true,
+        MfaSessionInactivityTimeout: 1,
+        MfaSessionOverallTimeout: 1,
+    }
 client.Guardian.Set(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -8228,27 +8315,28 @@ Retrieve all [hooks](https://auth0.com/docs/hooks). Accepts a list of fields to 
 
 ```go
 request := &management.ListHooksRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Enabled: management.Bool(
-        true,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    TriggerID: management.HookTriggerIDEnumCredentialsExchange.Ptr(),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Enabled: management.Bool(
+            true,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        TriggerID: management.HookTriggerIDEnumCredentialsExchange.Ptr(),
+    }
 client.Hooks.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -8343,14 +8431,15 @@ Create a new hook.
 
 ```go
 request := &management.CreateHookRequestContent{
-    Name: "name",
-    Script: "script",
-    TriggerID: management.HookTriggerIDEnumCredentialsExchange,
-}
+        Name: "name",
+        Script: "script",
+        TriggerID: management.HookTriggerIDEnumCredentialsExchange,
+    }
 client.Hooks.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -8397,7 +8486,7 @@ client.Hooks.Create(
 <dl>
 <dd>
 
-**triggerID:** `management.HookTriggerIDEnum` — Execution stage of this rule. Can be `credentials-exchange`, `pre-user-registration`, `post-user-registration`, `post-change-password`, or `send-phone-message`.
+**triggerID:** `*management.HookTriggerIDEnum` — Execution stage of this rule. Can be `credentials-exchange`, `pre-user-registration`, `post-user-registration`, `post-change-password`, or `send-phone-message`.
     
 </dd>
 </dl>
@@ -8437,15 +8526,16 @@ Retrieve [a hook](https://auth0.com/docs/hooks) by its ID. Accepts a list of fie
 
 ```go
 request := &management.GetHookRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+    }
 client.Hooks.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -8508,9 +8598,10 @@ Delete a hook.
 
 ```go
 client.Hooks.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -8566,10 +8657,11 @@ Update an existing hook.
 ```go
 request := &management.UpdateHookRequestContent{}
 client.Hooks.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -8657,9 +8749,10 @@ Retrieves a job. Useful to check its status.
 
 ```go
 client.Jobs.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -8785,8 +8878,9 @@ Retrieve details on [log streams](https://auth0.com/docs/logs/streams).
 
 ```go
 client.LogStreams.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -9022,17 +9116,17 @@ For a `Sumo Logic` Stream, the `sink` properties are listed in the payload below
 
 ```go
 request := &management.CreateLogStreamRequestContent{
-    CreateLogStreamHTTPRequestBody: &management.CreateLogStreamHTTPRequestBody{
-        Type: management.LogStreamHTTPEnumHTTP,
-        Sink: &management.LogStreamHTTPSink{
-            HTTPEndpoint: "httpEndpoint",
+        HTTP: &management.CreateLogStreamHTTPRequestBody{
+            Sink: &management.LogStreamHTTPSink{
+                HTTPEndpoint: "httpEndpoint",
+            },
         },
-    },
-}
+    }
 client.LogStreams.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -9238,9 +9332,10 @@ The `status` of a log stream maybe any of the following:
 
 ```go
 client.LogStreams.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -9295,9 +9390,10 @@ Delete a log stream.
 
 ```go
 client.LogStreams.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -9426,10 +9522,11 @@ Note: For log streams of type `eventbridge` and `eventgrid`, updating the `sink`
 ```go
 request := &management.UpdateLogStreamRequestContent{}
 client.LogStreams.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -9558,32 +9655,33 @@ Auth0 [limits the number of logs](https://auth0.com/docs/logs/retrieve-log-event
 
 ```go
 request := &management.ListLogsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    Sort: management.String(
-        "sort",
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Search: management.String(
-        "search",
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Search: management.String(
+            "search",
+        ),
+    }
 client.Logs.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -9690,9 +9788,10 @@ Retrieve an individual log event.
 
 ```go
 client.Logs.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -9748,20 +9847,21 @@ Get all access control list entries for your client.
 
 ```go
 request := &management.ListNetworkACLsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.NetworkACLs.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -9832,17 +9932,18 @@ Create a new access control list for your client.
 
 ```go
 request := &management.CreateNetworkACLRequestContent{
-    Description: "description",
-    Active: true,
-    Rule: &management.NetworkACLRule{
-        Action: &management.NetworkACLAction{},
-        Scope: management.NetworkACLRuleScopeEnumManagement,
-    },
-}
+        Description: "description",
+        Active: true,
+        Rule: &management.NetworkACLRule{
+            Action: &management.NetworkACLAction{},
+            Scope: management.NetworkACLRuleScopeEnumManagement,
+        },
+    }
 client.NetworkACLs.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -9921,9 +10022,10 @@ Get a specific access control list entry for your client.
 
 ```go
 client.NetworkACLs.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -9978,18 +10080,19 @@ Update existing access control list for your client.
 
 ```go
 request := &management.SetNetworkACLRequestContent{
-    Description: "description",
-    Active: true,
-    Rule: &management.NetworkACLRule{
-        Action: &management.NetworkACLAction{},
-        Scope: management.NetworkACLRuleScopeEnumManagement,
-    },
-}
+        Description: "description",
+        Active: true,
+        Rule: &management.NetworkACLRule{
+            Action: &management.NetworkACLAction{},
+            Scope: management.NetworkACLRuleScopeEnumManagement,
+        },
+    }
 client.NetworkACLs.Set(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -10076,9 +10179,10 @@ Delete existing access control list for your client.
 
 ```go
 client.NetworkACLs.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -10134,10 +10238,11 @@ Update existing access control list for your client.
 ```go
 request := &management.UpdateNetworkACLRequestContent{}
 client.NetworkACLs.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -10241,26 +10346,27 @@ To search by checkpoint, use the following parameters:
 
 ```go
 request := &management.ListOrganizationsRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Sort: management.String(
-        "sort",
-    ),
-    IncludeClientAssociationFor: management.String(
-        "include_client_association_for",
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+        IncludeClientAssociationFor: management.String(
+            "include_client_association_for",
+        ),
+    }
 client.Organizations.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -10347,12 +10453,13 @@ Create a new Organization within your tenant.  To learn more about Organization 
 
 ```go
 request := &management.CreateOrganizationRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.Organizations.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -10463,9 +10570,10 @@ Retrieve details about a single Organization specified by name.
 
 ```go
 client.Organizations.GetByName(
-    context.TODO(),
-    "name",
-)
+        context.TODO(),
+        "name",
+    )
+}
 ```
 </dd>
 </dl>
@@ -10534,22 +10642,23 @@ Results are eventually consistent and may not reflect recent updates immediately
 
 ```go
 request := &management.SearchOrganizationsRequestParameters{
-    Q: management.String(
-        "q",
-    ),
-    Parser: management.SearchParserEnumSCIM.Ptr(),
-    Take: management.Int(
-        1,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Sort: management.OrganizationSortFieldEnumName.Ptr(),
-}
+        Q: management.String(
+            "q",
+        ),
+        Parser: management.SearchParserEnumSCIM.Ptr(),
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Sort: management.OrganizationSortFieldEnumName.Ptr(),
+    }
 client.Organizations.Search(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -10636,9 +10745,10 @@ Retrieve details about a single Organization specified by ID.
 
 ```go
 client.Organizations.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -10695,9 +10805,10 @@ Remove an Organization from your tenant.  This action cannot be undone.
 
 ```go
 client.Organizations.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -10753,10 +10864,11 @@ Update the details of a specific [Organization](https://auth0.com/docs/manage-us
 ```go
 request := &management.UpdateOrganizationRequestContent{}
 client.Organizations.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -10854,8 +10966,9 @@ client.Organizations.Update(
 
 ```go
 client.Portals.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -10881,18 +10994,19 @@ client.Portals.List(
 
 ```go
 request := &management.CreatePortalRequestContent{
-    Slug: "slug",
-    Name: "name",
-    Client: &management.PortalClientSecretPostRequest{
-        TokenEndpointAuthMethod: management.PortalClientSecretPostRequestTokenEndpointAuthMethodClientSecretPost,
-        ClientID: "client_id",
-        ClientSecret: "client_secret",
-    },
-}
+        Slug: "slug",
+        Name: "name",
+        Client: &management.PortalClientSecretPostRequest{
+            TokenEndpointAuthMethod: management.PortalClientSecretPostRequestTokenEndpointAuthMethodClientSecretPost,
+            ClientID: "client_id",
+            ClientSecret: "client_secret",
+        },
+    }
 client.Portals.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -10973,9 +11087,10 @@ client.Portals.Create(
 
 ```go
 client.Portals.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -11016,9 +11131,10 @@ client.Portals.Get(
 
 ```go
 client.Portals.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -11060,10 +11176,11 @@ client.Portals.Delete(
 ```go
 request := &management.UpdatePortalRequestContent{}
 client.Portals.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11167,8 +11284,9 @@ Retrieve details of the Universal Login configuration of your tenant. This inclu
 
 ```go
 client.Prompts.GetSettings(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -11209,9 +11327,10 @@ Update the Universal Login configuration of your tenant. This includes the <a hr
 ```go
 request := &management.UpdateSettingsRequestContent{}
 client.Prompts.UpdateSettings(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11269,22 +11388,23 @@ client.Prompts.UpdateSettings(
 
 ```go
 request := &management.ListRateLimitPoliciesRequestParameters{
-    Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI.Ptr(),
-    Consumer: management.RateLimitPolicyConsumerEnumClient.Ptr(),
-    ConsumerSelector: management.String(
-        "consumer_selector",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    From: management.String(
-        "from",
-    ),
-}
+        Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI.Ptr(),
+        Consumer: management.RateLimitPolicyConsumerEnumClient.Ptr(),
+        ConsumerSelector: management.String(
+            "consumer_selector",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+    }
 client.RateLimitPolicies.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11357,19 +11477,20 @@ client.RateLimitPolicies.List(
 
 ```go
 request := &management.CreateRateLimitPolicyRequestContent{
-    Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI,
-    Consumer: management.RateLimitPolicyConsumerEnumClient,
-    ConsumerSelector: "consumer_selector",
-    Configuration: &management.RateLimitPolicyConfiguration{
-        RateLimitPolicyConfigurationZero: &management.RateLimitPolicyConfigurationZero{
-            Action: management.RateLimitPolicyConfigurationZeroActionAllow,
+        Resource: management.RateLimitPolicyResourceEnumOauthAuthenticationAPI,
+        Consumer: management.RateLimitPolicyConsumerEnumClient,
+        ConsumerSelector: "consumer_selector",
+        Configuration: &management.RateLimitPolicyConfiguration{
+            RateLimitPolicyConfigurationZero: &management.RateLimitPolicyConfigurationZero{
+                Action: management.RateLimitPolicyConfigurationZeroActionAllow,
+            },
         },
-    },
-}
+    }
 client.RateLimitPolicies.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11384,7 +11505,7 @@ client.RateLimitPolicies.Create(
 <dl>
 <dd>
 
-**resource:** `management.RateLimitPolicyResourceEnum` 
+**resource:** `*management.RateLimitPolicyResourceEnum` 
     
 </dd>
 </dl>
@@ -11392,7 +11513,7 @@ client.RateLimitPolicies.Create(
 <dl>
 <dd>
 
-**consumer:** `management.RateLimitPolicyConsumerEnum` 
+**consumer:** `*management.RateLimitPolicyConsumerEnum` 
     
 </dd>
 </dl>
@@ -11434,9 +11555,10 @@ client.RateLimitPolicies.Create(
 
 ```go
 client.RateLimitPolicies.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -11477,9 +11599,10 @@ client.RateLimitPolicies.Get(
 
 ```go
 client.RateLimitPolicies.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -11520,17 +11643,18 @@ client.RateLimitPolicies.Delete(
 
 ```go
 request := &management.PatchRateLimitPolicyRequestContent{
-    Configuration: &management.PatchRateLimitPolicyConfigurationRequestContent{
-        PatchRateLimitPolicyConfigurationRequestContentZero: &management.PatchRateLimitPolicyConfigurationRequestContentZero{
-            Action: management.PatchRateLimitPolicyConfigurationRequestContentZeroActionAllow,
+        Configuration: &management.PatchRateLimitPolicyConfigurationRequestContent{
+            PatchRateLimitPolicyConfigurationRequestContentZero: &management.PatchRateLimitPolicyConfigurationRequestContentZero{
+                Action: management.PatchRateLimitPolicyConfigurationRequestContentZeroActionAllow,
+            },
         },
-    },
-}
+    }
 client.RateLimitPolicies.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11594,27 +11718,28 @@ Retrieve a paginated list of refresh tokens for a specific user, with optional f
 
 ```go
 request := &management.GetRefreshTokensRequestParameters{
-    UserID: "user_id",
-    ClientID: management.String(
-        "client_id",
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        UserID: "user_id",
+        ClientID: management.String(
+            "client_id",
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.RefreshTokens.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11710,9 +11835,10 @@ Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audi
 ```go
 request := &management.RevokeRefreshTokensRequestContent{}
 client.RefreshTokens.Revoke(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11791,9 +11917,10 @@ Retrieve refresh token information.
 
 ```go
 client.RefreshTokens.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -11848,9 +11975,10 @@ Delete a refresh token by its ID.
 
 ```go
 client.RefreshTokens.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -11906,10 +12034,11 @@ Update a refresh token by its ID.
 ```go
 request := &management.UpdateRefreshTokenRequestContent{}
 client.RefreshTokens.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -11973,28 +12102,29 @@ Retrieve details of all APIs associated with your tenant.
 
 ```go
 request := &management.ListResourceServerRequestParameters{
-    Identifiers: []*string{
-        management.String(
-            "identifiers",
+        Identifiers: []*string{
+            management.String(
+                "identifiers",
+            ),
+        },
+        Page: management.Int(
+            1,
         ),
-    },
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.ResourceServers.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -12081,12 +12211,13 @@ Create a new API associated with your tenant. Note that all new APIs must be reg
 
 ```go
 request := &management.CreateResourceServerRequestContent{
-    Identifier: "identifier",
-}
+        Identifier: "identifier",
+    }
 client.ResourceServers.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -12320,28 +12451,29 @@ The `signing_secret` field is not supported by this endpoint.
 
 ```go
 request := &management.SearchResourceServersRequestParameters{
-    Q: management.String(
-        "q",
-    ),
-    Parser: management.SearchParserEnumSCIM.Ptr(),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Take: management.Int(
-        1,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Sort: management.ResourceServerSortFieldEnumIdentifier.Ptr(),
-}
+        Q: management.String(
+            "q",
+        ),
+        Parser: management.SearchParserEnumSCIM.Ptr(),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Sort: management.ResourceServerSortFieldEnumIdentifier.Ptr(),
+    }
 client.ResourceServers.Search(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -12444,15 +12576,16 @@ Retrieve <a href="https://auth0.com/docs/apis">API</a> details with the given ID
 
 ```go
 request := &management.GetResourceServerRequestParameters{
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.ResourceServers.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -12515,9 +12648,10 @@ Delete an existing API by ID. For more information, read <a href="https://www.au
 
 ```go
 client.ResourceServers.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -12573,10 +12707,11 @@ Change an existing API setting by resource server ID. For more information, read
 ```go
 request := &management.UpdateResourceServerRequestContent{}
 client.ResourceServers.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -12810,27 +12945,28 @@ Retrieve a list of roles. Includes roles created in your tenant and, when `owner
 
 ```go
 request := &management.ListRolesRequestParameters{
-    PerPage: management.Int(
-        1,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    NameFilter: management.String(
-        "name_filter",
-    ),
-    Type: management.RoleTypeEnumTenant.Ptr(),
-    OwnerID: management.String(
-        "owner_id",
-    ),
-}
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        NameFilter: management.String(
+            "name_filter",
+        ),
+        Type: management.RoleTypeEnumTenant.Ptr(),
+        OwnerID: management.String(
+            "owner_id",
+        ),
+    }
 client.Roles.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -12927,12 +13063,13 @@ Create a user role for [Role-Based Access Control](https://auth0.com/docs/manage
 
 ```go
 request := &management.CreateRoleRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.Roles.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13011,9 +13148,10 @@ Retrieve details about a specific [user role](https://auth0.com/docs/manage-user
 
 ```go
 client.Roles.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -13068,9 +13206,10 @@ Delete a specific [user role](https://auth0.com/docs/manage-users/access-control
 
 ```go
 client.Roles.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -13126,10 +13265,11 @@ Modify the details of a specific [user role](https://auth0.com/docs/manage-users
 ```go
 request := &management.UpdateRoleRequestContent{}
 client.Roles.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13201,29 +13341,30 @@ Retrieve a filtered list of [rules](https://auth0.com/docs/rules). Accepts a lis
 
 ```go
 request := &management.ListRulesRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Enabled: management.Bool(
-        true,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Enabled: management.Bool(
+            true,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Rules.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13320,13 +13461,14 @@ Note: Changing a rule's stage of execution from the default `login_success` can 
 
 ```go
 request := &management.CreateRuleRequestContent{
-    Name: "name",
-    Script: "script",
-}
+        Name: "name",
+        Script: "script",
+    }
 client.Rules.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13405,18 +13547,19 @@ Retrieve [rule](https://auth0.com/docs/rules) details. Accepts a list of fields 
 
 ```go
 request := &management.GetRuleRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Rules.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13487,9 +13630,10 @@ Delete a rule.
 
 ```go
 client.Rules.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -13545,10 +13689,11 @@ Update an existing rule.
 ```go
 request := &management.UpdateRuleRequestContent{}
 client.Rules.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13638,8 +13783,9 @@ Retrieve rules config variable keys.
 
 ```go
 client.RulesConfigs.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -13679,13 +13825,14 @@ Sets a rules config variable.
 
 ```go
 request := &management.SetRulesConfigRequestContent{
-    Value: "value",
-}
+        Value: "value",
+    }
 client.RulesConfigs.Set(
-    context.TODO(),
-    "key",
-    request,
-)
+        context.TODO(),
+        "key",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13748,9 +13895,10 @@ Delete a rules config variable identified by its key.
 
 ```go
 client.RulesConfigs.Delete(
-    context.TODO(),
-    "key",
-)
+        context.TODO(),
+        "key",
+    )
+}
 ```
 </dd>
 </dl>
@@ -13806,20 +13954,21 @@ Retrieves self-service profiles.
 
 ```go
 request := &management.ListSelfServiceProfilesRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.SelfServiceProfiles.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13890,12 +14039,13 @@ Creates a self-service profile.
 
 ```go
 request := &management.CreateSelfServiceProfileRequestContent{
-    Name: "name",
-}
+        Name: "name",
+    }
 client.SelfServiceProfiles.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -13934,7 +14084,7 @@ client.SelfServiceProfiles.Create(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>
@@ -13990,9 +14140,10 @@ Retrieves a self-service profile by Id.
 
 ```go
 client.SelfServiceProfiles.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -14047,9 +14198,10 @@ Deletes a self-service profile by Id.
 
 ```go
 client.SelfServiceProfiles.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -14105,10 +14257,11 @@ Updates a self-service profile.
 ```go
 request := &management.UpdateSelfServiceProfileRequestContent{}
 client.SelfServiceProfiles.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -14155,7 +14308,7 @@ client.SelfServiceProfiles.Update(
 <dl>
 <dd>
 
-**allowedStrategies:** `[]management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
+**allowedStrategies:** `[]*management.SelfServiceProfileAllowedStrategyEnum` — List of IdP strategies that will be shown to users during the Self-Service Enterprise Configuration flow. Possible values: [`oidc`, `samlp`, `waad`, `google-apps`, `adfs`, `okta`, `auth0-samlp`, `okta-samlp`, `keycloak-samlp`, `pingfederate`]
     
 </dd>
 </dl>
@@ -14212,9 +14365,10 @@ Retrieve session information.
 
 ```go
 client.Sessions.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -14269,9 +14423,10 @@ Delete a session by ID.
 
 ```go
 client.Sessions.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -14327,10 +14482,11 @@ Update session information.
 ```go
 request := &management.UpdateSessionRequestContent{}
 client.Sessions.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -14393,9 +14549,10 @@ Revokes a session by ID and all associated refresh tokens.
 
 ```go
 client.Sessions.Revoke(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -14451,8 +14608,9 @@ Retrieve the number of active users that logged in during the last 30 days.
 
 ```go
 client.Stats.GetActiveUsersCount(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -14492,17 +14650,18 @@ Retrieve the number of logins, signups and breached-password detections (subscri
 
 ```go
 request := &management.GetDailyStatsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    To: management.String(
-        "to",
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        To: management.String(
+            "to",
+        ),
+    }
 client.Stats.GetDaily(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -14566,8 +14725,9 @@ Get the supplemental signals configuration for a tenant.
 
 ```go
 client.SupplementalSignals.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -14607,12 +14767,13 @@ Update the supplemental signals configuration for a tenant.
 
 ```go
 request := &management.UpdateSupplementalSignalsRequestContent{
-    AkamaiEnabled: true,
-}
+        AkamaiEnabled: true,
+    }
 client.SupplementalSignals.Patch(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -14668,12 +14829,13 @@ Create an email verification ticket for a given user. An email verification tick
 
 ```go
 request := &management.VerifyEmailTicketRequestContent{
-    UserID: "user_id",
-}
+        UserID: "user_id",
+    }
 client.Tickets.VerifyEmail(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -14779,9 +14941,10 @@ Note: This endpoint does not verify the given user’s identity. If you call thi
 ```go
 request := &management.ChangePasswordTicketRequestContent{}
 client.Tickets.ChangePassword(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -14918,17 +15081,18 @@ This endpoint supports Checkpoint pagination. To search by checkpoint, use the f
 
 ```go
 request := &management.TokenExchangeProfilesListRequest{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.TokenExchangeProfiles.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -14993,15 +15157,16 @@ By using this feature, you agree to the applicable Free Trial terms in [Okta’s
 
 ```go
 request := &management.CreateTokenExchangeProfileRequestContent{
-    Name: "name",
-    SubjectTokenType: "subject_token_type",
-    ActionID: "action_id",
-    Type: management.TokenExchangeProfileTypeEnumCustomAuthentication,
-}
+        Name: "name",
+        SubjectTokenType: "subject_token_type",
+        ActionID: "action_id",
+        Type: management.TokenExchangeProfileTypeEnumCustomAuthentication,
+    }
 client.TokenExchangeProfiles.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15040,7 +15205,7 @@ client.TokenExchangeProfiles.Create(
 <dl>
 <dd>
 
-**type_:** `management.TokenExchangeProfileTypeEnum` 
+**type_:** `*management.TokenExchangeProfileTypeEnum` 
     
 </dd>
 </dl>
@@ -15082,9 +15247,10 @@ By using this feature, you agree to the applicable Free Trial terms in [Okta’s
 
 ```go
 client.TokenExchangeProfiles.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -15141,9 +15307,10 @@ By using this feature, you agree to the applicable Free Trial terms in [Okta's M
 
 ```go
 client.TokenExchangeProfiles.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -15201,10 +15368,11 @@ By using this feature, you agree to the applicable Free Trial terms in [Okta's M
 ```go
 request := &management.UpdateTokenExchangeProfileRequestContent{}
 client.TokenExchangeProfiles.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15276,17 +15444,18 @@ Retrieve a list of User Attribute Profiles. This endpoint supports Checkpoint pa
 
 ```go
 request := &management.ListUserAttributeProfileRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.UserAttributeProfiles.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15349,20 +15518,21 @@ Create a User Attribute Profile.
 
 ```go
 request := &management.CreateUserAttributeProfileRequestContent{
-    Name: "name",
-    UserAttributes: map[string]*management.UserAttributeProfileUserAttributeAdditionalProperties{
-        "key": &management.UserAttributeProfileUserAttributeAdditionalProperties{
-            Description: "description",
-            Label: "label",
-            ProfileRequired: true,
-            Auth0Mapping: "auth0_mapping",
+        Name: "name",
+        UserAttributes: map[string]*management.UserAttributeProfileUserAttributeAdditionalProperties{
+            "key": &management.UserAttributeProfileUserAttributeAdditionalProperties{
+                Description: "description",
+                Label: "label",
+                ProfileRequired: true,
+                Auth0Mapping: "auth0_mapping",
+            },
         },
-    },
-}
+    }
 client.UserAttributeProfiles.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15433,8 +15603,9 @@ Retrieve a list of User Attribute Profile Templates.
 
 ```go
 client.UserAttributeProfiles.ListTemplates(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -15474,9 +15645,10 @@ Retrieve a User Attribute Profile Template.
 
 ```go
 client.UserAttributeProfiles.GetTemplate(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -15531,9 +15703,10 @@ Retrieve details about a single User Attribute Profile specified by ID.
 
 ```go
 client.UserAttributeProfiles.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -15588,9 +15761,10 @@ Delete a single User Attribute Profile specified by ID.
 
 ```go
 client.UserAttributeProfiles.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -15646,10 +15820,11 @@ Update the details of a specific User attribute profile, such as name, user_id a
 ```go
 request := &management.UpdateUserAttributeProfileRequestContent{}
 client.UserAttributeProfiles.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15729,15 +15904,16 @@ Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/a
 
 ```go
 request := &management.ListUserBlocksByIdentifierRequestParameters{
-    Identifier: "identifier",
-    ConsiderBruteForceEnablement: management.Bool(
-        true,
-    ),
-}
+        Identifier: "identifier",
+        ConsiderBruteForceEnablement: management.Bool(
+            true,
+        ),
+    }
 client.UserBlocks.ListByIdentifier(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15807,12 +15983,13 @@ Note: This endpoint does not unblock users that were [blocked by a tenant admini
 
 ```go
 request := &management.DeleteUserBlocksByIdentifierRequestParameters{
-    Identifier: "identifier",
-}
+        Identifier: "identifier",
+    }
 client.UserBlocks.DeleteByIdentifier(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15867,15 +16044,16 @@ Retrieve details of all [Brute-force Protection](https://auth0.com/docs/secure/a
 
 ```go
 request := &management.ListUserBlocksRequestParameters{
-    ConsiderBruteForceEnablement: management.Bool(
-        true,
-    ),
-}
+        ConsiderBruteForceEnablement: management.Bool(
+            true,
+        ),
+    }
 client.UserBlocks.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -15945,9 +16123,10 @@ Note: This endpoint does not unblock users that were [blocked by a tenant admini
 
 ```go
 client.UserBlocks.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -16018,39 +16197,40 @@ For efficient queries, prefer indexed top-level fields and exact matches. Certai
 
 ```go
 request := &management.ListUsersRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Sort: management.String(
-        "sort",
-    ),
-    Connection: management.String(
-        "connection",
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Q: management.String(
-        "q",
-    ),
-    SearchEngine: management.SearchEngineVersionsEnumV1.Ptr(),
-    PrimaryOrder: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+        Connection: management.String(
+            "connection",
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Q: management.String(
+            "q",
+        ),
+        SearchEngine: management.SearchEngineVersionsEnumV1.Ptr(),
+        PrimaryOrder: management.Bool(
+            true,
+        ),
+    }
 client.Users.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -16179,12 +16359,13 @@ Note: `connection` is required but other parameters such as `email` and `passwor
 
 ```go
 request := &management.CreateUserRequestContent{
-    Connection: "connection",
-}
+        Connection: "connection",
+    }
 client.Users.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -16371,18 +16552,19 @@ Therefore, when using this endpoint, make sure that you are searching for users 
 
 ```go
 request := &management.ListUsersByEmailRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Email: "email",
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Email: "email",
+    }
 client.Users.ListUsersByEmail(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -16453,18 +16635,19 @@ Retrieve user details. A list of fields to include or exclude may also be specif
 
 ```go
 request := &management.GetUserRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Users.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -16535,9 +16718,10 @@ Delete a user by user ID. This action cannot be undone. For Auth0 Dashboard inst
 
 ```go
 client.Users.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -16683,10 +16867,11 @@ The modified object ends up with the following `user_metadata` property:
 ```go
 request := &management.UpdateUserRequestContent{}
 client.Users.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -16885,9 +17070,10 @@ Retrieve all consent signing keys registered for a user. Returns an empty `keys`
 
 ```go
 client.Users.ListConsentSigningKeys(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -16942,10 +17128,11 @@ Retrieve a single consent signing key for a user by its key identifier (kid). Re
 
 ```go
 client.Users.GetConsentSigningKey(
-    context.TODO(),
-    "id",
-    "kid",
-)
+        context.TODO(),
+        "id",
+        "kid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -17008,10 +17195,11 @@ Remove a single consent signing key for a user by its key identifier (kid). The 
 
 ```go
 client.Users.DeleteConsentSigningKey(
-    context.TODO(),
-    "id",
-    "kid",
-)
+        context.TODO(),
+        "id",
+        "kid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -17074,9 +17262,10 @@ Remove an existing multi-factor authentication (MFA) [recovery code](https://aut
 
 ```go
 client.Users.RegenerateRecoveryCode(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -17132,10 +17321,11 @@ Revokes selected resources related to a user (sessions, refresh tokens, ...).
 ```go
 request := &management.RevokeUserAccessRequestContent{}
 client.Users.RevokeAccess(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -17207,18 +17397,19 @@ Retrieve all of an action's versions. An action version is created whenever an a
 
 ```go
 request := &management.ListActionVersionsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
 client.Actions.Versions.List(
-    context.TODO(),
-    "actionId",
-    request,
-)
+        context.TODO(),
+        "actionId",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -17289,10 +17480,11 @@ Retrieve a specific version of an action. An action version is created whenever 
 
 ```go
 client.Actions.Versions.Get(
-    context.TODO(),
-    "actionId",
-    "id",
-)
+        context.TODO(),
+        "actionId",
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -17356,11 +17548,12 @@ Performs the equivalent of a roll-back of an action to an earlier, specified ver
 ```go
 request := &management.DeployActionVersionRequestContent{}
 client.Actions.Versions.Deploy(
-    context.TODO(),
-    "actionId",
-    "id",
-    request,
-)
+        context.TODO(),
+        "actionId",
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -17432,9 +17625,10 @@ Retrieve information about a specific execution of a trigger. Relevant execution
 
 ```go
 client.Actions.Executions.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -17490,17 +17684,18 @@ Retrieve a paginated list of all Actions Modules with optional filtering and tot
 
 ```go
 request := &management.GetActionModulesRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
 client.Actions.Modules.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -17563,13 +17758,14 @@ Create a new Actions Module for reusable code across actions.
 
 ```go
 request := &management.CreateActionModuleRequestContent{
-    Name: "name",
-    Code: "code",
-}
+        Name: "name",
+        Code: "code",
+    }
 client.Actions.Modules.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -17664,9 +17860,10 @@ Retrieve details of a specific Actions Module by its unique identifier.
 
 ```go
 client.Actions.Modules.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -17721,9 +17918,10 @@ Permanently delete an Actions Module. This will fail if the module is still in u
 
 ```go
 client.Actions.Modules.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -17779,10 +17977,11 @@ Update properties of an existing Actions Module, such as code, dependencies, or 
 ```go
 request := &management.UpdateActionModuleRequestContent{}
 client.Actions.Modules.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -17861,18 +18060,19 @@ Lists all actions that are using a specific Actions Module, showing which deploy
 
 ```go
 request := &management.GetActionModuleActionsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
 client.Actions.Modules.ListActions(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -17943,13 +18143,14 @@ Rolls back an Actions Module's draft to a previously created version. This actio
 
 ```go
 request := &management.RollbackActionModuleRequestParameters{
-    ModuleVersionID: "module_version_id",
-}
+        ModuleVersionID: "module_version_id",
+    }
 client.Actions.Modules.Rollback(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -18013,8 +18214,9 @@ Retrieve the set of triggers currently available within actions. A trigger is an
 
 ```go
 client.Actions.Triggers.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -18055,18 +18257,19 @@ List all published versions of a specific Actions Module.
 
 ```go
 request := &management.GetActionModuleVersionsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
 client.Actions.Modules.Versions.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -18137,9 +18340,10 @@ Creates a new immutable version of an Actions Module from the current draft vers
 
 ```go
 client.Actions.Modules.Versions.Create(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -18194,10 +18398,11 @@ Retrieve the details of a specific, immutable version of an Actions Module.
 
 ```go
 client.Actions.Modules.Versions.Get(
-    context.TODO(),
-    "id",
-    "versionId",
-)
+        context.TODO(),
+        "id",
+        "versionId",
+    )
+}
 ```
 </dd>
 </dl>
@@ -18261,18 +18466,19 @@ Retrieve the actions that are bound to a trigger. Once an action is created and 
 
 ```go
 request := &management.ListActionTriggerBindingsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+    }
 client.Actions.Triggers.Bindings.List(
-    context.TODO(),
-    management.ActionTriggerTypeEnumPostLogin.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.ActionTriggerTypeEnumPostLogin.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -18344,10 +18550,11 @@ Update the actions that are bound (i.e. attached) to a trigger. Once an action i
 ```go
 request := &management.UpdateActionBindingsRequestContent{}
 client.Actions.Triggers.Bindings.UpdateMany(
-    context.TODO(),
-    management.ActionTriggerTypeEnumPostLogin.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.ActionTriggerTypeEnumPostLogin.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -18411,9 +18618,10 @@ Check if the given IP address is blocked via the <a href="https://auth0.com/docs
 
 ```go
 client.Anomaly.Blocks.CheckIP(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -18468,9 +18676,10 @@ Remove a block imposed by <a href="https://auth0.com/docs/configure/attack-prote
 
 ```go
 client.Anomaly.Blocks.UnblockIP(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -18526,8 +18735,9 @@ Get the Bot Detection configuration of your tenant.
 
 ```go
 client.AttackProtection.BotDetection.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -18568,9 +18778,10 @@ Update the Bot Detection configuration of your tenant.
 ```go
 request := &management.UpdateBotDetectionSettingsRequestContent{}
 client.AttackProtection.BotDetection.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -18666,8 +18877,9 @@ Retrieve details of the Breached Password Detection configuration of your tenant
 
 ```go
 client.AttackProtection.BreachedPasswordDetection.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -18708,9 +18920,10 @@ Update details of the Breached Password Detection configuration of your tenant.
 ```go
 request := &management.UpdateBreachedPasswordDetectionSettingsRequestContent{}
 client.AttackProtection.BreachedPasswordDetection.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -18733,7 +18946,7 @@ client.AttackProtection.BreachedPasswordDetection.Update(
 <dl>
 <dd>
 
-**shields:** `[]management.BreachedPasswordDetectionShieldsEnum` 
+**shields:** `[]*management.BreachedPasswordDetectionShieldsEnum` 
 
 Action to take when a breached password is detected during a login.
       Possible values: <code>block</code>, <code>user_notification</code>, <code>admin_notification</code>.
@@ -18744,7 +18957,7 @@ Action to take when a breached password is detected during a login.
 <dl>
 <dd>
 
-**adminNotificationFrequency:** `[]management.BreachedPasswordDetectionAdminNotificationFrequencyEnum` 
+**adminNotificationFrequency:** `[]*management.BreachedPasswordDetectionAdminNotificationFrequencyEnum` 
 
 When "admin_notification" is enabled, determines how often email notifications are sent.
         Possible values: <code>immediately</code>, <code>daily</code>, <code>weekly</code>, <code>monthly</code>.
@@ -18804,8 +19017,9 @@ Retrieve details of the Brute-force Protection configuration of your tenant.
 
 ```go
 client.AttackProtection.BruteForceProtection.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -18846,9 +19060,10 @@ Update the Brute-force Protection configuration of your tenant.
 ```go
 request := &management.UpdateBruteForceSettingsRequestContent{}
 client.AttackProtection.BruteForceProtection.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -18871,7 +19086,7 @@ client.AttackProtection.BruteForceProtection.Update(
 <dl>
 <dd>
 
-**shields:** `[]management.BruteForceProtectionShieldsEnum` 
+**shields:** `[]*management.BruteForceProtectionShieldsEnum` 
 
 Action to take when a brute force protection threshold is violated.
         Possible values: <code>block</code>, <code>user_notification</code>.
@@ -18947,8 +19162,9 @@ Get the CAPTCHA configuration for your client.
 
 ```go
 client.AttackProtection.Captcha.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -18989,9 +19205,10 @@ Update existing CAPTCHA configuration for your client.
 ```go
 request := &management.UpdateAttackProtectionCaptchaRequestContent{}
 client.AttackProtection.Captcha.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -19103,8 +19320,9 @@ Get the phone provider protection configuration for a tenant.
 
 ```go
 client.AttackProtection.PhoneProviderProtection.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -19144,12 +19362,13 @@ Update the phone provider protection configuration for a tenant.
 
 ```go
 request := &management.PatchPhoneProviderProtectionRequestContent{
-    Type: management.PhoneProviderProtectionBackoffStrategyEnumExponential,
-}
+        Type: management.PhoneProviderProtectionBackoffStrategyEnumExponential,
+    }
 client.AttackProtection.PhoneProviderProtection.Patch(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -19164,7 +19383,7 @@ client.AttackProtection.PhoneProviderProtection.Patch(
 <dl>
 <dd>
 
-**type_:** `management.PhoneProviderProtectionBackoffStrategyEnum` 
+**type_:** `*management.PhoneProviderProtectionBackoffStrategyEnum` 
     
 </dd>
 </dl>
@@ -19205,8 +19424,9 @@ Retrieve details of the Suspicious IP Throttling configuration of your tenant.
 
 ```go
 client.AttackProtection.SuspiciousIPThrottling.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -19247,9 +19467,10 @@ Update the details of the Suspicious IP Throttling configuration of your tenant.
 ```go
 request := &management.UpdateSuspiciousIPThrottlingSettingsRequestContent{}
 client.AttackProtection.SuspiciousIPThrottling.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -19272,7 +19493,7 @@ client.AttackProtection.SuspiciousIPThrottling.Update(
 <dl>
 <dd>
 
-**shields:** `[]management.SuspiciousIPThrottlingShieldsEnum` 
+**shields:** `[]*management.SuspiciousIPThrottlingShieldsEnum` 
 
 Action to take when a suspicious IP throttling threshold is violated.
           Possible values: <code>block</code>, <code>admin_notification</code>.
@@ -19318,8 +19539,9 @@ Action to take when a suspicious IP throttling threshold is violated.
 
 ```go
 client.Branding.Templates.GetUniversalLogin(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -19382,12 +19604,13 @@ When `content-type` header is set to `text/html`:
 
 ```go
 request := &management.UpdateUniversalLoginTemplateRequestContent{
-    String: "string",
-}
+        String: "string",
+    }
 client.Branding.Templates.UpdateUniversalLogin(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -19428,8 +19651,9 @@ client.Branding.Templates.UpdateUniversalLogin(
 
 ```go
 client.Branding.Templates.DeleteUniversalLogin(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -19470,81 +19694,82 @@ Create branding theme.
 
 ```go
 request := &management.CreateBrandingThemeRequestContent{
-    Borders: &management.BrandingThemeBorders{
-        ButtonBorderRadius: 1.1,
-        ButtonBorderWeight: 1.1,
-        ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
-        InputBorderRadius: 1.1,
-        InputBorderWeight: 1.1,
-        InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
-        ShowWidgetShadow: true,
-        WidgetBorderWeight: 1.1,
-        WidgetCornerRadius: 1.1,
-    },
-    Colors: &management.BrandingThemeColors{
-        BodyText: "body_text",
-        Error: "error",
-        Header: "header",
-        Icons: "icons",
-        InputBackground: "input_background",
-        InputBorder: "input_border",
-        InputFilledText: "input_filled_text",
-        InputLabelsPlaceholders: "input_labels_placeholders",
-        LinksFocusedComponents: "links_focused_components",
-        PrimaryButton: "primary_button",
-        PrimaryButtonLabel: "primary_button_label",
-        SecondaryButtonBorder: "secondary_button_border",
-        SecondaryButtonLabel: "secondary_button_label",
-        Success: "success",
-        WidgetBackground: "widget_background",
-        WidgetBorder: "widget_border",
-    },
-    Fonts: &management.BrandingThemeFonts{
-        BodyText: &management.BrandingThemeFontBodyText{
-            Bold: true,
-            Size: 1.1,
+        Borders: &management.BrandingThemeBorders{
+            ButtonBorderRadius: 1.1,
+            ButtonBorderWeight: 1.1,
+            ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
+            InputBorderRadius: 1.1,
+            InputBorderWeight: 1.1,
+            InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
+            ShowWidgetShadow: true,
+            WidgetBorderWeight: 1.1,
+            WidgetCornerRadius: 1.1,
         },
-        ButtonsText: &management.BrandingThemeFontButtonsText{
-            Bold: true,
-            Size: 1.1,
+        Colors: &management.BrandingThemeColors{
+            BodyText: "body_text",
+            Error: "error",
+            Header: "header",
+            Icons: "icons",
+            InputBackground: "input_background",
+            InputBorder: "input_border",
+            InputFilledText: "input_filled_text",
+            InputLabelsPlaceholders: "input_labels_placeholders",
+            LinksFocusedComponents: "links_focused_components",
+            PrimaryButton: "primary_button",
+            PrimaryButtonLabel: "primary_button_label",
+            SecondaryButtonBorder: "secondary_button_border",
+            SecondaryButtonLabel: "secondary_button_label",
+            Success: "success",
+            WidgetBackground: "widget_background",
+            WidgetBorder: "widget_border",
         },
-        FontURL: "font_url",
-        InputLabels: &management.BrandingThemeFontInputLabels{
-            Bold: true,
-            Size: 1.1,
+        Fonts: &management.BrandingThemeFonts{
+            BodyText: &management.BrandingThemeFontBodyText{
+                Bold: true,
+                Size: 1.1,
+            },
+            ButtonsText: &management.BrandingThemeFontButtonsText{
+                Bold: true,
+                Size: 1.1,
+            },
+            FontURL: "font_url",
+            InputLabels: &management.BrandingThemeFontInputLabels{
+                Bold: true,
+                Size: 1.1,
+            },
+            Links: &management.BrandingThemeFontLinks{
+                Bold: true,
+                Size: 1.1,
+            },
+            LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
+            ReferenceTextSize: 1.1,
+            Subtitle: &management.BrandingThemeFontSubtitle{
+                Bold: true,
+                Size: 1.1,
+            },
+            Title: &management.BrandingThemeFontTitle{
+                Bold: true,
+                Size: 1.1,
+            },
         },
-        Links: &management.BrandingThemeFontLinks{
-            Bold: true,
-            Size: 1.1,
+        PageBackground: &management.BrandingThemePageBackground{
+            BackgroundColor: "background_color",
+            BackgroundImageURL: "background_image_url",
+            PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
         },
-        LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
-        ReferenceTextSize: 1.1,
-        Subtitle: &management.BrandingThemeFontSubtitle{
-            Bold: true,
-            Size: 1.1,
+        Widget: &management.BrandingThemeWidget{
+            HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+            LogoHeight: 1.1,
+            LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
+            LogoURL: "logo_url",
+            SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
         },
-        Title: &management.BrandingThemeFontTitle{
-            Bold: true,
-            Size: 1.1,
-        },
-    },
-    PageBackground: &management.BrandingThemePageBackground{
-        BackgroundColor: "background_color",
-        BackgroundImageURL: "background_image_url",
-        PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
-    },
-    Widget: &management.BrandingThemeWidget{
-        HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
-        LogoHeight: 1.1,
-        LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
-        LogoURL: "logo_url",
-        SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
-    },
-}
+    }
 client.Branding.Themes.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -19647,8 +19872,9 @@ Retrieve default branding theme.
 
 ```go
 client.Branding.Themes.GetDefault(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -19688,9 +19914,10 @@ Retrieve branding theme.
 
 ```go
 client.Branding.Themes.Get(
-    context.TODO(),
-    "themeId",
-)
+        context.TODO(),
+        "themeId",
+    )
+}
 ```
 </dd>
 </dl>
@@ -19745,9 +19972,10 @@ Delete branding theme.
 
 ```go
 client.Branding.Themes.Delete(
-    context.TODO(),
-    "themeId",
-)
+        context.TODO(),
+        "themeId",
+    )
+}
 ```
 </dd>
 </dl>
@@ -19802,82 +20030,83 @@ Update branding theme.
 
 ```go
 request := &management.UpdateBrandingThemeRequestContent{
-    Borders: &management.BrandingThemeBorders{
-        ButtonBorderRadius: 1.1,
-        ButtonBorderWeight: 1.1,
-        ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
-        InputBorderRadius: 1.1,
-        InputBorderWeight: 1.1,
-        InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
-        ShowWidgetShadow: true,
-        WidgetBorderWeight: 1.1,
-        WidgetCornerRadius: 1.1,
-    },
-    Colors: &management.BrandingThemeColors{
-        BodyText: "body_text",
-        Error: "error",
-        Header: "header",
-        Icons: "icons",
-        InputBackground: "input_background",
-        InputBorder: "input_border",
-        InputFilledText: "input_filled_text",
-        InputLabelsPlaceholders: "input_labels_placeholders",
-        LinksFocusedComponents: "links_focused_components",
-        PrimaryButton: "primary_button",
-        PrimaryButtonLabel: "primary_button_label",
-        SecondaryButtonBorder: "secondary_button_border",
-        SecondaryButtonLabel: "secondary_button_label",
-        Success: "success",
-        WidgetBackground: "widget_background",
-        WidgetBorder: "widget_border",
-    },
-    Fonts: &management.BrandingThemeFonts{
-        BodyText: &management.BrandingThemeFontBodyText{
-            Bold: true,
-            Size: 1.1,
+        Borders: &management.BrandingThemeBorders{
+            ButtonBorderRadius: 1.1,
+            ButtonBorderWeight: 1.1,
+            ButtonsStyle: management.BrandingThemeBordersButtonsStyleEnumPill,
+            InputBorderRadius: 1.1,
+            InputBorderWeight: 1.1,
+            InputsStyle: management.BrandingThemeBordersInputsStyleEnumPill,
+            ShowWidgetShadow: true,
+            WidgetBorderWeight: 1.1,
+            WidgetCornerRadius: 1.1,
         },
-        ButtonsText: &management.BrandingThemeFontButtonsText{
-            Bold: true,
-            Size: 1.1,
+        Colors: &management.BrandingThemeColors{
+            BodyText: "body_text",
+            Error: "error",
+            Header: "header",
+            Icons: "icons",
+            InputBackground: "input_background",
+            InputBorder: "input_border",
+            InputFilledText: "input_filled_text",
+            InputLabelsPlaceholders: "input_labels_placeholders",
+            LinksFocusedComponents: "links_focused_components",
+            PrimaryButton: "primary_button",
+            PrimaryButtonLabel: "primary_button_label",
+            SecondaryButtonBorder: "secondary_button_border",
+            SecondaryButtonLabel: "secondary_button_label",
+            Success: "success",
+            WidgetBackground: "widget_background",
+            WidgetBorder: "widget_border",
         },
-        FontURL: "font_url",
-        InputLabels: &management.BrandingThemeFontInputLabels{
-            Bold: true,
-            Size: 1.1,
+        Fonts: &management.BrandingThemeFonts{
+            BodyText: &management.BrandingThemeFontBodyText{
+                Bold: true,
+                Size: 1.1,
+            },
+            ButtonsText: &management.BrandingThemeFontButtonsText{
+                Bold: true,
+                Size: 1.1,
+            },
+            FontURL: "font_url",
+            InputLabels: &management.BrandingThemeFontInputLabels{
+                Bold: true,
+                Size: 1.1,
+            },
+            Links: &management.BrandingThemeFontLinks{
+                Bold: true,
+                Size: 1.1,
+            },
+            LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
+            ReferenceTextSize: 1.1,
+            Subtitle: &management.BrandingThemeFontSubtitle{
+                Bold: true,
+                Size: 1.1,
+            },
+            Title: &management.BrandingThemeFontTitle{
+                Bold: true,
+                Size: 1.1,
+            },
         },
-        Links: &management.BrandingThemeFontLinks{
-            Bold: true,
-            Size: 1.1,
+        PageBackground: &management.BrandingThemePageBackground{
+            BackgroundColor: "background_color",
+            BackgroundImageURL: "background_image_url",
+            PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
         },
-        LinksStyle: management.BrandingThemeFontLinksStyleEnumNormal,
-        ReferenceTextSize: 1.1,
-        Subtitle: &management.BrandingThemeFontSubtitle{
-            Bold: true,
-            Size: 1.1,
+        Widget: &management.BrandingThemeWidget{
+            HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
+            LogoHeight: 1.1,
+            LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
+            LogoURL: "logo_url",
+            SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
         },
-        Title: &management.BrandingThemeFontTitle{
-            Bold: true,
-            Size: 1.1,
-        },
-    },
-    PageBackground: &management.BrandingThemePageBackground{
-        BackgroundColor: "background_color",
-        BackgroundImageURL: "background_image_url",
-        PageLayout: management.BrandingThemePageBackgroundPageLayoutEnumCenter,
-    },
-    Widget: &management.BrandingThemeWidget{
-        HeaderTextAlignment: management.BrandingThemeWidgetHeaderTextAlignmentEnumCenter,
-        LogoHeight: 1.1,
-        LogoPosition: management.BrandingThemeWidgetLogoPositionEnumCenter,
-        LogoURL: "logo_url",
-        SocialButtonsLayout: management.BrandingThemeWidgetSocialButtonsLayoutEnumBottom,
-    },
-}
+    }
 client.Branding.Themes.Update(
-    context.TODO(),
-    "themeId",
-    request,
-)
+        context.TODO(),
+        "themeId",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -19989,14 +20218,15 @@ Retrieve a list of [phone providers](https://auth0.com/docs/customize/phone-mess
 
 ```go
 request := &management.ListBrandingPhoneProvidersRequestParameters{
-    Disabled: management.Bool(
-        true,
-    ),
-}
+        Disabled: management.Bool(
+            true,
+        ),
+    }
 client.Branding.Phone.Providers.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20052,17 +20282,18 @@ The `credentials` object requires different properties depending on the phone pr
 
 ```go
 request := &management.CreateBrandingPhoneProviderRequestContent{
-    Name: management.PhoneProviderNameEnumTwilio,
-    Credentials: &management.PhoneProviderCredentials{
-        TwilioProviderCredentials: &management.TwilioProviderCredentials{
-            AuthToken: "auth_token",
+        Name: management.PhoneProviderNameEnumTwilio,
+        Credentials: &management.PhoneProviderCredentials{
+            TwilioProviderCredentials: &management.TwilioProviderCredentials{
+                AuthToken: "auth_token",
+            },
         },
-    },
-}
+    }
 client.Branding.Phone.Providers.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20077,7 +20308,7 @@ client.Branding.Phone.Providers.Create(
 <dl>
 <dd>
 
-**name:** `management.PhoneProviderNameEnum` 
+**name:** `*management.PhoneProviderNameEnum` 
     
 </dd>
 </dl>
@@ -20141,9 +20372,10 @@ Retrieve [phone provider](https://auth0.com/docs/customize/phone-messages/config
 
 ```go
 client.Branding.Phone.Providers.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -20198,9 +20430,10 @@ Delete the configured phone provider.
 
 ```go
 client.Branding.Phone.Providers.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -20257,10 +20490,11 @@ The `credentials` object requires different properties depending on the phone pr
 ```go
 request := &management.UpdateBrandingPhoneProviderRequestContent{}
 client.Branding.Phone.Providers.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20333,13 +20567,14 @@ client.Branding.Phone.Providers.Update(
 
 ```go
 request := &management.CreatePhoneProviderSendTestRequestContent{
-    To: "to",
-}
+        To: "to",
+    }
 client.Branding.Phone.Providers.Test(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20397,14 +20632,15 @@ client.Branding.Phone.Providers.Test(
 
 ```go
 request := &management.ListPhoneTemplatesRequestParameters{
-    Disabled: management.Bool(
-        true,
-    ),
-}
+        Disabled: management.Bool(
+            true,
+        ),
+    }
 client.Branding.Phone.Templates.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20446,9 +20682,10 @@ client.Branding.Phone.Templates.List(
 ```go
 request := &management.CreatePhoneTemplateRequestContent{}
 client.Branding.Phone.Templates.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20505,9 +20742,10 @@ client.Branding.Phone.Templates.Create(
 
 ```go
 client.Branding.Phone.Templates.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -20548,9 +20786,10 @@ client.Branding.Phone.Templates.Get(
 
 ```go
 client.Branding.Phone.Templates.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -20592,10 +20831,11 @@ client.Branding.Phone.Templates.Delete(
 ```go
 request := &management.UpdatePhoneTemplateRequestContent{}
 client.Branding.Phone.Templates.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20652,13 +20892,14 @@ client.Branding.Phone.Templates.Update(
 
 ```go
 request := map[string]any{
-    "key": "value",
-}
+        "key": "value",
+    }
 client.Branding.Phone.Templates.Reset(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20707,13 +20948,14 @@ client.Branding.Phone.Templates.Reset(
 
 ```go
 request := &management.CreatePhoneTemplateTestNotificationRequestContent{
-    To: "to",
-}
+        To: "to",
+    }
 client.Branding.Phone.Templates.Test(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20771,21 +21013,22 @@ client.Branding.Phone.Templates.Test(
 
 ```go
 request := &management.ListClientGrantOrganizationsRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.ClientGrants.Organizations.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -20867,9 +21110,10 @@ Get the details of a client credential.
 
 ```go
 client.Clients.Credentials.List(
-    context.TODO(),
-    "client_id",
-)
+        context.TODO(),
+        "client_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -20980,13 +21224,14 @@ The credential will be created but not yet enabled for use until you set the cor
 
 ```go
 request := &management.PostClientCredentialRequestContent{
-    CredentialType: management.ClientCredentialTypeEnumPublicKey,
-}
+        CredentialType: management.ClientCredentialTypeEnumPublicKey,
+    }
 client.Clients.Credentials.Create(
-    context.TODO(),
-    "client_id",
-    request,
-)
+        context.TODO(),
+        "client_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21009,7 +21254,7 @@ client.Clients.Credentials.Create(
 <dl>
 <dd>
 
-**credentialType:** `management.ClientCredentialTypeEnum` 
+**credentialType:** `*management.ClientCredentialTypeEnum` 
     
 </dd>
 </dl>
@@ -21107,10 +21352,11 @@ Get the details of a client credential.
 
 ```go
 client.Clients.Credentials.Get(
-    context.TODO(),
-    "client_id",
-    "credential_id",
-)
+        context.TODO(),
+        "client_id",
+        "credential_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -21173,10 +21419,11 @@ Delete a client credential you previously created. May be enabled or disabled. F
 
 ```go
 client.Clients.Credentials.Delete(
-    context.TODO(),
-    "client_id",
-    "credential_id",
-)
+        context.TODO(),
+        "client_id",
+        "credential_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -21240,11 +21487,12 @@ Change a client credential you previously created. May be enabled or disabled. F
 ```go
 request := &management.PatchClientCredentialRequestContent{}
 client.Clients.Credentials.Update(
-    context.TODO(),
-    "client_id",
-    "credential_id",
-    request,
-)
+        context.TODO(),
+        "client_id",
+        "credential_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21319,27 +21567,28 @@ Retrieve all connections that are enabled for the specified [Application](https:
 
 ```go
 request := &management.ConnectionsGetRequest{
-    Strategy: []*management.ConnectionStrategyEnum{
-        management.ConnectionStrategyEnumAd.Ptr(),
-    },
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Strategy: []*management.ConnectionStrategyEnum{
+            management.ConnectionStrategyEnumAd.Ptr(),
+        },
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Clients.Connections.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21435,17 +21684,18 @@ Retrieve a list of directory provisioning configurations of a tenant.
 
 ```go
 request := &management.ListDirectoryProvisioningsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Connections.DirectoryProvisioning.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21508,9 +21758,10 @@ Retrieve the directory provisioning configuration of a connection.
 
 ```go
 client.Connections.DirectoryProvisioning.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -21566,10 +21817,11 @@ Create a directory provisioning configuration for a connection.
 ```go
 request := &management.CreateDirectoryProvisioningRequestContent{}
 client.Connections.DirectoryProvisioning.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21632,9 +21884,10 @@ Delete the directory provisioning configuration of a connection.
 
 ```go
 client.Connections.DirectoryProvisioning.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -21690,10 +21943,11 @@ Update the directory provisioning configuration of a connection.
 ```go
 request := &management.UpdateDirectoryProvisioningRequestContent{}
 client.Connections.DirectoryProvisioning.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21756,9 +22010,10 @@ Retrieve the directory provisioning default attribute mapping of a connection.
 
 ```go
 client.Connections.DirectoryProvisioning.GetDefaultMapping(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -21813,21 +22068,22 @@ Retrieve the configured synchronized groups for a connection directory provision
 
 ```go
 request := &management.ListSynchronizedGroupsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Q: management.String(
-        "q",
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Q: management.String(
+            "q",
+        ),
+    }
 client.Connections.DirectoryProvisioning.ListSynchronizedGroups(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21906,17 +22162,18 @@ Add synchronized group selections to a directory provisioning configuration.
 
 ```go
 request := &management.AddSynchronizedGroupsRequestContent{
-    Groups: []*management.SynchronizedGroupPayload{
-        &management.SynchronizedGroupPayload{
-            ID: "id",
+        Groups: []*management.SynchronizedGroupPayload{
+            &management.SynchronizedGroupPayload{
+                ID: "id",
+            },
         },
-    },
-}
+    }
 client.Connections.DirectoryProvisioning.AddSynchronizedGroupSelections(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -21979,17 +22236,18 @@ Create or replace the selected groups for a connection directory provisioning co
 
 ```go
 request := &management.ReplaceSynchronizedGroupsRequestContent{
-    Groups: []*management.SynchronizedGroupPayload{
-        &management.SynchronizedGroupPayload{
-            ID: "id",
+        Groups: []*management.SynchronizedGroupPayload{
+            &management.SynchronizedGroupPayload{
+                ID: "id",
+            },
         },
-    },
-}
+    }
 client.Connections.DirectoryProvisioning.Set(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22052,17 +22310,18 @@ Delete synchronized group selections for a directory provisioning configuration
 
 ```go
 request := &management.DeleteSynchronizedGroupsRequestContent{
-    Groups: []*management.SynchronizedGroupSelectionID{
-        &management.SynchronizedGroupSelectionID{
-            ID: "id",
+        Groups: []*management.SynchronizedGroupSelectionID{
+            &management.SynchronizedGroupSelectionID{
+                ID: "id",
+            },
         },
-    },
-}
+    }
 client.Connections.DirectoryProvisioning.DeleteSynchronizedGroupSelections(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22126,17 +22385,18 @@ Retrieve a list of SCIM configurations of a tenant.
 
 ```go
 request := &management.ListSCIMConfigurationsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Connections.SCIMConfiguration.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22199,9 +22459,10 @@ Retrieves a scim configuration by its `connectionId`.
 
 ```go
 client.Connections.SCIMConfiguration.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -22257,10 +22518,11 @@ Create a scim configuration for a connection.
 ```go
 request := &management.CreateSCIMConfigurationRequestContent{}
 client.Connections.SCIMConfiguration.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22323,9 +22585,10 @@ Deletes a scim configuration by its `connectionId`.
 
 ```go
 client.Connections.SCIMConfiguration.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -22380,16 +22643,17 @@ Update a scim configuration by its `connectionId`.
 
 ```go
 request := &management.UpdateSCIMConfigurationRequestContent{
-    UserIDAttribute: "user_id_attribute",
-    Mapping: []*management.SCIMMappingItem{
-        &management.SCIMMappingItem{},
-    },
-}
+        UserIDAttribute: "user_id_attribute",
+        Mapping: []*management.SCIMMappingItem{
+            &management.SCIMMappingItem{},
+        },
+    }
 client.Connections.SCIMConfiguration.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22460,9 +22724,10 @@ Retrieves a scim configuration's default mapping by its `connectionId`.
 
 ```go
 client.Connections.SCIMConfiguration.GetDefaultMapping(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -22520,18 +22785,19 @@ Retrieve all clients that have the specified [connection](https://auth0.com/docs
 
 ```go
 request := &management.GetConnectionEnabledClientsRequestParameters{
-    Take: management.Int(
-        1,
-    ),
-    From: management.String(
-        "from",
-    ),
-}
+        Take: management.Int(
+            1,
+        ),
+        From: management.String(
+            "from",
+        ),
+    }
 client.Connections.Clients.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22588,16 +22854,17 @@ client.Connections.Clients.Get(
 
 ```go
 request := []*management.UpdateEnabledClientConnectionsRequestContentItem{
-    &management.UpdateEnabledClientConnectionsRequestContentItem{
-        ClientID: "client_id",
-        Status: true,
-    },
-}
+        &management.UpdateEnabledClientConnectionsRequestContentItem{
+            ClientID: "client_id",
+            Status: true,
+        },
+    }
 client.Connections.Clients.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22661,9 +22928,10 @@ Gets the connection keys for the Okta, OIDC, or SAML (samlp) connection strategy
 
 ```go
 client.Connections.Keys.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -22719,10 +22987,11 @@ Provision initial connection keys for Okta, OIDC, or SAML (samlp) connection str
 ```go
 request := &management.PostConnectionKeysRequestContent{}
 client.Connections.Keys.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22786,10 +23055,11 @@ Rotates the connection keys for the Okta, OIDC, or SAML (samlp) connection strat
 ```go
 request := &management.RotateConnectionKeysRequestContent{}
 client.Connections.Keys.Rotate(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22853,13 +23123,14 @@ Deletes a specified connection user by its email (you cannot delete all users fr
 
 ```go
 request := &management.DeleteConnectionUsersByEmailQueryParameters{
-    Email: "email",
-}
+        Email: "email",
+    }
 client.Connections.Users.DeleteByEmail(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -22923,9 +23194,10 @@ Request an on-demand synchronization of the directory.
 
 ```go
 client.Connections.DirectoryProvisioning.Synchronizations.Create(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -22981,9 +23253,10 @@ Retrieves all scim tokens by its connection `id`.
 
 ```go
 client.Connections.SCIMConfiguration.Tokens.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -23039,10 +23312,11 @@ Create a scim token for a scim client.
 ```go
 request := &management.CreateSCIMTokenRequestContent{}
 client.Connections.SCIMConfiguration.Tokens.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23113,10 +23387,11 @@ Deletes a scim token by its connection `id` and `tokenId`.
 
 ```go
 client.Connections.SCIMConfiguration.Tokens.Delete(
-    context.TODO(),
-    "id",
-    "tokenId",
-)
+        context.TODO(),
+        "id",
+        "tokenId",
+    )
+}
 ```
 </dd>
 </dl>
@@ -23180,17 +23455,18 @@ Retrieve details of the [email provider configuration](https://auth0.com/docs/cu
 
 ```go
 request := &management.GetEmailProviderRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Emails.Provider.Get(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23277,17 +23553,18 @@ options, which will be used when sending an email:
 
 ```go
 request := &management.CreateEmailProviderRequestContent{
-    Name: management.EmailProviderNameEnumMailgun,
-    Credentials: &management.EmailProviderCredentialsSchema{
-        EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
-            APIKey: "api_key",
+        Name: management.EmailProviderNameEnumMailgun,
+        Credentials: &management.EmailProviderCredentialsSchema{
+            EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
+                APIKey: "api_key",
+            },
         },
-    },
-}
+    }
 client.Emails.Provider.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23302,7 +23579,7 @@ client.Emails.Provider.Create(
 <dl>
 <dd>
 
-**name:** `management.EmailProviderNameEnum` 
+**name:** `*management.EmailProviderNameEnum` 
     
 </dd>
 </dl>
@@ -23374,8 +23651,9 @@ Delete the email provider.
 
 ```go
 client.Emails.Provider.Delete(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -23441,9 +23719,10 @@ options, which will be used when sending an email:
 ```go
 request := &management.UpdateEmailProviderRequestContent{}
 client.Emails.Provider.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23517,30 +23796,31 @@ client.Emails.Provider.Update(
 
 ```go
 request := &management.ListEventStreamDeliveriesRequestParameters{
-    Statuses: management.String(
-        "statuses",
-    ),
-    EventTypes: management.String(
-        "event_types",
-    ),
-    DateFrom: management.String(
-        "date_from",
-    ),
-    DateTo: management.String(
-        "date_to",
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        Statuses: management.String(
+            "statuses",
+        ),
+        EventTypes: management.String(
+            "event_types",
+        ),
+        DateFrom: management.String(
+            "date_from",
+        ),
+        DateTo: management.String(
+            "date_to",
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.EventStreams.Deliveries.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23629,10 +23909,11 @@ client.EventStreams.Deliveries.List(
 
 ```go
 client.EventStreams.Deliveries.GetHistory(
-    context.TODO(),
-    "id",
-    "event_id",
-)
+        context.TODO(),
+        "id",
+        "event_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -23683,10 +23964,11 @@ client.EventStreams.Deliveries.GetHistory(
 ```go
 request := &management.CreateEventStreamRedeliveryRequestContent{}
 client.EventStreams.Redeliveries.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23725,7 +24007,7 @@ client.EventStreams.Redeliveries.Create(
 <dl>
 <dd>
 
-**statuses:** `[]management.EventStreamDeliveryStatusEnum` — Filter by status
+**statuses:** `[]*management.EventStreamDeliveryStatusEnum` — Filter by status
     
 </dd>
 </dl>
@@ -23733,7 +24015,7 @@ client.EventStreams.Redeliveries.Create(
 <dl>
 <dd>
 
-**eventTypes:** `[]management.EventStreamEventTypeEnum` — Filter by event type
+**eventTypes:** `[]*management.EventStreamEventTypeEnum` — Filter by event type
     
 </dd>
 </dl>
@@ -23759,10 +24041,11 @@ client.EventStreams.Redeliveries.Create(
 
 ```go
 client.EventStreams.Redeliveries.CreateByID(
-    context.TODO(),
-    "id",
-    "event_id",
-)
+        context.TODO(),
+        "id",
+        "event_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -23826,24 +24109,25 @@ Retrieve a paginated list of experiments for the tenant, with optional filters.
 
 ```go
 request := &management.ListExperimentsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Status: management.ExperimentStatusEnumDraft.Ptr(),
-    AuthenticationFlow: management.String(
-        "authentication_flow",
-    ),
-    FeatureFlagID: management.String(
-        "feature_flag_id",
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Status: management.ExperimentStatusEnumDraft.Ptr(),
+        AuthenticationFlow: management.String(
+            "authentication_flow",
+        ),
+        FeatureFlagID: management.String(
+            "feature_flag_id",
+        ),
+    }
 client.Experimentation.Experiments.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23930,15 +24214,16 @@ Create a new experiment for A/B testing.
 
 ```go
 request := &management.CreateExperimentRequestContent{
-    Name: "name",
-    FeatureFlagID: "feature_flag_id",
-    AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
-    AllocationStrategy: management.AllocationStrategyEnumPercentage,
-}
+        Name: "name",
+        FeatureFlagID: "feature_flag_id",
+        AuthenticationFlow: management.AuthenticationFlowEnumAuthentication,
+        AllocationStrategy: management.AllocationStrategyEnumPercentage,
+    }
 client.Experimentation.Experiments.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -23977,7 +24262,7 @@ client.Experimentation.Experiments.Create(
 <dl>
 <dd>
 
-**authenticationFlow:** `management.AuthenticationFlowEnum` 
+**authenticationFlow:** `*management.AuthenticationFlowEnum` 
     
 </dd>
 </dl>
@@ -23993,7 +24278,7 @@ client.Experimentation.Experiments.Create(
 <dl>
 <dd>
 
-**allocationStrategy:** `management.AllocationStrategyEnum` — The traffic allocation strategy for this experiment
+**allocationStrategy:** `*management.AllocationStrategyEnum` — The traffic allocation strategy for this experiment
     
 </dd>
 </dl>
@@ -24049,9 +24334,10 @@ Retrieve a single experiment with its allocations by ID.
 
 ```go
 client.Experimentation.Experiments.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -24106,9 +24392,10 @@ Permanently delete an experiment and its allocations by ID. Active experiments c
 
 ```go
 client.Experimentation.Experiments.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -24164,10 +24451,11 @@ Partially update an experiment by ID. Only provided fields are updated. Providin
 ```go
 request := &management.UpdateExperimentRequestParameters{}
 client.Experimentation.Experiments.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -24278,13 +24566,14 @@ Increments the current ramp index to the requested target level. Up-only: the ta
 
 ```go
 request := &management.AdvanceRampRequestContent{
-    TargetLevel: 1,
-}
+        TargetLevel: 1,
+    }
 client.Experimentation.Experiments.AdvanceRamp(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -24347,9 +24636,10 @@ Checks whether an experiment is ready to be activated. Returns is_valid boolean 
 
 ```go
 client.Experimentation.Experiments.Validate(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -24405,19 +24695,20 @@ Retrieve a paginated list of feature flags for the tenant.
 
 ```go
 request := &management.ListFeatureFlagsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Type: management.FeatureFlagTypeEnumAuth0.Ptr(),
-    Status: management.FeatureFlagStatusEnumDraft.Ptr(),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Type: management.FeatureFlagTypeEnumAuth0.Ptr(),
+        Status: management.FeatureFlagStatusEnumDraft.Ptr(),
+    }
 client.Experimentation.FeatureFlags.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -24496,13 +24787,14 @@ Create a new feature flag with parameters for use in experiments.
 
 ```go
 request := &management.CreateFeatureFlagRequestContent{
-    Name: "name",
-    Parameters: map[string]*management.FeatureFlagConfigParam{},
-}
+        Name: "name",
+        Parameters: map[string]*management.FeatureFlagConfigParam{},
+    }
 client.Experimentation.FeatureFlags.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -24573,9 +24865,10 @@ Retrieve a single feature flag by its ID.
 
 ```go
 client.Experimentation.FeatureFlags.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -24630,9 +24923,10 @@ Delete a feature flag by ID. Idempotent: returns 204 even if flag does not exist
 
 ```go
 client.Experimentation.FeatureFlags.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -24688,10 +24982,11 @@ Partially update a feature flag by ID. Only provided fields are updated.
 ```go
 request := &management.UpdateFeatureFlagRequestContent{}
 client.Experimentation.FeatureFlags.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -24779,19 +25074,20 @@ Retrieve a paginated list of segments for the tenant.
 
 ```go
 request := &management.ListSegmentsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Type: management.SegmentTypeFilterEnumAuth0.Ptr(),
-    Status: management.SegmentStatusEnumActive.Ptr(),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Type: management.SegmentTypeFilterEnumAuth0.Ptr(),
+        Status: management.SegmentStatusEnumActive.Ptr(),
+    }
 client.Experimentation.Segments.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -24870,15 +25166,16 @@ Create a new segment with rule-based membership criteria for use in experiments.
 
 ```go
 request := &management.CreateSegmentRequestContent{
-    Name: "name",
-    Rules: []*management.SegmentRule{
-        &management.SegmentRule{},
-    },
-}
+        Name: "name",
+        Rules: []*management.SegmentRule{
+            &management.SegmentRule{},
+        },
+    }
 client.Experimentation.Segments.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -24949,9 +25246,10 @@ Retrieve a single segment by its ID.
 
 ```go
 client.Experimentation.Segments.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25006,9 +25304,10 @@ Delete a segment by ID. Idempotent: returns 204 even if segment does not exist.
 
 ```go
 client.Experimentation.Segments.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25064,10 +25363,11 @@ Partially update a segment by ID. Only provided fields are updated. Sending rule
 ```go
 request := &management.UpdateSegmentRequestContent{}
 client.Experimentation.Segments.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25155,9 +25455,10 @@ Retrieve all variations defined for a specific feature flag.
 
 ```go
 client.Experimentation.FeatureFlags.Variations.List(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25212,16 +25513,17 @@ Create a new variation with parameter overrides for a specific feature flag.
 
 ```go
 request := &management.CreateVariationRequestContent{
-    Name: "name",
-    Overrides: map[string]any{
-        "key": "value",
-    },
-}
+        Name: "name",
+        Overrides: map[string]any{
+            "key": "value",
+        },
+    }
 client.Experimentation.FeatureFlags.Variations.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25300,10 +25602,11 @@ Retrieve a single variation by its ID.
 
 ```go
 client.Experimentation.FeatureFlags.Variations.Get(
-    context.TODO(),
-    "id",
-    "vid",
-)
+        context.TODO(),
+        "id",
+        "vid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25366,10 +25669,11 @@ Delete a variation by ID. Returns 204 if the variation does not exist. Returns 4
 
 ```go
 client.Experimentation.FeatureFlags.Variations.Delete(
-    context.TODO(),
-    "id",
-    "vid",
-)
+        context.TODO(),
+        "id",
+        "vid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25433,11 +25737,12 @@ Partially update a variation by ID. Only provided fields are updated.
 ```go
 request := &management.UpdateVariationRequestContent{}
 client.Experimentation.FeatureFlags.Variations.Update(
-    context.TODO(),
-    "id",
-    "vid",
-    request,
-)
+        context.TODO(),
+        "id",
+        "vid",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25511,21 +25816,22 @@ client.Experimentation.FeatureFlags.Variations.Update(
 
 ```go
 request := &management.ListFlowExecutionsRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Flows.Executions.List(
-    context.TODO(),
-    "flow_id",
-    request,
-)
+        context.TODO(),
+        "flow_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25590,16 +25896,17 @@ client.Flows.Executions.List(
 
 ```go
 request := &management.GetFlowExecutionRequestParameters{
-    Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
-        management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
-    },
-}
+        Hydrate: []*management.GetFlowExecutionRequestParametersHydrateEnum{
+            management.GetFlowExecutionRequestParametersHydrateEnumDebug.Ptr(),
+        },
+    }
 client.Flows.Executions.Get(
-    context.TODO(),
-    "flow_id",
-    "execution_id",
-    request,
-)
+        context.TODO(),
+        "flow_id",
+        "execution_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25656,10 +25963,11 @@ client.Flows.Executions.Get(
 
 ```go
 client.Flows.Executions.Delete(
-    context.TODO(),
-    "flow_id",
-    "execution_id",
-)
+        context.TODO(),
+        "flow_id",
+        "execution_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25709,20 +26017,21 @@ client.Flows.Executions.Delete(
 
 ```go
 request := &management.ListFlowsVaultConnectionsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Flows.Vault.Connections.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25779,22 +26088,23 @@ client.Flows.Vault.Connections.List(
 
 ```go
 request := &management.CreateFlowsVaultConnectionRequestContent{
-    CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
-        CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
-            Name: "name",
-            AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
-            Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
-                Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
-                APIKey: "api_key",
-                BaseURL: "base_url",
+        CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
+            CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
+                Name: "name",
+                AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
+                Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
+                    Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
+                    APIKey: "api_key",
+                    BaseURL: "base_url",
+                },
             },
         },
-    },
-}
+    }
 client.Flows.Vault.Connections.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25835,9 +26145,10 @@ client.Flows.Vault.Connections.Create(
 
 ```go
 client.Flows.Vault.Connections.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25878,9 +26189,10 @@ client.Flows.Vault.Connections.Get(
 
 ```go
 client.Flows.Vault.Connections.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -25922,10 +26234,11 @@ client.Flows.Vault.Connections.Delete(
 ```go
 request := &management.UpdateFlowsVaultConnectionRequestContent{}
 client.Flows.Vault.Connections.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -25997,24 +26310,25 @@ List all users that are a member of this group.
 
 ```go
 request := &management.GetGroupMembersRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Groups.Members.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26102,18 +26416,19 @@ Lists the [roles](https://auth0.com/docs/manage-users/access-control/rbac) assig
 
 ```go
 request := &management.ListGroupRolesRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Groups.Roles.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26184,15 +26499,16 @@ Assign one or more [roles](https://auth0.com/docs/manage-users/access-control/rb
 
 ```go
 request := &management.CreateGroupRolesRequestParameters{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Groups.Roles.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26255,15 +26571,16 @@ Unassign one or more [roles](https://auth0.com/docs/manage-users/access-control/
 
 ```go
 request := &management.DeleteGroupRolesRequestContent{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Groups.Roles.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26327,12 +26644,13 @@ Create a [multi-factor authentication (MFA) enrollment ticket](https://auth0.com
 
 ```go
 request := &management.CreateGuardianEnrollmentTicketRequestContent{
-    UserID: "user_id",
-}
+        UserID: "user_id",
+    }
 client.Guardian.Enrollments.CreateTicket(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26427,9 +26745,10 @@ Retrieve details, such as status and type, for a specific multi-factor authentic
 
 ```go
 client.Guardian.Enrollments.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -26484,9 +26803,10 @@ Remove a specific multi-factor authentication (MFA) enrollment from a user's acc
 
 ```go
 client.Guardian.Enrollments.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -26542,8 +26862,9 @@ Retrieve details of all <a href="https://auth0.com/docs/secure/multi-factor-auth
 
 ```go
 client.Guardian.Factors.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -26583,13 +26904,14 @@ Update the status (i.e., enabled or disabled) of a specific multi-factor authent
 
 ```go
 request := &management.SetGuardianFactorRequestContent{
-    Enabled: true,
-}
+        Enabled: true,
+    }
 client.Guardian.Factors.Set(
-    context.TODO(),
-    management.GuardianFactorNameEnumPushNotification.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.GuardianFactorNameEnumPushNotification.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26660,8 +26982,9 @@ The following policies are supported:
 
 ```go
 client.Guardian.Policies.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -26708,12 +27031,13 @@ The following policies are supported:
 
 ```go
 request := []management.MfaPolicyEnum{
-    management.MfaPolicyEnumAllApplications,
-}
+        management.MfaPolicyEnumAllApplications,
+    }
 client.Guardian.Policies.Set(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26769,8 +27093,9 @@ TODO: Link this endpoint to relevant documentation when available.
 
 ```go
 client.Guardian.Factors.Email.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -26810,13 +27135,14 @@ TODO: Link this endpoint to relevant documentation when available.
 
 ```go
 request := &management.SetEmailFactorSettingsRequestContent{
-    OtpLength: 1,
-    OtpExpirationTime: 1,
-}
+        OtpLength: 1,
+        OtpExpirationTime: 1,
+    }
 client.Guardian.Factors.Email.Set(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26880,8 +27206,9 @@ Retrieve list of <a href="https://auth0.com/docs/secure/multi-factor-authenticat
 
 ```go
 client.Guardian.Factors.Phone.GetMessageTypes(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -26921,14 +27248,15 @@ Replace the list of <a href="https://auth0.com/docs/secure/multi-factor-authenti
 
 ```go
 request := &management.SetGuardianFactorPhoneMessageTypesRequestContent{
-    MessageTypes: []management.GuardianFactorPhoneFactorMessageTypeEnum{
-        management.GuardianFactorPhoneFactorMessageTypeEnumSms,
-    },
-}
+        MessageTypes: []management.GuardianFactorPhoneFactorMessageTypeEnum{
+            management.GuardianFactorPhoneFactorMessageTypeEnumSms,
+        },
+    }
 client.Guardian.Factors.Phone.SetMessageTypes(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -26943,7 +27271,7 @@ client.Guardian.Factors.Phone.SetMessageTypes(
 <dl>
 <dd>
 
-**messageTypes:** `[]management.GuardianFactorPhoneFactorMessageTypeEnum` — The list of phone factors to enable on the tenant. Can include `sms` and `voice`.
+**messageTypes:** `[]*management.GuardianFactorPhoneFactorMessageTypeEnum` — The list of phone factors to enable on the tenant. Can include `sms` and `voice`.
     
 </dd>
 </dl>
@@ -26983,8 +27311,9 @@ Retrieve configuration details for a Twilio phone provider that has been set up 
 
 ```go
 client.Guardian.Factors.Phone.GetTwilioProvider(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -27025,9 +27354,10 @@ Update the configuration of a Twilio phone provider that has been set up in your
 ```go
 request := &management.SetGuardianFactorsProviderPhoneTwilioRequestContent{}
 client.Guardian.Factors.Phone.SetTwilioProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27106,8 +27436,9 @@ Retrieve details of the multi-factor authentication phone provider configured fo
 
 ```go
 client.Guardian.Factors.Phone.GetSelectedProvider(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -27133,12 +27464,13 @@ client.Guardian.Factors.Phone.GetSelectedProvider(
 
 ```go
 request := &management.SetGuardianFactorsProviderPhoneRequestContent{
-    Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
-}
+        Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
+    }
 client.Guardian.Factors.Phone.SetProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27153,7 +27485,7 @@ client.Guardian.Factors.Phone.SetProvider(
 <dl>
 <dd>
 
-**provider:** `management.GuardianFactorsProviderSmsProviderEnum` 
+**provider:** `*management.GuardianFactorsProviderSmsProviderEnum` 
     
 </dd>
 </dl>
@@ -27193,8 +27525,9 @@ TODO: Link this endpoint to relevant documentation when available.
 
 ```go
 client.Guardian.Factors.Phone.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -27234,13 +27567,14 @@ TODO: Link this endpoint to relevant documentation when available.
 
 ```go
 request := &management.SetPhoneFactorSettingsRequestContent{
-    OtpLength: 1,
-    OtpExpirationTime: 1,
-}
+        OtpLength: 1,
+        OtpExpirationTime: 1,
+    }
 client.Guardian.Factors.Phone.Set(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27303,8 +27637,9 @@ Retrieve details of the multi-factor authentication enrollment and verification 
 
 ```go
 client.Guardian.Factors.Phone.GetTemplates(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -27344,13 +27679,14 @@ Customize the messages sent to complete phone enrollment and verification (subsc
 
 ```go
 request := &management.SetGuardianFactorPhoneTemplatesRequestContent{
-    EnrollmentMessage: "enrollment_message",
-    VerificationMessage: "verification_message",
-}
+        EnrollmentMessage: "enrollment_message",
+        VerificationMessage: "verification_message",
+    }
 client.Guardian.Factors.Phone.SetTemplates(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27414,8 +27750,9 @@ Retrieve configuration details for the multi-factor authentication APNS provider
 
 ```go
 client.Guardian.Factors.PushNotification.GetApnsProvider(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -27456,9 +27793,10 @@ Overwrite all configuration details of the multi-factor authentication APNS prov
 ```go
 request := &management.SetGuardianFactorsProviderPushNotificationApnsRequestContent{}
 client.Guardian.Factors.PushNotification.SetApnsProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27530,9 +27868,10 @@ Modify configuration details of the multi-factor authentication APNS provider as
 ```go
 request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
 client.Guardian.Factors.PushNotification.UpdateApnsProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27604,9 +27943,10 @@ Overwrite all configuration details of the multi-factor authentication FCM provi
 ```go
 request := &management.SetGuardianFactorsProviderPushNotificationFcmRequestContent{}
 client.Guardian.Factors.PushNotification.SetFcmProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27662,9 +28002,10 @@ Modify configuration details of the multi-factor authentication FCM provider ass
 ```go
 request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
 client.Guardian.Factors.PushNotification.UpdateFcmProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27720,9 +28061,10 @@ Overwrite all configuration details of the multi-factor authentication FCMV1 pro
 ```go
 request := &management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
 client.Guardian.Factors.PushNotification.SetFcmv1Provider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27778,9 +28120,10 @@ Modify configuration details of the multi-factor authentication FCMV1 provider a
 ```go
 request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
 client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27835,8 +28178,9 @@ Retrieve configuration details for an AWS SNS push notification provider that ha
 
 ```go
 client.Guardian.Factors.PushNotification.GetSnsProvider(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -27877,9 +28221,10 @@ Configure the [AWS SNS push notification provider configuration](https://auth0.c
 ```go
 request := &management.SetGuardianFactorsProviderPushNotificationSnsRequestContent{}
 client.Guardian.Factors.PushNotification.SetSnsProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -27967,9 +28312,10 @@ Configure the [AWS SNS push notification provider configuration](https://auth0.c
 ```go
 request := &management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent{}
 client.Guardian.Factors.PushNotification.UpdateSnsProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28056,8 +28402,9 @@ Modify the push notification provider configured for your tenant. For more infor
 
 ```go
 client.Guardian.Factors.PushNotification.GetSelectedProvider(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -28097,12 +28444,13 @@ Modify the push notification provider configured for your tenant. For more infor
 
 ```go
 request := &management.SetGuardianFactorsProviderPushNotificationRequestContent{
-    Provider: management.GuardianFactorsProviderPushNotificationProviderDataEnumGuardian,
-}
+        Provider: management.GuardianFactorsProviderPushNotificationProviderDataEnumGuardian,
+    }
 client.Guardian.Factors.PushNotification.SetProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28117,7 +28465,7 @@ client.Guardian.Factors.PushNotification.SetProvider(
 <dl>
 <dd>
 
-**provider:** `management.GuardianFactorsProviderPushNotificationProviderDataEnum` 
+**provider:** `*management.GuardianFactorsProviderPushNotificationProviderDataEnum` 
     
 </dd>
 </dl>
@@ -28160,8 +28508,9 @@ Retrieve the <a href="https://auth0.com/docs/multifactor-authentication/twilio-c
 
 ```go
 client.Guardian.Factors.Sms.GetTwilioProvider(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -28204,9 +28553,10 @@ This endpoint has been deprecated. To complete this action, use the <a href="htt
 ```go
 request := &management.SetGuardianFactorsProviderSmsTwilioRequestContent{}
 client.Guardian.Factors.Sms.SetTwilioProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28287,8 +28637,9 @@ This endpoint has been deprecated. To complete this action, use the <a href="htt
 
 ```go
 client.Guardian.Factors.Sms.GetSelectedProvider(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -28330,12 +28681,13 @@ This endpoint has been deprecated. To complete this action, use the <a href="htt
 
 ```go
 request := &management.SetGuardianFactorsProviderSmsRequestContent{
-    Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
-}
+        Provider: management.GuardianFactorsProviderSmsProviderEnumAuth0,
+    }
 client.Guardian.Factors.Sms.SetProvider(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28350,7 +28702,7 @@ client.Guardian.Factors.Sms.SetProvider(
 <dl>
 <dd>
 
-**provider:** `management.GuardianFactorsProviderSmsProviderEnum` 
+**provider:** `*management.GuardianFactorsProviderSmsProviderEnum` 
     
 </dd>
 </dl>
@@ -28392,8 +28744,9 @@ This endpoint has been deprecated. To complete this action, use the <a href="htt
 
 ```go
 client.Guardian.Factors.Sms.GetTemplates(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -28435,13 +28788,14 @@ This endpoint has been deprecated. To complete this action, use the <a href="htt
 
 ```go
 request := &management.SetGuardianFactorSmsTemplatesRequestContent{
-    EnrollmentMessage: "enrollment_message",
-    VerificationMessage: "verification_message",
-}
+        EnrollmentMessage: "enrollment_message",
+        VerificationMessage: "verification_message",
+    }
 client.Guardian.Factors.Sms.SetTemplates(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28505,8 +28859,9 @@ Retrieves the DUO account and factor configuration.
 
 ```go
 client.Guardian.Factors.Duo.Settings.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -28547,9 +28902,10 @@ Set the DUO account configuration and other properties specific to this factor.
 ```go
 request := &management.SetGuardianFactorDuoSettingsRequestContent{}
 client.Guardian.Factors.Duo.Settings.Set(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28607,9 +28963,10 @@ client.Guardian.Factors.Duo.Settings.Set(
 ```go
 request := &management.UpdateGuardianFactorDuoSettingsRequestContent{}
 client.Guardian.Factors.Duo.Settings.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28681,9 +29038,10 @@ Retrieve a hook's secrets by the ID of the hook.
 
 ```go
 client.Hooks.Secrets.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -28738,13 +29096,14 @@ Add one or more secrets to an existing hook. Accepts an object of key-value pair
 
 ```go
 request := map[string]string{
-    "key": "value",
-}
+        "key": "value",
+    }
 client.Hooks.Secrets.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28807,13 +29166,14 @@ Delete one or more existing secrets for a given hook. Accepts an array of secret
 
 ```go
 request := []string{
-    "string",
-}
+        "string",
+    }
 client.Hooks.Secrets.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28876,13 +29236,14 @@ Update one or more existing secrets for an existing hook. Accepts an object of k
 
 ```go
 request := map[string]string{
-    "key": "value",
-}
+        "key": "value",
+    }
 client.Hooks.Secrets.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -28947,9 +29308,10 @@ Export all users to a file via a long-running job.
 ```go
 request := &management.CreateExportUsersRequestContent{}
 client.Jobs.UsersExports.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29029,15 +29391,16 @@ Import users from a <a href="https://auth0.com/docs/users/references/bulk-import
 
 ```go
 request := &management.CreateImportUsersRequestContent{
-    Users: strings.NewReader(
-        "",
-    ),
-    ConnectionID: "connection_id",
-}
+        Users: strings.NewReader(
+            "",
+        ),
+        ConnectionID: "connection_id",
+    }
 client.Jobs.UsersImports.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29080,12 +29443,13 @@ Note: You must have the `Status` toggle enabled for the verification email templ
 
 ```go
 request := &management.CreateVerificationEmailRequestContent{
-    UserID: "user_id",
-}
+        UserID: "user_id",
+    }
 client.Jobs.VerificationEmail.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29165,9 +29529,10 @@ Retrieve error details of a failed job.
 
 ```go
 client.Jobs.Errors.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -29223,8 +29588,9 @@ Get entire jwks representation of custom signing keys.
 
 ```go
 client.Keys.CustomSigning.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -29264,16 +29630,17 @@ Create or replace entire jwks representation of custom signing keys.
 
 ```go
 request := &management.SetCustomSigningKeysRequestContent{
-    Keys: []*management.CustomSigningKeyJwk{
-        &management.CustomSigningKeyJwk{
-            Kty: management.CustomSigningKeyTypeEnumEc,
+        Keys: []*management.CustomSigningKeyJwk{
+            &management.CustomSigningKeyJwk{
+                Kty: management.CustomSigningKeyTypeEnumEc,
+            },
         },
-    },
-}
+    }
 client.Keys.CustomSigning.Set(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29328,8 +29695,9 @@ Delete entire jwks representation of custom signing keys.
 
 ```go
 client.Keys.CustomSigning.Delete(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -29370,20 +29738,21 @@ Retrieve details of all the encryption keys associated with your tenant.
 
 ```go
 request := &management.ListEncryptionKeysRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Keys.Encryption.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29454,12 +29823,13 @@ Create the new, pre-activated encryption key, without the key material.
 
 ```go
 request := &management.CreateEncryptionKeyRequestContent{
-    Type: management.CreateEncryptionKeyTypeCustomerProvidedRootKey,
-}
+        Type: management.CreateEncryptionKeyTypeCustomerProvidedRootKey,
+    }
 client.Keys.Encryption.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29474,7 +29844,7 @@ client.Keys.Encryption.Create(
 <dl>
 <dd>
 
-**type_:** `management.CreateEncryptionKeyType` 
+**type_:** `*management.CreateEncryptionKeyType` 
     
 </dd>
 </dl>
@@ -29514,8 +29884,9 @@ Perform rekeying operation on the key hierarchy.
 
 ```go
 client.Keys.Encryption.Rekey(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -29555,9 +29926,10 @@ Retrieve details of the encryption key with the given ID.
 
 ```go
 client.Keys.Encryption.Get(
-    context.TODO(),
-    "kid",
-)
+        context.TODO(),
+        "kid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -29612,13 +29984,14 @@ Import wrapped key material and activate encryption key.
 
 ```go
 request := &management.ImportEncryptionKeyRequestContent{
-    WrappedKey: "wrapped_key",
-}
+        WrappedKey: "wrapped_key",
+    }
 client.Keys.Encryption.Import(
-    context.TODO(),
-    "kid",
-    request,
-)
+        context.TODO(),
+        "kid",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29681,9 +30054,10 @@ Delete the custom provided encryption key with the given ID and move back to usi
 
 ```go
 client.Keys.Encryption.Delete(
-    context.TODO(),
-    "kid",
-)
+        context.TODO(),
+        "kid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -29738,9 +30112,10 @@ Create the public wrapping key to wrap your own encryption key material.
 
 ```go
 client.Keys.Encryption.CreatePublicWrappingKey(
-    context.TODO(),
-    "kid",
-)
+        context.TODO(),
+        "kid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -29796,8 +30171,9 @@ Retrieve all keys used to verify HTTP Message Signatures on Network ACL rules, o
 
 ```go
 client.Keys.NetworkACLs.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -29837,14 +30213,15 @@ Create a new key used to verify HTTP Message Signatures on Network ACL rules.
 
 ```go
 request := &management.CreateKeysNetworkACLsRequestContent{
-    Name: "name",
-    Alg: management.NetworkACLKeyAlgorithmEnumHmacSha256,
-    Value: "value",
-}
+        Name: "name",
+        Alg: management.NetworkACLKeyAlgorithmEnumHmacSha256,
+        Value: "value",
+    }
 client.Keys.NetworkACLs.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -29867,7 +30244,7 @@ client.Keys.NetworkACLs.Create(
 <dl>
 <dd>
 
-**alg:** `management.NetworkACLKeyAlgorithmEnum` 
+**alg:** `*management.NetworkACLKeyAlgorithmEnum` 
     
 </dd>
 </dl>
@@ -29915,9 +30292,10 @@ Retrieve a specific key used to verify HTTP Message Signatures on Network ACL ru
 
 ```go
 client.Keys.NetworkACLs.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -29972,9 +30350,10 @@ Delete a key used to verify HTTP Message Signatures on Network ACL rules
 
 ```go
 client.Keys.NetworkACLs.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -30030,8 +30409,9 @@ Retrieve details of all the application signing keys associated with your tenant
 
 ```go
 client.Keys.Signing.List(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -30071,8 +30451,9 @@ Rotate the application signing key of your tenant.
 
 ```go
 client.Keys.Signing.Rotate(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -30112,9 +30493,10 @@ Retrieve details of the application signing key with the given ID.
 
 ```go
 client.Keys.Signing.Get(
-    context.TODO(),
-    "kid",
-)
+        context.TODO(),
+        "kid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -30169,9 +30551,10 @@ Revoke the application signing key with the given ID.
 
 ```go
 client.Keys.Signing.Revoke(
-    context.TODO(),
-    "kid",
-)
+        context.TODO(),
+        "kid",
+    )
+}
 ```
 </dd>
 </dl>
@@ -30213,32 +30596,33 @@ client.Keys.Signing.Revoke(
 
 ```go
 request := &management.ListOrganizationClientGrantsRequestParameters{
-    Audience: management.String(
-        "audience",
-    ),
-    ClientID: management.String(
-        "client_id",
-    ),
-    GrantIDs: []*string{
-        management.String(
-            "grant_ids",
+        Audience: management.String(
+            "audience",
         ),
-    },
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        ClientID: management.String(
+            "client_id",
+        ),
+        GrantIDs: []*string{
+            management.String(
+                "grant_ids",
+            ),
+        },
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Organizations.ClientGrants.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -30327,13 +30711,14 @@ client.Organizations.ClientGrants.List(
 
 ```go
 request := &management.AssociateOrganizationClientGrantRequestContent{
-    GrantID: "grant_id",
-}
+        GrantID: "grant_id",
+    }
 client.Organizations.ClientGrants.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -30382,10 +30767,11 @@ client.Organizations.ClientGrants.Create(
 
 ```go
 client.Organizations.ClientGrants.Delete(
-    context.TODO(),
-    "id",
-    "grant_id",
-)
+        context.TODO(),
+        "id",
+        "grant_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -30454,18 +30840,19 @@ List all clients associated with an organization, using checkpoint pagination.
 
 ```go
 request := &management.ListOrganizationClientsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Organizations.Clients.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -30536,18 +30923,19 @@ Associate one or more clients with an organization.
 
 ```go
 request := &management.CreateOrganizationClientsRequestContent{
-    Clients: []*management.CreateOrganizationClientRequestItem{
-        &management.CreateOrganizationClientRequestItem{
-            ClientID: "client_id",
-            UseForMemberAccess: true,
+        Clients: []*management.CreateOrganizationClientRequestItem{
+            &management.CreateOrganizationClientRequestItem{
+                ClientID: "client_id",
+                UseForMemberAccess: true,
+            },
         },
-    },
-}
+    }
 client.Organizations.Clients.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -30610,15 +30998,16 @@ Remove one or more client associations from an organization.
 
 ```go
 request := &management.DeleteOrganizationClientsRequestContent{
-    Clients: []string{
-        "clients",
-    },
-}
+        Clients: []string{
+            "clients",
+        },
+    }
 client.Organizations.Clients.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -30681,10 +31070,11 @@ Get a specific client association for an organization.
 
 ```go
 client.Organizations.Clients.Get(
-    context.TODO(),
-    "id",
-    "client_id",
-)
+        context.TODO(),
+        "id",
+        "client_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -30748,11 +31138,12 @@ Update an organization client association.
 ```go
 request := &management.UpdateOrganizationClientRequestContent{}
 client.Organizations.Clients.Update(
-    context.TODO(),
-    "id",
-    "client_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "client_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -30810,24 +31201,25 @@ client.Organizations.Clients.Update(
 
 ```go
 request := &management.ListOrganizationAllConnectionsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    IsEnabled: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        IsEnabled: management.Bool(
+            true,
+        ),
+    }
 client.Organizations.Connections.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -30900,13 +31292,14 @@ client.Organizations.Connections.List(
 
 ```go
 request := &management.CreateOrganizationAllConnectionRequestParameters{
-    ConnectionID: "connection_id",
-}
+        ConnectionID: "connection_id",
+    }
 client.Organizations.Connections.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -31011,10 +31404,11 @@ client.Organizations.Connections.Create(
 
 ```go
 client.Organizations.Connections.Get(
-    context.TODO(),
-    "id",
-    "connection_id",
-)
+        context.TODO(),
+        "id",
+        "connection_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -31063,10 +31457,11 @@ client.Organizations.Connections.Get(
 
 ```go
 client.Organizations.Connections.Delete(
-    context.TODO(),
-    "id",
-    "connection_id",
-)
+        context.TODO(),
+        "id",
+        "connection_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -31116,11 +31511,12 @@ client.Organizations.Connections.Delete(
 ```go
 request := &management.UpdateOrganizationConnectionRequestParameters{}
 client.Organizations.Connections.Update(
-    context.TODO(),
-    "id",
-    "connection_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "connection_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -31241,18 +31637,19 @@ This endpoint is subject to eventual consistency; newly created, updated, or del
 
 ```go
 request := &management.ListOrganizationDiscoveryDomainsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Organizations.DiscoveryDomains.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -31323,13 +31720,14 @@ Create a new discovery domain for an organization.
 
 ```go
 request := &management.CreateOrganizationDiscoveryDomainRequestContent{
-    Domain: "domain",
-}
+        Domain: "domain",
+    }
 client.Organizations.DiscoveryDomains.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -31409,10 +31807,11 @@ This endpoint is subject to eventual consistency; newly created, updated, or del
 
 ```go
 client.Organizations.DiscoveryDomains.GetByName(
-    context.TODO(),
-    "id",
-    "discovery_domain",
-)
+        context.TODO(),
+        "id",
+        "discovery_domain",
+    )
+}
 ```
 </dd>
 </dl>
@@ -31476,10 +31875,11 @@ This endpoint is subject to eventual consistency; newly created, updated, or del
 
 ```go
 client.Organizations.DiscoveryDomains.Get(
-    context.TODO(),
-    "id",
-    "discovery_domain_id",
-)
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -31542,10 +31942,11 @@ Remove a discovery domain from an organization. This action cannot be undone.
 
 ```go
 client.Organizations.DiscoveryDomains.Delete(
-    context.TODO(),
-    "id",
-    "discovery_domain_id",
-)
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -31609,11 +32010,12 @@ Update the verification status and/or use_for_organization_discovery for an orga
 ```go
 request := &management.UpdateOrganizationDiscoveryDomainRequestContent{}
 client.Organizations.DiscoveryDomains.Update(
-    context.TODO(),
-    "id",
-    "discovery_domain_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "discovery_domain_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -31693,21 +32095,22 @@ Retrieve details about a specific connection currently enabled for an Organizati
 
 ```go
 request := &management.ListOrganizationConnectionsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Organizations.EnabledConnections.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -31788,13 +32191,14 @@ Enable a specific connection for a given Organization. To enable a connection, i
 
 ```go
 request := &management.AddOrganizationConnectionRequestContent{
-    ConnectionID: "connection_id",
-}
+        ConnectionID: "connection_id",
+    }
 client.Organizations.EnabledConnections.Add(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -31881,10 +32285,11 @@ Retrieve details about a specific connection currently enabled for an Organizati
 
 ```go
 client.Organizations.EnabledConnections.Get(
-    context.TODO(),
-    "id",
-    "connectionId",
-)
+        context.TODO(),
+        "id",
+        "connectionId",
+    )
+}
 ```
 </dd>
 </dl>
@@ -31949,10 +32354,11 @@ Disable a specific connection for an Organization. Once disabled, Organization m
 
 ```go
 client.Organizations.EnabledConnections.Delete(
-    context.TODO(),
-    "id",
-    "connectionId",
-)
+        context.TODO(),
+        "id",
+        "connectionId",
+    )
+}
 ```
 </dd>
 </dl>
@@ -32016,11 +32422,12 @@ Modify the details of a specific connection currently enabled for an Organizatio
 ```go
 request := &management.UpdateOrganizationConnectionRequestContent{}
 client.Organizations.EnabledConnections.Update(
-    context.TODO(),
-    "id",
-    "connectionId",
-    request,
-)
+        context.TODO(),
+        "id",
+        "connectionId",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32108,30 +32515,31 @@ Retrieve a detailed list of invitations sent to users for a specific Organizatio
 
 ```go
 request := &management.ListOrganizationInvitationsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Sort: management.String(
-        "sort",
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+    }
 client.Organizations.Invitations.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32234,19 +32642,20 @@ Create a user invitation for a specific Organization. Upon creation, the listed 
 
 ```go
 request := &management.CreateOrganizationInvitationRequestContent{
-    Inviter: &management.OrganizationInvitationInviter{
-        Name: "name",
-    },
-    Invitee: &management.OrganizationInvitationInvitee{
-        Email: "email",
-    },
-    ClientID: "client_id",
-}
+        Inviter: &management.OrganizationInvitationInviter{
+            Name: "name",
+        },
+        Invitee: &management.OrganizationInvitationInvitee{
+            Email: "email",
+        },
+        ClientID: "client_id",
+    }
 client.Organizations.Invitations.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32359,19 +32768,20 @@ client.Organizations.Invitations.Create(
 
 ```go
 request := &management.GetOrganizationInvitationRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Organizations.Invitations.Get(
-    context.TODO(),
-    "id",
-    "invitation_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "invitation_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32436,10 +32846,11 @@ client.Organizations.Invitations.Get(
 
 ```go
 client.Organizations.Invitations.Delete(
-    context.TODO(),
-    "id",
-    "invitation_id",
-)
+        context.TODO(),
+        "id",
+        "invitation_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -32518,27 +32929,28 @@ To search by checkpoint, use the following parameters: - from: Optional id from 
 
 ```go
 request := &management.ListOrganizationMembersRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Organizations.Members.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32635,15 +33047,16 @@ To add a user to an Organization through this action, the user must already exis
 
 ```go
 request := &management.CreateOrganizationMemberRequestContent{
-    Members: []string{
-        "members",
-    },
-}
+        Members: []string{
+            "members",
+        },
+    }
 client.Organizations.Members.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32692,15 +33105,16 @@ client.Organizations.Members.Create(
 
 ```go
 request := &management.DeleteOrganizationMembersRequestContent{
-    Members: []string{
-        "members",
-    },
-}
+        Members: []string{
+            "members",
+        },
+    }
 client.Organizations.Members.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32764,18 +33178,19 @@ Lists the groups that are assigned to the specified organization.
 
 ```go
 request := &management.ListOrganizationGroupsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Organizations.Groups.List(
-    context.TODO(),
-    "organization_id",
-    request,
-)
+        context.TODO(),
+        "organization_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32847,19 +33262,20 @@ Lists the roles assigned to the specified group in the context of an organizatio
 
 ```go
 request := &management.ListOrganizationGroupRolesRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Organizations.Groups.Roles.List(
-    context.TODO(),
-    "organization_id",
-    "group_id",
-    request,
-)
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -32938,16 +33354,17 @@ Assign one or more roles to a specified group in the context of an organization.
 
 ```go
 request := &management.CreateOrganizationGroupRolesRequestContent{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Organizations.Groups.Roles.Create(
-    context.TODO(),
-    "organization_id",
-    "group_id",
-    request,
-)
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33018,16 +33435,17 @@ Unassign one or more roles from a specified group in the context of an organizat
 
 ```go
 request := &management.DeleteOrganizationGroupRolesRequestContent{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Organizations.Groups.Roles.Delete(
-    context.TODO(),
-    "organization_id",
-    "group_id",
-    request,
-)
+        context.TODO(),
+        "organization_id",
+        "group_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33099,19 +33517,20 @@ Lists the roles assigned to an organization member directly or through group mem
 
 ```go
 request := &management.ListOrganizationMemberEffectiveRolesRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Organizations.Members.EffectiveRoles.List(
-    context.TODO(),
-    "id",
-    "user_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33195,22 +33614,23 @@ Users can be members of multiple Organizations with unique roles assigned for ea
 
 ```go
 request := &management.ListOrganizationMemberRolesRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Organizations.Members.Roles.List(
-    context.TODO(),
-    "id",
-    "user_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33299,16 +33719,17 @@ Users can be members of multiple Organizations with unique roles assigned for ea
 
 ```go
 request := &management.AssignOrganizationMemberRolesRequestContent{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Organizations.Members.Roles.Assign(
-    context.TODO(),
-    "id",
-    "user_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33381,16 +33802,17 @@ Users can be members of multiple Organizations with unique roles assigned for ea
 
 ```go
 request := &management.DeleteOrganizationMemberRolesRequestContent{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Organizations.Members.Roles.Delete(
-    context.TODO(),
-    "id",
-    "user_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33462,20 +33884,21 @@ Lists the groups which grant the org member a given role.
 
 ```go
 request := &management.ListOrganizationMemberRoleSourceGroupsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    RoleID: "role_id",
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        RoleID: "role_id",
+    }
 client.Organizations.Members.EffectiveRoles.Sources.Groups.List(
-    context.TODO(),
-    "id",
-    "user_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "user_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33568,25 +33991,26 @@ List the organization members assigned a specific role within the context of an 
 
 ```go
 request := &management.ListOrganizationRoleMembersRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Organizations.Roles.Members.List(
-    context.TODO(),
-    "id",
-    "role_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "role_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33682,19 +34106,20 @@ Retrieve the list of groups assigned to a role in the context of an organization
 
 ```go
 request := &management.ListOrganizationRoleGroupsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Organizations.Roles.Groups.List(
-    context.TODO(),
-    "organization_id",
-    "role_id",
-    request,
-)
+        context.TODO(),
+        "organization_id",
+        "role_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33774,33 +34199,34 @@ Get render setting configurations for all screens.
 
 ```go
 request := &management.ListAculsRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    Prompt: management.String(
-        "prompt",
-    ),
-    Screen: management.String(
-        "screen",
-    ),
-    RenderingMode: management.AculRenderingModeEnumAdvanced.Ptr(),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        Prompt: management.String(
+            "prompt",
+        ),
+        Screen: management.String(
+            "screen",
+        ),
+        RenderingMode: management.AculRenderingModeEnumAdvanced.Ptr(),
+    }
 client.Prompts.Rendering.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33911,17 +34337,18 @@ Learn more about [configuring render settings](https://auth0.com/docs/customize/
 
 ```go
 request := &management.BulkUpdateAculRequestContent{
-    Configs: []*management.AculConfigsItem{
-        &management.AculConfigsItem{
-            Prompt: management.PromptGroupNameEnumLogin,
-            Screen: management.ScreenGroupNameEnumLogin,
+        Configs: []*management.AculConfigsItem{
+            &management.AculConfigsItem{
+                Prompt: management.PromptGroupNameEnumLogin,
+                Screen: management.ScreenGroupNameEnumLogin,
+            },
         },
-    },
-}
+    }
 client.Prompts.Rendering.BulkUpdate(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -33976,10 +34403,11 @@ Get render settings for a screen.
 
 ```go
 client.Prompts.Rendering.Get(
-    context.TODO(),
-    management.PromptGroupNameEnumLogin.Ptr(),
-    management.ScreenGroupNameEnumLogin.Ptr(),
-)
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.ScreenGroupNameEnumLogin.Ptr(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -34043,11 +34471,12 @@ Learn more about [configuring render settings](https://auth0.com/docs/customize/
 ```go
 request := &management.UpdateAculRequestContent{}
 client.Prompts.Rendering.Update(
-    context.TODO(),
-    management.PromptGroupNameEnumLogin.Ptr(),
-    management.ScreenGroupNameEnumLogin.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.ScreenGroupNameEnumLogin.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34159,10 +34588,11 @@ Retrieve custom text for a specific prompt and language.
 
 ```go
 client.Prompts.CustomText.Get(
-    context.TODO(),
-    management.PromptGroupNameEnumLogin.Ptr(),
-    management.PromptLanguageEnumAm.Ptr(),
-)
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.PromptLanguageEnumAm.Ptr(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -34225,14 +34655,15 @@ Set custom text for a specific prompt. Existing texts will be overwritten.
 
 ```go
 request := map[string]any{
-    "key": "value",
-}
+        "key": "value",
+    }
 client.Prompts.CustomText.Set(
-    context.TODO(),
-    management.PromptGroupNameEnumLogin.Ptr(),
-    management.PromptLanguageEnumAm.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.PromptGroupNameEnumLogin.Ptr(),
+        management.PromptLanguageEnumAm.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34304,9 +34735,10 @@ Get template partials for a prompt
 
 ```go
 client.Prompts.Partials.Get(
-    context.TODO(),
-    management.PartialGroupsEnumLogin.Ptr(),
-)
+        context.TODO(),
+        management.PartialGroupsEnumLogin.Ptr(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -34361,13 +34793,14 @@ Set template partials for a prompt
 
 ```go
 request := map[string]any{
-    "key": "value",
-}
+        "key": "value",
+    }
 client.Prompts.Partials.Set(
-    context.TODO(),
-    management.PartialGroupsEnumLogin.Ptr(),
-    request,
-)
+        context.TODO(),
+        management.PartialGroupsEnumLogin.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34431,8 +34864,9 @@ Gets the tenant settings for risk assessments
 
 ```go
 client.RiskAssessments.Settings.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -34472,12 +34906,13 @@ Updates the tenant settings for risk assessments
 
 ```go
 request := &management.UpdateRiskAssessmentsSettingsRequestContent{
-    Enabled: true,
-}
+        Enabled: true,
+    }
 client.RiskAssessments.Settings.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34533,8 +34968,9 @@ Gets the risk assessment settings for the new device assessor
 
 ```go
 client.RiskAssessments.Settings.NewDevice.Get(
-    context.TODO(),
-)
+        context.TODO(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -34574,12 +35010,13 @@ Updates the risk assessment settings for the new device assessor
 
 ```go
 request := &management.UpdateRiskAssessmentsSettingsNewDeviceRequestContent{
-    RememberFor: 1,
-}
+        RememberFor: 1,
+    }
 client.RiskAssessments.Settings.NewDevice.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34635,18 +35072,19 @@ Lists the groups to which the specified role is assigned.
 
 ```go
 request := &management.ListRoleGroupsParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Roles.Groups.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34717,15 +35155,16 @@ Assign one or more groups to a specified role.
 
 ```go
 request := &management.AssignRoleGroupsRequestContent{
-    Groups: []string{
-        "groups",
-    },
-}
+        Groups: []string{
+            "groups",
+        },
+    }
 client.Roles.Groups.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34788,15 +35227,16 @@ Unassign one or more groups from a specified role.
 
 ```go
 request := &management.DeleteRoleGroupsRequestContent{
-    Groups: []string{
-        "groups",
-    },
-}
+        Groups: []string{
+            "groups",
+        },
+    }
 client.Roles.Groups.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34860,21 +35300,22 @@ Retrieve detailed list (name, description, resource server) of permissions grant
 
 ```go
 request := &management.ListRolePermissionsRequestParameters{
-    PerPage: management.Int(
-        1,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Roles.Permissions.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -34953,18 +35394,19 @@ Add one or more [permissions](https://auth0.com/docs/manage-users/access-control
 
 ```go
 request := &management.AddRolePermissionsRequestContent{
-    Permissions: []*management.PermissionRequestPayload{
-        &management.PermissionRequestPayload{
-            ResourceServerIdentifier: "resource_server_identifier",
-            PermissionName: "permission_name",
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
         },
-    },
-}
+    }
 client.Roles.Permissions.Add(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35027,18 +35469,19 @@ Remove one or more [permissions](https://auth0.com/docs/manage-users/access-cont
 
 ```go
 request := &management.DeleteRolePermissionsRequestContent{
-    Permissions: []*management.PermissionRequestPayload{
-        &management.PermissionRequestPayload{
-            ResourceServerIdentifier: "resource_server_identifier",
-            PermissionName: "permission_name",
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
         },
-    },
-}
+    }
 client.Roles.Permissions.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35120,21 +35563,22 @@ To search by checkpoint, use the following parameters:
 
 ```go
 request := &management.ListRoleUsersRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Roles.Users.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35215,15 +35659,16 @@ Assign one or more users to an existing user role. To learn more, review [Role-B
 
 ```go
 request := &management.AssignRoleUsersRequestContent{
-    Users: []string{
-        "users",
-    },
-}
+        Users: []string{
+            "users",
+        },
+    }
 client.Roles.Users.Assign(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35287,11 +35732,12 @@ Retrieves text customizations for a given self-service profile, language and Sel
 
 ```go
 client.SelfServiceProfiles.CustomText.List(
-    context.TODO(),
-    "id",
-    management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
-    management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
-)
+        context.TODO(),
+        "id",
+        management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+        management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -35362,15 +35808,16 @@ Updates text customizations for a given self-service profile, language and Self-
 
 ```go
 request := map[string]string{
-    "key": "value",
-}
+        "key": "value",
+    }
 client.SelfServiceProfiles.CustomText.Set(
-    context.TODO(),
-    "id",
-    management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
-    management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
-    request,
-)
+        context.TODO(),
+        "id",
+        management.SelfServiceProfileCustomTextLanguageEnumEn.Ptr(),
+        management.SelfServiceProfileCustomTextPageEnumGetStarted.Ptr(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35451,10 +35898,11 @@ Creates an access ticket to initiate the Self-Service Enterprise Configuration f
 ```go
 request := &management.CreateSelfServiceProfileSSOTicketRequestContent{}
 client.SelfServiceProfiles.SSOTicket.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35590,10 +36038,11 @@ Clients should treat these `202` responses as an acknowledgment that the request
 
 ```go
 client.SelfServiceProfiles.SSOTicket.Revoke(
-    context.TODO(),
-    "profileId",
-    "id",
-)
+        context.TODO(),
+        "profileId",
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -35657,17 +36106,18 @@ Retrieve tenant settings. A list of fields to include or exclude may also be spe
 
 ```go
 request := &management.GetTenantSettingsRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+    }
 client.Tenants.Settings.Get(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35731,9 +36181,10 @@ Update settings for a tenant.
 ```go
 request := &management.UpdateTenantSettingsRequestContent{}
 client.Tenants.Settings.Update(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -35940,7 +36391,7 @@ client.Tenants.Settings.Update(
 <dl>
 <dd>
 
-**enabledLocales:** `[]management.TenantSettingsSupportedLocalesEnum` — Supported locales for the user interface
+**enabledLocales:** `[]*management.TenantSettingsSupportedLocalesEnum` — Supported locales for the user interface
     
 </dd>
 </dl>
@@ -36153,21 +36604,22 @@ Retrieve detailed list of authentication methods associated with a specified use
 
 ```go
 request := &management.ListUserAuthenticationMethodsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Users.AuthenticationMethods.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -36246,13 +36698,14 @@ Create an authentication method. Authentication methods created via this endpoin
 
 ```go
 request := &management.CreateUserAuthenticationMethodRequestContent{
-    Type: management.CreatedUserAuthenticationMethodTypeEnumPhone,
-}
+        Type: management.CreatedUserAuthenticationMethodTypeEnumPhone,
+    }
 client.Users.AuthenticationMethods.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -36275,7 +36728,7 @@ client.Users.AuthenticationMethods.Create(
 <dl>
 <dd>
 
-**type_:** `management.CreatedUserAuthenticationMethodTypeEnum` 
+**type_:** `*management.CreatedUserAuthenticationMethodTypeEnum` 
     
 </dd>
 </dl>
@@ -36437,15 +36890,16 @@ Replace the specified user <a href="https://auth0.com/docs/secure/multi-factor-a
 
 ```go
 request := []*management.SetUserAuthenticationMethods{
-    &management.SetUserAuthenticationMethods{
-        Type: management.AuthenticationTypeEnumPhone,
-    },
-}
+        &management.SetUserAuthenticationMethods{
+            Type: management.AuthenticationTypeEnumPhone,
+        },
+    }
 client.Users.AuthenticationMethods.Set(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -36508,9 +36962,10 @@ Remove all authentication methods (i.e., enrolled MFA factors) from the specifie
 
 ```go
 client.Users.AuthenticationMethods.DeleteAll(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -36551,10 +37006,11 @@ client.Users.AuthenticationMethods.DeleteAll(
 
 ```go
 client.Users.AuthenticationMethods.Get(
-    context.TODO(),
-    "id",
-    "authentication_method_id",
-)
+        context.TODO(),
+        "id",
+        "authentication_method_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -36617,10 +37073,11 @@ Remove the authentication method with the given ID from the specified user. For 
 
 ```go
 client.Users.AuthenticationMethods.Delete(
-    context.TODO(),
-    "id",
-    "authentication_method_id",
-)
+        context.TODO(),
+        "id",
+        "authentication_method_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -36684,11 +37141,12 @@ Modify the authentication method with the given ID from the specified user. For 
 ```go
 request := &management.UpdateUserAuthenticationMethodRequestContent{}
 client.Users.AuthenticationMethods.Update(
-    context.TODO(),
-    "id",
-    "authentication_method_id",
-    request,
-)
+        context.TODO(),
+        "id",
+        "authentication_method_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -36768,9 +37226,10 @@ Remove all authenticators registered to a given user ID, such as OTP, email, pho
 
 ```go
 client.Users.Authenticators.DeleteAll(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -36826,18 +37285,19 @@ Retrieve all connected accounts associated with the user.
 
 ```go
 request := &management.GetUserConnectedAccountsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Users.ConnectedAccounts.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -36909,19 +37369,20 @@ Returns the list of effective permissions for a user, taking into account permis
 
 ```go
 request := &management.ListUserEffectivePermissionsRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    ResourceServerIdentifier: "resource_server_identifier",
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        ResourceServerIdentifier: "resource_server_identifier",
+    }
 client.Users.EffectivePermissions.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37001,18 +37462,19 @@ Retrieve detailed list of effective roles for a user, including roles assigned d
 
 ```go
 request := &management.ListUserEffectiveRolesRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Users.EffectiveRoles.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37084,9 +37546,10 @@ Retrieve the first [multi-factor authentication](https://auth0.com/docs/secure/m
 
 ```go
 client.Users.Enrollments.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -37142,27 +37605,28 @@ List all groups to which this user belongs.
 
 ```go
 request := &management.GetUserGroupsRequestParameters{
-    Fields: management.String(
-        "fields",
-    ),
-    IncludeFields: management.Bool(
-        true,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        Fields: management.String(
+            "fields",
+        ),
+        IncludeFields: management.Bool(
+            true,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Users.Groups.Get(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37287,10 +37751,11 @@ Note: There are two ways of invoking the endpoint:
 ```go
 request := &management.LinkUserIdentityRequestContent{}
 client.Users.Identities.Link(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37379,11 +37844,12 @@ Unlinking the secondary account removes it from the identities array of the targ
 
 ```go
 client.Users.Identities.Delete(
-    context.TODO(),
-    "id",
-    management.UserIdentityProviderEnumAd.Ptr(),
-    "user_id",
-)
+        context.TODO(),
+        "id",
+        management.UserIdentityProviderEnumAd.Ptr(),
+        "user_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -37461,24 +37927,25 @@ Auth0 <a href="https://auth0.com/docs/logs/retrieve-log-events-using-mgmt-api#li
 
 ```go
 request := &management.ListUserLogsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    Sort: management.String(
-        "sort",
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        Sort: management.String(
+            "sort",
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Users.Logs.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37566,9 +38033,10 @@ Invalidate all remembered browsers across all [authentication factors](https://a
 
 ```go
 client.Users.Multifactor.InvalidateRememberBrowser(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -37623,10 +38091,11 @@ Remove a [multifactor](https://auth0.com/docs/multifactor-authentication) authen
 
 ```go
 client.Users.Multifactor.DeleteProvider(
-    context.TODO(),
-    "id",
-    management.UserMultifactorProviderEnumDuo.Ptr(),
-)
+        context.TODO(),
+        "id",
+        management.UserMultifactorProviderEnumDuo.Ptr(),
+    )
+}
 ```
 </dd>
 </dl>
@@ -37706,21 +38175,22 @@ To search by checkpoint, use the following parameters:
 
 ```go
 request := &management.ListUserOrganizationsRequestParameters{
-    Page: management.Int(
-        1,
-    ),
-    PerPage: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        Page: management.Int(
+            1,
+        ),
+        PerPage: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Users.Organizations.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37802,21 +38272,22 @@ Retrieve all permissions associated with the user.
 
 ```go
 request := &management.ListUserPermissionsRequestParameters{
-    PerPage: management.Int(
-        1,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Users.Permissions.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37895,18 +38366,19 @@ Assign permissions to a user.
 
 ```go
 request := &management.CreateUserPermissionsRequestContent{
-    Permissions: []*management.PermissionRequestPayload{
-        &management.PermissionRequestPayload{
-            ResourceServerIdentifier: "resource_server_identifier",
-            PermissionName: "permission_name",
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
         },
-    },
-}
+    }
 client.Users.Permissions.Create(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -37969,18 +38441,19 @@ Remove permissions from a user.
 
 ```go
 request := &management.DeleteUserPermissionsRequestContent{
-    Permissions: []*management.PermissionRequestPayload{
-        &management.PermissionRequestPayload{
-            ResourceServerIdentifier: "resource_server_identifier",
-            PermissionName: "permission_name",
+        Permissions: []*management.PermissionRequestPayload{
+            &management.PermissionRequestPayload{
+                ResourceServerIdentifier: "resource_server_identifier",
+                PermissionName: "permission_name",
+            },
         },
-    },
-}
+    }
 client.Users.Permissions.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38044,16 +38517,17 @@ Clear risk assessment assessors for a specific user
 
 ```go
 request := &management.ClearAssessorsRequestContent{
-    Connection: "connection",
-    Assessors: []management.AssessorsTypeEnum{
-        management.AssessorsTypeEnumNewDevice,
-    },
-}
+        Connection: "connection",
+        Assessors: []management.AssessorsTypeEnum{
+            management.AssessorsTypeEnumNewDevice,
+        },
+    }
 client.Users.RiskAssessments.Clear(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38084,7 +38558,7 @@ client.Users.RiskAssessments.Clear(
 <dl>
 <dd>
 
-**assessors:** `[]management.AssessorsTypeEnum` — List of assessors to clear.
+**assessors:** `[]*management.AssessorsTypeEnum` — List of assessors to clear.
     
 </dd>
 </dl>
@@ -38129,21 +38603,22 @@ Retrieve detailed list of all user roles currently assigned to a user.
 
 ```go
 request := &management.ListUserRolesRequestParameters{
-    PerPage: management.Int(
-        1,
-    ),
-    Page: management.Int(
-        1,
-    ),
-    IncludeTotals: management.Bool(
-        true,
-    ),
-}
+        PerPage: management.Int(
+            1,
+        ),
+        Page: management.Int(
+            1,
+        ),
+        IncludeTotals: management.Bool(
+            true,
+        ),
+    }
 client.Users.Roles.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38224,15 +38699,16 @@ Assign one or more existing user roles to a user. For more information, review [
 
 ```go
 request := &management.AssignUserRolesRequestContent{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Users.Roles.Assign(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38297,15 +38773,16 @@ Remove one or more specified user roles assigned to a user.
 
 ```go
 request := &management.DeleteUserRolesRequestContent{
-    Roles: []string{
-        "roles",
-    },
-}
+        Roles: []string{
+            "roles",
+        },
+    }
 client.Users.Roles.Delete(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38369,21 +38846,22 @@ Retrieve details for a user's refresh tokens.
 
 ```go
 request := &management.ListRefreshTokensRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Users.RefreshToken.List(
-    context.TODO(),
-    "user_id",
-    request,
-)
+        context.TODO(),
+        "user_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38462,9 +38940,10 @@ Delete all refresh tokens for a user.
 
 ```go
 client.Users.RefreshToken.Delete(
-    context.TODO(),
-    "user_id",
-)
+        context.TODO(),
+        "user_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -38520,21 +38999,22 @@ Retrieve details for a user's sessions.
 
 ```go
 request := &management.ListUserSessionsRequestParameters{
-    IncludeTotals: management.Bool(
-        true,
-    ),
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        IncludeTotals: management.Bool(
+            true,
+        ),
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Users.Sessions.List(
-    context.TODO(),
-    "user_id",
-    request,
-)
+        context.TODO(),
+        "user_id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38613,9 +39093,10 @@ Delete all sessions for a user.
 
 ```go
 client.Users.Sessions.Delete(
-    context.TODO(),
-    "user_id",
-)
+        context.TODO(),
+        "user_id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -38671,20 +39152,21 @@ Lists the roles which grant the user a given permission, including roles assigne
 
 ```go
 request := &management.ListUserEffectivePermissionRoleSourceRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-    ResourceServerIdentifier: "resource_server_identifier",
-    PermissionName: "permission_name",
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+        ResourceServerIdentifier: "resource_server_identifier",
+        PermissionName: "permission_name",
+    }
 client.Users.EffectivePermissions.Sources.Roles.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38772,19 +39254,20 @@ Lists the groups that grant a user a specific role.
 
 ```go
 request := &management.ListUserRoleSourceGroupsRequestParameters{
-    RoleID: "role_id",
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        RoleID: "role_id",
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.Users.EffectiveRoles.Sources.Groups.List(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38864,17 +39347,18 @@ List verifiable credential templates.
 
 ```go
 request := &management.ListVerifiableCredentialTemplatesRequestParameters{
-    From: management.String(
-        "from",
-    ),
-    Take: management.Int(
-        1,
-    ),
-}
+        From: management.String(
+            "from",
+        ),
+        Take: management.Int(
+            1,
+        ),
+    }
 client.VerifiableCredentials.Verification.Templates.List(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -38937,20 +39421,21 @@ Create a verifiable credential template.
 
 ```go
 request := &management.CreateVerifiableCredentialTemplateRequestContent{
-    Name: "name",
-    Type: "type",
-    Dialect: "dialect",
-    Presentation: &management.MdlPresentationRequest{
-        OrgIso1801351MDl: &management.MdlPresentationRequestProperties{
-            OrgIso1801351: &management.MdlPresentationProperties{},
+        Name: "name",
+        Type: "type",
+        Dialect: "dialect",
+        Presentation: &management.MdlPresentationRequest{
+            OrgIso1801351MDl: &management.MdlPresentationRequestProperties{
+                OrgIso1801351: &management.MdlPresentationProperties{},
+            },
         },
-    },
-    WellKnownTrustedIssuers: "well_known_trusted_issuers",
-}
+        WellKnownTrustedIssuers: "well_known_trusted_issuers",
+    }
 client.VerifiableCredentials.Verification.Templates.Create(
-    context.TODO(),
-    request,
-)
+        context.TODO(),
+        request,
+    )
+}
 ```
 </dd>
 </dl>
@@ -39045,9 +39530,10 @@ Get a verifiable credential template.
 
 ```go
 client.VerifiableCredentials.Verification.Templates.Get(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -39102,9 +39588,10 @@ Delete a verifiable credential template.
 
 ```go
 client.VerifiableCredentials.Verification.Templates.Delete(
-    context.TODO(),
-    "id",
-)
+        context.TODO(),
+        "id",
+    )
+}
 ```
 </dd>
 </dl>
@@ -39160,10 +39647,11 @@ Update a verifiable credential template.
 ```go
 request := &management.UpdateVerifiableCredentialTemplateRequestContent{}
 client.VerifiableCredentials.Verification.Templates.Update(
-    context.TODO(),
-    "id",
-    request,
-)
+        context.TODO(),
+        "id",
+        request,
+    )
+}
 ```
 </dd>
 </dl>

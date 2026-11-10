@@ -26,17 +26,6 @@ var (
 	getSessionResponseContentFieldActor            = big.NewInt(1 << 13)
 )
 
-// getSessionResponseContentNullableFields maps the wire names of GetSessionResponseContent's nullable fields (required or optional) to their field bits.
-var getSessionResponseContentNullableFields = map[string]*big.Int{
-	"created_at":         getSessionResponseContentFieldCreatedAt,
-	"updated_at":         getSessionResponseContentFieldUpdatedAt,
-	"authenticated_at":   getSessionResponseContentFieldAuthenticatedAt,
-	"idle_expires_at":    getSessionResponseContentFieldIdleExpiresAt,
-	"expires_at":         getSessionResponseContentFieldExpiresAt,
-	"last_interacted_at": getSessionResponseContentFieldLastInteractedAt,
-	"session_metadata":   getSessionResponseContentFieldSessionMetadata,
-}
-
 type GetSessionResponseContent struct {
 	// The ID of the session
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -170,12 +159,10 @@ func (g *GetSessionResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (g *GetSessionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -292,13 +279,6 @@ func (g *GetSessionResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getSessionResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -345,17 +325,6 @@ var (
 	updateSessionResponseContentFieldSessionMetadata  = big.NewInt(1 << 12)
 	updateSessionResponseContentFieldActor            = big.NewInt(1 << 13)
 )
-
-// updateSessionResponseContentNullableFields maps the wire names of UpdateSessionResponseContent's nullable fields (required or optional) to their field bits.
-var updateSessionResponseContentNullableFields = map[string]*big.Int{
-	"created_at":         updateSessionResponseContentFieldCreatedAt,
-	"updated_at":         updateSessionResponseContentFieldUpdatedAt,
-	"authenticated_at":   updateSessionResponseContentFieldAuthenticatedAt,
-	"idle_expires_at":    updateSessionResponseContentFieldIdleExpiresAt,
-	"expires_at":         updateSessionResponseContentFieldExpiresAt,
-	"last_interacted_at": updateSessionResponseContentFieldLastInteractedAt,
-	"session_metadata":   updateSessionResponseContentFieldSessionMetadata,
-}
 
 type UpdateSessionResponseContent struct {
 	// The ID of the session
@@ -490,12 +459,10 @@ func (u *UpdateSessionResponseContent) GetExtraProperties() map[string]interface
 }
 
 func (u *UpdateSessionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -612,13 +579,6 @@ func (u *UpdateSessionResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateSessionResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }

@@ -36,23 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Lists the roles assigned to the specified group in the context of an organization.
-//
-// Example:
-//
-//	request := &management.ListOrganizationGroupRolesRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.Organizations.Groups.Roles.List(
-//	    context.TODO(),
-//	    "organization_id",
-//	    "group_id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// ID of the organization
@@ -115,7 +98,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -127,20 +110,6 @@ func (c *Client) List(
 }
 
 // Assign one or more roles to a specified group in the context of an organization.
-//
-// Example:
-//
-//	request := &management.CreateOrganizationGroupRolesRequestContent{
-//	    Roles: []string{
-//	        "roles",
-//	    },
-//	}
-//	client.Organizations.Groups.Roles.Create(
-//	    context.TODO(),
-//	    "organization_id",
-//	    "group_id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the organization
@@ -164,20 +133,6 @@ func (c *Client) Create(
 }
 
 // Unassign one or more roles from a specified group in the context of an organization.
-//
-// Example:
-//
-//	request := &management.DeleteOrganizationGroupRolesRequestContent{
-//	    Roles: []string{
-//	        "roles",
-//	    },
-//	}
-//	client.Organizations.Groups.Roles.Delete(
-//	    context.TODO(),
-//	    "organization_id",
-//	    "group_id",
-//	    request,
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the organization

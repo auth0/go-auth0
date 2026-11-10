@@ -37,23 +37,6 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Example:
-//
-//	request := &management.ListFlowsVaultConnectionsRequestParameters{
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Flows.Vault.Connections.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListFlowsVaultConnectionsRequestParameters,
@@ -127,25 +110,6 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
-// Example:
-//
-//	request := &management.CreateFlowsVaultConnectionRequestContent{
-//	    CreateFlowsVaultConnectionActivecampaign: &management.CreateFlowsVaultConnectionActivecampaign{
-//	        CreateFlowsVaultConnectionActivecampaignAPIKey: &management.CreateFlowsVaultConnectionActivecampaignAPIKey{
-//	            Name: "name",
-//	            AppID: management.FlowsVaultConnectionAppIDActivecampaignEnumActivecampaign,
-//	            Setup: &management.FlowsVaultConnectioSetupAPIKeyWithBaseURL{
-//	                Type: management.FlowsVaultConnectioSetupTypeAPIKeyEnumAPIKey,
-//	                APIKey: "api_key",
-//	                BaseURL: "base_url",
-//	            },
-//	        },
-//	    },
-//	}
-//	client.Flows.Vault.Connections.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateFlowsVaultConnectionRequestContent,
@@ -162,12 +126,6 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.Flows.Vault.Connections.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Flows Vault connection ID
@@ -185,12 +143,6 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.Flows.Vault.Connections.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Vault connection id
@@ -208,14 +160,6 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Example:
-//
-//	request := &management.UpdateFlowsVaultConnectionRequestContent{}
-//	client.Flows.Vault.Connections.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// Flows Vault connection ID

@@ -35,13 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve session information.
-//
-// Example:
-//
-//	client.Sessions.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of session to retrieve
@@ -60,13 +53,6 @@ func (c *Client) Get(
 }
 
 // Delete a session by ID.
-//
-// Example:
-//
-//	client.Sessions.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the session to delete.
@@ -85,15 +71,6 @@ func (c *Client) Delete(
 }
 
 // Update session information.
-//
-// Example:
-//
-//	request := &management.UpdateSessionRequestContent{}
-//	client.Sessions.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the session to update.
@@ -114,13 +91,6 @@ func (c *Client) Update(
 }
 
 // Revokes a session by ID and all associated refresh tokens.
-//
-// Example:
-//
-//	client.Sessions.Revoke(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Revoke(
 	ctx context.Context,
 	// ID of the session to revoke.

@@ -39,12 +39,10 @@ func (l *ListPortalsResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (l *ListPortalsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPortals sets the Portals field and marks it as non-optional;
@@ -467,12 +465,10 @@ func (p *PageComponentAuth0Form) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PageComponentAuth0Form) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -564,12 +560,10 @@ func (p *PageComponentAuth0FormConfig) GetExtraProperties() map[string]interface
 }
 
 func (p *PageComponentAuth0FormConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetFormID sets the FormID field and marks it as non-optional;
@@ -657,12 +651,10 @@ func (p *PageComponentAuth0MediaImage) GetExtraProperties() map[string]interface
 }
 
 func (p *PageComponentAuth0MediaImage) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -722,8 +714,8 @@ var (
 
 type PageComponentAuth0MediaImageConfig struct {
 	// URL of the image to display.
-	Src      string    `json:"src" url:"src"`
-	Position *Position `json:"position,omitempty" url:"position,omitempty"`
+	Src      string                                    `json:"src" url:"src"`
+	Position *PageComponentAuth0MediaImagePositionEnum `json:"position,omitempty" url:"position,omitempty"`
 	// Height of the image in pixels. Width scales automatically to preserve aspect ratio.
 	Height *int `json:"height,omitempty" url:"height,omitempty"`
 
@@ -741,7 +733,7 @@ func (p *PageComponentAuth0MediaImageConfig) GetSrc() string {
 	return p.Src
 }
 
-func (p *PageComponentAuth0MediaImageConfig) GetPosition() Position {
+func (p *PageComponentAuth0MediaImageConfig) GetPosition() PageComponentAuth0MediaImagePositionEnum {
 	if p == nil || p.Position == nil {
 		return ""
 	}
@@ -763,12 +755,10 @@ func (p *PageComponentAuth0MediaImageConfig) GetExtraProperties() map[string]int
 }
 
 func (p *PageComponentAuth0MediaImageConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetSrc sets the Src field and marks it as non-optional;
@@ -780,7 +770,7 @@ func (p *PageComponentAuth0MediaImageConfig) SetSrc(src string) {
 
 // SetPosition sets the Position field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
-func (p *PageComponentAuth0MediaImageConfig) SetPosition(position *Position) {
+func (p *PageComponentAuth0MediaImageConfig) SetPosition(position *PageComponentAuth0MediaImagePositionEnum) {
 	p.Position = position
 	p.require(pageComponentAuth0MediaImageConfigFieldPosition)
 }
@@ -834,6 +824,32 @@ func (p *PageComponentAuth0MediaImageConfig) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
+// Horizontal alignment of the image within its container.
+type PageComponentAuth0MediaImagePositionEnum string
+
+const (
+	PageComponentAuth0MediaImagePositionEnumLeft   PageComponentAuth0MediaImagePositionEnum = "left"
+	PageComponentAuth0MediaImagePositionEnumCenter PageComponentAuth0MediaImagePositionEnum = "center"
+	PageComponentAuth0MediaImagePositionEnumRight  PageComponentAuth0MediaImagePositionEnum = "right"
+)
+
+func NewPageComponentAuth0MediaImagePositionEnumFromString(s string) (PageComponentAuth0MediaImagePositionEnum, error) {
+	switch s {
+	case "left":
+		return PageComponentAuth0MediaImagePositionEnumLeft, nil
+	case "center":
+		return PageComponentAuth0MediaImagePositionEnumCenter, nil
+	case "right":
+		return PageComponentAuth0MediaImagePositionEnumRight, nil
+	}
+	var t PageComponentAuth0MediaImagePositionEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PageComponentAuth0MediaImagePositionEnum) Ptr() *PageComponentAuth0MediaImagePositionEnum {
+	return &p
+}
+
 var (
 	pageComponentAuth0MyAccountMfaManagementFieldConfig = big.NewInt(1 << 0)
 )
@@ -863,12 +879,10 @@ func (p *PageComponentAuth0MyAccountMfaManagement) GetExtraProperties() map[stri
 }
 
 func (p *PageComponentAuth0MyAccountMfaManagement) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -937,12 +951,10 @@ func (p *PageComponentAuth0MyAccountMfaManagementConfig) GetExtraProperties() ma
 }
 
 func (p *PageComponentAuth0MyAccountMfaManagementConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 func (p *PageComponentAuth0MyAccountMfaManagementConfig) UnmarshalJSON(data []byte) error {
@@ -1016,12 +1028,10 @@ func (p *PageComponentAuth0MyAccountPasskeyManagement) GetExtraProperties() map[
 }
 
 func (p *PageComponentAuth0MyAccountPasskeyManagement) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -1090,12 +1100,10 @@ func (p *PageComponentAuth0MyAccountPasskeyManagementConfig) GetExtraProperties(
 }
 
 func (p *PageComponentAuth0MyAccountPasskeyManagementConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 func (p *PageComponentAuth0MyAccountPasskeyManagementConfig) UnmarshalJSON(data []byte) error {
@@ -1169,12 +1177,10 @@ func (p *PageComponentAuth0MyOrganizationDetailsEdit) GetExtraProperties() map[s
 }
 
 func (p *PageComponentAuth0MyOrganizationDetailsEdit) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -1243,12 +1249,10 @@ func (p *PageComponentAuth0MyOrganizationDetailsEditConfig) GetExtraProperties()
 }
 
 func (p *PageComponentAuth0MyOrganizationDetailsEditConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 func (p *PageComponentAuth0MyOrganizationDetailsEditConfig) UnmarshalJSON(data []byte) error {
@@ -1322,12 +1326,10 @@ func (p *PageComponentAuth0MyOrganizationDomainTable) GetExtraProperties() map[s
 }
 
 func (p *PageComponentAuth0MyOrganizationDomainTable) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -1396,12 +1398,10 @@ func (p *PageComponentAuth0MyOrganizationDomainTableConfig) GetExtraProperties()
 }
 
 func (p *PageComponentAuth0MyOrganizationDomainTableConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 func (p *PageComponentAuth0MyOrganizationDomainTableConfig) UnmarshalJSON(data []byte) error {
@@ -1475,12 +1475,10 @@ func (p *PageComponentAuth0MyOrganizationMemberManagement) GetExtraProperties() 
 }
 
 func (p *PageComponentAuth0MyOrganizationMemberManagement) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -1549,12 +1547,10 @@ func (p *PageComponentAuth0MyOrganizationMemberManagementConfig) GetExtraPropert
 }
 
 func (p *PageComponentAuth0MyOrganizationMemberManagementConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 func (p *PageComponentAuth0MyOrganizationMemberManagementConfig) UnmarshalJSON(data []byte) error {
@@ -1628,12 +1624,10 @@ func (p *PageComponentAuth0StructureSection) GetExtraProperties() map[string]int
 }
 
 func (p *PageComponentAuth0StructureSection) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -1744,12 +1738,10 @@ func (p *PageComponentAuth0StructureSectionConfig) GetExtraProperties() map[stri
 }
 
 func (p *PageComponentAuth0StructureSectionConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetTitle sets the Title field and marks it as non-optional;
@@ -1874,12 +1866,10 @@ func (p *PageComponentAuth0StructureSeparator) GetExtraProperties() map[string]i
 }
 
 func (p *PageComponentAuth0StructureSeparator) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -1970,12 +1960,10 @@ func (p *PageComponentAuth0StructureSeparatorConfig) GetExtraProperties() map[st
 }
 
 func (p *PageComponentAuth0StructureSeparatorConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetVariant sets the Variant field and marks it as non-optional;
@@ -2089,12 +2077,10 @@ func (p *PageComponentAuth0TypographyHeading) GetExtraProperties() map[string]in
 }
 
 func (p *PageComponentAuth0TypographyHeading) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -2186,12 +2172,10 @@ func (p *PageComponentAuth0TypographyHeadingConfig) GetExtraProperties() map[str
 }
 
 func (p *PageComponentAuth0TypographyHeadingConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetTitle sets the Title field and marks it as non-optional;
@@ -2279,12 +2263,10 @@ func (p *PageComponentAuth0TypographyRichText) GetExtraProperties() map[string]i
 }
 
 func (p *PageComponentAuth0TypographyRichText) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -2366,12 +2348,10 @@ func (p *PageComponentAuth0TypographyRichTextConfig) GetExtraProperties() map[st
 }
 
 func (p *PageComponentAuth0TypographyRichTextConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetContent sets the Content field and marks it as non-optional;
@@ -2844,12 +2824,10 @@ func (p *Portal) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *Portal) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3007,12 +2985,10 @@ func (p *PortalClientSecretPost) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PortalClientSecretPost) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
@@ -3118,12 +3094,10 @@ func (p *PortalClientSecretPostRequest) GetExtraProperties() map[string]interfac
 }
 
 func (p *PortalClientSecretPostRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetTokenEndpointAuthMethod sets the TokenEndpointAuthMethod field and marks it as non-optional;
@@ -3257,12 +3231,10 @@ func (p *PortalCustomCode) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PortalCustomCode) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetHead sets the Head field and marks it as non-optional;
@@ -3351,12 +3323,10 @@ func (p *PortalNavigation) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PortalNavigation) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetSidebar sets the Sidebar field and marks it as non-optional;
@@ -3457,12 +3427,10 @@ func (p *PortalPage) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PortalPage) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetTitle sets the Title field and marks it as non-optional;
@@ -3566,12 +3534,10 @@ func (p *PortalPagesByType) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PortalPagesByType) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetDefault sets the Default field and marks it as non-optional;
@@ -3699,12 +3665,10 @@ func (p *PortalSummary) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PortalSummary) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3796,32 +3760,6 @@ func (p *PortalSummary) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Horizontal alignment of the image within its container.
-type Position string
-
-const (
-	PositionLeft   Position = "left"
-	PositionCenter Position = "center"
-	PositionRight  Position = "right"
-)
-
-func NewPositionFromString(s string) (Position, error) {
-	switch s {
-	case "left":
-		return PositionLeft, nil
-	case "center":
-		return PositionCenter, nil
-	case "right":
-		return PositionRight, nil
-	}
-	var t Position
-	return "", fmt.Errorf("%s is not a valid %T", s, t)
-}
-
-func (p Position) Ptr() *Position {
-	return &p
-}
-
 var (
 	sidebarFieldComponents = big.NewInt(1 << 0)
 )
@@ -3851,12 +3789,10 @@ func (s *Sidebar) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *Sidebar) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetComponents sets the Components field and marks it as non-optional;
@@ -4082,11 +4018,11 @@ func (s *SidebarComponent) validate() error {
 	return nil
 }
 
+// Deprecated. Use "sidebar:component:auth0:external_link:v2" instead.
 var (
 	sidebarComponentAuth0ExternalLinkFieldConfig = big.NewInt(1 << 0)
 )
 
-// Deprecated. Use "sidebar:component:auth0:external_link:v2" instead.
 type SidebarComponentAuth0ExternalLink struct {
 	Config *SidebarComponentAuth0ExternalLinkConfig `json:"config" url:"config"`
 
@@ -4112,12 +4048,10 @@ func (s *SidebarComponentAuth0ExternalLink) GetExtraProperties() map[string]inte
 }
 
 func (s *SidebarComponentAuth0ExternalLink) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -4219,12 +4153,10 @@ func (s *SidebarComponentAuth0ExternalLinkConfig) GetExtraProperties() map[strin
 }
 
 func (s *SidebarComponentAuth0ExternalLinkConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetLabel sets the Label field and marks it as non-optional;
@@ -4319,12 +4251,10 @@ func (s *SidebarComponentAuth0ExternalLinkV2) GetExtraProperties() map[string]in
 }
 
 func (s *SidebarComponentAuth0ExternalLinkV2) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -4426,12 +4356,10 @@ func (s *SidebarComponentAuth0ExternalLinkV2Config) GetExtraProperties() map[str
 }
 
 func (s *SidebarComponentAuth0ExternalLinkV2Config) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetLabel sets the Label field and marks it as non-optional;
@@ -4497,11 +4425,11 @@ func (s *SidebarComponentAuth0ExternalLinkV2Config) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Deprecated. Use "sidebar:component:auth0:internal_link:v2" instead.
 var (
 	sidebarComponentAuth0InternalLinkFieldConfig = big.NewInt(1 << 0)
 )
 
-// Deprecated. Use "sidebar:component:auth0:internal_link:v2" instead.
 type SidebarComponentAuth0InternalLink struct {
 	Config *SidebarComponentAuth0InternalLinkConfig `json:"config" url:"config"`
 
@@ -4527,12 +4455,10 @@ func (s *SidebarComponentAuth0InternalLink) GetExtraProperties() map[string]inte
 }
 
 func (s *SidebarComponentAuth0InternalLink) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -4634,12 +4560,10 @@ func (s *SidebarComponentAuth0InternalLinkConfig) GetExtraProperties() map[strin
 }
 
 func (s *SidebarComponentAuth0InternalLinkConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetLabel sets the Label field and marks it as non-optional;
@@ -4734,12 +4658,10 @@ func (s *SidebarComponentAuth0InternalLinkV2) GetExtraProperties() map[string]in
 }
 
 func (s *SidebarComponentAuth0InternalLinkV2) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetConfig sets the Config field and marks it as non-optional;
@@ -4841,12 +4763,10 @@ func (s *SidebarComponentAuth0InternalLinkV2Config) GetExtraProperties() map[str
 }
 
 func (s *SidebarComponentAuth0InternalLinkV2Config) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetLabel sets the Label field and marks it as non-optional;

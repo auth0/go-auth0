@@ -119,12 +119,10 @@ func (c *CreateSelfServiceProfileResponseContent) GetExtraProperties() map[strin
 }
 
 func (c *CreateSelfServiceProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -353,12 +351,10 @@ func (g *GetSelfServiceProfileResponseContent) GetExtraProperties() map[string]i
 }
 
 func (g *GetSelfServiceProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -534,12 +530,10 @@ func (l *ListSelfServiceProfilesPaginatedResponseContent) GetExtraProperties() m
 }
 
 func (l *ListSelfServiceProfilesPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -721,12 +715,10 @@ func (s *SelfServiceProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SelfServiceProfile) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -924,12 +916,10 @@ func (s *SelfServiceProfileBrandingColors) GetExtraProperties() map[string]inter
 }
 
 func (s *SelfServiceProfileBrandingColors) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -1024,12 +1014,10 @@ func (s *SelfServiceProfileBrandingProperties) GetExtraProperties() map[string]i
 }
 
 func (s *SelfServiceProfileBrandingProperties) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetLogoURL sets the LogoURL field and marks it as non-optional;
@@ -1145,12 +1133,10 @@ func (s *SelfServiceProfileUserAttribute) GetExtraProperties() map[string]interf
 }
 
 func (s *SelfServiceProfileUserAttribute) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -1328,12 +1314,10 @@ func (u *UpdateSelfServiceProfileResponseContent) GetExtraProperties() map[strin
 }
 
 func (u *UpdateSelfServiceProfileResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

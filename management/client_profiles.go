@@ -20,11 +20,6 @@ var (
 	clientProfileFieldUpdatedAt           = big.NewInt(1 << 6)
 )
 
-// clientProfileNullableFields maps the wire names of ClientProfile's nullable fields (required or optional) to their field bits.
-var clientProfileNullableFields = map[string]*big.Int{
-	"description": clientProfileFieldDescription,
-}
-
 type ClientProfile struct {
 	ID                  ClientProfileID                   `json:"id" url:"id"`
 	Name                ClientProfileName                 `json:"name" url:"name"`
@@ -100,12 +95,10 @@ func (c *ClientProfile) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientProfile) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -177,13 +170,6 @@ func (c *ClientProfile) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, clientProfileNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -218,12 +204,12 @@ func (c *ClientProfile) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Runtime matching rules that determine which clients this profile governs.
 var (
 	clientProfileApplyPolicyFieldExternalMetadataType      = big.NewInt(1 << 0)
 	clientProfileApplyPolicyFieldExternalMetadataCreatedBy = big.NewInt(1 << 1)
 )
 
-// Runtime matching rules that determine which clients this profile governs.
 type ClientProfileApplyPolicy struct {
 	ExternalMetadataType      ClientProfileApplyPolicyExternalMetadataTypeEnum      `json:"external_metadata_type" url:"external_metadata_type"`
 	ExternalMetadataCreatedBy ClientProfileApplyPolicyExternalMetadataCreatedByEnum `json:"external_metadata_created_by" url:"external_metadata_created_by"`
@@ -257,12 +243,10 @@ func (c *ClientProfileApplyPolicy) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientProfileApplyPolicy) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetExternalMetadataType sets the ExternalMetadataType field and marks it as non-optional;
@@ -361,6 +345,7 @@ func (c ClientProfileApplyPolicyExternalMetadataTypeEnum) Ptr() *ClientProfileAp
 	return &c
 }
 
+// Runtime policy applied to matched clients. Omitted fields fall back to each client's own setting.
 var (
 	clientProfileClientConfigurationFieldRefreshToken                 = big.NewInt(1 << 0)
 	clientProfileClientConfigurationFieldOrganizationUsage            = big.NewInt(1 << 1)
@@ -370,7 +355,6 @@ var (
 	clientProfileClientConfigurationFieldOidcSupport                  = big.NewInt(1 << 5)
 )
 
-// Runtime policy applied to matched clients. Omitted fields fall back to each client's own setting.
 type ClientProfileClientConfiguration struct {
 	RefreshToken                 *ClientProfileClientConfigurationRefreshToken                 `json:"refresh_token,omitempty" url:"refresh_token,omitempty"`
 	OrganizationUsage            *ClientProfileClientConfigurationOrganizationUsage            `json:"organization_usage,omitempty" url:"organization_usage,omitempty"`
@@ -436,12 +420,10 @@ func (c *ClientProfileClientConfiguration) GetExtraProperties() map[string]inter
 }
 
 func (c *ClientProfileClientConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetRefreshToken sets the RefreshToken field and marks it as non-optional;
@@ -528,11 +510,11 @@ func (c *ClientProfileClientConfiguration) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Default OIDC support configuration applied to matched clients.
 var (
 	clientProfileClientConfigurationOidcSupportFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Default OIDC support configuration applied to matched clients.
 type ClientProfileClientConfigurationOidcSupport struct {
 	DefaultValue *ClientProfileClientConfigurationOidcSupportDefaultValue `json:"default_value" url:"default_value"`
 
@@ -558,12 +540,10 @@ func (c *ClientProfileClientConfigurationOidcSupport) GetExtraProperties() map[s
 }
 
 func (c *ClientProfileClientConfigurationOidcSupport) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -644,13 +624,13 @@ func (c ClientProfileClientConfigurationOidcSupportAllowedScopesEnum) Ptr() *Cli
 	return &c
 }
 
+// Controls whether matched clients can receive ID tokens and use the UserInfo endpoint, and which user profile information they can request through OIDC scopes.
 var (
 	clientProfileClientConfigurationOidcSupportDefaultValueFieldIsAllowed      = big.NewInt(1 << 0)
 	clientProfileClientConfigurationOidcSupportDefaultValueFieldAllowAllScopes = big.NewInt(1 << 1)
 	clientProfileClientConfigurationOidcSupportDefaultValueFieldAllowedScopes  = big.NewInt(1 << 2)
 )
 
-// Controls whether matched clients can receive ID tokens and use the UserInfo endpoint, and which user profile information they can request through OIDC scopes.
 type ClientProfileClientConfigurationOidcSupportDefaultValue struct {
 	// Allows matched clients to use OIDC, including receiving ID tokens and calling the UserInfo endpoint.
 	IsAllowed bool `json:"is_allowed" url:"is_allowed"`
@@ -695,12 +675,10 @@ func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) GetExtraProper
 }
 
 func (c *ClientProfileClientConfigurationOidcSupportDefaultValue) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetIsAllowed sets the IsAllowed field and marks it as non-optional;
@@ -789,11 +767,11 @@ func (c ClientProfileClientConfigurationOrganizationDiscoveryMethodEnum) Ptr() *
 	return &c
 }
 
+// Default organization discovery methods applied to matched clients.
 var (
 	clientProfileClientConfigurationOrganizationDiscoveryMethodsFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Default organization discovery methods applied to matched clients.
 type ClientProfileClientConfigurationOrganizationDiscoveryMethods struct {
 	DefaultValue []ClientProfileClientConfigurationOrganizationDiscoveryMethodEnum `json:"default_value,omitempty" url:"default_value,omitempty"`
 
@@ -819,12 +797,10 @@ func (c *ClientProfileClientConfigurationOrganizationDiscoveryMethods) GetExtraP
 }
 
 func (c *ClientProfileClientConfigurationOrganizationDiscoveryMethods) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -876,11 +852,11 @@ func (c *ClientProfileClientConfigurationOrganizationDiscoveryMethods) String() 
 	return fmt.Sprintf("%#v", c)
 }
 
+// Default organization prompt behavior applied to matched clients.
 var (
 	clientProfileClientConfigurationOrganizationRequireBehaviorFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Default organization prompt behavior applied to matched clients.
 type ClientProfileClientConfigurationOrganizationRequireBehavior struct {
 	DefaultValue *ClientProfileClientConfigurationOrganizationRequireBehaviorEnum `json:"default_value,omitempty" url:"default_value,omitempty"`
 
@@ -906,12 +882,10 @@ func (c *ClientProfileClientConfigurationOrganizationRequireBehavior) GetExtraPr
 }
 
 func (c *ClientProfileClientConfigurationOrganizationRequireBehavior) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -989,11 +963,11 @@ func (c ClientProfileClientConfigurationOrganizationRequireBehaviorEnum) Ptr() *
 	return &c
 }
 
+// Default organization usage applied to matched clients.
 var (
 	clientProfileClientConfigurationOrganizationUsageFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Default organization usage applied to matched clients.
 type ClientProfileClientConfigurationOrganizationUsage struct {
 	DefaultValue *ClientProfileClientConfigurationOrganizationUsageEnum `json:"default_value,omitempty" url:"default_value,omitempty"`
 
@@ -1019,12 +993,10 @@ func (c *ClientProfileClientConfigurationOrganizationUsage) GetExtraProperties()
 }
 
 func (c *ClientProfileClientConfigurationOrganizationUsage) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -1102,13 +1074,13 @@ func (c ClientProfileClientConfigurationOrganizationUsageEnum) Ptr() *ClientProf
 	return &c
 }
 
+// Refresh token settings. Omit any sub-field to use the client's own value.
 var (
 	clientProfileClientConfigurationRefreshTokenFieldTokenLifetime     = big.NewInt(1 << 0)
 	clientProfileClientConfigurationRefreshTokenFieldIdleTokenLifetime = big.NewInt(1 << 1)
 	clientProfileClientConfigurationRefreshTokenFieldLeeway            = big.NewInt(1 << 2)
 )
 
-// Refresh token settings. Omit any sub-field to use the client's own value.
 type ClientProfileClientConfigurationRefreshToken struct {
 	TokenLifetime     *ClientProfileRefreshTokenTokenLifetime     `json:"token_lifetime,omitempty" url:"token_lifetime,omitempty"`
 	IdleTokenLifetime *ClientProfileRefreshTokenIdleTokenLifetime `json:"idle_token_lifetime,omitempty" url:"idle_token_lifetime,omitempty"`
@@ -1150,12 +1122,10 @@ func (c *ClientProfileClientConfigurationRefreshToken) GetExtraProperties() map[
 }
 
 func (c *ClientProfileClientConfigurationRefreshToken) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTokenLifetime sets the TokenLifetime field and marks it as non-optional;
@@ -1221,11 +1191,11 @@ func (c *ClientProfileClientConfigurationRefreshToken) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Whether matched clients default to requiring proof of possession.
 var (
 	clientProfileClientConfigurationRequireProofOfPossessionFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Whether matched clients default to requiring proof of possession.
 type ClientProfileClientConfigurationRequireProofOfPossession struct {
 	DefaultValue *bool `json:"default_value,omitempty" url:"default_value,omitempty"`
 
@@ -1251,12 +1221,10 @@ func (c *ClientProfileClientConfigurationRequireProofOfPossession) GetExtraPrope
 }
 
 func (c *ClientProfileClientConfigurationRequireProofOfPossession) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -1317,11 +1285,11 @@ type ClientProfileID = string
 // Display name of the client profile.
 type ClientProfileName = string
 
+// Default idle refresh token lifetime, in seconds, applied to matched clients.
 var (
 	clientProfileRefreshTokenIdleTokenLifetimeFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Default idle refresh token lifetime, in seconds, applied to matched clients.
 type ClientProfileRefreshTokenIdleTokenLifetime struct {
 	DefaultValue *int `json:"default_value,omitempty" url:"default_value,omitempty"`
 
@@ -1347,12 +1315,10 @@ func (c *ClientProfileRefreshTokenIdleTokenLifetime) GetExtraProperties() map[st
 }
 
 func (c *ClientProfileRefreshTokenIdleTokenLifetime) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -1404,11 +1370,11 @@ func (c *ClientProfileRefreshTokenIdleTokenLifetime) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Default refresh token rotation leeway, in seconds, applied to matched clients.
 var (
 	clientProfileRefreshTokenLeewayFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Default refresh token rotation leeway, in seconds, applied to matched clients.
 type ClientProfileRefreshTokenLeeway struct {
 	DefaultValue *int `json:"default_value,omitempty" url:"default_value,omitempty"`
 
@@ -1434,12 +1400,10 @@ func (c *ClientProfileRefreshTokenLeeway) GetExtraProperties() map[string]interf
 }
 
 func (c *ClientProfileRefreshTokenLeeway) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -1491,11 +1455,11 @@ func (c *ClientProfileRefreshTokenLeeway) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Default refresh token lifetime, in seconds, applied to matched clients.
 var (
 	clientProfileRefreshTokenTokenLifetimeFieldDefaultValue = big.NewInt(1 << 0)
 )
 
-// Default refresh token lifetime, in seconds, applied to matched clients.
 type ClientProfileRefreshTokenTokenLifetime struct {
 	DefaultValue *int `json:"default_value,omitempty" url:"default_value,omitempty"`
 
@@ -1521,12 +1485,10 @@ func (c *ClientProfileRefreshTokenTokenLifetime) GetExtraProperties() map[string
 }
 
 func (c *ClientProfileRefreshTokenTokenLifetime) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDefaultValue sets the DefaultValue field and marks it as non-optional;
@@ -1578,12 +1540,12 @@ func (c *ClientProfileRefreshTokenTokenLifetime) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Checkpoint paginated list of client profiles.
 var (
 	listClientProfilesPaginatedResponseContentFieldNext           = big.NewInt(1 << 0)
 	listClientProfilesPaginatedResponseContentFieldClientProfiles = big.NewInt(1 << 1)
 )
 
-// Checkpoint paginated list of client profiles.
 type ListClientProfilesPaginatedResponseContent struct {
 	// A cursor to be used as the "from" query parameter for the next page of results.
 	Next           *string          `json:"next,omitempty" url:"next,omitempty"`
@@ -1618,12 +1580,10 @@ func (l *ListClientProfilesPaginatedResponseContent) GetExtraProperties() map[st
 }
 
 func (l *ListClientProfilesPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;

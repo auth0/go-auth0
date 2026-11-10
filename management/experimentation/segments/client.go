@@ -36,23 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a paginated list of segments for the tenant.
-//
-// Example:
-//
-//	request := &management.ListSegmentsRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	    Type: management.SegmentTypeFilterEnumAuth0.Ptr(),
-//	    Status: management.SegmentStatusEnumActive.Ptr(),
-//	}
-//	client.Experimentation.Segments.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListSegmentsRequestParameters,
@@ -107,7 +90,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -119,19 +102,6 @@ func (c *Client) List(
 }
 
 // Create a new segment with rule-based membership criteria for use in experiments.
-//
-// Example:
-//
-//	request := &management.CreateSegmentRequestContent{
-//	    Name: "name",
-//	    Rules: []*management.SegmentRule{
-//	        &management.SegmentRule{},
-//	    },
-//	}
-//	client.Experimentation.Segments.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateSegmentRequestContent,
@@ -149,13 +119,6 @@ func (c *Client) Create(
 }
 
 // Retrieve a single segment by its ID.
-//
-// Example:
-//
-//	client.Experimentation.Segments.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// The ID of the segment to retrieve.
@@ -174,13 +137,6 @@ func (c *Client) Get(
 }
 
 // Delete a segment by ID. Idempotent: returns 204 even if segment does not exist.
-//
-// Example:
-//
-//	client.Experimentation.Segments.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// The ID of the segment to delete.
@@ -199,15 +155,6 @@ func (c *Client) Delete(
 }
 
 // Partially update a segment by ID. Only provided fields are updated. Sending rules replaces the entire rules array.
-//
-// Example:
-//
-//	request := &management.UpdateSegmentRequestContent{}
-//	client.Experimentation.Segments.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// The ID of the segment to update.

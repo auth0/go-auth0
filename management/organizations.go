@@ -9,6 +9,7 @@ import (
 	big "math/big"
 )
 
+// Connection to be added to the organization.
 var (
 	connectionForOrganizationFieldConnectionID            = big.NewInt(1 << 0)
 	connectionForOrganizationFieldAssignMembershipOnLogin = big.NewInt(1 << 1)
@@ -16,7 +17,6 @@ var (
 	connectionForOrganizationFieldIsSignupEnabled         = big.NewInt(1 << 3)
 )
 
-// Connection to be added to the organization.
 type ConnectionForOrganization struct {
 	// ID of the connection.
 	ConnectionID string `json:"connection_id" url:"connection_id"`
@@ -70,12 +70,10 @@ func (c *ConnectionForOrganization) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionForOrganization) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -263,12 +261,10 @@ func (c *CreateOrganizationResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateOrganizationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -493,12 +489,10 @@ func (g *GetOrganizationByNameResponseContent) GetExtraProperties() map[string]i
 }
 
 func (g *GetOrganizationByNameResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -716,12 +710,10 @@ func (g *GetOrganizationResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (g *GetOrganizationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -871,12 +863,10 @@ func (l *ListOrganizationsPaginatedResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListOrganizationsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -1005,12 +995,10 @@ func (o *OrganizationEnabledConnection) GetExtraProperties() map[string]interfac
 }
 
 func (o *OrganizationEnabledConnection) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -1208,12 +1196,10 @@ func (s *SearchOrganization) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SearchOrganization) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1351,12 +1337,10 @@ func (s *SearchOrganizationsPaginatedResponseContent) GetExtraProperties() map[s
 }
 
 func (s *SearchOrganizationsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetOrganizations sets the Organizations field and marks it as non-optional;
@@ -1521,12 +1505,10 @@ func (u *UpdateOrganizationResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (u *UpdateOrganizationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

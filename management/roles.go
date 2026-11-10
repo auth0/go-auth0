@@ -77,12 +77,10 @@ func (c *CreateRoleResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CreateRoleResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -230,12 +228,10 @@ func (g *GetRoleResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetRoleResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -371,12 +367,10 @@ func (l *ListRolesOffsetPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListRolesOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -520,12 +514,10 @@ func (u *UpdateRoleResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UpdateRoleResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

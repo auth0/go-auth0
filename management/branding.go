@@ -9,12 +9,12 @@ import (
 	big "math/big"
 )
 
+// Custom color settings.
 var (
 	brandingColorsFieldPrimary        = big.NewInt(1 << 0)
 	brandingColorsFieldPageBackground = big.NewInt(1 << 1)
 )
 
-// Custom color settings.
 type BrandingColors struct {
 	// Accent color.
 	Primary        *string                 `json:"primary,omitempty" url:"primary,omitempty"`
@@ -49,12 +49,10 @@ func (b *BrandingColors) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingColors) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -113,11 +111,11 @@ func (b *BrandingColors) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Custom font settings.
 var (
 	brandingFontFieldURL = big.NewInt(1 << 0)
 )
 
-// Custom font settings.
 type BrandingFont struct {
 	// URL for the custom font. The URL must point to a font file and not a stylesheet. Must use HTTPS.
 	URL *string `json:"url,omitempty" url:"url,omitempty"`
@@ -144,12 +142,10 @@ func (b *BrandingFont) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingFont) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -335,12 +331,10 @@ func (g *GetBrandingResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (g *GetBrandingResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetColors sets the Colors field and marks it as non-optional;
@@ -417,17 +411,12 @@ func (g *GetBrandingResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Custom color settings.
 var (
 	updateBrandingColorsFieldPrimary        = big.NewInt(1 << 0)
 	updateBrandingColorsFieldPageBackground = big.NewInt(1 << 1)
 )
 
-// updateBrandingColorsNullableFields maps the wire names of UpdateBrandingColors's nullable fields (required or optional) to their field bits.
-var updateBrandingColorsNullableFields = map[string]*big.Int{
-	"primary": updateBrandingColorsFieldPrimary,
-}
-
-// Custom color settings.
 type UpdateBrandingColors struct {
 	// Accent color.
 	Primary        *string                       `json:"primary,omitempty" url:"primary,omitempty"`
@@ -462,12 +451,10 @@ func (u *UpdateBrandingColors) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateBrandingColors) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -496,13 +483,6 @@ func (u *UpdateBrandingColors) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateBrandingColorsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -533,16 +513,11 @@ func (u *UpdateBrandingColors) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Custom font settings.
 var (
 	updateBrandingFontFieldURL = big.NewInt(1 << 0)
 )
 
-// updateBrandingFontNullableFields maps the wire names of UpdateBrandingFont's nullable fields (required or optional) to their field bits.
-var updateBrandingFontNullableFields = map[string]*big.Int{
-	"url": updateBrandingFontFieldURL,
-}
-
-// Custom font settings.
 type UpdateBrandingFont struct {
 	// URL for the custom font. The URL must point to a font file and not a stylesheet. Must use HTTPS.
 	URL *string `json:"url,omitempty" url:"url,omitempty"`
@@ -569,12 +544,10 @@ func (u *UpdateBrandingFont) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateBrandingFont) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -596,13 +569,6 @@ func (u *UpdateBrandingFont) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateBrandingFontNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -767,12 +733,10 @@ func (u *UpdateBrandingResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (u *UpdateBrandingResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetColors sets the Colors field and marks it as non-optional;

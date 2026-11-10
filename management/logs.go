@@ -33,11 +33,6 @@ var (
 	getLogResponseContentFieldLocationInfo    = big.NewInt(1 << 20)
 )
 
-// getLogResponseContentNullableFields maps the wire names of GetLogResponseContent's nullable fields (required or optional) to their field bits.
-var getLogResponseContentNullableFields = map[string]*big.Int{
-	"description": getLogResponseContentFieldDescription,
-}
-
 type GetLogResponseContent struct {
 	Date *LogDate `json:"date,omitempty" url:"date,omitempty"`
 	// Type of event.
@@ -241,12 +236,10 @@ func (g *GetLogResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetLogResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetDate sets the Date field and marks it as non-optional;
@@ -412,13 +405,6 @@ func (g *GetLogResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getLogResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -514,12 +500,10 @@ func (l *ListLogOffsetPaginatedResponseContent) GetExtraProperties() map[string]
 }
 
 func (l *ListLogOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;

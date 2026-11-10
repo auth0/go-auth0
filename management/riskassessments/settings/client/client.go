@@ -38,12 +38,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Gets the tenant settings for risk assessments
-//
-// Example:
-//
-//	client.RiskAssessments.Settings.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -59,16 +53,6 @@ func (c *Client) Get(
 }
 
 // Updates the tenant settings for risk assessments
-//
-// Example:
-//
-//	request := &management.UpdateRiskAssessmentsSettingsRequestContent{
-//	    Enabled: true,
-//	}
-//	client.RiskAssessments.Settings.Update(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateRiskAssessmentsSettingsRequestContent,

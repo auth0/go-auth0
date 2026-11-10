@@ -36,21 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a paginated list of client profiles for the tenant. Uses checkpoint pagination: pass the <code>next</code> cursor from a previous response as the <code>from</code> query parameter to retrieve the following page.
-//
-// Example:
-//
-//	request := &management.ListClientProfilesRequestParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.ClientProfiles.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListClientProfilesRequestParameters,
@@ -105,7 +90,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -117,21 +102,6 @@ func (c *Client) List(
 }
 
 // Create a client profile. At most one profile is allowed per tenant in this release; attempting to create a second returns <code>409 Conflict</code>. The profile governs Dynamic CIMD clients matched by its <code>apply_policy</code> at runtime.
-//
-// Example:
-//
-//	request := &management.CreateClientProfileRequestContent{
-//	    Name: "name",
-//	    ClientConfiguration: &management.ClientProfileClientConfiguration{},
-//	    ApplyPolicy: &management.ClientProfileApplyPolicy{
-//	        ExternalMetadataType: management.ClientProfileApplyPolicyExternalMetadataTypeEnumCimd,
-//	        ExternalMetadataCreatedBy: management.ClientProfileApplyPolicyExternalMetadataCreatedByEnumClient,
-//	    },
-//	}
-//	client.ClientProfiles.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateClientProfileRequestContent,
@@ -149,13 +119,6 @@ func (c *Client) Create(
 }
 
 // Retrieve a single client profile by its identifier. Returns <code>404</code> if no profile with the given ID exists for the tenant.
-//
-// Example:
-//
-//	client.ClientProfiles.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the client profile.
@@ -174,13 +137,6 @@ func (c *Client) Get(
 }
 
 // Delete a client profile. Idempotent: returns <code>204 No Content</code> whether or not a profile with the given ID existed. Deleting the profile removes fleet governance for matched clients immediately.
-//
-// Example:
-//
-//	client.ClientProfiles.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the client profile.
@@ -199,15 +155,6 @@ func (c *Client) Delete(
 }
 
 // Update a client profile. Supports partial updates at the top level (JSON Merge Patch); omitted top-level fields remain unchanged. Nested objects such as <code>client_configuration</code> must be supplied in full.
-//
-// Example:
-//
-//	request := &management.UpdateClientProfileRequestContent{}
-//	client.ClientProfiles.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the client profile.

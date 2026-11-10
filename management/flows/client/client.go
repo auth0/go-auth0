@@ -43,29 +43,6 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Example:
-//
-//	request := &management.ListFlowsRequestParameters{
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	    Hydrate: []*management.ListFlowsRequestParametersHydrateEnum{
-//	        management.ListFlowsRequestParametersHydrateEnumFormCount.Ptr(),
-//	    },
-//	    Synchronous: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Flows.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListFlowsRequestParameters,
@@ -139,15 +116,6 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
-// Example:
-//
-//	request := &management.CreateFlowRequestContent{
-//	    Name: "name",
-//	}
-//	client.Flows.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateFlowRequestContent,
@@ -164,18 +132,6 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	request := &management.GetFlowRequestParameters{
-//	    Hydrate: []*management.GetFlowRequestParametersHydrateEnum{
-//	        management.GetFlowRequestParametersHydrateEnumFormCount.Ptr(),
-//	    },
-//	}
-//	client.Flows.Get(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Flow identifier
@@ -195,12 +151,6 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.Flows.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Flow id
@@ -218,14 +168,6 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Example:
-//
-//	request := &management.UpdateFlowRequestContent{}
-//	client.Flows.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// Flow identifier

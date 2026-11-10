@@ -34,11 +34,6 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Example:
-//
-//	client.Portals.List(
-//	    context.TODO(),
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -53,21 +48,6 @@ func (c *Client) List(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	request := &management.CreatePortalRequestContent{
-//	    Slug: "slug",
-//	    Name: "name",
-//	    Client: &management.PortalClientSecretPostRequest{
-//	        TokenEndpointAuthMethod: management.PortalClientSecretPostRequestTokenEndpointAuthMethodClientSecretPost,
-//	        ClientID: "client_id",
-//	        ClientSecret: "client_secret",
-//	    },
-//	}
-//	client.Portals.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreatePortalRequestContent,
@@ -84,12 +64,6 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.Portals.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	id management.PortalID,
@@ -106,12 +80,6 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.Portals.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	id management.PortalID,
@@ -128,14 +96,6 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Example:
-//
-//	request := &management.UpdatePortalRequestContent{}
-//	client.Portals.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	id management.PortalID,

@@ -211,12 +211,10 @@ func (c *ClientGrantResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ClientGrantResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -514,12 +512,10 @@ func (c *CreateClientGrantResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateClientGrantResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -768,12 +764,10 @@ func (g *GetClientGrantResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (g *GetClientGrantResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -934,12 +928,10 @@ func (l *ListClientGrantPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListClientGrantPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -1038,12 +1030,10 @@ func (s *SearchClientGrantsResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (s *SearchClientGrantsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetClientGrants sets the ClientGrants field and marks it as non-optional;
@@ -1229,12 +1219,10 @@ func (u *UpdateClientGrantResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (u *UpdateClientGrantResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;

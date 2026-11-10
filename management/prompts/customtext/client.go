@@ -35,14 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve custom text for a specific prompt and language.
-//
-// Example:
-//
-//	client.Prompts.CustomText.Get(
-//	    context.TODO(),
-//	    management.PromptGroupNameEnumLogin.Ptr(),
-//	    management.PromptLanguageEnumAm.Ptr(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Name of the prompt.
@@ -64,18 +56,6 @@ func (c *Client) Get(
 }
 
 // Set custom text for a specific prompt. Existing texts will be overwritten.
-//
-// Example:
-//
-//	request := map[string]any{
-//	    "key": "value",
-//	}
-//	client.Prompts.CustomText.Set(
-//	    context.TODO(),
-//	    management.PromptGroupNameEnumLogin.Ptr(),
-//	    management.PromptLanguageEnumAm.Ptr(),
-//	    request,
-//	)
 func (c *Client) Set(
 	ctx context.Context,
 	// Name of the prompt.

@@ -36,28 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // List all users that are a member of this group.
-//
-// Example:
-//
-//	request := &management.GetGroupMembersRequestParameters{
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.Groups.Members.Get(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Unique identifier for the group (service-generated).
@@ -117,7 +95,7 @@ func (c *Client) Get(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(

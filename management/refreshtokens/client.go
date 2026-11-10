@@ -36,31 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a paginated list of refresh tokens for a specific user, with optional filtering by client ID. Results are sorted by credential_id ascending.
-//
-// Example:
-//
-//	request := &management.GetRefreshTokensRequestParameters{
-//	    UserID: "user_id",
-//	    ClientID: management.String(
-//	        "client_id",
-//	    ),
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	    Fields: management.String(
-//	        "fields",
-//	    ),
-//	    IncludeFields: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.RefreshTokens.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.GetRefreshTokensRequestParameters,
@@ -115,7 +90,7 @@ func (c *Client) List(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -127,14 +102,6 @@ func (c *Client) List(
 }
 
 // Revoke refresh tokens in bulk by ID list, user, user+client, or user+client+audience.
-//
-// Example:
-//
-//	request := &management.RevokeRefreshTokensRequestContent{}
-//	client.RefreshTokens.Revoke(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Revoke(
 	ctx context.Context,
 	request *management.RevokeRefreshTokensRequestContent,
@@ -152,13 +119,6 @@ func (c *Client) Revoke(
 }
 
 // Retrieve refresh token information.
-//
-// Example:
-//
-//	client.RefreshTokens.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID refresh token to retrieve
@@ -177,13 +137,6 @@ func (c *Client) Get(
 }
 
 // Delete a refresh token by its ID.
-//
-// Example:
-//
-//	client.RefreshTokens.Delete(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the refresh token to delete.
@@ -202,15 +155,6 @@ func (c *Client) Delete(
 }
 
 // Update a refresh token by its ID.
-//
-// Example:
-//
-//	request := &management.UpdateRefreshTokenRequestContent{}
-//	client.RefreshTokens.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the refresh token to update.

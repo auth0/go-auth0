@@ -35,13 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Gets the connection keys for the Okta, OIDC, or SAML (samlp) connection strategy.
-//
-// Example:
-//
-//	client.Connections.Keys.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the connection
@@ -60,15 +53,6 @@ func (c *Client) Get(
 }
 
 // Provision initial connection keys for Okta, OIDC, or SAML (samlp) connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
-//
-// Example:
-//
-//	request := &management.PostConnectionKeysRequestContent{}
-//	client.Connections.Keys.Create(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// ID of the connection
@@ -89,15 +73,6 @@ func (c *Client) Create(
 }
 
 // Rotates the connection keys for the Okta, OIDC, or SAML (samlp) connection strategies.
-//
-// Example:
-//
-//	request := &management.RotateConnectionKeysRequestContent{}
-//	client.Connections.Keys.Rotate(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Rotate(
 	ctx context.Context,
 	// ID of the connection

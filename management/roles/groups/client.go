@@ -36,22 +36,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Lists the groups to which the specified role is assigned.
-//
-// Example:
-//
-//	request := &management.ListRoleGroupsParameters{
-//	    From: management.String(
-//	        "from",
-//	    ),
-//	    Take: management.Int(
-//	        1,
-//	    ),
-//	}
-//	client.Roles.Groups.Get(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Unique identifier for the role (service-generated).
@@ -111,7 +95,7 @@ func (c *Client) Get(
 			Results:  results,
 			Response: response,
 			Next:     next,
-			Done:     next == zeroValue || *next == "",
+			Done:     next == zeroValue,
 		}
 	}
 	pager := internal.NewCursorPager(
@@ -123,19 +107,6 @@ func (c *Client) Get(
 }
 
 // Assign one or more groups to a specified role.
-//
-// Example:
-//
-//	request := &management.AssignRoleGroupsRequestContent{
-//	    Groups: []string{
-//	        "groups",
-//	    },
-//	}
-//	client.Roles.Groups.Create(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// Unique identifier for the role (service-generated).
@@ -156,19 +127,6 @@ func (c *Client) Create(
 }
 
 // Unassign one or more groups from a specified role.
-//
-// Example:
-//
-//	request := &management.DeleteRoleGroupsRequestContent{
-//	    Groups: []string{
-//	        "groups",
-//	    },
-//	}
-//	client.Roles.Groups.Delete(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Unique identifier for the role (service-generated).

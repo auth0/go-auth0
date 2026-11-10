@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve configuration details for the multi-factor authentication APNS provider associated with your tenant.
-//
-// Example:
-//
-//	client.Guardian.Factors.PushNotification.GetApnsProvider(
-//	    context.TODO(),
-//	)
 func (c *Client) GetApnsProvider(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,14 +50,6 @@ func (c *Client) GetApnsProvider(
 }
 
 // Overwrite all configuration details of the multi-factor authentication APNS provider associated with your tenant.
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorsProviderPushNotificationApnsRequestContent{}
-//	client.Guardian.Factors.PushNotification.SetApnsProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetApnsProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationApnsRequestContent,
@@ -81,14 +67,6 @@ func (c *Client) SetApnsProvider(
 }
 
 // Modify configuration details of the multi-factor authentication APNS provider associated with your tenant.
-//
-// Example:
-//
-//	request := &management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent{}
-//	client.Guardian.Factors.PushNotification.UpdateApnsProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) UpdateApnsProvider(
 	ctx context.Context,
 	request *management.UpdateGuardianFactorsProviderPushNotificationApnsRequestContent,
@@ -106,14 +84,6 @@ func (c *Client) UpdateApnsProvider(
 }
 
 // Overwrite all configuration details of the multi-factor authentication FCM provider associated with your tenant.
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorsProviderPushNotificationFcmRequestContent{}
-//	client.Guardian.Factors.PushNotification.SetFcmProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetFcmProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationFcmRequestContent,
@@ -131,14 +101,6 @@ func (c *Client) SetFcmProvider(
 }
 
 // Modify configuration details of the multi-factor authentication FCM provider associated with your tenant.
-//
-// Example:
-//
-//	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent{}
-//	client.Guardian.Factors.PushNotification.UpdateFcmProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) UpdateFcmProvider(
 	ctx context.Context,
 	request *management.UpdateGuardianFactorsProviderPushNotificationFcmRequestContent,
@@ -156,14 +118,6 @@ func (c *Client) UpdateFcmProvider(
 }
 
 // Overwrite all configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
-//	client.Guardian.Factors.PushNotification.SetFcmv1Provider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetFcmv1Provider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationFcmv1RequestContent,
@@ -181,14 +135,6 @@ func (c *Client) SetFcmv1Provider(
 }
 
 // Modify configuration details of the multi-factor authentication FCMV1 provider associated with your tenant.
-//
-// Example:
-//
-//	request := &management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent{}
-//	client.Guardian.Factors.PushNotification.UpdateFcmv1Provider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) UpdateFcmv1Provider(
 	ctx context.Context,
 	request *management.UpdateGuardianFactorsProviderPushNotificationFcmv1RequestContent,
@@ -206,12 +152,6 @@ func (c *Client) UpdateFcmv1Provider(
 }
 
 // Retrieve configuration details for an AWS SNS push notification provider that has been enabled for MFA. To learn more, review [Configure Push Notifications for MFA](https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa).
-//
-// Example:
-//
-//	client.Guardian.Factors.PushNotification.GetSnsProvider(
-//	    context.TODO(),
-//	)
 func (c *Client) GetSnsProvider(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -227,14 +167,6 @@ func (c *Client) GetSnsProvider(
 }
 
 // Configure the [AWS SNS push notification provider configuration](https://auth0.com/docs/multifactor-authentication/developer/sns-configuration) (subscription required).
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorsProviderPushNotificationSnsRequestContent{}
-//	client.Guardian.Factors.PushNotification.SetSnsProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetSnsProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationSnsRequestContent,
@@ -252,14 +184,6 @@ func (c *Client) SetSnsProvider(
 }
 
 // Configure the [AWS SNS push notification provider configuration](https://auth0.com/docs/multifactor-authentication/developer/sns-configuration) (subscription required).
-//
-// Example:
-//
-//	request := &management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent{}
-//	client.Guardian.Factors.PushNotification.UpdateSnsProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) UpdateSnsProvider(
 	ctx context.Context,
 	request *management.UpdateGuardianFactorsProviderPushNotificationSnsRequestContent,
@@ -277,12 +201,6 @@ func (c *Client) UpdateSnsProvider(
 }
 
 // Modify the push notification provider configured for your tenant. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa">Configure Push Notifications for MFA</a>.
-//
-// Example:
-//
-//	client.Guardian.Factors.PushNotification.GetSelectedProvider(
-//	    context.TODO(),
-//	)
 func (c *Client) GetSelectedProvider(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -298,16 +216,6 @@ func (c *Client) GetSelectedProvider(
 }
 
 // Modify the push notification provider configured for your tenant. For more information, review <a href="https://auth0.com/docs/secure/multi-factor-authentication/multi-factor-authentication-factors/configure-push-notifications-for-mfa">Configure Push Notifications for MFA</a>.
-//
-// Example:
-//
-//	request := &management.SetGuardianFactorsProviderPushNotificationRequestContent{
-//	    Provider: management.GuardianFactorsProviderPushNotificationProviderDataEnumGuardian,
-//	}
-//	client.Guardian.Factors.PushNotification.SetProvider(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) SetProvider(
 	ctx context.Context,
 	request *management.SetGuardianFactorsProviderPushNotificationRequestContent,

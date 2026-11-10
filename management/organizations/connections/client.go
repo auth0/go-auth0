@@ -37,27 +37,6 @@ func NewClient(options *core.RequestOptions) *Client {
 	}
 }
 
-// Example:
-//
-//	request := &management.ListOrganizationAllConnectionsRequestParameters{
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	    IsEnabled: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Organizations.Connections.List(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	// Organization identifier.
@@ -136,16 +115,6 @@ func (c *Client) List(
 	return pager.GetPage(ctx, &next)
 }
 
-// Example:
-//
-//	request := &management.CreateOrganizationAllConnectionRequestParameters{
-//	    ConnectionID: "connection_id",
-//	}
-//	client.Organizations.Connections.Create(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// Organization identifier.
@@ -165,13 +134,6 @@ func (c *Client) Create(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.Organizations.Connections.Get(
-//	    context.TODO(),
-//	    "id",
-//	    "connection_id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Organization identifier.
@@ -192,13 +154,6 @@ func (c *Client) Get(
 	return response.Body, nil
 }
 
-// Example:
-//
-//	client.Organizations.Connections.Delete(
-//	    context.TODO(),
-//	    "id",
-//	    "connection_id",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Organization identifier.
@@ -219,15 +174,6 @@ func (c *Client) Delete(
 	return nil
 }
 
-// Example:
-//
-//	request := &management.UpdateOrganizationConnectionRequestParameters{}
-//	client.Organizations.Connections.Update(
-//	    context.TODO(),
-//	    "id",
-//	    "connection_id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// Organization identifier.

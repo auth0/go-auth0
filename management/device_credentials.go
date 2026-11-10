@@ -40,12 +40,10 @@ func (c *CreatePublicKeyDeviceCredentialResponseContent) GetExtraProperties() ma
 }
 
 func (c *CreatePublicKeyDeviceCredentialResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -181,12 +179,10 @@ func (d *DeviceCredential) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DeviceCredential) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -375,12 +371,10 @@ func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) GetExtraProperties
 }
 
 func (l *ListDeviceCredentialsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;

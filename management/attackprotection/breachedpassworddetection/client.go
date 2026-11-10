@@ -35,12 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of the Breached Password Detection configuration of your tenant.
-//
-// Example:
-//
-//	client.AttackProtection.BreachedPasswordDetection.Get(
-//	    context.TODO(),
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -56,14 +50,6 @@ func (c *Client) Get(
 }
 
 // Update details of the Breached Password Detection configuration of your tenant.
-//
-// Example:
-//
-//	request := &management.UpdateBreachedPasswordDetectionSettingsRequestContent{}
-//	client.AttackProtection.BreachedPasswordDetection.Update(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	request *management.UpdateBreachedPasswordDetectionSettingsRequestContent,

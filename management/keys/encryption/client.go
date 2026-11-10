@@ -38,24 +38,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve details of all the encryption keys associated with your tenant.
-//
-// Example:
-//
-//	request := &management.ListEncryptionKeysRequestParameters{
-//	    Page: management.Int(
-//	        1,
-//	    ),
-//	    PerPage: management.Int(
-//	        1,
-//	    ),
-//	    IncludeTotals: management.Bool(
-//	        true,
-//	    ),
-//	}
-//	client.Keys.Encryption.List(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) List(
 	ctx context.Context,
 	request *management.ListEncryptionKeysRequestParameters,
@@ -130,16 +112,6 @@ func (c *Client) List(
 }
 
 // Create the new, pre-activated encryption key, without the key material.
-//
-// Example:
-//
-//	request := &management.CreateEncryptionKeyRequestContent{
-//	    Type: management.CreateEncryptionKeyTypeCustomerProvidedRootKey,
-//	}
-//	client.Keys.Encryption.Create(
-//	    context.TODO(),
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	request *management.CreateEncryptionKeyRequestContent,
@@ -157,12 +129,6 @@ func (c *Client) Create(
 }
 
 // Perform rekeying operation on the key hierarchy.
-//
-// Example:
-//
-//	client.Keys.Encryption.Rekey(
-//	    context.TODO(),
-//	)
 func (c *Client) Rekey(
 	ctx context.Context,
 	opts ...option.RequestOption,
@@ -178,13 +144,6 @@ func (c *Client) Rekey(
 }
 
 // Retrieve details of the encryption key with the given ID.
-//
-// Example:
-//
-//	client.Keys.Encryption.Get(
-//	    context.TODO(),
-//	    "kid",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// Encryption key ID
@@ -203,17 +162,6 @@ func (c *Client) Get(
 }
 
 // Import wrapped key material and activate encryption key.
-//
-// Example:
-//
-//	request := &management.ImportEncryptionKeyRequestContent{
-//	    WrappedKey: "wrapped_key",
-//	}
-//	client.Keys.Encryption.Import(
-//	    context.TODO(),
-//	    "kid",
-//	    request,
-//	)
 func (c *Client) Import(
 	ctx context.Context,
 	// Encryption key ID
@@ -234,13 +182,6 @@ func (c *Client) Import(
 }
 
 // Delete the custom provided encryption key with the given ID and move back to using native encryption key.
-//
-// Example:
-//
-//	client.Keys.Encryption.Delete(
-//	    context.TODO(),
-//	    "kid",
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// Encryption key ID
@@ -259,13 +200,6 @@ func (c *Client) Delete(
 }
 
 // Create the public wrapping key to wrap your own encryption key material.
-//
-// Example:
-//
-//	client.Keys.Encryption.CreatePublicWrappingKey(
-//	    context.TODO(),
-//	    "kid",
-//	)
 func (c *Client) CreatePublicWrappingKey(
 	ctx context.Context,
 	// Encryption key ID

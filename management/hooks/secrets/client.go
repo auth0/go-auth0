@@ -35,13 +35,6 @@ func NewClient(options *core.RequestOptions) *Client {
 }
 
 // Retrieve a hook's secrets by the ID of the hook.
-//
-// Example:
-//
-//	client.Hooks.Secrets.Get(
-//	    context.TODO(),
-//	    "id",
-//	)
 func (c *Client) Get(
 	ctx context.Context,
 	// ID of the hook to retrieve secrets from.
@@ -60,17 +53,6 @@ func (c *Client) Get(
 }
 
 // Add one or more secrets to an existing hook. Accepts an object of key-value pairs, where the key is the name of the secret. A hook can have a maximum of 20 secrets.
-//
-// Example:
-//
-//	request := map[string]string{
-//	    "key": "value",
-//	}
-//	client.Hooks.Secrets.Create(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Create(
 	ctx context.Context,
 	// The id of the hook to retrieve
@@ -91,17 +73,6 @@ func (c *Client) Create(
 }
 
 // Delete one or more existing secrets for a given hook. Accepts an array of secret names to delete.
-//
-// Example:
-//
-//	request := []string{
-//	    "string",
-//	}
-//	client.Hooks.Secrets.Delete(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Delete(
 	ctx context.Context,
 	// ID of the hook whose secrets to delete.
@@ -122,17 +93,6 @@ func (c *Client) Delete(
 }
 
 // Update one or more existing secrets for an existing hook. Accepts an object of key-value pairs, where the key is the name of the existing secret.
-//
-// Example:
-//
-//	request := map[string]string{
-//	    "key": "value",
-//	}
-//	client.Hooks.Secrets.Update(
-//	    context.TODO(),
-//	    "id",
-//	    request,
-//	)
 func (c *Client) Update(
 	ctx context.Context,
 	// ID of the hook whose secrets to update.

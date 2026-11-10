@@ -197,12 +197,10 @@ func (a *Action) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *Action) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -382,6 +380,7 @@ func (a *Action) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// The action to which this version belongs.
 var (
 	actionBaseFieldID                 = big.NewInt(1 << 0)
 	actionBaseFieldName               = big.NewInt(1 << 1)
@@ -391,7 +390,6 @@ var (
 	actionBaseFieldUpdatedAt          = big.NewInt(1 << 5)
 )
 
-// The action to which this version belongs.
 type ActionBase struct {
 	// The unique ID of the action.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -463,12 +461,10 @@ func (a *ActionBase) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionBase) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -567,6 +563,7 @@ func (a *ActionBase) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// Binding is the associative entity joining a trigger, and an action together.
 var (
 	actionBindingFieldID          = big.NewInt(1 << 0)
 	actionBindingFieldTriggerID   = big.NewInt(1 << 1)
@@ -576,7 +573,6 @@ var (
 	actionBindingFieldUpdatedAt   = big.NewInt(1 << 5)
 )
 
-// Binding is the associative entity joining a trigger, and an action together.
 type ActionBinding struct {
 	// The unique ID of this binding.
 	ID        *string                `json:"id,omitempty" url:"id,omitempty"`
@@ -646,12 +642,10 @@ func (a *ActionBinding) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionBinding) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -750,12 +744,12 @@ func (a *ActionBinding) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// A reference to an action. An action can be referred to by ID or by Name.
 var (
 	actionBindingRefFieldType  = big.NewInt(1 << 0)
 	actionBindingRefFieldValue = big.NewInt(1 << 1)
 )
 
-// A reference to an action. An action can be referred to by ID or by Name.
 type ActionBindingRef struct {
 	Type *ActionBindingRefTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// The id or name of an action that is being bound to a trigger.
@@ -791,12 +785,10 @@ func (a *ActionBindingRef) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionBindingRef) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -957,12 +949,10 @@ func (a *ActionBindingWithRef) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionBindingWithRef) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetRef sets the Ref field and marks it as non-optional;
@@ -1063,6 +1053,7 @@ func (a ActionBuildStatusEnum) Ptr() *ActionBuildStatusEnum {
 	return &a
 }
 
+// The version of the action that is currently deployed.
 var (
 	actionDeployedVersionFieldID                = big.NewInt(1 << 0)
 	actionDeployedVersionFieldActionID          = big.NewInt(1 << 1)
@@ -1082,7 +1073,6 @@ var (
 	actionDeployedVersionFieldModules           = big.NewInt(1 << 15)
 )
 
-// The version of the action that is currently deployed.
 type ActionDeployedVersion struct {
 	// The unique id of an action version.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -1242,12 +1232,10 @@ func (a *ActionDeployedVersion) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionDeployedVersion) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1420,13 +1408,13 @@ func (a *ActionDeployedVersion) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// Error is a generic error with a human readable id which should be easily referenced in support tickets.
 var (
 	actionErrorFieldID  = big.NewInt(1 << 0)
 	actionErrorFieldMsg = big.NewInt(1 << 1)
 	actionErrorFieldURL = big.NewInt(1 << 2)
 )
 
-// Error is a generic error with a human readable id which should be easily referenced in support tickets.
 type ActionError struct {
 	ID  *string `json:"id,omitempty" url:"id,omitempty"`
 	Msg *string `json:"msg,omitempty" url:"msg,omitempty"`
@@ -1468,12 +1456,10 @@ func (a *ActionError) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionError) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -1539,6 +1525,7 @@ func (a *ActionError) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// Captures the results of a single action being executed.
 var (
 	actionExecutionResultFieldActionName = big.NewInt(1 << 0)
 	actionExecutionResultFieldError      = big.NewInt(1 << 1)
@@ -1546,7 +1533,6 @@ var (
 	actionExecutionResultFieldEndedAt    = big.NewInt(1 << 3)
 )
 
-// Captures the results of a single action being executed.
 type ActionExecutionResult struct {
 	// The name of the action that was executed.
 	ActionName *string      `json:"action_name,omitempty" url:"action_name,omitempty"`
@@ -1599,12 +1585,10 @@ func (a *ActionExecutionResult) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionExecutionResult) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetActionName sets the ActionName field and marks it as non-optional;
@@ -1794,12 +1778,10 @@ func (a *ActionModuleAction) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionModuleAction) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetActionID sets the ActionID field and marks it as non-optional;
@@ -1919,12 +1901,10 @@ func (a *ActionModuleDependency) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionModuleDependency) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2023,12 +2003,10 @@ func (a *ActionModuleDependencyRequest) GetExtraProperties() map[string]interfac
 }
 
 func (a *ActionModuleDependencyRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2207,12 +2185,10 @@ func (a *ActionModuleListItem) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionModuleListItem) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2339,6 +2315,7 @@ func (a *ActionModuleListItem) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// Reference to a module and its version used by an action.
 var (
 	actionModuleReferenceFieldModuleID            = big.NewInt(1 << 0)
 	actionModuleReferenceFieldModuleName          = big.NewInt(1 << 1)
@@ -2346,7 +2323,6 @@ var (
 	actionModuleReferenceFieldModuleVersionNumber = big.NewInt(1 << 3)
 )
 
-// Reference to a module and its version used by an action.
 type ActionModuleReference struct {
 	// The unique ID of the module.
 	ModuleID *string `json:"module_id,omitempty" url:"module_id,omitempty"`
@@ -2400,12 +2376,10 @@ func (a *ActionModuleReference) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionModuleReference) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetModuleID sets the ModuleID field and marks it as non-optional;
@@ -2518,12 +2492,10 @@ func (a *ActionModuleSecret) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionModuleSecret) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2630,12 +2602,10 @@ func (a *ActionModuleSecretRequest) GetExtraProperties() map[string]interface{} 
 }
 
 func (a *ActionModuleSecretRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -2784,12 +2754,10 @@ func (a *ActionModuleVersion) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionModuleVersion) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -2891,6 +2859,7 @@ func (a *ActionModuleVersion) String() string {
 	return fmt.Sprintf("%#v", a)
 }
 
+// The latest published version as a reference object. Omitted if no versions have been published.
 var (
 	actionModuleVersionReferenceFieldID            = big.NewInt(1 << 0)
 	actionModuleVersionReferenceFieldVersionNumber = big.NewInt(1 << 1)
@@ -2900,7 +2869,6 @@ var (
 	actionModuleVersionReferenceFieldCreatedAt     = big.NewInt(1 << 5)
 )
 
-// The latest published version as a reference object. Omitted if no versions have been published.
 type ActionModuleVersionReference struct {
 	// The unique ID of the version.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -2972,12 +2940,10 @@ func (a *ActionModuleVersionReference) GetExtraProperties() map[string]interface
 }
 
 func (a *ActionModuleVersionReference) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3113,12 +3079,10 @@ func (a *ActionSecretRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionSecretRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3222,12 +3186,10 @@ func (a *ActionSecretResponse) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionSecretResponse) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -3382,12 +3344,10 @@ func (a *ActionTrigger) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionTrigger) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3521,12 +3481,10 @@ func (a *ActionTriggerCompatibleTrigger) GetExtraProperties() map[string]interfa
 }
 
 func (a *ActionTriggerCompatibleTrigger) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -3829,12 +3787,10 @@ func (a *ActionVersion) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionVersion) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -4042,13 +3998,13 @@ func (a ActionVersionBuildStatusEnum) Ptr() *ActionVersionBuildStatusEnum {
 	return &a
 }
 
+// Dependency is an npm module. These values are used to produce an immutable artifact, which manifests as a layer_id.
 var (
 	actionVersionDependencyFieldName        = big.NewInt(1 << 0)
 	actionVersionDependencyFieldVersion     = big.NewInt(1 << 1)
 	actionVersionDependencyFieldRegistryURL = big.NewInt(1 << 2)
 )
 
-// Dependency is an npm module. These values are used to produce an immutable artifact, which manifests as a layer_id.
 type ActionVersionDependency struct {
 	// name is the name of the npm module, e.g. lodash
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -4093,12 +4049,10 @@ func (a *ActionVersionDependency) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *ActionVersionDependency) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -4187,38 +4141,6 @@ func (a *AculClientFilter) GetAculClientFilterByMetadata() *AculClientFilterByMe
 }
 
 func (a *AculClientFilter) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id"}, []string{"id"}) {
-		valueAculClientFilterByID := new(AculClientFilterByID)
-		if err := json.Unmarshal(data, &valueAculClientFilterByID); err == nil {
-			a.typ = "AculClientFilterByID"
-			a.AculClientFilterByID = valueAculClientFilterByID
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"metadata"}, []string{"metadata"}) {
-		valueAculClientFilterByMetadata := new(AculClientFilterByMetadata)
-		if err := json.Unmarshal(data, &valueAculClientFilterByMetadata); err == nil {
-			a.typ = "AculClientFilterByMetadata"
-			a.AculClientFilterByMetadata = valueAculClientFilterByMetadata
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id"}) {
-		valueAculClientFilterByID := new(AculClientFilterByID)
-		if err := json.Unmarshal(data, &valueAculClientFilterByID); err == nil {
-			a.typ = "AculClientFilterByID"
-			a.AculClientFilterByID = valueAculClientFilterByID
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"metadata"}) {
-		valueAculClientFilterByMetadata := new(AculClientFilterByMetadata)
-		if err := json.Unmarshal(data, &valueAculClientFilterByMetadata); err == nil {
-			a.typ = "AculClientFilterByMetadata"
-			a.AculClientFilterByMetadata = valueAculClientFilterByMetadata
-			return nil
-		}
-	}
 	valueAculClientFilterByID := new(AculClientFilterByID)
 	if err := json.Unmarshal(data, &valueAculClientFilterByID); err == nil {
 		a.typ = "AculClientFilterByID"
@@ -4289,12 +4211,10 @@ func (a *AculClientFilterByID) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AculClientFilterByID) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -4375,12 +4295,10 @@ func (a *AculClientFilterByMetadata) GetExtraProperties() map[string]interface{}
 }
 
 func (a *AculClientFilterByMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
@@ -4448,15 +4366,6 @@ var (
 	aculConfigsItemFieldHeadTags                = big.NewInt(1 << 6)
 	aculConfigsItemFieldFilters                 = big.NewInt(1 << 7)
 )
-
-// aculConfigsItemNullableFields maps the wire names of AculConfigsItem's nullable fields (required or optional) to their field bits.
-var aculConfigsItemNullableFields = map[string]*big.Int{
-	"context_configuration":      aculConfigsItemFieldContextConfiguration,
-	"default_head_tags_disabled": aculConfigsItemFieldDefaultHeadTagsDisabled,
-	"use_page_template":          aculConfigsItemFieldUsePageTemplate,
-	"head_tags":                  aculConfigsItemFieldHeadTags,
-	"filters":                    aculConfigsItemFieldFilters,
-}
 
 type AculConfigsItem struct {
 	Prompt PromptGroupNameEnum `json:"prompt" url:"prompt"`
@@ -4543,12 +4452,10 @@ func (a *AculConfigsItem) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AculConfigsItem) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetPrompt sets the Prompt field and marks it as non-optional;
@@ -4619,13 +4526,6 @@ func (a *AculConfigsItem) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, aculConfigsItemNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		a.require(presentFields)
-	}
 	a.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -4819,38 +4719,6 @@ func (a *AculDomainFilter) GetAculDomainFilterByMetadata() *AculDomainFilterByMe
 }
 
 func (a *AculDomainFilter) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id"}, []string{"id"}) {
-		valueAculDomainFilterByID := new(AculDomainFilterByID)
-		if err := json.Unmarshal(data, &valueAculDomainFilterByID); err == nil {
-			a.typ = "AculDomainFilterByID"
-			a.AculDomainFilterByID = valueAculDomainFilterByID
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"metadata"}, []string{"metadata"}) {
-		valueAculDomainFilterByMetadata := new(AculDomainFilterByMetadata)
-		if err := json.Unmarshal(data, &valueAculDomainFilterByMetadata); err == nil {
-			a.typ = "AculDomainFilterByMetadata"
-			a.AculDomainFilterByMetadata = valueAculDomainFilterByMetadata
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id"}) {
-		valueAculDomainFilterByID := new(AculDomainFilterByID)
-		if err := json.Unmarshal(data, &valueAculDomainFilterByID); err == nil {
-			a.typ = "AculDomainFilterByID"
-			a.AculDomainFilterByID = valueAculDomainFilterByID
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"metadata"}) {
-		valueAculDomainFilterByMetadata := new(AculDomainFilterByMetadata)
-		if err := json.Unmarshal(data, &valueAculDomainFilterByMetadata); err == nil {
-			a.typ = "AculDomainFilterByMetadata"
-			a.AculDomainFilterByMetadata = valueAculDomainFilterByMetadata
-			return nil
-		}
-	}
 	valueAculDomainFilterByID := new(AculDomainFilterByID)
 	if err := json.Unmarshal(data, &valueAculDomainFilterByID); err == nil {
 		a.typ = "AculDomainFilterByID"
@@ -4921,12 +4789,10 @@ func (a *AculDomainFilterByID) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AculDomainFilterByID) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -5007,12 +4873,10 @@ func (a *AculDomainFilterByMetadata) GetExtraProperties() map[string]interface{}
 }
 
 func (a *AculDomainFilterByMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
@@ -5067,6 +4931,7 @@ func (a *AculDomainFilterByMetadata) String() string {
 // Domain metadata key/value pairs
 type AculDomainMetadata = map[string]any
 
+// Optional filters to apply rendering rules to specific entities
 var (
 	aculFiltersFieldMatchType     = big.NewInt(1 << 0)
 	aculFiltersFieldClients       = big.NewInt(1 << 1)
@@ -5074,7 +4939,6 @@ var (
 	aculFiltersFieldDomains       = big.NewInt(1 << 3)
 )
 
-// Optional filters to apply rendering rules to specific entities
 type AculFilters struct {
 	MatchType *AculMatchTypeEnum `json:"match_type,omitempty" url:"match_type,omitempty"`
 	// Clients filter
@@ -5127,12 +4991,10 @@ func (a *AculFilters) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AculFilters) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetMatchType sets the MatchType field and marks it as non-optional;
@@ -5254,12 +5116,10 @@ func (a *AculHeadTag) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AculHeadTag) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetTag sets the Tag field and marks it as non-optional;
@@ -5382,38 +5242,6 @@ func (a *AculOrganizationFilter) GetAculOrganizationFilterByMetadata() *AculOrga
 }
 
 func (a *AculOrganizationFilter) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"id"}, []string{"id"}) {
-		valueAculOrganizationFilterByID := new(AculOrganizationFilterByID)
-		if err := json.Unmarshal(data, &valueAculOrganizationFilterByID); err == nil {
-			a.typ = "AculOrganizationFilterByID"
-			a.AculOrganizationFilterByID = valueAculOrganizationFilterByID
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"metadata"}, []string{"metadata"}) {
-		valueAculOrganizationFilterByMetadata := new(AculOrganizationFilterByMetadata)
-		if err := json.Unmarshal(data, &valueAculOrganizationFilterByMetadata); err == nil {
-			a.typ = "AculOrganizationFilterByMetadata"
-			a.AculOrganizationFilterByMetadata = valueAculOrganizationFilterByMetadata
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"id"}) {
-		valueAculOrganizationFilterByID := new(AculOrganizationFilterByID)
-		if err := json.Unmarshal(data, &valueAculOrganizationFilterByID); err == nil {
-			a.typ = "AculOrganizationFilterByID"
-			a.AculOrganizationFilterByID = valueAculOrganizationFilterByID
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"metadata"}) {
-		valueAculOrganizationFilterByMetadata := new(AculOrganizationFilterByMetadata)
-		if err := json.Unmarshal(data, &valueAculOrganizationFilterByMetadata); err == nil {
-			a.typ = "AculOrganizationFilterByMetadata"
-			a.AculOrganizationFilterByMetadata = valueAculOrganizationFilterByMetadata
-			return nil
-		}
-	}
 	valueAculOrganizationFilterByID := new(AculOrganizationFilterByID)
 	if err := json.Unmarshal(data, &valueAculOrganizationFilterByID); err == nil {
 		a.typ = "AculOrganizationFilterByID"
@@ -5484,12 +5312,10 @@ func (a *AculOrganizationFilterByID) GetExtraProperties() map[string]interface{}
 }
 
 func (a *AculOrganizationFilterByID) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -5570,12 +5396,10 @@ func (a *AculOrganizationFilterByMetadata) GetExtraProperties() map[string]inter
 }
 
 func (a *AculOrganizationFilterByMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetMetadata sets the Metadata field and marks it as non-optional;
@@ -5722,12 +5546,10 @@ func (a *AddOrganizationConnectionResponseContent) GetExtraProperties() map[stri
 }
 
 func (a *AddOrganizationConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -5863,12 +5685,10 @@ func (a *AdvanceRampResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (a *AdvanceRampResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetExperimentID sets the ExperimentID field and marks it as non-optional;
@@ -5953,12 +5773,6 @@ var (
 	allocationItemFieldVariationSnapshot = big.NewInt(1 << 8)
 	allocationItemFieldSegmentSnapshot   = big.NewInt(1 << 9)
 )
-
-// allocationItemNullableFields maps the wire names of AllocationItem's nullable fields (required or optional) to their field bits.
-var allocationItemNullableFields = map[string]*big.Int{
-	"variation_snapshot": allocationItemFieldVariationSnapshot,
-	"segment_snapshot":   allocationItemFieldSegmentSnapshot,
-}
 
 type AllocationItem struct {
 	VariationID       *string        `json:"variation_id,omitempty" url:"variation_id,omitempty"`
@@ -6057,12 +5871,10 @@ func (a *AllocationItem) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AllocationItem) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetVariationID sets the VariationID field and marks it as non-optional;
@@ -6147,13 +5959,6 @@ func (a *AllocationItem) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	a.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, allocationItemNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		a.require(presentFields)
-	}
 	a.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -6264,12 +6069,10 @@ func (a *AllocationRequestItem) GetExtraProperties() map[string]interface{} {
 }
 
 func (a *AllocationRequestItem) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetVariationID sets the VariationID field and marks it as non-optional;
@@ -6483,12 +6286,10 @@ func (a *AssociateOrganizationClientGrantResponseContent) GetExtraProperties() m
 }
 
 func (a *AssociateOrganizationClientGrantResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -6636,12 +6437,10 @@ func (a *AttackProtectionCaptchaArkoseResponseContent) GetExtraProperties() map[
 }
 
 func (a *AttackProtectionCaptchaArkoseResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -6748,12 +6547,10 @@ func (a *AttackProtectionCaptchaAuthChallengeRequest) GetExtraProperties() map[s
 }
 
 func (a *AttackProtectionCaptchaAuthChallengeRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetFailOpen sets the FailOpen field and marks it as non-optional;
@@ -6836,12 +6633,10 @@ func (a *AttackProtectionCaptchaAuthChallengeResponseContent) GetExtraProperties
 }
 
 func (a *AttackProtectionCaptchaAuthChallengeResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetFailOpen sets the FailOpen field and marks it as non-optional;
@@ -6928,12 +6723,10 @@ func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) GetExtraProperti
 }
 
 func (a *AttackProtectionCaptchaFriendlyCaptchaResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7020,12 +6813,10 @@ func (a *AttackProtectionCaptchaHcaptchaResponseContent) GetExtraProperties() ma
 }
 
 func (a *AttackProtectionCaptchaHcaptchaResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7160,12 +6951,10 @@ func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) GetExtraProp
 }
 
 func (a *AttackProtectionCaptchaRecaptchaEnterpriseResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7259,12 +7048,10 @@ func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) GetExtraProperties()
 }
 
 func (a *AttackProtectionCaptchaRecaptchaV2ResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7392,12 +7179,10 @@ func (a *AttackProtectionUpdateCaptchaArkose) GetExtraProperties() map[string]in
 }
 
 func (a *AttackProtectionUpdateCaptchaArkose) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7517,12 +7302,10 @@ func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) GetExtraProperties() map[
 }
 
 func (a *AttackProtectionUpdateCaptchaFriendlyCaptcha) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7621,12 +7404,10 @@ func (a *AttackProtectionUpdateCaptchaHcaptcha) GetExtraProperties() map[string]
 }
 
 func (a *AttackProtectionUpdateCaptchaHcaptcha) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7735,12 +7516,10 @@ func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) GetExtraProperties() 
 }
 
 func (a *AttackProtectionUpdateCaptchaRecaptchaEnterprise) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -7846,12 +7625,10 @@ func (a *AttackProtectionUpdateCaptchaRecaptchaV2) GetExtraProperties() map[stri
 }
 
 func (a *AttackProtectionUpdateCaptchaRecaptchaV2) require(field *big.Int) {
-	next := new(big.Int)
-	if a.explicitFields != nil {
-		next.Set(a.explicitFields)
+	if a.explicitFields == nil {
+		a.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	a.explicitFields = next
+	a.explicitFields.Or(a.explicitFields, field)
 }
 
 // SetSiteKey sets the SiteKey field and marks it as non-optional;
@@ -8019,13 +7796,13 @@ func (a AuthenticationTypeEnum) Ptr() *AuthenticationTypeEnum {
 	return &a
 }
 
+// Bad Request
 var (
 	badRequestSchemaFieldMessage    = big.NewInt(1 << 0)
 	badRequestSchemaFieldStatusCode = big.NewInt(1 << 1)
 	badRequestSchemaFieldError      = big.NewInt(1 << 2)
 )
 
-// Bad Request
 type BadRequestSchema struct {
 	Message    string                `json:"message" url:"message"`
 	StatusCode string                `json:"statusCode" url:"statusCode"`
@@ -8067,12 +7844,10 @@ func (b *BadRequestSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BadRequestSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -8390,12 +8165,10 @@ func (b *BrandingThemeBorders) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingThemeBorders) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetButtonBorderRadius sets the ButtonBorderRadius field and marks it as non-optional;
@@ -8774,12 +8547,10 @@ func (b *BrandingThemeColors) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingThemeColors) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBaseFocusColor sets the BaseFocusColor field and marks it as non-optional;
@@ -8990,12 +8761,12 @@ func (b BrandingThemeColorsCaptchaWidgetThemeEnum) Ptr() *BrandingThemeColorsCap
 	return &b
 }
 
+// Body text
 var (
 	brandingThemeFontBodyTextFieldBold = big.NewInt(1 << 0)
 	brandingThemeFontBodyTextFieldSize = big.NewInt(1 << 1)
 )
 
-// Body text
 type BrandingThemeFontBodyText struct {
 	// Body text bold
 	Bold bool `json:"bold" url:"bold"`
@@ -9031,12 +8802,10 @@ func (b *BrandingThemeFontBodyText) GetExtraProperties() map[string]interface{} 
 }
 
 func (b *BrandingThemeFontBodyText) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBold sets the Bold field and marks it as non-optional;
@@ -9095,12 +8864,12 @@ func (b *BrandingThemeFontBodyText) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Buttons text
 var (
 	brandingThemeFontButtonsTextFieldBold = big.NewInt(1 << 0)
 	brandingThemeFontButtonsTextFieldSize = big.NewInt(1 << 1)
 )
 
-// Buttons text
 type BrandingThemeFontButtonsText struct {
 	// Buttons text bold
 	Bold bool `json:"bold" url:"bold"`
@@ -9136,12 +8905,10 @@ func (b *BrandingThemeFontButtonsText) GetExtraProperties() map[string]interface
 }
 
 func (b *BrandingThemeFontButtonsText) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBold sets the Bold field and marks it as non-optional;
@@ -9200,12 +8967,12 @@ func (b *BrandingThemeFontButtonsText) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Input Labels
 var (
 	brandingThemeFontInputLabelsFieldBold = big.NewInt(1 << 0)
 	brandingThemeFontInputLabelsFieldSize = big.NewInt(1 << 1)
 )
 
-// Input Labels
 type BrandingThemeFontInputLabels struct {
 	// Input Labels bold
 	Bold bool `json:"bold" url:"bold"`
@@ -9241,12 +9008,10 @@ func (b *BrandingThemeFontInputLabels) GetExtraProperties() map[string]interface
 }
 
 func (b *BrandingThemeFontInputLabels) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBold sets the Bold field and marks it as non-optional;
@@ -9305,12 +9070,12 @@ func (b *BrandingThemeFontInputLabels) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Links
 var (
 	brandingThemeFontLinksFieldBold = big.NewInt(1 << 0)
 	brandingThemeFontLinksFieldSize = big.NewInt(1 << 1)
 )
 
-// Links
 type BrandingThemeFontLinks struct {
 	// Links bold
 	Bold bool `json:"bold" url:"bold"`
@@ -9346,12 +9111,10 @@ func (b *BrandingThemeFontLinks) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingThemeFontLinks) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBold sets the Bold field and marks it as non-optional;
@@ -9433,12 +9196,12 @@ func (b BrandingThemeFontLinksStyleEnum) Ptr() *BrandingThemeFontLinksStyleEnum 
 	return &b
 }
 
+// Subtitle
 var (
 	brandingThemeFontSubtitleFieldBold = big.NewInt(1 << 0)
 	brandingThemeFontSubtitleFieldSize = big.NewInt(1 << 1)
 )
 
-// Subtitle
 type BrandingThemeFontSubtitle struct {
 	// Subtitle bold
 	Bold bool `json:"bold" url:"bold"`
@@ -9474,12 +9237,10 @@ func (b *BrandingThemeFontSubtitle) GetExtraProperties() map[string]interface{} 
 }
 
 func (b *BrandingThemeFontSubtitle) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBold sets the Bold field and marks it as non-optional;
@@ -9538,12 +9299,12 @@ func (b *BrandingThemeFontSubtitle) String() string {
 	return fmt.Sprintf("%#v", b)
 }
 
+// Title
 var (
 	brandingThemeFontTitleFieldBold = big.NewInt(1 << 0)
 	brandingThemeFontTitleFieldSize = big.NewInt(1 << 1)
 )
 
-// Title
 type BrandingThemeFontTitle struct {
 	// Title bold
 	Bold bool `json:"bold" url:"bold"`
@@ -9579,12 +9340,10 @@ func (b *BrandingThemeFontTitle) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingThemeFontTitle) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBold sets the Bold field and marks it as non-optional;
@@ -9746,12 +9505,10 @@ func (b *BrandingThemeFonts) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingThemeFonts) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBodyText sets the BodyText field and marks it as non-optional;
@@ -9907,12 +9664,10 @@ func (b *BrandingThemeIdentifiers) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingThemeIdentifiers) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetLoginDisplay sets the LoginDisplay field and marks it as non-optional;
@@ -10001,12 +9756,12 @@ func (b BrandingThemeIdentifiersLoginDisplayEnum) Ptr() *BrandingThemeIdentifier
 	return &b
 }
 
+// Phone display
 var (
 	brandingThemeIdentifiersPhoneDisplayFieldFormatting = big.NewInt(1 << 0)
 	brandingThemeIdentifiersPhoneDisplayFieldMasking    = big.NewInt(1 << 1)
 )
 
-// Phone display
 type BrandingThemeIdentifiersPhoneDisplay struct {
 	Formatting BrandingThemeIdentifiersPhoneDisplayFormattingEnum `json:"formatting" url:"formatting"`
 	Masking    BrandingThemeIdentifiersPhoneDisplayMaskingEnum    `json:"masking" url:"masking"`
@@ -10040,12 +9795,10 @@ func (b *BrandingThemeIdentifiersPhoneDisplay) GetExtraProperties() map[string]i
 }
 
 func (b *BrandingThemeIdentifiersPhoneDisplay) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetFormatting sets the Formatting field and marks it as non-optional;
@@ -10202,12 +9955,10 @@ func (b *BrandingThemePageBackground) GetExtraProperties() map[string]interface{
 }
 
 func (b *BrandingThemePageBackground) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetBackgroundColor sets the BackgroundColor field and marks it as non-optional;
@@ -10366,12 +10117,10 @@ func (b *BrandingThemeWidget) GetExtraProperties() map[string]interface{} {
 }
 
 func (b *BrandingThemeWidget) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetHeaderTextAlignment sets the HeaderTextAlignment field and marks it as non-optional;
@@ -10636,12 +10385,10 @@ func (b *BreachedPasswordDetectionPreChangePasswordStage) GetExtraProperties() m
 }
 
 func (b *BreachedPasswordDetectionPreChangePasswordStage) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetShields sets the Shields field and marks it as non-optional;
@@ -10747,12 +10494,10 @@ func (b *BreachedPasswordDetectionPreUserRegistrationStage) GetExtraProperties()
 }
 
 func (b *BreachedPasswordDetectionPreUserRegistrationStage) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetShields sets the Shields field and marks it as non-optional;
@@ -10867,12 +10612,10 @@ func (b *BreachedPasswordDetectionStage) GetExtraProperties() map[string]interfa
 }
 
 func (b *BreachedPasswordDetectionStage) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetPreUserRegistration sets the PreUserRegistration field and marks it as non-optional;
@@ -11031,12 +10774,10 @@ func (b *BulkUpdateAculResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (b *BulkUpdateAculResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if b.explicitFields != nil {
-		next.Set(b.explicitFields)
+	if b.explicitFields == nil {
+		b.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	b.explicitFields = next
+	b.explicitFields.Or(b.explicitFields, field)
 }
 
 // SetConfigs sets the Configs field and marks it as non-optional;
@@ -11211,12 +10952,10 @@ func (c *ClientCredential) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ClientCredential) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -11399,13 +11138,13 @@ func (c ClientCredentialTypeEnum) Ptr() *ClientCredentialTypeEnum {
 	return &c
 }
 
+// Conflict
 var (
 	conflictSchemaFieldMessage    = big.NewInt(1 << 0)
 	conflictSchemaFieldStatusCode = big.NewInt(1 << 1)
 	conflictSchemaFieldError      = big.NewInt(1 << 2)
 )
 
-// Conflict
 type ConflictSchema struct {
 	Message    string              `json:"message" url:"message"`
 	StatusCode string              `json:"statusCode" url:"statusCode"`
@@ -11447,12 +11186,10 @@ func (c *ConflictSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConflictSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -11646,12 +11383,10 @@ func (c *ConnectedAccount) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectedAccount) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -11834,13 +11569,13 @@ type ConnectionAppDomainAzureAd = string
 // Object containing mapping details for incoming claims
 type ConnectionAttributeMapAttributes = map[string]any
 
+// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 var (
 	connectionAttributeMapOidcFieldAttributes    = big.NewInt(1 << 0)
 	connectionAttributeMapOidcFieldMappingMode   = big.NewInt(1 << 1)
 	connectionAttributeMapOidcFieldUserinfoScope = big.NewInt(1 << 2)
 )
 
-// Configuration for mapping claims from the identity provider to Auth0 user profile attributes. Allows customizing which IdP claims populate user fields and how they are transformed.
 type ConnectionAttributeMapOidc struct {
 	Attributes    *ConnectionAttributeMapAttributes    `json:"attributes,omitempty" url:"attributes,omitempty"`
 	MappingMode   *ConnectionMappingModeEnumOidc       `json:"mapping_mode,omitempty" url:"mapping_mode,omitempty"`
@@ -11882,12 +11617,10 @@ func (c *ConnectionAttributeMapOidc) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionAttributeMapOidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -11953,13 +11686,13 @@ func (c *ConnectionAttributeMapOidc) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Mapping of claims received from the identity provider (IdP)
 var (
 	connectionAttributeMapOktaFieldAttributes    = big.NewInt(1 << 0)
 	connectionAttributeMapOktaFieldMappingMode   = big.NewInt(1 << 1)
 	connectionAttributeMapOktaFieldUserinfoScope = big.NewInt(1 << 2)
 )
 
-// Mapping of claims received from the identity provider (IdP)
 type ConnectionAttributeMapOkta struct {
 	Attributes    *ConnectionAttributeMapAttributes    `json:"attributes,omitempty" url:"attributes,omitempty"`
 	MappingMode   *ConnectionMappingModeEnumOkta       `json:"mapping_mode,omitempty" url:"mapping_mode,omitempty"`
@@ -12001,12 +11734,10 @@ func (c *ConnectionAttributeMapOkta) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionAttributeMapOkta) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAttributes sets the Attributes field and marks it as non-optional;
@@ -12087,11 +11818,11 @@ type ConnectionAuthParamsMap = map[string]string
 // Additional static parameters included in every authorization request to the identity provider. These parameters are merged with runtime parameters before the authorization redirect. Keys and values are passed as-is to the identity provider's authorization endpoint. See https://auth0.com/docs/authenticate/identity-providers/social-identity-providers/oauth2#pass-static-parameters
 type ConnectionAuthParamsOAuth2 = map[string]ConnectionAuthParamsAdditionalPropertiesOAuth2
 
+// Configure the purpose of a connection to be used for authentication during login.
 var (
 	connectionAuthenticationPurposeFieldActive = big.NewInt(1 << 0)
 )
 
-// Configure the purpose of a connection to be used for authentication during login.
 type ConnectionAuthenticationPurpose struct {
 	Active bool `json:"active" url:"active"`
 
@@ -12117,12 +11848,10 @@ func (c *ConnectionAuthenticationPurpose) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionAuthenticationPurpose) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -12360,12 +12089,10 @@ func (c *ConnectionCommon) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionCommon) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -12444,13 +12171,13 @@ type ConnectionCommunityBaseURLSalesforce = ConnectionHttpsUrlWithHttpFallback
 // A hash of configuration key/value pairs.
 type ConnectionConfiguration = map[string]string
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	connectionConnectedAccountsPurposeFieldActive             = big.NewInt(1 << 0)
 	connectionConnectedAccountsPurposeFieldCrossAppAccess     = big.NewInt(1 << 1)
 	connectionConnectedAccountsPurposeFieldAllowMissingUserID = big.NewInt(1 << 2)
 )
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type ConnectionConnectedAccountsPurpose struct {
 	Active         bool  `json:"active" url:"active"`
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
@@ -12493,12 +12220,10 @@ func (c *ConnectionConnectedAccountsPurpose) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionConnectedAccountsPurpose) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -12564,13 +12289,13 @@ func (c *ConnectionConnectedAccountsPurpose) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 var (
 	connectionConnectedAccountsPurposeXaaFieldCrossAppAccess     = big.NewInt(1 << 0)
 	connectionConnectedAccountsPurposeXaaFieldActive             = big.NewInt(1 << 1)
 	connectionConnectedAccountsPurposeXaaFieldAllowMissingUserID = big.NewInt(1 << 2)
 )
 
-// Configure the purpose of a connection to be used for connected accounts and Token Vault.
 type ConnectionConnectedAccountsPurposeXaa struct {
 	CrossAppAccess *bool `json:"cross_app_access,omitempty" url:"cross_app_access,omitempty"`
 	Active         bool  `json:"active" url:"active"`
@@ -12613,12 +12338,10 @@ func (c *ConnectionConnectedAccountsPurposeXaa) GetExtraProperties() map[string]
 }
 
 func (c *ConnectionConnectedAccountsPurposeXaa) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCrossAppAccess sets the CrossAppAccess field and marks it as non-optional;
@@ -12684,11 +12407,11 @@ func (c *ConnectionConnectedAccountsPurposeXaa) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 var (
 	connectionConnectionSettingsFieldPkce = big.NewInt(1 << 0)
 )
 
-// OAuth 2.0 PKCE (Proof Key for Code Exchange) settings. PKCE enhances security for public clients by preventing authorization code interception attacks. 'auto' (recommended) uses the strongest method supported by the IdP.
 type ConnectionConnectionSettings struct {
 	Pkce *ConnectionConnectionSettingsPkceEnum `json:"pkce,omitempty" url:"pkce,omitempty"`
 
@@ -12714,12 +12437,10 @@ func (c *ConnectionConnectionSettings) GetExtraProperties() map[string]interface
 }
 
 func (c *ConnectionConnectionSettings) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPkce sets the Pkce field and marks it as non-optional;
@@ -12800,11 +12521,11 @@ func (c ConnectionConnectionSettingsPkceEnum) Ptr() *ConnectionConnectionSetting
 	return &c
 }
 
+// Cross App Access - Resource App settings that apply to this connection.
 var (
 	connectionCrossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
 )
 
-// Cross App Access - Resource App settings that apply to this connection.
 type ConnectionCrossAppAccessResourceApp struct {
 	Status ConnectionCrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
 
@@ -12830,12 +12551,10 @@ func (c *ConnectionCrossAppAccessResourceApp) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionCrossAppAccessResourceApp) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -12941,24 +12660,16 @@ func (c *ConnectionDecryptionKeySAML) GetString() string {
 }
 
 func (c *ConnectionDecryptionKeySAML) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"cert", "key"}, []string{}) {
-		valueConnectionDecryptionKeySAMLCert := new(ConnectionDecryptionKeySAMLCert)
-		if err := json.Unmarshal(data, &valueConnectionDecryptionKeySAMLCert); err == nil {
-			c.typ = "ConnectionDecryptionKeySAMLCert"
-			c.ConnectionDecryptionKeySAMLCert = valueConnectionDecryptionKeySAMLCert
-			return nil
-		}
+	valueConnectionDecryptionKeySAMLCert := new(ConnectionDecryptionKeySAMLCert)
+	if err := json.Unmarshal(data, &valueConnectionDecryptionKeySAMLCert); err == nil {
+		c.typ = "ConnectionDecryptionKeySAMLCert"
+		c.ConnectionDecryptionKeySAMLCert = valueConnectionDecryptionKeySAMLCert
+		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
 		c.typ = "String"
 		c.String = valueString
-		return nil
-	}
-	valueConnectionDecryptionKeySAMLCert := new(ConnectionDecryptionKeySAMLCert)
-	if err := json.Unmarshal(data, &valueConnectionDecryptionKeySAMLCert); err == nil {
-		c.typ = "ConnectionDecryptionKeySAMLCert"
-		c.ConnectionDecryptionKeySAMLCert = valueConnectionDecryptionKeySAMLCert
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, c)
@@ -12989,12 +12700,12 @@ func (c *ConnectionDecryptionKeySAML) Accept(visitor ConnectionDecryptionKeySAML
 	return fmt.Errorf("type %T does not include a non-empty union type", c)
 }
 
+// Key pair with 'key' and 'cert' properties.
 var (
 	connectionDecryptionKeySAMLCertFieldCert = big.NewInt(1 << 0)
 	connectionDecryptionKeySAMLCertFieldKey  = big.NewInt(1 << 1)
 )
 
-// Key pair with 'key' and 'cert' properties.
 type ConnectionDecryptionKeySAMLCert struct {
 	// Base64-encoded X.509 certificate in PEM format.
 	Cert *string `json:"cert,omitempty" url:"cert,omitempty"`
@@ -13030,12 +12741,10 @@ func (c *ConnectionDecryptionKeySAMLCert) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionDecryptionKeySAMLCert) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCert sets the Cert field and marks it as non-optional;
@@ -13167,6 +12876,7 @@ type ConnectionDpopSigningAlgValuesSupported = []string
 // Email body content
 type ConnectionEmailBodyEmail = string
 
+// Email template configuration
 var (
 	connectionEmailEmailFieldBody    = big.NewInt(1 << 0)
 	connectionEmailEmailFieldFrom    = big.NewInt(1 << 1)
@@ -13174,7 +12884,6 @@ var (
 	connectionEmailEmailFieldSyntax  = big.NewInt(1 << 3)
 )
 
-// Email template configuration
 type ConnectionEmailEmail struct {
 	Body    *ConnectionEmailBodyEmail    `json:"body,omitempty" url:"body,omitempty"`
 	From    *ConnectionEmailFromEmail    `json:"from,omitempty" url:"from,omitempty"`
@@ -13225,12 +12934,10 @@ func (c *ConnectionEmailEmail) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionEmailEmail) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetBody sets the Body field and marks it as non-optional;
@@ -13363,12 +13070,10 @@ func (c *ConnectionEnabledClient) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionEnabledClient) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -13680,12 +13385,10 @@ func (c *ConnectionForList) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionForList) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -13851,6 +13554,7 @@ type ConnectionGatewayAuthenticationAudienceSms = string
 // The Authorization header type when calling the SMS gateway. Set to 'bearer' for JWT token authentication.
 type ConnectionGatewayAuthenticationMethodSms = string
 
+// Optional token-based authentication configuration for the SMS gateway
 var (
 	connectionGatewayAuthenticationSmsFieldAudience            = big.NewInt(1 << 0)
 	connectionGatewayAuthenticationSmsFieldMethod              = big.NewInt(1 << 1)
@@ -13859,7 +13563,6 @@ var (
 	connectionGatewayAuthenticationSmsFieldSubject             = big.NewInt(1 << 4)
 )
 
-// Optional token-based authentication configuration for the SMS gateway
 type ConnectionGatewayAuthenticationSms struct {
 	Audience ConnectionGatewayAuthenticationAudienceSms `json:"audience" url:"audience"`
 	Method   ConnectionGatewayAuthenticationMethodSms   `json:"method" url:"method"`
@@ -13920,12 +13623,10 @@ func (c *ConnectionGatewayAuthenticationSms) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionGatewayAuthenticationSms) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -14246,12 +13947,10 @@ func (c *ConnectionKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -14471,12 +14170,12 @@ type ConnectionMetadataXMLAdfs = ConnectionMetadataXML
 // SAML metadata XML document from the identity provider. When provided, automatically parsed to extract signInEndpoint, signOutEndpoint, signingCert, signSAMLRequest, and protocolBinding. Deleted after parsing to avoid persisting large documents. Not persisted to database - deleted after parsing metadata. Use metadataUrl OR metadataXml, not both.
 type ConnectionMetadataXmlSaml = ConnectionMetadataXML
 
+// Multi-factor authentication configuration
 var (
 	connectionMfaFieldActive               = big.NewInt(1 << 0)
 	connectionMfaFieldReturnEnrollSettings = big.NewInt(1 << 1)
 )
 
-// Multi-factor authentication configuration
 type ConnectionMfa struct {
 	// Indicates whether MFA is active for this connection
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
@@ -14512,12 +14211,10 @@ func (c *ConnectionMfa) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionMfa) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -14591,6 +14288,7 @@ type ConnectionOpTosURI = string
 // In order to return options in the response, the `read:connections_options` scope must be present
 type ConnectionOptions = map[string]any
 
+// Options for the 'ad' connection
 var (
 	connectionOptionsAdFieldNonPersistentAttrs               = big.NewInt(1 << 0)
 	connectionOptionsAdFieldAgentIP                          = big.NewInt(1 << 1)
@@ -14613,12 +14311,6 @@ var (
 	connectionOptionsAdFieldUpstreamParams                   = big.NewInt(1 << 18)
 )
 
-// connectionOptionsAdNullableFields maps the wire names of ConnectionOptionsAd's nullable fields (required or optional) to their field bits.
-var connectionOptionsAdNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsAdFieldUpstreamParams,
-}
-
-// Options for the 'ad' connection
 type ConnectionOptionsAd struct {
 	NonPersistentAttrs   *ConnectionNonPersistentAttrs   `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AgentIP              *ConnectionAgentIpad            `json:"agentIP,omitempty" url:"agentIP,omitempty"`
@@ -14793,12 +14485,10 @@ func (c *ConnectionOptionsAd) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsAd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -14950,13 +14640,6 @@ func (c *ConnectionOptionsAd) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsAdNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -14987,6 +14670,7 @@ func (c *ConnectionOptionsAd) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'adfs' connection
 var (
 	connectionOptionsAdfsFieldNonPersistentAttrs                 = big.NewInt(1 << 0)
 	connectionOptionsAdfsFieldAdfsServer                         = big.NewInt(1 << 1)
@@ -15005,12 +14689,6 @@ var (
 	connectionOptionsAdfsFieldUserIDAttribute                    = big.NewInt(1 << 14)
 )
 
-// connectionOptionsAdfsNullableFields maps the wire names of ConnectionOptionsAdfs's nullable fields (required or optional) to their field bits.
-var connectionOptionsAdfsNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsAdfsFieldUpstreamParams,
-}
-
-// Options for the 'adfs' connection
 type ConnectionOptionsAdfs struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	// ADFS federation metadata host or XML URL used to discover WS-Fed endpoints and certificates. Errors if adfs_server and fedMetadataXml are both absent.
@@ -15152,12 +14830,10 @@ func (c *ConnectionOptionsAdfs) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsAdfs) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -15281,13 +14957,6 @@ func (c *ConnectionOptionsAdfs) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsAdfsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -15318,6 +14987,7 @@ func (c *ConnectionOptionsAdfs) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'amazon' connection
 var (
 	connectionOptionsAmazonFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsAmazonFieldClientID              = big.NewInt(1 << 1)
@@ -15330,12 +15000,6 @@ var (
 	connectionOptionsAmazonFieldUpstreamParams        = big.NewInt(1 << 8)
 )
 
-// connectionOptionsAmazonNullableFields maps the wire names of ConnectionOptionsAmazon's nullable fields (required or optional) to their field bits.
-var connectionOptionsAmazonNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsAmazonFieldUpstreamParams,
-}
-
-// Options for the 'amazon' connection
 type ConnectionOptionsAmazon struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs   `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID           *ConnectionClientIDAmazon       `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -15428,12 +15092,10 @@ func (c *ConnectionOptionsAmazon) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsAmazon) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -15515,13 +15177,6 @@ func (c *ConnectionOptionsAmazon) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsAmazonNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -15552,6 +15207,7 @@ func (c *ConnectionOptionsAmazon) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'apple' connection
 var (
 	connectionOptionsAppleFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsAppleFieldAppSecret             = big.NewInt(1 << 1)
@@ -15566,16 +15222,6 @@ var (
 	connectionOptionsAppleFieldUpstreamParams        = big.NewInt(1 << 10)
 )
 
-// connectionOptionsAppleNullableFields maps the wire names of ConnectionOptionsApple's nullable fields (required or optional) to their field bits.
-var connectionOptionsAppleNullableFields = map[string]*big.Int{
-	"app_secret":      connectionOptionsAppleFieldAppSecret,
-	"client_id":       connectionOptionsAppleFieldClientID,
-	"kid":             connectionOptionsAppleFieldKid,
-	"team_id":         connectionOptionsAppleFieldTeamID,
-	"upstream_params": connectionOptionsAppleFieldUpstreamParams,
-}
-
-// Options for the 'apple' connection
 type ConnectionOptionsApple struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	// Apple App Secret (must be a PEM)
@@ -15690,12 +15336,10 @@ func (c *ConnectionOptionsApple) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsApple) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -15791,13 +15435,6 @@ func (c *ConnectionOptionsApple) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsAppleNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -15828,6 +15465,7 @@ func (c *ConnectionOptionsApple) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'auth0' connection
 var (
 	connectionOptionsAuth0FieldNonPersistentAttrs               = big.NewInt(1 << 0)
 	connectionOptionsAuth0FieldAttributes                       = big.NewInt(1 << 1)
@@ -15855,19 +15493,6 @@ var (
 	connectionOptionsAuth0FieldValidation                       = big.NewInt(1 << 23)
 )
 
-// connectionOptionsAuth0NullableFields maps the wire names of ConnectionOptionsAuth0's nullable fields (required or optional) to their field bits.
-var connectionOptionsAuth0NullableFields = map[string]*big.Int{
-	"authentication_methods":      connectionOptionsAuth0FieldAuthenticationMethods,
-	"passkey_options":             connectionOptionsAuth0FieldPasskeyOptions,
-	"passwordPolicy":              connectionOptionsAuth0FieldPasswordPolicy,
-	"password_complexity_options": connectionOptionsAuth0FieldPasswordComplexityOptions,
-	"password_dictionary":         connectionOptionsAuth0FieldPasswordDictionary,
-	"password_history":            connectionOptionsAuth0FieldPasswordHistory,
-	"password_no_personal_info":   connectionOptionsAuth0FieldPasswordNoPersonalInfo,
-	"validation":                  connectionOptionsAuth0FieldValidation,
-}
-
-// Options for the 'auth0' connection
 type ConnectionOptionsAuth0 struct {
 	NonPersistentAttrs               *ConnectionNonPersistentAttrs               `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	Attributes                       *ConnectionAttributes                       `json:"attributes,omitempty" url:"attributes,omitempty"`
@@ -16078,12 +15703,10 @@ func (c *ConnectionOptionsAuth0) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsAuth0) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -16270,13 +15893,6 @@ func (c *ConnectionOptionsAuth0) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsAuth0NullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -16307,12 +15923,12 @@ func (c *ConnectionOptionsAuth0) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'auth0-oidc' connection
 var (
 	connectionOptionsAuth0OidcFieldClientID     = big.NewInt(1 << 0)
 	connectionOptionsAuth0OidcFieldClientSecret = big.NewInt(1 << 1)
 )
 
-// Options for the 'auth0-oidc' connection
 type ConnectionOptionsAuth0Oidc struct {
 	ClientID     *ConnectionClientID     `json:"client_id,omitempty" url:"client_id,omitempty"`
 	ClientSecret *ConnectionClientSecret `json:"client_secret,omitempty" url:"client_secret,omitempty"`
@@ -16347,12 +15963,10 @@ func (c *ConnectionOptionsAuth0Oidc) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionOptionsAuth0Oidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -16415,6 +16029,7 @@ func (c *ConnectionOptionsAuth0Oidc) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'waad' connection
 var (
 	connectionOptionsAzureAdFieldNonPersistentAttrs                 = big.NewInt(1 << 0)
 	connectionOptionsAzureAdFieldAPIEnableUsers                     = big.NewInt(1 << 1)
@@ -16486,12 +16101,6 @@ var (
 	connectionOptionsAzureAdFieldWaadProtocol                       = big.NewInt(0).Lsh(big.NewInt(1), 67)
 )
 
-// connectionOptionsAzureAdNullableFields maps the wire names of ConnectionOptionsAzureAd's nullable fields (required or optional) to their field bits.
-var connectionOptionsAzureAdNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsAzureAdFieldUpstreamParams,
-}
-
-// Options for the 'waad' connection
 type ConnectionOptionsAzureAd struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	// Enable users API
@@ -17097,12 +16706,10 @@ func (c *ConnectionOptionsAzureAd) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsAzureAd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -17597,13 +17204,6 @@ func (c *ConnectionOptionsAzureAd) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsAzureAdNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -17634,6 +17234,7 @@ func (c *ConnectionOptionsAzureAd) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'baidu' connection
 var (
 	connectionOptionsBaiduFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsBaiduFieldClientID              = big.NewInt(1 << 1)
@@ -17643,12 +17244,6 @@ var (
 	connectionOptionsBaiduFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsBaiduNullableFields maps the wire names of ConnectionOptionsBaidu's nullable fields (required or optional) to their field bits.
-var connectionOptionsBaiduNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsBaiduFieldUpstreamParams,
-}
-
-// Options for the 'baidu' connection
 type ConnectionOptionsBaidu struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -17715,12 +17310,10 @@ func (c *ConnectionOptionsBaidu) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsBaidu) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -17781,13 +17374,6 @@ func (c *ConnectionOptionsBaidu) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsBaiduNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -17818,6 +17404,7 @@ func (c *ConnectionOptionsBaidu) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'bitbucket' connection
 var (
 	connectionOptionsBitbucketFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsBitbucketFieldClientID              = big.NewInt(1 << 1)
@@ -17828,7 +17415,6 @@ var (
 	connectionOptionsBitbucketFieldSetUserRootAttributes = big.NewInt(1 << 6)
 )
 
-// Options for the 'bitbucket' connection
 type ConnectionOptionsBitbucket struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientIDBitbucket         `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -17903,12 +17489,10 @@ func (c *ConnectionOptionsBitbucket) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionOptionsBitbucket) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -18006,6 +17590,7 @@ func (c *ConnectionOptionsBitbucket) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'bitly' connection
 var (
 	connectionOptionsBitlyFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsBitlyFieldClientID              = big.NewInt(1 << 1)
@@ -18015,12 +17600,6 @@ var (
 	connectionOptionsBitlyFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsBitlyNullableFields maps the wire names of ConnectionOptionsBitly's nullable fields (required or optional) to their field bits.
-var connectionOptionsBitlyNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsBitlyFieldUpstreamParams,
-}
-
-// Options for the 'bitly' connection
 type ConnectionOptionsBitly struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -18087,12 +17666,10 @@ func (c *ConnectionOptionsBitly) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsBitly) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -18153,13 +17730,6 @@ func (c *ConnectionOptionsBitly) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsBitlyNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -18190,6 +17760,7 @@ func (c *ConnectionOptionsBitly) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'box' connection
 var (
 	connectionOptionsBoxFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsBoxFieldClientID              = big.NewInt(1 << 1)
@@ -18199,12 +17770,6 @@ var (
 	connectionOptionsBoxFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsBoxNullableFields maps the wire names of ConnectionOptionsBox's nullable fields (required or optional) to their field bits.
-var connectionOptionsBoxNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsBoxFieldUpstreamParams,
-}
-
-// Options for the 'box' connection
 type ConnectionOptionsBox struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -18271,12 +17836,10 @@ func (c *ConnectionOptionsBox) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsBox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -18337,13 +17900,6 @@ func (c *ConnectionOptionsBox) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsBoxNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -18386,11 +17942,11 @@ type ConnectionOptionsClientSecretGithub = string
 // OAuth 2.0 client secret issued by the identity provider during application registration. This value is used to authenticate your Auth0 connection to the identity provider.
 type ConnectionOptionsClientSecretTwitter = string
 
+// Common attributes for connection options including non-persistent attributes and Cross App Access
 var (
 	connectionOptionsCommonFieldNonPersistentAttrs = big.NewInt(1 << 0)
 )
 
-// Common attributes for connection options including non-persistent attributes and Cross App Access
 type ConnectionOptionsCommon struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 
@@ -18416,12 +17972,10 @@ func (c *ConnectionOptionsCommon) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsCommon) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -18473,6 +18027,7 @@ func (c *ConnectionOptionsCommon) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// common options for OIDC connections
 var (
 	connectionOptionsCommonOidcFieldAuthorizationEndpoint              = big.NewInt(1 << 0)
 	connectionOptionsCommonOidcFieldClientID                           = big.NewInt(1 << 1)
@@ -18501,15 +18056,6 @@ var (
 	connectionOptionsCommonOidcFieldUseOauthSpecScope                  = big.NewInt(1 << 24)
 )
 
-// connectionOptionsCommonOidcNullableFields maps the wire names of ConnectionOptionsCommonOidc's nullable fields (required or optional) to their field bits.
-var connectionOptionsCommonOidcNullableFields = map[string]*big.Int{
-	"id_token_signed_response_algs":   connectionOptionsCommonOidcFieldIDTokenSignedResponseAlgs,
-	"token_endpoint_auth_method":      connectionOptionsCommonOidcFieldTokenEndpointAuthMethod,
-	"token_endpoint_auth_signing_alg": connectionOptionsCommonOidcFieldTokenEndpointAuthSigningAlg,
-	"upstream_params":                 connectionOptionsCommonOidcFieldUpstreamParams,
-}
-
-// common options for OIDC connections
 type ConnectionOptionsCommonOidc struct {
 	AuthorizationEndpoint              *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
 	ClientID                           ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
@@ -18728,12 +18274,10 @@ func (c *ConnectionOptionsCommonOidc) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionOptionsCommonOidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -18927,13 +18471,6 @@ func (c *ConnectionOptionsCommonOidc) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsCommonOidcNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -18964,6 +18501,7 @@ func (c *ConnectionOptionsCommonOidc) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Common options for SAML-based enterprise connections (shared by samlp and pingfederate).
 var (
 	connectionOptionsCommonSAMLFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	connectionOptionsCommonSAMLFieldCert                        = big.NewInt(1 << 1)
@@ -18984,12 +18522,6 @@ var (
 	connectionOptionsCommonSAMLFieldUpstreamParams              = big.NewInt(1 << 16)
 )
 
-// connectionOptionsCommonSAMLNullableFields maps the wire names of ConnectionOptionsCommonSAML's nullable fields (required or optional) to their field bits.
-var connectionOptionsCommonSAMLNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsCommonSAMLFieldUpstreamParams,
-}
-
-// Common options for SAML-based enterprise connections (shared by samlp and pingfederate).
 type ConnectionOptionsCommonSAML struct {
 	AssertionDecryptionSettings *ConnectionAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	Cert                        *ConnectionSigningCertificateDerSAML   `json:"cert,omitempty" url:"cert,omitempty"`
@@ -19143,12 +18675,10 @@ func (c *ConnectionOptionsCommonSAML) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionOptionsCommonSAML) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -19282,13 +18812,6 @@ func (c *ConnectionOptionsCommonSAML) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsCommonSAMLNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -19322,6 +18845,7 @@ func (c *ConnectionOptionsCommonSAML) String() string {
 // Options for 'custom' connections
 type ConnectionOptionsCustom = map[string]any
 
+// Options for the 'daccount' connection
 var (
 	connectionOptionsDaccountFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsDaccountFieldClientID              = big.NewInt(1 << 1)
@@ -19331,12 +18855,6 @@ var (
 	connectionOptionsDaccountFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsDaccountNullableFields maps the wire names of ConnectionOptionsDaccount's nullable fields (required or optional) to their field bits.
-var connectionOptionsDaccountNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsDaccountFieldUpstreamParams,
-}
-
-// Options for the 'daccount' connection
 type ConnectionOptionsDaccount struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -19403,12 +18921,10 @@ func (c *ConnectionOptionsDaccount) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionOptionsDaccount) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -19469,13 +18985,6 @@ func (c *ConnectionOptionsDaccount) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsDaccountNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -19509,6 +19018,7 @@ func (c *ConnectionOptionsDaccount) String() string {
 // When true, enables DEFLATE compression for SAML requests sent via HTTP-Redirect binding.
 type ConnectionOptionsDeflateSAML = bool
 
+// Options for the 'dropbox' connection
 var (
 	connectionOptionsDropboxFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsDropboxFieldClientID              = big.NewInt(1 << 1)
@@ -19518,12 +19028,6 @@ var (
 	connectionOptionsDropboxFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsDropboxNullableFields maps the wire names of ConnectionOptionsDropbox's nullable fields (required or optional) to their field bits.
-var connectionOptionsDropboxNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsDropboxFieldUpstreamParams,
-}
-
-// Options for the 'dropbox' connection
 type ConnectionOptionsDropbox struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -19590,12 +19094,10 @@ func (c *ConnectionOptionsDropbox) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsDropbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -19656,13 +19158,6 @@ func (c *ConnectionOptionsDropbox) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsDropboxNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -19693,6 +19188,7 @@ func (c *ConnectionOptionsDropbox) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'dwolla' connection
 var (
 	connectionOptionsDwollaFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsDwollaFieldClientID              = big.NewInt(1 << 1)
@@ -19702,12 +19198,6 @@ var (
 	connectionOptionsDwollaFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsDwollaNullableFields maps the wire names of ConnectionOptionsDwolla's nullable fields (required or optional) to their field bits.
-var connectionOptionsDwollaNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsDwollaFieldUpstreamParams,
-}
-
-// Options for the 'dwolla' connection
 type ConnectionOptionsDwolla struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -19774,12 +19264,10 @@ func (c *ConnectionOptionsDwolla) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsDwolla) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -19840,13 +19328,6 @@ func (c *ConnectionOptionsDwolla) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsDwollaNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -19877,6 +19358,7 @@ func (c *ConnectionOptionsDwolla) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'email' connection
 var (
 	connectionOptionsEmailFieldNonPersistentAttrs   = big.NewInt(1 << 0)
 	connectionOptionsEmailFieldAuthParams           = big.NewInt(1 << 1)
@@ -19887,7 +19369,6 @@ var (
 	connectionOptionsEmailFieldTotp                 = big.NewInt(1 << 6)
 )
 
-// Options for the 'email' connection
 type ConnectionOptionsEmail struct {
 	NonPersistentAttrs   *ConnectionNonPersistentAttrs  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AuthParams           *ConnectionAuthParamsEmail     `json:"authParams,omitempty" url:"authParams,omitempty"`
@@ -19963,12 +19444,10 @@ func (c *ConnectionOptionsEmail) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsEmail) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -20066,6 +19545,7 @@ func (c *ConnectionOptionsEmail) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the evernote family of connections
 var (
 	connectionOptionsEvernoteFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsEvernoteFieldClientID              = big.NewInt(1 << 1)
@@ -20074,12 +19554,6 @@ var (
 	connectionOptionsEvernoteFieldUpstreamParams        = big.NewInt(1 << 4)
 )
 
-// connectionOptionsEvernoteNullableFields maps the wire names of ConnectionOptionsEvernote's nullable fields (required or optional) to their field bits.
-var connectionOptionsEvernoteNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsEvernoteFieldUpstreamParams,
-}
-
-// Options for the evernote family of connections
 type ConnectionOptionsEvernote struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	// OAuth 1.0 client identifier issued by the identity provider during application registration. This value identifies your Auth0 connection to the identity provider.
@@ -20140,12 +19614,10 @@ func (c *ConnectionOptionsEvernote) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionOptionsEvernote) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -20199,13 +19671,6 @@ func (c *ConnectionOptionsEvernote) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsEvernoteNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -20236,6 +19701,7 @@ func (c *ConnectionOptionsEvernote) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'exact' connection
 var (
 	connectionOptionsExactFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsExactFieldBaseURL               = big.NewInt(1 << 1)
@@ -20246,12 +19712,6 @@ var (
 	connectionOptionsExactFieldUpstreamParams        = big.NewInt(1 << 6)
 )
 
-// connectionOptionsExactNullableFields maps the wire names of ConnectionOptionsExact's nullable fields (required or optional) to their field bits.
-var connectionOptionsExactNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsExactFieldUpstreamParams,
-}
-
-// Options for the 'exact' connection
 type ConnectionOptionsExact struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	BaseURL            *ConnectionBaseURLExact       `json:"baseUrl,omitempty" url:"baseUrl,omitempty"`
@@ -20327,12 +19787,10 @@ func (c *ConnectionOptionsExact) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsExact) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -20400,13 +19858,6 @@ func (c *ConnectionOptionsExact) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsExactNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -20437,6 +19888,7 @@ func (c *ConnectionOptionsExact) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'facebook' connection
 var (
 	connectionOptionsFacebookFieldNonPersistentAttrs          = big.NewInt(1 << 0)
 	connectionOptionsFacebookFieldClientID                    = big.NewInt(1 << 1)
@@ -20488,7 +19940,6 @@ var (
 	connectionOptionsFacebookFieldUserVideos                  = big.NewInt(1 << 47)
 )
 
-// Options for the 'facebook' connection
 type ConnectionOptionsFacebook struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientIDFacebook          `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -20932,12 +20383,10 @@ func (c *ConnectionOptionsFacebook) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionOptionsFacebook) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -21322,6 +20771,7 @@ func (c *ConnectionOptionsFacebook) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'fitbit' connection
 var (
 	connectionOptionsFitbitFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsFitbitFieldClientID              = big.NewInt(1 << 1)
@@ -21331,12 +20781,6 @@ var (
 	connectionOptionsFitbitFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsFitbitNullableFields maps the wire names of ConnectionOptionsFitbit's nullable fields (required or optional) to their field bits.
-var connectionOptionsFitbitNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsFitbitFieldUpstreamParams,
-}
-
-// Options for the 'fitbit' connection
 type ConnectionOptionsFitbit struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -21403,12 +20847,10 @@ func (c *ConnectionOptionsFitbit) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsFitbit) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -21469,13 +20911,6 @@ func (c *ConnectionOptionsFitbit) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsFitbitNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -21509,6 +20944,7 @@ func (c *ConnectionOptionsFitbit) String() string {
 // Array of custom OAuth 2.0 scopes to request from GitHub during authentication. Use this to request scopes not covered by the predefined scope options.
 type ConnectionOptionsFreeformScopesGithub = ConnectionScopeArray
 
+// Options for the 'github' connection
 var (
 	connectionOptionsGitHubFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsGitHubFieldClientID              = big.NewInt(1 << 1)
@@ -21539,12 +20975,6 @@ var (
 	connectionOptionsGitHubFieldWriteRepoHook         = big.NewInt(1 << 26)
 )
 
-// connectionOptionsGitHubNullableFields maps the wire names of ConnectionOptionsGitHub's nullable fields (required or optional) to their field bits.
-var connectionOptionsGitHubNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsGitHubFieldUpstreamParams,
-}
-
-// Options for the 'github' connection
 type ConnectionOptionsGitHub struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs          `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionOptionsClientIDGithub       `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -21799,12 +21229,10 @@ func (c *ConnectionOptionsGitHub) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsGitHub) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -22012,13 +21440,6 @@ func (c *ConnectionOptionsGitHub) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsGitHubNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -22049,6 +21470,7 @@ func (c *ConnectionOptionsGitHub) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'google-apps' connection
 var (
 	connectionOptionsGoogleAppsFieldNonPersistentAttrs        = big.NewInt(1 << 0)
 	connectionOptionsGoogleAppsFieldAdminAccessToken          = big.NewInt(1 << 1)
@@ -22077,12 +21499,6 @@ var (
 	connectionOptionsGoogleAppsFieldUpstreamParams            = big.NewInt(1 << 24)
 )
 
-// connectionOptionsGoogleAppsNullableFields maps the wire names of ConnectionOptionsGoogleApps's nullable fields (required or optional) to their field bits.
-var connectionOptionsGoogleAppsNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsGoogleAppsFieldUpstreamParams,
-}
-
-// Options for the 'google-apps' connection
 type ConnectionOptionsGoogleApps struct {
 	NonPersistentAttrs        *ConnectionNonPersistentAttrs                  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AdminAccessToken          *ConnectionAdminAccessTokenGoogleApps          `json:"admin_access_token,omitempty" url:"admin_access_token,omitempty"`
@@ -22306,12 +21722,10 @@ func (c *ConnectionOptionsGoogleApps) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionOptionsGoogleApps) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -22507,13 +21921,6 @@ func (c *ConnectionOptionsGoogleApps) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsGoogleAppsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -22546,6 +21953,7 @@ func (c *ConnectionOptionsGoogleApps) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'google-oauth2' connection
 var (
 	connectionOptionsGoogleOAuth2FieldNonPersistentAttrs               = big.NewInt(1 << 0)
 	connectionOptionsGoogleOAuth2FieldAllowedAudiences                 = big.NewInt(1 << 1)
@@ -22623,12 +22031,6 @@ var (
 	connectionOptionsGoogleOAuth2FieldYoutubepartner                   = big.NewInt(0).Lsh(big.NewInt(1), 73)
 )
 
-// connectionOptionsGoogleOAuth2NullableFields maps the wire names of ConnectionOptionsGoogleOAuth2's nullable fields (required or optional) to their field bits.
-var connectionOptionsGoogleOAuth2NullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsGoogleOAuth2FieldUpstreamParams,
-}
-
-// Options for the 'google-oauth2' connection
 type ConnectionOptionsGoogleOAuth2 struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs           `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AllowedAudiences      *ConnectionAllowedAudiencesGoogleOAuth2 `json:"allowed_audiences,omitempty" url:"allowed_audiences,omitempty"`
@@ -23304,12 +22706,10 @@ func (c *ConnectionOptionsGoogleOAuth2) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionOptionsGoogleOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -23846,13 +23246,6 @@ func (c *ConnectionOptionsGoogleOAuth2) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsGoogleOAuth2NullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -23909,6 +23302,7 @@ func (c ConnectionOptionsIdpInitiatedClientProtocolEnumSAML) Ptr() *ConnectionOp
 	return &c
 }
 
+// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 var (
 	connectionOptionsIdpinitiatedSAMLFieldClientAuthorizequery = big.NewInt(1 << 0)
 	connectionOptionsIdpinitiatedSAMLFieldClientID             = big.NewInt(1 << 1)
@@ -23916,7 +23310,6 @@ var (
 	connectionOptionsIdpinitiatedSAMLFieldEnabled              = big.NewInt(1 << 3)
 )
 
-// Configuration for IdP-Initiated SAML Single Sign-On. When enabled, allows users to initiate login directly from their SAML identity provider without first visiting Auth0. The IdP must include the connection parameter in the post-back URL (Assertion Consumer Service URL).
 type ConnectionOptionsIdpinitiatedSAML struct {
 	// The query string sent to the default application
 	ClientAuthorizequery *string `json:"client_authorizequery,omitempty" url:"client_authorizequery,omitempty"`
@@ -23969,12 +23362,10 @@ func (c *ConnectionOptionsIdpinitiatedSAML) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionOptionsIdpinitiatedSAML) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientAuthorizequery sets the ClientAuthorizequery field and marks it as non-optional;
@@ -24047,6 +23438,7 @@ func (c *ConnectionOptionsIdpinitiatedSAML) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'instagram' connection
 var (
 	connectionOptionsInstagramFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsInstagramFieldClientID              = big.NewInt(1 << 1)
@@ -24056,12 +23448,6 @@ var (
 	connectionOptionsInstagramFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsInstagramNullableFields maps the wire names of ConnectionOptionsInstagram's nullable fields (required or optional) to their field bits.
-var connectionOptionsInstagramNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsInstagramFieldUpstreamParams,
-}
-
-// Options for the 'instagram' connection
 type ConnectionOptionsInstagram struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -24128,12 +23514,10 @@ func (c *ConnectionOptionsInstagram) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionOptionsInstagram) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -24194,13 +23578,6 @@ func (c *ConnectionOptionsInstagram) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsInstagramNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -24234,6 +23611,7 @@ func (c *ConnectionOptionsInstagram) String() string {
 // Options for the 'ip' connection
 type ConnectionOptionsIP = map[string]any
 
+// Options for the 'line' connection
 var (
 	connectionOptionsLineFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsLineFieldClientID              = big.NewInt(1 << 1)
@@ -24246,12 +23624,6 @@ var (
 	connectionOptionsLineFieldProfile               = big.NewInt(1 << 8)
 )
 
-// connectionOptionsLineNullableFields maps the wire names of ConnectionOptionsLine's nullable fields (required or optional) to their field bits.
-var connectionOptionsLineNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsLineFieldUpstreamParams,
-}
-
-// Options for the 'line' connection
 type ConnectionOptionsLine struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientIDLine              `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -24344,12 +23716,10 @@ func (c *ConnectionOptionsLine) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsLine) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -24431,13 +23801,6 @@ func (c *ConnectionOptionsLine) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsLineNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -24468,6 +23831,7 @@ func (c *ConnectionOptionsLine) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'linkedin' connection
 var (
 	connectionOptionsLinkedinFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsLinkedinFieldClientID              = big.NewInt(1 << 1)
@@ -24485,12 +23849,6 @@ var (
 	connectionOptionsLinkedinFieldProfile               = big.NewInt(1 << 13)
 )
 
-// connectionOptionsLinkedinNullableFields maps the wire names of ConnectionOptionsLinkedin's nullable fields (required or optional) to their field bits.
-var connectionOptionsLinkedinNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsLinkedinFieldUpstreamParams,
-}
-
-// Options for the 'linkedin' connection
 type ConnectionOptionsLinkedin struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientIDLinkedin          `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -24628,12 +23986,10 @@ func (c *ConnectionOptionsLinkedin) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *ConnectionOptionsLinkedin) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -24750,13 +24106,6 @@ func (c *ConnectionOptionsLinkedin) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsLinkedinNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -24787,6 +24136,7 @@ func (c *ConnectionOptionsLinkedin) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'oauth1' connection
 var (
 	connectionOptionsOAuth1FieldNonPersistentAttrs   = big.NewInt(1 << 0)
 	connectionOptionsOAuth1FieldAccessTokenURL       = big.NewInt(1 << 1)
@@ -24799,12 +24149,6 @@ var (
 	connectionOptionsOAuth1FieldUserAuthorizationURL = big.NewInt(1 << 8)
 )
 
-// connectionOptionsOAuth1NullableFields maps the wire names of ConnectionOptionsOAuth1's nullable fields (required or optional) to their field bits.
-var connectionOptionsOAuth1NullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsOAuth1FieldUpstreamParams,
-}
-
-// Options for the 'oauth1' connection
 type ConnectionOptionsOAuth1 struct {
 	NonPersistentAttrs   *ConnectionNonPersistentAttrs         `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AccessTokenURL       *ConnectionAccessTokenUrloAuth1       `json:"accessTokenURL,omitempty" url:"accessTokenURL,omitempty"`
@@ -24895,12 +24239,10 @@ func (c *ConnectionOptionsOAuth1) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsOAuth1) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -24982,13 +24324,6 @@ func (c *ConnectionOptionsOAuth1) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsOAuth1NullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -25026,11 +24361,6 @@ var (
 	connectionOptionsOAuth1CommonFieldSetUserRootAttributes = big.NewInt(1 << 3)
 	connectionOptionsOAuth1CommonFieldUpstreamParams        = big.NewInt(1 << 4)
 )
-
-// connectionOptionsOAuth1CommonNullableFields maps the wire names of ConnectionOptionsOAuth1Common's nullable fields (required or optional) to their field bits.
-var connectionOptionsOAuth1CommonNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsOAuth1CommonFieldUpstreamParams,
-}
 
 type ConnectionOptionsOAuth1Common struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
@@ -25091,12 +24421,10 @@ func (c *ConnectionOptionsOAuth1Common) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionOptionsOAuth1Common) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -25146,13 +24474,6 @@ func (c *ConnectionOptionsOAuth1Common) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsOAuth1CommonNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -25183,6 +24504,7 @@ func (c *ConnectionOptionsOAuth1Common) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'oauth2' connection
 var (
 	connectionOptionsOAuth2FieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsOAuth2FieldAuthParams            = big.NewInt(1 << 1)
@@ -25203,12 +24525,6 @@ var (
 	connectionOptionsOAuth2FieldUseOauthSpecScope     = big.NewInt(1 << 16)
 )
 
-// connectionOptionsOAuth2NullableFields maps the wire names of ConnectionOptionsOAuth2's nullable fields (required or optional) to their field bits.
-var connectionOptionsOAuth2NullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsOAuth2FieldUpstreamParams,
-}
-
-// Options for the 'oauth2' connection
 type ConnectionOptionsOAuth2 struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs    `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AuthParams         *ConnectionAuthParamsOAuth2      `json:"authParams,omitempty" url:"authParams,omitempty"`
@@ -25365,12 +24681,10 @@ func (c *ConnectionOptionsOAuth2) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -25508,13 +24822,6 @@ func (c *ConnectionOptionsOAuth2) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsOAuth2NullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -25553,11 +24860,6 @@ var (
 	connectionOptionsOAuth2CommonFieldSetUserRootAttributes = big.NewInt(1 << 4)
 	connectionOptionsOAuth2CommonFieldUpstreamParams        = big.NewInt(1 << 5)
 )
-
-// connectionOptionsOAuth2CommonNullableFields maps the wire names of ConnectionOptionsOAuth2Common's nullable fields (required or optional) to their field bits.
-var connectionOptionsOAuth2CommonNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsOAuth2CommonFieldUpstreamParams,
-}
 
 type ConnectionOptionsOAuth2Common struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
@@ -25624,12 +24926,10 @@ func (c *ConnectionOptionsOAuth2Common) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionOptionsOAuth2Common) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -25686,13 +24986,6 @@ func (c *ConnectionOptionsOAuth2Common) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsOAuth2CommonNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -25723,12 +25016,12 @@ func (c *ConnectionOptionsOAuth2Common) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'office365' connection
 var (
 	connectionOptionsOffice365FieldClientID     = big.NewInt(1 << 0)
 	connectionOptionsOffice365FieldClientSecret = big.NewInt(1 << 1)
 )
 
-// Options for the 'office365' connection
 type ConnectionOptionsOffice365 struct {
 	ClientID     *ConnectionClientID     `json:"client_id,omitempty" url:"client_id,omitempty"`
 	ClientSecret *ConnectionClientSecret `json:"client_secret,omitempty" url:"client_secret,omitempty"`
@@ -25763,12 +25056,10 @@ func (c *ConnectionOptionsOffice365) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionOptionsOffice365) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -25831,6 +25122,7 @@ func (c *ConnectionOptionsOffice365) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'oidc' connection
 var (
 	connectionOptionsOidcFieldAuthorizationEndpoint              = big.NewInt(1 << 0)
 	connectionOptionsOidcFieldClientID                           = big.NewInt(1 << 1)
@@ -25863,15 +25155,6 @@ var (
 	connectionOptionsOidcFieldType                               = big.NewInt(1 << 28)
 )
 
-// connectionOptionsOidcNullableFields maps the wire names of ConnectionOptionsOidc's nullable fields (required or optional) to their field bits.
-var connectionOptionsOidcNullableFields = map[string]*big.Int{
-	"id_token_signed_response_algs":   connectionOptionsOidcFieldIDTokenSignedResponseAlgs,
-	"token_endpoint_auth_method":      connectionOptionsOidcFieldTokenEndpointAuthMethod,
-	"token_endpoint_auth_signing_alg": connectionOptionsOidcFieldTokenEndpointAuthSigningAlg,
-	"upstream_params":                 connectionOptionsOidcFieldUpstreamParams,
-}
-
-// Options for the 'oidc' connection
 type ConnectionOptionsOidc struct {
 	AuthorizationEndpoint              *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
 	ClientID                           ConnectionClientIDOidc                         `json:"client_id" url:"client_id"`
@@ -26122,12 +25405,10 @@ func (c *ConnectionOptionsOidc) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsOidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthorizationEndpoint sets the AuthorizationEndpoint field and marks it as non-optional;
@@ -26349,13 +25630,6 @@ func (c *ConnectionOptionsOidc) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsOidcNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -26386,6 +25660,7 @@ func (c *ConnectionOptionsOidc) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 var (
 	connectionOptionsOidcMetadataFieldAcrValuesSupported                         = big.NewInt(1 << 0)
 	connectionOptionsOidcMetadataFieldAuthorizationEndpoint                      = big.NewInt(1 << 1)
@@ -26428,12 +25703,6 @@ var (
 	connectionOptionsOidcMetadataFieldUserinfoSigningAlgValuesSupported          = big.NewInt(1 << 38)
 )
 
-// connectionOptionsOidcMetadataNullableFields maps the wire names of ConnectionOptionsOidcMetadata's nullable fields (required or optional) to their field bits.
-var connectionOptionsOidcMetadataNullableFields = map[string]*big.Int{
-	"scopes_supported": connectionOptionsOidcMetadataFieldScopesSupported,
-}
-
-// OpenID Connect Provider Metadata as per https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderMetadata
 type ConnectionOptionsOidcMetadata struct {
 	AcrValuesSupported                         *ConnectionAcrValuesSupported                         `json:"acr_values_supported,omitempty" url:"acr_values_supported,omitempty"`
 	AuthorizationEndpoint                      ConnectionAuthorizationEndpoint                       `json:"authorization_endpoint" url:"authorization_endpoint"`
@@ -26764,12 +26033,10 @@ func (c *ConnectionOptionsOidcMetadata) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionOptionsOidcMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAcrValuesSupported sets the AcrValuesSupported field and marks it as non-optional;
@@ -27061,13 +26328,6 @@ func (c *ConnectionOptionsOidcMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsOidcMetadataNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -27098,6 +26358,7 @@ func (c *ConnectionOptionsOidcMetadata) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'okta' connection
 var (
 	connectionOptionsOktaFieldNonPersistentAttrs                 = big.NewInt(1 << 0)
 	connectionOptionsOktaFieldAuthorizationEndpoint              = big.NewInt(1 << 1)
@@ -27130,15 +26391,6 @@ var (
 	connectionOptionsOktaFieldType                               = big.NewInt(1 << 28)
 )
 
-// connectionOptionsOktaNullableFields maps the wire names of ConnectionOptionsOkta's nullable fields (required or optional) to their field bits.
-var connectionOptionsOktaNullableFields = map[string]*big.Int{
-	"id_token_signed_response_algs":   connectionOptionsOktaFieldIDTokenSignedResponseAlgs,
-	"token_endpoint_auth_method":      connectionOptionsOktaFieldTokenEndpointAuthMethod,
-	"token_endpoint_auth_signing_alg": connectionOptionsOktaFieldTokenEndpointAuthSigningAlg,
-	"upstream_params":                 connectionOptionsOktaFieldUpstreamParams,
-}
-
-// Options for the 'okta' connection
 type ConnectionOptionsOkta struct {
 	NonPersistentAttrs                 *ConnectionNonPersistentAttrs                  `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	AuthorizationEndpoint              *ConnectionAuthorizationEndpoint               `json:"authorization_endpoint,omitempty" url:"authorization_endpoint,omitempty"`
@@ -27389,12 +26641,10 @@ func (c *ConnectionOptionsOkta) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsOkta) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -27616,13 +26866,6 @@ func (c *ConnectionOptionsOkta) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsOktaNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -27653,6 +26896,7 @@ func (c *ConnectionOptionsOkta) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'paypal' and 'paypal-sandbox' connections
 var (
 	connectionOptionsPaypalFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsPaypalFieldClientID              = big.NewInt(1 << 1)
@@ -27666,7 +26910,6 @@ var (
 	connectionOptionsPaypalFieldProfile               = big.NewInt(1 << 9)
 )
 
-// Options for the 'paypal' and 'paypal-sandbox' connections
 type ConnectionOptionsPaypal struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientIDPaypal            `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -27769,12 +27012,10 @@ func (c *ConnectionOptionsPaypal) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsPaypal) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -27893,6 +27134,7 @@ func (c *ConnectionOptionsPaypal) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'pingfederate' connection
 var (
 	connectionOptionsPingFederateFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	connectionOptionsPingFederateFieldCert                        = big.NewInt(1 << 1)
@@ -27916,12 +27158,6 @@ var (
 	connectionOptionsPingFederateFieldSigningCert                 = big.NewInt(1 << 19)
 )
 
-// connectionOptionsPingFederateNullableFields maps the wire names of ConnectionOptionsPingFederate's nullable fields (required or optional) to their field bits.
-var connectionOptionsPingFederateNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsPingFederateFieldUpstreamParams,
-}
-
-// Options for the 'pingfederate' connection
 type ConnectionOptionsPingFederate struct {
 	AssertionDecryptionSettings *ConnectionAssertionDecryptionSettings       `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	Cert                        *ConnectionSigningCertificateDerSAML         `json:"cert,omitempty" url:"cert,omitempty"`
@@ -28100,12 +27336,10 @@ func (c *ConnectionOptionsPingFederate) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionOptionsPingFederate) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -28264,13 +27498,6 @@ func (c *ConnectionOptionsPingFederate) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsPingFederateNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -28301,6 +27528,7 @@ func (c *ConnectionOptionsPingFederate) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'planningcenter' connection
 var (
 	connectionOptionsPlanningCenterFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsPlanningCenterFieldClientID              = big.NewInt(1 << 1)
@@ -28310,12 +27538,6 @@ var (
 	connectionOptionsPlanningCenterFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsPlanningCenterNullableFields maps the wire names of ConnectionOptionsPlanningCenter's nullable fields (required or optional) to their field bits.
-var connectionOptionsPlanningCenterNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsPlanningCenterFieldUpstreamParams,
-}
-
-// Options for the 'planningcenter' connection
 type ConnectionOptionsPlanningCenter struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -28382,12 +27604,10 @@ func (c *ConnectionOptionsPlanningCenter) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionOptionsPlanningCenter) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -28448,13 +27668,6 @@ func (c *ConnectionOptionsPlanningCenter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsPlanningCenterNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -28508,6 +27721,7 @@ func (c ConnectionOptionsProtocolEnumTwitter) Ptr() *ConnectionOptionsProtocolEn
 	return &c
 }
 
+// Options for the salesforce family of connections (salesforce, salesforce-sandbox, salesforce-community)
 var (
 	connectionOptionsSalesforceFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsSalesforceFieldClientID              = big.NewInt(1 << 1)
@@ -28519,12 +27733,6 @@ var (
 	connectionOptionsSalesforceFieldUpstreamParams        = big.NewInt(1 << 7)
 )
 
-// connectionOptionsSalesforceNullableFields maps the wire names of ConnectionOptionsSalesforce's nullable fields (required or optional) to their field bits.
-var connectionOptionsSalesforceNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsSalesforceFieldUpstreamParams,
-}
-
-// Options for the salesforce family of connections (salesforce, salesforce-sandbox, salesforce-community)
 type ConnectionOptionsSalesforce struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs       `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID           *ConnectionClientIDSalesforce       `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -28608,12 +27816,10 @@ func (c *ConnectionOptionsSalesforce) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionOptionsSalesforce) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -28688,13 +27894,6 @@ func (c *ConnectionOptionsSalesforce) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsSalesforceNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -28725,6 +27924,7 @@ func (c *ConnectionOptionsSalesforce) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'salesforce-community' connection
 var (
 	connectionOptionsSalesforceCommunityFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsSalesforceCommunityFieldClientID              = big.NewInt(1 << 1)
@@ -28737,12 +27937,6 @@ var (
 	connectionOptionsSalesforceCommunityFieldCommunityBaseURL      = big.NewInt(1 << 8)
 )
 
-// connectionOptionsSalesforceCommunityNullableFields maps the wire names of ConnectionOptionsSalesforceCommunity's nullable fields (required or optional) to their field bits.
-var connectionOptionsSalesforceCommunityNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsSalesforceCommunityFieldUpstreamParams,
-}
-
-// Options for the 'salesforce-community' connection
 type ConnectionOptionsSalesforceCommunity struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs       `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID           *ConnectionClientIDSalesforce       `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -28834,12 +28028,10 @@ func (c *ConnectionOptionsSalesforceCommunity) GetExtraProperties() map[string]i
 }
 
 func (c *ConnectionOptionsSalesforceCommunity) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -28921,13 +28113,6 @@ func (c *ConnectionOptionsSalesforceCommunity) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsSalesforceCommunityNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -28958,6 +28143,7 @@ func (c *ConnectionOptionsSalesforceCommunity) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'samlp' connection
 var (
 	connectionOptionsSAMLFieldAssertionDecryptionSettings = big.NewInt(1 << 0)
 	connectionOptionsSAMLFieldCert                        = big.NewInt(1 << 1)
@@ -29001,14 +28187,6 @@ var (
 	connectionOptionsSAMLFieldUserIDAttribute             = big.NewInt(1 << 39)
 )
 
-// connectionOptionsSAMLNullableFields maps the wire names of ConnectionOptionsSAML's nullable fields (required or optional) to their field bits.
-var connectionOptionsSAMLNullableFields = map[string]*big.Int{
-	"upstream_params":                 connectionOptionsSAMLFieldUpstreamParams,
-	"token_endpoint_auth_method":      connectionOptionsSAMLFieldTokenEndpointAuthMethod,
-	"token_endpoint_auth_signing_alg": connectionOptionsSAMLFieldTokenEndpointAuthSigningAlg,
-}
-
-// Options for the 'samlp' connection
 type ConnectionOptionsSAML struct {
 	AssertionDecryptionSettings *ConnectionAssertionDecryptionSettings      `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	Cert                        *ConnectionSigningCertificateDerSAML        `json:"cert,omitempty" url:"cert,omitempty"`
@@ -29348,12 +28526,10 @@ func (c *ConnectionOptionsSAML) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsSAML) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAssertionDecryptionSettings sets the AssertionDecryptionSettings field and marks it as non-optional;
@@ -29652,13 +28828,6 @@ func (c *ConnectionOptionsSAML) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsSAMLNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -29695,6 +28864,7 @@ type ConnectionOptionsScopeGithub = ConnectionScopeArray
 // Array of OAuth 2.0 scopes to request from Twitter during authentication. Use this to request scopes not covered by the predefined scope options.
 type ConnectionOptionsScopeTwitter = ConnectionScopeArray
 
+// Options for the 'sharepoint' connection
 var (
 	connectionOptionsSharepointFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsSharepointFieldClientID              = big.NewInt(1 << 1)
@@ -29704,12 +28874,6 @@ var (
 	connectionOptionsSharepointFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsSharepointNullableFields maps the wire names of ConnectionOptionsSharepoint's nullable fields (required or optional) to their field bits.
-var connectionOptionsSharepointNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsSharepointFieldUpstreamParams,
-}
-
-// Options for the 'sharepoint' connection
 type ConnectionOptionsSharepoint struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -29776,12 +28940,10 @@ func (c *ConnectionOptionsSharepoint) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionOptionsSharepoint) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -29842,13 +29004,6 @@ func (c *ConnectionOptionsSharepoint) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsSharepointNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -29879,6 +29034,7 @@ func (c *ConnectionOptionsSharepoint) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'shop' connection
 var (
 	connectionOptionsShopFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsShopFieldClientID              = big.NewInt(1 << 1)
@@ -29888,12 +29044,6 @@ var (
 	connectionOptionsShopFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsShopNullableFields maps the wire names of ConnectionOptionsShop's nullable fields (required or optional) to their field bits.
-var connectionOptionsShopNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsShopFieldUpstreamParams,
-}
-
-// Options for the 'shop' connection
 type ConnectionOptionsShop struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -29960,12 +29110,10 @@ func (c *ConnectionOptionsShop) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsShop) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -30026,13 +29174,6 @@ func (c *ConnectionOptionsShop) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsShopNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -30063,6 +29204,7 @@ func (c *ConnectionOptionsShop) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'shopify' connection
 var (
 	connectionOptionsShopifyFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsShopifyFieldClientID              = big.NewInt(1 << 1)
@@ -30072,12 +29214,6 @@ var (
 	connectionOptionsShopifyFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsShopifyNullableFields maps the wire names of ConnectionOptionsShopify's nullable fields (required or optional) to their field bits.
-var connectionOptionsShopifyNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsShopifyFieldUpstreamParams,
-}
-
-// Options for the 'shopify' connection
 type ConnectionOptionsShopify struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -30144,12 +29280,10 @@ func (c *ConnectionOptionsShopify) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsShopify) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -30210,13 +29344,6 @@ func (c *ConnectionOptionsShopify) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsShopifyNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -30247,6 +29374,7 @@ func (c *ConnectionOptionsShopify) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'sms' connection
 var (
 	connectionOptionsSmsFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsSmsFieldBruteForceProtection  = big.NewInt(1 << 1)
@@ -30265,12 +29393,6 @@ var (
 	connectionOptionsSmsFieldTwilioToken           = big.NewInt(1 << 14)
 )
 
-// connectionOptionsSmsNullableFields maps the wire names of ConnectionOptionsSms's nullable fields (required or optional) to their field bits.
-var connectionOptionsSmsNullableFields = map[string]*big.Int{
-	"gateway_authentication": connectionOptionsSmsFieldGatewayAuthentication,
-}
-
-// Options for the 'sms' connection
 type ConnectionOptionsSms struct {
 	NonPersistentAttrs *ConnectionNonPersistentAttrs `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	// Whether brute force protection is enabled
@@ -30411,12 +29533,10 @@ func (c *ConnectionOptionsSms) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsSms) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -30540,13 +29660,6 @@ func (c *ConnectionOptionsSms) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsSmsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -30577,6 +29690,7 @@ func (c *ConnectionOptionsSms) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'soundcloud' connection
 var (
 	connectionOptionsSoundcloudFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsSoundcloudFieldClientID              = big.NewInt(1 << 1)
@@ -30586,12 +29700,6 @@ var (
 	connectionOptionsSoundcloudFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsSoundcloudNullableFields maps the wire names of ConnectionOptionsSoundcloud's nullable fields (required or optional) to their field bits.
-var connectionOptionsSoundcloudNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsSoundcloudFieldUpstreamParams,
-}
-
-// Options for the 'soundcloud' connection
 type ConnectionOptionsSoundcloud struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -30658,12 +29766,10 @@ func (c *ConnectionOptionsSoundcloud) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionOptionsSoundcloud) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -30724,13 +29830,6 @@ func (c *ConnectionOptionsSoundcloud) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsSoundcloudNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -30761,6 +29860,7 @@ func (c *ConnectionOptionsSoundcloud) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'thirtysevensignals' connection
 var (
 	connectionOptionsThirtySevenSignalsFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsThirtySevenSignalsFieldClientID              = big.NewInt(1 << 1)
@@ -30770,12 +29870,6 @@ var (
 	connectionOptionsThirtySevenSignalsFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsThirtySevenSignalsNullableFields maps the wire names of ConnectionOptionsThirtySevenSignals's nullable fields (required or optional) to their field bits.
-var connectionOptionsThirtySevenSignalsNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsThirtySevenSignalsFieldUpstreamParams,
-}
-
-// Options for the 'thirtysevensignals' connection
 type ConnectionOptionsThirtySevenSignals struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -30842,12 +29936,10 @@ func (c *ConnectionOptionsThirtySevenSignals) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionOptionsThirtySevenSignals) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -30908,13 +30000,6 @@ func (c *ConnectionOptionsThirtySevenSignals) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsThirtySevenSignalsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -30945,6 +30030,7 @@ func (c *ConnectionOptionsThirtySevenSignals) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'twitter' connection
 var (
 	connectionOptionsTwitterFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsTwitterFieldClientID              = big.NewInt(1 << 1)
@@ -30960,12 +30046,6 @@ var (
 	connectionOptionsTwitterFieldUsersRead             = big.NewInt(1 << 11)
 )
 
-// connectionOptionsTwitterNullableFields maps the wire names of ConnectionOptionsTwitter's nullable fields (required or optional) to their field bits.
-var connectionOptionsTwitterNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsTwitterFieldUpstreamParams,
-}
-
-// Options for the 'twitter' connection
 type ConnectionOptionsTwitter struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs         `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionOptionsClientIDTwitter     `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -31084,12 +30164,10 @@ func (c *ConnectionOptionsTwitter) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsTwitter) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -31192,13 +30270,6 @@ func (c *ConnectionOptionsTwitter) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsTwitterNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -31229,6 +30300,7 @@ func (c *ConnectionOptionsTwitter) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'untappd' connection
 var (
 	connectionOptionsUntappdFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsUntappdFieldClientID              = big.NewInt(1 << 1)
@@ -31238,12 +30310,6 @@ var (
 	connectionOptionsUntappdFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsUntappdNullableFields maps the wire names of ConnectionOptionsUntappd's nullable fields (required or optional) to their field bits.
-var connectionOptionsUntappdNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsUntappdFieldUpstreamParams,
-}
-
-// Options for the 'untappd' connection
 type ConnectionOptionsUntappd struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -31310,12 +30376,10 @@ func (c *ConnectionOptionsUntappd) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsUntappd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -31376,13 +30440,6 @@ func (c *ConnectionOptionsUntappd) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsUntappdNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -31413,6 +30470,7 @@ func (c *ConnectionOptionsUntappd) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'vkontakte' connection
 var (
 	connectionOptionsVkontakteFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsVkontakteFieldClientID              = big.NewInt(1 << 1)
@@ -31422,12 +30480,6 @@ var (
 	connectionOptionsVkontakteFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsVkontakteNullableFields maps the wire names of ConnectionOptionsVkontakte's nullable fields (required or optional) to their field bits.
-var connectionOptionsVkontakteNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsVkontakteFieldUpstreamParams,
-}
-
-// Options for the 'vkontakte' connection
 type ConnectionOptionsVkontakte struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -31494,12 +30546,10 @@ func (c *ConnectionOptionsVkontakte) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionOptionsVkontakte) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -31560,13 +30610,6 @@ func (c *ConnectionOptionsVkontakte) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsVkontakteNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -31597,6 +30640,7 @@ func (c *ConnectionOptionsVkontakte) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'weibo' connection
 var (
 	connectionOptionsWeiboFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsWeiboFieldClientID              = big.NewInt(1 << 1)
@@ -31606,12 +30650,6 @@ var (
 	connectionOptionsWeiboFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsWeiboNullableFields maps the wire names of ConnectionOptionsWeibo's nullable fields (required or optional) to their field bits.
-var connectionOptionsWeiboNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsWeiboFieldUpstreamParams,
-}
-
-// Options for the 'weibo' connection
 type ConnectionOptionsWeibo struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -31678,12 +30716,10 @@ func (c *ConnectionOptionsWeibo) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsWeibo) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -31744,13 +30780,6 @@ func (c *ConnectionOptionsWeibo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsWeiboNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -31781,6 +30810,7 @@ func (c *ConnectionOptionsWeibo) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'windowslive' connection
 var (
 	connectionOptionsWindowsLiveFieldNonPersistentAttrs               = big.NewInt(1 << 0)
 	connectionOptionsWindowsLiveFieldClientID                         = big.NewInt(1 << 1)
@@ -31850,12 +30880,6 @@ var (
 	connectionOptionsWindowsLiveFieldWorkProfile                      = big.NewInt(0).Lsh(big.NewInt(1), 65)
 )
 
-// connectionOptionsWindowsLiveNullableFields maps the wire names of ConnectionOptionsWindowsLive's nullable fields (required or optional) to their field bits.
-var connectionOptionsWindowsLiveNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsWindowsLiveFieldUpstreamParams,
-}
-
-// Options for the 'windowslive' connection
 type ConnectionOptionsWindowsLive struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs             `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientIDWindowsLive            `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -32460,12 +31484,10 @@ func (c *ConnectionOptionsWindowsLive) GetExtraProperties() map[string]interface
 }
 
 func (c *ConnectionOptionsWindowsLive) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -32946,13 +31968,6 @@ func (c *ConnectionOptionsWindowsLive) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsWindowsLiveNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -32983,6 +31998,7 @@ func (c *ConnectionOptionsWindowsLive) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'wordpress' connection
 var (
 	connectionOptionsWordpressFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsWordpressFieldClientID              = big.NewInt(1 << 1)
@@ -32992,12 +32008,6 @@ var (
 	connectionOptionsWordpressFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsWordpressNullableFields maps the wire names of ConnectionOptionsWordpress's nullable fields (required or optional) to their field bits.
-var connectionOptionsWordpressNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsWordpressFieldUpstreamParams,
-}
-
-// Options for the 'wordpress' connection
 type ConnectionOptionsWordpress struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -33064,12 +32074,10 @@ func (c *ConnectionOptionsWordpress) GetExtraProperties() map[string]interface{}
 }
 
 func (c *ConnectionOptionsWordpress) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -33130,13 +32138,6 @@ func (c *ConnectionOptionsWordpress) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsWordpressNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -33167,6 +32168,7 @@ func (c *ConnectionOptionsWordpress) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'yahoo' connection
 var (
 	connectionOptionsYahooFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsYahooFieldClientID              = big.NewInt(1 << 1)
@@ -33176,12 +32178,6 @@ var (
 	connectionOptionsYahooFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsYahooNullableFields maps the wire names of ConnectionOptionsYahoo's nullable fields (required or optional) to their field bits.
-var connectionOptionsYahooNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsYahooFieldUpstreamParams,
-}
-
-// Options for the 'yahoo' connection
 type ConnectionOptionsYahoo struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -33248,12 +32244,10 @@ func (c *ConnectionOptionsYahoo) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsYahoo) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -33314,13 +32308,6 @@ func (c *ConnectionOptionsYahoo) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsYahooNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -33351,6 +32338,7 @@ func (c *ConnectionOptionsYahoo) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Options for the 'yandex' connection
 var (
 	connectionOptionsYandexFieldNonPersistentAttrs    = big.NewInt(1 << 0)
 	connectionOptionsYandexFieldClientID              = big.NewInt(1 << 1)
@@ -33360,12 +32348,6 @@ var (
 	connectionOptionsYandexFieldUpstreamParams        = big.NewInt(1 << 5)
 )
 
-// connectionOptionsYandexNullableFields maps the wire names of ConnectionOptionsYandex's nullable fields (required or optional) to their field bits.
-var connectionOptionsYandexNullableFields = map[string]*big.Int{
-	"upstream_params": connectionOptionsYandexFieldUpstreamParams,
-}
-
-// Options for the 'yandex' connection
 type ConnectionOptionsYandex struct {
 	NonPersistentAttrs    *ConnectionNonPersistentAttrs        `json:"non_persistent_attrs,omitempty" url:"non_persistent_attrs,omitempty"`
 	ClientID              *ConnectionClientID                  `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -33432,12 +32414,10 @@ func (c *ConnectionOptionsYandex) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionOptionsYandex) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetNonPersistentAttrs sets the NonPersistentAttrs field and marks it as non-optional;
@@ -33498,13 +32478,6 @@ func (c *ConnectionOptionsYandex) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionOptionsYandexNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -33599,12 +32572,12 @@ type ConnectionProviderSms = ConnectionProviderEnumSms
 // A ticket URL used for provisioning the connection
 type ConnectionProvisioningTicketURL = string
 
+// Purposes for a connection
 var (
 	connectionPurposesFieldAuthentication    = big.NewInt(1 << 0)
 	connectionPurposesFieldConnectedAccounts = big.NewInt(1 << 1)
 )
 
-// Purposes for a connection
 type ConnectionPurposes struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -33638,12 +32611,10 @@ func (c *ConnectionPurposes) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionPurposes) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -33828,12 +32799,10 @@ func (c *ConnectionResponseCommon) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionResponseCommon) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -33927,6 +32896,7 @@ func (c *ConnectionResponseCommon) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Response for connections with strategy=ad
 var (
 	connectionResponseContentAdFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentAdFieldConnectedAccounts     = big.NewInt(1 << 1)
@@ -33942,7 +32912,6 @@ var (
 	connectionResponseContentAdFieldProvisioningTicketURL = big.NewInt(1 << 11)
 )
 
-// Response for connections with strategy=ad
 type ConnectionResponseContentAd struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -34057,12 +33026,10 @@ func (c *ConnectionResponseContentAd) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionResponseContentAd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -34210,6 +33177,7 @@ func (c ConnectionResponseContentAdStrategy) Ptr() *ConnectionResponseContentAdS
 	return &c
 }
 
+// Response for connections with strategy=adfs
 var (
 	connectionResponseContentAdfsFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentAdfsFieldConnectedAccounts     = big.NewInt(1 << 1)
@@ -34226,7 +33194,6 @@ var (
 	connectionResponseContentAdfsFieldShowAsButton          = big.NewInt(1 << 12)
 )
 
-// Response for connections with strategy=adfs
 type ConnectionResponseContentAdfs struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -34349,12 +33316,10 @@ func (c *ConnectionResponseContentAdfs) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionResponseContentAdfs) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -34509,6 +33474,7 @@ func (c ConnectionResponseContentAdfsStrategy) Ptr() *ConnectionResponseContentA
 	return &c
 }
 
+// Response for connections with strategy=amazon
 var (
 	connectionResponseContentAmazonFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAmazonFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -34523,7 +33489,6 @@ var (
 	connectionResponseContentAmazonFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=amazon
 type ConnectionResponseContentAmazon struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -34630,12 +33595,10 @@ func (c *ConnectionResponseContentAmazon) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentAmazon) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -34776,6 +33739,7 @@ func (c ConnectionResponseContentAmazonStrategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=apple
 var (
 	connectionResponseContentAppleFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAppleFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -34790,7 +33754,6 @@ var (
 	connectionResponseContentAppleFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=apple
 type ConnectionResponseContentApple struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -34897,12 +33860,10 @@ func (c *ConnectionResponseContentApple) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentApple) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -35043,6 +34004,7 @@ func (c ConnectionResponseContentAppleStrategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=auth0
 var (
 	connectionResponseContentAuth0FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAuth0FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -35057,7 +34019,6 @@ var (
 	connectionResponseContentAuth0FieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=auth0
 type ConnectionResponseContentAuth0 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -35164,12 +34125,10 @@ func (c *ConnectionResponseContentAuth0) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentAuth0) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -35291,6 +34250,7 @@ func (c *ConnectionResponseContentAuth0) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Response for connections with strategy=auth0-oidc
 var (
 	connectionResponseContentAuth0OidcFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentAuth0OidcFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -35305,7 +34265,6 @@ var (
 	connectionResponseContentAuth0OidcFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=auth0-oidc
 type ConnectionResponseContentAuth0Oidc struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -35412,12 +34371,10 @@ func (c *ConnectionResponseContentAuth0Oidc) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionResponseContentAuth0Oidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -35577,6 +34534,7 @@ func (c ConnectionResponseContentAuth0Strategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=waad
 var (
 	connectionResponseContentAzureAdFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentAzureAdFieldConnectedAccounts     = big.NewInt(1 << 1)
@@ -35593,7 +34551,6 @@ var (
 	connectionResponseContentAzureAdFieldShowAsButton          = big.NewInt(1 << 12)
 )
 
-// Response for connections with strategy=waad
 type ConnectionResponseContentAzureAd struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -35716,12 +34673,10 @@ func (c *ConnectionResponseContentAzureAd) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionResponseContentAzureAd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -35876,6 +34831,7 @@ func (c ConnectionResponseContentAzureAdStrategy) Ptr() *ConnectionResponseConte
 	return &c
 }
 
+// Response for connections with strategy=baidu
 var (
 	connectionResponseContentBaiduFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBaiduFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -35890,7 +34846,6 @@ var (
 	connectionResponseContentBaiduFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=baidu
 type ConnectionResponseContentBaidu struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -35997,12 +34952,10 @@ func (c *ConnectionResponseContentBaidu) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentBaidu) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -36143,6 +35096,7 @@ func (c ConnectionResponseContentBaiduStrategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=bitbucket
 var (
 	connectionResponseContentBitbucketFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBitbucketFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -36157,7 +35111,6 @@ var (
 	connectionResponseContentBitbucketFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=bitbucket
 type ConnectionResponseContentBitbucket struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -36264,12 +35217,10 @@ func (c *ConnectionResponseContentBitbucket) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionResponseContentBitbucket) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -36410,6 +35361,7 @@ func (c ConnectionResponseContentBitbucketStrategy) Ptr() *ConnectionResponseCon
 	return &c
 }
 
+// Response for connections with strategy=bitly
 var (
 	connectionResponseContentBitlyFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBitlyFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -36424,7 +35376,6 @@ var (
 	connectionResponseContentBitlyFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=bitly
 type ConnectionResponseContentBitly struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -36531,12 +35482,10 @@ func (c *ConnectionResponseContentBitly) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentBitly) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -36677,6 +35626,7 @@ func (c ConnectionResponseContentBitlyStrategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=box
 var (
 	connectionResponseContentBoxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentBoxFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -36691,7 +35641,6 @@ var (
 	connectionResponseContentBoxFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=box
 type ConnectionResponseContentBox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -36798,12 +35747,10 @@ func (c *ConnectionResponseContentBox) GetExtraProperties() map[string]interface
 }
 
 func (c *ConnectionResponseContentBox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -36944,6 +35891,7 @@ func (c ConnectionResponseContentBoxStrategy) Ptr() *ConnectionResponseContentBo
 	return &c
 }
 
+// Response for connections with strategy=custom
 var (
 	connectionResponseContentCustomFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentCustomFieldConnectedAccounts     = big.NewInt(1 << 1)
@@ -36959,7 +35907,6 @@ var (
 	connectionResponseContentCustomFieldProvisioningTicketURL = big.NewInt(1 << 11)
 )
 
-// Response for connections with strategy=custom
 type ConnectionResponseContentCustom struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -37074,12 +36021,10 @@ func (c *ConnectionResponseContentCustom) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentCustom) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -37227,6 +36172,7 @@ func (c ConnectionResponseContentCustomStrategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=daccount
 var (
 	connectionResponseContentDaccountFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentDaccountFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -37241,7 +36187,6 @@ var (
 	connectionResponseContentDaccountFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=daccount
 type ConnectionResponseContentDaccount struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -37348,12 +36293,10 @@ func (c *ConnectionResponseContentDaccount) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionResponseContentDaccount) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -37494,6 +36437,7 @@ func (c ConnectionResponseContentDaccountStrategy) Ptr() *ConnectionResponseCont
 	return &c
 }
 
+// Response for connections with strategy=dropbox
 var (
 	connectionResponseContentDropboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentDropboxFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -37508,7 +36452,6 @@ var (
 	connectionResponseContentDropboxFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=dropbox
 type ConnectionResponseContentDropbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -37615,12 +36558,10 @@ func (c *ConnectionResponseContentDropbox) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionResponseContentDropbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -37761,6 +36702,7 @@ func (c ConnectionResponseContentDropboxStrategy) Ptr() *ConnectionResponseConte
 	return &c
 }
 
+// Response for connections with strategy=dwolla
 var (
 	connectionResponseContentDwollaFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentDwollaFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -37775,7 +36717,6 @@ var (
 	connectionResponseContentDwollaFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=dwolla
 type ConnectionResponseContentDwolla struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -37882,12 +36823,10 @@ func (c *ConnectionResponseContentDwolla) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentDwolla) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -38028,6 +36967,7 @@ func (c ConnectionResponseContentDwollaStrategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=email
 var (
 	connectionResponseContentEmailFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentEmailFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -38042,7 +36982,6 @@ var (
 	connectionResponseContentEmailFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=email
 type ConnectionResponseContentEmail struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -38149,12 +37088,10 @@ func (c *ConnectionResponseContentEmail) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentEmail) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -38295,6 +37232,7 @@ func (c ConnectionResponseContentEmailStrategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=evernote
 var (
 	connectionResponseContentEvernoteFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentEvernoteFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -38309,7 +37247,6 @@ var (
 	connectionResponseContentEvernoteFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=evernote
 type ConnectionResponseContentEvernote struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -38416,12 +37353,10 @@ func (c *ConnectionResponseContentEvernote) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionResponseContentEvernote) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -38543,6 +37478,7 @@ func (c *ConnectionResponseContentEvernote) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Response for connections with strategy=evernote-sandbox
 var (
 	connectionResponseContentEvernoteSandboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentEvernoteSandboxFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -38557,7 +37493,6 @@ var (
 	connectionResponseContentEvernoteSandboxFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=evernote-sandbox
 type ConnectionResponseContentEvernoteSandbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -38664,12 +37599,10 @@ func (c *ConnectionResponseContentEvernoteSandbox) GetExtraProperties() map[stri
 }
 
 func (c *ConnectionResponseContentEvernoteSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -38829,6 +37762,7 @@ func (c ConnectionResponseContentEvernoteStrategy) Ptr() *ConnectionResponseCont
 	return &c
 }
 
+// Response for connections with strategy=exact
 var (
 	connectionResponseContentExactFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentExactFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -38843,7 +37777,6 @@ var (
 	connectionResponseContentExactFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=exact
 type ConnectionResponseContentExact struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -38950,12 +37883,10 @@ func (c *ConnectionResponseContentExact) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentExact) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -39096,6 +38027,7 @@ func (c ConnectionResponseContentExactStrategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=facebook
 var (
 	connectionResponseContentFacebookFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentFacebookFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -39110,7 +38042,6 @@ var (
 	connectionResponseContentFacebookFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=facebook
 type ConnectionResponseContentFacebook struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -39217,12 +38148,10 @@ func (c *ConnectionResponseContentFacebook) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionResponseContentFacebook) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -39363,6 +38292,7 @@ func (c ConnectionResponseContentFacebookStrategy) Ptr() *ConnectionResponseCont
 	return &c
 }
 
+// Response for connections with strategy=fitbit
 var (
 	connectionResponseContentFitbitFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentFitbitFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -39377,7 +38307,6 @@ var (
 	connectionResponseContentFitbitFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=fitbit
 type ConnectionResponseContentFitbit struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -39484,12 +38413,10 @@ func (c *ConnectionResponseContentFitbit) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentFitbit) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -39630,6 +38557,7 @@ func (c ConnectionResponseContentFitbitStrategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=github
 var (
 	connectionResponseContentGitHubFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentGitHubFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -39644,7 +38572,6 @@ var (
 	connectionResponseContentGitHubFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=github
 type ConnectionResponseContentGitHub struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -39751,12 +38678,10 @@ func (c *ConnectionResponseContentGitHub) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentGitHub) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -39897,6 +38822,7 @@ func (c ConnectionResponseContentGitHubStrategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=google-apps
 var (
 	connectionResponseContentGoogleAppsFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentGoogleAppsFieldConnectedAccounts     = big.NewInt(1 << 1)
@@ -39913,7 +38839,6 @@ var (
 	connectionResponseContentGoogleAppsFieldShowAsButton          = big.NewInt(1 << 12)
 )
 
-// Response for connections with strategy=google-apps
 type ConnectionResponseContentGoogleApps struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -40036,12 +38961,10 @@ func (c *ConnectionResponseContentGoogleApps) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionResponseContentGoogleApps) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -40196,6 +39119,7 @@ func (c ConnectionResponseContentGoogleAppsStrategy) Ptr() *ConnectionResponseCo
 	return &c
 }
 
+// Response for connections with strategy=google-oauth2
 var (
 	connectionResponseContentGoogleOAuth2FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentGoogleOAuth2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -40210,7 +39134,6 @@ var (
 	connectionResponseContentGoogleOAuth2FieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=google-oauth2
 type ConnectionResponseContentGoogleOAuth2 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -40317,12 +39240,10 @@ func (c *ConnectionResponseContentGoogleOAuth2) GetExtraProperties() map[string]
 }
 
 func (c *ConnectionResponseContentGoogleOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -40463,6 +39384,7 @@ func (c ConnectionResponseContentGoogleOAuth2Strategy) Ptr() *ConnectionResponse
 	return &c
 }
 
+// Response for connections with strategy=instagram
 var (
 	connectionResponseContentInstagramFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentInstagramFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -40477,7 +39399,6 @@ var (
 	connectionResponseContentInstagramFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=instagram
 type ConnectionResponseContentInstagram struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -40584,12 +39505,10 @@ func (c *ConnectionResponseContentInstagram) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionResponseContentInstagram) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -40730,6 +39649,7 @@ func (c ConnectionResponseContentInstagramStrategy) Ptr() *ConnectionResponseCon
 	return &c
 }
 
+// Response for connections with strategy=ip
 var (
 	connectionResponseContentIPFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentIPFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -40745,7 +39665,6 @@ var (
 	connectionResponseContentIPFieldShowAsButton       = big.NewInt(1 << 11)
 )
 
-// Response for connections with strategy=ip
 type ConnectionResponseContentIP struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -40860,12 +39779,10 @@ func (c *ConnectionResponseContentIP) GetExtraProperties() map[string]interface{
 }
 
 func (c *ConnectionResponseContentIP) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -41013,6 +39930,7 @@ func (c ConnectionResponseContentIPStrategy) Ptr() *ConnectionResponseContentIPS
 	return &c
 }
 
+// Response for connections with strategy=line
 var (
 	connectionResponseContentLineFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentLineFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -41027,7 +39945,6 @@ var (
 	connectionResponseContentLineFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=line
 type ConnectionResponseContentLine struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -41134,12 +40051,10 @@ func (c *ConnectionResponseContentLine) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionResponseContentLine) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -41280,6 +40195,7 @@ func (c ConnectionResponseContentLineStrategy) Ptr() *ConnectionResponseContentL
 	return &c
 }
 
+// Response for connections with strategy=linkedin
 var (
 	connectionResponseContentLinkedinFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentLinkedinFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -41294,7 +40210,6 @@ var (
 	connectionResponseContentLinkedinFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=linkedin
 type ConnectionResponseContentLinkedin struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -41401,12 +40316,10 @@ func (c *ConnectionResponseContentLinkedin) GetExtraProperties() map[string]inte
 }
 
 func (c *ConnectionResponseContentLinkedin) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -41547,6 +40460,7 @@ func (c ConnectionResponseContentLinkedinStrategy) Ptr() *ConnectionResponseCont
 	return &c
 }
 
+// Response for connections with strategy=oauth1
 var (
 	connectionResponseContentOAuth1FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentOAuth1FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -41561,7 +40475,6 @@ var (
 	connectionResponseContentOAuth1FieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=oauth1
 type ConnectionResponseContentOAuth1 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -41668,12 +40581,10 @@ func (c *ConnectionResponseContentOAuth1) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentOAuth1) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -41814,6 +40725,7 @@ func (c ConnectionResponseContentOAuth1Strategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=oauth2
 var (
 	connectionResponseContentOAuth2FieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentOAuth2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -41828,7 +40740,6 @@ var (
 	connectionResponseContentOAuth2FieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=oauth2
 type ConnectionResponseContentOAuth2 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -41935,12 +40846,10 @@ func (c *ConnectionResponseContentOAuth2) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -42081,6 +40990,7 @@ func (c ConnectionResponseContentOAuth2Strategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=office365
 var (
 	connectionResponseContentOffice365FieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentOffice365FieldConnectedAccounts     = big.NewInt(1 << 1)
@@ -42097,7 +41007,6 @@ var (
 	connectionResponseContentOffice365FieldShowAsButton          = big.NewInt(1 << 12)
 )
 
-// Response for connections with strategy=office365
 type ConnectionResponseContentOffice365 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -42220,12 +41129,10 @@ func (c *ConnectionResponseContentOffice365) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionResponseContentOffice365) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -42380,6 +41287,7 @@ func (c ConnectionResponseContentOffice365Strategy) Ptr() *ConnectionResponseCon
 	return &c
 }
 
+// Response for connections with strategy=oidc
 var (
 	connectionResponseContentOidcFieldDisplayName                 = big.NewInt(1 << 0)
 	connectionResponseContentOidcFieldID                          = big.NewInt(1 << 1)
@@ -42397,12 +41305,6 @@ var (
 	connectionResponseContentOidcFieldShowAsButton                = big.NewInt(1 << 13)
 )
 
-// connectionResponseContentOidcNullableFields maps the wire names of ConnectionResponseContentOidc's nullable fields (required or optional) to their field bits.
-var connectionResponseContentOidcNullableFields = map[string]*big.Int{
-	"cross_app_access_resource_app": connectionResponseContentOidcFieldCrossAppAccessResourceApp,
-}
-
-// Response for connections with strategy=oidc
 type ConnectionResponseContentOidc struct {
 	DisplayName ConnectionDisplayName `json:"display_name" url:"display_name"`
 	ID          ConnectionID          `json:"id" url:"id"`
@@ -42533,12 +41435,10 @@ func (c *ConnectionResponseContentOidc) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionResponseContentOidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -42651,13 +41551,6 @@ func (c *ConnectionResponseContentOidc) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionResponseContentOidcNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -42707,6 +41600,7 @@ func (c ConnectionResponseContentOidcStrategy) Ptr() *ConnectionResponseContentO
 	return &c
 }
 
+// Response for connections with strategy=okta
 var (
 	connectionResponseContentOktaFieldAuthentication              = big.NewInt(1 << 0)
 	connectionResponseContentOktaFieldConnectedAccounts           = big.NewInt(1 << 1)
@@ -42723,7 +41617,6 @@ var (
 	connectionResponseContentOktaFieldShowAsButton                = big.NewInt(1 << 12)
 )
 
-// Response for connections with strategy=okta
 type ConnectionResponseContentOkta struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -42846,12 +41739,10 @@ func (c *ConnectionResponseContentOkta) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionResponseContentOkta) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -43006,6 +41897,7 @@ func (c ConnectionResponseContentOktaStrategy) Ptr() *ConnectionResponseContentO
 	return &c
 }
 
+// Response for connections with strategy=paypal
 var (
 	connectionResponseContentPaypalFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentPaypalFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -43020,7 +41912,6 @@ var (
 	connectionResponseContentPaypalFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=paypal
 type ConnectionResponseContentPaypal struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -43127,12 +42018,10 @@ func (c *ConnectionResponseContentPaypal) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentPaypal) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -43254,6 +42143,7 @@ func (c *ConnectionResponseContentPaypal) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Response for connections with strategy=paypal-sandbox
 var (
 	connectionResponseContentPaypalSandboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentPaypalSandboxFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -43268,7 +42158,6 @@ var (
 	connectionResponseContentPaypalSandboxFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=paypal-sandbox
 type ConnectionResponseContentPaypalSandbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -43375,12 +42264,10 @@ func (c *ConnectionResponseContentPaypalSandbox) GetExtraProperties() map[string
 }
 
 func (c *ConnectionResponseContentPaypalSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -43540,6 +42427,7 @@ func (c ConnectionResponseContentPaypalStrategy) Ptr() *ConnectionResponseConten
 	return &c
 }
 
+// Response for connections with strategy=pingfederate
 var (
 	connectionResponseContentPingFederateFieldAuthentication        = big.NewInt(1 << 0)
 	connectionResponseContentPingFederateFieldConnectedAccounts     = big.NewInt(1 << 1)
@@ -43556,7 +42444,6 @@ var (
 	connectionResponseContentPingFederateFieldShowAsButton          = big.NewInt(1 << 12)
 )
 
-// Response for connections with strategy=pingfederate
 type ConnectionResponseContentPingFederate struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -43679,12 +42566,10 @@ func (c *ConnectionResponseContentPingFederate) GetExtraProperties() map[string]
 }
 
 func (c *ConnectionResponseContentPingFederate) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -43839,6 +42724,7 @@ func (c ConnectionResponseContentPingFederateStrategy) Ptr() *ConnectionResponse
 	return &c
 }
 
+// Response for connections with strategy=planningcenter
 var (
 	connectionResponseContentPlanningCenterFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentPlanningCenterFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -43853,7 +42739,6 @@ var (
 	connectionResponseContentPlanningCenterFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=planningcenter
 type ConnectionResponseContentPlanningCenter struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -43960,12 +42845,10 @@ func (c *ConnectionResponseContentPlanningCenter) GetExtraProperties() map[strin
 }
 
 func (c *ConnectionResponseContentPlanningCenter) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -44106,6 +42989,7 @@ func (c ConnectionResponseContentPlanningCenterStrategy) Ptr() *ConnectionRespon
 	return &c
 }
 
+// Response for connections with strategy=salesforce
 var (
 	connectionResponseContentSalesforceFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSalesforceFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -44120,7 +43004,6 @@ var (
 	connectionResponseContentSalesforceFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=salesforce
 type ConnectionResponseContentSalesforce struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -44227,12 +43110,10 @@ func (c *ConnectionResponseContentSalesforce) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionResponseContentSalesforce) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -44354,6 +43235,7 @@ func (c *ConnectionResponseContentSalesforce) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Response for connections with strategy=salesforce-community
 var (
 	connectionResponseContentSalesforceCommunityFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSalesforceCommunityFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -44368,7 +43250,6 @@ var (
 	connectionResponseContentSalesforceCommunityFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=salesforce-community
 type ConnectionResponseContentSalesforceCommunity struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -44475,12 +43356,10 @@ func (c *ConnectionResponseContentSalesforceCommunity) GetExtraProperties() map[
 }
 
 func (c *ConnectionResponseContentSalesforceCommunity) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -44621,6 +43500,7 @@ func (c ConnectionResponseContentSalesforceCommunityStrategy) Ptr() *ConnectionR
 	return &c
 }
 
+// Response for connections with strategy=salesforce-sandbox
 var (
 	connectionResponseContentSalesforceSandboxFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSalesforceSandboxFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -44635,7 +43515,6 @@ var (
 	connectionResponseContentSalesforceSandboxFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=salesforce-sandbox
 type ConnectionResponseContentSalesforceSandbox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -44742,12 +43621,10 @@ func (c *ConnectionResponseContentSalesforceSandbox) GetExtraProperties() map[st
 }
 
 func (c *ConnectionResponseContentSalesforceSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -44907,6 +43784,7 @@ func (c ConnectionResponseContentSalesforceStrategy) Ptr() *ConnectionResponseCo
 	return &c
 }
 
+// Response for connections with strategy=samlp
 var (
 	connectionResponseContentSAMLFieldAuthentication              = big.NewInt(1 << 0)
 	connectionResponseContentSAMLFieldConnectedAccounts           = big.NewInt(1 << 1)
@@ -44925,12 +43803,6 @@ var (
 	connectionResponseContentSAMLFieldShowAsButton                = big.NewInt(1 << 14)
 )
 
-// connectionResponseContentSAMLNullableFields maps the wire names of ConnectionResponseContentSAML's nullable fields (required or optional) to their field bits.
-var connectionResponseContentSAMLNullableFields = map[string]*big.Int{
-	"cross_app_access_resource_app": connectionResponseContentSAMLFieldCrossAppAccessResourceApp,
-}
-
-// Response for connections with strategy=samlp
 type ConnectionResponseContentSAML struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -45069,12 +43941,10 @@ func (c *ConnectionResponseContentSAML) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionResponseContentSAML) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -45194,13 +44064,6 @@ func (c *ConnectionResponseContentSAML) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, connectionResponseContentSAMLNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -45250,6 +44113,7 @@ func (c ConnectionResponseContentSAMLStrategy) Ptr() *ConnectionResponseContentS
 	return &c
 }
 
+// Response for connections with strategy=sharepoint
 var (
 	connectionResponseContentSharepointFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSharepointFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -45265,7 +44129,6 @@ var (
 	connectionResponseContentSharepointFieldShowAsButton       = big.NewInt(1 << 11)
 )
 
-// Response for connections with strategy=sharepoint
 type ConnectionResponseContentSharepoint struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -45380,12 +44243,10 @@ func (c *ConnectionResponseContentSharepoint) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionResponseContentSharepoint) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -45533,6 +44394,7 @@ func (c ConnectionResponseContentSharepointStrategy) Ptr() *ConnectionResponseCo
 	return &c
 }
 
+// Response for connections with strategy=shop
 var (
 	connectionResponseContentShopFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentShopFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -45547,7 +44409,6 @@ var (
 	connectionResponseContentShopFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=shop
 type ConnectionResponseContentShop struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -45654,12 +44515,10 @@ func (c *ConnectionResponseContentShop) GetExtraProperties() map[string]interfac
 }
 
 func (c *ConnectionResponseContentShop) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -45800,6 +44659,7 @@ func (c ConnectionResponseContentShopStrategy) Ptr() *ConnectionResponseContentS
 	return &c
 }
 
+// Response for connections with strategy=shopify
 var (
 	connectionResponseContentShopifyFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentShopifyFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -45814,7 +44674,6 @@ var (
 	connectionResponseContentShopifyFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=shopify
 type ConnectionResponseContentShopify struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -45921,12 +44780,10 @@ func (c *ConnectionResponseContentShopify) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionResponseContentShopify) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -46067,6 +44924,7 @@ func (c ConnectionResponseContentShopifyStrategy) Ptr() *ConnectionResponseConte
 	return &c
 }
 
+// Response for connections with strategy=sms
 var (
 	connectionResponseContentSmsFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSmsFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -46081,7 +44939,6 @@ var (
 	connectionResponseContentSmsFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=sms
 type ConnectionResponseContentSms struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -46188,12 +45045,10 @@ func (c *ConnectionResponseContentSms) GetExtraProperties() map[string]interface
 }
 
 func (c *ConnectionResponseContentSms) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -46334,6 +45189,7 @@ func (c ConnectionResponseContentSmsStrategy) Ptr() *ConnectionResponseContentSm
 	return &c
 }
 
+// Response for connections with strategy=soundcloud
 var (
 	connectionResponseContentSoundcloudFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentSoundcloudFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -46348,7 +45204,6 @@ var (
 	connectionResponseContentSoundcloudFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=soundcloud
 type ConnectionResponseContentSoundcloud struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -46455,12 +45310,10 @@ func (c *ConnectionResponseContentSoundcloud) GetExtraProperties() map[string]in
 }
 
 func (c *ConnectionResponseContentSoundcloud) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -46601,6 +45454,7 @@ func (c ConnectionResponseContentSoundcloudStrategy) Ptr() *ConnectionResponseCo
 	return &c
 }
 
+// Response for connections with strategy=thirtysevensignals
 var (
 	connectionResponseContentThirtySevenSignalsFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentThirtySevenSignalsFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -46615,7 +45469,6 @@ var (
 	connectionResponseContentThirtySevenSignalsFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=thirtysevensignals
 type ConnectionResponseContentThirtySevenSignals struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -46722,12 +45575,10 @@ func (c *ConnectionResponseContentThirtySevenSignals) GetExtraProperties() map[s
 }
 
 func (c *ConnectionResponseContentThirtySevenSignals) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -46868,6 +45719,7 @@ func (c ConnectionResponseContentThirtySevenSignalsStrategy) Ptr() *ConnectionRe
 	return &c
 }
 
+// Response for connections with strategy=twitter
 var (
 	connectionResponseContentTwitterFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentTwitterFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -46882,7 +45734,6 @@ var (
 	connectionResponseContentTwitterFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=twitter
 type ConnectionResponseContentTwitter struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -46989,12 +45840,10 @@ func (c *ConnectionResponseContentTwitter) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionResponseContentTwitter) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -47135,6 +45984,7 @@ func (c ConnectionResponseContentTwitterStrategy) Ptr() *ConnectionResponseConte
 	return &c
 }
 
+// Response for connections with strategy=untappd
 var (
 	connectionResponseContentUntappdFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentUntappdFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -47149,7 +45999,6 @@ var (
 	connectionResponseContentUntappdFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=untappd
 type ConnectionResponseContentUntappd struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -47256,12 +46105,10 @@ func (c *ConnectionResponseContentUntappd) GetExtraProperties() map[string]inter
 }
 
 func (c *ConnectionResponseContentUntappd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -47402,6 +46249,7 @@ func (c ConnectionResponseContentUntappdStrategy) Ptr() *ConnectionResponseConte
 	return &c
 }
 
+// Response for connections with strategy=vkontakte
 var (
 	connectionResponseContentVkontakteFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentVkontakteFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -47416,7 +46264,6 @@ var (
 	connectionResponseContentVkontakteFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=vkontakte
 type ConnectionResponseContentVkontakte struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -47523,12 +46370,10 @@ func (c *ConnectionResponseContentVkontakte) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionResponseContentVkontakte) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -47669,6 +46514,7 @@ func (c ConnectionResponseContentVkontakteStrategy) Ptr() *ConnectionResponseCon
 	return &c
 }
 
+// Response for connections with strategy=weibo
 var (
 	connectionResponseContentWeiboFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentWeiboFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -47683,7 +46529,6 @@ var (
 	connectionResponseContentWeiboFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=weibo
 type ConnectionResponseContentWeibo struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -47790,12 +46635,10 @@ func (c *ConnectionResponseContentWeibo) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentWeibo) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -47936,6 +46779,7 @@ func (c ConnectionResponseContentWeiboStrategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=windowslive
 var (
 	connectionResponseContentWindowsLiveFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentWindowsLiveFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -47950,7 +46794,6 @@ var (
 	connectionResponseContentWindowsLiveFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=windowslive
 type ConnectionResponseContentWindowsLive struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -48057,12 +46900,10 @@ func (c *ConnectionResponseContentWindowsLive) GetExtraProperties() map[string]i
 }
 
 func (c *ConnectionResponseContentWindowsLive) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -48203,6 +47044,7 @@ func (c ConnectionResponseContentWindowsLiveStrategy) Ptr() *ConnectionResponseC
 	return &c
 }
 
+// Response for connections with strategy=wordpress
 var (
 	connectionResponseContentWordpressFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentWordpressFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -48217,7 +47059,6 @@ var (
 	connectionResponseContentWordpressFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=wordpress
 type ConnectionResponseContentWordpress struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -48324,12 +47165,10 @@ func (c *ConnectionResponseContentWordpress) GetExtraProperties() map[string]int
 }
 
 func (c *ConnectionResponseContentWordpress) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -48470,6 +47309,7 @@ func (c ConnectionResponseContentWordpressStrategy) Ptr() *ConnectionResponseCon
 	return &c
 }
 
+// Response for connections with strategy=yahoo
 var (
 	connectionResponseContentYahooFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentYahooFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -48484,7 +47324,6 @@ var (
 	connectionResponseContentYahooFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=yahoo
 type ConnectionResponseContentYahoo struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -48591,12 +47430,10 @@ func (c *ConnectionResponseContentYahoo) GetExtraProperties() map[string]interfa
 }
 
 func (c *ConnectionResponseContentYahoo) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -48737,6 +47574,7 @@ func (c ConnectionResponseContentYahooStrategy) Ptr() *ConnectionResponseContent
 	return &c
 }
 
+// Response for connections with strategy=yandex
 var (
 	connectionResponseContentYandexFieldAuthentication     = big.NewInt(1 << 0)
 	connectionResponseContentYandexFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -48751,7 +47589,6 @@ var (
 	connectionResponseContentYandexFieldOptions            = big.NewInt(1 << 10)
 )
 
-// Response for connections with strategy=yandex
 type ConnectionResponseContentYandex struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -48858,12 +47695,10 @@ func (c *ConnectionResponseContentYandex) GetExtraProperties() map[string]interf
 }
 
 func (c *ConnectionResponseContentYandex) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -49118,11 +47953,11 @@ type ConnectionScopeSalesforce = ConnectionScopeArray
 // A list of the OAuth 2.0 [RFC6749] scope values that this server supports. The server MUST support the openid scope value. Servers MAY choose not to advertise some supported scope values even when this parameter is used, although those defined in [OpenID.Core] SHOULD be listed, if supported. RECOMMENDED but not REQUIRED
 type ConnectionScopesSupported = []string
 
+// Custom scripts to transform user profile data or modify OAuth1 flow behavior
 var (
 	connectionScriptsOAuth1FieldFetchUserProfile = big.NewInt(1 << 0)
 )
 
-// Custom scripts to transform user profile data or modify OAuth1 flow behavior
 type ConnectionScriptsOAuth1 struct {
 	// Custom JavaScript function to retrieve and transform user profile data from the identity provider. Called with the access token and token exchange response. Must return a user profile object. Executed in a sandboxed environment. If not provided, an empty profile object is used.
 	FetchUserProfile *string `json:"fetchUserProfile,omitempty" url:"fetchUserProfile,omitempty"`
@@ -49149,12 +47984,10 @@ func (c *ConnectionScriptsOAuth1) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionScriptsOAuth1) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetFetchUserProfile sets the FetchUserProfile field and marks it as non-optional;
@@ -49206,12 +48039,12 @@ func (c *ConnectionScriptsOAuth1) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Custom scripts to transform user profile data or modify OAuth2 flow behavior
 var (
 	connectionScriptsOAuth2FieldFetchUserProfile = big.NewInt(1 << 0)
 	connectionScriptsOAuth2FieldGetLogoutURL     = big.NewInt(1 << 1)
 )
 
-// Custom scripts to transform user profile data or modify OAuth2 flow behavior
 type ConnectionScriptsOAuth2 struct {
 	// Custom JavaScript function to retrieve and transform user profile data from the identity provider. Called with the access token and token exchange response. Must return a user profile object. Executed in a sandboxed environment. If not provided, an empty profile object is used.
 	FetchUserProfile *string `json:"fetchUserProfile,omitempty" url:"fetchUserProfile,omitempty"`
@@ -49247,12 +48080,10 @@ func (c *ConnectionScriptsOAuth2) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionScriptsOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetFetchUserProfile sets the FetchUserProfile field and marks it as non-optional;
@@ -49419,12 +48250,12 @@ type ConnectionSigningCertificatePemPingFederate = string
 // Base64-encoded X.509 certificate from the identity provider used to validate signatures in SAML responses and assertions. The certificate is decoded and used for cryptographic signature verification.
 type ConnectionSigningCertificatePemSAML = string
 
+// Key pair with 'key' and 'cert' properties for signing SAML messages
 var (
 	connectionSigningKeySAMLFieldCert = big.NewInt(1 << 0)
 	connectionSigningKeySAMLFieldKey  = big.NewInt(1 << 1)
 )
 
-// Key pair with 'key' and 'cert' properties for signing SAML messages
 type ConnectionSigningKeySAML struct {
 	// Base64-encoded X.509 certificate in PEM format used by Auth0 to sign SAML requests and logout messages.
 	Cert *string `json:"cert,omitempty" url:"cert,omitempty"`
@@ -49460,12 +48291,10 @@ func (c *ConnectionSigningKeySAML) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionSigningKeySAML) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCert sets the Cert field and marks it as non-optional;
@@ -49845,12 +48674,10 @@ func (c *ConnectionTotpEmail) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionTotpEmail) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetLength sets the Length field and marks it as non-optional;
@@ -49918,12 +48745,12 @@ type ConnectionTotpLengthPasswordless = int
 // Number of digits in the verification code
 type ConnectionTotpLengthSms = ConnectionTotpLengthPasswordless
 
+// Time-based One-Time Password (TOTP) options
 var (
 	connectionTotpSmsFieldLength   = big.NewInt(1 << 0)
 	connectionTotpSmsFieldTimeStep = big.NewInt(1 << 1)
 )
 
-// Time-based One-Time Password (TOTP) options
 type ConnectionTotpSms struct {
 	Length   *ConnectionTotpLengthSms   `json:"length,omitempty" url:"length,omitempty"`
 	TimeStep *ConnectionTotpTimeStepSms `json:"time_step,omitempty" url:"time_step,omitempty"`
@@ -49957,12 +48784,10 @@ func (c *ConnectionTotpSms) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *ConnectionTotpSms) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetLength sets the Length field and marks it as non-optional;
@@ -50161,18 +48986,13 @@ func (c ConnectionWaadProtocolEnumAzureAd) Ptr() *ConnectionWaadProtocolEnumAzur
 // Metadata associated with the connection in the form of an object with string values (max 255 chars).  Maximum of 10 metadata properties allowed.
 type ConnectionsMetadata = map[string]*string
 
+// Content Security Policy configuration with multi-policy support.
 var (
 	contentSecurityPolicyConfigFieldEnabled                 = big.NewInt(1 << 0)
 	contentSecurityPolicyConfigFieldPolicies                = big.NewInt(1 << 1)
 	contentSecurityPolicyConfigFieldReportingInfrastructure = big.NewInt(1 << 2)
 )
 
-// contentSecurityPolicyConfigNullableFields maps the wire names of ContentSecurityPolicyConfig's nullable fields (required or optional) to their field bits.
-var contentSecurityPolicyConfigNullableFields = map[string]*big.Int{
-	"reporting_infrastructure": contentSecurityPolicyConfigFieldReportingInfrastructure,
-}
-
-// Content Security Policy configuration with multi-policy support.
 type ContentSecurityPolicyConfig struct {
 	// Whether CSP is enabled.
 	Enabled                 *bool                       `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -50215,12 +49035,10 @@ func (c *ContentSecurityPolicyConfig) GetExtraProperties() map[string]interface{
 }
 
 func (c *ContentSecurityPolicyConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -50256,13 +49074,6 @@ func (c *ContentSecurityPolicyConfig) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, contentSecurityPolicyConfigNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -50422,12 +49233,10 @@ func (c *CreateActionModuleResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateActionModuleResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -50651,12 +49460,10 @@ func (c *CreateActionModuleVersionResponseContent) GetExtraProperties() map[stri
 }
 
 func (c *CreateActionModuleVersionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -50758,6 +49565,7 @@ func (c *CreateActionModuleVersionResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Phone provider configuration schema
 var (
 	createBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
 	createBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
@@ -50769,7 +49577,6 @@ var (
 	createBrandingPhoneProviderResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
 )
 
-// Phone provider configuration schema
 type CreateBrandingPhoneProviderResponseContent struct {
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
@@ -50855,12 +49662,10 @@ func (c *CreateBrandingPhoneProviderResponseContent) GetExtraProperties() map[st
 }
 
 func (c *CreateBrandingPhoneProviderResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -51067,12 +49872,10 @@ func (c *CreateBrandingThemeResponseContent) GetExtraProperties() map[string]int
 }
 
 func (c *CreateBrandingThemeResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetBorders sets the Borders field and marks it as non-optional;
@@ -51239,12 +50042,10 @@ func (c *CreateConnectionCommon) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateConnectionCommon) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -51324,6 +50125,7 @@ func (c *CreateConnectionCommon) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Create a connection with strategy=ad
 var (
 	createConnectionRequestContentAdFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentAdFieldEnabledClients     = big.NewInt(1 << 1)
@@ -51334,7 +50136,6 @@ var (
 	createConnectionRequestContentAdFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=ad
 type CreateConnectionRequestContentAd struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -51409,12 +50210,10 @@ func (c *CreateConnectionRequestContentAd) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateConnectionRequestContentAd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -51527,6 +50326,7 @@ func (c CreateConnectionRequestContentAdStrategy) Ptr() *CreateConnectionRequest
 	return &c
 }
 
+// Create a connection with strategy=adfs
 var (
 	createConnectionRequestContentAdfsFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentAdfsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -51538,7 +50338,6 @@ var (
 	createConnectionRequestContentAdfsFieldShowAsButton       = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=adfs
 type CreateConnectionRequestContentAdfs struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -51621,12 +50420,10 @@ func (c *CreateConnectionRequestContentAdfs) GetExtraProperties() map[string]int
 }
 
 func (c *CreateConnectionRequestContentAdfs) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -51746,6 +50543,7 @@ func (c CreateConnectionRequestContentAdfsStrategy) Ptr() *CreateConnectionReque
 	return &c
 }
 
+// Create a connection with strategy=amazon
 var (
 	createConnectionRequestContentAmazonFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentAmazonFieldEnabledClients     = big.NewInt(1 << 1)
@@ -51756,7 +50554,6 @@ var (
 	createConnectionRequestContentAmazonFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=amazon
 type CreateConnectionRequestContentAmazon struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -51831,12 +50628,10 @@ func (c *CreateConnectionRequestContentAmazon) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentAmazon) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -51949,6 +50744,7 @@ func (c CreateConnectionRequestContentAmazonStrategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=apple
 var (
 	createConnectionRequestContentAppleFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentAppleFieldEnabledClients     = big.NewInt(1 << 1)
@@ -51959,7 +50755,6 @@ var (
 	createConnectionRequestContentAppleFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=apple
 type CreateConnectionRequestContentApple struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -52034,12 +50829,10 @@ func (c *CreateConnectionRequestContentApple) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentApple) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -52152,6 +50945,7 @@ func (c CreateConnectionRequestContentAppleStrategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=auth0
 var (
 	createConnectionRequestContentAuth0FieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentAuth0FieldEnabledClients     = big.NewInt(1 << 1)
@@ -52163,7 +50957,6 @@ var (
 	createConnectionRequestContentAuth0FieldRealms             = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=auth0
 type CreateConnectionRequestContentAuth0 struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -52246,12 +51039,10 @@ func (c *CreateConnectionRequestContentAuth0) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentAuth0) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -52352,6 +51143,7 @@ func (c *CreateConnectionRequestContentAuth0) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Create a connection with strategy=auth0-oidc
 var (
 	createConnectionRequestContentAuth0OidcFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentAuth0OidcFieldEnabledClients     = big.NewInt(1 << 1)
@@ -52362,7 +51154,6 @@ var (
 	createConnectionRequestContentAuth0OidcFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=auth0-oidc
 type CreateConnectionRequestContentAuth0Oidc struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -52437,12 +51228,10 @@ func (c *CreateConnectionRequestContentAuth0Oidc) GetExtraProperties() map[strin
 }
 
 func (c *CreateConnectionRequestContentAuth0Oidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -52574,6 +51363,7 @@ func (c CreateConnectionRequestContentAuth0Strategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=waad
 var (
 	createConnectionRequestContentAzureAdFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentAzureAdFieldEnabledClients     = big.NewInt(1 << 1)
@@ -52585,7 +51375,6 @@ var (
 	createConnectionRequestContentAzureAdFieldShowAsButton       = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=waad
 type CreateConnectionRequestContentAzureAd struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -52668,12 +51457,10 @@ func (c *CreateConnectionRequestContentAzureAd) GetExtraProperties() map[string]
 }
 
 func (c *CreateConnectionRequestContentAzureAd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -52793,6 +51580,7 @@ func (c CreateConnectionRequestContentAzureAdStrategy) Ptr() *CreateConnectionRe
 	return &c
 }
 
+// Create a connection with strategy=baidu
 var (
 	createConnectionRequestContentBaiduFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentBaiduFieldEnabledClients     = big.NewInt(1 << 1)
@@ -52803,7 +51591,6 @@ var (
 	createConnectionRequestContentBaiduFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=baidu
 type CreateConnectionRequestContentBaidu struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -52878,12 +51665,10 @@ func (c *CreateConnectionRequestContentBaidu) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentBaidu) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -52996,6 +51781,7 @@ func (c CreateConnectionRequestContentBaiduStrategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=bitbucket
 var (
 	createConnectionRequestContentBitbucketFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentBitbucketFieldEnabledClients     = big.NewInt(1 << 1)
@@ -53006,7 +51792,6 @@ var (
 	createConnectionRequestContentBitbucketFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=bitbucket
 type CreateConnectionRequestContentBitbucket struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -53081,12 +51866,10 @@ func (c *CreateConnectionRequestContentBitbucket) GetExtraProperties() map[strin
 }
 
 func (c *CreateConnectionRequestContentBitbucket) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -53199,6 +51982,7 @@ func (c CreateConnectionRequestContentBitbucketStrategy) Ptr() *CreateConnection
 	return &c
 }
 
+// Create a connection with strategy=bitly
 var (
 	createConnectionRequestContentBitlyFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentBitlyFieldEnabledClients     = big.NewInt(1 << 1)
@@ -53209,7 +51993,6 @@ var (
 	createConnectionRequestContentBitlyFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=bitly
 type CreateConnectionRequestContentBitly struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -53284,12 +52067,10 @@ func (c *CreateConnectionRequestContentBitly) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentBitly) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -53402,6 +52183,7 @@ func (c CreateConnectionRequestContentBitlyStrategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=box
 var (
 	createConnectionRequestContentBoxFieldAuthentication     = big.NewInt(1 << 0)
 	createConnectionRequestContentBoxFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -53414,7 +52196,6 @@ var (
 	createConnectionRequestContentBoxFieldOptions            = big.NewInt(1 << 8)
 )
 
-// Create a connection with strategy=box
 type CreateConnectionRequestContentBox struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -53505,12 +52286,10 @@ func (c *CreateConnectionRequestContentBox) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateConnectionRequestContentBox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -53637,6 +52416,7 @@ func (c CreateConnectionRequestContentBoxStrategy) Ptr() *CreateConnectionReques
 	return &c
 }
 
+// Create a connection with strategy=custom
 var (
 	createConnectionRequestContentCustomFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentCustomFieldEnabledClients     = big.NewInt(1 << 1)
@@ -53647,7 +52427,6 @@ var (
 	createConnectionRequestContentCustomFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=custom
 type CreateConnectionRequestContentCustom struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -53722,12 +52501,10 @@ func (c *CreateConnectionRequestContentCustom) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentCustom) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -53840,6 +52617,7 @@ func (c CreateConnectionRequestContentCustomStrategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=daccount
 var (
 	createConnectionRequestContentDaccountFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentDaccountFieldEnabledClients     = big.NewInt(1 << 1)
@@ -53850,7 +52628,6 @@ var (
 	createConnectionRequestContentDaccountFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=daccount
 type CreateConnectionRequestContentDaccount struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -53925,12 +52702,10 @@ func (c *CreateConnectionRequestContentDaccount) GetExtraProperties() map[string
 }
 
 func (c *CreateConnectionRequestContentDaccount) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -54043,6 +52818,7 @@ func (c CreateConnectionRequestContentDaccountStrategy) Ptr() *CreateConnectionR
 	return &c
 }
 
+// Create a connection with strategy=dropbox
 var (
 	createConnectionRequestContentDropboxFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentDropboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -54053,7 +52829,6 @@ var (
 	createConnectionRequestContentDropboxFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=dropbox
 type CreateConnectionRequestContentDropbox struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -54128,12 +52903,10 @@ func (c *CreateConnectionRequestContentDropbox) GetExtraProperties() map[string]
 }
 
 func (c *CreateConnectionRequestContentDropbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -54246,6 +53019,7 @@ func (c CreateConnectionRequestContentDropboxStrategy) Ptr() *CreateConnectionRe
 	return &c
 }
 
+// Create a connection with strategy=dwolla
 var (
 	createConnectionRequestContentDwollaFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentDwollaFieldEnabledClients     = big.NewInt(1 << 1)
@@ -54256,7 +53030,6 @@ var (
 	createConnectionRequestContentDwollaFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=dwolla
 type CreateConnectionRequestContentDwolla struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -54331,12 +53104,10 @@ func (c *CreateConnectionRequestContentDwolla) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentDwolla) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -54449,6 +53220,7 @@ func (c CreateConnectionRequestContentDwollaStrategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=email
 var (
 	createConnectionRequestContentEmailFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentEmailFieldEnabledClients     = big.NewInt(1 << 1)
@@ -54459,7 +53231,6 @@ var (
 	createConnectionRequestContentEmailFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=email
 type CreateConnectionRequestContentEmail struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -54534,12 +53305,10 @@ func (c *CreateConnectionRequestContentEmail) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentEmail) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -54652,6 +53421,7 @@ func (c CreateConnectionRequestContentEmailStrategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=evernote
 var (
 	createConnectionRequestContentEvernoteFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentEvernoteFieldEnabledClients     = big.NewInt(1 << 1)
@@ -54662,7 +53432,6 @@ var (
 	createConnectionRequestContentEvernoteFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=evernote
 type CreateConnectionRequestContentEvernote struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -54737,12 +53506,10 @@ func (c *CreateConnectionRequestContentEvernote) GetExtraProperties() map[string
 }
 
 func (c *CreateConnectionRequestContentEvernote) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -54836,6 +53603,7 @@ func (c *CreateConnectionRequestContentEvernote) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Create a connection with strategy=evernote-sandbox
 var (
 	createConnectionRequestContentEvernoteSandboxFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentEvernoteSandboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -54846,7 +53614,6 @@ var (
 	createConnectionRequestContentEvernoteSandboxFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=evernote-sandbox
 type CreateConnectionRequestContentEvernoteSandbox struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -54921,12 +53688,10 @@ func (c *CreateConnectionRequestContentEvernoteSandbox) GetExtraProperties() map
 }
 
 func (c *CreateConnectionRequestContentEvernoteSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -55058,6 +53823,7 @@ func (c CreateConnectionRequestContentEvernoteStrategy) Ptr() *CreateConnectionR
 	return &c
 }
 
+// Create a connection with strategy=exact
 var (
 	createConnectionRequestContentExactFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentExactFieldEnabledClients     = big.NewInt(1 << 1)
@@ -55068,7 +53834,6 @@ var (
 	createConnectionRequestContentExactFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=exact
 type CreateConnectionRequestContentExact struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -55143,12 +53908,10 @@ func (c *CreateConnectionRequestContentExact) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentExact) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -55261,6 +54024,7 @@ func (c CreateConnectionRequestContentExactStrategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=facebook
 var (
 	createConnectionRequestContentFacebookFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentFacebookFieldEnabledClients     = big.NewInt(1 << 1)
@@ -55271,7 +54035,6 @@ var (
 	createConnectionRequestContentFacebookFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=facebook
 type CreateConnectionRequestContentFacebook struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -55346,12 +54109,10 @@ func (c *CreateConnectionRequestContentFacebook) GetExtraProperties() map[string
 }
 
 func (c *CreateConnectionRequestContentFacebook) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -55464,6 +54225,7 @@ func (c CreateConnectionRequestContentFacebookStrategy) Ptr() *CreateConnectionR
 	return &c
 }
 
+// Create a connection with strategy=fitbit
 var (
 	createConnectionRequestContentFitbitFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentFitbitFieldEnabledClients     = big.NewInt(1 << 1)
@@ -55474,7 +54236,6 @@ var (
 	createConnectionRequestContentFitbitFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=fitbit
 type CreateConnectionRequestContentFitbit struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -55549,12 +54310,10 @@ func (c *CreateConnectionRequestContentFitbit) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentFitbit) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -55667,6 +54426,7 @@ func (c CreateConnectionRequestContentFitbitStrategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=github
 var (
 	createConnectionRequestContentGitHubFieldAuthentication     = big.NewInt(1 << 0)
 	createConnectionRequestContentGitHubFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -55679,7 +54439,6 @@ var (
 	createConnectionRequestContentGitHubFieldOptions            = big.NewInt(1 << 8)
 )
 
-// Create a connection with strategy=github
 type CreateConnectionRequestContentGitHub struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -55770,12 +54529,10 @@ func (c *CreateConnectionRequestContentGitHub) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentGitHub) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -55902,6 +54659,7 @@ func (c CreateConnectionRequestContentGitHubStrategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=google-apps
 var (
 	createConnectionRequestContentGoogleAppsFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentGoogleAppsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -55913,7 +54671,6 @@ var (
 	createConnectionRequestContentGoogleAppsFieldShowAsButton       = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=google-apps
 type CreateConnectionRequestContentGoogleApps struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -55996,12 +54753,10 @@ func (c *CreateConnectionRequestContentGoogleApps) GetExtraProperties() map[stri
 }
 
 func (c *CreateConnectionRequestContentGoogleApps) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -56121,6 +54876,7 @@ func (c CreateConnectionRequestContentGoogleAppsStrategy) Ptr() *CreateConnectio
 	return &c
 }
 
+// Create a connection with strategy=google-oauth2
 var (
 	createConnectionRequestContentGoogleOAuth2FieldAuthentication     = big.NewInt(1 << 0)
 	createConnectionRequestContentGoogleOAuth2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -56133,7 +54889,6 @@ var (
 	createConnectionRequestContentGoogleOAuth2FieldOptions            = big.NewInt(1 << 8)
 )
 
-// Create a connection with strategy=google-oauth2
 type CreateConnectionRequestContentGoogleOAuth2 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -56224,12 +54979,10 @@ func (c *CreateConnectionRequestContentGoogleOAuth2) GetExtraProperties() map[st
 }
 
 func (c *CreateConnectionRequestContentGoogleOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -56356,6 +55109,7 @@ func (c CreateConnectionRequestContentGoogleOAuth2Strategy) Ptr() *CreateConnect
 	return &c
 }
 
+// Create a connection with strategy=instagram
 var (
 	createConnectionRequestContentInstagramFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentInstagramFieldEnabledClients     = big.NewInt(1 << 1)
@@ -56366,7 +55120,6 @@ var (
 	createConnectionRequestContentInstagramFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=instagram
 type CreateConnectionRequestContentInstagram struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -56441,12 +55194,10 @@ func (c *CreateConnectionRequestContentInstagram) GetExtraProperties() map[strin
 }
 
 func (c *CreateConnectionRequestContentInstagram) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -56559,6 +55310,7 @@ func (c CreateConnectionRequestContentInstagramStrategy) Ptr() *CreateConnection
 	return &c
 }
 
+// Create a connection with strategy=ip
 var (
 	createConnectionRequestContentIPFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentIPFieldEnabledClients     = big.NewInt(1 << 1)
@@ -56570,7 +55322,6 @@ var (
 	createConnectionRequestContentIPFieldShowAsButton       = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=ip
 type CreateConnectionRequestContentIP struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -56653,12 +55404,10 @@ func (c *CreateConnectionRequestContentIP) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateConnectionRequestContentIP) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -56778,6 +55527,7 @@ func (c CreateConnectionRequestContentIPStrategy) Ptr() *CreateConnectionRequest
 	return &c
 }
 
+// Create a connection with strategy=line
 var (
 	createConnectionRequestContentLineFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentLineFieldEnabledClients     = big.NewInt(1 << 1)
@@ -56788,7 +55538,6 @@ var (
 	createConnectionRequestContentLineFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=line
 type CreateConnectionRequestContentLine struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -56863,12 +55612,10 @@ func (c *CreateConnectionRequestContentLine) GetExtraProperties() map[string]int
 }
 
 func (c *CreateConnectionRequestContentLine) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -56981,6 +55728,7 @@ func (c CreateConnectionRequestContentLineStrategy) Ptr() *CreateConnectionReque
 	return &c
 }
 
+// Create a connection with strategy=linkedin
 var (
 	createConnectionRequestContentLinkedinFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentLinkedinFieldEnabledClients     = big.NewInt(1 << 1)
@@ -56991,7 +55739,6 @@ var (
 	createConnectionRequestContentLinkedinFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=linkedin
 type CreateConnectionRequestContentLinkedin struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -57066,12 +55813,10 @@ func (c *CreateConnectionRequestContentLinkedin) GetExtraProperties() map[string
 }
 
 func (c *CreateConnectionRequestContentLinkedin) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -57184,6 +55929,7 @@ func (c CreateConnectionRequestContentLinkedinStrategy) Ptr() *CreateConnectionR
 	return &c
 }
 
+// Create a connection with strategy=oauth1
 var (
 	createConnectionRequestContentOAuth1FieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentOAuth1FieldEnabledClients     = big.NewInt(1 << 1)
@@ -57194,7 +55940,6 @@ var (
 	createConnectionRequestContentOAuth1FieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=oauth1
 type CreateConnectionRequestContentOAuth1 struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -57269,12 +56014,10 @@ func (c *CreateConnectionRequestContentOAuth1) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentOAuth1) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -57387,6 +56130,7 @@ func (c CreateConnectionRequestContentOAuth1Strategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=oauth2
 var (
 	createConnectionRequestContentOAuth2FieldAuthentication     = big.NewInt(1 << 0)
 	createConnectionRequestContentOAuth2FieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -57399,7 +56143,6 @@ var (
 	createConnectionRequestContentOAuth2FieldOptions            = big.NewInt(1 << 8)
 )
 
-// Create a connection with strategy=oauth2
 type CreateConnectionRequestContentOAuth2 struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -57490,12 +56233,10 @@ func (c *CreateConnectionRequestContentOAuth2) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -57622,6 +56363,7 @@ func (c CreateConnectionRequestContentOAuth2Strategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=office365
 var (
 	createConnectionRequestContentOffice365FieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentOffice365FieldEnabledClients     = big.NewInt(1 << 1)
@@ -57633,7 +56375,6 @@ var (
 	createConnectionRequestContentOffice365FieldShowAsButton       = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=office365
 type CreateConnectionRequestContentOffice365 struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -57716,12 +56457,10 @@ func (c *CreateConnectionRequestContentOffice365) GetExtraProperties() map[strin
 }
 
 func (c *CreateConnectionRequestContentOffice365) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -57841,6 +56580,7 @@ func (c CreateConnectionRequestContentOffice365Strategy) Ptr() *CreateConnection
 	return &c
 }
 
+// Create a connection with strategy=oidc
 var (
 	createConnectionRequestContentOidcFieldName                        = big.NewInt(1 << 0)
 	createConnectionRequestContentOidcFieldEnabledClients              = big.NewInt(1 << 1)
@@ -57856,12 +56596,6 @@ var (
 	createConnectionRequestContentOidcFieldShowAsButton                = big.NewInt(1 << 11)
 )
 
-// createConnectionRequestContentOidcNullableFields maps the wire names of CreateConnectionRequestContentOidc's nullable fields (required or optional) to their field bits.
-var createConnectionRequestContentOidcNullableFields = map[string]*big.Int{
-	"cross_app_access_resource_app": createConnectionRequestContentOidcFieldCrossAppAccessResourceApp,
-}
-
-// Create a connection with strategy=oidc
 type CreateConnectionRequestContentOidc struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -57976,12 +56710,10 @@ func (c *CreateConnectionRequestContentOidc) GetExtraProperties() map[string]int
 }
 
 func (c *CreateConnectionRequestContentOidc) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -58080,13 +56812,6 @@ func (c *CreateConnectionRequestContentOidc) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, createConnectionRequestContentOidcNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -58136,6 +56861,7 @@ func (c CreateConnectionRequestContentOidcStrategy) Ptr() *CreateConnectionReque
 	return &c
 }
 
+// Create a connection with strategy=okta
 var (
 	createConnectionRequestContentOktaFieldName                        = big.NewInt(1 << 0)
 	createConnectionRequestContentOktaFieldEnabledClients              = big.NewInt(1 << 1)
@@ -58148,7 +56874,6 @@ var (
 	createConnectionRequestContentOktaFieldShowAsButton                = big.NewInt(1 << 8)
 )
 
-// Create a connection with strategy=okta
 type CreateConnectionRequestContentOkta struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -58239,12 +56964,10 @@ func (c *CreateConnectionRequestContentOkta) GetExtraProperties() map[string]int
 }
 
 func (c *CreateConnectionRequestContentOkta) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -58371,6 +57094,7 @@ func (c CreateConnectionRequestContentOktaStrategy) Ptr() *CreateConnectionReque
 	return &c
 }
 
+// Create a connection with strategy=paypal
 var (
 	createConnectionRequestContentPaypalFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentPaypalFieldEnabledClients     = big.NewInt(1 << 1)
@@ -58381,7 +57105,6 @@ var (
 	createConnectionRequestContentPaypalFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=paypal
 type CreateConnectionRequestContentPaypal struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -58456,12 +57179,10 @@ func (c *CreateConnectionRequestContentPaypal) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentPaypal) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -58555,6 +57276,7 @@ func (c *CreateConnectionRequestContentPaypal) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Create a connection with strategy=paypal-sandbox
 var (
 	createConnectionRequestContentPaypalSandboxFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentPaypalSandboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -58565,7 +57287,6 @@ var (
 	createConnectionRequestContentPaypalSandboxFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=paypal-sandbox
 type CreateConnectionRequestContentPaypalSandbox struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -58640,12 +57361,10 @@ func (c *CreateConnectionRequestContentPaypalSandbox) GetExtraProperties() map[s
 }
 
 func (c *CreateConnectionRequestContentPaypalSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -58777,6 +57496,7 @@ func (c CreateConnectionRequestContentPaypalStrategy) Ptr() *CreateConnectionReq
 	return &c
 }
 
+// Create a connection with strategy=pingfederate
 var (
 	createConnectionRequestContentPingFederateFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentPingFederateFieldEnabledClients     = big.NewInt(1 << 1)
@@ -58788,7 +57508,6 @@ var (
 	createConnectionRequestContentPingFederateFieldShowAsButton       = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=pingfederate
 type CreateConnectionRequestContentPingFederate struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -58871,12 +57590,10 @@ func (c *CreateConnectionRequestContentPingFederate) GetExtraProperties() map[st
 }
 
 func (c *CreateConnectionRequestContentPingFederate) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -58996,6 +57713,7 @@ func (c CreateConnectionRequestContentPingFederateStrategy) Ptr() *CreateConnect
 	return &c
 }
 
+// Create a connection with strategy=planningcenter
 var (
 	createConnectionRequestContentPlanningCenterFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentPlanningCenterFieldEnabledClients     = big.NewInt(1 << 1)
@@ -59006,7 +57724,6 @@ var (
 	createConnectionRequestContentPlanningCenterFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=planningcenter
 type CreateConnectionRequestContentPlanningCenter struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -59081,12 +57798,10 @@ func (c *CreateConnectionRequestContentPlanningCenter) GetExtraProperties() map[
 }
 
 func (c *CreateConnectionRequestContentPlanningCenter) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -59199,6 +57914,7 @@ func (c CreateConnectionRequestContentPlanningCenterStrategy) Ptr() *CreateConne
 	return &c
 }
 
+// Create a connection with strategy=salesforce
 var (
 	createConnectionRequestContentSalesforceFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentSalesforceFieldEnabledClients     = big.NewInt(1 << 1)
@@ -59209,7 +57925,6 @@ var (
 	createConnectionRequestContentSalesforceFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=salesforce
 type CreateConnectionRequestContentSalesforce struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -59284,12 +57999,10 @@ func (c *CreateConnectionRequestContentSalesforce) GetExtraProperties() map[stri
 }
 
 func (c *CreateConnectionRequestContentSalesforce) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -59383,6 +58096,7 @@ func (c *CreateConnectionRequestContentSalesforce) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Create a connection with strategy=salesforce-community
 var (
 	createConnectionRequestContentSalesforceCommunityFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentSalesforceCommunityFieldEnabledClients     = big.NewInt(1 << 1)
@@ -59393,7 +58107,6 @@ var (
 	createConnectionRequestContentSalesforceCommunityFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=salesforce-community
 type CreateConnectionRequestContentSalesforceCommunity struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -59468,12 +58181,10 @@ func (c *CreateConnectionRequestContentSalesforceCommunity) GetExtraProperties()
 }
 
 func (c *CreateConnectionRequestContentSalesforceCommunity) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -59586,6 +58297,7 @@ func (c CreateConnectionRequestContentSalesforceCommunityStrategy) Ptr() *Create
 	return &c
 }
 
+// Create a connection with strategy=salesforce-sandbox
 var (
 	createConnectionRequestContentSalesforceSandboxFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentSalesforceSandboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -59596,7 +58308,6 @@ var (
 	createConnectionRequestContentSalesforceSandboxFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=salesforce-sandbox
 type CreateConnectionRequestContentSalesforceSandbox struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -59671,12 +58382,10 @@ func (c *CreateConnectionRequestContentSalesforceSandbox) GetExtraProperties() m
 }
 
 func (c *CreateConnectionRequestContentSalesforceSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -59808,6 +58517,7 @@ func (c CreateConnectionRequestContentSalesforceStrategy) Ptr() *CreateConnectio
 	return &c
 }
 
+// Create a connection with strategy=samlp
 var (
 	createConnectionRequestContentSAMLFieldName                        = big.NewInt(1 << 0)
 	createConnectionRequestContentSAMLFieldEnabledClients              = big.NewInt(1 << 1)
@@ -59821,12 +58531,6 @@ var (
 	createConnectionRequestContentSAMLFieldShowAsButton                = big.NewInt(1 << 9)
 )
 
-// createConnectionRequestContentSAMLNullableFields maps the wire names of CreateConnectionRequestContentSAML's nullable fields (required or optional) to their field bits.
-var createConnectionRequestContentSAMLNullableFields = map[string]*big.Int{
-	"cross_app_access_resource_app": createConnectionRequestContentSAMLFieldCrossAppAccessResourceApp,
-}
-
-// Create a connection with strategy=samlp
 type CreateConnectionRequestContentSAML struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -59925,12 +58629,10 @@ func (c *CreateConnectionRequestContentSAML) GetExtraProperties() map[string]int
 }
 
 func (c *CreateConnectionRequestContentSAML) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -60015,13 +58717,6 @@ func (c *CreateConnectionRequestContentSAML) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, createConnectionRequestContentSAMLNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -60071,6 +58766,7 @@ func (c CreateConnectionRequestContentSAMLStrategy) Ptr() *CreateConnectionReque
 	return &c
 }
 
+// Create a connection with strategy=sharepoint
 var (
 	createConnectionRequestContentSharepointFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentSharepointFieldEnabledClients     = big.NewInt(1 << 1)
@@ -60082,7 +58778,6 @@ var (
 	createConnectionRequestContentSharepointFieldShowAsButton       = big.NewInt(1 << 7)
 )
 
-// Create a connection with strategy=sharepoint
 type CreateConnectionRequestContentSharepoint struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -60165,12 +58860,10 @@ func (c *CreateConnectionRequestContentSharepoint) GetExtraProperties() map[stri
 }
 
 func (c *CreateConnectionRequestContentSharepoint) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -60290,6 +58983,7 @@ func (c CreateConnectionRequestContentSharepointStrategy) Ptr() *CreateConnectio
 	return &c
 }
 
+// Create a connection with strategy=shop
 var (
 	createConnectionRequestContentShopFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentShopFieldEnabledClients     = big.NewInt(1 << 1)
@@ -60300,7 +58994,6 @@ var (
 	createConnectionRequestContentShopFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=shop
 type CreateConnectionRequestContentShop struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -60375,12 +59068,10 @@ func (c *CreateConnectionRequestContentShop) GetExtraProperties() map[string]int
 }
 
 func (c *CreateConnectionRequestContentShop) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -60493,6 +59184,7 @@ func (c CreateConnectionRequestContentShopStrategy) Ptr() *CreateConnectionReque
 	return &c
 }
 
+// Create a connection with strategy=shopify
 var (
 	createConnectionRequestContentShopifyFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentShopifyFieldEnabledClients     = big.NewInt(1 << 1)
@@ -60503,7 +59195,6 @@ var (
 	createConnectionRequestContentShopifyFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=shopify
 type CreateConnectionRequestContentShopify struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -60578,12 +59269,10 @@ func (c *CreateConnectionRequestContentShopify) GetExtraProperties() map[string]
 }
 
 func (c *CreateConnectionRequestContentShopify) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -60696,6 +59385,7 @@ func (c CreateConnectionRequestContentShopifyStrategy) Ptr() *CreateConnectionRe
 	return &c
 }
 
+// Create a connection with strategy=sms
 var (
 	createConnectionRequestContentSmsFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentSmsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -60706,7 +59396,6 @@ var (
 	createConnectionRequestContentSmsFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=sms
 type CreateConnectionRequestContentSms struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -60781,12 +59470,10 @@ func (c *CreateConnectionRequestContentSms) GetExtraProperties() map[string]inte
 }
 
 func (c *CreateConnectionRequestContentSms) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -60899,6 +59586,7 @@ func (c CreateConnectionRequestContentSmsStrategy) Ptr() *CreateConnectionReques
 	return &c
 }
 
+// Create a connection with strategy=soundcloud
 var (
 	createConnectionRequestContentSoundcloudFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentSoundcloudFieldEnabledClients     = big.NewInt(1 << 1)
@@ -60909,7 +59597,6 @@ var (
 	createConnectionRequestContentSoundcloudFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=soundcloud
 type CreateConnectionRequestContentSoundcloud struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -60984,12 +59671,10 @@ func (c *CreateConnectionRequestContentSoundcloud) GetExtraProperties() map[stri
 }
 
 func (c *CreateConnectionRequestContentSoundcloud) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -61102,6 +59787,7 @@ func (c CreateConnectionRequestContentSoundcloudStrategy) Ptr() *CreateConnectio
 	return &c
 }
 
+// Create a connection with strategy=thirtysevensignals
 var (
 	createConnectionRequestContentThirtySevenSignalsFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentThirtySevenSignalsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -61112,7 +59798,6 @@ var (
 	createConnectionRequestContentThirtySevenSignalsFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=thirtysevensignals
 type CreateConnectionRequestContentThirtySevenSignals struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -61187,12 +59872,10 @@ func (c *CreateConnectionRequestContentThirtySevenSignals) GetExtraProperties() 
 }
 
 func (c *CreateConnectionRequestContentThirtySevenSignals) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -61305,6 +59988,7 @@ func (c CreateConnectionRequestContentThirtySevenSignalsStrategy) Ptr() *CreateC
 	return &c
 }
 
+// Create a connection with strategy=twitter
 var (
 	createConnectionRequestContentTwitterFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentTwitterFieldEnabledClients     = big.NewInt(1 << 1)
@@ -61315,7 +59999,6 @@ var (
 	createConnectionRequestContentTwitterFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=twitter
 type CreateConnectionRequestContentTwitter struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -61390,12 +60073,10 @@ func (c *CreateConnectionRequestContentTwitter) GetExtraProperties() map[string]
 }
 
 func (c *CreateConnectionRequestContentTwitter) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -61508,6 +60189,7 @@ func (c CreateConnectionRequestContentTwitterStrategy) Ptr() *CreateConnectionRe
 	return &c
 }
 
+// Create a connection with strategy=untappd
 var (
 	createConnectionRequestContentUntappdFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentUntappdFieldEnabledClients     = big.NewInt(1 << 1)
@@ -61518,7 +60200,6 @@ var (
 	createConnectionRequestContentUntappdFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=untappd
 type CreateConnectionRequestContentUntappd struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -61593,12 +60274,10 @@ func (c *CreateConnectionRequestContentUntappd) GetExtraProperties() map[string]
 }
 
 func (c *CreateConnectionRequestContentUntappd) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -61711,6 +60390,7 @@ func (c CreateConnectionRequestContentUntappdStrategy) Ptr() *CreateConnectionRe
 	return &c
 }
 
+// Create a connection with strategy=vkontakte
 var (
 	createConnectionRequestContentVkontakteFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentVkontakteFieldEnabledClients     = big.NewInt(1 << 1)
@@ -61721,7 +60401,6 @@ var (
 	createConnectionRequestContentVkontakteFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=vkontakte
 type CreateConnectionRequestContentVkontakte struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -61796,12 +60475,10 @@ func (c *CreateConnectionRequestContentVkontakte) GetExtraProperties() map[strin
 }
 
 func (c *CreateConnectionRequestContentVkontakte) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -61914,6 +60591,7 @@ func (c CreateConnectionRequestContentVkontakteStrategy) Ptr() *CreateConnection
 	return &c
 }
 
+// Create a connection with strategy=weibo
 var (
 	createConnectionRequestContentWeiboFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentWeiboFieldEnabledClients     = big.NewInt(1 << 1)
@@ -61924,7 +60602,6 @@ var (
 	createConnectionRequestContentWeiboFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=weibo
 type CreateConnectionRequestContentWeibo struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -61999,12 +60676,10 @@ func (c *CreateConnectionRequestContentWeibo) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentWeibo) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -62117,6 +60792,7 @@ func (c CreateConnectionRequestContentWeiboStrategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=windowslive
 var (
 	createConnectionRequestContentWindowsLiveFieldAuthentication     = big.NewInt(1 << 0)
 	createConnectionRequestContentWindowsLiveFieldConnectedAccounts  = big.NewInt(1 << 1)
@@ -62129,7 +60805,6 @@ var (
 	createConnectionRequestContentWindowsLiveFieldOptions            = big.NewInt(1 << 8)
 )
 
-// Create a connection with strategy=windowslive
 type CreateConnectionRequestContentWindowsLive struct {
 	Authentication    *ConnectionAuthenticationPurpose    `json:"authentication,omitempty" url:"authentication,omitempty"`
 	ConnectedAccounts *ConnectionConnectedAccountsPurpose `json:"connected_accounts,omitempty" url:"connected_accounts,omitempty"`
@@ -62220,12 +60895,10 @@ func (c *CreateConnectionRequestContentWindowsLive) GetExtraProperties() map[str
 }
 
 func (c *CreateConnectionRequestContentWindowsLive) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetAuthentication sets the Authentication field and marks it as non-optional;
@@ -62352,6 +61025,7 @@ func (c CreateConnectionRequestContentWindowsLiveStrategy) Ptr() *CreateConnecti
 	return &c
 }
 
+// Create a connection with strategy=wordpress
 var (
 	createConnectionRequestContentWordpressFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentWordpressFieldEnabledClients     = big.NewInt(1 << 1)
@@ -62362,7 +61036,6 @@ var (
 	createConnectionRequestContentWordpressFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=wordpress
 type CreateConnectionRequestContentWordpress struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -62437,12 +61110,10 @@ func (c *CreateConnectionRequestContentWordpress) GetExtraProperties() map[strin
 }
 
 func (c *CreateConnectionRequestContentWordpress) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -62555,6 +61226,7 @@ func (c CreateConnectionRequestContentWordpressStrategy) Ptr() *CreateConnection
 	return &c
 }
 
+// Create a connection with strategy=yahoo
 var (
 	createConnectionRequestContentYahooFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentYahooFieldEnabledClients     = big.NewInt(1 << 1)
@@ -62565,7 +61237,6 @@ var (
 	createConnectionRequestContentYahooFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=yahoo
 type CreateConnectionRequestContentYahoo struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -62640,12 +61311,10 @@ func (c *CreateConnectionRequestContentYahoo) GetExtraProperties() map[string]in
 }
 
 func (c *CreateConnectionRequestContentYahoo) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -62758,6 +61427,7 @@ func (c CreateConnectionRequestContentYahooStrategy) Ptr() *CreateConnectionRequ
 	return &c
 }
 
+// Create a connection with strategy=yandex
 var (
 	createConnectionRequestContentYandexFieldName               = big.NewInt(1 << 0)
 	createConnectionRequestContentYandexFieldEnabledClients     = big.NewInt(1 << 1)
@@ -62768,7 +61438,6 @@ var (
 	createConnectionRequestContentYandexFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Create a connection with strategy=yandex
 type CreateConnectionRequestContentYandex struct {
 	Name ConnectionName `json:"name" url:"name"`
 	// Use of this property is NOT RECOMMENDED. Use the PATCH /v2/connections/{id}/clients endpoint to enable the connection for a set of clients.
@@ -62843,12 +61512,10 @@ func (c *CreateConnectionRequestContentYandex) GetExtraProperties() map[string]i
 }
 
 func (c *CreateConnectionRequestContentYandex) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -63010,12 +61677,10 @@ func (c *CreateDirectoryProvisioningRequestContent) GetExtraProperties() map[str
 }
 
 func (c *CreateDirectoryProvisioningRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
@@ -63210,12 +61875,10 @@ func (c *CreateDirectoryProvisioningResponseContent) GetExtraProperties() map[st
 }
 
 func (c *CreateDirectoryProvisioningResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -63403,12 +62066,10 @@ func (c *CreateDirectorySynchronizationResponseContent) GetExtraProperties() map
 }
 
 func (c *CreateDirectorySynchronizationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -63542,12 +62203,10 @@ func (c *CreateEmailProviderResponseContent) GetExtraProperties() map[string]int
 }
 
 func (c *CreateEmailProviderResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -63667,12 +62326,10 @@ func (c *CreateEncryptionKeyPublicWrappingResponseContent) GetExtraProperties() 
 }
 
 func (c *CreateEncryptionKeyPublicWrappingResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetPublicKey sets the PublicKey field and marks it as non-optional;
@@ -63735,6 +62392,7 @@ func (c *CreateEncryptionKeyPublicWrappingResponseContent) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Encryption key
 var (
 	createEncryptionKeyResponseContentFieldKid       = big.NewInt(1 << 0)
 	createEncryptionKeyResponseContentFieldType      = big.NewInt(1 << 1)
@@ -63745,13 +62403,6 @@ var (
 	createEncryptionKeyResponseContentFieldPublicKey = big.NewInt(1 << 6)
 )
 
-// createEncryptionKeyResponseContentNullableFields maps the wire names of CreateEncryptionKeyResponseContent's nullable fields (required or optional) to their field bits.
-var createEncryptionKeyResponseContentNullableFields = map[string]*big.Int{
-	"parent_kid": createEncryptionKeyResponseContentFieldParentKid,
-	"public_key": createEncryptionKeyResponseContentFieldPublicKey,
-}
-
-// Encryption key
 type CreateEncryptionKeyResponseContent struct {
 	// Key ID
 	Kid   string             `json:"kid" url:"kid"`
@@ -63830,12 +62481,10 @@ func (c *CreateEncryptionKeyResponseContent) GetExtraProperties() map[string]int
 }
 
 func (c *CreateEncryptionKeyResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -63907,13 +62556,6 @@ func (c *CreateEncryptionKeyResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, createEncryptionKeyResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -64031,12 +62673,10 @@ func (c *CreateEventStreamRedeliveryResponseContent) GetExtraProperties() map[st
 }
 
 func (c *CreateEventStreamRedeliveryResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDateFrom sets the DateFrom field and marks it as non-optional;
@@ -64142,12 +62782,6 @@ var (
 	createExperimentResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
 	createExperimentResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
 )
-
-// createExperimentResponseContentNullableFields maps the wire names of CreateExperimentResponseContent's nullable fields (required or optional) to their field bits.
-var createExperimentResponseContentNullableFields = map[string]*big.Int{
-	"feature_flag_snapshot": createExperimentResponseContentFieldFeatureFlagSnapshot,
-	"current_level":         createExperimentResponseContentFieldCurrentLevel,
-}
 
 type CreateExperimentResponseContent struct {
 	ID                 string                 `json:"id" url:"id"`
@@ -64322,12 +62956,10 @@ func (c *CreateExperimentResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (c *CreateExperimentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -64487,13 +63119,6 @@ func (c *CreateExperimentResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, createExperimentResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -64572,12 +63197,10 @@ func (c *CreateExportUsersFields) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateExportUsersFields) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -64736,12 +63359,10 @@ func (c *CreateExportUsersResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateExportUsersResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -64941,12 +63562,10 @@ func (c *CreateFeatureFlagResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateFeatureFlagResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -65081,38 +63700,6 @@ func (c *CreateFlowsVaultConnectionActivecampaign) GetCreateFlowsVaultConnection
 }
 
 func (c *CreateFlowsVaultConnectionActivecampaign) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionActivecampaignAPIKey := new(CreateFlowsVaultConnectionActivecampaignAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionActivecampaignAPIKey"
-			c.CreateFlowsVaultConnectionActivecampaignAPIKey = valueCreateFlowsVaultConnectionActivecampaignAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionActivecampaignUninitialized := new(CreateFlowsVaultConnectionActivecampaignUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionActivecampaignUninitialized"
-			c.CreateFlowsVaultConnectionActivecampaignUninitialized = valueCreateFlowsVaultConnectionActivecampaignUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionActivecampaignAPIKey := new(CreateFlowsVaultConnectionActivecampaignAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionActivecampaignAPIKey"
-			c.CreateFlowsVaultConnectionActivecampaignAPIKey = valueCreateFlowsVaultConnectionActivecampaignAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionActivecampaignUninitialized := new(CreateFlowsVaultConnectionActivecampaignUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionActivecampaignUninitialized"
-			c.CreateFlowsVaultConnectionActivecampaignUninitialized = valueCreateFlowsVaultConnectionActivecampaignUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionActivecampaignAPIKey := new(CreateFlowsVaultConnectionActivecampaignAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionActivecampaignAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionActivecampaignAPIKey"
@@ -65201,12 +63788,10 @@ func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) GetExtraProperties() ma
 }
 
 func (c *CreateFlowsVaultConnectionActivecampaignAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -65311,12 +63896,10 @@ func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) GetExtraProperti
 }
 
 func (c *CreateFlowsVaultConnectionActivecampaignUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -65397,38 +63980,6 @@ func (c *CreateFlowsVaultConnectionAirtable) GetCreateFlowsVaultConnectionAirtab
 }
 
 func (c *CreateFlowsVaultConnectionAirtable) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionAirtableAPIKey := new(CreateFlowsVaultConnectionAirtableAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAirtableAPIKey"
-			c.CreateFlowsVaultConnectionAirtableAPIKey = valueCreateFlowsVaultConnectionAirtableAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionAirtableUninitialized := new(CreateFlowsVaultConnectionAirtableUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAirtableUninitialized"
-			c.CreateFlowsVaultConnectionAirtableUninitialized = valueCreateFlowsVaultConnectionAirtableUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionAirtableAPIKey := new(CreateFlowsVaultConnectionAirtableAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAirtableAPIKey"
-			c.CreateFlowsVaultConnectionAirtableAPIKey = valueCreateFlowsVaultConnectionAirtableAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionAirtableUninitialized := new(CreateFlowsVaultConnectionAirtableUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAirtableUninitialized"
-			c.CreateFlowsVaultConnectionAirtableUninitialized = valueCreateFlowsVaultConnectionAirtableUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionAirtableAPIKey := new(CreateFlowsVaultConnectionAirtableAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAirtableAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionAirtableAPIKey"
@@ -65517,12 +64068,10 @@ func (c *CreateFlowsVaultConnectionAirtableAPIKey) GetExtraProperties() map[stri
 }
 
 func (c *CreateFlowsVaultConnectionAirtableAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -65627,12 +64176,10 @@ func (c *CreateFlowsVaultConnectionAirtableUninitialized) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionAirtableUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -65713,38 +64260,6 @@ func (c *CreateFlowsVaultConnectionAuth0) GetCreateFlowsVaultConnectionAuth0Unin
 }
 
 func (c *CreateFlowsVaultConnectionAuth0) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionAuth0OauthApp := new(CreateFlowsVaultConnectionAuth0OauthApp)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0OauthApp); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAuth0OauthApp"
-			c.CreateFlowsVaultConnectionAuth0OauthApp = valueCreateFlowsVaultConnectionAuth0OauthApp
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionAuth0Uninitialized := new(CreateFlowsVaultConnectionAuth0Uninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0Uninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAuth0Uninitialized"
-			c.CreateFlowsVaultConnectionAuth0Uninitialized = valueCreateFlowsVaultConnectionAuth0Uninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionAuth0OauthApp := new(CreateFlowsVaultConnectionAuth0OauthApp)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0OauthApp); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAuth0OauthApp"
-			c.CreateFlowsVaultConnectionAuth0OauthApp = valueCreateFlowsVaultConnectionAuth0OauthApp
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionAuth0Uninitialized := new(CreateFlowsVaultConnectionAuth0Uninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0Uninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionAuth0Uninitialized"
-			c.CreateFlowsVaultConnectionAuth0Uninitialized = valueCreateFlowsVaultConnectionAuth0Uninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionAuth0OauthApp := new(CreateFlowsVaultConnectionAuth0OauthApp)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionAuth0OauthApp); err == nil {
 		c.typ = "CreateFlowsVaultConnectionAuth0OauthApp"
@@ -65833,12 +64348,10 @@ func (c *CreateFlowsVaultConnectionAuth0OauthApp) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionAuth0OauthApp) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -65943,12 +64456,10 @@ func (c *CreateFlowsVaultConnectionAuth0Uninitialized) GetExtraProperties() map[
 }
 
 func (c *CreateFlowsVaultConnectionAuth0Uninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -66029,38 +64540,6 @@ func (c *CreateFlowsVaultConnectionBigquery) GetCreateFlowsVaultConnectionBigque
 }
 
 func (c *CreateFlowsVaultConnectionBigquery) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionBigqueryJwt := new(CreateFlowsVaultConnectionBigqueryJwt)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigqueryJwt); err == nil {
-			c.typ = "CreateFlowsVaultConnectionBigqueryJwt"
-			c.CreateFlowsVaultConnectionBigqueryJwt = valueCreateFlowsVaultConnectionBigqueryJwt
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionBigqueryUninitialized := new(CreateFlowsVaultConnectionBigqueryUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigqueryUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionBigqueryUninitialized"
-			c.CreateFlowsVaultConnectionBigqueryUninitialized = valueCreateFlowsVaultConnectionBigqueryUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionBigqueryJwt := new(CreateFlowsVaultConnectionBigqueryJwt)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigqueryJwt); err == nil {
-			c.typ = "CreateFlowsVaultConnectionBigqueryJwt"
-			c.CreateFlowsVaultConnectionBigqueryJwt = valueCreateFlowsVaultConnectionBigqueryJwt
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionBigqueryUninitialized := new(CreateFlowsVaultConnectionBigqueryUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigqueryUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionBigqueryUninitialized"
-			c.CreateFlowsVaultConnectionBigqueryUninitialized = valueCreateFlowsVaultConnectionBigqueryUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionBigqueryJwt := new(CreateFlowsVaultConnectionBigqueryJwt)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionBigqueryJwt); err == nil {
 		c.typ = "CreateFlowsVaultConnectionBigqueryJwt"
@@ -66149,12 +64628,10 @@ func (c *CreateFlowsVaultConnectionBigqueryJwt) GetExtraProperties() map[string]
 }
 
 func (c *CreateFlowsVaultConnectionBigqueryJwt) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -66259,12 +64736,10 @@ func (c *CreateFlowsVaultConnectionBigqueryUninitialized) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionBigqueryUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -66345,38 +64820,6 @@ func (c *CreateFlowsVaultConnectionClearbit) GetCreateFlowsVaultConnectionClearb
 }
 
 func (c *CreateFlowsVaultConnectionClearbit) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionClearbitAPIKey := new(CreateFlowsVaultConnectionClearbitAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionClearbitAPIKey"
-			c.CreateFlowsVaultConnectionClearbitAPIKey = valueCreateFlowsVaultConnectionClearbitAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionClearbitUninitialized := new(CreateFlowsVaultConnectionClearbitUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionClearbitUninitialized"
-			c.CreateFlowsVaultConnectionClearbitUninitialized = valueCreateFlowsVaultConnectionClearbitUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionClearbitAPIKey := new(CreateFlowsVaultConnectionClearbitAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionClearbitAPIKey"
-			c.CreateFlowsVaultConnectionClearbitAPIKey = valueCreateFlowsVaultConnectionClearbitAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionClearbitUninitialized := new(CreateFlowsVaultConnectionClearbitUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionClearbitUninitialized"
-			c.CreateFlowsVaultConnectionClearbitUninitialized = valueCreateFlowsVaultConnectionClearbitUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionClearbitAPIKey := new(CreateFlowsVaultConnectionClearbitAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionClearbitAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionClearbitAPIKey"
@@ -66465,12 +64908,10 @@ func (c *CreateFlowsVaultConnectionClearbitAPIKey) GetExtraProperties() map[stri
 }
 
 func (c *CreateFlowsVaultConnectionClearbitAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -66575,12 +65016,10 @@ func (c *CreateFlowsVaultConnectionClearbitUninitialized) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionClearbitUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -66661,38 +65100,6 @@ func (c *CreateFlowsVaultConnectionDocusign) GetCreateFlowsVaultConnectionDocusi
 }
 
 func (c *CreateFlowsVaultConnectionDocusign) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionDocusignOauthCode := new(CreateFlowsVaultConnectionDocusignOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusignOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionDocusignOauthCode"
-			c.CreateFlowsVaultConnectionDocusignOauthCode = valueCreateFlowsVaultConnectionDocusignOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionDocusignUninitialized := new(CreateFlowsVaultConnectionDocusignUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusignUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionDocusignUninitialized"
-			c.CreateFlowsVaultConnectionDocusignUninitialized = valueCreateFlowsVaultConnectionDocusignUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionDocusignOauthCode := new(CreateFlowsVaultConnectionDocusignOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusignOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionDocusignOauthCode"
-			c.CreateFlowsVaultConnectionDocusignOauthCode = valueCreateFlowsVaultConnectionDocusignOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionDocusignUninitialized := new(CreateFlowsVaultConnectionDocusignUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusignUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionDocusignUninitialized"
-			c.CreateFlowsVaultConnectionDocusignUninitialized = valueCreateFlowsVaultConnectionDocusignUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionDocusignOauthCode := new(CreateFlowsVaultConnectionDocusignOauthCode)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionDocusignOauthCode); err == nil {
 		c.typ = "CreateFlowsVaultConnectionDocusignOauthCode"
@@ -66781,12 +65188,10 @@ func (c *CreateFlowsVaultConnectionDocusignOauthCode) GetExtraProperties() map[s
 }
 
 func (c *CreateFlowsVaultConnectionDocusignOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -66891,12 +65296,10 @@ func (c *CreateFlowsVaultConnectionDocusignUninitialized) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionDocusignUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -66977,38 +65380,6 @@ func (c *CreateFlowsVaultConnectionGoogleSheets) GetCreateFlowsVaultConnectionGo
 }
 
 func (c *CreateFlowsVaultConnectionGoogleSheets) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionGoogleSheetsOauthCode := new(CreateFlowsVaultConnectionGoogleSheetsOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheetsOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionGoogleSheetsOauthCode"
-			c.CreateFlowsVaultConnectionGoogleSheetsOauthCode = valueCreateFlowsVaultConnectionGoogleSheetsOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionGoogleSheetsUninitialized := new(CreateFlowsVaultConnectionGoogleSheetsUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheetsUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionGoogleSheetsUninitialized"
-			c.CreateFlowsVaultConnectionGoogleSheetsUninitialized = valueCreateFlowsVaultConnectionGoogleSheetsUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionGoogleSheetsOauthCode := new(CreateFlowsVaultConnectionGoogleSheetsOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheetsOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionGoogleSheetsOauthCode"
-			c.CreateFlowsVaultConnectionGoogleSheetsOauthCode = valueCreateFlowsVaultConnectionGoogleSheetsOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionGoogleSheetsUninitialized := new(CreateFlowsVaultConnectionGoogleSheetsUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheetsUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionGoogleSheetsUninitialized"
-			c.CreateFlowsVaultConnectionGoogleSheetsUninitialized = valueCreateFlowsVaultConnectionGoogleSheetsUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionGoogleSheetsOauthCode := new(CreateFlowsVaultConnectionGoogleSheetsOauthCode)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionGoogleSheetsOauthCode); err == nil {
 		c.typ = "CreateFlowsVaultConnectionGoogleSheetsOauthCode"
@@ -67097,12 +65468,10 @@ func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionGoogleSheetsOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -67207,12 +65576,10 @@ func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) GetExtraProperties
 }
 
 func (c *CreateFlowsVaultConnectionGoogleSheetsUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -67317,86 +65684,6 @@ func (c *CreateFlowsVaultConnectionHTTP) GetCreateFlowsVaultConnectionHTTPUninit
 }
 
 func (c *CreateFlowsVaultConnectionHTTP) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHTTPBearer := new(CreateFlowsVaultConnectionHTTPBearer)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPBearer); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPBearer"
-			c.CreateFlowsVaultConnectionHTTPBearer = valueCreateFlowsVaultConnectionHTTPBearer
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHTTPBasicAuth := new(CreateFlowsVaultConnectionHTTPBasicAuth)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPBasicAuth); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPBasicAuth"
-			c.CreateFlowsVaultConnectionHTTPBasicAuth = valueCreateFlowsVaultConnectionHTTPBasicAuth
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHttpApiKey := new(CreateFlowsVaultConnectionHttpApiKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHttpApiKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHttpApiKey"
-			c.CreateFlowsVaultConnectionHttpApiKey = valueCreateFlowsVaultConnectionHttpApiKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHTTPOauthClientCredentials := new(CreateFlowsVaultConnectionHTTPOauthClientCredentials)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPOauthClientCredentials); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPOauthClientCredentials"
-			c.CreateFlowsVaultConnectionHTTPOauthClientCredentials = valueCreateFlowsVaultConnectionHTTPOauthClientCredentials
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionHTTPUninitialized := new(CreateFlowsVaultConnectionHTTPUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPUninitialized"
-			c.CreateFlowsVaultConnectionHTTPUninitialized = valueCreateFlowsVaultConnectionHTTPUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHTTPBearer := new(CreateFlowsVaultConnectionHTTPBearer)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPBearer); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPBearer"
-			c.CreateFlowsVaultConnectionHTTPBearer = valueCreateFlowsVaultConnectionHTTPBearer
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHTTPBasicAuth := new(CreateFlowsVaultConnectionHTTPBasicAuth)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPBasicAuth); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPBasicAuth"
-			c.CreateFlowsVaultConnectionHTTPBasicAuth = valueCreateFlowsVaultConnectionHTTPBasicAuth
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHttpApiKey := new(CreateFlowsVaultConnectionHttpApiKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHttpApiKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHttpApiKey"
-			c.CreateFlowsVaultConnectionHttpApiKey = valueCreateFlowsVaultConnectionHttpApiKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHTTPOauthClientCredentials := new(CreateFlowsVaultConnectionHTTPOauthClientCredentials)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPOauthClientCredentials); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPOauthClientCredentials"
-			c.CreateFlowsVaultConnectionHTTPOauthClientCredentials = valueCreateFlowsVaultConnectionHTTPOauthClientCredentials
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionHTTPUninitialized := new(CreateFlowsVaultConnectionHTTPUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHTTPUninitialized"
-			c.CreateFlowsVaultConnectionHTTPUninitialized = valueCreateFlowsVaultConnectionHTTPUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionHTTPBearer := new(CreateFlowsVaultConnectionHTTPBearer)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHTTPBearer); err == nil {
 		c.typ = "CreateFlowsVaultConnectionHTTPBearer"
@@ -67524,12 +65811,10 @@ func (c *CreateFlowsVaultConnectionHttpApiKey) GetExtraProperties() map[string]i
 }
 
 func (c *CreateFlowsVaultConnectionHttpApiKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -67643,12 +65928,10 @@ func (c *CreateFlowsVaultConnectionHTTPBasicAuth) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionHTTPBasicAuth) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -67762,12 +66045,10 @@ func (c *CreateFlowsVaultConnectionHTTPBearer) GetExtraProperties() map[string]i
 }
 
 func (c *CreateFlowsVaultConnectionHTTPBearer) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -67881,12 +66162,10 @@ func (c *CreateFlowsVaultConnectionHTTPOauthClientCredentials) GetExtraPropertie
 }
 
 func (c *CreateFlowsVaultConnectionHTTPOauthClientCredentials) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -67991,12 +66270,10 @@ func (c *CreateFlowsVaultConnectionHTTPUninitialized) GetExtraProperties() map[s
 }
 
 func (c *CreateFlowsVaultConnectionHTTPUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -68085,54 +66362,6 @@ func (c *CreateFlowsVaultConnectionHubspot) GetCreateFlowsVaultConnectionHubspot
 }
 
 func (c *CreateFlowsVaultConnectionHubspot) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHubspotAPIKey := new(CreateFlowsVaultConnectionHubspotAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHubspotAPIKey"
-			c.CreateFlowsVaultConnectionHubspotAPIKey = valueCreateFlowsVaultConnectionHubspotAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHubspotOauthCode := new(CreateFlowsVaultConnectionHubspotOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHubspotOauthCode"
-			c.CreateFlowsVaultConnectionHubspotOauthCode = valueCreateFlowsVaultConnectionHubspotOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionHubspotUninitialized := new(CreateFlowsVaultConnectionHubspotUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHubspotUninitialized"
-			c.CreateFlowsVaultConnectionHubspotUninitialized = valueCreateFlowsVaultConnectionHubspotUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHubspotAPIKey := new(CreateFlowsVaultConnectionHubspotAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHubspotAPIKey"
-			c.CreateFlowsVaultConnectionHubspotAPIKey = valueCreateFlowsVaultConnectionHubspotAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionHubspotOauthCode := new(CreateFlowsVaultConnectionHubspotOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHubspotOauthCode"
-			c.CreateFlowsVaultConnectionHubspotOauthCode = valueCreateFlowsVaultConnectionHubspotOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionHubspotUninitialized := new(CreateFlowsVaultConnectionHubspotUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionHubspotUninitialized"
-			c.CreateFlowsVaultConnectionHubspotUninitialized = valueCreateFlowsVaultConnectionHubspotUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionHubspotAPIKey := new(CreateFlowsVaultConnectionHubspotAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionHubspotAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionHubspotAPIKey"
@@ -68234,12 +66463,10 @@ func (c *CreateFlowsVaultConnectionHubspotAPIKey) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionHubspotAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -68353,12 +66580,10 @@ func (c *CreateFlowsVaultConnectionHubspotOauthCode) GetExtraProperties() map[st
 }
 
 func (c *CreateFlowsVaultConnectionHubspotOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -68463,12 +66688,10 @@ func (c *CreateFlowsVaultConnectionHubspotUninitialized) GetExtraProperties() ma
 }
 
 func (c *CreateFlowsVaultConnectionHubspotUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -68549,38 +66772,6 @@ func (c *CreateFlowsVaultConnectionJwt) GetCreateFlowsVaultConnectionJwtUninitia
 }
 
 func (c *CreateFlowsVaultConnectionJwt) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionJwtJwt := new(CreateFlowsVaultConnectionJwtJwt)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwtJwt); err == nil {
-			c.typ = "CreateFlowsVaultConnectionJwtJwt"
-			c.CreateFlowsVaultConnectionJwtJwt = valueCreateFlowsVaultConnectionJwtJwt
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionJwtUninitialized := new(CreateFlowsVaultConnectionJwtUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwtUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionJwtUninitialized"
-			c.CreateFlowsVaultConnectionJwtUninitialized = valueCreateFlowsVaultConnectionJwtUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionJwtJwt := new(CreateFlowsVaultConnectionJwtJwt)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwtJwt); err == nil {
-			c.typ = "CreateFlowsVaultConnectionJwtJwt"
-			c.CreateFlowsVaultConnectionJwtJwt = valueCreateFlowsVaultConnectionJwtJwt
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionJwtUninitialized := new(CreateFlowsVaultConnectionJwtUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwtUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionJwtUninitialized"
-			c.CreateFlowsVaultConnectionJwtUninitialized = valueCreateFlowsVaultConnectionJwtUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionJwtJwt := new(CreateFlowsVaultConnectionJwtJwt)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionJwtJwt); err == nil {
 		c.typ = "CreateFlowsVaultConnectionJwtJwt"
@@ -68669,12 +66860,10 @@ func (c *CreateFlowsVaultConnectionJwtJwt) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateFlowsVaultConnectionJwtJwt) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -68779,12 +66968,10 @@ func (c *CreateFlowsVaultConnectionJwtUninitialized) GetExtraProperties() map[st
 }
 
 func (c *CreateFlowsVaultConnectionJwtUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -68873,54 +67060,6 @@ func (c *CreateFlowsVaultConnectionMailchimp) GetCreateFlowsVaultConnectionMailc
 }
 
 func (c *CreateFlowsVaultConnectionMailchimp) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionMailchimpAPIKey := new(CreateFlowsVaultConnectionMailchimpAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailchimpAPIKey"
-			c.CreateFlowsVaultConnectionMailchimpAPIKey = valueCreateFlowsVaultConnectionMailchimpAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionMailchimpOauthCode := new(CreateFlowsVaultConnectionMailchimpOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailchimpOauthCode"
-			c.CreateFlowsVaultConnectionMailchimpOauthCode = valueCreateFlowsVaultConnectionMailchimpOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionMailchimpUninitialized := new(CreateFlowsVaultConnectionMailchimpUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailchimpUninitialized"
-			c.CreateFlowsVaultConnectionMailchimpUninitialized = valueCreateFlowsVaultConnectionMailchimpUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionMailchimpAPIKey := new(CreateFlowsVaultConnectionMailchimpAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailchimpAPIKey"
-			c.CreateFlowsVaultConnectionMailchimpAPIKey = valueCreateFlowsVaultConnectionMailchimpAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionMailchimpOauthCode := new(CreateFlowsVaultConnectionMailchimpOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailchimpOauthCode"
-			c.CreateFlowsVaultConnectionMailchimpOauthCode = valueCreateFlowsVaultConnectionMailchimpOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionMailchimpUninitialized := new(CreateFlowsVaultConnectionMailchimpUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailchimpUninitialized"
-			c.CreateFlowsVaultConnectionMailchimpUninitialized = valueCreateFlowsVaultConnectionMailchimpUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionMailchimpAPIKey := new(CreateFlowsVaultConnectionMailchimpAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailchimpAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionMailchimpAPIKey"
@@ -69022,12 +67161,10 @@ func (c *CreateFlowsVaultConnectionMailchimpAPIKey) GetExtraProperties() map[str
 }
 
 func (c *CreateFlowsVaultConnectionMailchimpAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -69141,12 +67278,10 @@ func (c *CreateFlowsVaultConnectionMailchimpOauthCode) GetExtraProperties() map[
 }
 
 func (c *CreateFlowsVaultConnectionMailchimpOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -69251,12 +67386,10 @@ func (c *CreateFlowsVaultConnectionMailchimpUninitialized) GetExtraProperties() 
 }
 
 func (c *CreateFlowsVaultConnectionMailchimpUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -69337,38 +67470,6 @@ func (c *CreateFlowsVaultConnectionMailjet) GetCreateFlowsVaultConnectionMailjet
 }
 
 func (c *CreateFlowsVaultConnectionMailjet) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionMailjetAPIKey := new(CreateFlowsVaultConnectionMailjetAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailjetAPIKey"
-			c.CreateFlowsVaultConnectionMailjetAPIKey = valueCreateFlowsVaultConnectionMailjetAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionMailjetUninitialized := new(CreateFlowsVaultConnectionMailjetUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailjetUninitialized"
-			c.CreateFlowsVaultConnectionMailjetUninitialized = valueCreateFlowsVaultConnectionMailjetUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionMailjetAPIKey := new(CreateFlowsVaultConnectionMailjetAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailjetAPIKey"
-			c.CreateFlowsVaultConnectionMailjetAPIKey = valueCreateFlowsVaultConnectionMailjetAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionMailjetUninitialized := new(CreateFlowsVaultConnectionMailjetUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionMailjetUninitialized"
-			c.CreateFlowsVaultConnectionMailjetUninitialized = valueCreateFlowsVaultConnectionMailjetUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionMailjetAPIKey := new(CreateFlowsVaultConnectionMailjetAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionMailjetAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionMailjetAPIKey"
@@ -69457,12 +67558,10 @@ func (c *CreateFlowsVaultConnectionMailjetAPIKey) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionMailjetAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -69567,12 +67666,10 @@ func (c *CreateFlowsVaultConnectionMailjetUninitialized) GetExtraProperties() ma
 }
 
 func (c *CreateFlowsVaultConnectionMailjetUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -69661,54 +67758,6 @@ func (c *CreateFlowsVaultConnectionPipedrive) GetCreateFlowsVaultConnectionPiped
 }
 
 func (c *CreateFlowsVaultConnectionPipedrive) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionPipedriveToken := new(CreateFlowsVaultConnectionPipedriveToken)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveToken); err == nil {
-			c.typ = "CreateFlowsVaultConnectionPipedriveToken"
-			c.CreateFlowsVaultConnectionPipedriveToken = valueCreateFlowsVaultConnectionPipedriveToken
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionPipedriveOauthCode := new(CreateFlowsVaultConnectionPipedriveOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionPipedriveOauthCode"
-			c.CreateFlowsVaultConnectionPipedriveOauthCode = valueCreateFlowsVaultConnectionPipedriveOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionPipedriveUninitialized := new(CreateFlowsVaultConnectionPipedriveUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionPipedriveUninitialized"
-			c.CreateFlowsVaultConnectionPipedriveUninitialized = valueCreateFlowsVaultConnectionPipedriveUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionPipedriveToken := new(CreateFlowsVaultConnectionPipedriveToken)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveToken); err == nil {
-			c.typ = "CreateFlowsVaultConnectionPipedriveToken"
-			c.CreateFlowsVaultConnectionPipedriveToken = valueCreateFlowsVaultConnectionPipedriveToken
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionPipedriveOauthCode := new(CreateFlowsVaultConnectionPipedriveOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionPipedriveOauthCode"
-			c.CreateFlowsVaultConnectionPipedriveOauthCode = valueCreateFlowsVaultConnectionPipedriveOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionPipedriveUninitialized := new(CreateFlowsVaultConnectionPipedriveUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionPipedriveUninitialized"
-			c.CreateFlowsVaultConnectionPipedriveUninitialized = valueCreateFlowsVaultConnectionPipedriveUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionPipedriveToken := new(CreateFlowsVaultConnectionPipedriveToken)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionPipedriveToken); err == nil {
 		c.typ = "CreateFlowsVaultConnectionPipedriveToken"
@@ -69810,12 +67859,10 @@ func (c *CreateFlowsVaultConnectionPipedriveOauthCode) GetExtraProperties() map[
 }
 
 func (c *CreateFlowsVaultConnectionPipedriveOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -69929,12 +67976,10 @@ func (c *CreateFlowsVaultConnectionPipedriveToken) GetExtraProperties() map[stri
 }
 
 func (c *CreateFlowsVaultConnectionPipedriveToken) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -70039,12 +68084,10 @@ func (c *CreateFlowsVaultConnectionPipedriveUninitialized) GetExtraProperties() 
 }
 
 func (c *CreateFlowsVaultConnectionPipedriveUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -70683,12 +68726,10 @@ func (c *CreateFlowsVaultConnectionResponseContent) GetExtraProperties() map[str
 }
 
 func (c *CreateFlowsVaultConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -70841,38 +68882,6 @@ func (c *CreateFlowsVaultConnectionSalesforce) GetCreateFlowsVaultConnectionSale
 }
 
 func (c *CreateFlowsVaultConnectionSalesforce) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSalesforceOauthCode := new(CreateFlowsVaultConnectionSalesforceOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforceOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSalesforceOauthCode"
-			c.CreateFlowsVaultConnectionSalesforceOauthCode = valueCreateFlowsVaultConnectionSalesforceOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionSalesforceUninitialized := new(CreateFlowsVaultConnectionSalesforceUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforceUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSalesforceUninitialized"
-			c.CreateFlowsVaultConnectionSalesforceUninitialized = valueCreateFlowsVaultConnectionSalesforceUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSalesforceOauthCode := new(CreateFlowsVaultConnectionSalesforceOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforceOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSalesforceOauthCode"
-			c.CreateFlowsVaultConnectionSalesforceOauthCode = valueCreateFlowsVaultConnectionSalesforceOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionSalesforceUninitialized := new(CreateFlowsVaultConnectionSalesforceUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforceUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSalesforceUninitialized"
-			c.CreateFlowsVaultConnectionSalesforceUninitialized = valueCreateFlowsVaultConnectionSalesforceUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionSalesforceOauthCode := new(CreateFlowsVaultConnectionSalesforceOauthCode)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSalesforceOauthCode); err == nil {
 		c.typ = "CreateFlowsVaultConnectionSalesforceOauthCode"
@@ -70961,12 +68970,10 @@ func (c *CreateFlowsVaultConnectionSalesforceOauthCode) GetExtraProperties() map
 }
 
 func (c *CreateFlowsVaultConnectionSalesforceOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -71071,12 +69078,10 @@ func (c *CreateFlowsVaultConnectionSalesforceUninitialized) GetExtraProperties()
 }
 
 func (c *CreateFlowsVaultConnectionSalesforceUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -71157,38 +69162,6 @@ func (c *CreateFlowsVaultConnectionSendgrid) GetCreateFlowsVaultConnectionSendgr
 }
 
 func (c *CreateFlowsVaultConnectionSendgrid) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSendgridAPIKey := new(CreateFlowsVaultConnectionSendgridAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSendgridAPIKey"
-			c.CreateFlowsVaultConnectionSendgridAPIKey = valueCreateFlowsVaultConnectionSendgridAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionSendgridUninitialized := new(CreateFlowsVaultConnectionSendgridUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSendgridUninitialized"
-			c.CreateFlowsVaultConnectionSendgridUninitialized = valueCreateFlowsVaultConnectionSendgridUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSendgridAPIKey := new(CreateFlowsVaultConnectionSendgridAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSendgridAPIKey"
-			c.CreateFlowsVaultConnectionSendgridAPIKey = valueCreateFlowsVaultConnectionSendgridAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionSendgridUninitialized := new(CreateFlowsVaultConnectionSendgridUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSendgridUninitialized"
-			c.CreateFlowsVaultConnectionSendgridUninitialized = valueCreateFlowsVaultConnectionSendgridUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionSendgridAPIKey := new(CreateFlowsVaultConnectionSendgridAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSendgridAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionSendgridAPIKey"
@@ -71277,12 +69250,10 @@ func (c *CreateFlowsVaultConnectionSendgridAPIKey) GetExtraProperties() map[stri
 }
 
 func (c *CreateFlowsVaultConnectionSendgridAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -71387,12 +69358,10 @@ func (c *CreateFlowsVaultConnectionSendgridUninitialized) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionSendgridUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -71481,54 +69450,6 @@ func (c *CreateFlowsVaultConnectionSlack) GetCreateFlowsVaultConnectionSlackUnin
 }
 
 func (c *CreateFlowsVaultConnectionSlack) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSlackWebhook := new(CreateFlowsVaultConnectionSlackWebhook)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackWebhook); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSlackWebhook"
-			c.CreateFlowsVaultConnectionSlackWebhook = valueCreateFlowsVaultConnectionSlackWebhook
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSlackOauthCode := new(CreateFlowsVaultConnectionSlackOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSlackOauthCode"
-			c.CreateFlowsVaultConnectionSlackOauthCode = valueCreateFlowsVaultConnectionSlackOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionSlackUninitialized := new(CreateFlowsVaultConnectionSlackUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSlackUninitialized"
-			c.CreateFlowsVaultConnectionSlackUninitialized = valueCreateFlowsVaultConnectionSlackUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSlackWebhook := new(CreateFlowsVaultConnectionSlackWebhook)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackWebhook); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSlackWebhook"
-			c.CreateFlowsVaultConnectionSlackWebhook = valueCreateFlowsVaultConnectionSlackWebhook
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionSlackOauthCode := new(CreateFlowsVaultConnectionSlackOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSlackOauthCode"
-			c.CreateFlowsVaultConnectionSlackOauthCode = valueCreateFlowsVaultConnectionSlackOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionSlackUninitialized := new(CreateFlowsVaultConnectionSlackUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionSlackUninitialized"
-			c.CreateFlowsVaultConnectionSlackUninitialized = valueCreateFlowsVaultConnectionSlackUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionSlackWebhook := new(CreateFlowsVaultConnectionSlackWebhook)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionSlackWebhook); err == nil {
 		c.typ = "CreateFlowsVaultConnectionSlackWebhook"
@@ -71630,12 +69551,10 @@ func (c *CreateFlowsVaultConnectionSlackOauthCode) GetExtraProperties() map[stri
 }
 
 func (c *CreateFlowsVaultConnectionSlackOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -71740,12 +69659,10 @@ func (c *CreateFlowsVaultConnectionSlackUninitialized) GetExtraProperties() map[
 }
 
 func (c *CreateFlowsVaultConnectionSlackUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -71852,12 +69769,10 @@ func (c *CreateFlowsVaultConnectionSlackWebhook) GetExtraProperties() map[string
 }
 
 func (c *CreateFlowsVaultConnectionSlackWebhook) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -71953,54 +69868,6 @@ func (c *CreateFlowsVaultConnectionStripe) GetCreateFlowsVaultConnectionStripeUn
 }
 
 func (c *CreateFlowsVaultConnectionStripe) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionStripeKeyPair := new(CreateFlowsVaultConnectionStripeKeyPair)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeKeyPair); err == nil {
-			c.typ = "CreateFlowsVaultConnectionStripeKeyPair"
-			c.CreateFlowsVaultConnectionStripeKeyPair = valueCreateFlowsVaultConnectionStripeKeyPair
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionStripeOauthCode := new(CreateFlowsVaultConnectionStripeOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionStripeOauthCode"
-			c.CreateFlowsVaultConnectionStripeOauthCode = valueCreateFlowsVaultConnectionStripeOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionStripeUninitialized := new(CreateFlowsVaultConnectionStripeUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionStripeUninitialized"
-			c.CreateFlowsVaultConnectionStripeUninitialized = valueCreateFlowsVaultConnectionStripeUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionStripeKeyPair := new(CreateFlowsVaultConnectionStripeKeyPair)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeKeyPair); err == nil {
-			c.typ = "CreateFlowsVaultConnectionStripeKeyPair"
-			c.CreateFlowsVaultConnectionStripeKeyPair = valueCreateFlowsVaultConnectionStripeKeyPair
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionStripeOauthCode := new(CreateFlowsVaultConnectionStripeOauthCode)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeOauthCode); err == nil {
-			c.typ = "CreateFlowsVaultConnectionStripeOauthCode"
-			c.CreateFlowsVaultConnectionStripeOauthCode = valueCreateFlowsVaultConnectionStripeOauthCode
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionStripeUninitialized := new(CreateFlowsVaultConnectionStripeUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionStripeUninitialized"
-			c.CreateFlowsVaultConnectionStripeUninitialized = valueCreateFlowsVaultConnectionStripeUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionStripeKeyPair := new(CreateFlowsVaultConnectionStripeKeyPair)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionStripeKeyPair); err == nil {
 		c.typ = "CreateFlowsVaultConnectionStripeKeyPair"
@@ -72102,12 +69969,10 @@ func (c *CreateFlowsVaultConnectionStripeKeyPair) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionStripeKeyPair) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -72221,12 +70086,10 @@ func (c *CreateFlowsVaultConnectionStripeOauthCode) GetExtraProperties() map[str
 }
 
 func (c *CreateFlowsVaultConnectionStripeOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -72331,12 +70194,10 @@ func (c *CreateFlowsVaultConnectionStripeUninitialized) GetExtraProperties() map
 }
 
 func (c *CreateFlowsVaultConnectionStripeUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -72417,38 +70278,6 @@ func (c *CreateFlowsVaultConnectionTelegram) GetCreateFlowsVaultConnectionTelegr
 }
 
 func (c *CreateFlowsVaultConnectionTelegram) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionTelegramToken := new(CreateFlowsVaultConnectionTelegramToken)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegramToken); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTelegramToken"
-			c.CreateFlowsVaultConnectionTelegramToken = valueCreateFlowsVaultConnectionTelegramToken
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionTelegramUninitialized := new(CreateFlowsVaultConnectionTelegramUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegramUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTelegramUninitialized"
-			c.CreateFlowsVaultConnectionTelegramUninitialized = valueCreateFlowsVaultConnectionTelegramUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionTelegramToken := new(CreateFlowsVaultConnectionTelegramToken)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegramToken); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTelegramToken"
-			c.CreateFlowsVaultConnectionTelegramToken = valueCreateFlowsVaultConnectionTelegramToken
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionTelegramUninitialized := new(CreateFlowsVaultConnectionTelegramUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegramUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTelegramUninitialized"
-			c.CreateFlowsVaultConnectionTelegramUninitialized = valueCreateFlowsVaultConnectionTelegramUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionTelegramToken := new(CreateFlowsVaultConnectionTelegramToken)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTelegramToken); err == nil {
 		c.typ = "CreateFlowsVaultConnectionTelegramToken"
@@ -72537,12 +70366,10 @@ func (c *CreateFlowsVaultConnectionTelegramToken) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionTelegramToken) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -72647,12 +70474,10 @@ func (c *CreateFlowsVaultConnectionTelegramUninitialized) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionTelegramUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -72733,38 +70558,6 @@ func (c *CreateFlowsVaultConnectionTwilio) GetCreateFlowsVaultConnectionTwilioUn
 }
 
 func (c *CreateFlowsVaultConnectionTwilio) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionTwilioAPIKey := new(CreateFlowsVaultConnectionTwilioAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTwilioAPIKey"
-			c.CreateFlowsVaultConnectionTwilioAPIKey = valueCreateFlowsVaultConnectionTwilioAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionTwilioUninitialized := new(CreateFlowsVaultConnectionTwilioUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTwilioUninitialized"
-			c.CreateFlowsVaultConnectionTwilioUninitialized = valueCreateFlowsVaultConnectionTwilioUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionTwilioAPIKey := new(CreateFlowsVaultConnectionTwilioAPIKey)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioAPIKey); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTwilioAPIKey"
-			c.CreateFlowsVaultConnectionTwilioAPIKey = valueCreateFlowsVaultConnectionTwilioAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionTwilioUninitialized := new(CreateFlowsVaultConnectionTwilioUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionTwilioUninitialized"
-			c.CreateFlowsVaultConnectionTwilioUninitialized = valueCreateFlowsVaultConnectionTwilioUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionTwilioAPIKey := new(CreateFlowsVaultConnectionTwilioAPIKey)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionTwilioAPIKey); err == nil {
 		c.typ = "CreateFlowsVaultConnectionTwilioAPIKey"
@@ -72853,12 +70646,10 @@ func (c *CreateFlowsVaultConnectionTwilioAPIKey) GetExtraProperties() map[string
 }
 
 func (c *CreateFlowsVaultConnectionTwilioAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -72963,12 +70754,10 @@ func (c *CreateFlowsVaultConnectionTwilioUninitialized) GetExtraProperties() map
 }
 
 func (c *CreateFlowsVaultConnectionTwilioUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -73049,38 +70838,6 @@ func (c *CreateFlowsVaultConnectionWhatsapp) GetCreateFlowsVaultConnectionWhatsa
 }
 
 func (c *CreateFlowsVaultConnectionWhatsapp) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionWhatsappToken := new(CreateFlowsVaultConnectionWhatsappToken)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsappToken); err == nil {
-			c.typ = "CreateFlowsVaultConnectionWhatsappToken"
-			c.CreateFlowsVaultConnectionWhatsappToken = valueCreateFlowsVaultConnectionWhatsappToken
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionWhatsappUninitialized := new(CreateFlowsVaultConnectionWhatsappUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsappUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionWhatsappUninitialized"
-			c.CreateFlowsVaultConnectionWhatsappUninitialized = valueCreateFlowsVaultConnectionWhatsappUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionWhatsappToken := new(CreateFlowsVaultConnectionWhatsappToken)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsappToken); err == nil {
-			c.typ = "CreateFlowsVaultConnectionWhatsappToken"
-			c.CreateFlowsVaultConnectionWhatsappToken = valueCreateFlowsVaultConnectionWhatsappToken
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionWhatsappUninitialized := new(CreateFlowsVaultConnectionWhatsappUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsappUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionWhatsappUninitialized"
-			c.CreateFlowsVaultConnectionWhatsappUninitialized = valueCreateFlowsVaultConnectionWhatsappUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionWhatsappToken := new(CreateFlowsVaultConnectionWhatsappToken)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionWhatsappToken); err == nil {
 		c.typ = "CreateFlowsVaultConnectionWhatsappToken"
@@ -73169,12 +70926,10 @@ func (c *CreateFlowsVaultConnectionWhatsappToken) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionWhatsappToken) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -73279,12 +71034,10 @@ func (c *CreateFlowsVaultConnectionWhatsappUninitialized) GetExtraProperties() m
 }
 
 func (c *CreateFlowsVaultConnectionWhatsappUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -73365,38 +71118,6 @@ func (c *CreateFlowsVaultConnectionZapier) GetCreateFlowsVaultConnectionZapierUn
 }
 
 func (c *CreateFlowsVaultConnectionZapier) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id", "setup"}, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionZapierWebhook := new(CreateFlowsVaultConnectionZapierWebhook)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapierWebhook); err == nil {
-			c.typ = "CreateFlowsVaultConnectionZapierWebhook"
-			c.CreateFlowsVaultConnectionZapierWebhook = valueCreateFlowsVaultConnectionZapierWebhook
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"name", "app_id"}, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionZapierUninitialized := new(CreateFlowsVaultConnectionZapierUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapierUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionZapierUninitialized"
-			c.CreateFlowsVaultConnectionZapierUninitialized = valueCreateFlowsVaultConnectionZapierUninitialized
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id", "setup"}) {
-		valueCreateFlowsVaultConnectionZapierWebhook := new(CreateFlowsVaultConnectionZapierWebhook)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapierWebhook); err == nil {
-			c.typ = "CreateFlowsVaultConnectionZapierWebhook"
-			c.CreateFlowsVaultConnectionZapierWebhook = valueCreateFlowsVaultConnectionZapierWebhook
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"name", "app_id"}) {
-		valueCreateFlowsVaultConnectionZapierUninitialized := new(CreateFlowsVaultConnectionZapierUninitialized)
-		if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapierUninitialized); err == nil {
-			c.typ = "CreateFlowsVaultConnectionZapierUninitialized"
-			c.CreateFlowsVaultConnectionZapierUninitialized = valueCreateFlowsVaultConnectionZapierUninitialized
-			return nil
-		}
-	}
 	valueCreateFlowsVaultConnectionZapierWebhook := new(CreateFlowsVaultConnectionZapierWebhook)
 	if err := json.Unmarshal(data, &valueCreateFlowsVaultConnectionZapierWebhook); err == nil {
 		c.typ = "CreateFlowsVaultConnectionZapierWebhook"
@@ -73476,12 +71197,10 @@ func (c *CreateFlowsVaultConnectionZapierUninitialized) GetExtraProperties() map
 }
 
 func (c *CreateFlowsVaultConnectionZapierUninitialized) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -73588,12 +71307,10 @@ func (c *CreateFlowsVaultConnectionZapierWebhook) GetExtraProperties() map[strin
 }
 
 func (c *CreateFlowsVaultConnectionZapierWebhook) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -73700,12 +71417,10 @@ func (c *CreateGuardianEnrollmentTicketResponseContent) GetExtraProperties() map
 }
 
 func (c *CreateGuardianEnrollmentTicketResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTicketID sets the TicketID field and marks it as non-optional;
@@ -73852,12 +71567,10 @@ func (c *CreateImportUsersResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (c *CreateImportUsersResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -74027,12 +71740,10 @@ func (c *CreateKeysNetworkACLsResponseContent) GetExtraProperties() map[string]i
 }
 
 func (c *CreateKeysNetworkACLsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -74226,12 +71937,10 @@ func (c *CreateOrganizationAllConnectionResponseContent) GetExtraProperties() ma
 }
 
 func (c *CreateOrganizationAllConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
@@ -74379,12 +72088,10 @@ func (c *CreateOrganizationClientRequestItem) GetExtraProperties() map[string]in
 }
 
 func (c *CreateOrganizationClientRequestItem) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -74524,12 +72231,10 @@ func (c *CreateOrganizationDiscoveryDomainResponseContent) GetExtraProperties() 
 }
 
 func (c *CreateOrganizationDiscoveryDomainResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -74762,12 +72467,10 @@ func (c *CreateOrganizationInvitationResponseContent) GetExtraProperties() map[s
 }
 
 func (c *CreateOrganizationInvitationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -74955,12 +72658,10 @@ func (c *CreatePhoneProviderSendTestResponseContent) GetExtraProperties() map[st
 }
 
 func (c *CreatePhoneProviderSendTestResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -75103,12 +72804,10 @@ func (c *CreatePhoneTemplateResponseContent) GetExtraProperties() map[string]int
 }
 
 func (c *CreatePhoneTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -75232,12 +72931,10 @@ func (c *CreatePhoneTemplateTestNotificationResponseContent) GetExtraProperties(
 }
 
 func (c *CreatePhoneTemplateTestNotificationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -75333,12 +73030,10 @@ func (c *CreateSCIMConfigurationRequestContent) GetExtraProperties() map[string]
 }
 
 func (c *CreateSCIMConfigurationRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetUserIDAttribute sets the UserIDAttribute field and marks it as non-optional;
@@ -75497,12 +73192,10 @@ func (c *CreateSCIMConfigurationResponseContent) GetExtraProperties() map[string
 }
 
 func (c *CreateSCIMConfigurationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -75685,12 +73378,10 @@ func (c *CreateSCIMTokenResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (c *CreateSCIMTokenResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTokenID sets the TokenID field and marks it as non-optional;
@@ -75862,12 +73553,10 @@ func (c *CreateSegmentResponseContent) GetExtraProperties() map[string]interface
 }
 
 func (c *CreateSegmentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -76010,12 +73699,10 @@ func (c *CreateSelfServiceProfileSSOTicketResponseContent) GetExtraProperties() 
 }
 
 func (c *CreateSelfServiceProfileSSOTicketResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetTicket sets the Ticket field and marks it as non-optional;
@@ -76096,12 +73783,10 @@ func (c *CreateTokenQuota) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CreateTokenQuota) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetClientCredentials sets the ClientCredentials field and marks it as non-optional;
@@ -76153,6 +73838,7 @@ func (c *CreateTokenQuota) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// The successfully created authentication method.
 var (
 	createUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
 	createUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
@@ -76175,7 +73861,6 @@ var (
 	createUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 18)
 )
 
-// The successfully created authentication method.
 type CreateUserAuthenticationMethodResponseContent struct {
 	// The ID of the newly created authentication method (automatically generated by the application)
 	ID   *string                                 `json:"id,omitempty" url:"id,omitempty"`
@@ -76361,12 +74046,10 @@ func (c *CreateUserAuthenticationMethodResponseContent) GetExtraProperties() map
 }
 
 func (c *CreateUserAuthenticationMethodResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -76635,12 +74318,10 @@ func (c *CreateVariationResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (c *CreateVariationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -76758,12 +74439,6 @@ var (
 	createVerifiableCredentialTemplateResponseContentFieldUpdatedAt                  = big.NewInt(1 << 8)
 )
 
-// createVerifiableCredentialTemplateResponseContentNullableFields maps the wire names of CreateVerifiableCredentialTemplateResponseContent's nullable fields (required or optional) to their field bits.
-var createVerifiableCredentialTemplateResponseContentNullableFields = map[string]*big.Int{
-	"custom_certificate_authority": createVerifiableCredentialTemplateResponseContentFieldCustomCertificateAuthority,
-	"well_known_trusted_issuers":   createVerifiableCredentialTemplateResponseContentFieldWellKnownTrustedIssuers,
-}
-
 type CreateVerifiableCredentialTemplateResponseContent struct {
 	// The id of the template.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -76862,12 +74537,10 @@ func (c *CreateVerifiableCredentialTemplateResponseContent) GetExtraProperties()
 }
 
 func (c *CreateVerifiableCredentialTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -76953,13 +74626,6 @@ func (c *CreateVerifiableCredentialTemplateResponseContent) UnmarshalJSON(data [
 		return err
 	}
 	c.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, createVerifiableCredentialTemplateResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -77055,12 +74721,10 @@ func (c *CreateVerificationEmailResponseContent) GetExtraProperties() map[string
 }
 
 func (c *CreateVerificationEmailResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -77219,11 +74883,11 @@ func (c CredentialDeviceTypeEnum) Ptr() *CredentialDeviceTypeEnum {
 	return &c
 }
 
+// Configure the connection to be used as a Requesting Application for Cross App Access.
 var (
 	crossAppAccessRequestingAppFieldActive = big.NewInt(1 << 0)
 )
 
-// Configure the connection to be used as a Requesting Application for Cross App Access.
 type CrossAppAccessRequestingApp struct {
 	// Set to `true` to enable the connection as a Requesting Application for Cross App Access. On `oidc` connections this requires `options.type` to be `back_channel`. Setting `false` is always accepted, so the role can be turned off even if the tenant or connection no longer supports it.
 	Active bool `json:"active" url:"active"`
@@ -77250,12 +74914,10 @@ func (c *CrossAppAccessRequestingApp) GetExtraProperties() map[string]interface{
 }
 
 func (c *CrossAppAccessRequestingApp) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetActive sets the Active field and marks it as non-optional;
@@ -77307,11 +74969,11 @@ func (c *CrossAppAccessRequestingApp) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Cross App Access - Resource App settings that apply to this connection.
 var (
 	crossAppAccessResourceAppFieldStatus = big.NewInt(1 << 0)
 )
 
-// Cross App Access - Resource App settings that apply to this connection.
 type CrossAppAccessResourceApp struct {
 	Status CrossAppAccessResourceAppStatusEnum `json:"status" url:"status"`
 
@@ -77337,12 +74999,10 @@ func (c *CrossAppAccessResourceApp) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CrossAppAccessResourceApp) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -77448,6 +75108,7 @@ type CspFlags = []CspFlag
 // Array of CSP policies (enforcing and/or reporting).
 type CspPolicies = []*CspPolicy
 
+// A single CSP policy with mode, directives, flags, and optional reporting.
 var (
 	cspPolicyFieldMode       = big.NewInt(1 << 0)
 	cspPolicyFieldDirectives = big.NewInt(1 << 1)
@@ -77455,12 +75116,6 @@ var (
 	cspPolicyFieldReporting  = big.NewInt(1 << 3)
 )
 
-// cspPolicyNullableFields maps the wire names of CspPolicy's nullable fields (required or optional) to their field bits.
-var cspPolicyNullableFields = map[string]*big.Int{
-	"reporting": cspPolicyFieldReporting,
-}
-
-// A single CSP policy with mode, directives, flags, and optional reporting.
 type CspPolicy struct {
 	Mode       *CspPolicyMode      `json:"mode,omitempty" url:"mode,omitempty"`
 	Directives *CspDirectives      `json:"directives,omitempty" url:"directives,omitempty"`
@@ -77510,12 +75165,10 @@ func (c *CspPolicy) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CspPolicy) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetMode sets the Mode field and marks it as non-optional;
@@ -77558,13 +75211,6 @@ func (c *CspPolicy) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, cspPolicyNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -77618,12 +75264,12 @@ func (c CspPolicyMode) Ptr() *CspPolicyMode {
 	return &c
 }
 
+// Per-policy reporting configuration.
 var (
 	cspPolicyReportingFieldReportURI     = big.NewInt(1 << 0)
 	cspPolicyReportingFieldReportToGroup = big.NewInt(1 << 1)
 )
 
-// Per-policy reporting configuration.
 type CspPolicyReporting struct {
 	// HTTPS endpoint for CSP violation reports.
 	ReportURI *string `json:"report_uri,omitempty" url:"report_uri,omitempty"`
@@ -77659,12 +75305,10 @@ func (c *CspPolicyReporting) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CspPolicyReporting) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetReportURI sets the ReportURI field and marks it as non-optional;
@@ -77723,13 +75367,13 @@ func (c *CspPolicyReporting) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Report-To header configuration.
 var (
 	cspReportToFieldGroup     = big.NewInt(1 << 0)
 	cspReportToFieldMaxAge    = big.NewInt(1 << 1)
 	cspReportToFieldEndpoints = big.NewInt(1 << 2)
 )
 
-// Report-To header configuration.
 type CspReportTo struct {
 	// Reporting group identifier.
 	Group *string `json:"group,omitempty" url:"group,omitempty"`
@@ -77773,12 +75417,10 @@ func (c *CspReportTo) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CspReportTo) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetGroup sets the Group field and marks it as non-optional;
@@ -77844,11 +75486,11 @@ func (c *CspReportTo) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// A single reporting endpoint.
 var (
 	cspReportToEndpointFieldURL = big.NewInt(1 << 0)
 )
 
-// A single reporting endpoint.
 type CspReportToEndpoint struct {
 	// HTTPS URL for the reporting endpoint.
 	URL *string `json:"url,omitempty" url:"url,omitempty"`
@@ -77875,12 +75517,10 @@ func (c *CspReportToEndpoint) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CspReportToEndpoint) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetURL sets the URL field and marks it as non-optional;
@@ -77938,17 +75578,12 @@ type CspReportToEndpoints = []*CspReportToEndpoint
 // Reporting-Endpoints header configuration (key-value pairs).
 type CspReportingEndpoints = map[string]string
 
+// Global reporting infrastructure configuration.
 var (
 	cspReportingInfrastructureFieldReportTo           = big.NewInt(1 << 0)
 	cspReportingInfrastructureFieldReportingEndpoints = big.NewInt(1 << 1)
 )
 
-// cspReportingInfrastructureNullableFields maps the wire names of CspReportingInfrastructure's nullable fields (required or optional) to their field bits.
-var cspReportingInfrastructureNullableFields = map[string]*big.Int{
-	"report_to": cspReportingInfrastructureFieldReportTo,
-}
-
-// Global reporting infrastructure configuration.
 type CspReportingInfrastructure struct {
 	ReportTo           *CspReportTo           `json:"report_to,omitempty" url:"report_to,omitempty"`
 	ReportingEndpoints *CspReportingEndpoints `json:"reporting_endpoints,omitempty" url:"reporting_endpoints,omitempty"`
@@ -77982,12 +75617,10 @@ func (c *CspReportingInfrastructure) GetExtraProperties() map[string]interface{}
 }
 
 func (c *CspReportingInfrastructure) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetReportTo sets the ReportTo field and marks it as non-optional;
@@ -78016,13 +75649,6 @@ func (c *CspReportingInfrastructure) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	c.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, cspReportingInfrastructureNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		c.require(presentFields)
-	}
 	c.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -78082,12 +75708,10 @@ func (c *CustomProviderConfiguration) GetExtraProperties() map[string]interface{
 }
 
 func (c *CustomProviderConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetDeliveryMethods sets the DeliveryMethods field and marks it as non-optional;
@@ -78156,12 +75780,10 @@ func (c *CustomProviderCredentials) GetExtraProperties() map[string]interface{} 
 }
 
 func (c *CustomProviderCredentials) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 func (c *CustomProviderCredentials) UnmarshalJSON(data []byte) error {
@@ -78298,6 +75920,7 @@ func (c CustomSigningKeyCurveEnum) Ptr() *CustomSigningKeyCurveEnum {
 	return &c
 }
 
+// JWK representing a custom public signing key.
 var (
 	customSigningKeyJwkFieldKty     = big.NewInt(1 << 0)
 	customSigningKeyJwkFieldKid     = big.NewInt(1 << 1)
@@ -78315,7 +75938,6 @@ var (
 	customSigningKeyJwkFieldX5TS256 = big.NewInt(1 << 13)
 )
 
-// JWK representing a custom public signing key.
 type CustomSigningKeyJwk struct {
 	Kty CustomSigningKeyTypeEnum `json:"kty" url:"kty"`
 	// Key identifier
@@ -78455,12 +76077,10 @@ func (c *CustomSigningKeyJwk) GetExtraProperties() map[string]interface{} {
 }
 
 func (c *CustomSigningKeyJwk) require(field *big.Int) {
-	next := new(big.Int)
-	if c.explicitFields != nil {
-		next.Set(c.explicitFields)
+	if c.explicitFields == nil {
+		c.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	c.explicitFields = next
+	c.explicitFields.Or(c.explicitFields, field)
 }
 
 // SetKty sets the Kty field and marks it as non-optional;
@@ -78688,12 +76308,12 @@ func (d DefaultConfigEnum) Ptr() *DefaultConfigEnum {
 	return &d
 }
 
+// Token Quota configuration, to configure quotas for token issuance for clients and organizations. Applied to all clients and organizations unless overridden in individual client or organization settings.
 var (
 	defaultTokenQuotaFieldClients       = big.NewInt(1 << 0)
 	defaultTokenQuotaFieldOrganizations = big.NewInt(1 << 1)
 )
 
-// Token Quota configuration, to configure quotas for token issuance for clients and organizations. Applied to all clients and organizations unless overridden in individual client or organization settings.
 type DefaultTokenQuota struct {
 	Clients       *TokenQuotaConfiguration `json:"clients,omitempty" url:"clients,omitempty"`
 	Organizations *TokenQuotaConfiguration `json:"organizations,omitempty" url:"organizations,omitempty"`
@@ -78727,12 +76347,10 @@ func (d *DefaultTokenQuota) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DefaultTokenQuota) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetClients sets the Clients field and marks it as non-optional;
@@ -78896,12 +76514,10 @@ func (d *DeleteUserIdentityResponseContentItem) GetExtraProperties() map[string]
 }
 
 func (d *DeleteUserIdentityResponseContentItem) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -79032,12 +76648,10 @@ func (d *DeployActionVersionRequestContent) GetExtraProperties() map[string]inte
 }
 
 func (d *DeployActionVersionRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetUpdateDraft sets the UpdateDraft field and marks it as non-optional;
@@ -79267,12 +76881,10 @@ func (d *DeployActionVersionResponseContent) GetExtraProperties() map[string]int
 }
 
 func (d *DeployActionVersionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -79574,12 +77186,10 @@ func (d *DirectoryProvisioning) GetExtraProperties() map[string]interface{} {
 }
 
 func (d *DirectoryProvisioning) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -79757,12 +77367,10 @@ func (d *DirectoryProvisioningMappingItem) GetExtraProperties() map[string]inter
 }
 
 func (d *DirectoryProvisioningMappingItem) require(field *big.Int) {
-	next := new(big.Int)
-	if d.explicitFields != nil {
-		next.Set(d.explicitFields)
+	if d.explicitFields == nil {
+		d.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	d.explicitFields = next
+	d.explicitFields.Or(d.explicitFields, field)
 }
 
 // SetAuth0 sets the Auth0 field and marks it as non-optional;
@@ -79841,6 +77449,7 @@ func (e EmailMailgunRegionEnum) Ptr() *EmailMailgunRegionEnum {
 	return &e
 }
 
+// Credentials required to use the provider.
 var (
 	emailProviderCredentialsFieldAPIUser  = big.NewInt(1 << 0)
 	emailProviderCredentialsFieldRegion   = big.NewInt(1 << 1)
@@ -79849,7 +77458,6 @@ var (
 	emailProviderCredentialsFieldSMTPUser = big.NewInt(1 << 4)
 )
 
-// Credentials required to use the provider.
 type EmailProviderCredentials struct {
 	// API User.
 	APIUser *string `json:"api_user,omitempty" url:"api_user,omitempty"`
@@ -79912,12 +77520,10 @@ func (e *EmailProviderCredentials) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EmailProviderCredentials) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetAPIUser sets the APIUser field and marks it as non-optional;
@@ -80068,78 +77674,6 @@ func (e *EmailProviderCredentialsSchema) GetExtensibilityEmailProviderCredential
 }
 
 func (e *EmailProviderCredentialsSchema) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"api_key"}, []string{"api_key"}) {
-		valueEmailProviderCredentialsSchemaZero := new(EmailProviderCredentialsSchemaZero)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaZero); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaZero"
-			e.EmailProviderCredentialsSchemaZero = valueEmailProviderCredentialsSchemaZero
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"accessKeyId", "secretAccessKey", "region"}, []string{}) {
-		valueEmailProviderCredentialsSchemaAccessKeyID := new(EmailProviderCredentialsSchemaAccessKeyID)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaAccessKeyID); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaAccessKeyID"
-			e.EmailProviderCredentialsSchemaAccessKeyID = valueEmailProviderCredentialsSchemaAccessKeyID
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"smtp_host", "smtp_port", "smtp_user", "smtp_pass"}, []string{}) {
-		valueEmailProviderCredentialsSchemaSMTPHost := new(EmailProviderCredentialsSchemaSMTPHost)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaSMTPHost); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaSMTPHost"
-			e.EmailProviderCredentialsSchemaSMTPHost = valueEmailProviderCredentialsSchemaSMTPHost
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"api_key", "region"}, []string{}) {
-		valueEmailProviderCredentialsSchemaThree := new(EmailProviderCredentialsSchemaThree)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaThree); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaThree"
-			e.EmailProviderCredentialsSchemaThree = valueEmailProviderCredentialsSchemaThree
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"api_key", "domain", "region"}, []string{}) {
-		valueEmailProviderCredentialsSchemaAPIKey := new(EmailProviderCredentialsSchemaAPIKey)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaAPIKey); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaAPIKey"
-			e.EmailProviderCredentialsSchemaAPIKey = valueEmailProviderCredentialsSchemaAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"connectionString"}, []string{}) {
-		valueEmailProviderCredentialsSchemaConnectionString := new(EmailProviderCredentialsSchemaConnectionString)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaConnectionString); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaConnectionString"
-			e.EmailProviderCredentialsSchemaConnectionString = valueEmailProviderCredentialsSchemaConnectionString
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"tenantId", "clientId", "clientSecret"}, []string{}) {
-		valueEmailProviderCredentialsSchemaClientID := new(EmailProviderCredentialsSchemaClientID)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaClientID); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaClientID"
-			e.EmailProviderCredentialsSchemaClientID = valueEmailProviderCredentialsSchemaClientID
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{}, []string{}) {
-		valueExtensibilityEmailProviderCredentials := new(ExtensibilityEmailProviderCredentials)
-		if err := json.Unmarshal(data, &valueExtensibilityEmailProviderCredentials); err == nil {
-			e.typ = "ExtensibilityEmailProviderCredentials"
-			e.ExtensibilityEmailProviderCredentials = valueExtensibilityEmailProviderCredentials
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"api_key"}) {
-		valueEmailProviderCredentialsSchemaZero := new(EmailProviderCredentialsSchemaZero)
-		if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaZero); err == nil {
-			e.typ = "EmailProviderCredentialsSchemaZero"
-			e.EmailProviderCredentialsSchemaZero = valueEmailProviderCredentialsSchemaZero
-			return nil
-		}
-	}
 	valueEmailProviderCredentialsSchemaZero := new(EmailProviderCredentialsSchemaZero)
 	if err := json.Unmarshal(data, &valueEmailProviderCredentialsSchemaZero); err == nil {
 		e.typ = "EmailProviderCredentialsSchemaZero"
@@ -80308,12 +77842,10 @@ func (e *EmailProviderCredentialsSchemaAccessKeyID) GetExtraProperties() map[str
 }
 
 func (e *EmailProviderCredentialsSchemaAccessKeyID) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetAccessKeyID sets the AccessKeyID field and marks it as non-optional;
@@ -80428,12 +77960,10 @@ func (e *EmailProviderCredentialsSchemaAPIKey) GetExtraProperties() map[string]i
 }
 
 func (e *EmailProviderCredentialsSchemaAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetAPIKey sets the APIKey field and marks it as non-optional;
@@ -80549,12 +78079,10 @@ func (e *EmailProviderCredentialsSchemaClientID) GetExtraProperties() map[string
 }
 
 func (e *EmailProviderCredentialsSchemaClientID) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetTenantID sets the TenantID field and marks it as non-optional;
@@ -80650,12 +78178,10 @@ func (e *EmailProviderCredentialsSchemaConnectionString) GetExtraProperties() ma
 }
 
 func (e *EmailProviderCredentialsSchemaConnectionString) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetConnectionString sets the ConnectionString field and marks it as non-optional;
@@ -80766,12 +78292,10 @@ func (e *EmailProviderCredentialsSchemaSMTPHost) GetExtraProperties() map[string
 }
 
 func (e *EmailProviderCredentialsSchemaSMTPHost) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetSMTPHost sets the SMTPHost field and marks it as non-optional;
@@ -80883,12 +78407,10 @@ func (e *EmailProviderCredentialsSchemaThree) GetExtraProperties() map[string]in
 }
 
 func (e *EmailProviderCredentialsSchemaThree) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetAPIKey sets the APIKey field and marks it as non-optional;
@@ -80977,12 +78499,10 @@ func (e *EmailProviderCredentialsSchemaZero) GetExtraProperties() map[string]int
 }
 
 func (e *EmailProviderCredentialsSchemaZero) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetAPIKey sets the APIKey field and marks it as non-optional;
@@ -81110,6 +78630,7 @@ func (e EmailSparkPostRegionEnum) Ptr() *EmailSparkPostRegionEnum {
 // Specific provider setting
 type EmailSpecificProviderSettingsWithAdditionalProperties = map[string]any
 
+// Encryption key
 var (
 	encryptionKeyFieldKid       = big.NewInt(1 << 0)
 	encryptionKeyFieldType      = big.NewInt(1 << 1)
@@ -81120,13 +78641,6 @@ var (
 	encryptionKeyFieldPublicKey = big.NewInt(1 << 6)
 )
 
-// encryptionKeyNullableFields maps the wire names of EncryptionKey's nullable fields (required or optional) to their field bits.
-var encryptionKeyNullableFields = map[string]*big.Int{
-	"parent_kid": encryptionKeyFieldParentKid,
-	"public_key": encryptionKeyFieldPublicKey,
-}
-
-// Encryption key
 type EncryptionKey struct {
 	// Key ID
 	Kid   string             `json:"kid" url:"kid"`
@@ -81205,12 +78719,10 @@ func (e *EncryptionKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EncryptionKey) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -81282,13 +78794,6 @@ func (e *EncryptionKey) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, encryptionKeyNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		e.require(presentFields)
-	}
 	e.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -81401,6 +78906,7 @@ func (e EncryptionKeyType) Ptr() *EncryptionKeyType {
 	return &e
 }
 
+// Event content. This will only be set if delivery failed.
 var (
 	eventStreamCloudEventFieldID          = big.NewInt(1 << 0)
 	eventStreamCloudEventFieldSource      = big.NewInt(1 << 1)
@@ -81410,7 +78916,6 @@ var (
 	eventStreamCloudEventFieldData        = big.NewInt(1 << 5)
 )
 
-// Event content. This will only be set if delivery failed.
 type EventStreamCloudEvent struct {
 	// Unique identifier for the event
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -81481,12 +78986,10 @@ func (e *EventStreamCloudEvent) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EventStreamCloudEvent) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -81581,6 +79084,326 @@ func (e *EventStreamCloudEvent) String() string {
 	return fmt.Sprintf("%#v", e)
 }
 
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject0StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject0StrategyEnumOidc EventStreamCloudEventConnectionCreatedObject0StrategyEnum = "oidc"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject0StrategyEnum, error) {
+	switch s {
+	case "oidc":
+		return EventStreamCloudEventConnectionCreatedObject0StrategyEnumOidc, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject0StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject0StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject1StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject1StrategyEnumOkta EventStreamCloudEventConnectionCreatedObject1StrategyEnum = "okta"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject1StrategyEnum, error) {
+	switch s {
+	case "okta":
+		return EventStreamCloudEventConnectionCreatedObject1StrategyEnumOkta, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject1StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject1StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject2StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject2StrategyEnumSamlp EventStreamCloudEventConnectionCreatedObject2StrategyEnum = "samlp"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject2StrategyEnum, error) {
+	switch s {
+	case "samlp":
+		return EventStreamCloudEventConnectionCreatedObject2StrategyEnumSamlp, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject2StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject2StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject3StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject3StrategyEnumPingfederate EventStreamCloudEventConnectionCreatedObject3StrategyEnum = "pingfederate"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject3StrategyEnum, error) {
+	switch s {
+	case "pingfederate":
+		return EventStreamCloudEventConnectionCreatedObject3StrategyEnumPingfederate, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject3StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject3StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject4StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject4StrategyEnumAdfs EventStreamCloudEventConnectionCreatedObject4StrategyEnum = "adfs"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject4StrategyEnum, error) {
+	switch s {
+	case "adfs":
+		return EventStreamCloudEventConnectionCreatedObject4StrategyEnumAdfs, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject4StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject4StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject5StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject5StrategyEnumAd EventStreamCloudEventConnectionCreatedObject5StrategyEnum = "ad"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject5StrategyEnum, error) {
+	switch s {
+	case "ad":
+		return EventStreamCloudEventConnectionCreatedObject5StrategyEnumAd, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject5StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject5StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject6StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionCreatedObject6StrategyEnum = "google-apps"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject6StrategyEnum, error) {
+	switch s {
+	case "google-apps":
+		return EventStreamCloudEventConnectionCreatedObject6StrategyEnumGoogleApps, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject6StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject6StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedObject7StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedObject7StrategyEnumWaad EventStreamCloudEventConnectionCreatedObject7StrategyEnum = "waad"
+)
+
+func NewEventStreamCloudEventConnectionCreatedObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedObject7StrategyEnum, error) {
+	switch s {
+	case "waad":
+		return EventStreamCloudEventConnectionCreatedObject7StrategyEnumWaad, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedObject7StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedObject7StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumOidc EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum = "oidc"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum, error) {
+	switch s {
+	case "oidc":
+		return EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnumOidc, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject0StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumOkta EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum = "okta"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum, error) {
+	switch s {
+	case "okta":
+		return EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnumOkta, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject1StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumSamlp EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum = "samlp"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum, error) {
+	switch s {
+	case "samlp":
+		return EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnumSamlp, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject2StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumPingfederate EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum = "pingfederate"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum, error) {
+	switch s {
+	case "pingfederate":
+		return EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnumPingfederate, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject3StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumAdfs EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum = "adfs"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum, error) {
+	switch s {
+	case "adfs":
+		return EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnumAdfs, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject4StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumAd EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum = "ad"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum, error) {
+	switch s {
+	case "ad":
+		return EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnumAd, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject5StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum = "google-apps"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum, error) {
+	switch s {
+	case "google-apps":
+		return EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnumGoogleApps, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject6StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumWaad EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum = "waad"
+)
+
+func NewEventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum, error) {
+	switch s {
+	case "waad":
+		return EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnumWaad, nil
+	}
+	var t EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionCreatedPreviousObject7StrategyEnum {
+	return &e
+}
+
 // The event type (injected from the SSE event field).
 type EventStreamCloudEventConnectionCreatedTypeEnum string
 
@@ -81601,6 +79424,326 @@ func (e EventStreamCloudEventConnectionCreatedTypeEnum) Ptr() *EventStreamCloudE
 	return &e
 }
 
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject0StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject0StrategyEnumOidc EventStreamCloudEventConnectionDeletedObject0StrategyEnum = "oidc"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject0StrategyEnum, error) {
+	switch s {
+	case "oidc":
+		return EventStreamCloudEventConnectionDeletedObject0StrategyEnumOidc, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject0StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject0StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject1StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject1StrategyEnumOkta EventStreamCloudEventConnectionDeletedObject1StrategyEnum = "okta"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject1StrategyEnum, error) {
+	switch s {
+	case "okta":
+		return EventStreamCloudEventConnectionDeletedObject1StrategyEnumOkta, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject1StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject1StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject2StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject2StrategyEnumSamlp EventStreamCloudEventConnectionDeletedObject2StrategyEnum = "samlp"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject2StrategyEnum, error) {
+	switch s {
+	case "samlp":
+		return EventStreamCloudEventConnectionDeletedObject2StrategyEnumSamlp, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject2StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject2StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject3StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject3StrategyEnumPingfederate EventStreamCloudEventConnectionDeletedObject3StrategyEnum = "pingfederate"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject3StrategyEnum, error) {
+	switch s {
+	case "pingfederate":
+		return EventStreamCloudEventConnectionDeletedObject3StrategyEnumPingfederate, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject3StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject3StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject4StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject4StrategyEnumAdfs EventStreamCloudEventConnectionDeletedObject4StrategyEnum = "adfs"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject4StrategyEnum, error) {
+	switch s {
+	case "adfs":
+		return EventStreamCloudEventConnectionDeletedObject4StrategyEnumAdfs, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject4StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject4StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject5StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject5StrategyEnumAd EventStreamCloudEventConnectionDeletedObject5StrategyEnum = "ad"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject5StrategyEnum, error) {
+	switch s {
+	case "ad":
+		return EventStreamCloudEventConnectionDeletedObject5StrategyEnumAd, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject5StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject5StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject6StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionDeletedObject6StrategyEnum = "google-apps"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject6StrategyEnum, error) {
+	switch s {
+	case "google-apps":
+		return EventStreamCloudEventConnectionDeletedObject6StrategyEnumGoogleApps, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject6StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject6StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedObject7StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedObject7StrategyEnumWaad EventStreamCloudEventConnectionDeletedObject7StrategyEnum = "waad"
+)
+
+func NewEventStreamCloudEventConnectionDeletedObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedObject7StrategyEnum, error) {
+	switch s {
+	case "waad":
+		return EventStreamCloudEventConnectionDeletedObject7StrategyEnumWaad, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedObject7StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedObject7StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumOidc EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum = "oidc"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum, error) {
+	switch s {
+	case "oidc":
+		return EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnumOidc, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject0StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumOkta EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum = "okta"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum, error) {
+	switch s {
+	case "okta":
+		return EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnumOkta, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject1StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumSamlp EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum = "samlp"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum, error) {
+	switch s {
+	case "samlp":
+		return EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnumSamlp, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject2StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumPingfederate EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum = "pingfederate"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum, error) {
+	switch s {
+	case "pingfederate":
+		return EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnumPingfederate, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject3StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumAdfs EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum = "adfs"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum, error) {
+	switch s {
+	case "adfs":
+		return EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnumAdfs, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject4StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumAd EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum = "ad"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum, error) {
+	switch s {
+	case "ad":
+		return EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnumAd, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject5StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum = "google-apps"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum, error) {
+	switch s {
+	case "google-apps":
+		return EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnumGoogleApps, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject6StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumWaad EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum = "waad"
+)
+
+func NewEventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum, error) {
+	switch s {
+	case "waad":
+		return EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnumWaad, nil
+	}
+	var t EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionDeletedPreviousObject7StrategyEnum {
+	return &e
+}
+
 // The event type (injected from the SSE event field).
 type EventStreamCloudEventConnectionDeletedTypeEnum string
 
@@ -81618,6 +79761,326 @@ func NewEventStreamCloudEventConnectionDeletedTypeEnumFromString(s string) (Even
 }
 
 func (e EventStreamCloudEventConnectionDeletedTypeEnum) Ptr() *EventStreamCloudEventConnectionDeletedTypeEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject0StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject0StrategyEnumOidc EventStreamCloudEventConnectionUpdatedObject0StrategyEnum = "oidc"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject0StrategyEnum, error) {
+	switch s {
+	case "oidc":
+		return EventStreamCloudEventConnectionUpdatedObject0StrategyEnumOidc, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject0StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject0StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject1StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject1StrategyEnumOkta EventStreamCloudEventConnectionUpdatedObject1StrategyEnum = "okta"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject1StrategyEnum, error) {
+	switch s {
+	case "okta":
+		return EventStreamCloudEventConnectionUpdatedObject1StrategyEnumOkta, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject1StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject1StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject2StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject2StrategyEnumSamlp EventStreamCloudEventConnectionUpdatedObject2StrategyEnum = "samlp"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject2StrategyEnum, error) {
+	switch s {
+	case "samlp":
+		return EventStreamCloudEventConnectionUpdatedObject2StrategyEnumSamlp, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject2StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject2StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject3StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject3StrategyEnumPingfederate EventStreamCloudEventConnectionUpdatedObject3StrategyEnum = "pingfederate"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject3StrategyEnum, error) {
+	switch s {
+	case "pingfederate":
+		return EventStreamCloudEventConnectionUpdatedObject3StrategyEnumPingfederate, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject3StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject3StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject4StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject4StrategyEnumAdfs EventStreamCloudEventConnectionUpdatedObject4StrategyEnum = "adfs"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject4StrategyEnum, error) {
+	switch s {
+	case "adfs":
+		return EventStreamCloudEventConnectionUpdatedObject4StrategyEnumAdfs, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject4StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject4StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject5StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject5StrategyEnumAd EventStreamCloudEventConnectionUpdatedObject5StrategyEnum = "ad"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject5StrategyEnum, error) {
+	switch s {
+	case "ad":
+		return EventStreamCloudEventConnectionUpdatedObject5StrategyEnumAd, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject5StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject5StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject6StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionUpdatedObject6StrategyEnum = "google-apps"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject6StrategyEnum, error) {
+	switch s {
+	case "google-apps":
+		return EventStreamCloudEventConnectionUpdatedObject6StrategyEnumGoogleApps, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject6StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject6StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedObject7StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedObject7StrategyEnumWaad EventStreamCloudEventConnectionUpdatedObject7StrategyEnum = "waad"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedObject7StrategyEnum, error) {
+	switch s {
+	case "waad":
+		return EventStreamCloudEventConnectionUpdatedObject7StrategyEnumWaad, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedObject7StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedObject7StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumOidc EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum = "oidc"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum, error) {
+	switch s {
+	case "oidc":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnumOidc, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject0StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumOkta EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum = "okta"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum, error) {
+	switch s {
+	case "okta":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnumOkta, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject1StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumSamlp EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum = "samlp"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum, error) {
+	switch s {
+	case "samlp":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnumSamlp, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject2StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumPingfederate EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum = "pingfederate"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum, error) {
+	switch s {
+	case "pingfederate":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnumPingfederate, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject3StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumAdfs EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum = "adfs"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum, error) {
+	switch s {
+	case "adfs":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnumAdfs, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject4StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumAd EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum = "ad"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum, error) {
+	switch s {
+	case "ad":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnumAd, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject5StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumGoogleApps EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum = "google-apps"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum, error) {
+	switch s {
+	case "google-apps":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnumGoogleApps, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject6StrategyEnum {
+	return &e
+}
+
+// The connection strategy.
+type EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum string
+
+const (
+	EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumWaad EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum = "waad"
+)
+
+func NewEventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumFromString(s string) (EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum, error) {
+	switch s {
+	case "waad":
+		return EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnumWaad, nil
+	}
+	var t EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum) Ptr() *EventStreamCloudEventConnectionUpdatedPreviousObject7StrategyEnum {
 	return &e
 }
 
@@ -81664,6 +80127,126 @@ func (e EventStreamCloudEventErrorMessageTypeEnum) Ptr() *EventStreamCloudEventE
 	return &e
 }
 
+// The type of the group.
+type EventStreamCloudEventGroupCreatedObject0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupCreatedObject0TypeEnumConnection EventStreamCloudEventGroupCreatedObject0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupCreatedObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedObject0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupCreatedObject0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupCreatedObject0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupCreatedObject0TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedObject0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupCreatedObject1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupCreatedObject1TypeEnumOrganization EventStreamCloudEventGroupCreatedObject1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupCreatedObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedObject1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupCreatedObject1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupCreatedObject1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupCreatedObject1TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedObject1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupCreatedObject2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupCreatedObject2TypeEnumTenant EventStreamCloudEventGroupCreatedObject2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupCreatedObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedObject2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupCreatedObject2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupCreatedObject2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupCreatedObject2TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedObject2TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupCreatedPreviousObject0TypeEnumConnection EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupCreatedPreviousObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupCreatedPreviousObject0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedPreviousObject0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupCreatedPreviousObject1TypeEnumOrganization EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupCreatedPreviousObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupCreatedPreviousObject1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedPreviousObject1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupCreatedPreviousObject2TypeEnumTenant EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupCreatedPreviousObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupCreatedPreviousObject2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum) Ptr() *EventStreamCloudEventGroupCreatedPreviousObject2TypeEnum {
+	return &e
+}
+
 // The event type (injected from the SSE event field).
 type EventStreamCloudEventGroupCreatedTypeEnum string
 
@@ -81681,6 +80264,126 @@ func NewEventStreamCloudEventGroupCreatedTypeEnumFromString(s string) (EventStre
 }
 
 func (e EventStreamCloudEventGroupCreatedTypeEnum) Ptr() *EventStreamCloudEventGroupCreatedTypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupDeletedObject0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupDeletedObject0TypeEnumConnection EventStreamCloudEventGroupDeletedObject0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupDeletedObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedObject0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupDeletedObject0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupDeletedObject0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupDeletedObject0TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedObject0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupDeletedObject1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupDeletedObject1TypeEnumOrganization EventStreamCloudEventGroupDeletedObject1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupDeletedObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedObject1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupDeletedObject1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupDeletedObject1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupDeletedObject1TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedObject1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupDeletedObject2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupDeletedObject2TypeEnumTenant EventStreamCloudEventGroupDeletedObject2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupDeletedObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedObject2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupDeletedObject2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupDeletedObject2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupDeletedObject2TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedObject2TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupDeletedPreviousObject0TypeEnumConnection EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupDeletedPreviousObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupDeletedPreviousObject0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedPreviousObject0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupDeletedPreviousObject1TypeEnumOrganization EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupDeletedPreviousObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupDeletedPreviousObject1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedPreviousObject1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupDeletedPreviousObject2TypeEnumTenant EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupDeletedPreviousObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupDeletedPreviousObject2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum) Ptr() *EventStreamCloudEventGroupDeletedPreviousObject2TypeEnum {
 	return &e
 }
 
@@ -81704,6 +80407,206 @@ func (e EventStreamCloudEventGroupDeletedTypeEnum) Ptr() *EventStreamCloudEventG
 	return &e
 }
 
+// The type of the group.
+type EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectGroup2TypeEnum {
+	return &e
+}
+
+// Type discriminator for user members
+type EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum = "user"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum, error) {
+	switch s {
+	case "user":
+		return EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnumUser, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectMember0MemberTypeEnum {
+	return &e
+}
+
+// Type discriminator for connection members
+type EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedObjectMember1MemberTypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectGroup2TypeEnum {
+	return &e
+}
+
+// Type discriminator for user members
+type EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum = "user"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum, error) {
+	switch s {
+	case "user":
+		return EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnumUser, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember0MemberTypeEnum {
+	return &e
+}
+
+// Type discriminator for connection members
+type EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedPreviousObjectMember1MemberTypeEnum {
+	return &e
+}
+
 // The event type (injected from the SSE event field).
 type EventStreamCloudEventGroupMemberAddedTypeEnum string
 
@@ -81721,6 +80624,206 @@ func NewEventStreamCloudEventGroupMemberAddedTypeEnumFromString(s string) (Event
 }
 
 func (e EventStreamCloudEventGroupMemberAddedTypeEnum) Ptr() *EventStreamCloudEventGroupMemberAddedTypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectGroup2TypeEnum {
+	return &e
+}
+
+// Type discriminator for user members
+type EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum = "user"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum, error) {
+	switch s {
+	case "user":
+		return EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnumUser, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectMember0MemberTypeEnum {
+	return &e
+}
+
+// Type discriminator for connection members
+type EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedObjectMember1MemberTypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectGroup2TypeEnum {
+	return &e
+}
+
+// Type discriminator for user members
+type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumUser EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum = "user"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum, error) {
+	switch s {
+	case "user":
+		return EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnumUser, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember0MemberTypeEnum {
+	return &e
+}
+
+// Type discriminator for connection members
+type EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum string
+
+const (
+	EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumConnection EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumFromString(s string) (EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum) Ptr() *EventStreamCloudEventGroupMemberDeletedPreviousObjectMember1MemberTypeEnum {
 	return &e
 }
 
@@ -81744,6 +80847,126 @@ func (e EventStreamCloudEventGroupMemberDeletedTypeEnum) Ptr() *EventStreamCloud
 	return &e
 }
 
+// The type of the group.
+type EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedObjectGroup2TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleAssignedPreviousObjectGroup2TypeEnum {
+	return &e
+}
+
 // The event type (injected from the SSE event field).
 type EventStreamCloudEventGroupRoleAssignedTypeEnum string
 
@@ -81764,6 +80987,126 @@ func (e EventStreamCloudEventGroupRoleAssignedTypeEnum) Ptr() *EventStreamCloudE
 	return &e
 }
 
+// The type of the group.
+type EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedObjectGroup2TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedPreviousObjectGroup2TypeEnum {
+	return &e
+}
+
 // The event type (injected from the SSE event field).
 type EventStreamCloudEventGroupRoleDeletedTypeEnum string
 
@@ -81781,6 +81124,126 @@ func NewEventStreamCloudEventGroupRoleDeletedTypeEnumFromString(s string) (Event
 }
 
 func (e EventStreamCloudEventGroupRoleDeletedTypeEnum) Ptr() *EventStreamCloudEventGroupRoleDeletedTypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupUpdatedObject0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupUpdatedObject0TypeEnumConnection EventStreamCloudEventGroupUpdatedObject0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupUpdatedObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedObject0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupUpdatedObject0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupUpdatedObject0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupUpdatedObject0TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedObject0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupUpdatedObject1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupUpdatedObject1TypeEnumOrganization EventStreamCloudEventGroupUpdatedObject1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupUpdatedObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedObject1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupUpdatedObject1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupUpdatedObject1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupUpdatedObject1TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedObject1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupUpdatedObject2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupUpdatedObject2TypeEnumTenant EventStreamCloudEventGroupUpdatedObject2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupUpdatedObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedObject2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupUpdatedObject2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupUpdatedObject2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupUpdatedObject2TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedObject2TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum string
+
+const (
+	EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumConnection EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedPreviousObject0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum string
+
+const (
+	EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumOrganization EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedPreviousObject1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum string
+
+const (
+	EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumTenant EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumFromString(s string) (EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum) Ptr() *EventStreamCloudEventGroupUpdatedPreviousObject2TypeEnum {
 	return &e
 }
 
@@ -81924,6 +81387,126 @@ func (e EventStreamCloudEventOrgDeletedTypeEnum) Ptr() *EventStreamCloudEventOrg
 	return &e
 }
 
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedObjectGroup2TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedPreviousObjectGroup2TypeEnum {
+	return &e
+}
+
 // The event type (injected from the SSE event field).
 type EventStreamCloudEventOrgGroupRoleAssignedTypeEnum string
 
@@ -81941,6 +81524,126 @@ func NewEventStreamCloudEventOrgGroupRoleAssignedTypeEnumFromString(s string) (E
 }
 
 func (e EventStreamCloudEventOrgGroupRoleAssignedTypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleAssignedTypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedObjectGroup2TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum = "connection"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum, error) {
+	switch s {
+	case "connection":
+		return EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnumConnection, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup0TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum = "organization"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum, error) {
+	switch s {
+	case "organization":
+		return EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnumOrganization, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup1TypeEnum {
+	return &e
+}
+
+// The type of the group.
+type EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum string
+
+const (
+	EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum = "tenant"
+)
+
+func NewEventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumFromString(s string) (EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum, error) {
+	switch s {
+	case "tenant":
+		return EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnumTenant, nil
+	}
+	var t EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum) Ptr() *EventStreamCloudEventOrgGroupRoleDeletedPreviousObjectGroup2TypeEnum {
 	return &e
 }
 
@@ -82124,6 +81827,7 @@ func (e EventStreamCloudEventUserUpdatedTypeEnum) Ptr() *EventStreamCloudEventUs
 	return &e
 }
 
+// Metadata about a specific attempt to deliver an event
 var (
 	eventStreamDeliveryFieldID            = big.NewInt(1 << 0)
 	eventStreamDeliveryFieldEventStreamID = big.NewInt(1 << 1)
@@ -82133,7 +81837,6 @@ var (
 	eventStreamDeliveryFieldEvent         = big.NewInt(1 << 5)
 )
 
-// Metadata about a specific attempt to deliver an event
 type EventStreamDelivery struct {
 	// Unique identifier for the delivery
 	ID string `json:"id" url:"id"`
@@ -82202,12 +81905,10 @@ func (e *EventStreamDelivery) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *EventStreamDelivery) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -82353,12 +82054,10 @@ func (e *EventStreamDeliveryAttempt) GetExtraProperties() map[string]interface{}
 }
 
 func (e *EventStreamDeliveryAttempt) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -82645,6 +82344,66 @@ func (e EventStreamEventTypeEnum) Ptr() *EventStreamEventTypeEnum {
 // Event type(s) to listen for. Specify multiple times for multiple types (e.g., ?event_type=user.created&event_type=user.updated). If not provided, all event types will be streamed.
 type EventStreamSubscribeEventsEventTypeParam = []EventStreamSubscribeEventsEventTypeEnum
 
+// Type of authorization.
+type EventStreamWebhookBasicAuthMethodEnum string
+
+const (
+	EventStreamWebhookBasicAuthMethodEnumBasic EventStreamWebhookBasicAuthMethodEnum = "basic"
+)
+
+func NewEventStreamWebhookBasicAuthMethodEnumFromString(s string) (EventStreamWebhookBasicAuthMethodEnum, error) {
+	switch s {
+	case "basic":
+		return EventStreamWebhookBasicAuthMethodEnumBasic, nil
+	}
+	var t EventStreamWebhookBasicAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookBasicAuthMethodEnum) Ptr() *EventStreamWebhookBasicAuthMethodEnum {
+	return &e
+}
+
+// Type of authorization.
+type EventStreamWebhookBearerAuthMethodEnum string
+
+const (
+	EventStreamWebhookBearerAuthMethodEnumBearer EventStreamWebhookBearerAuthMethodEnum = "bearer"
+)
+
+func NewEventStreamWebhookBearerAuthMethodEnumFromString(s string) (EventStreamWebhookBearerAuthMethodEnum, error) {
+	switch s {
+	case "bearer":
+		return EventStreamWebhookBearerAuthMethodEnumBearer, nil
+	}
+	var t EventStreamWebhookBearerAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookBearerAuthMethodEnum) Ptr() *EventStreamWebhookBearerAuthMethodEnum {
+	return &e
+}
+
+// Type of authorization.
+type EventStreamWebhookCustomHeaderAuthMethodEnum string
+
+const (
+	EventStreamWebhookCustomHeaderAuthMethodEnumCustomHeader EventStreamWebhookCustomHeaderAuthMethodEnum = "custom_header"
+)
+
+func NewEventStreamWebhookCustomHeaderAuthMethodEnumFromString(s string) (EventStreamWebhookCustomHeaderAuthMethodEnum, error) {
+	switch s {
+	case "custom_header":
+		return EventStreamWebhookCustomHeaderAuthMethodEnumCustomHeader, nil
+	}
+	var t EventStreamWebhookCustomHeaderAuthMethodEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (e EventStreamWebhookCustomHeaderAuthMethodEnum) Ptr() *EventStreamWebhookCustomHeaderAuthMethodEnum {
+	return &e
+}
+
 var (
 	experimentListItemFieldID                  = big.NewInt(1 << 0)
 	experimentListItemFieldName                = big.NewInt(1 << 1)
@@ -82666,12 +82425,6 @@ var (
 	experimentListItemFieldCreatedAt           = big.NewInt(1 << 17)
 	experimentListItemFieldUpdatedAt           = big.NewInt(1 << 18)
 )
-
-// experimentListItemNullableFields maps the wire names of ExperimentListItem's nullable fields (required or optional) to their field bits.
-var experimentListItemNullableFields = map[string]*big.Int{
-	"feature_flag_snapshot": experimentListItemFieldFeatureFlagSnapshot,
-	"current_level":         experimentListItemFieldCurrentLevel,
-}
 
 type ExperimentListItem struct {
 	ID                 string                 `json:"id" url:"id"`
@@ -82846,12 +82599,10 @@ func (e *ExperimentListItem) GetExtraProperties() map[string]interface{} {
 }
 
 func (e *ExperimentListItem) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -83011,13 +82762,6 @@ func (e *ExperimentListItem) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	e.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, experimentListItemNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		e.require(presentFields)
-	}
 	e.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -83157,12 +82901,10 @@ func (e *ExperimentValidationError) GetExtraProperties() map[string]interface{} 
 }
 
 func (e *ExperimentValidationError) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -83238,12 +82980,10 @@ func (e *ExtensibilityEmailProviderCredentials) GetExtraProperties() map[string]
 }
 
 func (e *ExtensibilityEmailProviderCredentials) require(field *big.Int) {
-	next := new(big.Int)
-	if e.explicitFields != nil {
-		next.Set(e.explicitFields)
+	if e.explicitFields == nil {
+		e.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	e.explicitFields = next
+	e.explicitFields.Or(e.explicitFields, field)
 }
 
 func (e *ExtensibilityEmailProviderCredentials) UnmarshalJSON(data []byte) error {
@@ -83380,12 +83120,10 @@ func (f *FeatureFlag) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FeatureFlag) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -83546,12 +83284,10 @@ func (f *FeatureFlagConfigParam) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FeatureFlagConfigParam) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -83804,12 +83540,10 @@ func (f *FlowExecutionSummary) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *FlowExecutionSummary) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -83968,12 +83702,10 @@ func (f *FlowsVaultConnectioSetupAPIKey) GetExtraProperties() map[string]interfa
 }
 
 func (f *FlowsVaultConnectioSetupAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84079,12 +83811,10 @@ func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) GetExtraProperties() map[str
 }
 
 func (f *FlowsVaultConnectioSetupAPIKeyWithBaseURL) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84206,12 +83936,10 @@ func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) GetExtraProperties() map[stri
 }
 
 func (f *FlowsVaultConnectioSetupBigqueryOauthJwt) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84322,12 +84050,10 @@ func (f *FlowsVaultConnectioSetupHTTPBearer) GetExtraProperties() map[string]int
 }
 
 func (f *FlowsVaultConnectioSetupHTTPBearer) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84425,12 +84151,10 @@ func (f *FlowsVaultConnectioSetupJwt) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowsVaultConnectioSetupJwt) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84592,12 +84316,10 @@ func (f *FlowsVaultConnectioSetupMailjetAPIKey) GetExtraProperties() map[string]
 }
 
 func (f *FlowsVaultConnectioSetupMailjetAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84728,12 +84450,10 @@ func (f *FlowsVaultConnectioSetupOauthApp) GetExtraProperties() map[string]inter
 }
 
 func (f *FlowsVaultConnectioSetupOauthApp) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84852,12 +84572,10 @@ func (f *FlowsVaultConnectioSetupOauthCode) GetExtraProperties() map[string]inte
 }
 
 func (f *FlowsVaultConnectioSetupOauthCode) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -84958,12 +84676,10 @@ func (f *FlowsVaultConnectioSetupSecretAPIKey) GetExtraProperties() map[string]i
 }
 
 func (f *FlowsVaultConnectioSetupSecretAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -85069,12 +84785,10 @@ func (f *FlowsVaultConnectioSetupStripeKeyPair) GetExtraProperties() map[string]
 }
 
 func (f *FlowsVaultConnectioSetupStripeKeyPair) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -85178,12 +84892,10 @@ func (f *FlowsVaultConnectioSetupToken) GetExtraProperties() map[string]interfac
 }
 
 func (f *FlowsVaultConnectioSetupToken) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -85289,12 +85001,10 @@ func (f *FlowsVaultConnectioSetupTwilioAPIKey) GetExtraProperties() map[string]i
 }
 
 func (f *FlowsVaultConnectioSetupTwilioAPIKey) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -85569,12 +85279,10 @@ func (f *FlowsVaultConnectioSetupWebhook) GetExtraProperties() map[string]interf
 }
 
 func (f *FlowsVaultConnectioSetupWebhook) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -86109,12 +85817,10 @@ func (f *FlowsVaultConnectionHttpApiKeySetup) GetExtraProperties() map[string]in
 }
 
 func (f *FlowsVaultConnectionHttpApiKeySetup) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -86256,12 +85962,10 @@ func (f *FlowsVaultConnectionHTTPBasicAuthSetup) GetExtraProperties() map[string
 }
 
 func (f *FlowsVaultConnectionHTTPBasicAuthSetup) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -86410,12 +86114,10 @@ func (f *FlowsVaultConnectionHTTPOauthClientCredentialsSetup) GetExtraProperties
 }
 
 func (f *FlowsVaultConnectionHTTPOauthClientCredentialsSetup) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -86675,12 +86377,10 @@ func (f *FlowsVaultConnectionSummary) GetExtraProperties() map[string]interface{
 }
 
 func (f *FlowsVaultConnectionSummary) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -86804,13 +86504,13 @@ func (f *FlowsVaultConnectionSummary) String() string {
 	return fmt.Sprintf("%#v", f)
 }
 
+// Forbidden
 var (
 	forbiddenSchemaFieldMessage    = big.NewInt(1 << 0)
 	forbiddenSchemaFieldStatusCode = big.NewInt(1 << 1)
 	forbiddenSchemaFieldError      = big.NewInt(1 << 2)
 )
 
-// Forbidden
 type ForbiddenSchema struct {
 	Message    string               `json:"message" url:"message"`
 	StatusCode string               `json:"statusCode" url:"statusCode"`
@@ -86852,12 +86552,10 @@ func (f *ForbiddenSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (f *ForbiddenSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if f.explicitFields != nil {
-		next.Set(f.explicitFields)
+	if f.explicitFields == nil {
+		f.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	f.explicitFields = next
+	f.explicitFields.Or(f.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -86942,6 +86640,615 @@ func (f ForbiddenSchemaError) Ptr() *ForbiddenSchemaError {
 	return &f
 }
 
+type FormBlockTypeDividerConst string
+
+const (
+	FormBlockTypeDividerConstDivider FormBlockTypeDividerConst = "DIVIDER"
+)
+
+func NewFormBlockTypeDividerConstFromString(s string) (FormBlockTypeDividerConst, error) {
+	switch s {
+	case "DIVIDER":
+		return FormBlockTypeDividerConstDivider, nil
+	}
+	var t FormBlockTypeDividerConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeDividerConst) Ptr() *FormBlockTypeDividerConst {
+	return &f
+}
+
+type FormBlockTypeHTMLConst string
+
+const (
+	FormBlockTypeHTMLConstHTML FormBlockTypeHTMLConst = "HTML"
+)
+
+func NewFormBlockTypeHTMLConstFromString(s string) (FormBlockTypeHTMLConst, error) {
+	switch s {
+	case "HTML":
+		return FormBlockTypeHTMLConstHTML, nil
+	}
+	var t FormBlockTypeHTMLConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeHTMLConst) Ptr() *FormBlockTypeHTMLConst {
+	return &f
+}
+
+type FormBlockTypeImageConst string
+
+const (
+	FormBlockTypeImageConstImage FormBlockTypeImageConst = "IMAGE"
+)
+
+func NewFormBlockTypeImageConstFromString(s string) (FormBlockTypeImageConst, error) {
+	switch s {
+	case "IMAGE":
+		return FormBlockTypeImageConstImage, nil
+	}
+	var t FormBlockTypeImageConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeImageConst) Ptr() *FormBlockTypeImageConst {
+	return &f
+}
+
+type FormBlockTypeJumpButtonConst string
+
+const (
+	FormBlockTypeJumpButtonConstJumpButton FormBlockTypeJumpButtonConst = "JUMP_BUTTON"
+)
+
+func NewFormBlockTypeJumpButtonConstFromString(s string) (FormBlockTypeJumpButtonConst, error) {
+	switch s {
+	case "JUMP_BUTTON":
+		return FormBlockTypeJumpButtonConstJumpButton, nil
+	}
+	var t FormBlockTypeJumpButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeJumpButtonConst) Ptr() *FormBlockTypeJumpButtonConst {
+	return &f
+}
+
+type FormBlockTypeNextButtonConst string
+
+const (
+	FormBlockTypeNextButtonConstNextButton FormBlockTypeNextButtonConst = "NEXT_BUTTON"
+)
+
+func NewFormBlockTypeNextButtonConstFromString(s string) (FormBlockTypeNextButtonConst, error) {
+	switch s {
+	case "NEXT_BUTTON":
+		return FormBlockTypeNextButtonConstNextButton, nil
+	}
+	var t FormBlockTypeNextButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeNextButtonConst) Ptr() *FormBlockTypeNextButtonConst {
+	return &f
+}
+
+type FormBlockTypePreviousButtonConst string
+
+const (
+	FormBlockTypePreviousButtonConstPreviousButton FormBlockTypePreviousButtonConst = "PREVIOUS_BUTTON"
+)
+
+func NewFormBlockTypePreviousButtonConstFromString(s string) (FormBlockTypePreviousButtonConst, error) {
+	switch s {
+	case "PREVIOUS_BUTTON":
+		return FormBlockTypePreviousButtonConstPreviousButton, nil
+	}
+	var t FormBlockTypePreviousButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypePreviousButtonConst) Ptr() *FormBlockTypePreviousButtonConst {
+	return &f
+}
+
+type FormBlockTypeResendButtonConst string
+
+const (
+	FormBlockTypeResendButtonConstResendButton FormBlockTypeResendButtonConst = "RESEND_BUTTON"
+)
+
+func NewFormBlockTypeResendButtonConstFromString(s string) (FormBlockTypeResendButtonConst, error) {
+	switch s {
+	case "RESEND_BUTTON":
+		return FormBlockTypeResendButtonConstResendButton, nil
+	}
+	var t FormBlockTypeResendButtonConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeResendButtonConst) Ptr() *FormBlockTypeResendButtonConst {
+	return &f
+}
+
+type FormBlockTypeRichTextConst string
+
+const (
+	FormBlockTypeRichTextConstRichText FormBlockTypeRichTextConst = "RICH_TEXT"
+)
+
+func NewFormBlockTypeRichTextConstFromString(s string) (FormBlockTypeRichTextConst, error) {
+	switch s {
+	case "RICH_TEXT":
+		return FormBlockTypeRichTextConstRichText, nil
+	}
+	var t FormBlockTypeRichTextConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormBlockTypeRichTextConst) Ptr() *FormBlockTypeRichTextConst {
+	return &f
+}
+
+type FormFieldPaymentConfigChargeTypeOneOffConst string
+
+const (
+	FormFieldPaymentConfigChargeTypeOneOffConstOneOff FormFieldPaymentConfigChargeTypeOneOffConst = "ONE_OFF"
+)
+
+func NewFormFieldPaymentConfigChargeTypeOneOffConstFromString(s string) (FormFieldPaymentConfigChargeTypeOneOffConst, error) {
+	switch s {
+	case "ONE_OFF":
+		return FormFieldPaymentConfigChargeTypeOneOffConstOneOff, nil
+	}
+	var t FormFieldPaymentConfigChargeTypeOneOffConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldPaymentConfigChargeTypeOneOffConst) Ptr() *FormFieldPaymentConfigChargeTypeOneOffConst {
+	return &f
+}
+
+type FormFieldPaymentConfigChargeTypeSubscriptionConst string
+
+const (
+	FormFieldPaymentConfigChargeTypeSubscriptionConstSubscription FormFieldPaymentConfigChargeTypeSubscriptionConst = "SUBSCRIPTION"
+)
+
+func NewFormFieldPaymentConfigChargeTypeSubscriptionConstFromString(s string) (FormFieldPaymentConfigChargeTypeSubscriptionConst, error) {
+	switch s {
+	case "SUBSCRIPTION":
+		return FormFieldPaymentConfigChargeTypeSubscriptionConstSubscription, nil
+	}
+	var t FormFieldPaymentConfigChargeTypeSubscriptionConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldPaymentConfigChargeTypeSubscriptionConst) Ptr() *FormFieldPaymentConfigChargeTypeSubscriptionConst {
+	return &f
+}
+
+type FormFieldTypeBooleanConst string
+
+const (
+	FormFieldTypeBooleanConstBoolean FormFieldTypeBooleanConst = "BOOLEAN"
+)
+
+func NewFormFieldTypeBooleanConstFromString(s string) (FormFieldTypeBooleanConst, error) {
+	switch s {
+	case "BOOLEAN":
+		return FormFieldTypeBooleanConstBoolean, nil
+	}
+	var t FormFieldTypeBooleanConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeBooleanConst) Ptr() *FormFieldTypeBooleanConst {
+	return &f
+}
+
+type FormFieldTypeCardsConst string
+
+const (
+	FormFieldTypeCardsConstCards FormFieldTypeCardsConst = "CARDS"
+)
+
+func NewFormFieldTypeCardsConstFromString(s string) (FormFieldTypeCardsConst, error) {
+	switch s {
+	case "CARDS":
+		return FormFieldTypeCardsConstCards, nil
+	}
+	var t FormFieldTypeCardsConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeCardsConst) Ptr() *FormFieldTypeCardsConst {
+	return &f
+}
+
+type FormFieldTypeChoiceConst string
+
+const (
+	FormFieldTypeChoiceConstChoice FormFieldTypeChoiceConst = "CHOICE"
+)
+
+func NewFormFieldTypeChoiceConstFromString(s string) (FormFieldTypeChoiceConst, error) {
+	switch s {
+	case "CHOICE":
+		return FormFieldTypeChoiceConstChoice, nil
+	}
+	var t FormFieldTypeChoiceConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeChoiceConst) Ptr() *FormFieldTypeChoiceConst {
+	return &f
+}
+
+type FormFieldTypeCustomConst string
+
+const (
+	FormFieldTypeCustomConstCustom FormFieldTypeCustomConst = "CUSTOM"
+)
+
+func NewFormFieldTypeCustomConstFromString(s string) (FormFieldTypeCustomConst, error) {
+	switch s {
+	case "CUSTOM":
+		return FormFieldTypeCustomConstCustom, nil
+	}
+	var t FormFieldTypeCustomConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeCustomConst) Ptr() *FormFieldTypeCustomConst {
+	return &f
+}
+
+type FormFieldTypeDateConst string
+
+const (
+	FormFieldTypeDateConstDate FormFieldTypeDateConst = "DATE"
+)
+
+func NewFormFieldTypeDateConstFromString(s string) (FormFieldTypeDateConst, error) {
+	switch s {
+	case "DATE":
+		return FormFieldTypeDateConstDate, nil
+	}
+	var t FormFieldTypeDateConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeDateConst) Ptr() *FormFieldTypeDateConst {
+	return &f
+}
+
+type FormFieldTypeDropdownConst string
+
+const (
+	FormFieldTypeDropdownConstDropdown FormFieldTypeDropdownConst = "DROPDOWN"
+)
+
+func NewFormFieldTypeDropdownConstFromString(s string) (FormFieldTypeDropdownConst, error) {
+	switch s {
+	case "DROPDOWN":
+		return FormFieldTypeDropdownConstDropdown, nil
+	}
+	var t FormFieldTypeDropdownConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeDropdownConst) Ptr() *FormFieldTypeDropdownConst {
+	return &f
+}
+
+type FormFieldTypeEmailConst string
+
+const (
+	FormFieldTypeEmailConstEmail FormFieldTypeEmailConst = "EMAIL"
+)
+
+func NewFormFieldTypeEmailConstFromString(s string) (FormFieldTypeEmailConst, error) {
+	switch s {
+	case "EMAIL":
+		return FormFieldTypeEmailConstEmail, nil
+	}
+	var t FormFieldTypeEmailConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeEmailConst) Ptr() *FormFieldTypeEmailConst {
+	return &f
+}
+
+type FormFieldTypeFileConst string
+
+const (
+	FormFieldTypeFileConstFile FormFieldTypeFileConst = "FILE"
+)
+
+func NewFormFieldTypeFileConstFromString(s string) (FormFieldTypeFileConst, error) {
+	switch s {
+	case "FILE":
+		return FormFieldTypeFileConstFile, nil
+	}
+	var t FormFieldTypeFileConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeFileConst) Ptr() *FormFieldTypeFileConst {
+	return &f
+}
+
+type FormFieldTypeLegalConst string
+
+const (
+	FormFieldTypeLegalConstLegal FormFieldTypeLegalConst = "LEGAL"
+)
+
+func NewFormFieldTypeLegalConstFromString(s string) (FormFieldTypeLegalConst, error) {
+	switch s {
+	case "LEGAL":
+		return FormFieldTypeLegalConstLegal, nil
+	}
+	var t FormFieldTypeLegalConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeLegalConst) Ptr() *FormFieldTypeLegalConst {
+	return &f
+}
+
+type FormFieldTypeNumberConst string
+
+const (
+	FormFieldTypeNumberConstNumber FormFieldTypeNumberConst = "NUMBER"
+)
+
+func NewFormFieldTypeNumberConstFromString(s string) (FormFieldTypeNumberConst, error) {
+	switch s {
+	case "NUMBER":
+		return FormFieldTypeNumberConstNumber, nil
+	}
+	var t FormFieldTypeNumberConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeNumberConst) Ptr() *FormFieldTypeNumberConst {
+	return &f
+}
+
+type FormFieldTypePasswordConst string
+
+const (
+	FormFieldTypePasswordConstPassword FormFieldTypePasswordConst = "PASSWORD"
+)
+
+func NewFormFieldTypePasswordConstFromString(s string) (FormFieldTypePasswordConst, error) {
+	switch s {
+	case "PASSWORD":
+		return FormFieldTypePasswordConstPassword, nil
+	}
+	var t FormFieldTypePasswordConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypePasswordConst) Ptr() *FormFieldTypePasswordConst {
+	return &f
+}
+
+type FormFieldTypePaymentConst string
+
+const (
+	FormFieldTypePaymentConstPayment FormFieldTypePaymentConst = "PAYMENT"
+)
+
+func NewFormFieldTypePaymentConstFromString(s string) (FormFieldTypePaymentConst, error) {
+	switch s {
+	case "PAYMENT":
+		return FormFieldTypePaymentConstPayment, nil
+	}
+	var t FormFieldTypePaymentConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypePaymentConst) Ptr() *FormFieldTypePaymentConst {
+	return &f
+}
+
+type FormFieldTypeSocialConst string
+
+const (
+	FormFieldTypeSocialConstSocial FormFieldTypeSocialConst = "SOCIAL"
+)
+
+func NewFormFieldTypeSocialConstFromString(s string) (FormFieldTypeSocialConst, error) {
+	switch s {
+	case "SOCIAL":
+		return FormFieldTypeSocialConstSocial, nil
+	}
+	var t FormFieldTypeSocialConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeSocialConst) Ptr() *FormFieldTypeSocialConst {
+	return &f
+}
+
+type FormFieldTypeTelConst string
+
+const (
+	FormFieldTypeTelConstTel FormFieldTypeTelConst = "TEL"
+)
+
+func NewFormFieldTypeTelConstFromString(s string) (FormFieldTypeTelConst, error) {
+	switch s {
+	case "TEL":
+		return FormFieldTypeTelConstTel, nil
+	}
+	var t FormFieldTypeTelConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeTelConst) Ptr() *FormFieldTypeTelConst {
+	return &f
+}
+
+type FormFieldTypeTextConst string
+
+const (
+	FormFieldTypeTextConstText FormFieldTypeTextConst = "TEXT"
+)
+
+func NewFormFieldTypeTextConstFromString(s string) (FormFieldTypeTextConst, error) {
+	switch s {
+	case "TEXT":
+		return FormFieldTypeTextConstText, nil
+	}
+	var t FormFieldTypeTextConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeTextConst) Ptr() *FormFieldTypeTextConst {
+	return &f
+}
+
+type FormFieldTypeURLConst string
+
+const (
+	FormFieldTypeURLConstURL FormFieldTypeURLConst = "URL"
+)
+
+func NewFormFieldTypeURLConstFromString(s string) (FormFieldTypeURLConst, error) {
+	switch s {
+	case "URL":
+		return FormFieldTypeURLConstURL, nil
+	}
+	var t FormFieldTypeURLConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormFieldTypeURLConst) Ptr() *FormFieldTypeURLConst {
+	return &f
+}
+
+type FormNodeTypeFlowConst string
+
+const (
+	FormNodeTypeFlowConstFlow FormNodeTypeFlowConst = "FLOW"
+)
+
+func NewFormNodeTypeFlowConstFromString(s string) (FormNodeTypeFlowConst, error) {
+	switch s {
+	case "FLOW":
+		return FormNodeTypeFlowConstFlow, nil
+	}
+	var t FormNodeTypeFlowConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormNodeTypeFlowConst) Ptr() *FormNodeTypeFlowConst {
+	return &f
+}
+
+type FormNodeTypeRouterConst string
+
+const (
+	FormNodeTypeRouterConstRouter FormNodeTypeRouterConst = "ROUTER"
+)
+
+func NewFormNodeTypeRouterConstFromString(s string) (FormNodeTypeRouterConst, error) {
+	switch s {
+	case "ROUTER":
+		return FormNodeTypeRouterConstRouter, nil
+	}
+	var t FormNodeTypeRouterConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormNodeTypeRouterConst) Ptr() *FormNodeTypeRouterConst {
+	return &f
+}
+
+type FormNodeTypeStepConst string
+
+const (
+	FormNodeTypeStepConstStep FormNodeTypeStepConst = "STEP"
+)
+
+func NewFormNodeTypeStepConstFromString(s string) (FormNodeTypeStepConst, error) {
+	switch s {
+	case "STEP":
+		return FormNodeTypeStepConstStep, nil
+	}
+	var t FormNodeTypeStepConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormNodeTypeStepConst) Ptr() *FormNodeTypeStepConst {
+	return &f
+}
+
+type FormWidgetTypeAuth0VerifiableCredentialsConst string
+
+const (
+	FormWidgetTypeAuth0VerifiableCredentialsConstAuth0VerifiableCredentials FormWidgetTypeAuth0VerifiableCredentialsConst = "AUTH0_VERIFIABLE_CREDENTIALS"
+)
+
+func NewFormWidgetTypeAuth0VerifiableCredentialsConstFromString(s string) (FormWidgetTypeAuth0VerifiableCredentialsConst, error) {
+	switch s {
+	case "AUTH0_VERIFIABLE_CREDENTIALS":
+		return FormWidgetTypeAuth0VerifiableCredentialsConstAuth0VerifiableCredentials, nil
+	}
+	var t FormWidgetTypeAuth0VerifiableCredentialsConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormWidgetTypeAuth0VerifiableCredentialsConst) Ptr() *FormWidgetTypeAuth0VerifiableCredentialsConst {
+	return &f
+}
+
+type FormWidgetTypeGMapsAddressConst string
+
+const (
+	FormWidgetTypeGMapsAddressConstGmapsAddress FormWidgetTypeGMapsAddressConst = "GMAPS_ADDRESS"
+)
+
+func NewFormWidgetTypeGMapsAddressConstFromString(s string) (FormWidgetTypeGMapsAddressConst, error) {
+	switch s {
+	case "GMAPS_ADDRESS":
+		return FormWidgetTypeGMapsAddressConstGmapsAddress, nil
+	}
+	var t FormWidgetTypeGMapsAddressConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormWidgetTypeGMapsAddressConst) Ptr() *FormWidgetTypeGMapsAddressConst {
+	return &f
+}
+
+type FormWidgetTypeRecaptchaConst string
+
+const (
+	FormWidgetTypeRecaptchaConstRecaptcha FormWidgetTypeRecaptchaConst = "RECAPTCHA"
+)
+
+func NewFormWidgetTypeRecaptchaConstFromString(s string) (FormWidgetTypeRecaptchaConst, error) {
+	switch s {
+	case "RECAPTCHA":
+		return FormWidgetTypeRecaptchaConstRecaptcha, nil
+	}
+	var t FormWidgetTypeRecaptchaConst
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (f FormWidgetTypeRecaptchaConst) Ptr() *FormWidgetTypeRecaptchaConst {
+	return &f
+}
+
+// The result of a specific execution of a trigger.
 var (
 	getActionExecutionResponseContentFieldID        = big.NewInt(1 << 0)
 	getActionExecutionResponseContentFieldTriggerID = big.NewInt(1 << 1)
@@ -86951,7 +87258,6 @@ var (
 	getActionExecutionResponseContentFieldUpdatedAt = big.NewInt(1 << 5)
 )
 
-// The result of a specific execution of a trigger.
 type GetActionExecutionResponseContent struct {
 	// ID identifies this specific execution simulation. These IDs would resemble real executions in production.
 	ID        *string                    `json:"id,omitempty" url:"id,omitempty"`
@@ -87020,12 +87326,10 @@ func (g *GetActionExecutionResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (g *GetActionExecutionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87184,12 +87488,10 @@ func (g *GetActionModuleActionsResponseContent) GetExtraProperties() map[string]
 }
 
 func (g *GetActionModuleActionsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetActions sets the Actions field and marks it as non-optional;
@@ -87391,12 +87693,10 @@ func (g *GetActionModuleResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (g *GetActionModuleResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87620,12 +87920,10 @@ func (g *GetActionModuleVersionResponseContent) GetExtraProperties() map[string]
 }
 
 func (g *GetActionModuleVersionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -87787,12 +88085,10 @@ func (g *GetActionModuleVersionsResponseContent) GetExtraProperties() map[string
 }
 
 func (g *GetActionModuleVersionsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetVersions sets the Versions field and marks it as non-optional;
@@ -87925,12 +88221,10 @@ func (g *GetActionModulesResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetActionModulesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetModules sets the Modules field and marks it as non-optional;
@@ -88181,12 +88475,10 @@ func (g *GetActionVersionResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetActionVersionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -88371,15 +88663,6 @@ var (
 	getAculResponseContentFieldFilters                 = big.NewInt(1 << 8)
 )
 
-// getAculResponseContentNullableFields maps the wire names of GetAculResponseContent's nullable fields (required or optional) to their field bits.
-var getAculResponseContentNullableFields = map[string]*big.Int{
-	"context_configuration":      getAculResponseContentFieldContextConfiguration,
-	"default_head_tags_disabled": getAculResponseContentFieldDefaultHeadTagsDisabled,
-	"use_page_template":          getAculResponseContentFieldUsePageTemplate,
-	"head_tags":                  getAculResponseContentFieldHeadTags,
-	"filters":                    getAculResponseContentFieldFilters,
-}
-
 type GetAculResponseContent struct {
 	// Tenant ID
 	Tenant *string `json:"tenant,omitempty" url:"tenant,omitempty"`
@@ -88477,12 +88760,10 @@ func (g *GetAculResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetAculResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -88564,13 +88845,6 @@ func (g *GetAculResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getAculResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -88631,12 +88905,10 @@ func (g *GetAllKeysNetworkACLsResponseContent) GetExtraProperties() map[string]i
 }
 
 func (g *GetAllKeysNetworkACLsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetKeys sets the Keys field and marks it as non-optional;
@@ -88781,12 +89053,10 @@ func (g *GetAttackProtectionCaptchaResponseContent) GetExtraProperties() map[str
 }
 
 func (g *GetAttackProtectionCaptchaResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
@@ -88965,12 +89235,10 @@ func (g *GetBotDetectionSettingsResponseContent) GetExtraProperties() map[string
 }
 
 func (g *GetBotDetectionSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetBotDetectionLevel sets the BotDetectionLevel field and marks it as non-optional;
@@ -89151,12 +89419,10 @@ func (g *GetBrandingDefaultThemeResponseContent) GetExtraProperties() map[string
 }
 
 func (g *GetBrandingDefaultThemeResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetBorders sets the Borders field and marks it as non-optional;
@@ -89257,6 +89523,7 @@ func (g *GetBrandingDefaultThemeResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Phone provider configuration schema
 var (
 	getBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
 	getBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
@@ -89268,7 +89535,6 @@ var (
 	getBrandingPhoneProviderResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
 )
 
-// Phone provider configuration schema
 type GetBrandingPhoneProviderResponseContent struct {
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
@@ -89354,12 +89620,10 @@ func (g *GetBrandingPhoneProviderResponseContent) GetExtraProperties() map[strin
 }
 
 func (g *GetBrandingPhoneProviderResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -89566,12 +89830,10 @@ func (g *GetBrandingThemeResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetBrandingThemeResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetBorders sets the Borders field and marks it as non-optional;
@@ -89744,12 +90006,10 @@ func (g *GetBreachedPasswordDetectionSettingsResponseContent) GetExtraProperties
 }
 
 func (g *GetBreachedPasswordDetectionSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -89909,12 +90169,10 @@ func (g *GetBruteForceSettingsResponseContent) GetExtraProperties() map[string]i
 }
 
 func (g *GetBruteForceSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -90120,12 +90378,10 @@ func (g *GetClientCredentialResponseContent) GetExtraProperties() map[string]int
 }
 
 func (g *GetClientCredentialResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -90297,12 +90553,10 @@ func (g *GetConnectionEnabledClientsResponseContent) GetExtraProperties() map[st
 }
 
 func (g *GetConnectionEnabledClientsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetClients sets the Clients field and marks it as non-optional;
@@ -90365,11 +90619,11 @@ func (g *GetConnectionEnabledClientsResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// JWKS representing an array of custom public signing keys.
 var (
 	getCustomSigningKeysResponseContentFieldKeys = big.NewInt(1 << 0)
 )
 
-// JWKS representing an array of custom public signing keys.
 type GetCustomSigningKeysResponseContent struct {
 	// An array of custom public signing keys.
 	Keys []*CustomSigningKeyJwk `json:"keys,omitempty" url:"keys,omitempty"`
@@ -90396,12 +90650,10 @@ func (g *GetCustomSigningKeysResponseContent) GetExtraProperties() map[string]in
 }
 
 func (g *GetCustomSigningKeysResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetKeys sets the Keys field and marks it as non-optional;
@@ -90486,12 +90738,10 @@ func (g *GetDirectoryProvisioningDefaultMappingResponseContent) GetExtraProperti
 }
 
 func (g *GetDirectoryProvisioningDefaultMappingResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
@@ -90672,12 +90922,10 @@ func (g *GetDirectoryProvisioningResponseContent) GetExtraProperties() map[strin
 }
 
 func (g *GetDirectoryProvisioningResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -90855,12 +91103,10 @@ func (g *GetEmailFactorSettingsResponseContent) GetExtraProperties() map[string]
 }
 
 func (g *GetEmailFactorSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -90987,12 +91233,10 @@ func (g *GetEmailProviderResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetEmailProviderResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -91072,6 +91316,7 @@ func (g *GetEmailProviderResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Encryption key
 var (
 	getEncryptionKeyResponseContentFieldKid       = big.NewInt(1 << 0)
 	getEncryptionKeyResponseContentFieldType      = big.NewInt(1 << 1)
@@ -91082,13 +91327,6 @@ var (
 	getEncryptionKeyResponseContentFieldPublicKey = big.NewInt(1 << 6)
 )
 
-// getEncryptionKeyResponseContentNullableFields maps the wire names of GetEncryptionKeyResponseContent's nullable fields (required or optional) to their field bits.
-var getEncryptionKeyResponseContentNullableFields = map[string]*big.Int{
-	"parent_kid": getEncryptionKeyResponseContentFieldParentKid,
-	"public_key": getEncryptionKeyResponseContentFieldPublicKey,
-}
-
-// Encryption key
 type GetEncryptionKeyResponseContent struct {
 	// Key ID
 	Kid   string             `json:"kid" url:"kid"`
@@ -91167,12 +91405,10 @@ func (g *GetEncryptionKeyResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetEncryptionKeyResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -91244,13 +91480,6 @@ func (g *GetEncryptionKeyResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getEncryptionKeyResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -91285,6 +91514,7 @@ func (g *GetEncryptionKeyResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Metadata about a specific attempt to deliver an event
 var (
 	getEventStreamDeliveryHistoryResponseContentFieldID            = big.NewInt(1 << 0)
 	getEventStreamDeliveryHistoryResponseContentFieldEventStreamID = big.NewInt(1 << 1)
@@ -91294,7 +91524,6 @@ var (
 	getEventStreamDeliveryHistoryResponseContentFieldEvent         = big.NewInt(1 << 5)
 )
 
-// Metadata about a specific attempt to deliver an event
 type GetEventStreamDeliveryHistoryResponseContent struct {
 	// Unique identifier for the delivery
 	ID string `json:"id" url:"id"`
@@ -91363,12 +91592,10 @@ func (g *GetEventStreamDeliveryHistoryResponseContent) GetExtraProperties() map[
 }
 
 func (g *GetEventStreamDeliveryHistoryResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91476,12 +91703,6 @@ var (
 	getExperimentResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
 	getExperimentResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
 )
-
-// getExperimentResponseContentNullableFields maps the wire names of GetExperimentResponseContent's nullable fields (required or optional) to their field bits.
-var getExperimentResponseContentNullableFields = map[string]*big.Int{
-	"feature_flag_snapshot": getExperimentResponseContentFieldFeatureFlagSnapshot,
-	"current_level":         getExperimentResponseContentFieldCurrentLevel,
-}
 
 type GetExperimentResponseContent struct {
 	ID                 string                 `json:"id" url:"id"`
@@ -91656,12 +91877,10 @@ func (g *GetExperimentResponseContent) GetExtraProperties() map[string]interface
 }
 
 func (g *GetExperimentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -91821,13 +92040,6 @@ func (g *GetExperimentResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getExperimentResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -91958,12 +92170,10 @@ func (g *GetFeatureFlagResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (g *GetFeatureFlagResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -92204,12 +92414,10 @@ func (g *GetFlowExecutionResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetFlowExecutionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -92456,12 +92664,10 @@ func (g *GetFlowsVaultConnectionResponseContent) GetExtraProperties() map[string
 }
 
 func (g *GetFlowsVaultConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -92631,12 +92837,10 @@ func (g *GetGroupMembersResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (g *GetGroupMembersResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetMembers sets the Members field and marks it as non-optional;
@@ -92782,12 +92986,10 @@ func (g *GetGuardianEnrollmentResponseContent) GetExtraProperties() map[string]i
 }
 
 func (g *GetGuardianEnrollmentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -92928,12 +93130,10 @@ func (g *GetGuardianFactorDuoSettingsResponseContent) GetExtraProperties() map[s
 }
 
 func (g *GetGuardianFactorDuoSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetIkey sets the Ikey field and marks it as non-optional;
@@ -93029,12 +93229,10 @@ func (g *GetGuardianFactorPhoneMessageTypesResponseContent) GetExtraProperties()
 }
 
 func (g *GetGuardianFactorPhoneMessageTypesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetMessageTypes sets the MessageTypes field and marks it as non-optional;
@@ -93126,12 +93324,10 @@ func (g *GetGuardianFactorPhoneTemplatesResponseContent) GetExtraProperties() ma
 }
 
 func (g *GetGuardianFactorPhoneTemplatesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
@@ -93230,12 +93426,10 @@ func (g *GetGuardianFactorSmsTemplatesResponseContent) GetExtraProperties() map[
 }
 
 func (g *GetGuardianFactorSmsTemplatesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
@@ -93300,11 +93494,6 @@ var (
 	getGuardianFactorsProviderApnsResponseContentFieldEnabled  = big.NewInt(1 << 2)
 )
 
-// getGuardianFactorsProviderApnsResponseContentNullableFields maps the wire names of GetGuardianFactorsProviderApnsResponseContent's nullable fields (required or optional) to their field bits.
-var getGuardianFactorsProviderApnsResponseContentNullableFields = map[string]*big.Int{
-	"bundle_id": getGuardianFactorsProviderApnsResponseContentFieldBundleID,
-}
-
 type GetGuardianFactorsProviderApnsResponseContent struct {
 	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
 	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
@@ -93346,12 +93535,10 @@ func (g *GetGuardianFactorsProviderApnsResponseContent) GetExtraProperties() map
 }
 
 func (g *GetGuardianFactorsProviderApnsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetBundleID sets the BundleID field and marks it as non-optional;
@@ -93387,13 +93574,6 @@ func (g *GetGuardianFactorsProviderApnsResponseContent) UnmarshalJSON(data []byt
 		return err
 	}
 	g.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getGuardianFactorsProviderApnsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -93453,12 +93633,10 @@ func (g *GetGuardianFactorsProviderPhoneResponseContent) GetExtraProperties() ma
 }
 
 func (g *GetGuardianFactorsProviderPhoneResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -93517,14 +93695,6 @@ var (
 	getGuardianFactorsProviderPhoneTwilioResponseContentFieldSid                 = big.NewInt(1 << 3)
 )
 
-// getGuardianFactorsProviderPhoneTwilioResponseContentNullableFields maps the wire names of GetGuardianFactorsProviderPhoneTwilioResponseContent's nullable fields (required or optional) to their field bits.
-var getGuardianFactorsProviderPhoneTwilioResponseContentNullableFields = map[string]*big.Int{
-	"from":                  getGuardianFactorsProviderPhoneTwilioResponseContentFieldFrom,
-	"messaging_service_sid": getGuardianFactorsProviderPhoneTwilioResponseContentFieldMessagingServiceSid,
-	"auth_token":            getGuardianFactorsProviderPhoneTwilioResponseContentFieldAuthToken,
-	"sid":                   getGuardianFactorsProviderPhoneTwilioResponseContentFieldSid,
-}
-
 type GetGuardianFactorsProviderPhoneTwilioResponseContent struct {
 	// From number
 	From *string `json:"from,omitempty" url:"from,omitempty"`
@@ -93578,12 +93748,10 @@ func (g *GetGuardianFactorsProviderPhoneTwilioResponseContent) GetExtraPropertie
 }
 
 func (g *GetGuardianFactorsProviderPhoneTwilioResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -93626,13 +93794,6 @@ func (g *GetGuardianFactorsProviderPhoneTwilioResponseContent) UnmarshalJSON(dat
 		return err
 	}
 	g.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getGuardianFactorsProviderPhoneTwilioResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -93692,12 +93853,10 @@ func (g *GetGuardianFactorsProviderPushNotificationResponseContent) GetExtraProp
 }
 
 func (g *GetGuardianFactorsProviderPushNotificationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -93778,12 +93937,10 @@ func (g *GetGuardianFactorsProviderSmsResponseContent) GetExtraProperties() map[
 }
 
 func (g *GetGuardianFactorsProviderSmsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -93842,14 +93999,6 @@ var (
 	getGuardianFactorsProviderSmsTwilioResponseContentFieldSid                 = big.NewInt(1 << 3)
 )
 
-// getGuardianFactorsProviderSmsTwilioResponseContentNullableFields maps the wire names of GetGuardianFactorsProviderSmsTwilioResponseContent's nullable fields (required or optional) to their field bits.
-var getGuardianFactorsProviderSmsTwilioResponseContentNullableFields = map[string]*big.Int{
-	"from":                  getGuardianFactorsProviderSmsTwilioResponseContentFieldFrom,
-	"messaging_service_sid": getGuardianFactorsProviderSmsTwilioResponseContentFieldMessagingServiceSid,
-	"auth_token":            getGuardianFactorsProviderSmsTwilioResponseContentFieldAuthToken,
-	"sid":                   getGuardianFactorsProviderSmsTwilioResponseContentFieldSid,
-}
-
 type GetGuardianFactorsProviderSmsTwilioResponseContent struct {
 	// From number
 	From *string `json:"from,omitempty" url:"from,omitempty"`
@@ -93903,12 +94052,10 @@ func (g *GetGuardianFactorsProviderSmsTwilioResponseContent) GetExtraProperties(
 }
 
 func (g *GetGuardianFactorsProviderSmsTwilioResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -93951,13 +94098,6 @@ func (g *GetGuardianFactorsProviderSmsTwilioResponseContent) UnmarshalJSON(data 
 		return err
 	}
 	g.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getGuardianFactorsProviderSmsTwilioResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -93995,15 +94135,6 @@ var (
 	getGuardianFactorsProviderSnsResponseContentFieldSnsApnsPlatformApplicationArn = big.NewInt(1 << 3)
 	getGuardianFactorsProviderSnsResponseContentFieldSnsGcmPlatformApplicationArn  = big.NewInt(1 << 4)
 )
-
-// getGuardianFactorsProviderSnsResponseContentNullableFields maps the wire names of GetGuardianFactorsProviderSnsResponseContent's nullable fields (required or optional) to their field bits.
-var getGuardianFactorsProviderSnsResponseContentNullableFields = map[string]*big.Int{
-	"aws_access_key_id":                 getGuardianFactorsProviderSnsResponseContentFieldAwsAccessKeyID,
-	"aws_secret_access_key":             getGuardianFactorsProviderSnsResponseContentFieldAwsSecretAccessKey,
-	"aws_region":                        getGuardianFactorsProviderSnsResponseContentFieldAwsRegion,
-	"sns_apns_platform_application_arn": getGuardianFactorsProviderSnsResponseContentFieldSnsApnsPlatformApplicationArn,
-	"sns_gcm_platform_application_arn":  getGuardianFactorsProviderSnsResponseContentFieldSnsGcmPlatformApplicationArn,
-}
 
 type GetGuardianFactorsProviderSnsResponseContent struct {
 	AwsAccessKeyID                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
@@ -94062,12 +94193,10 @@ func (g *GetGuardianFactorsProviderSnsResponseContent) GetExtraProperties() map[
 }
 
 func (g *GetGuardianFactorsProviderSnsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
@@ -94117,13 +94246,6 @@ func (g *GetGuardianFactorsProviderSnsResponseContent) UnmarshalJSON(data []byte
 		return err
 	}
 	g.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getGuardianFactorsProviderSnsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -94196,12 +94318,10 @@ func (g *GetJobErrorResponseContent) GetExtraProperties() map[string]interface{}
 }
 
 func (g *GetJobErrorResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetUser sets the User field and marks it as non-optional;
@@ -94341,12 +94461,10 @@ func (g *GetJobGenericErrorResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (g *GetJobGenericErrorResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetStatus sets the Status field and marks it as non-optional;
@@ -94488,12 +94606,10 @@ func (g *GetJobImportUserError) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GetJobImportUserError) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetCode sets the Code field and marks it as non-optional;
@@ -94673,12 +94789,10 @@ func (g *GetOrganizationAllConnectionResponseContent) GetExtraProperties() map[s
 }
 
 func (g *GetOrganizationAllConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
@@ -94835,12 +94949,10 @@ func (g *GetOrganizationClientResponseContent) GetExtraProperties() map[string]i
 }
 
 func (g *GetOrganizationClientResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -94975,12 +95087,10 @@ func (g *GetOrganizationConnectionResponseContent) GetExtraProperties() map[stri
 }
 
 func (g *GetOrganizationConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -95139,12 +95249,10 @@ func (g *GetOrganizationDiscoveryDomainByNameResponseContent) GetExtraProperties
 }
 
 func (g *GetOrganizationDiscoveryDomainByNameResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -95310,12 +95418,10 @@ func (g *GetOrganizationDiscoveryDomainResponseContent) GetExtraProperties() map
 }
 
 func (g *GetOrganizationDiscoveryDomainResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -95548,12 +95654,10 @@ func (g *GetOrganizationInvitationResponseContent) GetExtraProperties() map[stri
 }
 
 func (g *GetOrganizationInvitationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -95744,12 +95848,10 @@ func (g *GetPhoneFactorSettingsResponseContent) GetExtraProperties() map[string]
 }
 
 func (g *GetPhoneFactorSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -95838,12 +95940,10 @@ func (g *GetPhoneProviderProtectionResponseContent) GetExtraProperties() map[str
 }
 
 func (g *GetPhoneProviderProtectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -95983,12 +96083,10 @@ func (g *GetPhoneTemplateResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (g *GetPhoneTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -96112,12 +96210,10 @@ func (g *GetRiskAssessmentsSettingsNewDeviceResponseContent) GetExtraProperties(
 }
 
 func (g *GetRiskAssessmentsSettingsNewDeviceResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetRememberFor sets the RememberFor field and marks it as non-optional;
@@ -96199,12 +96295,10 @@ func (g *GetRiskAssessmentsSettingsResponseContent) GetExtraProperties() map[str
 }
 
 func (g *GetRiskAssessmentsSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -96286,12 +96380,10 @@ func (g *GetSCIMConfigurationDefaultMappingResponseContent) GetExtraProperties()
 }
 
 func (g *GetSCIMConfigurationDefaultMappingResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
@@ -96443,12 +96535,10 @@ func (g *GetSCIMConfigurationResponseContent) GetExtraProperties() map[string]in
 }
 
 func (g *GetSCIMConfigurationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -96656,12 +96746,10 @@ func (g *GetSegmentResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (g *GetSegmentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -96911,12 +96999,10 @@ func (g *GetSigningKeysResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (g *GetSigningKeysResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -97105,12 +97191,10 @@ func (g *GetSuspiciousIPThrottlingSettingsResponseContent) GetExtraProperties() 
 }
 
 func (g *GetSuspiciousIPThrottlingSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -97228,24 +97312,6 @@ var (
 	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
 	getTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
 )
-
-// getTenantSettingsResponseContentNullableFields maps the wire names of GetTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
-var getTenantSettingsResponseContentNullableFields = map[string]*big.Int{
-	"change_password":      getTenantSettingsResponseContentFieldChangePassword,
-	"guardian_mfa_page":    getTenantSettingsResponseContentFieldGuardianMfaPage,
-	"error_page":           getTenantSettingsResponseContentFieldErrorPage,
-	"device_flow":          getTenantSettingsResponseContentFieldDeviceFlow,
-	"default_token_quota":  getTenantSettingsResponseContentFieldDefaultTokenQuota,
-	"access_token":         getTenantSettingsResponseContentFieldAccessToken,
-	"security_headers":     getTenantSettingsResponseContentFieldSecurityHeaders,
-	"session_cookie":       getTenantSettingsResponseContentFieldSessionCookie,
-	"sessions":             getTenantSettingsResponseContentFieldSessions,
-	"acr_values_supported": getTenantSettingsResponseContentFieldAcrValuesSupported,
-	"mtls":                 getTenantSettingsResponseContentFieldMtls,
-	"authorization_response_iss_parameter_supported":       getTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported,
-	"dpop_strict_refresh_token_binding":                    getTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding,
-	"skip_non_verifiable_callback_uri_confirmation_prompt": getTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt,
-}
 
 type GetTenantSettingsResponseContent struct {
 	ChangePassword  *TenantSettingsPasswordPage `json:"change_password,omitempty" url:"change_password,omitempty"`
@@ -97638,12 +97704,10 @@ func (g *GetTenantSettingsResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (g *GetTenantSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetChangePassword sets the ChangePassword field and marks it as non-optional;
@@ -97959,13 +98023,6 @@ func (g *GetTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	g.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getTenantSettingsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -98026,12 +98083,10 @@ func (g *GetUniversalLoginTemplate) GetExtraProperties() map[string]interface{} 
 }
 
 func (g *GetUniversalLoginTemplate) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetBody sets the Body field and marks it as non-optional;
@@ -98106,24 +98161,16 @@ func (g *GetUniversalLoginTemplateResponseContent) GetString() string {
 }
 
 func (g *GetUniversalLoginTemplateResponseContent) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"body"}, []string{}) {
-		valueGetUniversalLoginTemplate := new(GetUniversalLoginTemplate)
-		if err := json.Unmarshal(data, &valueGetUniversalLoginTemplate); err == nil {
-			g.typ = "GetUniversalLoginTemplate"
-			g.GetUniversalLoginTemplate = valueGetUniversalLoginTemplate
-			return nil
-		}
+	valueGetUniversalLoginTemplate := new(GetUniversalLoginTemplate)
+	if err := json.Unmarshal(data, &valueGetUniversalLoginTemplate); err == nil {
+		g.typ = "GetUniversalLoginTemplate"
+		g.GetUniversalLoginTemplate = valueGetUniversalLoginTemplate
+		return nil
 	}
 	var valueString string
 	if err := json.Unmarshal(data, &valueString); err == nil {
 		g.typ = "String"
 		g.String = valueString
-		return nil
-	}
-	valueGetUniversalLoginTemplate := new(GetUniversalLoginTemplate)
-	if err := json.Unmarshal(data, &valueGetUniversalLoginTemplate); err == nil {
-		g.typ = "GetUniversalLoginTemplate"
-		g.GetUniversalLoginTemplate = valueGetUniversalLoginTemplate
 		return nil
 	}
 	return fmt.Errorf("%s cannot be deserialized as a %T", data, g)
@@ -98391,12 +98438,10 @@ func (g *GetUserAuthenticationMethodResponseContent) GetExtraProperties() map[st
 }
 
 func (g *GetUserAuthenticationMethodResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -98677,12 +98722,10 @@ func (g *GetUserGroupsPaginatedResponseContent) GetExtraProperties() map[string]
 }
 
 func (g *GetUserGroupsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -98845,12 +98888,10 @@ func (g *GetVariationResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (g *GetVariationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -98968,12 +99009,6 @@ var (
 	getVerifiableCredentialTemplateResponseContentFieldUpdatedAt                  = big.NewInt(1 << 8)
 )
 
-// getVerifiableCredentialTemplateResponseContentNullableFields maps the wire names of GetVerifiableCredentialTemplateResponseContent's nullable fields (required or optional) to their field bits.
-var getVerifiableCredentialTemplateResponseContentNullableFields = map[string]*big.Int{
-	"custom_certificate_authority": getVerifiableCredentialTemplateResponseContentFieldCustomCertificateAuthority,
-	"well_known_trusted_issuers":   getVerifiableCredentialTemplateResponseContentFieldWellKnownTrustedIssuers,
-}
-
 type GetVerifiableCredentialTemplateResponseContent struct {
 	// The id of the template.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -99072,12 +99107,10 @@ func (g *GetVerifiableCredentialTemplateResponseContent) GetExtraProperties() ma
 }
 
 func (g *GetVerifiableCredentialTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -99163,13 +99196,6 @@ func (g *GetVerifiableCredentialTemplateResponseContent) UnmarshalJSON(data []by
 		return err
 	}
 	g.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, getVerifiableCredentialTemplateResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		g.require(presentFields)
-	}
 	g.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -99204,6 +99230,7 @@ func (g *GetVerifiableCredentialTemplateResponseContent) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Represents the metadata of a group. Member lists are retrieved via a separate endpoint.
 var (
 	groupFieldID           = big.NewInt(1 << 0)
 	groupFieldName         = big.NewInt(1 << 1)
@@ -99214,7 +99241,6 @@ var (
 	groupFieldUpdatedAt    = big.NewInt(1 << 6)
 )
 
-// Represents the metadata of a group. Member lists are retrieved via a separate endpoint.
 type Group struct {
 	// Unique identifier for the group (service-generated).
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -99296,12 +99322,10 @@ func (g *Group) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *Group) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -99407,6 +99431,7 @@ func (g *Group) String() string {
 	return fmt.Sprintf("%#v", g)
 }
 
+// Represents the metadata of a group membership.
 var (
 	groupMemberFieldID           = big.NewInt(1 << 0)
 	groupMemberFieldMemberType   = big.NewInt(1 << 1)
@@ -99415,7 +99440,6 @@ var (
 	groupMemberFieldCreatedAt    = big.NewInt(1 << 4)
 )
 
-// Represents the metadata of a group membership.
 type GroupMember struct {
 	// Unique identifier for the member.
 	ID         *string              `json:"id,omitempty" url:"id,omitempty"`
@@ -99477,12 +99501,10 @@ func (g *GroupMember) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GroupMember) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -99738,12 +99760,10 @@ func (g *GuardianFactor) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GuardianFactor) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -99882,12 +99902,12 @@ func (g GuardianFactorPhoneFactorMessageTypeEnum) Ptr() *GuardianFactorPhoneFact
 	return &g
 }
 
+// Factor-specific settings. Only returned when include_settings=true.
 var (
 	guardianFactorSettingsFieldOtpLength         = big.NewInt(1 << 0)
 	guardianFactorSettingsFieldOtpExpirationTime = big.NewInt(1 << 1)
 )
 
-// Factor-specific settings. Only returned when include_settings=true.
 type GuardianFactorSettings struct {
 	// The length of the OTP code.
 	OtpLength *int `json:"otp_length,omitempty" url:"otp_length,omitempty"`
@@ -99924,12 +99944,10 @@ func (g *GuardianFactorSettings) GetExtraProperties() map[string]interface{} {
 }
 
 func (g *GuardianFactorSettings) require(field *big.Int) {
-	next := new(big.Int)
-	if g.explicitFields != nil {
-		next.Set(g.explicitFields)
+	if g.explicitFields == nil {
+		g.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	g.explicitFields = next
+	g.explicitFields.Or(g.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -100042,13 +100060,13 @@ func (g GuardianFactorsProviderSmsProviderEnum) Ptr() *GuardianFactorsProviderSm
 	return &g
 }
 
+// This must be provided to verify primary social, enterprise and passwordless email identities. Also, is needed to verify secondary identities.
 var (
 	identityFieldUserID       = big.NewInt(1 << 0)
 	identityFieldProvider     = big.NewInt(1 << 1)
 	identityFieldConnectionID = big.NewInt(1 << 2)
 )
 
-// This must be provided to verify primary social, enterprise and passwordless email identities. Also, is needed to verify secondary identities.
 type Identity struct {
 	// user_id of the identity to be verified.
 	UserID   string               `json:"user_id" url:"user_id"`
@@ -100092,12 +100110,10 @@ func (i *Identity) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *Identity) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -100345,6 +100361,7 @@ func (i IdentityProviderEnum) Ptr() *IdentityProviderEnum {
 	return &i
 }
 
+// Encryption key
 var (
 	importEncryptionKeyResponseContentFieldKid       = big.NewInt(1 << 0)
 	importEncryptionKeyResponseContentFieldType      = big.NewInt(1 << 1)
@@ -100355,13 +100372,6 @@ var (
 	importEncryptionKeyResponseContentFieldPublicKey = big.NewInt(1 << 6)
 )
 
-// importEncryptionKeyResponseContentNullableFields maps the wire names of ImportEncryptionKeyResponseContent's nullable fields (required or optional) to their field bits.
-var importEncryptionKeyResponseContentNullableFields = map[string]*big.Int{
-	"parent_kid": importEncryptionKeyResponseContentFieldParentKid,
-	"public_key": importEncryptionKeyResponseContentFieldPublicKey,
-}
-
-// Encryption key
 type ImportEncryptionKeyResponseContent struct {
 	// Key ID
 	Kid   string             `json:"kid" url:"kid"`
@@ -100440,12 +100450,10 @@ func (i *ImportEncryptionKeyResponseContent) GetExtraProperties() map[string]int
 }
 
 func (i *ImportEncryptionKeyResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -100517,13 +100525,6 @@ func (i *ImportEncryptionKeyResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	i.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, importEncryptionKeyResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		i.require(presentFields)
-	}
 	i.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -100558,6 +100559,8 @@ func (i *ImportEncryptionKeyResponseContent) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
+// Integration defines a self contained functioning unit which partners
+// publish. A partner may create one or many of these integrations.
 var (
 	integrationFieldID                = big.NewInt(1 << 0)
 	integrationFieldCatalogID         = big.NewInt(1 << 1)
@@ -100576,8 +100579,6 @@ var (
 	integrationFieldUpdatedAt         = big.NewInt(1 << 14)
 )
 
-// Integration defines a self contained functioning unit which partners
-// publish. A partner may create one or many of these integrations.
 type Integration struct {
 	// id is a system generated GUID. This same ID is designed to be federated in
 	// all the applicable localities.
@@ -100729,12 +100730,10 @@ func (i *Integration) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *Integration) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -101001,12 +101000,10 @@ func (i *IntegrationRelease) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *IntegrationRelease) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -101090,6 +101087,12 @@ func (i *IntegrationRelease) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
+// Param are form input values, primarily utilized when specifying secrets and
+// configuration values for actions.
+//
+// These are especially important for partner integrations -- but can be
+// exposed to tenant admins as well if they want to parameterize their custom
+// actions.
 var (
 	integrationRequiredParamFieldType         = big.NewInt(1 << 0)
 	integrationRequiredParamFieldName         = big.NewInt(1 << 1)
@@ -101102,12 +101105,6 @@ var (
 	integrationRequiredParamFieldOptions      = big.NewInt(1 << 8)
 )
 
-// Param are form input values, primarily utilized when specifying secrets and
-// configuration values for actions.
-//
-// These are especially important for partner integrations -- but can be
-// exposed to tenant admins as well if they want to parameterize their custom
-// actions.
 type IntegrationRequiredParam struct {
 	Type *IntegrationRequiredParamTypeEnum `json:"type,omitempty" url:"type,omitempty"`
 	// The name of the parameter.
@@ -101205,12 +101202,10 @@ func (i *IntegrationRequiredParam) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *IntegrationRequiredParam) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -101358,12 +101353,10 @@ func (i *IntegrationRequiredParamOption) GetExtraProperties() map[string]interfa
 }
 
 func (i *IntegrationRequiredParamOption) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetValue sets the Value field and marks it as non-optional;
@@ -101444,12 +101437,12 @@ func (i IntegrationRequiredParamTypeEnum) Ptr() *IntegrationRequiredParamTypeEnu
 	return &i
 }
 
+// Semver denotes the major.minor version of an integration release
 var (
 	integrationSemVerFieldMajor = big.NewInt(1 << 0)
 	integrationSemVerFieldMinor = big.NewInt(1 << 1)
 )
 
-// Semver denotes the major.minor version of an integration release
 type IntegrationSemVer struct {
 	// Major is the major number of a semver
 	Major *int `json:"major,omitempty" url:"major,omitempty"`
@@ -101485,12 +101478,10 @@ func (i *IntegrationSemVer) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *IntegrationSemVer) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetMajor sets the Major field and marks it as non-optional;
@@ -101596,12 +101587,10 @@ func (i *InternalServerErrorBody) GetExtraProperties() map[string]interface{} {
 }
 
 func (i *InternalServerErrorBody) require(field *big.Int) {
-	next := new(big.Int)
-	if i.explicitFields != nil {
-		next.Set(i.explicitFields)
+	if i.explicitFields == nil {
+		i.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	i.explicitFields = next
+	i.explicitFields.Or(i.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -101769,12 +101758,10 @@ func (l *ListActionBindingsPaginatedResponseContent) GetExtraProperties() map[st
 }
 
 func (l *ListActionBindingsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTotal sets the Total field and marks it as non-optional;
@@ -101876,12 +101863,10 @@ func (l *ListActionTriggersResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (l *ListActionTriggersResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTriggers sets the Triggers field and marks it as non-optional;
@@ -101992,12 +101977,10 @@ func (l *ListActionVersionsPaginatedResponseContent) GetExtraProperties() map[st
 }
 
 func (l *ListActionVersionsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTotal sets the Total field and marks it as non-optional;
@@ -102129,12 +102112,10 @@ func (l *ListAculsOffsetPaginatedResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListAculsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetConfigs sets the Configs field and marks it as non-optional;
@@ -102218,15 +102199,6 @@ var (
 	listAculsResponseContentItemFieldHeadTags                = big.NewInt(1 << 7)
 	listAculsResponseContentItemFieldFilters                 = big.NewInt(1 << 8)
 )
-
-// listAculsResponseContentItemNullableFields maps the wire names of ListAculsResponseContentItem's nullable fields (required or optional) to their field bits.
-var listAculsResponseContentItemNullableFields = map[string]*big.Int{
-	"context_configuration":      listAculsResponseContentItemFieldContextConfiguration,
-	"default_head_tags_disabled": listAculsResponseContentItemFieldDefaultHeadTagsDisabled,
-	"use_page_template":          listAculsResponseContentItemFieldUsePageTemplate,
-	"head_tags":                  listAculsResponseContentItemFieldHeadTags,
-	"filters":                    listAculsResponseContentItemFieldFilters,
-}
 
 type ListAculsResponseContentItem struct {
 	// Tenant ID
@@ -102325,12 +102297,10 @@ func (l *ListAculsResponseContentItem) GetExtraProperties() map[string]interface
 }
 
 func (l *ListAculsResponseContentItem) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTenant sets the Tenant field and marks it as non-optional;
@@ -102412,13 +102382,6 @@ func (l *ListAculsResponseContentItem) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	l.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, listAculsResponseContentItemNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		l.require(presentFields)
-	}
 	l.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -102478,12 +102441,10 @@ func (l *ListBrandingPhoneProvidersResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListBrandingPhoneProvidersResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetProviders sets the Providers field and marks it as non-optional;
@@ -102575,12 +102536,10 @@ func (l *ListClientConnectionsResponseContent) GetExtraProperties() map[string]i
 }
 
 func (l *ListClientConnectionsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetConnections sets the Connections field and marks it as non-optional;
@@ -102682,12 +102641,10 @@ func (l *ListClientGrantOrganizationsPaginatedResponseContent) GetExtraPropertie
 }
 
 func (l *ListClientGrantOrganizationsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -102786,12 +102743,10 @@ func (l *ListDirectoryProvisioningsResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListDirectoryProvisioningsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetDirectoryProvisionings sets the DirectoryProvisionings field and marks it as non-optional;
@@ -102910,12 +102865,10 @@ func (l *ListEncryptionKeyOffsetPaginatedResponseContent) GetExtraProperties() m
 }
 
 func (l *ListEncryptionKeyOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -103028,12 +102981,10 @@ func (l *ListEventStreamDeliveriesResponseContent) GetExtraProperties() map[stri
 }
 
 func (l *ListEventStreamDeliveriesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetDeliveries sets the Deliveries field and marks it as non-optional;
@@ -103131,12 +103082,10 @@ func (l *ListExperimentsResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (l *ListExperimentsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetExperiments sets the Experiments field and marks it as non-optional;
@@ -103234,12 +103183,10 @@ func (l *ListFeatureFlagsResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (l *ListFeatureFlagsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetFeatureFlags sets the FeatureFlags field and marks it as non-optional;
@@ -103337,12 +103284,10 @@ func (l *ListFlowExecutionsPaginatedResponseContent) GetExtraProperties() map[st
 }
 
 func (l *ListFlowExecutionsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -103457,12 +103402,10 @@ func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) GetExtraProper
 }
 
 func (l *ListFlowsVaultConnectionsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -103574,12 +103517,10 @@ func (l *ListGroupRolesResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (l *ListGroupRolesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -103696,12 +103637,10 @@ func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) GetExtraP
 }
 
 func (l *ListOrganizationAllConnectionsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -103830,12 +103769,10 @@ func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) GetExtraPro
 }
 
 func (l *ListOrganizationClientGrantsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -103948,12 +103885,10 @@ func (l *ListOrganizationClientsResponseContent) GetExtraProperties() map[string
 }
 
 func (l *ListOrganizationClientsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetClients sets the Clients field and marks it as non-optional;
@@ -104068,12 +104003,10 @@ func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) GetExtraProp
 }
 
 func (l *ListOrganizationConnectionsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -104184,12 +104117,10 @@ func (l *ListOrganizationDiscoveryDomainsResponseContent) GetExtraProperties() m
 }
 
 func (l *ListOrganizationDiscoveryDomainsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -104287,12 +104218,10 @@ func (l *ListOrganizationGroupRolesResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListOrganizationGroupRolesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -104390,12 +104319,10 @@ func (l *ListOrganizationGroupsResponseContent) GetExtraProperties() map[string]
 }
 
 func (l *ListOrganizationGroupsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -104501,12 +104428,10 @@ func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) GetExtraProp
 }
 
 func (l *ListOrganizationInvitationsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -104611,12 +104536,10 @@ func (l *ListOrganizationMemberEffectiveRolesResponseContent) GetExtraProperties
 }
 
 func (l *ListOrganizationMemberEffectiveRolesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -104714,12 +104637,10 @@ func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) GetExtraProperti
 }
 
 func (l *ListOrganizationMemberRoleSourceGroupsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -104834,12 +104755,10 @@ func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) GetExtraProp
 }
 
 func (l *ListOrganizationMemberRolesOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -104951,12 +104870,10 @@ func (l *ListOrganizationMembersPaginatedResponseContent) GetExtraProperties() m
 }
 
 func (l *ListOrganizationMembersPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -105019,12 +104936,12 @@ func (l *ListOrganizationMembersPaginatedResponseContent) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+// Checkpoint paginated list of groups assigned to a role within an organization.
 var (
 	listOrganizationRoleGroupsResponseContentFieldGroups = big.NewInt(1 << 0)
 	listOrganizationRoleGroupsResponseContentFieldNext   = big.NewInt(1 << 1)
 )
 
-// Checkpoint paginated list of groups assigned to a role within an organization.
 type ListOrganizationRoleGroupsResponseContent struct {
 	Groups []*RoleGroup `json:"groups" url:"groups"`
 	// A cursor to be used as the "from" query parameter for the next page of results.
@@ -105059,12 +104976,10 @@ func (l *ListOrganizationRoleGroupsResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListOrganizationRoleGroupsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -105163,12 +105078,10 @@ func (l *ListOrganizationRoleMembersResponseContent) GetExtraProperties() map[st
 }
 
 func (l *ListOrganizationRoleMembersResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetMembers sets the Members field and marks it as non-optional;
@@ -105256,12 +105169,10 @@ func (l *ListPhoneTemplatesResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (l *ListPhoneTemplatesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTemplates sets the Templates field and marks it as non-optional;
@@ -105353,12 +105264,10 @@ func (l *ListRefreshTokensPaginatedResponseContent) GetExtraProperties() map[str
 }
 
 func (l *ListRefreshTokensPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetTokens sets the Tokens field and marks it as non-optional;
@@ -105460,12 +105369,10 @@ func (l *ListRoleGroupsResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (l *ListRoleGroupsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -105580,12 +105487,10 @@ func (l *ListRolePermissionsOffsetPaginatedResponseContent) GetExtraProperties()
 }
 
 func (l *ListRolePermissionsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -105696,12 +105601,10 @@ func (l *ListRoleUsersPaginatedResponseContent) GetExtraProperties() map[string]
 }
 
 func (l *ListRoleUsersPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -105800,12 +105703,10 @@ func (l *ListSCIMConfigurationsResponseContent) GetExtraProperties() map[string]
 }
 
 func (l *ListSCIMConfigurationsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetSCIMConfigurations sets the SCIMConfigurations field and marks it as non-optional;
@@ -105903,12 +105804,10 @@ func (l *ListSegmentsResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (l *ListSegmentsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetSegments sets the Segments field and marks it as non-optional;
@@ -106010,12 +105909,10 @@ func (l *ListSynchronizedGroupsResponseContent) GetExtraProperties() map[string]
 }
 
 func (l *ListSynchronizedGroupsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -106134,12 +106031,10 @@ func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) GetExtraPr
 }
 
 func (l *ListUserAuthenticationMethodsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -106251,12 +106146,10 @@ func (l *ListUserConnectedAccountsResponseContent) GetExtraProperties() map[stri
 }
 
 func (l *ListUserConnectedAccountsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetConnectedAccounts sets the ConnectedAccounts field and marks it as non-optional;
@@ -106355,12 +106248,10 @@ func (l *ListUserEffectivePermissionRoleSourcesResponseContent) GetExtraProperti
 }
 
 func (l *ListUserEffectivePermissionRoleSourcesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -106459,12 +106350,10 @@ func (l *ListUserEffectivePermissionsResponseContent) GetExtraProperties() map[s
 }
 
 func (l *ListUserEffectivePermissionsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetPermissions sets the Permissions field and marks it as non-optional;
@@ -106562,12 +106451,10 @@ func (l *ListUserEffectiveRolesResponseContent) GetExtraProperties() map[string]
 }
 
 func (l *ListUserEffectiveRolesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetRoles sets the Roles field and marks it as non-optional;
@@ -106682,12 +106569,10 @@ func (l *ListUserOrganizationsOffsetPaginatedResponseContent) GetExtraProperties
 }
 
 func (l *ListUserOrganizationsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -106816,12 +106701,10 @@ func (l *ListUserPermissionsOffsetPaginatedResponseContent) GetExtraProperties()
 }
 
 func (l *ListUserPermissionsOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -106933,12 +106816,10 @@ func (l *ListUserRoleSourceGroupsResponseContent) GetExtraProperties() map[strin
 }
 
 func (l *ListUserRoleSourceGroupsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetGroups sets the Groups field and marks it as non-optional;
@@ -107053,12 +106934,10 @@ func (l *ListUserRolesOffsetPaginatedResponseContent) GetExtraProperties() map[s
 }
 
 func (l *ListUserRolesOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -107171,12 +107050,10 @@ func (l *ListUserSessionsPaginatedResponseContent) GetExtraProperties() map[stri
 }
 
 func (l *ListUserSessionsPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetSessions sets the Sessions field and marks it as non-optional;
@@ -107268,12 +107145,10 @@ func (l *ListVariationsResponseContent) GetExtraProperties() map[string]interfac
 }
 
 func (l *ListVariationsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetVariations sets the Variations field and marks it as non-optional;
@@ -107330,11 +107205,6 @@ var (
 	listVerifiableCredentialTemplatesPaginatedResponseContentFieldTemplates = big.NewInt(1 << 1)
 )
 
-// listVerifiableCredentialTemplatesPaginatedResponseContentNullableFields maps the wire names of ListVerifiableCredentialTemplatesPaginatedResponseContent's nullable fields (required or optional) to their field bits.
-var listVerifiableCredentialTemplatesPaginatedResponseContentNullableFields = map[string]*big.Int{
-	"next": listVerifiableCredentialTemplatesPaginatedResponseContentFieldNext,
-}
-
 type ListVerifiableCredentialTemplatesPaginatedResponseContent struct {
 	// Opaque identifier for use with the <i>from</i> query parameter for the next page of results.<br/>This identifier is valid for 24 hours.
 	Next      *string                                 `json:"next,omitempty" url:"next,omitempty"`
@@ -107369,12 +107239,10 @@ func (l *ListVerifiableCredentialTemplatesPaginatedResponseContent) GetExtraProp
 }
 
 func (l *ListVerifiableCredentialTemplatesPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetNext sets the Next field and marks it as non-optional;
@@ -107403,13 +107271,6 @@ func (l *ListVerifiableCredentialTemplatesPaginatedResponseContent) UnmarshalJSO
 		return err
 	}
 	l.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, listVerifiableCredentialTemplatesPaginatedResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		l.require(presentFields)
-	}
 	l.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -107463,11 +107324,6 @@ var (
 	logFieldSecurityContext = big.NewInt(1 << 19)
 	logFieldLocationInfo    = big.NewInt(1 << 20)
 )
-
-// logNullableFields maps the wire names of Log's nullable fields (required or optional) to their field bits.
-var logNullableFields = map[string]*big.Int{
-	"description": logFieldDescription,
-}
 
 type Log struct {
 	Date *LogDate `json:"date,omitempty" url:"date,omitempty"`
@@ -107672,12 +107528,10 @@ func (l *Log) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *Log) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetDate sets the Date field and marks it as non-optional;
@@ -107843,13 +107697,6 @@ func (l *Log) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	l.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, logNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		l.require(presentFields)
-	}
 	l.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -107949,6 +107796,7 @@ type LogDateObject = map[string]any
 // Additional useful details about this event (structure is dependent upon event type).
 type LogDetails = map[string]any
 
+// Information about the location that triggered this event based on the `ip`.
 var (
 	logLocationInfoFieldCountryCode   = big.NewInt(1 << 0)
 	logLocationInfoFieldCountryCode3  = big.NewInt(1 << 1)
@@ -107960,7 +107808,6 @@ var (
 	logLocationInfoFieldContinentCode = big.NewInt(1 << 7)
 )
 
-// Information about the location that triggered this event based on the `ip`.
 type LogLocationInfo struct {
 	// Two-letter <a href="https://www.iso.org/iso-3166-country-codes.html">Alpha-2 ISO 3166-1</a> country code.
 	CountryCode *string `json:"country_code,omitempty" url:"country_code,omitempty"`
@@ -108051,12 +107898,10 @@ func (l *LogLocationInfo) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogLocationInfo) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetCountryCode sets the CountryCode field and marks it as non-optional;
@@ -108161,12 +108006,12 @@ func (l *LogLocationInfo) String() string {
 	return fmt.Sprintf("%#v", l)
 }
 
+// Information about security-related signals.
 var (
 	logSecurityContextFieldJa3 = big.NewInt(1 << 0)
 	logSecurityContextFieldJa4 = big.NewInt(1 << 1)
 )
 
-// Information about security-related signals.
 type LogSecurityContext struct {
 	// JA3 fingerprint value.
 	Ja3 *string `json:"ja3,omitempty" url:"ja3,omitempty"`
@@ -108203,12 +108048,10 @@ func (l *LogSecurityContext) GetExtraProperties() map[string]interface{} {
 }
 
 func (l *LogSecurityContext) require(field *big.Int) {
-	next := new(big.Int)
-	if l.explicitFields != nil {
-		next.Set(l.explicitFields)
+	if l.explicitFields == nil {
+		l.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	l.explicitFields = next
+	l.explicitFields.Or(l.explicitFields, field)
 }
 
 // SetJa3 sets the Ja3 field and marks it as non-optional;
@@ -108269,6 +108112,158 @@ func (l *LogSecurityContext) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", l)
+}
+
+type LogStreamDatadogEnum string
+
+const (
+	LogStreamDatadogEnumDatadog LogStreamDatadogEnum = "datadog"
+)
+
+func NewLogStreamDatadogEnumFromString(s string) (LogStreamDatadogEnum, error) {
+	switch s {
+	case "datadog":
+		return LogStreamDatadogEnumDatadog, nil
+	}
+	var t LogStreamDatadogEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamDatadogEnum) Ptr() *LogStreamDatadogEnum {
+	return &l
+}
+
+type LogStreamEventBridgeEnum string
+
+const (
+	LogStreamEventBridgeEnumEventbridge LogStreamEventBridgeEnum = "eventbridge"
+)
+
+func NewLogStreamEventBridgeEnumFromString(s string) (LogStreamEventBridgeEnum, error) {
+	switch s {
+	case "eventbridge":
+		return LogStreamEventBridgeEnumEventbridge, nil
+	}
+	var t LogStreamEventBridgeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamEventBridgeEnum) Ptr() *LogStreamEventBridgeEnum {
+	return &l
+}
+
+type LogStreamEventGridEnum string
+
+const (
+	LogStreamEventGridEnumEventgrid LogStreamEventGridEnum = "eventgrid"
+)
+
+func NewLogStreamEventGridEnumFromString(s string) (LogStreamEventGridEnum, error) {
+	switch s {
+	case "eventgrid":
+		return LogStreamEventGridEnumEventgrid, nil
+	}
+	var t LogStreamEventGridEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamEventGridEnum) Ptr() *LogStreamEventGridEnum {
+	return &l
+}
+
+type LogStreamHTTPEnum string
+
+const (
+	LogStreamHTTPEnumHTTP LogStreamHTTPEnum = "http"
+)
+
+func NewLogStreamHTTPEnumFromString(s string) (LogStreamHTTPEnum, error) {
+	switch s {
+	case "http":
+		return LogStreamHTTPEnumHTTP, nil
+	}
+	var t LogStreamHTTPEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamHTTPEnum) Ptr() *LogStreamHTTPEnum {
+	return &l
+}
+
+type LogStreamMixpanelEnum string
+
+const (
+	LogStreamMixpanelEnumMixpanel LogStreamMixpanelEnum = "mixpanel"
+)
+
+func NewLogStreamMixpanelEnumFromString(s string) (LogStreamMixpanelEnum, error) {
+	switch s {
+	case "mixpanel":
+		return LogStreamMixpanelEnumMixpanel, nil
+	}
+	var t LogStreamMixpanelEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamMixpanelEnum) Ptr() *LogStreamMixpanelEnum {
+	return &l
+}
+
+type LogStreamSegmentEnum string
+
+const (
+	LogStreamSegmentEnumSegment LogStreamSegmentEnum = "segment"
+)
+
+func NewLogStreamSegmentEnumFromString(s string) (LogStreamSegmentEnum, error) {
+	switch s {
+	case "segment":
+		return LogStreamSegmentEnumSegment, nil
+	}
+	var t LogStreamSegmentEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSegmentEnum) Ptr() *LogStreamSegmentEnum {
+	return &l
+}
+
+type LogStreamSplunkEnum string
+
+const (
+	LogStreamSplunkEnumSplunk LogStreamSplunkEnum = "splunk"
+)
+
+func NewLogStreamSplunkEnumFromString(s string) (LogStreamSplunkEnum, error) {
+	switch s {
+	case "splunk":
+		return LogStreamSplunkEnumSplunk, nil
+	}
+	var t LogStreamSplunkEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSplunkEnum) Ptr() *LogStreamSplunkEnum {
+	return &l
+}
+
+type LogStreamSumoEnum string
+
+const (
+	LogStreamSumoEnumSumo LogStreamSumoEnum = "sumo"
+)
+
+func NewLogStreamSumoEnumFromString(s string) (LogStreamSumoEnum, error) {
+	switch s {
+	case "sumo":
+		return LogStreamSumoEnumSumo, nil
+	}
+	var t LogStreamSumoEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (l LogStreamSumoEnum) Ptr() *LogStreamSumoEnum {
+	return &l
 }
 
 var (
@@ -108502,12 +108497,10 @@ func (m *MdlPresentationProperties) GetExtraProperties() map[string]interface{} 
 }
 
 func (m *MdlPresentationProperties) require(field *big.Int) {
-	next := new(big.Int)
-	if m.explicitFields != nil {
-		next.Set(m.explicitFields)
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	m.explicitFields = next
+	m.explicitFields.Or(m.explicitFields, field)
 }
 
 // SetFamilyName sets the FamilyName field and marks it as non-optional;
@@ -108703,11 +108696,11 @@ func (m *MdlPresentationProperties) String() string {
 	return fmt.Sprintf("%#v", m)
 }
 
+// A simplified presentation request
 var (
 	mdlPresentationRequestFieldOrgIso1801351MDl = big.NewInt(1 << 0)
 )
 
-// A simplified presentation request
 type MdlPresentationRequest struct {
 	OrgIso1801351MDl *MdlPresentationRequestProperties `json:"org.iso.18013.5.1.mDL" url:"org.iso.18013.5.1.mDL"`
 
@@ -108733,12 +108726,10 @@ func (m *MdlPresentationRequest) GetExtraProperties() map[string]interface{} {
 }
 
 func (m *MdlPresentationRequest) require(field *big.Int) {
-	next := new(big.Int)
-	if m.explicitFields != nil {
-		next.Set(m.explicitFields)
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	m.explicitFields = next
+	m.explicitFields.Or(m.explicitFields, field)
 }
 
 // SetOrgIso1801351MDl sets the OrgIso1801351MDl field and marks it as non-optional;
@@ -108819,12 +108810,10 @@ func (m *MdlPresentationRequestProperties) GetExtraProperties() map[string]inter
 }
 
 func (m *MdlPresentationRequestProperties) require(field *big.Int) {
-	next := new(big.Int)
-	if m.explicitFields != nil {
-		next.Set(m.explicitFields)
+	if m.explicitFields == nil {
+		m.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	m.explicitFields = next
+	m.explicitFields.Or(m.explicitFields, field)
 }
 
 // SetOrgIso1801351 sets the OrgIso1801351 field and marks it as non-optional;
@@ -108978,12 +108967,10 @@ func (n *NetworkACLKey) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NetworkACLKey) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -109137,12 +109124,10 @@ func (n *NotFoundErrorBody) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NotFoundErrorBody) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -109227,13 +109212,13 @@ func (n NotFoundErrorBodyError) Ptr() *NotFoundErrorBodyError {
 	return &n
 }
 
+// Not Found
 var (
 	notFoundSchemaFieldMessage    = big.NewInt(1 << 0)
 	notFoundSchemaFieldStatusCode = big.NewInt(1 << 1)
 	notFoundSchemaFieldError      = big.NewInt(1 << 2)
 )
 
-// Not Found
 type NotFoundSchema struct {
 	Message    string              `json:"message" url:"message"`
 	StatusCode string              `json:"statusCode" url:"statusCode"`
@@ -109275,12 +109260,10 @@ func (n *NotFoundSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (n *NotFoundSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if n.explicitFields != nil {
-		next.Set(n.explicitFields)
+	if n.explicitFields == nil {
+		n.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	n.explicitFields = next
+	n.explicitFields.Or(n.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -110523,12 +110506,10 @@ func (o *Organization) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *Organization) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -110805,12 +110786,10 @@ func (o *OrganizationAllConnectionPost) GetExtraProperties() map[string]interfac
 }
 
 func (o *OrganizationAllConnectionPost) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
@@ -110918,12 +110897,12 @@ func (o *OrganizationAllConnectionPost) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Theme defines how to style the login pages.
 var (
 	organizationBrandingFieldLogoURL = big.NewInt(1 << 0)
 	organizationBrandingFieldColors  = big.NewInt(1 << 1)
 )
 
-// Theme defines how to style the login pages.
 type OrganizationBranding struct {
 	// URL of logo to display on login page.
 	LogoURL *string                     `json:"logo_url,omitempty" url:"logo_url,omitempty"`
@@ -110958,12 +110937,10 @@ func (o *OrganizationBranding) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrganizationBranding) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetLogoURL sets the LogoURL field and marks it as non-optional;
@@ -111022,12 +110999,12 @@ func (o *OrganizationBranding) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Color scheme used to customize the login pages.
 var (
 	organizationBrandingColorsFieldPrimary        = big.NewInt(1 << 0)
 	organizationBrandingColorsFieldPageBackground = big.NewInt(1 << 1)
 )
 
-// Color scheme used to customize the login pages.
 type OrganizationBrandingColors struct {
 	// HEX Color for primary elements.
 	Primary string `json:"primary" url:"primary"`
@@ -111063,12 +111040,10 @@ func (o *OrganizationBrandingColors) GetExtraProperties() map[string]interface{}
 }
 
 func (o *OrganizationBrandingColors) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetPrimary sets the Primary field and marks it as non-optional;
@@ -111176,12 +111151,10 @@ func (o *OrganizationClient) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrganizationClient) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -111247,11 +111220,11 @@ func (o *OrganizationClient) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// The organization's association with the client passed in the <code>include_client_association_for</code> query parameter.
 var (
 	organizationClientAssociationFieldUseForMemberAccess = big.NewInt(1 << 0)
 )
 
-// The organization's association with the client passed in the <code>include_client_association_for</code> query parameter.
 type OrganizationClientAssociation struct {
 	// Whether this client is used for member access to the organization.
 	UseForMemberAccess *bool `json:"use_for_member_access,omitempty" url:"use_for_member_access,omitempty"`
@@ -111278,12 +111251,10 @@ func (o *OrganizationClientAssociation) GetExtraProperties() map[string]interfac
 }
 
 func (o *OrganizationClientAssociation) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetUseForMemberAccess sets the UseForMemberAccess field and marks it as non-optional;
@@ -111414,12 +111385,10 @@ func (o *OrganizationClientGrant) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrganizationClientGrant) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -111506,6 +111475,7 @@ func (o *OrganizationClientGrant) String() string {
 	return fmt.Sprintf("%#v", o)
 }
 
+// Metadata about the associated client.
 var (
 	organizationClientMetadataFieldName              = big.NewInt(1 << 0)
 	organizationClientMetadataFieldAppType           = big.NewInt(1 << 1)
@@ -111515,12 +111485,6 @@ var (
 	organizationClientMetadataFieldOrganizationUsage = big.NewInt(1 << 5)
 )
 
-// organizationClientMetadataNullableFields maps the wire names of OrganizationClientMetadata's nullable fields (required or optional) to their field bits.
-var organizationClientMetadataNullableFields = map[string]*big.Int{
-	"logo_uri": organizationClientMetadataFieldLogoURI,
-}
-
-// Metadata about the associated client.
 type OrganizationClientMetadata struct {
 	// The name of the client.
 	Name *string `json:"name,omitempty" url:"name,omitempty"`
@@ -111591,12 +111555,10 @@ func (o *OrganizationClientMetadata) GetExtraProperties() map[string]interface{}
 }
 
 func (o *OrganizationClientMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -111653,13 +111615,6 @@ func (o *OrganizationClientMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	o.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, organizationClientMetadataNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		o.require(presentFields)
-	}
 	o.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -111785,12 +111740,10 @@ func (o *OrganizationConnection) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrganizationConnection) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -111911,12 +111864,10 @@ func (o *OrganizationConnectionInformation) GetExtraProperties() map[string]inte
 }
 
 func (o *OrganizationConnectionInformation) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -112058,12 +112009,10 @@ func (o *OrganizationDiscoveryDomain) GetExtraProperties() map[string]interface{
 }
 
 func (o *OrganizationDiscoveryDomain) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -112319,12 +112268,10 @@ func (o *OrganizationInvitation) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrganizationInvitation) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -112502,12 +112449,10 @@ func (o *OrganizationInvitationInvitee) GetExtraProperties() map[string]interfac
 }
 
 func (o *OrganizationInvitationInvitee) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -112589,12 +112534,10 @@ func (o *OrganizationInvitationInviter) GetExtraProperties() map[string]interfac
 }
 
 func (o *OrganizationInvitationInviter) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -112715,12 +112658,10 @@ func (o *OrganizationMember) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrganizationMember) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -112918,12 +112859,10 @@ func (o *OrganizationMemberEffectiveRole) GetExtraProperties() map[string]interf
 }
 
 func (o *OrganizationMemberEffectiveRole) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -113058,12 +112997,10 @@ func (o *OrganizationMemberRole) GetExtraProperties() map[string]interface{} {
 }
 
 func (o *OrganizationMemberRole) require(field *big.Int) {
-	next := new(big.Int)
-	if o.explicitFields != nil {
-		next.Set(o.explicitFields)
+	if o.explicitFields == nil {
+		o.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	o.explicitFields = next
+	o.explicitFields.Or(o.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -113260,12 +113197,10 @@ func (p *PartialPhoneTemplateContent) GetExtraProperties() map[string]interface{
 }
 
 func (p *PartialPhoneTemplateContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -113443,12 +113378,10 @@ func (p *PatchClientCredentialResponseContent) GetExtraProperties() map[string]i
 }
 
 func (p *PatchClientCredentialResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -113609,12 +113542,10 @@ func (p *PatchPhoneProviderProtectionResponseContent) GetExtraProperties() map[s
 }
 
 func (p *PatchPhoneProviderProtectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -113710,12 +113641,10 @@ func (p *PermissionRequestPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PermissionRequestPayload) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -113834,12 +113763,10 @@ func (p *PermissionsResponsePayload) GetExtraProperties() map[string]interface{}
 }
 
 func (p *PermissionsResponsePayload) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -113954,38 +113881,6 @@ func (p *PhoneProviderConfiguration) GetCustomProviderConfiguration() *CustomPro
 }
 
 func (p *PhoneProviderConfiguration) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"default_from", "mssid", "sid", "delivery_methods"}, []string{"sid", "delivery_methods"}) {
-		valueTwilioProviderConfiguration := new(TwilioProviderConfiguration)
-		if err := json.Unmarshal(data, &valueTwilioProviderConfiguration); err == nil {
-			p.typ = "TwilioProviderConfiguration"
-			p.TwilioProviderConfiguration = valueTwilioProviderConfiguration
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"delivery_methods"}, []string{"delivery_methods"}) {
-		valueCustomProviderConfiguration := new(CustomProviderConfiguration)
-		if err := json.Unmarshal(data, &valueCustomProviderConfiguration); err == nil {
-			p.typ = "CustomProviderConfiguration"
-			p.CustomProviderConfiguration = valueCustomProviderConfiguration
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"sid", "delivery_methods"}) {
-		valueTwilioProviderConfiguration := new(TwilioProviderConfiguration)
-		if err := json.Unmarshal(data, &valueTwilioProviderConfiguration); err == nil {
-			p.typ = "TwilioProviderConfiguration"
-			p.TwilioProviderConfiguration = valueTwilioProviderConfiguration
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"delivery_methods"}) {
-		valueCustomProviderConfiguration := new(CustomProviderConfiguration)
-		if err := json.Unmarshal(data, &valueCustomProviderConfiguration); err == nil {
-			p.typ = "CustomProviderConfiguration"
-			p.CustomProviderConfiguration = valueCustomProviderConfiguration
-			return nil
-		}
-	}
 	valueTwilioProviderConfiguration := new(TwilioProviderConfiguration)
 	if err := json.Unmarshal(data, &valueTwilioProviderConfiguration); err == nil {
 		p.typ = "TwilioProviderConfiguration"
@@ -114049,30 +113944,6 @@ func (p *PhoneProviderCredentials) GetCustomProviderCredentials() *CustomProvide
 }
 
 func (p *PhoneProviderCredentials) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"auth_token"}, []string{"auth_token"}) {
-		valueTwilioProviderCredentials := new(TwilioProviderCredentials)
-		if err := json.Unmarshal(data, &valueTwilioProviderCredentials); err == nil {
-			p.typ = "TwilioProviderCredentials"
-			p.TwilioProviderCredentials = valueTwilioProviderCredentials
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{}, []string{}) {
-		valueCustomProviderCredentials := new(CustomProviderCredentials)
-		if err := json.Unmarshal(data, &valueCustomProviderCredentials); err == nil {
-			p.typ = "CustomProviderCredentials"
-			p.CustomProviderCredentials = valueCustomProviderCredentials
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"auth_token"}) {
-		valueTwilioProviderCredentials := new(TwilioProviderCredentials)
-		if err := json.Unmarshal(data, &valueTwilioProviderCredentials); err == nil {
-			p.typ = "TwilioProviderCredentials"
-			p.TwilioProviderCredentials = valueTwilioProviderCredentials
-			return nil
-		}
-	}
 	valueTwilioProviderCredentials := new(TwilioProviderCredentials)
 	if err := json.Unmarshal(data, &valueTwilioProviderCredentials); err == nil {
 		p.typ = "TwilioProviderCredentials"
@@ -114182,6 +114053,7 @@ func (p PhoneProviderProtectionBackoffStrategyEnum) Ptr() *PhoneProviderProtecti
 	return &p
 }
 
+// Phone provider configuration schema
 var (
 	phoneProviderSchemaMaskedFieldID            = big.NewInt(1 << 0)
 	phoneProviderSchemaMaskedFieldTenant        = big.NewInt(1 << 1)
@@ -114193,7 +114065,6 @@ var (
 	phoneProviderSchemaMaskedFieldUpdatedAt     = big.NewInt(1 << 7)
 )
 
-// Phone provider configuration schema
 type PhoneProviderSchemaMasked struct {
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
@@ -114279,12 +114150,10 @@ func (p *PhoneProviderSchemaMasked) GetExtraProperties() map[string]interface{} 
 }
 
 func (p *PhoneProviderSchemaMasked) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -114481,12 +114350,10 @@ func (p *PhoneTemplate) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PhoneTemplate) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -114620,12 +114487,10 @@ func (p *PhoneTemplateBody) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PhoneTemplateBody) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetText sets the Text field and marks it as non-optional;
@@ -114732,12 +114597,10 @@ func (p *PhoneTemplateContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (p *PhoneTemplateContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetSyntax sets the Syntax field and marks it as non-optional;
@@ -114953,12 +114816,10 @@ func (p *PostClientCredentialResponseContent) GetExtraProperties() map[string]in
 }
 
 func (p *PostClientCredentialResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -115156,12 +115017,10 @@ func (p *PostConnectionKeysRequestContent) GetExtraProperties() map[string]inter
 }
 
 func (p *PostConnectionKeysRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetSigningAlg sets the SigningAlg field and marks it as non-optional;
@@ -115344,12 +115203,10 @@ func (p *PostConnectionsKeysResponseContentItem) GetExtraProperties() map[string
 }
 
 func (p *PostConnectionsKeysResponseContentItem) require(field *big.Int) {
-	next := new(big.Int)
-	if p.explicitFields != nil {
-		next.Set(p.explicitFields)
+	if p.explicitFields == nil {
+		p.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	p.explicitFields = next
+	p.explicitFields.Or(p.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -115981,6 +115838,7 @@ func (r *RefreshTokenDate) Accept(visitor RefreshTokenDateVisitor) error {
 // The date and time when the refresh token was created
 type RefreshTokenDateObject = map[string]any
 
+// Device used while issuing/exchanging the refresh token
 var (
 	refreshTokenDeviceFieldInitialIP        = big.NewInt(1 << 0)
 	refreshTokenDeviceFieldInitialAsn       = big.NewInt(1 << 1)
@@ -115990,7 +115848,6 @@ var (
 	refreshTokenDeviceFieldLastUserAgent    = big.NewInt(1 << 5)
 )
 
-// Device used while issuing/exchanging the refresh token
 type RefreshTokenDevice struct {
 	// First IP address associated with the refresh token
 	InitialIP *string `json:"initial_ip,omitempty" url:"initial_ip,omitempty"`
@@ -116063,12 +115920,10 @@ func (r *RefreshTokenDevice) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RefreshTokenDevice) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetInitialIP sets the InitialIP field and marks it as non-optional;
@@ -116203,12 +116058,10 @@ func (r *RefreshTokenResourceServer) GetExtraProperties() map[string]interface{}
 }
 
 func (r *RefreshTokenResourceServer) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetAudience sets the Audience field and marks it as non-optional;
@@ -116285,16 +116138,6 @@ var (
 	refreshTokenResponseContentFieldRefreshTokenMetadata = big.NewInt(1 << 10)
 	refreshTokenResponseContentFieldLastExchangedAt      = big.NewInt(1 << 11)
 )
-
-// refreshTokenResponseContentNullableFields maps the wire names of RefreshTokenResponseContent's nullable fields (required or optional) to their field bits.
-var refreshTokenResponseContentNullableFields = map[string]*big.Int{
-	"created_at":             refreshTokenResponseContentFieldCreatedAt,
-	"idle_expires_at":        refreshTokenResponseContentFieldIdleExpiresAt,
-	"expires_at":             refreshTokenResponseContentFieldExpiresAt,
-	"session_id":             refreshTokenResponseContentFieldSessionID,
-	"refresh_token_metadata": refreshTokenResponseContentFieldRefreshTokenMetadata,
-	"last_exchanged_at":      refreshTokenResponseContentFieldLastExchangedAt,
-}
 
 type RefreshTokenResponseContent struct {
 	// The ID of the refresh token
@@ -116415,12 +116258,10 @@ func (r *RefreshTokenResponseContent) GetExtraProperties() map[string]interface{
 }
 
 func (r *RefreshTokenResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -116523,13 +116364,6 @@ func (r *RefreshTokenResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, refreshTokenResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		r.require(presentFields)
-	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -116649,12 +116483,10 @@ func (r *ResetPhoneTemplateResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (r *ResetPhoneTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -116748,11 +116580,11 @@ func (r *ResetPhoneTemplateResponseContent) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+// Custom configuration for access tokens
 var (
 	resourceServerAccessTokenFieldClaimsMapping = big.NewInt(1 << 0)
 )
 
-// Custom configuration for access tokens
 type ResourceServerAccessToken struct {
 	ClaimsMapping *ResourceServerAccessTokenClaimsMapping `json:"claims_mapping,omitempty" url:"claims_mapping,omitempty"`
 
@@ -116778,12 +116610,10 @@ func (r *ResourceServerAccessToken) GetExtraProperties() map[string]interface{} 
 }
 
 func (r *ResourceServerAccessToken) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetClaimsMapping sets the ClaimsMapping field and marks it as non-optional;
@@ -116835,11 +116665,11 @@ func (r *ResourceServerAccessToken) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+// Custom configuration for claims in access tokens
 var (
 	resourceServerAccessTokenClaimsMappingFieldCustomClaims = big.NewInt(1 << 0)
 )
 
-// Custom configuration for claims in access tokens
 type ResourceServerAccessTokenClaimsMapping struct {
 	CustomClaims *ResourceServerAccessTokenCustomClaimsMapping `json:"custom_claims,omitempty" url:"custom_claims,omitempty"`
 
@@ -116865,12 +116695,10 @@ func (r *ResourceServerAccessTokenClaimsMapping) GetExtraProperties() map[string
 }
 
 func (r *ResourceServerAccessTokenClaimsMapping) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetCustomClaims sets the CustomClaims field and marks it as non-optional;
@@ -116965,12 +116793,10 @@ func (r *ResourceServerAccessTokenCustomClaimsMappingRule) GetExtraProperties() 
 }
 
 func (r *ResourceServerAccessTokenCustomClaimsMappingRule) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -117073,12 +116899,10 @@ func (r *RevokedSigningKeysResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (r *RevokedSigningKeysResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetCert sets the Cert field and marks it as non-optional;
@@ -117209,12 +117033,10 @@ func (r *Role) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *Role) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -117294,6 +117116,7 @@ func (r *Role) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
+// A group assigned to a role in the context of an organization.
 var (
 	roleGroupFieldID             = big.NewInt(1 << 0)
 	roleGroupFieldName           = big.NewInt(1 << 1)
@@ -117306,13 +117129,6 @@ var (
 	roleGroupFieldUpdatedAt      = big.NewInt(1 << 8)
 )
 
-// roleGroupNullableFields maps the wire names of RoleGroup's nullable fields (required or optional) to their field bits.
-var roleGroupNullableFields = map[string]*big.Int{
-	"organization_id": roleGroupFieldOrganizationID,
-	"description":     roleGroupFieldDescription,
-}
-
-// A group assigned to a role in the context of an organization.
 type RoleGroup struct {
 	// Unique identifier for the group (service-generated).
 	ID string `json:"id" url:"id"`
@@ -117411,12 +117227,10 @@ func (r *RoleGroup) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RoleGroup) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -117502,13 +117316,6 @@ func (r *RoleGroup) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	r.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, roleGroupNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		r.require(presentFields)
-	}
 	r.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -117603,12 +117410,10 @@ func (r *RoleMember) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RoleMember) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -117767,12 +117572,10 @@ func (r *RoleUser) GetExtraProperties() map[string]interface{} {
 }
 
 func (r *RoleUser) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetUserID sets the UserID field and marks it as non-optional;
@@ -117974,12 +117777,10 @@ func (r *RollbackActionModuleResponseContent) GetExtraProperties() map[string]in
 }
 
 func (r *RollbackActionModuleResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -118142,12 +117943,10 @@ func (r *RotateConnectionKeysRequestContent) GetExtraProperties() map[string]int
 }
 
 func (r *RotateConnectionKeysRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetSigningAlg sets the SigningAlg field and marks it as non-optional;
@@ -118346,12 +118145,10 @@ func (r *RotateConnectionsKeysResponseContent) GetExtraProperties() map[string]i
 }
 
 func (r *RotateConnectionsKeysResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -118504,12 +118301,10 @@ func (r *RotateSigningKeysResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (r *RotateSigningKeysResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if r.explicitFields != nil {
-		next.Set(r.explicitFields)
+	if r.explicitFields == nil {
+		r.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	r.explicitFields = next
+	r.explicitFields.Or(r.explicitFields, field)
 }
 
 // SetCert sets the Cert field and marks it as non-optional;
@@ -118672,12 +118467,10 @@ func (s *SCIMConfiguration) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SCIMConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -118831,12 +118624,10 @@ func (s *SCIMMappingItem) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SCIMMappingItem) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetAuth0 sets the Auth0 field and marks it as non-optional;
@@ -118970,12 +118761,10 @@ func (s *SCIMTokenItem) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SCIMTokenItem) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetTokenID sets the TokenID field and marks it as non-optional;
@@ -119467,12 +119256,10 @@ func (s *Segment) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *Segment) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -119614,12 +119401,10 @@ func (s *SegmentContainsExpression) GetExtraProperties() map[string]interface{} 
 }
 
 func (s *SegmentContainsExpression) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetContains sets the Contains field and marks it as non-optional;
@@ -119700,12 +119485,10 @@ func (s *SegmentEndsWithExpression) GetExtraProperties() map[string]interface{} 
 }
 
 func (s *SegmentEndsWithExpression) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEndsWith sets the EndsWith field and marks it as non-optional;
@@ -119786,12 +119569,10 @@ func (s *SegmentExistsExpression) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SegmentExistsExpression) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetExists sets the Exists field and marks it as non-optional;
@@ -119843,6 +119624,7 @@ func (s *SegmentExistsExpression) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Attribute conditions that must match.
 var (
 	segmentMatchConditionsFieldClientID       = big.NewInt(1 << 0)
 	segmentMatchConditionsFieldConnection     = big.NewInt(1 << 1)
@@ -119857,7 +119639,6 @@ var (
 	segmentMatchConditionsFieldRegion         = big.NewInt(1 << 10)
 )
 
-// Attribute conditions that must match.
 type SegmentMatchConditions struct {
 	ClientID       *SegmentMatchExpression `json:"client_id,omitempty" url:"client_id,omitempty"`
 	Connection     *SegmentMatchExpression `json:"connection,omitempty" url:"connection,omitempty"`
@@ -119964,12 +119745,10 @@ func (s *SegmentMatchConditions) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SegmentMatchConditions) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -120147,70 +119926,6 @@ func (s *SegmentMatchExpression) UnmarshalJSON(data []byte) error {
 		s.StringList = valueStringList
 		return nil
 	}
-	if internal.MatchesObjectKeys(data, []string{"contains"}, []string{"contains"}) {
-		valueSegmentContainsExpression := new(SegmentContainsExpression)
-		if err := json.Unmarshal(data, &valueSegmentContainsExpression); err == nil {
-			s.typ = "SegmentContainsExpression"
-			s.SegmentContainsExpression = valueSegmentContainsExpression
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"starts_with"}, []string{"starts_with"}) {
-		valueSegmentStartsWithExpression := new(SegmentStartsWithExpression)
-		if err := json.Unmarshal(data, &valueSegmentStartsWithExpression); err == nil {
-			s.typ = "SegmentStartsWithExpression"
-			s.SegmentStartsWithExpression = valueSegmentStartsWithExpression
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"ends_with"}, []string{"ends_with"}) {
-		valueSegmentEndsWithExpression := new(SegmentEndsWithExpression)
-		if err := json.Unmarshal(data, &valueSegmentEndsWithExpression); err == nil {
-			s.typ = "SegmentEndsWithExpression"
-			s.SegmentEndsWithExpression = valueSegmentEndsWithExpression
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"exists"}, []string{"exists"}) {
-		valueSegmentExistsExpression := new(SegmentExistsExpression)
-		if err := json.Unmarshal(data, &valueSegmentExistsExpression); err == nil {
-			s.typ = "SegmentExistsExpression"
-			s.SegmentExistsExpression = valueSegmentExistsExpression
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"contains"}) {
-		valueSegmentContainsExpression := new(SegmentContainsExpression)
-		if err := json.Unmarshal(data, &valueSegmentContainsExpression); err == nil {
-			s.typ = "SegmentContainsExpression"
-			s.SegmentContainsExpression = valueSegmentContainsExpression
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"starts_with"}) {
-		valueSegmentStartsWithExpression := new(SegmentStartsWithExpression)
-		if err := json.Unmarshal(data, &valueSegmentStartsWithExpression); err == nil {
-			s.typ = "SegmentStartsWithExpression"
-			s.SegmentStartsWithExpression = valueSegmentStartsWithExpression
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"ends_with"}) {
-		valueSegmentEndsWithExpression := new(SegmentEndsWithExpression)
-		if err := json.Unmarshal(data, &valueSegmentEndsWithExpression); err == nil {
-			s.typ = "SegmentEndsWithExpression"
-			s.SegmentEndsWithExpression = valueSegmentEndsWithExpression
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"exists"}) {
-		valueSegmentExistsExpression := new(SegmentExistsExpression)
-		if err := json.Unmarshal(data, &valueSegmentExistsExpression); err == nil {
-			s.typ = "SegmentExistsExpression"
-			s.SegmentExistsExpression = valueSegmentExistsExpression
-			return nil
-		}
-	}
 	valueSegmentContainsExpression := new(SegmentContainsExpression)
 	if err := json.Unmarshal(data, &valueSegmentContainsExpression); err == nil {
 		s.typ = "SegmentContainsExpression"
@@ -120284,6 +119999,7 @@ func (s *SegmentMatchExpression) Accept(visitor SegmentMatchExpressionVisitor) e
 	return fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
+// Attribute conditions that must not match.
 var (
 	segmentNotMatchConditionsFieldClientID       = big.NewInt(1 << 0)
 	segmentNotMatchConditionsFieldConnection     = big.NewInt(1 << 1)
@@ -120298,7 +120014,6 @@ var (
 	segmentNotMatchConditionsFieldRegion         = big.NewInt(1 << 10)
 )
 
-// Attribute conditions that must not match.
 type SegmentNotMatchConditions struct {
 	ClientID       *SegmentMatchExpression `json:"client_id,omitempty" url:"client_id,omitempty"`
 	Connection     *SegmentMatchExpression `json:"connection,omitempty" url:"connection,omitempty"`
@@ -120405,12 +120120,10 @@ func (s *SegmentNotMatchConditions) GetExtraProperties() map[string]interface{} 
 }
 
 func (s *SegmentNotMatchConditions) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -120574,12 +120287,10 @@ func (s *SegmentRule) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SegmentRule) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMatch sets the Match field and marks it as non-optional;
@@ -120667,12 +120378,10 @@ func (s *SegmentStartsWithExpression) GetExtraProperties() map[string]interface{
 }
 
 func (s *SegmentStartsWithExpression) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetStartsWith sets the StartsWith field and marks it as non-optional;
@@ -120832,6 +120541,7 @@ func (s SelfServiceProfileCustomTextPageEnum) Ptr() *SelfServiceProfileCustomTex
 	return &s
 }
 
+// If provided, this will create a new connection for the Self-Service Enterprise Configuration flow with the given configuration
 var (
 	selfServiceProfileSSOTicketConnectionConfigFieldName               = big.NewInt(1 << 0)
 	selfServiceProfileSSOTicketConnectionConfigFieldDisplayName        = big.NewInt(1 << 1)
@@ -120841,12 +120551,6 @@ var (
 	selfServiceProfileSSOTicketConnectionConfigFieldOptions            = big.NewInt(1 << 5)
 )
 
-// selfServiceProfileSSOTicketConnectionConfigNullableFields maps the wire names of SelfServiceProfileSSOTicketConnectionConfig's nullable fields (required or optional) to their field bits.
-var selfServiceProfileSSOTicketConnectionConfigNullableFields = map[string]*big.Int{
-	"options": selfServiceProfileSSOTicketConnectionConfigFieldOptions,
-}
-
-// If provided, this will create a new connection for the Self-Service Enterprise Configuration flow with the given configuration
 type SelfServiceProfileSSOTicketConnectionConfig struct {
 	// The name of the connection that will be created as a part of the Self-Service Enterprise Configuration flow.
 	Name string `json:"name" url:"name"`
@@ -120916,12 +120620,10 @@ func (s *SelfServiceProfileSSOTicketConnectionConfig) GetExtraProperties() map[s
 }
 
 func (s *SelfServiceProfileSSOTicketConnectionConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -120978,13 +120680,6 @@ func (s *SelfServiceProfileSSOTicketConnectionConfig) UnmarshalJSON(data []byte)
 		return err
 	}
 	s.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, selfServiceProfileSSOTicketConnectionConfigNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -121015,20 +120710,13 @@ func (s *SelfServiceProfileSSOTicketConnectionConfig) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// The connection's options (depend on the connection strategy)
 var (
 	selfServiceProfileSSOTicketConnectionOptionsFieldIconURL       = big.NewInt(1 << 0)
 	selfServiceProfileSSOTicketConnectionOptionsFieldDomainAliases = big.NewInt(1 << 1)
 	selfServiceProfileSSOTicketConnectionOptionsFieldIdpinitiated  = big.NewInt(1 << 2)
 )
 
-// selfServiceProfileSSOTicketConnectionOptionsNullableFields maps the wire names of SelfServiceProfileSSOTicketConnectionOptions's nullable fields (required or optional) to their field bits.
-var selfServiceProfileSSOTicketConnectionOptionsNullableFields = map[string]*big.Int{
-	"icon_url":       selfServiceProfileSSOTicketConnectionOptionsFieldIconURL,
-	"domain_aliases": selfServiceProfileSSOTicketConnectionOptionsFieldDomainAliases,
-	"idpinitiated":   selfServiceProfileSSOTicketConnectionOptionsFieldIdpinitiated,
-}
-
-// The connection's options (depend on the connection strategy)
 type SelfServiceProfileSSOTicketConnectionOptions struct {
 	// URL for the icon. Must use HTTPS.
 	IconURL *string `json:"icon_url,omitempty" url:"icon_url,omitempty"`
@@ -121072,12 +120760,10 @@ func (s *SelfServiceProfileSSOTicketConnectionOptions) GetExtraProperties() map[
 }
 
 func (s *SelfServiceProfileSSOTicketConnectionOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetIconURL sets the IconURL field and marks it as non-optional;
@@ -121113,13 +120799,6 @@ func (s *SelfServiceProfileSSOTicketConnectionOptions) UnmarshalJSON(data []byte
 		return err
 	}
 	s.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, selfServiceProfileSSOTicketConnectionOptionsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -121150,12 +120829,12 @@ func (s *SelfServiceProfileSSOTicketConnectionOptions) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Configuration for the setup of the connection’s domain_aliases in the Self-Service Enterprise Configuration flow.
 var (
 	selfServiceProfileSSOTicketDomainAliasesConfigFieldDomainVerification = big.NewInt(1 << 0)
 	selfServiceProfileSSOTicketDomainAliasesConfigFieldPendingDomains     = big.NewInt(1 << 1)
 )
 
-// Configuration for the setup of the connection’s domain_aliases in the Self-Service Enterprise Configuration flow.
 type SelfServiceProfileSSOTicketDomainAliasesConfig struct {
 	DomainVerification SelfServiceProfileSSOTicketDomainVerificationEnum `json:"domain_verification" url:"domain_verification"`
 	// List of domains that will be submitted for verification during the Self-Service Enterprise Configuration flow.
@@ -121190,12 +120869,10 @@ func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) GetExtraProperties() ma
 }
 
 func (s *SelfServiceProfileSSOTicketDomainAliasesConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetDomainVerification sets the DomainVerification field and marks it as non-optional;
@@ -121280,13 +120957,13 @@ func (s SelfServiceProfileSSOTicketDomainVerificationEnum) Ptr() *SelfServicePro
 	return &s
 }
 
+// Specifies which features are enabled for an "edit connection" ticket. Only applicable when connection ID is provided.
 var (
 	selfServiceProfileSSOTicketEnabledFeaturesFieldSSO                = big.NewInt(1 << 0)
 	selfServiceProfileSSOTicketEnabledFeaturesFieldDomainVerification = big.NewInt(1 << 1)
 	selfServiceProfileSSOTicketEnabledFeaturesFieldProvisioning       = big.NewInt(1 << 2)
 )
 
-// Specifies which features are enabled for an "edit connection" ticket. Only applicable when connection ID is provided.
 type SelfServiceProfileSSOTicketEnabledFeatures struct {
 	// Whether SSO configuration is enabled in this ticket.
 	SSO *bool `json:"sso,omitempty" url:"sso,omitempty"`
@@ -121331,12 +121008,10 @@ func (s *SelfServiceProfileSSOTicketEnabledFeatures) GetExtraProperties() map[st
 }
 
 func (s *SelfServiceProfileSSOTicketEnabledFeatures) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetSSO sets the SSO field and marks it as non-optional;
@@ -121452,12 +121127,10 @@ func (s *SelfServiceProfileSSOTicketEnabledOrganization) GetExtraProperties() ma
 }
 
 func (s *SelfServiceProfileSSOTicketEnabledOrganization) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetOrganizationID sets the OrganizationID field and marks it as non-optional;
@@ -121523,12 +121196,12 @@ func (s *SelfServiceProfileSSOTicketEnabledOrganization) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Configuration for Google Workspace Directory Sync during the self-service flow.
 var (
 	selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncUsers  = big.NewInt(1 << 0)
 	selfServiceProfileSSOTicketGoogleWorkspaceConfigFieldSyncGroups = big.NewInt(1 << 1)
 )
 
-// Configuration for Google Workspace Directory Sync during the self-service flow.
 type SelfServiceProfileSSOTicketGoogleWorkspaceConfig struct {
 	// Whether to enable Google Workspace Directory Sync for users during the self-service flow.
 	SyncUsers bool `json:"sync_users" url:"sync_users"`
@@ -121564,12 +121237,10 @@ func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) GetExtraProperties() 
 }
 
 func (s *SelfServiceProfileSSOTicketGoogleWorkspaceConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetSyncUsers sets the SyncUsers field and marks it as non-optional;
@@ -121654,6 +121325,7 @@ func (s SelfServiceProfileSSOTicketIdpInitiatedClientProtocolEnum) Ptr() *SelfSe
 	return &s
 }
 
+// Allows IdP-initiated login
 var (
 	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldEnabled              = big.NewInt(1 << 0)
 	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientID             = big.NewInt(1 << 1)
@@ -121661,7 +121333,6 @@ var (
 	selfServiceProfileSSOTicketIdpInitiatedOptionsFieldClientAuthorizequery = big.NewInt(1 << 3)
 )
 
-// Allows IdP-initiated login
 type SelfServiceProfileSSOTicketIdpInitiatedOptions struct {
 	// Enables IdP-initiated login for this connection
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -121714,12 +121385,10 @@ func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) GetExtraProperties() ma
 }
 
 func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -121792,18 +121461,13 @@ func (s *SelfServiceProfileSSOTicketIdpInitiatedOptions) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Configuration for the setup of Provisioning in the self-service flow.
 var (
 	selfServiceProfileSSOTicketProvisioningConfigFieldScopes          = big.NewInt(1 << 0)
 	selfServiceProfileSSOTicketProvisioningConfigFieldGoogleWorkspace = big.NewInt(1 << 1)
 	selfServiceProfileSSOTicketProvisioningConfigFieldTokenLifetime   = big.NewInt(1 << 2)
 )
 
-// selfServiceProfileSSOTicketProvisioningConfigNullableFields maps the wire names of SelfServiceProfileSSOTicketProvisioningConfig's nullable fields (required or optional) to their field bits.
-var selfServiceProfileSSOTicketProvisioningConfigNullableFields = map[string]*big.Int{
-	"token_lifetime": selfServiceProfileSSOTicketProvisioningConfigFieldTokenLifetime,
-}
-
-// Configuration for the setup of Provisioning in the self-service flow.
 type SelfServiceProfileSSOTicketProvisioningConfig struct {
 	// The scopes of the SCIM tokens generated during the self-service flow.
 	Scopes          []SelfServiceProfileSSOTicketProvisioningScopeEnum `json:"scopes,omitempty" url:"scopes,omitempty"`
@@ -121847,12 +121511,10 @@ func (s *SelfServiceProfileSSOTicketProvisioningConfig) GetExtraProperties() map
 }
 
 func (s *SelfServiceProfileSSOTicketProvisioningConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetScopes sets the Scopes field and marks it as non-optional;
@@ -121888,13 +121550,6 @@ func (s *SelfServiceProfileSSOTicketProvisioningConfig) UnmarshalJSON(data []byt
 		return err
 	}
 	s.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, selfServiceProfileSSOTicketProvisioningConfigNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -122055,11 +121710,11 @@ func (s *SessionActorClaimValue) Accept(visitor SessionActorClaimValueVisitor) e
 	return fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
+// The identity of the delegating party/session actor for delegated sessions. Present only on delegated sessions. Contains "sub" and up to 5 additional primitive claims.
 var (
 	sessionActorMetadataFieldSub = big.NewInt(1 << 0)
 )
 
-// The identity of the delegating party/session actor for delegated sessions. Present only on delegated sessions. Contains "sub" and up to 5 additional primitive claims.
 type SessionActorMetadata struct {
 	// Subject identifier of the actor
 	Sub string `json:"sub" url:"sub"`
@@ -122086,12 +121741,10 @@ func (s *SessionActorMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SessionActorMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetSub sets the Sub field and marks it as non-optional;
@@ -122143,18 +121796,13 @@ func (s *SessionActorMetadata) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Authentication signal details
 var (
 	sessionAuthenticationSignalFieldName      = big.NewInt(1 << 0)
 	sessionAuthenticationSignalFieldTimestamp = big.NewInt(1 << 1)
 	sessionAuthenticationSignalFieldType      = big.NewInt(1 << 2)
 )
 
-// sessionAuthenticationSignalNullableFields maps the wire names of SessionAuthenticationSignal's nullable fields (required or optional) to their field bits.
-var sessionAuthenticationSignalNullableFields = map[string]*big.Int{
-	"timestamp": sessionAuthenticationSignalFieldTimestamp,
-}
-
-// Authentication signal details
 type SessionAuthenticationSignal struct {
 	// One of: "federated", "passkey", "pwd", "sms", "email", "mfa", "mock" or a custom method denoted by a URL
 	Name      *string      `json:"name,omitempty" url:"name,omitempty"`
@@ -122199,12 +121847,10 @@ func (s *SessionAuthenticationSignal) GetExtraProperties() map[string]interface{
 }
 
 func (s *SessionAuthenticationSignal) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -122244,13 +121890,6 @@ func (s *SessionAuthenticationSignal) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, sessionAuthenticationSignalNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -122281,11 +121920,11 @@ func (s *SessionAuthenticationSignal) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Details about authentication signals obtained during the login flow
 var (
 	sessionAuthenticationSignalsFieldMethods = big.NewInt(1 << 0)
 )
 
-// Details about authentication signals obtained during the login flow
 type SessionAuthenticationSignals struct {
 	// Contains the authentication methods a user has completed during their session
 	Methods []*SessionAuthenticationSignal `json:"methods,omitempty" url:"methods,omitempty"`
@@ -122313,12 +121952,10 @@ func (s *SessionAuthenticationSignals) GetExtraProperties() map[string]interface
 }
 
 func (s *SessionAuthenticationSignals) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMethods sets the Methods field and marks it as non-optional;
@@ -122374,11 +122011,11 @@ func (s *SessionAuthenticationSignals) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Client details
 var (
 	sessionClientMetadataFieldClientID = big.NewInt(1 << 0)
 )
 
-// Client details
 type SessionClientMetadata struct {
 	// ID of client for the session
 	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
@@ -122406,12 +122043,10 @@ func (s *SessionClientMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SessionClientMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -122467,11 +122102,11 @@ func (s *SessionClientMetadata) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// [Private Early Access] Session cookie configuration.
 var (
 	sessionCookieMetadataFieldMode = big.NewInt(1 << 0)
 )
 
-// [Private Early Access] Session cookie configuration.
 type SessionCookieMetadata struct {
 	Mode *SessionCookieMetadataModeEnum `json:"mode,omitempty" url:"mode,omitempty"`
 
@@ -122498,12 +122133,10 @@ func (s *SessionCookieMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SessionCookieMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMode sets the Mode field and marks it as non-optional;
@@ -122605,11 +122238,11 @@ func (s SessionCookieModeEnum) Ptr() *SessionCookieModeEnum {
 	return &s
 }
 
+// Session cookie configuration
 var (
 	sessionCookieSchemaFieldMode = big.NewInt(1 << 0)
 )
 
-// Session cookie configuration
 type SessionCookieSchema struct {
 	Mode SessionCookieModeEnum `json:"mode" url:"mode"`
 
@@ -122635,12 +122268,10 @@ func (s *SessionCookieSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SessionCookieSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMode sets the Mode field and marks it as non-optional;
@@ -122756,6 +122387,7 @@ func (s *SessionDate) Accept(visitor SessionDateVisitor) error {
 	return fmt.Errorf("type %T does not include a non-empty union type", s)
 }
 
+// Metadata related to the device used in the session
 var (
 	sessionDeviceMetadataFieldInitialUserAgent = big.NewInt(1 << 0)
 	sessionDeviceMetadataFieldInitialIP        = big.NewInt(1 << 1)
@@ -122765,13 +122397,6 @@ var (
 	sessionDeviceMetadataFieldLastAsn          = big.NewInt(1 << 5)
 )
 
-// sessionDeviceMetadataNullableFields maps the wire names of SessionDeviceMetadata's nullable fields (required or optional) to their field bits.
-var sessionDeviceMetadataNullableFields = map[string]*big.Int{
-	"initial_ip": sessionDeviceMetadataFieldInitialIP,
-	"last_ip":    sessionDeviceMetadataFieldLastIP,
-}
-
-// Metadata related to the device used in the session
 type SessionDeviceMetadata struct {
 	// First user agent of the device from which this user logged in
 	InitialUserAgent *string    `json:"initial_user_agent,omitempty" url:"initial_user_agent,omitempty"`
@@ -122842,12 +122467,10 @@ func (s *SessionDeviceMetadata) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SessionDeviceMetadata) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetInitialUserAgent sets the InitialUserAgent field and marks it as non-optional;
@@ -122908,13 +122531,6 @@ func (s *SessionDeviceMetadata) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, sessionDeviceMetadataNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -122967,17 +122583,6 @@ var (
 	sessionResponseContentFieldSessionMetadata  = big.NewInt(1 << 12)
 	sessionResponseContentFieldActor            = big.NewInt(1 << 13)
 )
-
-// sessionResponseContentNullableFields maps the wire names of SessionResponseContent's nullable fields (required or optional) to their field bits.
-var sessionResponseContentNullableFields = map[string]*big.Int{
-	"created_at":         sessionResponseContentFieldCreatedAt,
-	"updated_at":         sessionResponseContentFieldUpdatedAt,
-	"authenticated_at":   sessionResponseContentFieldAuthenticatedAt,
-	"idle_expires_at":    sessionResponseContentFieldIdleExpiresAt,
-	"expires_at":         sessionResponseContentFieldExpiresAt,
-	"last_interacted_at": sessionResponseContentFieldLastInteractedAt,
-	"session_metadata":   sessionResponseContentFieldSessionMetadata,
-}
 
 type SessionResponseContent struct {
 	// The ID of the session
@@ -123112,12 +122717,10 @@ func (s *SessionResponseContent) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SessionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -123234,13 +122837,6 @@ func (s *SessionResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, sessionResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -123271,11 +122867,11 @@ func (s *SessionResponseContent) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// JWKS representing an array of custom public signing keys.
 var (
 	setCustomSigningKeysResponseContentFieldKeys = big.NewInt(1 << 0)
 )
 
-// JWKS representing an array of custom public signing keys.
 type SetCustomSigningKeysResponseContent struct {
 	// An array of custom public signing keys.
 	Keys []*CustomSigningKeyJwk `json:"keys,omitempty" url:"keys,omitempty"`
@@ -123302,12 +122898,10 @@ func (s *SetCustomSigningKeysResponseContent) GetExtraProperties() map[string]in
 }
 
 func (s *SetCustomSigningKeysResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetKeys sets the Keys field and marks it as non-optional;
@@ -123399,12 +122993,10 @@ func (s *SetEmailFactorSettingsResponseContent) GetExtraProperties() map[string]
 }
 
 func (s *SetEmailFactorSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -123510,12 +123102,10 @@ func (s *SetGuardianFactorDuoSettingsResponseContent) GetExtraProperties() map[s
 }
 
 func (s *SetGuardianFactorDuoSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetIkey sets the Ikey field and marks it as non-optional;
@@ -123611,12 +123201,10 @@ func (s *SetGuardianFactorPhoneMessageTypesResponseContent) GetExtraProperties()
 }
 
 func (s *SetGuardianFactorPhoneMessageTypesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMessageTypes sets the MessageTypes field and marks it as non-optional;
@@ -123708,12 +123296,10 @@ func (s *SetGuardianFactorPhoneTemplatesResponseContent) GetExtraProperties() ma
 }
 
 func (s *SetGuardianFactorPhoneTemplatesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
@@ -123802,12 +123388,10 @@ func (s *SetGuardianFactorResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (s *SetGuardianFactorResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -123899,12 +123483,10 @@ func (s *SetGuardianFactorSmsTemplatesResponseContent) GetExtraProperties() map[
 }
 
 func (s *SetGuardianFactorSmsTemplatesResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetEnrollmentMessage sets the EnrollmentMessage field and marks it as non-optional;
@@ -123992,12 +123574,10 @@ func (s *SetGuardianFactorsProviderPhoneResponseContent) GetExtraProperties() ma
 }
 
 func (s *SetGuardianFactorsProviderPhoneResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -124056,14 +123636,6 @@ var (
 	setGuardianFactorsProviderPhoneTwilioResponseContentFieldSid                 = big.NewInt(1 << 3)
 )
 
-// setGuardianFactorsProviderPhoneTwilioResponseContentNullableFields maps the wire names of SetGuardianFactorsProviderPhoneTwilioResponseContent's nullable fields (required or optional) to their field bits.
-var setGuardianFactorsProviderPhoneTwilioResponseContentNullableFields = map[string]*big.Int{
-	"from":                  setGuardianFactorsProviderPhoneTwilioResponseContentFieldFrom,
-	"messaging_service_sid": setGuardianFactorsProviderPhoneTwilioResponseContentFieldMessagingServiceSid,
-	"auth_token":            setGuardianFactorsProviderPhoneTwilioResponseContentFieldAuthToken,
-	"sid":                   setGuardianFactorsProviderPhoneTwilioResponseContentFieldSid,
-}
-
 type SetGuardianFactorsProviderPhoneTwilioResponseContent struct {
 	// From number
 	From *string `json:"from,omitempty" url:"from,omitempty"`
@@ -124117,12 +123689,10 @@ func (s *SetGuardianFactorsProviderPhoneTwilioResponseContent) GetExtraPropertie
 }
 
 func (s *SetGuardianFactorsProviderPhoneTwilioResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -124165,13 +123735,6 @@ func (s *SetGuardianFactorsProviderPhoneTwilioResponseContent) UnmarshalJSON(dat
 		return err
 	}
 	s.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, setGuardianFactorsProviderPhoneTwilioResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -124207,11 +123770,6 @@ var (
 	setGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID = big.NewInt(1 << 1)
 )
 
-// setGuardianFactorsProviderPushNotificationApnsResponseContentNullableFields maps the wire names of SetGuardianFactorsProviderPushNotificationApnsResponseContent's nullable fields (required or optional) to their field bits.
-var setGuardianFactorsProviderPushNotificationApnsResponseContentNullableFields = map[string]*big.Int{
-	"bundle_id": setGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID,
-}
-
 type SetGuardianFactorsProviderPushNotificationApnsResponseContent struct {
 	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
 	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
@@ -124245,12 +123803,10 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) GetExtra
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetSandbox sets the Sandbox field and marks it as non-optional;
@@ -124279,13 +123835,6 @@ func (s *SetGuardianFactorsProviderPushNotificationApnsResponseContent) Unmarsha
 		return err
 	}
 	s.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, setGuardianFactorsProviderPushNotificationApnsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -124349,12 +123898,10 @@ func (s *SetGuardianFactorsProviderPushNotificationResponseContent) GetExtraProp
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -124414,15 +123961,6 @@ var (
 	setGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsGcmPlatformApplicationArn  = big.NewInt(1 << 4)
 )
 
-// setGuardianFactorsProviderPushNotificationSnsResponseContentNullableFields maps the wire names of SetGuardianFactorsProviderPushNotificationSnsResponseContent's nullable fields (required or optional) to their field bits.
-var setGuardianFactorsProviderPushNotificationSnsResponseContentNullableFields = map[string]*big.Int{
-	"aws_access_key_id":                 setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyID,
-	"aws_secret_access_key":             setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsSecretAccessKey,
-	"aws_region":                        setGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsRegion,
-	"sns_apns_platform_application_arn": setGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsApnsPlatformApplicationArn,
-	"sns_gcm_platform_application_arn":  setGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsGcmPlatformApplicationArn,
-}
-
 type SetGuardianFactorsProviderPushNotificationSnsResponseContent struct {
 	AwsAccessKeyID                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
 	AwsSecretAccessKey            *string `json:"aws_secret_access_key,omitempty" url:"aws_secret_access_key,omitempty"`
@@ -124480,12 +124018,10 @@ func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) GetExtraP
 }
 
 func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
@@ -124535,13 +124071,6 @@ func (s *SetGuardianFactorsProviderPushNotificationSnsResponseContent) Unmarshal
 		return err
 	}
 	s.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, setGuardianFactorsProviderPushNotificationSnsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -124601,12 +124130,10 @@ func (s *SetGuardianFactorsProviderSmsResponseContent) GetExtraProperties() map[
 }
 
 func (s *SetGuardianFactorsProviderSmsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetProvider sets the Provider field and marks it as non-optional;
@@ -124665,14 +124192,6 @@ var (
 	setGuardianFactorsProviderSmsTwilioResponseContentFieldSid                 = big.NewInt(1 << 3)
 )
 
-// setGuardianFactorsProviderSmsTwilioResponseContentNullableFields maps the wire names of SetGuardianFactorsProviderSmsTwilioResponseContent's nullable fields (required or optional) to their field bits.
-var setGuardianFactorsProviderSmsTwilioResponseContentNullableFields = map[string]*big.Int{
-	"from":                  setGuardianFactorsProviderSmsTwilioResponseContentFieldFrom,
-	"messaging_service_sid": setGuardianFactorsProviderSmsTwilioResponseContentFieldMessagingServiceSid,
-	"auth_token":            setGuardianFactorsProviderSmsTwilioResponseContentFieldAuthToken,
-	"sid":                   setGuardianFactorsProviderSmsTwilioResponseContentFieldSid,
-}
-
 type SetGuardianFactorsProviderSmsTwilioResponseContent struct {
 	// From number
 	From *string `json:"from,omitempty" url:"from,omitempty"`
@@ -124726,12 +124245,10 @@ func (s *SetGuardianFactorsProviderSmsTwilioResponseContent) GetExtraProperties(
 }
 
 func (s *SetGuardianFactorsProviderSmsTwilioResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetFrom sets the From field and marks it as non-optional;
@@ -124774,13 +124291,6 @@ func (s *SetGuardianFactorsProviderSmsTwilioResponseContent) UnmarshalJSON(data 
 		return err
 	}
 	s.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, setGuardianFactorsProviderSmsTwilioResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		s.require(presentFields)
-	}
 	s.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -124858,12 +124368,10 @@ func (s *SetPhoneFactorSettingsResponseContent) GetExtraProperties() map[string]
 }
 
 func (s *SetPhoneFactorSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetOtpLength sets the OtpLength field and marks it as non-optional;
@@ -124928,6 +124436,7 @@ type SetSelfServiceProfileCustomTextRequestContent = map[string]string
 // The resulting list of custom text keys and values.
 type SetSelfServiceProfileCustomTextResponseContent = map[string]string
 
+// The successfully created authentication method.
 var (
 	setUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
 	setUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
@@ -124944,7 +124453,6 @@ var (
 	setUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 12)
 )
 
-// The successfully created authentication method.
 type SetUserAuthenticationMethodResponseContent struct {
 	// The ID of the newly created authentication method (automatically generated by the application)
 	ID   *string                             `json:"id,omitempty" url:"id,omitempty"`
@@ -125077,12 +124585,10 @@ func (s *SetUserAuthenticationMethodResponseContent) GetExtraProperties() map[st
 }
 
 func (s *SetUserAuthenticationMethodResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -125304,12 +124810,10 @@ func (s *SetUserAuthenticationMethods) GetExtraProperties() map[string]interface
 }
 
 func (s *SetUserAuthenticationMethods) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -125567,12 +125071,10 @@ func (s *SigningKeys) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SigningKeys) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetKid sets the Kid field and marks it as non-optional;
@@ -126032,12 +125534,12 @@ type SuspiciousIPThrottlingAllowlist = []SuspiciousIPThrottlingAllowlistItem
 
 type SuspiciousIPThrottlingAllowlistItem = string
 
+// Configuration options that apply before every custom token exchange attempt.
 var (
 	suspiciousIPThrottlingPreCustomTokenExchangeStageFieldMaxAttempts = big.NewInt(1 << 0)
 	suspiciousIPThrottlingPreCustomTokenExchangeStageFieldRate        = big.NewInt(1 << 1)
 )
 
-// Configuration options that apply before every custom token exchange attempt.
 type SuspiciousIPThrottlingPreCustomTokenExchangeStage struct {
 	// Total number of attempts allowed.
 	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
@@ -126073,12 +125575,10 @@ func (s *SuspiciousIPThrottlingPreCustomTokenExchangeStage) GetExtraProperties()
 }
 
 func (s *SuspiciousIPThrottlingPreCustomTokenExchangeStage) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
@@ -126137,12 +125637,12 @@ func (s *SuspiciousIPThrottlingPreCustomTokenExchangeStage) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Configuration options that apply before every login attempt.
 var (
 	suspiciousIPThrottlingPreLoginStageFieldMaxAttempts = big.NewInt(1 << 0)
 	suspiciousIPThrottlingPreLoginStageFieldRate        = big.NewInt(1 << 1)
 )
 
-// Configuration options that apply before every login attempt.
 type SuspiciousIPThrottlingPreLoginStage struct {
 	// Total number of attempts allowed per day.
 	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
@@ -126178,12 +125678,10 @@ func (s *SuspiciousIPThrottlingPreLoginStage) GetExtraProperties() map[string]in
 }
 
 func (s *SuspiciousIPThrottlingPreLoginStage) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
@@ -126242,12 +125740,12 @@ func (s *SuspiciousIPThrottlingPreLoginStage) String() string {
 	return fmt.Sprintf("%#v", s)
 }
 
+// Configuration options that apply before every user registration attempt.
 var (
 	suspiciousIPThrottlingPreUserRegistrationStageFieldMaxAttempts = big.NewInt(1 << 0)
 	suspiciousIPThrottlingPreUserRegistrationStageFieldRate        = big.NewInt(1 << 1)
 )
 
-// Configuration options that apply before every user registration attempt.
 type SuspiciousIPThrottlingPreUserRegistrationStage struct {
 	// Total number of attempts allowed.
 	MaxAttempts *int `json:"max_attempts,omitempty" url:"max_attempts,omitempty"`
@@ -126283,12 +125781,10 @@ func (s *SuspiciousIPThrottlingPreUserRegistrationStage) GetExtraProperties() ma
 }
 
 func (s *SuspiciousIPThrottlingPreUserRegistrationStage) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetMaxAttempts sets the MaxAttempts field and marks it as non-optional;
@@ -126369,13 +125865,13 @@ func (s SuspiciousIPThrottlingShieldsEnum) Ptr() *SuspiciousIPThrottlingShieldsE
 	return &s
 }
 
+// Holds per-stage configuration options (max_attempts and rate).
 var (
 	suspiciousIPThrottlingStageFieldPreLogin               = big.NewInt(1 << 0)
 	suspiciousIPThrottlingStageFieldPreUserRegistration    = big.NewInt(1 << 1)
 	suspiciousIPThrottlingStageFieldPreCustomTokenExchange = big.NewInt(1 << 2)
 )
 
-// Holds per-stage configuration options (max_attempts and rate).
 type SuspiciousIPThrottlingStage struct {
 	PreLogin               *SuspiciousIPThrottlingPreLoginStage               `json:"pre-login,omitempty" url:"pre-login,omitempty"`
 	PreUserRegistration    *SuspiciousIPThrottlingPreUserRegistrationStage    `json:"pre-user-registration,omitempty" url:"pre-user-registration,omitempty"`
@@ -126417,12 +125913,10 @@ func (s *SuspiciousIPThrottlingStage) GetExtraProperties() map[string]interface{
 }
 
 func (s *SuspiciousIPThrottlingStage) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetPreLogin sets the PreLogin field and marks it as non-optional;
@@ -126574,12 +126068,10 @@ func (s *SynchronizedGroupPayload) GetExtraProperties() map[string]interface{} {
 }
 
 func (s *SynchronizedGroupPayload) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -126682,12 +126174,10 @@ func (s *SynchronizedGroupSelectionID) GetExtraProperties() map[string]interface
 }
 
 func (s *SynchronizedGroupSelectionID) require(field *big.Int) {
-	next := new(big.Int)
-	if s.explicitFields != nil {
-		next.Set(s.explicitFields)
+	if s.explicitFields == nil {
+		s.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	s.explicitFields = next
+	s.explicitFields.Or(s.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -126758,11 +126248,11 @@ func (s SystemRoleOwnerID) Ptr() *SystemRoleOwnerID {
 	return &s
 }
 
+// Settings related to OIDC RP-initiated Logout
 var (
 	tenantOidcLogoutSettingsFieldRpLogoutEndSessionEndpointDiscovery = big.NewInt(1 << 0)
 )
 
-// Settings related to OIDC RP-initiated Logout
 type TenantOidcLogoutSettings struct {
 	// Enable the end_session_endpoint URL in the .well-known discovery configuration
 	RpLogoutEndSessionEndpointDiscovery *bool `json:"rp_logout_end_session_endpoint_discovery,omitempty" url:"rp_logout_end_session_endpoint_discovery,omitempty"`
@@ -126789,12 +126279,10 @@ func (t *TenantOidcLogoutSettings) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TenantOidcLogoutSettings) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetRpLogoutEndSessionEndpointDiscovery sets the RpLogoutEndSessionEndpointDiscovery field and marks it as non-optional;
@@ -126846,12 +126334,12 @@ func (t *TenantOidcLogoutSettings) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Phone country code configuration for identifier input.
 var (
 	tenantSettingsCountryCodesFieldList = big.NewInt(1 << 0)
 	tenantSettingsCountryCodesFieldMode = big.NewInt(1 << 1)
 )
 
-// Phone country code configuration for identifier input.
 type TenantSettingsCountryCodes struct {
 	// Array of ISO 3166-1 alpha-2 country codes.
 	List []string                        `json:"list,omitempty" url:"list,omitempty"`
@@ -126886,12 +126374,10 @@ func (t *TenantSettingsCountryCodes) GetExtraProperties() map[string]interface{}
 }
 
 func (t *TenantSettingsCountryCodes) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetList sets the List field and marks it as non-optional;
@@ -126996,12 +126482,12 @@ func (t TenantSettingsCountryCodesModeResponse) Ptr() *TenantSettingsCountryCode
 	return &t
 }
 
+// Phone country code configuration for identifier input.
 var (
 	tenantSettingsCountryCodesResponseFieldList = big.NewInt(1 << 0)
 	tenantSettingsCountryCodesResponseFieldMode = big.NewInt(1 << 1)
 )
 
-// Phone country code configuration for identifier input.
 type TenantSettingsCountryCodesResponse struct {
 	// Array of ISO 3166-1 alpha-2 country codes.
 	List []string                                `json:"list,omitempty" url:"list,omitempty"`
@@ -127036,12 +126522,10 @@ func (t *TenantSettingsCountryCodesResponse) GetExtraProperties() map[string]int
 }
 
 func (t *TenantSettingsCountryCodesResponse) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetList sets the List field and marks it as non-optional;
@@ -127100,12 +126584,12 @@ func (t *TenantSettingsCountryCodesResponse) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Device Flow configuration
 var (
 	tenantSettingsDeviceFlowFieldCharset = big.NewInt(1 << 0)
 	tenantSettingsDeviceFlowFieldMask    = big.NewInt(1 << 1)
 )
 
-// Device Flow configuration
 type TenantSettingsDeviceFlow struct {
 	Charset *TenantSettingsDeviceFlowCharset `json:"charset,omitempty" url:"charset,omitempty"`
 	// Mask used to format a generated User Code into a friendly, readable format.
@@ -127140,12 +126624,10 @@ func (t *TenantSettingsDeviceFlow) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TenantSettingsDeviceFlow) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetCharset sets the Charset field and marks it as non-optional;
@@ -127250,13 +126732,13 @@ func (t TenantSettingsDynamicClientRegistrationSecurityMode) Ptr() *TenantSettin
 	return &t
 }
 
+// Error page customization.
 var (
 	tenantSettingsErrorPageFieldHTML        = big.NewInt(1 << 0)
 	tenantSettingsErrorPageFieldShowLogLink = big.NewInt(1 << 1)
 	tenantSettingsErrorPageFieldURL         = big.NewInt(1 << 2)
 )
 
-// Error page customization.
 type TenantSettingsErrorPage struct {
 	// Custom Error HTML (<a href='https://github.com/Shopify/liquid/wiki/Liquid-for-Designers'>Liquid syntax</a> is supported).
 	HTML *string `json:"html,omitempty" url:"html,omitempty"`
@@ -127301,12 +126783,10 @@ func (t *TenantSettingsErrorPage) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TenantSettingsErrorPage) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetHTML sets the HTML field and marks it as non-optional;
@@ -127372,6 +126852,7 @@ func (t *TenantSettingsErrorPage) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Flags used to change the behavior of this tenant.
 var (
 	tenantSettingsFlagsFieldChangePwdFlowV1                                = big.NewInt(1 << 0)
 	tenantSettingsFlagsFieldEnableAPIsSection                              = big.NewInt(1 << 1)
@@ -127405,7 +126886,6 @@ var (
 	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 29)
 )
 
-// Flags used to change the behavior of this tenant.
 type TenantSettingsFlags struct {
 	// Whether to use the older v1 change password flow (true, not recommended except for backward compatibility) or the newer safer flow (false, recommended).
 	ChangePwdFlowV1 *bool `json:"change_pwd_flow_v1,omitempty" url:"change_pwd_flow_v1,omitempty"`
@@ -127693,12 +127173,10 @@ func (t *TenantSettingsFlags) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TenantSettingsFlags) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetChangePwdFlowV1 sets the ChangePwdFlowV1 field and marks it as non-optional;
@@ -127953,12 +127431,12 @@ func (t *TenantSettingsFlags) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Guardian page customization.
 var (
 	tenantSettingsGuardianPageFieldEnabled = big.NewInt(1 << 0)
 	tenantSettingsGuardianPageFieldHTML    = big.NewInt(1 << 1)
 )
 
-// Guardian page customization.
 type TenantSettingsGuardianPage struct {
 	// Whether to use the custom Guardian HTML (true) or the default Auth0 page (false, default)
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -127994,12 +127472,10 @@ func (t *TenantSettingsGuardianPage) GetExtraProperties() map[string]interface{}
 }
 
 func (t *TenantSettingsGuardianPage) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -128058,11 +127534,11 @@ func (t *TenantSettingsGuardianPage) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// mTLS configuration.
 var (
 	tenantSettingsMtlsFieldEnableEndpointAliases = big.NewInt(1 << 0)
 )
 
-// mTLS configuration.
 type TenantSettingsMtls struct {
 	// If true, enables mTLS endpoint aliases
 	EnableEndpointAliases *bool `json:"enable_endpoint_aliases,omitempty" url:"enable_endpoint_aliases,omitempty"`
@@ -128089,12 +127565,10 @@ func (t *TenantSettingsMtls) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TenantSettingsMtls) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetEnableEndpointAliases sets the EnableEndpointAliases field and marks it as non-optional;
@@ -128146,18 +127620,12 @@ func (t *TenantSettingsMtls) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Security headers configuration for tenant responses.
 var (
 	tenantSettingsNullableSecurityHeadersFieldContentSecurityPolicy = big.NewInt(1 << 0)
 	tenantSettingsNullableSecurityHeadersFieldXXSSProtection        = big.NewInt(1 << 1)
 )
 
-// tenantSettingsNullableSecurityHeadersNullableFields maps the wire names of TenantSettingsNullableSecurityHeaders's nullable fields (required or optional) to their field bits.
-var tenantSettingsNullableSecurityHeadersNullableFields = map[string]*big.Int{
-	"content_security_policy": tenantSettingsNullableSecurityHeadersFieldContentSecurityPolicy,
-	"x_xss_protection":        tenantSettingsNullableSecurityHeadersFieldXXSSProtection,
-}
-
-// Security headers configuration for tenant responses.
 type TenantSettingsNullableSecurityHeaders struct {
 	ContentSecurityPolicy *ContentSecurityPolicyConfig `json:"content_security_policy,omitempty" url:"content_security_policy,omitempty"`
 	XXSSProtection        *XSSProtectionConfig         `json:"x_xss_protection,omitempty" url:"x_xss_protection,omitempty"`
@@ -128191,12 +127659,10 @@ func (t *TenantSettingsNullableSecurityHeaders) GetExtraProperties() map[string]
 }
 
 func (t *TenantSettingsNullableSecurityHeaders) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetContentSecurityPolicy sets the ContentSecurityPolicy field and marks it as non-optional;
@@ -128225,13 +127691,6 @@ func (t *TenantSettingsNullableSecurityHeaders) UnmarshalJSON(data []byte) error
 		return err
 	}
 	t.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, tenantSettingsNullableSecurityHeadersNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		t.require(presentFields)
-	}
 	t.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -128262,12 +127721,12 @@ func (t *TenantSettingsNullableSecurityHeaders) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Change Password page customization.
 var (
 	tenantSettingsPasswordPageFieldEnabled = big.NewInt(1 << 0)
 	tenantSettingsPasswordPageFieldHTML    = big.NewInt(1 << 1)
 )
 
-// Change Password page customization.
 type TenantSettingsPasswordPage struct {
 	// Whether to use the custom change password HTML (true) or the default Auth0 page (false). Default is to use the Auth0 page.
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -128303,12 +127762,10 @@ func (t *TenantSettingsPasswordPage) GetExtraProperties() map[string]interface{}
 }
 
 func (t *TenantSettingsPasswordPage) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -128390,17 +127847,12 @@ func (t TenantSettingsResourceParameterProfile) Ptr() *TenantSettingsResourcePar
 	return &t
 }
 
+// Sessions related settings for tenant
 var (
 	tenantSettingsSessionsFieldOidcLogoutPromptEnabled = big.NewInt(1 << 0)
 	tenantSettingsSessionsFieldAnonymous               = big.NewInt(1 << 1)
 )
 
-// tenantSettingsSessionsNullableFields maps the wire names of TenantSettingsSessions's nullable fields (required or optional) to their field bits.
-var tenantSettingsSessionsNullableFields = map[string]*big.Int{
-	"anonymous": tenantSettingsSessionsFieldAnonymous,
-}
-
-// Sessions related settings for tenant
 type TenantSettingsSessions struct {
 	// Whether to bypass prompting logic (false) when performing OIDC Logout
 	OidcLogoutPromptEnabled *bool                            `json:"oidc_logout_prompt_enabled,omitempty" url:"oidc_logout_prompt_enabled,omitempty"`
@@ -128435,12 +127887,10 @@ func (t *TenantSettingsSessions) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TenantSettingsSessions) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetOidcLogoutPromptEnabled sets the OidcLogoutPromptEnabled field and marks it as non-optional;
@@ -128469,13 +127919,6 @@ func (t *TenantSettingsSessions) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	t.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, tenantSettingsSessionsNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		t.require(presentFields)
-	}
 	t.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -128506,12 +127949,12 @@ func (t *TenantSettingsSessions) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// Anonymous session settings for tenant.
 var (
 	tenantSettingsSessionsAnonymousFieldLifetimeInMinutes = big.NewInt(1 << 0)
 	tenantSettingsSessionsAnonymousFieldActivateCookie    = big.NewInt(1 << 1)
 )
 
-// Anonymous session settings for tenant.
 type TenantSettingsSessionsAnonymous struct {
 	// Anonymous session lifetime, in minutes. Defaults to 43200 (30 days); maximum 525600 (1 year).
 	LifetimeInMinutes *int `json:"lifetime_in_minutes,omitempty" url:"lifetime_in_minutes,omitempty"`
@@ -128547,12 +127990,10 @@ func (t *TenantSettingsSessionsAnonymous) GetExtraProperties() map[string]interf
 }
 
 func (t *TenantSettingsSessionsAnonymous) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetLifetimeInMinutes sets the LifetimeInMinutes field and marks it as non-optional;
@@ -128873,11 +128314,11 @@ func (t TenantSettingsSupportedLocalesEnum) Ptr() *TenantSettingsSupportedLocale
 	return &t
 }
 
+// Configuration for Third Party Client Access during the Self-Service Enterprise Configuration flow.
 var (
 	thirdPartyClientAccessConfigFieldAllowConfiguration = big.NewInt(1 << 0)
 )
 
-// Configuration for Third Party Client Access during the Self-Service Enterprise Configuration flow.
 type ThirdPartyClientAccessConfig struct {
 	// Whether third-party applications can configure the connection as a domain-level connection during the Self-Service Enterprise Configuration flow.
 	AllowConfiguration bool `json:"allow_configuration" url:"allow_configuration"`
@@ -128904,12 +128345,10 @@ func (t *ThirdPartyClientAccessConfig) GetExtraProperties() map[string]interface
 }
 
 func (t *ThirdPartyClientAccessConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetAllowConfiguration sets the AllowConfiguration field and marks it as non-optional;
@@ -128990,12 +128429,10 @@ func (t *TokenQuota) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenQuota) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetClientCredentials sets the ClientCredentials field and marks it as non-optional;
@@ -129047,13 +128484,13 @@ func (t *TokenQuota) String() string {
 	return fmt.Sprintf("%#v", t)
 }
 
+// The token quota configuration
 var (
 	tokenQuotaClientCredentialsFieldEnforce = big.NewInt(1 << 0)
 	tokenQuotaClientCredentialsFieldPerDay  = big.NewInt(1 << 1)
 	tokenQuotaClientCredentialsFieldPerHour = big.NewInt(1 << 2)
 )
 
-// The token quota configuration
 type TokenQuotaClientCredentials struct {
 	// If enabled, the quota will be enforced and requests in excess of the quota will fail. If disabled, the quota will not be enforced, but notifications for requests exceeding the quota will be available in logs.
 	Enforce *bool `json:"enforce,omitempty" url:"enforce,omitempty"`
@@ -129098,12 +128535,10 @@ func (t *TokenQuotaClientCredentials) GetExtraProperties() map[string]interface{
 }
 
 func (t *TokenQuotaClientCredentials) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetEnforce sets the Enforce field and marks it as non-optional;
@@ -129199,12 +128634,10 @@ func (t *TokenQuotaConfiguration) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TokenQuotaConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetClientCredentials sets the ClientCredentials field and marks it as non-optional;
@@ -129307,12 +128740,10 @@ func (t *TooManyRequestsErrorBody) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TooManyRequestsErrorBody) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -129397,13 +128828,13 @@ func (t TooManyRequestsErrorBodyError) Ptr() *TooManyRequestsErrorBodyError {
 	return &t
 }
 
+// Too Many Requests
 var (
 	tooManyRequestsSchemaFieldMessage    = big.NewInt(1 << 0)
 	tooManyRequestsSchemaFieldStatusCode = big.NewInt(1 << 1)
 	tooManyRequestsSchemaFieldError      = big.NewInt(1 << 2)
 )
 
-// Too Many Requests
 type TooManyRequestsSchema struct {
 	Message    string                     `json:"message" url:"message"`
 	StatusCode string                     `json:"statusCode" url:"statusCode"`
@@ -129445,12 +128876,10 @@ func (t *TooManyRequestsSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (t *TooManyRequestsSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -129591,12 +129020,10 @@ func (t *TwilioProviderConfiguration) GetExtraProperties() map[string]interface{
 }
 
 func (t *TwilioProviderConfiguration) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetDefaultFrom sets the DefaultFrom field and marks it as non-optional;
@@ -129698,12 +129125,10 @@ func (t *TwilioProviderCredentials) GetExtraProperties() map[string]interface{} 
 }
 
 func (t *TwilioProviderCredentials) require(field *big.Int) {
-	next := new(big.Int)
-	if t.explicitFields != nil {
-		next.Set(t.explicitFields)
+	if t.explicitFields == nil {
+		t.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	t.explicitFields = next
+	t.explicitFields.Or(t.explicitFields, field)
 }
 
 // SetAuthToken sets the AuthToken field and marks it as non-optional;
@@ -129777,13 +129202,13 @@ func (t TwilioProviderDeliveryMethodEnum) Ptr() *TwilioProviderDeliveryMethodEnu
 	return &t
 }
 
+// Unauthorized
 var (
 	unauthorizedSchemaFieldMessage    = big.NewInt(1 << 0)
 	unauthorizedSchemaFieldStatusCode = big.NewInt(1 << 1)
 	unauthorizedSchemaFieldError      = big.NewInt(1 << 2)
 )
 
-// Unauthorized
 type UnauthorizedSchema struct {
 	Message    string                  `json:"message" url:"message"`
 	StatusCode string                  `json:"statusCode" url:"statusCode"`
@@ -129825,12 +129250,10 @@ func (u *UnauthorizedSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UnauthorizedSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetMessage sets the Message field and marks it as non-optional;
@@ -129944,12 +129367,10 @@ func (u *UpdateActionBindingsResponseContent) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateActionBindingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetBindings sets the Bindings field and marks it as non-optional;
@@ -130130,12 +129551,10 @@ func (u *UpdateActionModuleResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (u *UpdateActionModuleResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -130278,15 +129697,6 @@ var (
 	updateAculResponseContentFieldFilters                 = big.NewInt(1 << 5)
 )
 
-// updateAculResponseContentNullableFields maps the wire names of UpdateAculResponseContent's nullable fields (required or optional) to their field bits.
-var updateAculResponseContentNullableFields = map[string]*big.Int{
-	"context_configuration":      updateAculResponseContentFieldContextConfiguration,
-	"default_head_tags_disabled": updateAculResponseContentFieldDefaultHeadTagsDisabled,
-	"use_page_template":          updateAculResponseContentFieldUsePageTemplate,
-	"head_tags":                  updateAculResponseContentFieldHeadTags,
-	"filters":                    updateAculResponseContentFieldFilters,
-}
-
 type UpdateAculResponseContent struct {
 	// Rendering mode
 	RenderingMode        *AculRenderingModeEnum    `json:"rendering_mode,omitempty" url:"rendering_mode,omitempty"`
@@ -130357,12 +129767,10 @@ func (u *UpdateAculResponseContent) GetExtraProperties() map[string]interface{} 
 }
 
 func (u *UpdateAculResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetRenderingMode sets the RenderingMode field and marks it as non-optional;
@@ -130423,13 +129831,6 @@ func (u *UpdateAculResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateAculResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -130553,12 +129954,10 @@ func (u *UpdateAttackProtectionCaptchaResponseContent) GetExtraProperties() map[
 }
 
 func (u *UpdateAttackProtectionCaptchaResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetActiveProviderID sets the ActiveProviderID field and marks it as non-optional;
@@ -130737,12 +130136,10 @@ func (u *UpdateBotDetectionSettingsResponseContent) GetExtraProperties() map[str
 }
 
 func (u *UpdateBotDetectionSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetBotDetectionLevel sets the BotDetectionLevel field and marks it as non-optional;
@@ -130829,6 +130226,7 @@ func (u *UpdateBotDetectionSettingsResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Phone provider configuration schema
 var (
 	updateBrandingPhoneProviderResponseContentFieldID            = big.NewInt(1 << 0)
 	updateBrandingPhoneProviderResponseContentFieldTenant        = big.NewInt(1 << 1)
@@ -130840,7 +130238,6 @@ var (
 	updateBrandingPhoneProviderResponseContentFieldUpdatedAt     = big.NewInt(1 << 7)
 )
 
-// Phone provider configuration schema
 type UpdateBrandingPhoneProviderResponseContent struct {
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
 	// The name of the tenant
@@ -130926,12 +130323,10 @@ func (u *UpdateBrandingPhoneProviderResponseContent) GetExtraProperties() map[st
 }
 
 func (u *UpdateBrandingPhoneProviderResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -131138,12 +130533,10 @@ func (u *UpdateBrandingThemeResponseContent) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateBrandingThemeResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetBorders sets the Borders field and marks it as non-optional;
@@ -131316,12 +130709,10 @@ func (u *UpdateBreachedPasswordDetectionSettingsResponseContent) GetExtraPropert
 }
 
 func (u *UpdateBreachedPasswordDetectionSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -131481,12 +130872,10 @@ func (u *UpdateBruteForceSettingsResponseContent) GetExtraProperties() map[strin
 }
 
 func (u *UpdateBruteForceSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -131573,6 +130962,7 @@ func (u *UpdateBruteForceSettingsResponseContent) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=ad
 var (
 	updateConnectionRequestContentAdFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentAdFieldEnabledClients     = big.NewInt(1 << 1)
@@ -131581,7 +130971,6 @@ var (
 	updateConnectionRequestContentAdFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=ad
 type UpdateConnectionRequestContentAd struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -131639,12 +131028,10 @@ func (u *UpdateConnectionRequestContentAd) GetExtraProperties() map[string]inter
 }
 
 func (u *UpdateConnectionRequestContentAd) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -131724,6 +131111,7 @@ func (u *UpdateConnectionRequestContentAd) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=adfs
 var (
 	updateConnectionRequestContentAdfsFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentAdfsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -131733,7 +131121,6 @@ var (
 	updateConnectionRequestContentAdfsFieldShowAsButton       = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=adfs
 type UpdateConnectionRequestContentAdfs struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -131799,12 +131186,10 @@ func (u *UpdateConnectionRequestContentAdfs) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateConnectionRequestContentAdfs) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -131891,6 +131276,7 @@ func (u *UpdateConnectionRequestContentAdfs) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=amazon
 var (
 	updateConnectionRequestContentAmazonFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentAmazonFieldEnabledClients     = big.NewInt(1 << 1)
@@ -131899,7 +131285,6 @@ var (
 	updateConnectionRequestContentAmazonFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=amazon
 type UpdateConnectionRequestContentAmazon struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -131957,12 +131342,10 @@ func (u *UpdateConnectionRequestContentAmazon) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentAmazon) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -132042,6 +131425,7 @@ func (u *UpdateConnectionRequestContentAmazon) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=apple
 var (
 	updateConnectionRequestContentAppleFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentAppleFieldEnabledClients     = big.NewInt(1 << 1)
@@ -132050,7 +131434,6 @@ var (
 	updateConnectionRequestContentAppleFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=apple
 type UpdateConnectionRequestContentApple struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -132108,12 +131491,10 @@ func (u *UpdateConnectionRequestContentApple) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentApple) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -132193,6 +131574,7 @@ func (u *UpdateConnectionRequestContentApple) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=auth0
 var (
 	updateConnectionRequestContentAuth0FieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentAuth0FieldEnabledClients     = big.NewInt(1 << 1)
@@ -132202,7 +131584,6 @@ var (
 	updateConnectionRequestContentAuth0FieldRealms             = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=auth0
 type UpdateConnectionRequestContentAuth0 struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -132268,12 +131649,10 @@ func (u *UpdateConnectionRequestContentAuth0) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentAuth0) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -132360,6 +131739,7 @@ func (u *UpdateConnectionRequestContentAuth0) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=auth0-oidc
 var (
 	updateConnectionRequestContentAuth0OidcFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentAuth0OidcFieldEnabledClients     = big.NewInt(1 << 1)
@@ -132368,7 +131748,6 @@ var (
 	updateConnectionRequestContentAuth0OidcFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=auth0-oidc
 type UpdateConnectionRequestContentAuth0Oidc struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -132426,12 +131805,10 @@ func (u *UpdateConnectionRequestContentAuth0Oidc) GetExtraProperties() map[strin
 }
 
 func (u *UpdateConnectionRequestContentAuth0Oidc) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -132511,6 +131888,7 @@ func (u *UpdateConnectionRequestContentAuth0Oidc) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=waad
 var (
 	updateConnectionRequestContentAzureAdFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentAzureAdFieldEnabledClients     = big.NewInt(1 << 1)
@@ -132520,7 +131898,6 @@ var (
 	updateConnectionRequestContentAzureAdFieldShowAsButton       = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=waad
 type UpdateConnectionRequestContentAzureAd struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -132586,12 +131963,10 @@ func (u *UpdateConnectionRequestContentAzureAd) GetExtraProperties() map[string]
 }
 
 func (u *UpdateConnectionRequestContentAzureAd) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -132678,6 +132053,7 @@ func (u *UpdateConnectionRequestContentAzureAd) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=baidu
 var (
 	updateConnectionRequestContentBaiduFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentBaiduFieldEnabledClients     = big.NewInt(1 << 1)
@@ -132686,7 +132062,6 @@ var (
 	updateConnectionRequestContentBaiduFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=baidu
 type UpdateConnectionRequestContentBaidu struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -132744,12 +132119,10 @@ func (u *UpdateConnectionRequestContentBaidu) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentBaidu) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -132829,6 +132202,7 @@ func (u *UpdateConnectionRequestContentBaidu) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=bitbucket
 var (
 	updateConnectionRequestContentBitbucketFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentBitbucketFieldEnabledClients     = big.NewInt(1 << 1)
@@ -132837,7 +132211,6 @@ var (
 	updateConnectionRequestContentBitbucketFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=bitbucket
 type UpdateConnectionRequestContentBitbucket struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -132895,12 +132268,10 @@ func (u *UpdateConnectionRequestContentBitbucket) GetExtraProperties() map[strin
 }
 
 func (u *UpdateConnectionRequestContentBitbucket) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -132980,6 +132351,7 @@ func (u *UpdateConnectionRequestContentBitbucket) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=bitly
 var (
 	updateConnectionRequestContentBitlyFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentBitlyFieldEnabledClients     = big.NewInt(1 << 1)
@@ -132988,7 +132360,6 @@ var (
 	updateConnectionRequestContentBitlyFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=bitly
 type UpdateConnectionRequestContentBitly struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -133046,12 +132417,10 @@ func (u *UpdateConnectionRequestContentBitly) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentBitly) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -133131,6 +132500,7 @@ func (u *UpdateConnectionRequestContentBitly) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=box
 var (
 	updateConnectionRequestContentBoxFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentBoxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -133141,7 +132511,6 @@ var (
 	updateConnectionRequestContentBoxFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Update a connection with strategy=box
 type UpdateConnectionRequestContentBox struct {
 	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -133215,12 +132584,10 @@ func (u *UpdateConnectionRequestContentBox) GetExtraProperties() map[string]inte
 }
 
 func (u *UpdateConnectionRequestContentBox) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -133314,6 +132681,7 @@ func (u *UpdateConnectionRequestContentBox) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=custom
 var (
 	updateConnectionRequestContentCustomFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentCustomFieldEnabledClients     = big.NewInt(1 << 1)
@@ -133322,7 +132690,6 @@ var (
 	updateConnectionRequestContentCustomFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=custom
 type UpdateConnectionRequestContentCustom struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -133380,12 +132747,10 @@ func (u *UpdateConnectionRequestContentCustom) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentCustom) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -133465,6 +132830,7 @@ func (u *UpdateConnectionRequestContentCustom) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=daccount
 var (
 	updateConnectionRequestContentDaccountFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentDaccountFieldEnabledClients     = big.NewInt(1 << 1)
@@ -133473,7 +132839,6 @@ var (
 	updateConnectionRequestContentDaccountFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=daccount
 type UpdateConnectionRequestContentDaccount struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -133531,12 +132896,10 @@ func (u *UpdateConnectionRequestContentDaccount) GetExtraProperties() map[string
 }
 
 func (u *UpdateConnectionRequestContentDaccount) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -133616,6 +132979,7 @@ func (u *UpdateConnectionRequestContentDaccount) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=dropbox
 var (
 	updateConnectionRequestContentDropboxFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentDropboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -133624,7 +132988,6 @@ var (
 	updateConnectionRequestContentDropboxFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=dropbox
 type UpdateConnectionRequestContentDropbox struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -133682,12 +133045,10 @@ func (u *UpdateConnectionRequestContentDropbox) GetExtraProperties() map[string]
 }
 
 func (u *UpdateConnectionRequestContentDropbox) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -133767,6 +133128,7 @@ func (u *UpdateConnectionRequestContentDropbox) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=dwolla
 var (
 	updateConnectionRequestContentDwollaFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentDwollaFieldEnabledClients     = big.NewInt(1 << 1)
@@ -133775,7 +133137,6 @@ var (
 	updateConnectionRequestContentDwollaFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=dwolla
 type UpdateConnectionRequestContentDwolla struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -133833,12 +133194,10 @@ func (u *UpdateConnectionRequestContentDwolla) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentDwolla) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -133918,6 +133277,7 @@ func (u *UpdateConnectionRequestContentDwolla) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=email
 var (
 	updateConnectionRequestContentEmailFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentEmailFieldEnabledClients     = big.NewInt(1 << 1)
@@ -133926,7 +133286,6 @@ var (
 	updateConnectionRequestContentEmailFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=email
 type UpdateConnectionRequestContentEmail struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -133984,12 +133343,10 @@ func (u *UpdateConnectionRequestContentEmail) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentEmail) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -134069,6 +133426,7 @@ func (u *UpdateConnectionRequestContentEmail) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=evernote
 var (
 	updateConnectionRequestContentEvernoteFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentEvernoteFieldEnabledClients     = big.NewInt(1 << 1)
@@ -134077,7 +133435,6 @@ var (
 	updateConnectionRequestContentEvernoteFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=evernote
 type UpdateConnectionRequestContentEvernote struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -134135,12 +133492,10 @@ func (u *UpdateConnectionRequestContentEvernote) GetExtraProperties() map[string
 }
 
 func (u *UpdateConnectionRequestContentEvernote) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -134220,6 +133575,7 @@ func (u *UpdateConnectionRequestContentEvernote) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=evernote-sandbox
 var (
 	updateConnectionRequestContentEvernoteSandboxFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentEvernoteSandboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -134228,7 +133584,6 @@ var (
 	updateConnectionRequestContentEvernoteSandboxFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=evernote-sandbox
 type UpdateConnectionRequestContentEvernoteSandbox struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -134286,12 +133641,10 @@ func (u *UpdateConnectionRequestContentEvernoteSandbox) GetExtraProperties() map
 }
 
 func (u *UpdateConnectionRequestContentEvernoteSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -134371,6 +133724,7 @@ func (u *UpdateConnectionRequestContentEvernoteSandbox) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=exact
 var (
 	updateConnectionRequestContentExactFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentExactFieldEnabledClients     = big.NewInt(1 << 1)
@@ -134379,7 +133733,6 @@ var (
 	updateConnectionRequestContentExactFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=exact
 type UpdateConnectionRequestContentExact struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -134437,12 +133790,10 @@ func (u *UpdateConnectionRequestContentExact) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentExact) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -134522,6 +133873,7 @@ func (u *UpdateConnectionRequestContentExact) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=facebook
 var (
 	updateConnectionRequestContentFacebookFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentFacebookFieldEnabledClients     = big.NewInt(1 << 1)
@@ -134530,7 +133882,6 @@ var (
 	updateConnectionRequestContentFacebookFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=facebook
 type UpdateConnectionRequestContentFacebook struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -134588,12 +133939,10 @@ func (u *UpdateConnectionRequestContentFacebook) GetExtraProperties() map[string
 }
 
 func (u *UpdateConnectionRequestContentFacebook) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -134673,6 +134022,7 @@ func (u *UpdateConnectionRequestContentFacebook) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=fitbit
 var (
 	updateConnectionRequestContentFitbitFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentFitbitFieldEnabledClients     = big.NewInt(1 << 1)
@@ -134681,7 +134031,6 @@ var (
 	updateConnectionRequestContentFitbitFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=fitbit
 type UpdateConnectionRequestContentFitbit struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -134739,12 +134088,10 @@ func (u *UpdateConnectionRequestContentFitbit) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentFitbit) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -134824,6 +134171,7 @@ func (u *UpdateConnectionRequestContentFitbit) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=github
 var (
 	updateConnectionRequestContentGitHubFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentGitHubFieldEnabledClients     = big.NewInt(1 << 1)
@@ -134834,7 +134182,6 @@ var (
 	updateConnectionRequestContentGitHubFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Update a connection with strategy=github
 type UpdateConnectionRequestContentGitHub struct {
 	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -134908,12 +134255,10 @@ func (u *UpdateConnectionRequestContentGitHub) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentGitHub) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -135007,6 +134352,7 @@ func (u *UpdateConnectionRequestContentGitHub) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=google-apps
 var (
 	updateConnectionRequestContentGoogleAppsFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentGoogleAppsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -135016,7 +134362,6 @@ var (
 	updateConnectionRequestContentGoogleAppsFieldShowAsButton       = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=google-apps
 type UpdateConnectionRequestContentGoogleApps struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -135082,12 +134427,10 @@ func (u *UpdateConnectionRequestContentGoogleApps) GetExtraProperties() map[stri
 }
 
 func (u *UpdateConnectionRequestContentGoogleApps) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -135174,6 +134517,7 @@ func (u *UpdateConnectionRequestContentGoogleApps) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=google-oauth2
 var (
 	updateConnectionRequestContentGoogleOAuth2FieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentGoogleOAuth2FieldEnabledClients     = big.NewInt(1 << 1)
@@ -135184,7 +134528,6 @@ var (
 	updateConnectionRequestContentGoogleOAuth2FieldOptions            = big.NewInt(1 << 6)
 )
 
-// Update a connection with strategy=google-oauth2
 type UpdateConnectionRequestContentGoogleOAuth2 struct {
 	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -135258,12 +134601,10 @@ func (u *UpdateConnectionRequestContentGoogleOAuth2) GetExtraProperties() map[st
 }
 
 func (u *UpdateConnectionRequestContentGoogleOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -135357,6 +134698,7 @@ func (u *UpdateConnectionRequestContentGoogleOAuth2) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=instagram
 var (
 	updateConnectionRequestContentInstagramFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentInstagramFieldEnabledClients     = big.NewInt(1 << 1)
@@ -135365,7 +134707,6 @@ var (
 	updateConnectionRequestContentInstagramFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=instagram
 type UpdateConnectionRequestContentInstagram struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -135423,12 +134764,10 @@ func (u *UpdateConnectionRequestContentInstagram) GetExtraProperties() map[strin
 }
 
 func (u *UpdateConnectionRequestContentInstagram) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -135508,6 +134847,7 @@ func (u *UpdateConnectionRequestContentInstagram) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=ip
 var (
 	updateConnectionRequestContentIPFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentIPFieldEnabledClients     = big.NewInt(1 << 1)
@@ -135517,7 +134857,6 @@ var (
 	updateConnectionRequestContentIPFieldShowAsButton       = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=ip
 type UpdateConnectionRequestContentIP struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -135583,12 +134922,10 @@ func (u *UpdateConnectionRequestContentIP) GetExtraProperties() map[string]inter
 }
 
 func (u *UpdateConnectionRequestContentIP) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -135675,6 +135012,7 @@ func (u *UpdateConnectionRequestContentIP) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=line
 var (
 	updateConnectionRequestContentLineFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentLineFieldEnabledClients     = big.NewInt(1 << 1)
@@ -135683,7 +135021,6 @@ var (
 	updateConnectionRequestContentLineFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=line
 type UpdateConnectionRequestContentLine struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -135741,12 +135078,10 @@ func (u *UpdateConnectionRequestContentLine) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateConnectionRequestContentLine) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -135826,6 +135161,7 @@ func (u *UpdateConnectionRequestContentLine) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=linkedin
 var (
 	updateConnectionRequestContentLinkedinFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentLinkedinFieldEnabledClients     = big.NewInt(1 << 1)
@@ -135834,7 +135170,6 @@ var (
 	updateConnectionRequestContentLinkedinFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=linkedin
 type UpdateConnectionRequestContentLinkedin struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -135892,12 +135227,10 @@ func (u *UpdateConnectionRequestContentLinkedin) GetExtraProperties() map[string
 }
 
 func (u *UpdateConnectionRequestContentLinkedin) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -135977,6 +135310,7 @@ func (u *UpdateConnectionRequestContentLinkedin) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=oauth1
 var (
 	updateConnectionRequestContentOAuth1FieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentOAuth1FieldEnabledClients     = big.NewInt(1 << 1)
@@ -135985,7 +135319,6 @@ var (
 	updateConnectionRequestContentOAuth1FieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=oauth1
 type UpdateConnectionRequestContentOAuth1 struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -136043,12 +135376,10 @@ func (u *UpdateConnectionRequestContentOAuth1) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentOAuth1) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -136128,6 +135459,7 @@ func (u *UpdateConnectionRequestContentOAuth1) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=oauth2
 var (
 	updateConnectionRequestContentOAuth2FieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentOAuth2FieldEnabledClients     = big.NewInt(1 << 1)
@@ -136138,7 +135470,6 @@ var (
 	updateConnectionRequestContentOAuth2FieldOptions            = big.NewInt(1 << 6)
 )
 
-// Update a connection with strategy=oauth2
 type UpdateConnectionRequestContentOAuth2 struct {
 	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -136212,12 +135543,10 @@ func (u *UpdateConnectionRequestContentOAuth2) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentOAuth2) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -136311,6 +135640,7 @@ func (u *UpdateConnectionRequestContentOAuth2) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=office365
 var (
 	updateConnectionRequestContentOffice365FieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentOffice365FieldEnabledClients     = big.NewInt(1 << 1)
@@ -136320,7 +135650,6 @@ var (
 	updateConnectionRequestContentOffice365FieldShowAsButton       = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=office365
 type UpdateConnectionRequestContentOffice365 struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -136386,12 +135715,10 @@ func (u *UpdateConnectionRequestContentOffice365) GetExtraProperties() map[strin
 }
 
 func (u *UpdateConnectionRequestContentOffice365) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -136478,6 +135805,7 @@ func (u *UpdateConnectionRequestContentOffice365) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=oidc
 var (
 	updateConnectionRequestContentOidcFieldDisplayName                 = big.NewInt(1 << 0)
 	updateConnectionRequestContentOidcFieldEnabledClients              = big.NewInt(1 << 1)
@@ -136491,12 +135819,6 @@ var (
 	updateConnectionRequestContentOidcFieldShowAsButton                = big.NewInt(1 << 9)
 )
 
-// updateConnectionRequestContentOidcNullableFields maps the wire names of UpdateConnectionRequestContentOidc's nullable fields (required or optional) to their field bits.
-var updateConnectionRequestContentOidcNullableFields = map[string]*big.Int{
-	"cross_app_access_resource_app": updateConnectionRequestContentOidcFieldCrossAppAccessResourceApp,
-}
-
-// Update a connection with strategy=oidc
 type UpdateConnectionRequestContentOidc struct {
 	DisplayName                 *ConnectionDisplayName                 `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients              *ConnectionEnabledClients              `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -136594,12 +135916,10 @@ func (u *UpdateConnectionRequestContentOidc) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateConnectionRequestContentOidc) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -136684,13 +136004,6 @@ func (u *UpdateConnectionRequestContentOidc) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateConnectionRequestContentOidcNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -136721,6 +136034,7 @@ func (u *UpdateConnectionRequestContentOidc) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=okta
 var (
 	updateConnectionRequestContentOktaFieldDisplayName                 = big.NewInt(1 << 0)
 	updateConnectionRequestContentOktaFieldEnabledClients              = big.NewInt(1 << 1)
@@ -136731,7 +136045,6 @@ var (
 	updateConnectionRequestContentOktaFieldShowAsButton                = big.NewInt(1 << 6)
 )
 
-// Update a connection with strategy=okta
 type UpdateConnectionRequestContentOkta struct {
 	DisplayName                 *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients              *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -136805,12 +136118,10 @@ func (u *UpdateConnectionRequestContentOkta) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateConnectionRequestContentOkta) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -136904,6 +136215,7 @@ func (u *UpdateConnectionRequestContentOkta) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=paypal
 var (
 	updateConnectionRequestContentPaypalFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentPaypalFieldEnabledClients     = big.NewInt(1 << 1)
@@ -136912,7 +136224,6 @@ var (
 	updateConnectionRequestContentPaypalFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=paypal
 type UpdateConnectionRequestContentPaypal struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -136970,12 +136281,10 @@ func (u *UpdateConnectionRequestContentPaypal) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentPaypal) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -137055,6 +136364,7 @@ func (u *UpdateConnectionRequestContentPaypal) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=paypal-sandbox
 var (
 	updateConnectionRequestContentPaypalSandboxFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentPaypalSandboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -137063,7 +136373,6 @@ var (
 	updateConnectionRequestContentPaypalSandboxFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=paypal-sandbox
 type UpdateConnectionRequestContentPaypalSandbox struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -137121,12 +136430,10 @@ func (u *UpdateConnectionRequestContentPaypalSandbox) GetExtraProperties() map[s
 }
 
 func (u *UpdateConnectionRequestContentPaypalSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -137206,6 +136513,7 @@ func (u *UpdateConnectionRequestContentPaypalSandbox) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=pingfederate
 var (
 	updateConnectionRequestContentPingFederateFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentPingFederateFieldEnabledClients     = big.NewInt(1 << 1)
@@ -137215,7 +136523,6 @@ var (
 	updateConnectionRequestContentPingFederateFieldShowAsButton       = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=pingfederate
 type UpdateConnectionRequestContentPingFederate struct {
 	DisplayName        *ConnectionDisplayName         `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients      `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -137281,12 +136588,10 @@ func (u *UpdateConnectionRequestContentPingFederate) GetExtraProperties() map[st
 }
 
 func (u *UpdateConnectionRequestContentPingFederate) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -137373,6 +136678,7 @@ func (u *UpdateConnectionRequestContentPingFederate) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=planningcenter
 var (
 	updateConnectionRequestContentPlanningCenterFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentPlanningCenterFieldEnabledClients     = big.NewInt(1 << 1)
@@ -137381,7 +136687,6 @@ var (
 	updateConnectionRequestContentPlanningCenterFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=planningcenter
 type UpdateConnectionRequestContentPlanningCenter struct {
 	DisplayName        *ConnectionDisplayName           `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients        `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -137439,12 +136744,10 @@ func (u *UpdateConnectionRequestContentPlanningCenter) GetExtraProperties() map[
 }
 
 func (u *UpdateConnectionRequestContentPlanningCenter) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -137524,6 +136827,7 @@ func (u *UpdateConnectionRequestContentPlanningCenter) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=salesforce
 var (
 	updateConnectionRequestContentSalesforceFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentSalesforceFieldEnabledClients     = big.NewInt(1 << 1)
@@ -137532,7 +136836,6 @@ var (
 	updateConnectionRequestContentSalesforceFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=salesforce
 type UpdateConnectionRequestContentSalesforce struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -137590,12 +136893,10 @@ func (u *UpdateConnectionRequestContentSalesforce) GetExtraProperties() map[stri
 }
 
 func (u *UpdateConnectionRequestContentSalesforce) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -137675,6 +136976,7 @@ func (u *UpdateConnectionRequestContentSalesforce) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=salesforce-community
 var (
 	updateConnectionRequestContentSalesforceCommunityFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentSalesforceCommunityFieldEnabledClients     = big.NewInt(1 << 1)
@@ -137683,7 +136985,6 @@ var (
 	updateConnectionRequestContentSalesforceCommunityFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=salesforce-community
 type UpdateConnectionRequestContentSalesforceCommunity struct {
 	DisplayName        *ConnectionDisplayName                `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients             `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -137741,12 +137042,10 @@ func (u *UpdateConnectionRequestContentSalesforceCommunity) GetExtraProperties()
 }
 
 func (u *UpdateConnectionRequestContentSalesforceCommunity) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -137826,6 +137125,7 @@ func (u *UpdateConnectionRequestContentSalesforceCommunity) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=salesforce-sandbox
 var (
 	updateConnectionRequestContentSalesforceSandboxFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentSalesforceSandboxFieldEnabledClients     = big.NewInt(1 << 1)
@@ -137834,7 +137134,6 @@ var (
 	updateConnectionRequestContentSalesforceSandboxFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=salesforce-sandbox
 type UpdateConnectionRequestContentSalesforceSandbox struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -137892,12 +137191,10 @@ func (u *UpdateConnectionRequestContentSalesforceSandbox) GetExtraProperties() m
 }
 
 func (u *UpdateConnectionRequestContentSalesforceSandbox) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -137977,6 +137274,7 @@ func (u *UpdateConnectionRequestContentSalesforceSandbox) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=samlp
 var (
 	updateConnectionRequestContentSAMLFieldDisplayName                 = big.NewInt(1 << 0)
 	updateConnectionRequestContentSAMLFieldEnabledClients              = big.NewInt(1 << 1)
@@ -137988,12 +137286,6 @@ var (
 	updateConnectionRequestContentSAMLFieldShowAsButton                = big.NewInt(1 << 7)
 )
 
-// updateConnectionRequestContentSAMLNullableFields maps the wire names of UpdateConnectionRequestContentSAML's nullable fields (required or optional) to their field bits.
-var updateConnectionRequestContentSAMLNullableFields = map[string]*big.Int{
-	"cross_app_access_resource_app": updateConnectionRequestContentSAMLFieldCrossAppAccessResourceApp,
-}
-
-// Update a connection with strategy=samlp
 type UpdateConnectionRequestContentSAML struct {
 	DisplayName                 *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients              *ConnectionEnabledClients            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -138075,12 +137367,10 @@ func (u *UpdateConnectionRequestContentSAML) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateConnectionRequestContentSAML) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -138151,13 +137441,6 @@ func (u *UpdateConnectionRequestContentSAML) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateConnectionRequestContentSAMLNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -138188,6 +137471,7 @@ func (u *UpdateConnectionRequestContentSAML) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=sharepoint
 var (
 	updateConnectionRequestContentSharepointFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentSharepointFieldEnabledClients     = big.NewInt(1 << 1)
@@ -138197,7 +137481,6 @@ var (
 	updateConnectionRequestContentSharepointFieldShowAsButton       = big.NewInt(1 << 5)
 )
 
-// Update a connection with strategy=sharepoint
 type UpdateConnectionRequestContentSharepoint struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -138263,12 +137546,10 @@ func (u *UpdateConnectionRequestContentSharepoint) GetExtraProperties() map[stri
 }
 
 func (u *UpdateConnectionRequestContentSharepoint) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -138355,6 +137636,7 @@ func (u *UpdateConnectionRequestContentSharepoint) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=shop
 var (
 	updateConnectionRequestContentShopFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentShopFieldEnabledClients     = big.NewInt(1 << 1)
@@ -138363,7 +137645,6 @@ var (
 	updateConnectionRequestContentShopFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=shop
 type UpdateConnectionRequestContentShop struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -138421,12 +137702,10 @@ func (u *UpdateConnectionRequestContentShop) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateConnectionRequestContentShop) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -138506,6 +137785,7 @@ func (u *UpdateConnectionRequestContentShop) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=shopify
 var (
 	updateConnectionRequestContentShopifyFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentShopifyFieldEnabledClients     = big.NewInt(1 << 1)
@@ -138514,7 +137794,6 @@ var (
 	updateConnectionRequestContentShopifyFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=shopify
 type UpdateConnectionRequestContentShopify struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -138572,12 +137851,10 @@ func (u *UpdateConnectionRequestContentShopify) GetExtraProperties() map[string]
 }
 
 func (u *UpdateConnectionRequestContentShopify) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -138657,6 +137934,7 @@ func (u *UpdateConnectionRequestContentShopify) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=sms
 var (
 	updateConnectionRequestContentSmsFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentSmsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -138665,7 +137943,6 @@ var (
 	updateConnectionRequestContentSmsFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=sms
 type UpdateConnectionRequestContentSms struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -138723,12 +138000,10 @@ func (u *UpdateConnectionRequestContentSms) GetExtraProperties() map[string]inte
 }
 
 func (u *UpdateConnectionRequestContentSms) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -138808,6 +138083,7 @@ func (u *UpdateConnectionRequestContentSms) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=soundcloud
 var (
 	updateConnectionRequestContentSoundcloudFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentSoundcloudFieldEnabledClients     = big.NewInt(1 << 1)
@@ -138816,7 +138092,6 @@ var (
 	updateConnectionRequestContentSoundcloudFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=soundcloud
 type UpdateConnectionRequestContentSoundcloud struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -138874,12 +138149,10 @@ func (u *UpdateConnectionRequestContentSoundcloud) GetExtraProperties() map[stri
 }
 
 func (u *UpdateConnectionRequestContentSoundcloud) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -138959,6 +138232,7 @@ func (u *UpdateConnectionRequestContentSoundcloud) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=thirtysevensignals
 var (
 	updateConnectionRequestContentThirtySevenSignalsFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentThirtySevenSignalsFieldEnabledClients     = big.NewInt(1 << 1)
@@ -138967,7 +138241,6 @@ var (
 	updateConnectionRequestContentThirtySevenSignalsFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=thirtysevensignals
 type UpdateConnectionRequestContentThirtySevenSignals struct {
 	DisplayName        *ConnectionDisplayName               `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients            `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -139025,12 +138298,10 @@ func (u *UpdateConnectionRequestContentThirtySevenSignals) GetExtraProperties() 
 }
 
 func (u *UpdateConnectionRequestContentThirtySevenSignals) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -139110,6 +138381,7 @@ func (u *UpdateConnectionRequestContentThirtySevenSignals) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=twitter
 var (
 	updateConnectionRequestContentTwitterFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentTwitterFieldEnabledClients     = big.NewInt(1 << 1)
@@ -139118,7 +138390,6 @@ var (
 	updateConnectionRequestContentTwitterFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=twitter
 type UpdateConnectionRequestContentTwitter struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -139176,12 +138447,10 @@ func (u *UpdateConnectionRequestContentTwitter) GetExtraProperties() map[string]
 }
 
 func (u *UpdateConnectionRequestContentTwitter) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -139261,6 +138530,7 @@ func (u *UpdateConnectionRequestContentTwitter) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=untappd
 var (
 	updateConnectionRequestContentUntappdFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentUntappdFieldEnabledClients     = big.NewInt(1 << 1)
@@ -139269,7 +138539,6 @@ var (
 	updateConnectionRequestContentUntappdFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=untappd
 type UpdateConnectionRequestContentUntappd struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -139327,12 +138596,10 @@ func (u *UpdateConnectionRequestContentUntappd) GetExtraProperties() map[string]
 }
 
 func (u *UpdateConnectionRequestContentUntappd) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -139412,6 +138679,7 @@ func (u *UpdateConnectionRequestContentUntappd) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=vkontakte
 var (
 	updateConnectionRequestContentVkontakteFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentVkontakteFieldEnabledClients     = big.NewInt(1 << 1)
@@ -139420,7 +138688,6 @@ var (
 	updateConnectionRequestContentVkontakteFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=vkontakte
 type UpdateConnectionRequestContentVkontakte struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -139478,12 +138745,10 @@ func (u *UpdateConnectionRequestContentVkontakte) GetExtraProperties() map[strin
 }
 
 func (u *UpdateConnectionRequestContentVkontakte) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -139563,6 +138828,7 @@ func (u *UpdateConnectionRequestContentVkontakte) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=weibo
 var (
 	updateConnectionRequestContentWeiboFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentWeiboFieldEnabledClients     = big.NewInt(1 << 1)
@@ -139571,7 +138837,6 @@ var (
 	updateConnectionRequestContentWeiboFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=weibo
 type UpdateConnectionRequestContentWeibo struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -139629,12 +138894,10 @@ func (u *UpdateConnectionRequestContentWeibo) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentWeibo) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -139714,6 +138977,7 @@ func (u *UpdateConnectionRequestContentWeibo) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=windowslive
 var (
 	updateConnectionRequestContentWindowsLiveFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentWindowsLiveFieldEnabledClients     = big.NewInt(1 << 1)
@@ -139724,7 +138988,6 @@ var (
 	updateConnectionRequestContentWindowsLiveFieldOptions            = big.NewInt(1 << 6)
 )
 
-// Update a connection with strategy=windowslive
 type UpdateConnectionRequestContentWindowsLive struct {
 	DisplayName        *ConnectionDisplayName              `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients           `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -139798,12 +139061,10 @@ func (u *UpdateConnectionRequestContentWindowsLive) GetExtraProperties() map[str
 }
 
 func (u *UpdateConnectionRequestContentWindowsLive) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -139897,6 +139158,7 @@ func (u *UpdateConnectionRequestContentWindowsLive) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=wordpress
 var (
 	updateConnectionRequestContentWordpressFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentWordpressFieldEnabledClients     = big.NewInt(1 << 1)
@@ -139905,7 +139167,6 @@ var (
 	updateConnectionRequestContentWordpressFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=wordpress
 type UpdateConnectionRequestContentWordpress struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -139963,12 +139224,10 @@ func (u *UpdateConnectionRequestContentWordpress) GetExtraProperties() map[strin
 }
 
 func (u *UpdateConnectionRequestContentWordpress) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -140048,6 +139307,7 @@ func (u *UpdateConnectionRequestContentWordpress) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=yahoo
 var (
 	updateConnectionRequestContentYahooFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentYahooFieldEnabledClients     = big.NewInt(1 << 1)
@@ -140056,7 +139316,6 @@ var (
 	updateConnectionRequestContentYahooFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=yahoo
 type UpdateConnectionRequestContentYahoo struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -140114,12 +139373,10 @@ func (u *UpdateConnectionRequestContentYahoo) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateConnectionRequestContentYahoo) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -140199,6 +139456,7 @@ func (u *UpdateConnectionRequestContentYahoo) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// Update a connection with strategy=yandex
 var (
 	updateConnectionRequestContentYandexFieldDisplayName        = big.NewInt(1 << 0)
 	updateConnectionRequestContentYandexFieldEnabledClients     = big.NewInt(1 << 1)
@@ -140207,7 +139465,6 @@ var (
 	updateConnectionRequestContentYandexFieldOptions            = big.NewInt(1 << 4)
 )
 
-// Update a connection with strategy=yandex
 type UpdateConnectionRequestContentYandex struct {
 	DisplayName        *ConnectionDisplayName        `json:"display_name,omitempty" url:"display_name,omitempty"`
 	EnabledClients     *ConnectionEnabledClients     `json:"enabled_clients,omitempty" url:"enabled_clients,omitempty"`
@@ -140265,12 +139522,10 @@ func (u *UpdateConnectionRequestContentYandex) GetExtraProperties() map[string]i
 }
 
 func (u *UpdateConnectionRequestContentYandex) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetDisplayName sets the DisplayName field and marks it as non-optional;
@@ -140399,12 +139654,10 @@ func (u *UpdateDirectoryProvisioningRequestContent) GetExtraProperties() map[str
 }
 
 func (u *UpdateDirectoryProvisioningRequestContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetMapping sets the Mapping field and marks it as non-optional;
@@ -140599,12 +139852,10 @@ func (u *UpdateDirectoryProvisioningResponseContent) GetExtraProperties() map[st
 }
 
 func (u *UpdateDirectoryProvisioningResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -140810,12 +140061,10 @@ func (u *UpdateEmailProviderResponseContent) GetExtraProperties() map[string]int
 }
 
 func (u *UpdateEmailProviderResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetName sets the Name field and marks it as non-optional;
@@ -140937,12 +140186,10 @@ func (u *UpdateEnabledClientConnectionsRequestContentItem) GetExtraProperties() 
 }
 
 func (u *UpdateEnabledClientConnectionsRequestContentItem) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -141022,12 +140269,6 @@ var (
 	updateExperimentResponseContentFieldCreatedAt           = big.NewInt(1 << 17)
 	updateExperimentResponseContentFieldUpdatedAt           = big.NewInt(1 << 18)
 )
-
-// updateExperimentResponseContentNullableFields maps the wire names of UpdateExperimentResponseContent's nullable fields (required or optional) to their field bits.
-var updateExperimentResponseContentNullableFields = map[string]*big.Int{
-	"feature_flag_snapshot": updateExperimentResponseContentFieldFeatureFlagSnapshot,
-	"current_level":         updateExperimentResponseContentFieldCurrentLevel,
-}
 
 type UpdateExperimentResponseContent struct {
 	ID                 string                 `json:"id" url:"id"`
@@ -141202,12 +140443,10 @@ func (u *UpdateExperimentResponseContent) GetExtraProperties() map[string]interf
 }
 
 func (u *UpdateExperimentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -141367,13 +140606,6 @@ func (u *UpdateExperimentResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateExperimentResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -141507,12 +140739,10 @@ func (u *UpdateFeatureFlagResponseContent) GetExtraProperties() map[string]inter
 }
 
 func (u *UpdateFeatureFlagResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -141744,12 +140974,10 @@ func (u *UpdateFlowsVaultConnectionResponseContent) GetExtraProperties() map[str
 }
 
 func (u *UpdateFlowsVaultConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -142015,238 +141243,6 @@ func (u *UpdateFlowsVaultConnectionSetup) GetFlowsVaultConnectioSetupTwilioAPIKe
 }
 
 func (u *UpdateFlowsVaultConnectionSetup) UnmarshalJSON(data []byte) error {
-	if internal.MatchesObjectKeys(data, []string{"type", "api_key", "base_url"}, []string{"type", "api_key", "base_url"}) {
-		valueFlowsVaultConnectioSetupAPIKeyWithBaseURL := new(FlowsVaultConnectioSetupAPIKeyWithBaseURL)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKeyWithBaseURL); err == nil {
-			u.typ = "FlowsVaultConnectioSetupAPIKeyWithBaseURL"
-			u.FlowsVaultConnectioSetupAPIKeyWithBaseURL = valueFlowsVaultConnectioSetupAPIKeyWithBaseURL
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "api_key"}, []string{"type", "api_key"}) {
-		valueFlowsVaultConnectioSetupAPIKey := new(FlowsVaultConnectioSetupAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupAPIKey"
-			u.FlowsVaultConnectioSetupAPIKey = valueFlowsVaultConnectioSetupAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "client_id", "client_secret", "domain", "audience"}, []string{"type", "client_id", "client_secret", "domain"}) {
-		valueFlowsVaultConnectioSetupOauthApp := new(FlowsVaultConnectioSetupOauthApp)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupOauthApp); err == nil {
-			u.typ = "FlowsVaultConnectioSetupOauthApp"
-			u.FlowsVaultConnectioSetupOauthApp = valueFlowsVaultConnectioSetupOauthApp
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "project_id", "private_key", "client_email"}, []string{}) {
-		valueFlowsVaultConnectioSetupBigqueryOauthJwt := new(FlowsVaultConnectioSetupBigqueryOauthJwt)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupBigqueryOauthJwt); err == nil {
-			u.typ = "FlowsVaultConnectioSetupBigqueryOauthJwt"
-			u.FlowsVaultConnectioSetupBigqueryOauthJwt = valueFlowsVaultConnectioSetupBigqueryOauthJwt
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "secret_key"}, []string{"type", "secret_key"}) {
-		valueFlowsVaultConnectioSetupSecretAPIKey := new(FlowsVaultConnectioSetupSecretAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupSecretAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupSecretAPIKey"
-			u.FlowsVaultConnectioSetupSecretAPIKey = valueFlowsVaultConnectioSetupSecretAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "token"}, []string{"type", "token"}) {
-		valueFlowsVaultConnectioSetupHTTPBearer := new(FlowsVaultConnectioSetupHTTPBearer)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupHTTPBearer); err == nil {
-			u.typ = "FlowsVaultConnectioSetupHTTPBearer"
-			u.FlowsVaultConnectioSetupHTTPBearer = valueFlowsVaultConnectioSetupHTTPBearer
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "username", "password"}, []string{"type", "username"}) {
-		valueFlowsVaultConnectionHTTPBasicAuthSetup := new(FlowsVaultConnectionHTTPBasicAuthSetup)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectionHTTPBasicAuthSetup); err == nil {
-			u.typ = "FlowsVaultConnectionHTTPBasicAuthSetup"
-			u.FlowsVaultConnectionHTTPBasicAuthSetup = valueFlowsVaultConnectionHTTPBasicAuthSetup
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "name", "value", "in"}, []string{"type", "name", "value", "in"}) {
-		valueFlowsVaultConnectionHttpApiKeySetup := new(FlowsVaultConnectionHttpApiKeySetup)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectionHttpApiKeySetup); err == nil {
-			u.typ = "FlowsVaultConnectionHttpApiKeySetup"
-			u.FlowsVaultConnectionHttpApiKeySetup = valueFlowsVaultConnectionHttpApiKeySetup
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "client_id", "client_secret", "token_endpoint", "audience", "resource", "scope"}, []string{"type", "client_id", "client_secret", "token_endpoint"}) {
-		valueFlowsVaultConnectionHTTPOauthClientCredentialsSetup := new(FlowsVaultConnectionHTTPOauthClientCredentialsSetup)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectionHTTPOauthClientCredentialsSetup); err == nil {
-			u.typ = "FlowsVaultConnectionHTTPOauthClientCredentialsSetup"
-			u.FlowsVaultConnectionHTTPOauthClientCredentialsSetup = valueFlowsVaultConnectionHTTPOauthClientCredentialsSetup
-			return nil
-		}
-	}
-	if !(internal.MatchesObjectKeys(data, []string{"type", "api_key", "secret_key"}, []string{"type", "api_key", "secret_key"}) || internal.MatchesObjectKeys(data, []string{"type", "token"}, []string{"type", "token"}) || internal.MatchesObjectKeys(data, []string{"type", "url"}, []string{"type", "url"}) || internal.MatchesObjectKeys(data, []string{"type", "private_key", "public_key"}, []string{"type", "private_key", "public_key"}) || internal.MatchesObjectKeys(data, []string{"type", "account_id", "api_key"}, []string{"type", "account_id", "api_key"})) {
-		valueFlowsVaultConnectioSetupJwt := new(FlowsVaultConnectioSetupJwt)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupJwt); err == nil {
-			u.typ = "FlowsVaultConnectioSetupJwt"
-			u.FlowsVaultConnectioSetupJwt = valueFlowsVaultConnectioSetupJwt
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "api_key", "secret_key"}, []string{"type", "api_key", "secret_key"}) {
-		valueFlowsVaultConnectioSetupMailjetAPIKey := new(FlowsVaultConnectioSetupMailjetAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupMailjetAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupMailjetAPIKey"
-			u.FlowsVaultConnectioSetupMailjetAPIKey = valueFlowsVaultConnectioSetupMailjetAPIKey
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "token"}, []string{"type", "token"}) {
-		valueFlowsVaultConnectioSetupToken := new(FlowsVaultConnectioSetupToken)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupToken); err == nil {
-			u.typ = "FlowsVaultConnectioSetupToken"
-			u.FlowsVaultConnectioSetupToken = valueFlowsVaultConnectioSetupToken
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "url"}, []string{"type", "url"}) {
-		valueFlowsVaultConnectioSetupWebhook := new(FlowsVaultConnectioSetupWebhook)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupWebhook); err == nil {
-			u.typ = "FlowsVaultConnectioSetupWebhook"
-			u.FlowsVaultConnectioSetupWebhook = valueFlowsVaultConnectioSetupWebhook
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "private_key", "public_key"}, []string{"type", "private_key", "public_key"}) {
-		valueFlowsVaultConnectioSetupStripeKeyPair := new(FlowsVaultConnectioSetupStripeKeyPair)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupStripeKeyPair); err == nil {
-			u.typ = "FlowsVaultConnectioSetupStripeKeyPair"
-			u.FlowsVaultConnectioSetupStripeKeyPair = valueFlowsVaultConnectioSetupStripeKeyPair
-			return nil
-		}
-	}
-	if !(internal.MatchesObjectKeys(data, []string{"type", "account_id", "api_key"}, []string{"type", "account_id", "api_key"})) {
-		valueFlowsVaultConnectioSetupOauthCode := new(FlowsVaultConnectioSetupOauthCode)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupOauthCode); err == nil {
-			u.typ = "FlowsVaultConnectioSetupOauthCode"
-			u.FlowsVaultConnectioSetupOauthCode = valueFlowsVaultConnectioSetupOauthCode
-			return nil
-		}
-	}
-	if internal.MatchesObjectKeys(data, []string{"type", "account_id", "api_key"}, []string{"type", "account_id", "api_key"}) {
-		valueFlowsVaultConnectioSetupTwilioAPIKey := new(FlowsVaultConnectioSetupTwilioAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupTwilioAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupTwilioAPIKey"
-			u.FlowsVaultConnectioSetupTwilioAPIKey = valueFlowsVaultConnectioSetupTwilioAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "api_key", "base_url"}) {
-		valueFlowsVaultConnectioSetupAPIKeyWithBaseURL := new(FlowsVaultConnectioSetupAPIKeyWithBaseURL)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKeyWithBaseURL); err == nil {
-			u.typ = "FlowsVaultConnectioSetupAPIKeyWithBaseURL"
-			u.FlowsVaultConnectioSetupAPIKeyWithBaseURL = valueFlowsVaultConnectioSetupAPIKeyWithBaseURL
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "api_key"}) {
-		valueFlowsVaultConnectioSetupAPIKey := new(FlowsVaultConnectioSetupAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupAPIKey"
-			u.FlowsVaultConnectioSetupAPIKey = valueFlowsVaultConnectioSetupAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "client_id", "client_secret", "domain"}) {
-		valueFlowsVaultConnectioSetupOauthApp := new(FlowsVaultConnectioSetupOauthApp)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupOauthApp); err == nil {
-			u.typ = "FlowsVaultConnectioSetupOauthApp"
-			u.FlowsVaultConnectioSetupOauthApp = valueFlowsVaultConnectioSetupOauthApp
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "secret_key"}) {
-		valueFlowsVaultConnectioSetupSecretAPIKey := new(FlowsVaultConnectioSetupSecretAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupSecretAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupSecretAPIKey"
-			u.FlowsVaultConnectioSetupSecretAPIKey = valueFlowsVaultConnectioSetupSecretAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "token"}) {
-		valueFlowsVaultConnectioSetupHTTPBearer := new(FlowsVaultConnectioSetupHTTPBearer)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupHTTPBearer); err == nil {
-			u.typ = "FlowsVaultConnectioSetupHTTPBearer"
-			u.FlowsVaultConnectioSetupHTTPBearer = valueFlowsVaultConnectioSetupHTTPBearer
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "username"}) {
-		valueFlowsVaultConnectionHTTPBasicAuthSetup := new(FlowsVaultConnectionHTTPBasicAuthSetup)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectionHTTPBasicAuthSetup); err == nil {
-			u.typ = "FlowsVaultConnectionHTTPBasicAuthSetup"
-			u.FlowsVaultConnectionHTTPBasicAuthSetup = valueFlowsVaultConnectionHTTPBasicAuthSetup
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "name", "value", "in"}) {
-		valueFlowsVaultConnectionHttpApiKeySetup := new(FlowsVaultConnectionHttpApiKeySetup)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectionHttpApiKeySetup); err == nil {
-			u.typ = "FlowsVaultConnectionHttpApiKeySetup"
-			u.FlowsVaultConnectionHttpApiKeySetup = valueFlowsVaultConnectionHttpApiKeySetup
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "client_id", "client_secret", "token_endpoint"}) {
-		valueFlowsVaultConnectionHTTPOauthClientCredentialsSetup := new(FlowsVaultConnectionHTTPOauthClientCredentialsSetup)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectionHTTPOauthClientCredentialsSetup); err == nil {
-			u.typ = "FlowsVaultConnectionHTTPOauthClientCredentialsSetup"
-			u.FlowsVaultConnectionHTTPOauthClientCredentialsSetup = valueFlowsVaultConnectionHTTPOauthClientCredentialsSetup
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "api_key", "secret_key"}) {
-		valueFlowsVaultConnectioSetupMailjetAPIKey := new(FlowsVaultConnectioSetupMailjetAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupMailjetAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupMailjetAPIKey"
-			u.FlowsVaultConnectioSetupMailjetAPIKey = valueFlowsVaultConnectioSetupMailjetAPIKey
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "token"}) {
-		valueFlowsVaultConnectioSetupToken := new(FlowsVaultConnectioSetupToken)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupToken); err == nil {
-			u.typ = "FlowsVaultConnectioSetupToken"
-			u.FlowsVaultConnectioSetupToken = valueFlowsVaultConnectioSetupToken
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "url"}) {
-		valueFlowsVaultConnectioSetupWebhook := new(FlowsVaultConnectioSetupWebhook)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupWebhook); err == nil {
-			u.typ = "FlowsVaultConnectioSetupWebhook"
-			u.FlowsVaultConnectioSetupWebhook = valueFlowsVaultConnectioSetupWebhook
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "private_key", "public_key"}) {
-		valueFlowsVaultConnectioSetupStripeKeyPair := new(FlowsVaultConnectioSetupStripeKeyPair)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupStripeKeyPair); err == nil {
-			u.typ = "FlowsVaultConnectioSetupStripeKeyPair"
-			u.FlowsVaultConnectioSetupStripeKeyPair = valueFlowsVaultConnectioSetupStripeKeyPair
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"type", "account_id", "api_key"}) {
-		valueFlowsVaultConnectioSetupTwilioAPIKey := new(FlowsVaultConnectioSetupTwilioAPIKey)
-		if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupTwilioAPIKey); err == nil {
-			u.typ = "FlowsVaultConnectioSetupTwilioAPIKey"
-			u.FlowsVaultConnectioSetupTwilioAPIKey = valueFlowsVaultConnectioSetupTwilioAPIKey
-			return nil
-		}
-	}
 	valueFlowsVaultConnectioSetupAPIKeyWithBaseURL := new(FlowsVaultConnectioSetupAPIKeyWithBaseURL)
 	if err := json.Unmarshal(data, &valueFlowsVaultConnectioSetupAPIKeyWithBaseURL); err == nil {
 		u.typ = "FlowsVaultConnectioSetupAPIKeyWithBaseURL"
@@ -142516,12 +141512,10 @@ func (u *UpdateGuardianFactorDuoSettingsResponseContent) GetExtraProperties() ma
 }
 
 func (u *UpdateGuardianFactorDuoSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetIkey sets the Ikey field and marks it as non-optional;
@@ -142592,11 +141586,6 @@ var (
 	updateGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID = big.NewInt(1 << 1)
 )
 
-// updateGuardianFactorsProviderPushNotificationApnsResponseContentNullableFields maps the wire names of UpdateGuardianFactorsProviderPushNotificationApnsResponseContent's nullable fields (required or optional) to their field bits.
-var updateGuardianFactorsProviderPushNotificationApnsResponseContentNullableFields = map[string]*big.Int{
-	"bundle_id": updateGuardianFactorsProviderPushNotificationApnsResponseContentFieldBundleID,
-}
-
 type UpdateGuardianFactorsProviderPushNotificationApnsResponseContent struct {
 	Sandbox  *bool   `json:"sandbox,omitempty" url:"sandbox,omitempty"`
 	BundleID *string `json:"bundle_id,omitempty" url:"bundle_id,omitempty"`
@@ -142630,12 +141619,10 @@ func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) GetEx
 }
 
 func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetSandbox sets the Sandbox field and marks it as non-optional;
@@ -142664,13 +141651,6 @@ func (u *UpdateGuardianFactorsProviderPushNotificationApnsResponseContent) Unmar
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateGuardianFactorsProviderPushNotificationApnsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -142712,15 +141692,6 @@ var (
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsApnsPlatformApplicationArn = big.NewInt(1 << 3)
 	updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsGcmPlatformApplicationArn  = big.NewInt(1 << 4)
 )
-
-// updateGuardianFactorsProviderPushNotificationSnsResponseContentNullableFields maps the wire names of UpdateGuardianFactorsProviderPushNotificationSnsResponseContent's nullable fields (required or optional) to their field bits.
-var updateGuardianFactorsProviderPushNotificationSnsResponseContentNullableFields = map[string]*big.Int{
-	"aws_access_key_id":                 updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsAccessKeyID,
-	"aws_secret_access_key":             updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsSecretAccessKey,
-	"aws_region":                        updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldAwsRegion,
-	"sns_apns_platform_application_arn": updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsApnsPlatformApplicationArn,
-	"sns_gcm_platform_application_arn":  updateGuardianFactorsProviderPushNotificationSnsResponseContentFieldSnsGcmPlatformApplicationArn,
-}
 
 type UpdateGuardianFactorsProviderPushNotificationSnsResponseContent struct {
 	AwsAccessKeyID                *string `json:"aws_access_key_id,omitempty" url:"aws_access_key_id,omitempty"`
@@ -142779,12 +141750,10 @@ func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) GetExt
 }
 
 func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetAwsAccessKeyID sets the AwsAccessKeyID field and marks it as non-optional;
@@ -142834,13 +141803,6 @@ func (u *UpdateGuardianFactorsProviderPushNotificationSnsResponseContent) Unmars
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateGuardianFactorsProviderPushNotificationSnsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -142981,12 +141943,10 @@ func (u *UpdateOrganizationAllConnectionResponseContent) GetExtraProperties() ma
 }
 
 func (u *UpdateOrganizationAllConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetOrganizationConnectionName sets the OrganizationConnectionName field and marks it as non-optional;
@@ -143143,12 +142103,10 @@ func (u *UpdateOrganizationClientResponseContent) GetExtraProperties() map[strin
 }
 
 func (u *UpdateOrganizationClientResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetClientID sets the ClientID field and marks it as non-optional;
@@ -143283,12 +142241,10 @@ func (u *UpdateOrganizationConnectionResponseContent) GetExtraProperties() map[s
 }
 
 func (u *UpdateOrganizationConnectionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -143447,12 +142403,10 @@ func (u *UpdateOrganizationDiscoveryDomainResponseContent) GetExtraProperties() 
 }
 
 func (u *UpdateOrganizationDiscoveryDomainResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -143623,12 +142577,10 @@ func (u *UpdatePhoneTemplateResponseContent) GetExtraProperties() map[string]int
 }
 
 func (u *UpdatePhoneTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -143752,12 +142704,10 @@ func (u *UpdateRiskAssessmentsSettingsNewDeviceResponseContent) GetExtraProperti
 }
 
 func (u *UpdateRiskAssessmentsSettingsNewDeviceResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetRememberFor sets the RememberFor field and marks it as non-optional;
@@ -143839,12 +142789,10 @@ func (u *UpdateRiskAssessmentsSettingsResponseContent) GetExtraProperties() map[
 }
 
 func (u *UpdateRiskAssessmentsSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -143996,12 +142944,10 @@ func (u *UpdateSCIMConfigurationResponseContent) GetExtraProperties() map[string
 }
 
 func (u *UpdateSCIMConfigurationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetConnectionID sets the ConnectionID field and marks it as non-optional;
@@ -144206,12 +143152,10 @@ func (u *UpdateSegmentResponseContent) GetExtraProperties() map[string]interface
 }
 
 func (u *UpdateSegmentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -144384,12 +143328,10 @@ func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) GetExtraProperties
 }
 
 func (u *UpdateSuspiciousIPThrottlingSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
@@ -144507,24 +143449,6 @@ var (
 	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
 	updateTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
 )
-
-// updateTenantSettingsResponseContentNullableFields maps the wire names of UpdateTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
-var updateTenantSettingsResponseContentNullableFields = map[string]*big.Int{
-	"change_password":      updateTenantSettingsResponseContentFieldChangePassword,
-	"guardian_mfa_page":    updateTenantSettingsResponseContentFieldGuardianMfaPage,
-	"error_page":           updateTenantSettingsResponseContentFieldErrorPage,
-	"device_flow":          updateTenantSettingsResponseContentFieldDeviceFlow,
-	"default_token_quota":  updateTenantSettingsResponseContentFieldDefaultTokenQuota,
-	"access_token":         updateTenantSettingsResponseContentFieldAccessToken,
-	"security_headers":     updateTenantSettingsResponseContentFieldSecurityHeaders,
-	"session_cookie":       updateTenantSettingsResponseContentFieldSessionCookie,
-	"sessions":             updateTenantSettingsResponseContentFieldSessions,
-	"acr_values_supported": updateTenantSettingsResponseContentFieldAcrValuesSupported,
-	"mtls":                 updateTenantSettingsResponseContentFieldMtls,
-	"authorization_response_iss_parameter_supported":       updateTenantSettingsResponseContentFieldAuthorizationResponseIssParameterSupported,
-	"dpop_strict_refresh_token_binding":                    updateTenantSettingsResponseContentFieldDpopStrictRefreshTokenBinding,
-	"skip_non_verifiable_callback_uri_confirmation_prompt": updateTenantSettingsResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt,
-}
 
 type UpdateTenantSettingsResponseContent struct {
 	ChangePassword  *TenantSettingsPasswordPage `json:"change_password,omitempty" url:"change_password,omitempty"`
@@ -144917,12 +143841,10 @@ func (u *UpdateTenantSettingsResponseContent) GetExtraProperties() map[string]in
 }
 
 func (u *UpdateTenantSettingsResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetChangePassword sets the ChangePassword field and marks it as non-optional;
@@ -145238,13 +144160,6 @@ func (u *UpdateTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	u.extraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateTenantSettingsResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -145304,12 +144219,10 @@ func (u *UpdateTokenQuota) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UpdateTokenQuota) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetClientCredentials sets the ClientCredentials field and marks it as non-optional;
@@ -145389,22 +144302,6 @@ func (u *UpdateUniversalLoginTemplateRequestContent) UnmarshalJSON(data []byte) 
 		u.String = valueString
 		return nil
 	}
-	if internal.MatchesObjectKeys(data, []string{"template"}, []string{"template"}) {
-		valueUpdateUniversalLoginTemplateRequestContentTemplate := new(UpdateUniversalLoginTemplateRequestContentTemplate)
-		if err := json.Unmarshal(data, &valueUpdateUniversalLoginTemplateRequestContentTemplate); err == nil {
-			u.typ = "UpdateUniversalLoginTemplateRequestContentTemplate"
-			u.UpdateUniversalLoginTemplateRequestContentTemplate = valueUpdateUniversalLoginTemplateRequestContentTemplate
-			return nil
-		}
-	}
-	if internal.HasObjectKeys(data, []string{"template"}) {
-		valueUpdateUniversalLoginTemplateRequestContentTemplate := new(UpdateUniversalLoginTemplateRequestContentTemplate)
-		if err := json.Unmarshal(data, &valueUpdateUniversalLoginTemplateRequestContentTemplate); err == nil {
-			u.typ = "UpdateUniversalLoginTemplateRequestContentTemplate"
-			u.UpdateUniversalLoginTemplateRequestContentTemplate = valueUpdateUniversalLoginTemplateRequestContentTemplate
-			return nil
-		}
-	}
 	valueUpdateUniversalLoginTemplateRequestContentTemplate := new(UpdateUniversalLoginTemplateRequestContentTemplate)
 	if err := json.Unmarshal(data, &valueUpdateUniversalLoginTemplateRequestContentTemplate); err == nil {
 		u.typ = "UpdateUniversalLoginTemplateRequestContentTemplate"
@@ -145468,12 +144365,10 @@ func (u *UpdateUniversalLoginTemplateRequestContentTemplate) GetExtraProperties(
 }
 
 func (u *UpdateUniversalLoginTemplateRequestContentTemplate) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetTemplate sets the Template field and marks it as non-optional;
@@ -145525,6 +144420,7 @@ func (u *UpdateUniversalLoginTemplateRequestContentTemplate) String() string {
 	return fmt.Sprintf("%#v", u)
 }
 
+// The successfully created authentication method.
 var (
 	updateUserAuthenticationMethodResponseContentFieldID                            = big.NewInt(1 << 0)
 	updateUserAuthenticationMethodResponseContentFieldType                          = big.NewInt(1 << 1)
@@ -145542,7 +144438,6 @@ var (
 	updateUserAuthenticationMethodResponseContentFieldCreatedAt                     = big.NewInt(1 << 13)
 )
 
-// The successfully created authentication method.
 type UpdateUserAuthenticationMethodResponseContent struct {
 	// The ID of the newly created authentication method (automatically generated by the application)
 	ID   *string                             `json:"id,omitempty" url:"id,omitempty"`
@@ -145683,12 +144578,10 @@ func (u *UpdateUserAuthenticationMethodResponseContent) GetExtraProperties() map
 }
 
 func (u *UpdateUserAuthenticationMethodResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -145925,12 +144818,10 @@ func (u *UpdateVariationResponseContent) GetExtraProperties() map[string]interfa
 }
 
 func (u *UpdateVariationResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -146048,12 +144939,6 @@ var (
 	updateVerifiableCredentialTemplateResponseContentFieldUpdatedAt                  = big.NewInt(1 << 8)
 )
 
-// updateVerifiableCredentialTemplateResponseContentNullableFields maps the wire names of UpdateVerifiableCredentialTemplateResponseContent's nullable fields (required or optional) to their field bits.
-var updateVerifiableCredentialTemplateResponseContentNullableFields = map[string]*big.Int{
-	"custom_certificate_authority": updateVerifiableCredentialTemplateResponseContentFieldCustomCertificateAuthority,
-	"well_known_trusted_issuers":   updateVerifiableCredentialTemplateResponseContentFieldWellKnownTrustedIssuers,
-}
-
 type UpdateVerifiableCredentialTemplateResponseContent struct {
 	// The id of the template.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -146152,12 +145037,10 @@ func (u *UpdateVerifiableCredentialTemplateResponseContent) GetExtraProperties()
 }
 
 func (u *UpdateVerifiableCredentialTemplateResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -146243,13 +145126,6 @@ func (u *UpdateVerifiableCredentialTemplateResponseContent) UnmarshalJSON(data [
 		return err
 	}
 	u.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, updateVerifiableCredentialTemplateResponseContentNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		u.require(presentFields)
-	}
 	u.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -146521,12 +145397,10 @@ func (u *UserAuthenticationMethod) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserAuthenticationMethod) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -146780,12 +145654,10 @@ func (u *UserAuthenticationMethodProperties) GetExtraProperties() map[string]int
 }
 
 func (u *UserAuthenticationMethodProperties) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -146946,12 +145818,10 @@ func (u *UserEffectivePermissionResponseContent) GetExtraProperties() map[string
 }
 
 func (u *UserEffectivePermissionResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -147132,12 +146002,10 @@ func (u *UserEffectivePermissionRoleSourceResponseContent) GetExtraProperties() 
 }
 
 func (u *UserEffectivePermissionRoleSourceResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -147307,12 +146175,10 @@ func (u *UserEffectiveRole) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserEffectiveRole) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -147562,12 +146428,10 @@ func (u *UserGroupsResponseSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserGroupsResponseSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -147846,12 +146710,10 @@ func (u *UserIdentity) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserIdentity) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetConnection sets the Connection field and marks it as non-optional;
@@ -148199,12 +147061,10 @@ func (u *UserListLogOffsetPaginatedResponseContent) GetExtraProperties() map[str
 }
 
 func (u *UserListLogOffsetPaginatedResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetStart sets the Start field and marks it as non-optional;
@@ -148370,12 +147230,10 @@ func (u *UserPermissionSchema) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserPermissionSchema) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetResourceServerIdentifier sets the ResourceServerIdentifier field and marks it as non-optional;
@@ -148549,12 +147407,10 @@ func (u *UserProfileData) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UserProfileData) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetEmail sets the Email field and marks it as non-optional;
@@ -148768,12 +147624,10 @@ func (u *UsersEnrollment) GetExtraProperties() map[string]interface{} {
 }
 
 func (u *UsersEnrollment) require(field *big.Int) {
-	next := new(big.Int)
-	if u.explicitFields != nil {
-		next.Set(u.explicitFields)
+	if u.explicitFields == nil {
+		u.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	u.explicitFields = next
+	u.explicitFields.Or(u.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -148933,12 +147787,10 @@ func (v *ValidateExperimentResponseContent) GetExtraProperties() map[string]inte
 }
 
 func (v *ValidateExperimentResponseContent) require(field *big.Int) {
-	next := new(big.Int)
-	if v.explicitFields != nil {
-		next.Set(v.explicitFields)
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	v.explicitFields = next
+	v.explicitFields.Or(v.explicitFields, field)
 }
 
 // SetIsValid sets the IsValid field and marks it as non-optional;
@@ -149080,12 +147932,10 @@ func (v *Variation) GetExtraProperties() map[string]interface{} {
 }
 
 func (v *Variation) require(field *big.Int) {
-	next := new(big.Int)
-	if v.explicitFields != nil {
-		next.Set(v.explicitFields)
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	v.explicitFields = next
+	v.explicitFields.Or(v.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -149206,12 +148056,6 @@ var (
 	verifiableCredentialTemplateResponseFieldUpdatedAt                  = big.NewInt(1 << 8)
 )
 
-// verifiableCredentialTemplateResponseNullableFields maps the wire names of VerifiableCredentialTemplateResponse's nullable fields (required or optional) to their field bits.
-var verifiableCredentialTemplateResponseNullableFields = map[string]*big.Int{
-	"custom_certificate_authority": verifiableCredentialTemplateResponseFieldCustomCertificateAuthority,
-	"well_known_trusted_issuers":   verifiableCredentialTemplateResponseFieldWellKnownTrustedIssuers,
-}
-
 type VerifiableCredentialTemplateResponse struct {
 	// The id of the template.
 	ID *string `json:"id,omitempty" url:"id,omitempty"`
@@ -149310,12 +148154,10 @@ func (v *VerifiableCredentialTemplateResponse) GetExtraProperties() map[string]i
 }
 
 func (v *VerifiableCredentialTemplateResponse) require(field *big.Int) {
-	next := new(big.Int)
-	if v.explicitFields != nil {
-		next.Set(v.explicitFields)
+	if v.explicitFields == nil {
+		v.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	v.explicitFields = next
+	v.explicitFields.Or(v.explicitFields, field)
 }
 
 // SetID sets the ID field and marks it as non-optional;
@@ -149401,13 +148243,6 @@ func (v *VerifiableCredentialTemplateResponse) UnmarshalJSON(data []byte) error 
 		return err
 	}
 	v.ExtraProperties = extraProperties
-	presentFields, err := internal.ExplicitFieldsFromJSON(data, verifiableCredentialTemplateResponseNullableFields)
-	if err != nil {
-		return err
-	}
-	if presentFields != nil {
-		v.require(presentFields)
-	}
 	v.rawJSON = json.RawMessage(data)
 	return nil
 }
@@ -149442,13 +148277,13 @@ func (v *VerifiableCredentialTemplateResponse) String() string {
 	return fmt.Sprintf("%#v", v)
 }
 
+// X-XSS-Protection header configuration (deprecated header, use CSP instead).
 var (
 	xSSProtectionConfigFieldEnabled   = big.NewInt(1 << 0)
 	xSSProtectionConfigFieldMode      = big.NewInt(1 << 1)
 	xSSProtectionConfigFieldReportURI = big.NewInt(1 << 2)
 )
 
-// X-XSS-Protection header configuration (deprecated header, use CSP instead).
 type XSSProtectionConfig struct {
 	// Whether X-XSS-Protection header is enabled.
 	Enabled *bool              `json:"enabled,omitempty" url:"enabled,omitempty"`
@@ -149492,12 +148327,10 @@ func (x *XSSProtectionConfig) GetExtraProperties() map[string]interface{} {
 }
 
 func (x *XSSProtectionConfig) require(field *big.Int) {
-	next := new(big.Int)
-	if x.explicitFields != nil {
-		next.Set(x.explicitFields)
+	if x.explicitFields == nil {
+		x.explicitFields = big.NewInt(0)
 	}
-	next.Or(next, field)
-	x.explicitFields = next
+	x.explicitFields.Or(x.explicitFields, field)
 }
 
 // SetEnabled sets the Enabled field and marks it as non-optional;
