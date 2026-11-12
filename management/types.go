@@ -77627,7 +77627,7 @@ var (
 type CspPolicyReporting struct {
 	// HTTPS endpoint for CSP violation reports.
 	ReportURI *string `json:"report_uri,omitempty" url:"report_uri,omitempty"`
-	// Report-To group name for modern reporting.
+	// Report-To group name for modern reporting. Letters, digits, underscores and hyphens only; enforced on write by the request validator.
 	ReportToGroup *string `json:"report_to_group,omitempty" url:"report_to_group,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -119093,6 +119093,7 @@ const (
 	ScreenGroupNameEnumCustomForm                                ScreenGroupNameEnum = "custom-form"
 	ScreenGroupNameEnumConsent                                   ScreenGroupNameEnum = "consent"
 	ScreenGroupNameEnumConsentTenantScopes                       ScreenGroupNameEnum = "consent-tenant-scopes"
+	ScreenGroupNameEnumPendingConsent                            ScreenGroupNameEnum = "pending-consent"
 	ScreenGroupNameEnumCustomizedConsent                         ScreenGroupNameEnum = "customized-consent"
 	ScreenGroupNameEnumLogout                                    ScreenGroupNameEnum = "logout"
 	ScreenGroupNameEnumLogoutComplete                            ScreenGroupNameEnum = "logout-complete"
@@ -119218,6 +119219,8 @@ func NewScreenGroupNameEnumFromString(s string) (ScreenGroupNameEnum, error) {
 		return ScreenGroupNameEnumConsent, nil
 	case "consent-tenant-scopes":
 		return ScreenGroupNameEnumConsentTenantScopes, nil
+	case "pending-consent":
+		return ScreenGroupNameEnumPendingConsent, nil
 	case "customized-consent":
 		return ScreenGroupNameEnumCustomizedConsent, nil
 	case "logout":

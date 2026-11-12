@@ -394504,6 +394504,13 @@ func TestEnumScreenGroupNameEnum(t *testing.T) {
 		assert.Equal(t, ScreenGroupNameEnum("consent-tenant-scopes"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_pending_consent", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewScreenGroupNameEnumFromString("pending-consent")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ScreenGroupNameEnum("pending-consent"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_customized_consent", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewScreenGroupNameEnumFromString("customized-consent")

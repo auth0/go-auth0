@@ -1399,13 +1399,16 @@ func (c *ConnectionOtpSettings) String() string {
 }
 
 var (
-	connectionPasskeyAuthenticationMethodFieldEnabled = big.NewInt(1 << 0)
+	connectionPasskeyAuthenticationMethodFieldEnabled        = big.NewInt(1 << 0)
+	connectionPasskeyAuthenticationMethodFieldSignupBehavior = big.NewInt(1 << 1)
 )
 
 // Passkey authentication enablement
 type ConnectionPasskeyAuthenticationMethod struct {
 	// Determines whether passkeys are enabled
 	Enabled *bool `json:"enabled,omitempty" url:"enabled,omitempty"`
+	// Specifies the signup behavior for passkey authentication
+	SignupBehavior *ConnectionSignupBehaviorEnum `json:"signup_behavior,omitempty" url:"signup_behavior,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1419,6 +1422,13 @@ func (c *ConnectionPasskeyAuthenticationMethod) GetEnabled() bool {
 		return false
 	}
 	return *c.Enabled
+}
+
+func (c *ConnectionPasskeyAuthenticationMethod) GetSignupBehavior() ConnectionSignupBehaviorEnum {
+	if c == nil || c.SignupBehavior == nil {
+		return ""
+	}
+	return *c.SignupBehavior
 }
 
 func (c *ConnectionPasskeyAuthenticationMethod) GetExtraProperties() map[string]interface{} {
@@ -1442,6 +1452,13 @@ func (c *ConnectionPasskeyAuthenticationMethod) require(field *big.Int) {
 func (c *ConnectionPasskeyAuthenticationMethod) SetEnabled(enabled *bool) {
 	c.Enabled = enabled
 	c.require(connectionPasskeyAuthenticationMethodFieldEnabled)
+}
+
+// SetSignupBehavior sets the SignupBehavior field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasskeyAuthenticationMethod) SetSignupBehavior(signupBehavior *ConnectionSignupBehaviorEnum) {
+	c.SignupBehavior = signupBehavior
+	c.require(connectionPasskeyAuthenticationMethodFieldSignupBehavior)
 }
 
 func (c *ConnectionPasskeyAuthenticationMethod) UnmarshalJSON(data []byte) error {
