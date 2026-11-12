@@ -1845,6 +1845,16 @@ func TestBrandingThemeColors_GetBaseHoverColor(tt *testing.T) {
 	b.GetBaseHoverColor()
 }
 
+func TestBrandingThemeColors_GetReadOnlyBackground(tt *testing.T) {
+	var zeroValue string
+	b := &BrandingThemeColors{ReadOnlyBackground: &zeroValue}
+	b.GetReadOnlyBackground()
+	b = &BrandingThemeColors{}
+	b.GetReadOnlyBackground()
+	b = nil
+	b.GetReadOnlyBackground()
+}
+
 func TestBrandingThemeColors_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &BrandingThemeColors{}
