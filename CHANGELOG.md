@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+**Added**
+- feat: add `OIDCSupport` to `Client`, backed by `ClientOIDCSupport` and the `OIDCScope*` constants, to configure which OIDC scopes a client may request (Early Access) [\#934](https://github.com/auth0/go-auth0/pull/934) ([KartikJha](https://github.com/KartikJha))
+
 ## [v1.52.0](https://github.com/auth0/go-auth0/tree/v1.52.0) (2026-11-04)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.51.0...v1.52.0)
 
