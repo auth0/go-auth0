@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+## [v1.53.0](https://github.com/auth0/go-auth0/tree/v1.53.0) (2026-11-12)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.52.0...v1.53.0)
+
+**Added**
+- feat: add support for resend email provider [\#918](https://github.com/auth0/go-auth0/pull/918) ([martinbartolo](https://github.com/martinbartolo))
+- feat: add assertion decryption settings to SAML and PingFederate connection options [\#919](https://github.com/auth0/go-auth0/pull/919) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add configurable read-only background to branding themes [\#933](https://github.com/auth0/go-auth0/pull/933) ([bkiran6398](https://github.com/bkiran6398))
+
 ## [v1.52.0](https://github.com/auth0/go-auth0/tree/v1.52.0) (2026-11-04)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.51.0...v1.52.0)
 
