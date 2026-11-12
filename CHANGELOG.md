@@ -1,5 +1,12 @@
 # Change Log
 
+## [v3.12.0](https://github.com/auth0/go-auth0/tree/v3.12.0) (2026-11-12)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.11.0...v3.12.0)
+
+**Added**
+- feat: add `SignupBehavior` (`ConnectionSignupBehaviorEnum`) to `ConnectionPasskeyAuthenticationMethod` [\#931](https://github.com/auth0/go-auth0/pull/931) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ScreenGroupNameEnumPendingConsent` (`"pending-consent"`) as a valid `ScreenGroupNameEnum` value [\#931](https://github.com/auth0/go-auth0/pull/931) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.11.0](https://github.com/auth0/go-auth0/tree/v3.11.0) (2026-11-04)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.10.0...v3.11.0)
 
