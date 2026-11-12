@@ -2393,3 +2393,94 @@ func TestClient_AgentID(t *testing.T) {
 		assert.Equal(t, agentID, list.Clients[0].GetAgentID())
 	})
 }
+
+func givenAnOIDCSupportClient(t *testing.T, oidcSupport *ClientOIDCSupport) *Client {
+	t.Helper()
+
+	client := &Client{
+		Name:           auth0.Stringf("Test OIDC Support Client (%s)", time.Now().Format(time.StampMilli)),
+		IsFirstParty:   auth0.Bool(false),
+		OIDCConformant: auth0.Bool(true),
+		OIDCSupport:    oidcSupport,
+	}
+
+	err := api.Client.Create(context.Background(), client)
+	require.NoError(t, err)
+
+	t.Cleanup(func() {
+		cleanupClient(t, client.GetClientID())
+	})
+
+	return client
+}
+
+func TestClient_OIDCSupport(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	client := givenAnOIDCSupportClient(t, &ClientOIDCSupport{
+		IsAllowed:     auth0.Bool(true),
+		AllowedScopes: &[]string{OIDCScopeProfile, OIDCScopeEmail},
+	})
+
+	actual, err := api.Client.Read(context.Background(), client.GetClientID())
+	require.NoError(t, err)
+	assert.True(t, actual.GetOIDCSupport().GetIsAllowed())
+	assert.ElementsMatch(t, []string{OIDCScopeProfile, OIDCScopeEmail}, actual.GetOIDCSupport().GetAllowedScopes())
+	assert.False(t, actual.GetOIDCSupport().GetAllowAllScopes())
+
+	// Flip to allow_all_scopes, which fully replaces the previous object.
+	err = api.Client.Update(context.Background(), client.GetClientID(), &Client{
+		OIDCSupport: &ClientOIDCSupport{
+			IsAllowed:      auth0.Bool(true),
+			AllowAllScopes: auth0.Bool(true),
+		},
+	})
+	require.NoError(t, err)
+
+	actual, err = api.Client.Read(context.Background(), client.GetClientID())
+	require.NoError(t, err)
+	assert.True(t, actual.GetOIDCSupport().GetIsAllowed())
+	assert.True(t, actual.GetOIDCSupport().GetAllowAllScopes())
+	assert.Empty(t, actual.GetOIDCSupport().GetAllowedScopes())
+}
+
+func TestClient_OIDCSupportDefault(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	client := givenAnOIDCSupportClient(t, nil)
+
+	actual, err := api.Client.Read(context.Background(), client.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, actual.OIDCSupport)
+	assert.False(t, actual.GetOIDCSupport().GetIsAllowed())
+}
+
+func TestClient_ListOIDCSupport(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	client := givenAnOIDCSupportClient(t, &ClientOIDCSupport{
+		IsAllowed:      auth0.Bool(true),
+		AllowAllScopes: auth0.Bool(true),
+	})
+
+	var found *Client
+	for page := 0; found == nil; page++ {
+		clientList, err := api.Client.List(
+			context.Background(),
+			IncludeFields("client_id", "oidc_support"),
+			Page(page),
+			PerPage(100),
+		)
+		require.NoError(t, err)
+		require.NotEmpty(t, clientList.Clients, "created client not found in list")
+
+		for _, c := range clientList.Clients {
+			if c.GetClientID() == client.GetClientID() {
+				found = c
+			}
+		}
+	}
+
+	assert.True(t, found.GetOIDCSupport().GetIsAllowed())
+	assert.True(t, found.GetOIDCSupport().GetAllowAllScopes())
+}

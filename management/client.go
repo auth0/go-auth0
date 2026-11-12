@@ -52,6 +52,17 @@ type Client struct {
 	// AnonymousSessions configures whether this client can create anonymous sessions.
 	AnonymousSessions *ClientAnonymousSessions `json:"anonymous_sessions,omitempty"`
 
+	// OIDCSupport configures which OIDC scopes this client may request.
+	//
+	// It can only be set on clients with OIDCConformant enabled, and requires the
+	// tenant feature flag `enable_configurable_oidc_support`. As observed against the API:
+	//   - When sent, the whole object is replaced on update, so always send the complete
+	//     intended state, and IsAllowed is required.
+	//   - Reads materialize server defaults, so a non-nil value does not mean it was stored.
+	//   - Reads are nil for clients that are not OIDCConformant.
+	//   - Sending an explicit null is not supported by this SDK, so a stored value cannot be cleared.
+	OIDCSupport *ClientOIDCSupport `json:"oidc_support,omitempty"`
+
 	// The URLs that Auth0 can use to as a callback for the client.
 	Callbacks      *[]string `json:"callbacks,omitempty"`
 	AllowedOrigins *[]string `json:"allowed_origins,omitempty"`
@@ -598,6 +609,32 @@ type ClientJWTConfiguration struct {
 type ClientAnonymousSessions struct {
 	// Active indicates whether this client is allowed to create anonymous sessions.
 	Active *bool `json:"active,omitempty"`
+}
+
+// Optional OIDC scopes that can be listed in ClientOIDCSupport.AllowedScopes.
+// The `openid` scope is implied and rejected by the API.
+const (
+	OIDCScopeProfile = "profile"
+	OIDCScopeEmail   = "email"
+	OIDCScopeAddress = "address"
+	OIDCScopePhone   = "phone"
+)
+
+// ClientOIDCSupport configures the OIDC scopes a client is allowed to request.
+//
+// The API rejects the following combinations: IsAllowed false with scopes,
+// AllowedScopes together with AllowAllScopes true, `openid` in AllowedScopes,
+// duplicate scopes and unknown keys. An empty AllowedScopes list is valid.
+type ClientOIDCSupport struct {
+	// IsAllowed indicates whether the client may request optional OIDC scopes.
+	// It is required whenever the object is sent.
+	IsAllowed *bool `json:"is_allowed,omitempty"`
+
+	// AllowedScopes is the list of optional scopes the client may request, e.g. OIDCScopeProfile.
+	AllowedScopes *[]string `json:"allowed_scopes,omitempty"`
+
+	// AllowAllScopes indicates whether the client may request all optional scopes.
+	AllowAllScopes *bool `json:"allow_all_scopes,omitempty"`
 }
 
 // ClientNativeSocialLogin is used to configure Native Social Login for our Client.
