@@ -1,5 +1,31 @@
 # Change Log
 
+## [Unreleased]
+
+## [v1.52.0](https://github.com/auth0/go-auth0/tree/v1.52.0) (2026-11-04)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.51.0...v1.52.0)
+
+**Added**
+- feat: add `AgentID` field to `Client`, linking a client to an agent (Early Access) [\#906](https://github.com/auth0/go-auth0/pull/906) ([KartikJha](https://github.com/KartikJha))
+- feat: add `ExternalMetadataStatus` to `Client` and `ClientIDMetadataDocumentDynamicRegistrationSupported` to `Tenant` for Client ID Metadata Documents (Early Access) [\#912](https://github.com/auth0/go-auth0/pull/912) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `OTPSettings` to `ConnectionOptions` for per-channel one-time password settings (Early Access) [\#860](https://github.com/auth0/go-auth0/pull/860) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `Type` to `ResourceServer` with Universal Commerce Protocol server support (Early Access) [\#917](https://github.com/auth0/go-auth0/pull/917) ([KartikJha](https://github.com/KartikJha))
+
+## [v1.51.0](https://github.com/auth0/go-auth0/tree/v1.51.0) (2026-10-07)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.50.0...v1.51.0)
+
+**Added**
+- feat: add `RequireConsentNonRepudiation` field to `ResourceServer`, enabling operators to require cryptographic signing of consent decisions via the My Account API (Early Access) [\#883](https://github.com/auth0/go-auth0/pull/883) ([KartikJha](https://github.com/KartikJha))
+
+## [v1.50.0](https://github.com/auth0/go-auth0/tree/v1.50.0) (2026-09-18)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.49.0...v1.50.0)
+
+**Added**
+- feat: add `AccessToken` field to `ResourceServer`, backed by `ResourceServerAccessToken` and `ResourceServerAccessTokenClaimsMapping` types, enabling custom claim rules to be mapped into issued access tokens [\#874](https://github.com/auth0/go-auth0/pull/874) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add `EnforcePermissionCeiling` and `EnforceSelfAssignmentRestriction` fields to `MyOrganizationConfiguration` (Early Access), letting organization admins restrict permission assignment and self-assignment [\#873](https://github.com/auth0/go-auth0/pull/873) ([KartikJha](https://github.com/KartikJha))
+- feat: add `Code() string` to `management.Error` interface, decoding the `errorCode` field from API error responses to let callers distinguish error subtypes that share an HTTP status code [\#872](https://github.com/auth0/go-auth0/pull/872) ([KartikJha](https://github.com/KartikJha))
+- feat: add anonymous sessions support to `Tenant`, `Client`, `ResourceServer`, and `ClientGrant` (Early Access), introducing `TenantSessionsAnonymous`, `ClientAnonymousSessions`, and `ResourceServerSubjectTypeAuthorization` types to configure session lifetime, cookie activation, anonymous access token TTL, and authorization policy [\#869](https://github.com/auth0/go-auth0/pull/869) ([bkiran6398](https://github.com/bkiran6398))
+
 ## [v1.49.0](https://github.com/auth0/go-auth0/tree/v1.49.0) (2026-09-09)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.48.0...v1.49.0)
 

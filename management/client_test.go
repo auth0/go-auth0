@@ -3,6 +3,7 @@ package management
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"testing"
 	"time"
@@ -2188,6 +2189,70 @@ func TestClient_MyOrganizationConfigurationThirdPartyClientAccess(t *testing.T) 
 	assert.Equal(t, http.StatusBadRequest, err.(Error).Status())
 }
 
+func TestClient_MyOrganizationConfigurationMemberManagement(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	// Case: Create a client with member management fields set to false.
+	clientWith := &Client{
+		Name:        auth0.Stringf("Test Client MemberManagement (%s)", time.Now().Format(time.StampMilli)),
+		Description: auth0.String("Client with member management my_organization_configuration fields."),
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:                &[]string{"okta"},
+			ConnectionDeletionBehavior:       auth0.String("allow"),
+			EnforcePermissionCeiling:         auth0.Bool(false),
+			EnforceSelfAssignmentRestriction: auth0.Bool(false),
+		},
+	}
+	err := api.Client.Create(ctx, clientWith)
+	require.NoError(t, err)
+	require.NotEmpty(t, clientWith.GetClientID())
+	t.Cleanup(func() {
+		cleanupClient(t, clientWith.GetClientID())
+	})
+
+	require.NotNil(t, clientWith.GetMyOrganizationConfiguration())
+	assert.False(t, clientWith.GetMyOrganizationConfiguration().GetEnforcePermissionCeiling())
+	assert.False(t, clientWith.GetMyOrganizationConfiguration().GetEnforceSelfAssignmentRestriction())
+
+	// Case: Update both fields to true.
+	updatedClient := &Client{
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:                &[]string{"okta"},
+			ConnectionDeletionBehavior:       auth0.String("allow"),
+			EnforcePermissionCeiling:         auth0.Bool(true),
+			EnforceSelfAssignmentRestriction: auth0.Bool(true),
+		},
+	}
+	err = api.Client.Update(ctx, clientWith.GetClientID(), updatedClient)
+	require.NoError(t, err)
+
+	readClient, err := api.Client.Read(ctx, clientWith.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, readClient.GetMyOrganizationConfiguration())
+	assert.True(t, readClient.GetMyOrganizationConfiguration().GetEnforcePermissionCeiling())
+	assert.True(t, readClient.GetMyOrganizationConfiguration().GetEnforceSelfAssignmentRestriction())
+
+	// Case: Reset both fields to false.
+	resetClient := &Client{
+		MyOrganizationConfiguration: &MyOrganizationConfiguration{
+			AllowedStrategies:                &[]string{"okta"},
+			ConnectionDeletionBehavior:       auth0.String("allow"),
+			EnforcePermissionCeiling:         auth0.Bool(false),
+			EnforceSelfAssignmentRestriction: auth0.Bool(false),
+		},
+	}
+	err = api.Client.Update(ctx, clientWith.GetClientID(), resetClient)
+	require.NoError(t, err)
+
+	readClient, err = api.Client.Read(ctx, clientWith.GetClientID())
+	require.NoError(t, err)
+	require.NotNil(t, readClient.GetMyOrganizationConfiguration())
+	assert.False(t, readClient.GetMyOrganizationConfiguration().GetEnforcePermissionCeiling())
+	assert.False(t, readClient.GetMyOrganizationConfiguration().GetEnforceSelfAssignmentRestriction())
+}
+
 func givenAnExpressConfigurationClient(t *testing.T) *Client {
 	t.Helper()
 
@@ -2229,4 +2294,102 @@ aibASY5pIRiKENmbZELDtucCAwEAAQ==
 	})
 
 	return client
+}
+
+func TestClient_AgentID(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	ctx := context.Background()
+
+	givenAnAgent := func(t *testing.T) string {
+		t.Helper()
+
+		// The same struct is sent as the request body and populated from the response.
+		agent := struct {
+			ID   string `json:"agent_id,omitempty"`
+			Name string `json:"name"`
+		}{
+			Name: fmt.Sprintf("Test Agent (%s)", time.Now().Format(time.StampMilli)),
+		}
+		require.NoError(t, api.Request(ctx, http.MethodPost, api.URI("agents"), &agent))
+		require.NotEmpty(t, agent.ID)
+
+		// Registered first so that it runs last: the client must be deleted before its agent.
+		t.Cleanup(func() {
+			require.NoError(t, api.Request(ctx, http.MethodDelete, api.URI("agents", agent.ID), nil))
+		})
+
+		return agent.ID
+	}
+
+	givenAClientLinkedToAgent := func(t *testing.T, agentID string) *Client {
+		t.Helper()
+
+		client := &Client{
+			Name:    auth0.Stringf("Test Agent Client (%s)", time.Now().Format(time.StampMilli)),
+			AgentID: auth0.String(agentID),
+		}
+		require.NoError(t, api.Client.Create(ctx, client))
+		t.Cleanup(func() {
+			cleanupClient(t, client.GetClientID())
+		})
+
+		return client
+	}
+
+	t.Run("CreateLinked", func(t *testing.T) {
+		agentID := givenAnAgent(t)
+		client := givenAClientLinkedToAgent(t, agentID)
+		assert.Equal(t, agentID, client.GetAgentID())
+
+		read, err := api.Client.Read(ctx, client.GetClientID())
+		require.NoError(t, err)
+		assert.Equal(t, agentID, read.GetAgentID())
+	})
+
+	t.Run("UpdateLinkAndMove", func(t *testing.T) {
+		firstAgentID := givenAnAgent(t)
+		secondAgentID := givenAnAgent(t)
+
+		client := &Client{Name: auth0.Stringf("Test Agent Client (%s)", time.Now().Format(time.StampMilli))}
+		require.NoError(t, api.Client.Create(ctx, client))
+		t.Cleanup(func() {
+			cleanupClient(t, client.GetClientID())
+		})
+		assert.Empty(t, client.GetAgentID())
+
+		require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{AgentID: auth0.String(firstAgentID)}))
+		read, err := api.Client.Read(ctx, client.GetClientID())
+		require.NoError(t, err)
+		assert.Equal(t, firstAgentID, read.GetAgentID())
+
+		require.NoError(t, api.Client.Update(ctx, client.GetClientID(), &Client{AgentID: auth0.String(secondAgentID)}))
+		read, err = api.Client.Read(ctx, client.GetClientID())
+		require.NoError(t, err)
+		assert.Equal(t, secondAgentID, read.GetAgentID())
+	})
+
+	t.Run("UnlinkWithNullPatch", func(t *testing.T) {
+		agentID := givenAnAgent(t)
+		client := givenAClientLinkedToAgent(t, agentID)
+
+		patch := map[string]interface{}{"agent_id": nil}
+		require.NoError(t, api.Request(ctx, http.MethodPatch, api.URI("clients", client.GetClientID()), patch))
+
+		read, err := api.Client.Read(ctx, client.GetClientID())
+		require.NoError(t, err)
+		assert.Nil(t, read.AgentID)
+		assert.Empty(t, read.GetAgentID())
+	})
+
+	t.Run("ListByAgent", func(t *testing.T) {
+		agentID := givenAnAgent(t)
+		client := givenAClientLinkedToAgent(t, agentID)
+
+		list, err := api.Client.List(ctx, Parameter("agent_id", agentID))
+		require.NoError(t, err)
+		require.Len(t, list.Clients, 1)
+		assert.Equal(t, client.GetClientID(), list.Clients[0].GetClientID())
+		assert.Equal(t, agentID, list.Clients[0].GetAgentID())
+	})
 }

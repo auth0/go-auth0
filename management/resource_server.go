@@ -2,6 +2,13 @@ package management
 
 import "context"
 
+const (
+	// ResourceServerTypeUniversalCommerceProtocolServer is the type of a resource
+	// server acting as a Universal Commerce Protocol (UCP) server.
+	//
+	ResourceServerTypeUniversalCommerceProtocolServer = "universal_commerce_protocol_server"
+)
+
 // ResourceServer is an entity that represents an external resource, capable of
 // accepting and responding to protected resource requests made by applications.
 type ResourceServer struct {
@@ -45,6 +52,10 @@ type ResourceServer struct {
 	// issued from browser based flows. Value cannot be larger than
 	// token_lifetime.
 	TokenLifetimeForWeb *int `json:"token_lifetime_for_web,omitempty"`
+
+	// The amount of time in seconds that anonymous-session access tokens issued
+	// for this resource server remain valid.
+	TokenLifetimeForAnonymousAccessTokens *int `json:"token_lifetime_for_anonymous_access_tokens,omitempty"`
 
 	// Flag this entity as capable of skipping consent.
 	SkipConsentForVerifiableFirstPartyClients *bool `json:"skip_consent_for_verifiable_first_party_clients,omitempty"`
@@ -92,6 +103,35 @@ type ResourceServer struct {
 	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
 	ConsentPolicy *string `json:"consent_policy,omitempty"`
 
+	// RequireConsentNonRepudiation controls whether the authorization server rejects
+	// consent decisions that do not include a valid signature and kid.
+	// When true, end-users must cryptographically sign their consent decisions via the
+	// My Account API.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	RequireConsentNonRepudiation *bool `json:"require_consent_non_repudiation,omitempty"`
+
+	// Type is the type of the resource server. The only supported value is
+	// [ResourceServerTypeUniversalCommerceProtocolServer].
+	//
+	// Only one typed resource server is allowed per tenant. Scopes starting with
+	// "dev.ucp" are only accepted on a typed resource server. When omitted on update,
+	// the existing type is kept; the empty string is invalid and is never sent.
+	//
+	// To unset the type (set to null), send a PATCH request with a custom body, after
+	// removing any "dev.ucp" scopes:
+	//
+	// PATCH /api/v2/resource-servers/{id}
+	//
+	// {
+	//   "type": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	//
+	Type *string `json:"type,omitempty"`
+
 	// The list of authorization details for the resource server.
 	//
 	// To unset values (set to null), use a PATCH request like this:
@@ -132,6 +172,30 @@ type ResourceServer struct {
 
 	// AuthorizationPolicy specifies the authorization policy for the resource server.
 	AuthorizationPolicy *ResourceServerAuthorizationPolicy `json:"authorization_policy,omitempty"`
+
+	// AccessToken specifies the configuration for the access tokens issued for this resource server.
+	AccessToken *ResourceServerAccessToken `json:"access_token,omitempty"`
+}
+
+// ResourceServerAccessToken specifies the configuration for the access tokens issued for the resource server.
+type ResourceServerAccessToken struct {
+	// ClaimsMapping specifies the configuration for mapping claims into the access tokens.
+	ClaimsMapping *ResourceServerAccessTokenClaimsMapping `json:"claims_mapping,omitempty"`
+}
+
+// ResourceServerAccessTokenClaimsMapping specifies the configuration for mapping claims into the access tokens.
+type ResourceServerAccessTokenClaimsMapping struct {
+	// CustomClaims is the list of custom claims to include in the access tokens.
+	CustomClaims *[]ResourceServerAccessTokenCustomClaimsMappingRule `json:"custom_claims,omitempty"`
+}
+
+// ResourceServerAccessTokenCustomClaimsMappingRule defines a single custom-claim mapping rule.
+type ResourceServerAccessTokenCustomClaimsMappingRule struct {
+	// Name of the claim to emit in the access token.
+	Name *string `json:"name,omitempty"`
+
+	// Expression used to resolve the claim value.
+	Expression *string `json:"expression,omitempty"`
 }
 
 // ResourceServerAuthorizationPolicy specifies the authorization policy for the resource server.
@@ -146,6 +210,9 @@ type ResourceServerSubjectTypeAuthorization struct {
 
 	// Client authorization policies for the resource server.
 	Client *ResourceServerSubjectTypeAuthorizationClient `json:"client,omitempty"`
+
+	// AnonymousUser authorization policies for the resource server.
+	AnonymousUser *ResourceServerSubjectTypeAuthorizationAnonymousUser `json:"anonymous_user,omitempty"`
 }
 
 // ResourceServerSubjectTypeAuthorizationUser defines the authorization policies for user-initiated flows.
@@ -166,6 +233,18 @@ type ResourceServerSubjectTypeAuthorizationClient struct {
 	// Available options:
 	//   - "deny_all": Denies all client-initiated flows.
 	//   - "require_client_grant": Requires a client grant for client-initiated flows.
+	Policy *string `json:"policy,omitempty"`
+}
+
+// ResourceServerSubjectTypeAuthorizationAnonymousUser defines the authorization policies for anonymous-user flows.
+type ResourceServerSubjectTypeAuthorizationAnonymousUser struct {
+	// Policy defines the anonymous-user flows policy for the resource server.
+	//
+	// Available options:
+	//   - "deny_all": Denies all anonymous-user flows.
+	//   - "require_client_grant": Requires a client grant for anonymous-user flows.
+	//
+	// Defaults to "deny_all" when not specified.
 	Policy *string `json:"policy,omitempty"`
 }
 

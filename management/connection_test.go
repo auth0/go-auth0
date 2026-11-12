@@ -1705,6 +1705,46 @@ func TestGoogleOauth2Connection_UnmarshalJSON(t *testing.T) {
 	})
 }
 
+func TestConnectionOptionsSAMLAssertionDecryptionSettings_JSON(t *testing.T) {
+	for expectedAsString, settings := range map[string]*ConnectionOptionsSAMLAssertionDecryptionSettings{
+		`{}`:                                   nil,
+		`{"assertion_decryption_settings":{}}`: {},
+		`{"assertion_decryption_settings":{"algorithm_profile":"v2026-1"}}`: {
+			AlgorithmProfile: auth0.String("v2026-1"),
+		},
+		`{"assertion_decryption_settings":{"algorithm_profile":"v2026-1","algorithm_exceptions":[]}}`: {
+			AlgorithmProfile:    auth0.String("v2026-1"),
+			AlgorithmExceptions: &[]string{},
+		},
+		`{"assertion_decryption_settings":{"algorithm_profile":"v2026-1","algorithm_exceptions":["http://www.w3.org/2001/04/xmlenc#rsa-1_5"]}}`: {
+			AlgorithmProfile:    auth0.String("v2026-1"),
+			AlgorithmExceptions: &[]string{"http://www.w3.org/2001/04/xmlenc#rsa-1_5"},
+		},
+	} {
+		t.Run("SAML "+expectedAsString, func(t *testing.T) {
+			payload, err := json.Marshal(&ConnectionOptionsSAML{AssertionDecryptionSettings: settings})
+			assert.NoError(t, err)
+			assert.JSONEq(t, expectedAsString, string(payload))
+
+			var actual ConnectionOptionsSAML
+			err = json.Unmarshal([]byte(expectedAsString), &actual)
+			assert.NoError(t, err)
+			assert.Equal(t, settings, actual.AssertionDecryptionSettings)
+		})
+
+		t.Run("PingFederate "+expectedAsString, func(t *testing.T) {
+			payload, err := json.Marshal(&ConnectionOptionsPingFederate{AssertionDecryptionSettings: settings})
+			assert.NoError(t, err)
+			assert.JSONEq(t, expectedAsString, string(payload))
+
+			var actual ConnectionOptionsPingFederate
+			err = json.Unmarshal([]byte(expectedAsString), &actual)
+			assert.NoError(t, err)
+			assert.Equal(t, settings, actual.AssertionDecryptionSettings)
+		})
+	}
+}
+
 func cleanupConnection(t *testing.T, connectionID string) {
 	t.Helper()
 

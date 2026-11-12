@@ -49,6 +49,9 @@ type Client struct {
 	// Whether this client will conform to strict OIDC specifications.
 	OIDCConformant *bool `json:"oidc_conformant,omitempty"`
 
+	// AnonymousSessions configures whether this client can create anonymous sessions.
+	AnonymousSessions *ClientAnonymousSessions `json:"anonymous_sessions,omitempty"`
+
 	// The URLs that Auth0 can use to as a callback for the client.
 	Callbacks      *[]string `json:"callbacks,omitempty"`
 	AllowedOrigins *[]string `json:"allowed_origins,omitempty"`
@@ -238,6 +241,27 @@ type Client struct {
 	// Only present for CIMD-registered clients.
 	ExternalClientID *string `json:"external_client_id,omitempty"`
 
+	// AgentID is the identifier of the agent this client is linked to (Early Access).
+	// This feature may be unavailable on your tenant.
+	//
+	// A client can be linked to at most one agent. Sending a different agent ID on update
+	// moves the link to that agent. Deleting an agent does not clear this field.
+	//
+	// To list the clients linked to an agent, pass `management.Parameter("agent_id", id)` to
+	// ClientManager.List. This cannot be combined with the `q` parameter.
+	//
+	// To unset values (set to null), use a PATCH request like this:
+	//
+	// PATCH /api/v2/clients/{id}
+	//
+	// {
+	//	 "agent_id": null
+	// }
+	//
+	// For more details on making custom requests, refer to the Auth0 Go SDK examples:
+	// https://github.com/auth0/go-auth0/blob/main/EXAMPLES.md#providing-a-custom-user-struct
+	AgentID *string `json:"agent_id,omitempty"`
+
 	// ExternalMetadataType is the type of external metadata.
 	// Value is "cimd" for CIMD-registered clients.
 	ExternalMetadataType *string `json:"external_metadata_type,omitempty"`
@@ -245,6 +269,14 @@ type Client struct {
 	// ExternalMetadataCreatedBy indicates who created the external metadata client.
 	// Values: "admin" (via Management API), "client" (self-registered), or "unknown".
 	ExternalMetadataCreatedBy *string `json:"external_metadata_created_by,omitempty"`
+
+	// ExternalMetadataStatus indicates whether Auth0 can currently resolve the Client ID Metadata
+	// Document, from its cache or from the document URL. Values: "available" or "unavailable".
+	//
+	// This field is read-only and is only present for CIMD-registered clients.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	ExternalMetadataStatus *string `json:"external_metadata_status,omitempty"`
 
 	// JwksURI is the URL for the JSON Web Key Set (JWKS) containing the public keys
 	// used for private_key_jwt authentication. Only present for CIMD clients.
@@ -419,6 +451,14 @@ type MyOrganizationConfiguration struct {
 	// ThirdPartyClientAccess controls whether third-party clients can access organizations
 	// created for this client through the My Organization API.
 	ThirdPartyClientAccess *MyOrganizationThirdPartyClientAccess `json:"third_party_client_access,omitempty"`
+
+	// EnforcePermissionCeiling limits the permissions that organization admins can assign
+	// to members to only those held by the admin themselves.
+	EnforcePermissionCeiling *bool `json:"enforce_permission_ceiling,omitempty"`
+
+	// EnforceSelfAssignmentRestriction prevents organization admins from assigning
+	// permissions to themselves.
+	EnforceSelfAssignmentRestriction *bool `json:"enforce_self_assignment_restriction,omitempty"`
 }
 
 // MyOrganizationThirdPartyClientAccess represents the third-party client access policy for
@@ -552,6 +592,12 @@ type ClientJWTConfiguration struct {
 
 	// Algorithm used to sign JWTs. Can be `HS256` or `RS256`. `PS256` available via addon"
 	Algorithm *string `json:"alg,omitempty"`
+}
+
+// ClientAnonymousSessions configures anonymous session support for a client.
+type ClientAnonymousSessions struct {
+	// Active indicates whether this client is allowed to create anonymous sessions.
+	Active *bool `json:"active,omitempty"`
 }
 
 // ClientNativeSocialLogin is used to configure Native Social Login for our Client.

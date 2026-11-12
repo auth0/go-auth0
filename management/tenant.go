@@ -161,6 +161,16 @@ type Tenant struct {
 	// Whether the tenant supports Client ID Metadata Document (CIMD) for client registration.
 	ClientIDMetadataDocumentSupported *bool `json:"client_id_metadata_document_supported,omitempty"`
 
+	// Whether the tenant lets applications register themselves at runtime from their
+	// Client ID Metadata Document URL.
+	//
+	// It can only be enabled when ClientIDMetadataDocumentSupported is true, and
+	// ClientIDMetadataDocumentSupported cannot be disabled while this setting is true.
+	// To disable both, disable this setting first or set both to false in the same request.
+	//
+	// This is an Early Access feature and requires it to be enabled for your tenant.
+	ClientIDMetadataDocumentDynamicRegistrationSupported *bool `json:"client_id_metadata_document_dynamic_registration_supported,omitempty"`
+
 	// ResourceParameterProfile determines how the protected resource identity is specified in OAuth
 	// endpoints. Values: "audience" (default) or "compatibility".
 	ResourceParameterProfile *string `json:"resource_parameter_profile,omitempty"`
@@ -540,6 +550,18 @@ type TenantSessionCookie struct {
 type TenantSessions struct {
 	// Whether to bypass prompting logic (false) when performing OIDC Logout.
 	OIDCLogoutPromptEnabled *bool `json:"oidc_logout_prompt_enabled,omitempty"`
+
+	// Anonymous session settings for the tenant.
+	Anonymous *TenantSessionsAnonymous `json:"anonymous,omitempty"`
+}
+
+// TenantSessionsAnonymous manages anonymous session settings for the tenant.
+type TenantSessionsAnonymous struct {
+	// Number of minutes an anonymous session stays valid.
+	LifetimeInMinutes *int `json:"lifetime_in_minutes,omitempty"`
+
+	// Whether anonymous session requests return the auth0_anon cookie.
+	ActivateCookie *bool `json:"activate_cookie,omitempty"`
 }
 
 // TenantOIDCLogout manages OIDC logout related settings for the tenant.

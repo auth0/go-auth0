@@ -31,7 +31,7 @@ type ClientGrant struct {
 	OrganizationUsage *string `json:"organization_usage,omitempty"`
 
 	// SubjectType defines the type of subject for this grant.
-	// Can be one of `client` or `user`. Defaults to `client` when not defined.
+	// Can be one of `client`, `user` or `anonymous_user`. Defaults to `client` when not defined.
 	SubjectType *string `json:"subject_type,omitempty"`
 
 	// AuthorizationDetailsTypes defines the types of authorization details allowed for this client grant.

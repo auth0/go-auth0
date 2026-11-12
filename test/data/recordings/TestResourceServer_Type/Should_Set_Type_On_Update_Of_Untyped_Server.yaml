@@ -1,0 +1,108 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 176
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"name":"Test Resource Server (Nov  2 10:59:35.433)","identifier":"https://api.example-ucp-set.com/","signing_alg":"RS256","token_lifetime":7200,"token_lifetime_for_web":3600}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.51.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers
+        method: POST
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 436
+        uncompressed: false
+        body: '{"id":"6ae81fbf3f9f3ee693564c0a","name":"Test Resource Server (Nov  2 10:59:35.433)","identifier":"https://api.example-ucp-set.com/","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":false,"subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 201 Created
+        code: 201
+        duration: 308.682708ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 46
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"type":"universal_commerce_protocol_server"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.51.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6ae81fbf3f9f3ee693564c0a
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"id":"6ae81fbf3f9f3ee693564c0a","name":"Test Resource Server (Nov  2 10:59:35.433)","identifier":"https://api.example-ucp-set.com/","signing_alg":"RS256","allow_offline_access":false,"token_lifetime":7200,"token_lifetime_for_web":3600,"skip_consent_for_verifiable_first_party_clients":false,"require_consent_non_repudiation":false,"type":"universal_commerce_protocol_server","subject_type_authorization":{"user":{"policy":"allow_all"},"client":{"policy":"require_client_grant"}}}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 314.161541ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.51.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/resource-servers/6ae81fbf3f9f3ee693564c0a
+        method: DELETE
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 0
+        uncompressed: false
+        body: ""
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 204 No Content
+        code: 204
+        duration: 327.069958ms

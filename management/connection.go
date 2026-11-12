@@ -540,11 +540,41 @@ type ConnectionOptions struct {
 
 	// The action to be triggered for Universal Custom Password
 	CustomPasswordHash *CustomPasswordHash `json:"custom_password_hash,omitempty"`
+
+	// OTPSettings configures one-time password settings per delivery channel.
+	// This is an Early Access feature for auth0 (database) strategy connections.
+	// A PATCH replaces all connection options, so include every channel and field
+	// to retain; omitting OTPSettings from patched options removes it.
+	OTPSettings *ConnectionOptionsOTPSettings `json:"otp_settings,omitempty"`
 }
 
 // CustomPasswordHash defines the structure of custom password hash options.
 type CustomPasswordHash struct {
 	ActionID *string `json:"action_id,omitempty"`
+}
+
+// ConnectionOptionsOTPSettings configures one-time password settings for a
+// database (auth0 strategy) connection, per delivery channel. Early Access only.
+// Unlike ConnectionOptionsOTP, this configures database email and phone channels,
+// not the totp option on email or SMS strategy connections.
+type ConnectionOptionsOTPSettings struct {
+	// Email holds the OTP settings for the email delivery channel.
+	Email *ConnectionOptionsOTPChannelSettings `json:"email,omitempty"`
+
+	// Phone holds the OTP settings for the phone delivery channel.
+	Phone *ConnectionOptionsOTPChannelSettings `json:"phone,omitempty"`
+}
+
+// ConnectionOptionsOTPChannelSettings configures the one-time password settings
+// for a single delivery channel of a ConnectionOptionsOTPSettings. Early Access only.
+type ConnectionOptionsOTPChannelSettings struct {
+	// OTPLength is the number of digits in the generated one-time password
+	// (min 4, max 48; defaults to 6 when unset).
+	OTPLength *int `json:"otp_length,omitempty"`
+
+	// OTPExpiry is the number of seconds before the one-time password expires
+	// (min 60, max 86400; defaults to 900 when unset).
+	OTPExpiry *int `json:"otp_expiry,omitempty"`
 }
 
 // ConnectionOptionsAttributes defines the structure for attribute configurations.
@@ -1736,6 +1766,9 @@ type ConnectionOptionsPingFederate struct {
 	AgentMode                *bool                               `json:"agentMode,omitempty"`
 	ExtGroups                *bool                               `json:"ext_groups,omitempty" scope:"ext_groups"`
 	ExtProfile               *bool                               `json:"ext_profile,omitempty" scope:"ext_profile"`
+
+	// AssertionDecryptionSettings configures the algorithms allowed to decrypt SAML assertions.
+	AssertionDecryptionSettings *ConnectionOptionsSAMLAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsPingFederate.
@@ -1799,6 +1832,9 @@ type ConnectionOptionsSAML struct {
 	DiscoveryURL *string `json:"discovery_url,omitempty"`
 	// OIDCMetadata is the OIDC discovery document. Auto-populated from DiscoveryURL when absent, or preserved as uploaded. Honoured for SAML connections acting as a Cross-App Access resource application.
 	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
+
+	// AssertionDecryptionSettings configures the algorithms allowed to decrypt SAML assertions.
+	AssertionDecryptionSettings *ConnectionOptionsSAMLAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty"`
 }
 
 // ConnectionOptionsSAMLIdpInitiated is used to configure the
@@ -1825,6 +1861,16 @@ type ConnectionOptionsSAMLSigningKey struct {
 type ConnectionOptionsSAMLDecryptionKey struct {
 	Key  *string `json:"key,omitempty"`
 	Cert *string `json:"cert,omitempty"`
+}
+
+// ConnectionOptionsSAMLAssertionDecryptionSettings is used to configure the
+// AssertionDecryptionSettings on a ConnectionOptionsSAML or ConnectionOptionsPingFederate.
+type ConnectionOptionsSAMLAssertionDecryptionSettings struct {
+	// AlgorithmProfile is the algorithm profile used to decrypt SAML assertions. Possible values: "v2026-1".
+	AlgorithmProfile *string `json:"algorithm_profile,omitempty"`
+
+	// AlgorithmExceptions is a list of insecure algorithms to allow, in addition to the profile, for SAML assertion decryption.
+	AlgorithmExceptions *[]string `json:"algorithm_exceptions,omitempty"`
 }
 
 // Scopes returns the scopes for ConnectionOptionsSAML.
@@ -1928,7 +1974,7 @@ func (m *ConnectionManager) Delete(ctx context.Context, id string, opts ...Reque
 // connection id is not readily available.
 func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ...RequestOption) (*Connection, error) {
 	if name == "" {
-		return nil, &managementError{400, "Bad Request", "Name cannot be empty"}
+		return nil, &managementError{400, "Bad Request", "Name cannot be empty", ""}
 	}
 
 	c, err := m.List(ctx, append(opts, Parameter("name", name))...)
@@ -1940,7 +1986,7 @@ func (m *ConnectionManager) ReadByName(ctx context.Context, name string, opts ..
 		return c.Connections[0], nil
 	}
 
-	return nil, &managementError{404, "Not Found", "Connection not found"}
+	return nil, &managementError{404, "Not Found", "Connection not found", ""}
 }
 
 // ReadEnabledClients  retrieves the enabled clients for a connection by its connection ID.
