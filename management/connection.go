@@ -692,6 +692,9 @@ type PasswordAuthenticationMethod struct {
 type PasskeyAuthenticationMethod struct {
 	// Determines whether passkeys are enabled.
 	Enabled *bool `json:"enabled,omitempty"`
+	// Specifies whether passkey is allowed or blocked during signup flows. Possible values: "allow", "block".
+	// This feature currently must be enabled for your tenant.
+	SignupBehavior *string `json:"signup_behavior,omitempty"`
 }
 
 // EmailOTPAuthenticationMethod represents Email OTP authentication enablement for the connection.

@@ -11531,6 +11531,14 @@ func (p *PasskeyAuthenticationMethod) GetEnabled() bool {
 	return *p.Enabled
 }
 
+// GetSignupBehavior returns the SignupBehavior field if it's non-nil, zero value otherwise.
+func (p *PasskeyAuthenticationMethod) GetSignupBehavior() string {
+	if p == nil || p.SignupBehavior == nil {
+		return ""
+	}
+	return *p.SignupBehavior
+}
+
 // String returns a string representation of PasskeyAuthenticationMethod.
 func (p *PasskeyAuthenticationMethod) String() string {
 	return Stringify(p)
