@@ -15033,6 +15033,27 @@ func TestEnumLogStreamFilterGroupNameEnum(t *testing.T) {
 		assert.Equal(t, LogStreamFilterGroupNameEnum("actions"), val, "enum value should match expected wire value")
 	})
 
+	t.Run("NewFromString_agent_gateway_authentication_fail", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamFilterGroupNameEnumFromString("agent_gateway.authentication.fail")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamFilterGroupNameEnum("agent_gateway.authentication.fail"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_agent_gateway_operation_fail", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamFilterGroupNameEnumFromString("agent_gateway.operation.fail")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamFilterGroupNameEnum("agent_gateway.operation.fail"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_agent_gateway_operation_success", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewLogStreamFilterGroupNameEnumFromString("agent_gateway.operation.success")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, LogStreamFilterGroupNameEnum("agent_gateway.operation.success"), val, "enum value should match expected wire value")
+	})
+
 	t.Run("NewFromString_other", func(t *testing.T) {
 		t.Parallel()
 		val, err := NewLogStreamFilterGroupNameEnumFromString("other")

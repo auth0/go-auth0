@@ -3328,7 +3328,7 @@ type CreateEmailProviderRequestContent struct {
 	Enabled *bool `json:"enabled,omitempty" url:"-"`
 	// Email address to use as "from" when no other address specified.
 	DefaultFromAddress *string                                                `json:"default_from_address,omitempty" url:"-"`
-	Credentials        *EmailProviderCredentialsSchema                        `json:"credentials" url:"-"`
+	Credentials        *EmailProviderCredentialsSchema                        `json:"credentials,omitempty" url:"-"`
 	Settings           *EmailSpecificProviderSettingsWithAdditionalProperties `json:"settings,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -3693,25 +3693,26 @@ var (
 	createClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 39)
 	createClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 40)
 	createClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 41)
-	createClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 42)
-	createClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 43)
-	createClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 44)
-	createClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 45)
-	createClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 46)
-	createClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 47)
-	createClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 48)
-	createClientRequestContentFieldResourceServerIdentifier                       = big.NewInt(1 << 49)
-	createClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 50)
-	createClientRequestContentFieldAnonymousSessions                              = big.NewInt(1 << 51)
-	createClientRequestContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 52)
-	createClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 53)
-	createClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 54)
-	createClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	createClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	createClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	createClientRequestContentFieldAgentID                                        = big.NewInt(1 << 59)
-	createClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 60)
+	createClientRequestContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 42)
+	createClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 43)
+	createClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 44)
+	createClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 45)
+	createClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 46)
+	createClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 47)
+	createClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 48)
+	createClientRequestContentFieldTokenQuota                                     = big.NewInt(1 << 49)
+	createClientRequestContentFieldResourceServerIdentifier                       = big.NewInt(1 << 50)
+	createClientRequestContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 51)
+	createClientRequestContentFieldAnonymousSessions                              = big.NewInt(1 << 52)
+	createClientRequestContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 53)
+	createClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 54)
+	createClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 55)
+	createClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	createClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	createClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	createClientRequestContentFieldAgentID                                        = big.NewInt(1 << 60)
+	createClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 61)
 )
 
 type CreateClientRequestContent struct {
@@ -3782,10 +3783,11 @@ type CreateClientRequestContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"-"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                          `json:"require_proof_of_possession,omitempty" url:"-"`
-	SignedRequestObject        *ClientSignedRequestObjectWithPublicKey        `json:"signed_request_object,omitempty" url:"-"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithPublicKey `json:"token_vault_privileged_access,omitempty" url:"-"`
-	ComplianceLevel            *ClientComplianceLevelEnum                     `json:"compliance_level,omitempty" url:"-"`
+	RequireProofOfPossession      *bool                                          `json:"require_proof_of_possession,omitempty" url:"-"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin           `json:"allow_personal_agent_browser_join,omitempty" url:"-"`
+	SignedRequestObject           *ClientSignedRequestObjectWithPublicKey        `json:"signed_request_object,omitempty" url:"-"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithPublicKey `json:"token_vault_privileged_access,omitempty" url:"-"`
+	ComplianceLevel               *ClientComplianceLevelEnum                     `json:"compliance_level,omitempty" url:"-"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -4114,6 +4116,13 @@ func (c *CreateClientRequestContent) SetRequirePushedAuthorizationRequests(requi
 func (c *CreateClientRequestContent) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	c.RequireProofOfPossession = requireProofOfPossession
 	c.require(createClientRequestContentFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientRequestContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(createClientRequestContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
@@ -5240,7 +5249,8 @@ var (
 	createResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 19)
 	createResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 20)
 	createResourceServerRequestContentFieldAgentSubjectClaims                        = big.NewInt(1 << 21)
-	createResourceServerRequestContentFieldType                                      = big.NewInt(1 << 22)
+	createResourceServerRequestContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 22)
+	createResourceServerRequestContentFieldType                                      = big.NewInt(1 << 23)
 )
 
 type CreateResourceServerRequestContent struct {
@@ -5278,6 +5288,7 @@ type CreateResourceServerRequestContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization     `json:"subject_type_authorization,omitempty" url:"-"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy          `json:"authorization_policy,omitempty" url:"-"`
 	AgentSubjectClaims           *ResourceServerAgentSubjectClaimsSchemaEnum `json:"agent_subject_claims,omitempty" url:"-"`
+	UseForPersonalAgentProtocol  *ResourceServerUseForPersonalAgentProtocol  `json:"use_for_personal_agent_protocol,omitempty" url:"-"`
 	Type                         *ResourceServerTypeEnum                     `json:"type,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -5445,6 +5456,13 @@ func (c *CreateResourceServerRequestContent) SetAuthorizationPolicy(authorizatio
 func (c *CreateResourceServerRequestContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsSchemaEnum) {
 	c.AgentSubjectClaims = agentSubjectClaims
 	c.require(createResourceServerRequestContentFieldAgentSubjectClaims)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerRequestContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol) {
+	c.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	c.require(createResourceServerRequestContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -7406,7 +7424,7 @@ type GetUserGroupsRequestParameters struct {
 	Fields *string `json:"-" url:"fields,omitempty"`
 	// Whether specified fields are to be included (true) or excluded (false).
 	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). The returned total reflects at most 1,000 results.
 	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
 	// Optional Id from which to start selection.
 	From *string `json:"-" url:"from,omitempty"`
@@ -15786,7 +15804,8 @@ var (
 	updateResourceServerRequestContentFieldSubjectTypeAuthorization                  = big.NewInt(1 << 18)
 	updateResourceServerRequestContentFieldAuthorizationPolicy                       = big.NewInt(1 << 19)
 	updateResourceServerRequestContentFieldAgentSubjectClaims                        = big.NewInt(1 << 20)
-	updateResourceServerRequestContentFieldType                                      = big.NewInt(1 << 21)
+	updateResourceServerRequestContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 21)
+	updateResourceServerRequestContentFieldType                                      = big.NewInt(1 << 22)
 )
 
 type UpdateResourceServerRequestContent struct {
@@ -15822,6 +15841,7 @@ type UpdateResourceServerRequestContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization     `json:"subject_type_authorization,omitempty" url:"-"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy          `json:"authorization_policy,omitempty" url:"-"`
 	AgentSubjectClaims           *ResourceServerAgentSubjectClaimsSchemaEnum `json:"agent_subject_claims,omitempty" url:"-"`
+	UseForPersonalAgentProtocol  *ResourceServerUseForPersonalAgentProtocol  `json:"use_for_personal_agent_protocol,omitempty" url:"-"`
 	Type                         *ResourceServerTypeEnum                     `json:"type,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -15982,6 +16002,13 @@ func (u *UpdateResourceServerRequestContent) SetAuthorizationPolicy(authorizatio
 func (u *UpdateResourceServerRequestContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsSchemaEnum) {
 	u.AgentSubjectClaims = agentSubjectClaims
 	u.require(updateResourceServerRequestContentFieldAgentSubjectClaims)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerRequestContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol) {
+	u.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	u.require(updateResourceServerRequestContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -16155,6 +16182,7 @@ var (
 	updateTenantSettingsRequestContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 43)
 	updateTenantSettingsRequestContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 44)
 	updateTenantSettingsRequestContentFieldCountryCodes                                         = big.NewInt(1 << 45)
+	updateTenantSettingsRequestContentFieldPersonalAgentProtocolCompanyDomains                  = big.NewInt(1 << 46)
 )
 
 type UpdateTenantSettingsRequestContent struct {
@@ -16238,6 +16266,7 @@ type UpdateTenantSettingsRequestContent struct {
 	IncludeSessionMetadataInTenantLogs    *bool                                                `json:"include_session_metadata_in_tenant_logs,omitempty" url:"-"`
 	DynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode `json:"dynamic_client_registration_security_mode,omitempty" url:"-"`
 	CountryCodes                          *TenantSettingsCountryCodes                          `json:"country_codes,omitempty" url:"-"`
+	PersonalAgentProtocolCompanyDomains   *TenantSettingsPersonalAgentProtocolCompanyDomains   `json:"personal_agent_protocol_company_domains,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -16572,6 +16601,13 @@ func (u *UpdateTenantSettingsRequestContent) SetDynamicClientRegistrationSecurit
 func (u *UpdateTenantSettingsRequestContent) SetCountryCodes(countryCodes *TenantSettingsCountryCodes) {
 	u.CountryCodes = countryCodes
 	u.require(updateTenantSettingsRequestContentFieldCountryCodes)
+}
+
+// SetPersonalAgentProtocolCompanyDomains sets the PersonalAgentProtocolCompanyDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsRequestContent) SetPersonalAgentProtocolCompanyDomains(personalAgentProtocolCompanyDomains *TenantSettingsPersonalAgentProtocolCompanyDomains) {
+	u.PersonalAgentProtocolCompanyDomains = personalAgentProtocolCompanyDomains
+	u.require(updateTenantSettingsRequestContentFieldPersonalAgentProtocolCompanyDomains)
 }
 
 func (u *UpdateTenantSettingsRequestContent) UnmarshalJSON(data []byte) error {
@@ -19196,20 +19232,21 @@ var (
 	updateClientRequestContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 44)
 	updateClientRequestContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 45)
 	updateClientRequestContentFieldRequireProofOfPossession                       = big.NewInt(1 << 46)
-	updateClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 47)
-	updateClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 48)
-	updateClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 49)
-	updateClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 50)
-	updateClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 51)
-	updateClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 52)
-	updateClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
-	updateClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
-	updateClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 56)
-	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	updateClientRequestContentFieldAgentID                                        = big.NewInt(1 << 59)
-	updateClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 60)
+	updateClientRequestContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 47)
+	updateClientRequestContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
+	updateClientRequestContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
+	updateClientRequestContentFieldComplianceLevel                                = big.NewInt(1 << 50)
+	updateClientRequestContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
+	updateClientRequestContentFieldTokenExchange                                  = big.NewInt(1 << 52)
+	updateClientRequestContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
+	updateClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 54)
+	updateClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 55)
+	updateClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 56)
+	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 58)
+	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 59)
+	updateClientRequestContentFieldAgentID                                        = big.NewInt(1 << 60)
+	updateClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 61)
 )
 
 type UpdateClientRequestContent struct {
@@ -19288,10 +19325,11 @@ type UpdateClientRequestContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"-"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"-"`
-	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"-"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"-"`
-	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"-"`
+	RequireProofOfPossession      *bool                                             `json:"require_proof_of_possession,omitempty" url:"-"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoinOrNull        `json:"allow_personal_agent_browser_join,omitempty" url:"-"`
+	SignedRequestObject           *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"-"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"-"`
+	ComplianceLevel               *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"-"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -19649,6 +19687,13 @@ func (u *UpdateClientRequestContent) SetRequirePushedAuthorizationRequests(requi
 func (u *UpdateClientRequestContent) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	u.RequireProofOfPossession = requireProofOfPossession
 	u.require(updateClientRequestContentFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientRequestContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoinOrNull) {
+	u.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	u.require(updateClientRequestContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;

@@ -8516,6 +8516,14 @@ func TestSettersCreateClientRequestContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &CreateClientRequestContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSignedRequestObject", func(t *testing.T) {
 		obj := &CreateClientRequestContent{}
 		var fernTestValueSignedRequestObject *ClientSignedRequestObjectWithPublicKey
@@ -9950,6 +9958,37 @@ func TestSettersMarkExplicitCreateClientRequestContent(t *testing.T) {
 
 		// Act
 		obj.SetRequireProofOfPossession(fernTestValueRequireProofOfPossession)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientRequestContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -12913,6 +12952,14 @@ func TestSettersCreateResourceServerRequestContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol", func(t *testing.T) {
+		obj := &CreateResourceServerRequestContent{}
+		var fernTestValueUseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+		assert.Equal(t, fernTestValueUseForPersonalAgentProtocol, obj.UseForPersonalAgentProtocol)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetType", func(t *testing.T) {
 		obj := &CreateResourceServerRequestContent{}
 		var fernTestValueType *ResourceServerTypeEnum
@@ -13583,6 +13630,37 @@ func TestSettersMarkExplicitCreateResourceServerRequestContent(t *testing.T) {
 
 		// Act
 		obj.SetAgentSubjectClaims(fernTestValueAgentSubjectClaims)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetUseForPersonalAgentProtocol_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateResourceServerRequestContent{}
+		var fernTestValueUseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol
+
+		// Act
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -36833,6 +36911,14 @@ func TestSettersUpdateResourceServerRequestContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol", func(t *testing.T) {
+		obj := &UpdateResourceServerRequestContent{}
+		var fernTestValueUseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+		assert.Equal(t, fernTestValueUseForPersonalAgentProtocol, obj.UseForPersonalAgentProtocol)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetType", func(t *testing.T) {
 		obj := &UpdateResourceServerRequestContent{}
 		var fernTestValueType *ResourceServerTypeEnum
@@ -37495,6 +37581,37 @@ func TestSettersMarkExplicitUpdateResourceServerRequestContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetUseForPersonalAgentProtocol_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateResourceServerRequestContent{}
+		var fernTestValueUseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol
+
+		// Act
+		obj.SetUseForPersonalAgentProtocol(fernTestValueUseForPersonalAgentProtocol)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetType_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -38134,6 +38251,14 @@ func TestSettersUpdateTenantSettingsRequestContent(t *testing.T) {
 		var fernTestValueCountryCodes *TenantSettingsCountryCodes
 		obj.SetCountryCodes(fernTestValueCountryCodes)
 		assert.Equal(t, fernTestValueCountryCodes, obj.CountryCodes)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetPersonalAgentProtocolCompanyDomains", func(t *testing.T) {
+		obj := &UpdateTenantSettingsRequestContent{}
+		var fernTestValuePersonalAgentProtocolCompanyDomains *TenantSettingsPersonalAgentProtocolCompanyDomains
+		obj.SetPersonalAgentProtocolCompanyDomains(fernTestValuePersonalAgentProtocolCompanyDomains)
+		assert.Equal(t, fernTestValuePersonalAgentProtocolCompanyDomains, obj.PersonalAgentProtocolCompanyDomains)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -39543,6 +39668,37 @@ func TestSettersMarkExplicitUpdateTenantSettingsRequestContent(t *testing.T) {
 
 		// Act
 		obj.SetCountryCodes(fernTestValueCountryCodes)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetPersonalAgentProtocolCompanyDomains_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateTenantSettingsRequestContent{}
+		var fernTestValuePersonalAgentProtocolCompanyDomains *TenantSettingsPersonalAgentProtocolCompanyDomains
+
+		// Act
+		obj.SetPersonalAgentProtocolCompanyDomains(fernTestValuePersonalAgentProtocolCompanyDomains)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -45780,6 +45936,14 @@ func TestSettersUpdateClientRequestContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetAllowPersonalAgentBrowserJoin", func(t *testing.T) {
+		obj := &UpdateClientRequestContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoinOrNull
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
+		assert.Equal(t, fernTestValueAllowPersonalAgentBrowserJoin, obj.AllowPersonalAgentBrowserJoin)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSignedRequestObject", func(t *testing.T) {
 		obj := &UpdateClientRequestContent{}
 		var fernTestValueSignedRequestObject *ClientSignedRequestObjectWithCredentialID
@@ -47329,6 +47493,37 @@ func TestSettersMarkExplicitUpdateClientRequestContent(t *testing.T) {
 
 		// Act
 		obj.SetRequireProofOfPossession(fernTestValueRequireProofOfPossession)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetAllowPersonalAgentBrowserJoin_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientRequestContent{}
+		var fernTestValueAllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoinOrNull
+
+		// Act
+		obj.SetAllowPersonalAgentBrowserJoin(fernTestValueAllowPersonalAgentBrowserJoin)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)

@@ -2639,6 +2639,14 @@ client.Clients.Create(
 <dl>
 <dd>
 
+**allowPersonalAgentBrowserJoin:** `*management.ClientAllowPersonalAgentBrowserJoin` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **signedRequestObject:** `*management.ClientSignedRequestObjectWithPublicKey` 
     
 </dd>
@@ -3662,6 +3670,14 @@ client.Clients.Update(
 <dd>
 
 **requireProofOfPossession:** `*bool` — Makes the use of Proof-of-Possession mandatory for this client
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**allowPersonalAgentBrowserJoin:** `*management.ClientAllowPersonalAgentBrowserJoinOrNull` 
     
 </dd>
 </dl>
@@ -12277,6 +12293,14 @@ client.ResourceServers.Create(
 <dl>
 <dd>
 
+**useForPersonalAgentProtocol:** `*management.ResourceServerUseForPersonalAgentProtocol` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **type_:** `*management.ResourceServerTypeEnum` 
     
 </dd>
@@ -12760,6 +12784,14 @@ client.ResourceServers.Update(
 <dd>
 
 **agentSubjectClaims:** `*management.ResourceServerAgentSubjectClaimsSchemaEnum` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**useForPersonalAgentProtocol:** `*management.ResourceServerUseForPersonalAgentProtocol` 
     
 </dd>
 </dl>
@@ -22645,7 +22677,7 @@ client.Connections.Clients.Update(
 <dl>
 <dd>
 
-Gets the connection keys for the Okta, OIDC, or SAML (samlp) connection strategy.
+Gets the connection keys for the Okta, OIDC, or SAML (samlp) connection strategy. The response includes both signing keys and encryption keys, told apart by `key_use`. Encryption keys apply only to OIDC and Okta connections.
 </dd>
 </dl>
 </dd>
@@ -22702,7 +22734,9 @@ client.Connections.Keys.Get(
 <dl>
 <dd>
 
-Provision initial connection keys for Okta, OIDC, or SAML (samlp) connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication, enabling zero-downtime transitions.
+Provision initial connection keys for Okta, OIDC, or SAML (samlp) connection strategies. This endpoint allows you to create keys before configuring the connection to use Private Key JWT authentication or encrypted ID tokens, enabling zero-downtime transitions.
+
+Set `key_use` to `signing` (default) to provision signing keys, optionally choosing `signing_alg`, or to `encryption` to provision encryption keys, optionally choosing `encryption_alg`. `signing_alg` and `encryption_alg` each apply only to their own key use. Encryption keys and encrypted ID tokens apply only to OIDC and Okta connections. The response lists all of the connection's keys.
 </dd>
 </dl>
 </dd>
@@ -22770,6 +22804,8 @@ client.Connections.Keys.Create(
 <dd>
 
 Rotates the connection keys for the Okta, OIDC, or SAML (samlp) connection strategies.
+
+Set `key_use` to `signing` (default) to rotate the signing key, optionally choosing `signing_alg`, or to `encryption` to rotate the encryption key, optionally choosing `encryption_alg`. Rotating signing keys requires the connection to be configured to use JWT Client Authentication. Rotating encryption keys requires the connection to be configured to use encrypted ID tokens (`id_token_encrypted_response_alg` set), which applies only to OIDC and Okta connections. When `encryption_alg` is omitted, the new encryption key uses `id_token_encrypted_response_alg`.
 </dd>
 </dl>
 </dd>
@@ -23278,11 +23314,6 @@ options, which will be used when sending an email:
 ```go
 request := &management.CreateEmailProviderRequestContent{
     Name: management.EmailProviderNameEnumMailgun,
-    Credentials: &management.EmailProviderCredentialsSchema{
-        EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
-            APIKey: "api_key",
-        },
-    },
 }
 client.Emails.Provider.Create(
     context.TODO(),
@@ -36116,6 +36147,14 @@ See https://auth0.com/docs/secure/security-guidance/measures-against-app-imperso
     
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**personalAgentProtocolCompanyDomains:** `*management.TenantSettingsPersonalAgentProtocolCompanyDomains` 
+    
+</dd>
+</dl>
 </dd>
 </dl>
 
@@ -37201,7 +37240,7 @@ client.Users.Groups.Get(
 <dl>
 <dd>
 
-**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+**includeTotals:** `*bool` — Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). The returned total reflects at most 1,000 results.
     
 </dd>
 </dl>

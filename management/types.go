@@ -11354,6 +11354,8 @@ const (
 	ClientCredentialAlgorithmEnumRs256 ClientCredentialAlgorithmEnum = "RS256"
 	ClientCredentialAlgorithmEnumRs384 ClientCredentialAlgorithmEnum = "RS384"
 	ClientCredentialAlgorithmEnumPs256 ClientCredentialAlgorithmEnum = "PS256"
+	ClientCredentialAlgorithmEnumEs256 ClientCredentialAlgorithmEnum = "ES256"
+	ClientCredentialAlgorithmEnumPs384 ClientCredentialAlgorithmEnum = "PS384"
 )
 
 func NewClientCredentialAlgorithmEnumFromString(s string) (ClientCredentialAlgorithmEnum, error) {
@@ -11364,6 +11366,10 @@ func NewClientCredentialAlgorithmEnumFromString(s string) (ClientCredentialAlgor
 		return ClientCredentialAlgorithmEnumRs384, nil
 	case "PS256":
 		return ClientCredentialAlgorithmEnumPs256, nil
+	case "ES256":
+		return ClientCredentialAlgorithmEnumEs256, nil
+	case "PS384":
+		return ClientCredentialAlgorithmEnumPs384, nil
 	}
 	var t ClientCredentialAlgorithmEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -14054,6 +14060,44 @@ type ConnectionIconUrlSaml = ConnectionIconURL
 // The connection's identifier
 type ConnectionID = string
 
+// Key-management algorithm the upstream IdP uses to encrypt the ID token. Also the algorithm of the encryption keys Auth0 creates or rotates when no algorithm is selected.
+type ConnectionIDTokenEncryptedResponseAlgEnum string
+
+const (
+	ConnectionIDTokenEncryptedResponseAlgEnumRsaOaep256   ConnectionIDTokenEncryptedResponseAlgEnum = "RSA-OAEP-256"
+	ConnectionIDTokenEncryptedResponseAlgEnumRsaOaep384   ConnectionIDTokenEncryptedResponseAlgEnum = "RSA-OAEP-384"
+	ConnectionIDTokenEncryptedResponseAlgEnumRsaOaep512   ConnectionIDTokenEncryptedResponseAlgEnum = "RSA-OAEP-512"
+	ConnectionIDTokenEncryptedResponseAlgEnumEcdhEs       ConnectionIDTokenEncryptedResponseAlgEnum = "ECDH-ES"
+	ConnectionIDTokenEncryptedResponseAlgEnumEcdhEsA128Kw ConnectionIDTokenEncryptedResponseAlgEnum = "ECDH-ES+A128KW"
+	ConnectionIDTokenEncryptedResponseAlgEnumEcdhEsA192Kw ConnectionIDTokenEncryptedResponseAlgEnum = "ECDH-ES+A192KW"
+	ConnectionIDTokenEncryptedResponseAlgEnumEcdhEsA256Kw ConnectionIDTokenEncryptedResponseAlgEnum = "ECDH-ES+A256KW"
+)
+
+func NewConnectionIDTokenEncryptedResponseAlgEnumFromString(s string) (ConnectionIDTokenEncryptedResponseAlgEnum, error) {
+	switch s {
+	case "RSA-OAEP-256":
+		return ConnectionIDTokenEncryptedResponseAlgEnumRsaOaep256, nil
+	case "RSA-OAEP-384":
+		return ConnectionIDTokenEncryptedResponseAlgEnumRsaOaep384, nil
+	case "RSA-OAEP-512":
+		return ConnectionIDTokenEncryptedResponseAlgEnumRsaOaep512, nil
+	case "ECDH-ES":
+		return ConnectionIDTokenEncryptedResponseAlgEnumEcdhEs, nil
+	case "ECDH-ES+A128KW":
+		return ConnectionIDTokenEncryptedResponseAlgEnumEcdhEsA128Kw, nil
+	case "ECDH-ES+A192KW":
+		return ConnectionIDTokenEncryptedResponseAlgEnumEcdhEsA192Kw, nil
+	case "ECDH-ES+A256KW":
+		return ConnectionIDTokenEncryptedResponseAlgEnumEcdhEsA256Kw, nil
+	}
+	var t ConnectionIDTokenEncryptedResponseAlgEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionIDTokenEncryptedResponseAlgEnum) Ptr() *ConnectionIDTokenEncryptedResponseAlgEnum {
+	return &c
+}
+
 // JSON array containing a list of the JWE encryption algorithms (alg values) supported by the OP for the ID Token to encode the Claims in a JWT
 type ConnectionIDTokenEncryptionAlgValuesSupported = []string
 
@@ -14123,11 +14167,11 @@ var (
 )
 
 type ConnectionKey struct {
-	// The key id of the signing key
+	// The key id of the signing or encryption key
 	Kid string `json:"kid" url:"kid"`
-	// The public certificate of the signing key
+	// The public certificate of the signing or encryption key
 	Cert string `json:"cert" url:"cert"`
-	// The public certificate of the signing key in pkcs7 format
+	// The public certificate of the signing or encryption key in pkcs7 format
 	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
 	// True if the key is the the current key
 	Current *bool `json:"current,omitempty" url:"current,omitempty"`
@@ -14141,7 +14185,7 @@ type ConnectionKey struct {
 	Fingerprint string `json:"fingerprint" url:"fingerprint"`
 	// The cert thumbprint
 	Thumbprint string `json:"thumbprint" url:"thumbprint"`
-	// Signing key algorithm
+	// Key algorithm: a signing algorithm for signing keys, or a key-management algorithm for encryption keys
 	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
 	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
@@ -14384,7 +14428,7 @@ func (c *ConnectionKey) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Signing key use, whether for encryption or signing
+// Key use, whether for encryption or signing
 type ConnectionKeyUseEnum string
 
 const (
@@ -18482,23 +18526,25 @@ var (
 	connectionOptionsCommonOidcFieldDpopSigningAlg                     = big.NewInt(1 << 5)
 	connectionOptionsCommonOidcFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 6)
 	connectionOptionsCommonOidcFieldIconURL                            = big.NewInt(1 << 7)
-	connectionOptionsCommonOidcFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 8)
-	connectionOptionsCommonOidcFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 9)
-	connectionOptionsCommonOidcFieldIssuer                             = big.NewInt(1 << 10)
-	connectionOptionsCommonOidcFieldJwksURI                            = big.NewInt(1 << 11)
-	connectionOptionsCommonOidcFieldOidcMetadata                       = big.NewInt(1 << 12)
-	connectionOptionsCommonOidcFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 13)
-	connectionOptionsCommonOidcFieldScope                              = big.NewInt(1 << 14)
-	connectionOptionsCommonOidcFieldSendBackChannelNonce               = big.NewInt(1 << 15)
-	connectionOptionsCommonOidcFieldSetUserRootAttributes              = big.NewInt(1 << 16)
-	connectionOptionsCommonOidcFieldTenantDomain                       = big.NewInt(1 << 17)
-	connectionOptionsCommonOidcFieldTokenEndpoint                      = big.NewInt(1 << 18)
-	connectionOptionsCommonOidcFieldTokenEndpointAuthMethod            = big.NewInt(1 << 19)
-	connectionOptionsCommonOidcFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 20)
-	connectionOptionsCommonOidcFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 21)
-	connectionOptionsCommonOidcFieldUpstreamParams                     = big.NewInt(1 << 22)
-	connectionOptionsCommonOidcFieldUserinfoEndpoint                   = big.NewInt(1 << 23)
-	connectionOptionsCommonOidcFieldUseOauthSpecScope                  = big.NewInt(1 << 24)
+	connectionOptionsCommonOidcFieldIDTokenEncryptedResponseAlg        = big.NewInt(1 << 8)
+	connectionOptionsCommonOidcFieldIDTokenEncryptedResponseEncs       = big.NewInt(1 << 9)
+	connectionOptionsCommonOidcFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 10)
+	connectionOptionsCommonOidcFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 11)
+	connectionOptionsCommonOidcFieldIssuer                             = big.NewInt(1 << 12)
+	connectionOptionsCommonOidcFieldJwksURI                            = big.NewInt(1 << 13)
+	connectionOptionsCommonOidcFieldOidcMetadata                       = big.NewInt(1 << 14)
+	connectionOptionsCommonOidcFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 15)
+	connectionOptionsCommonOidcFieldScope                              = big.NewInt(1 << 16)
+	connectionOptionsCommonOidcFieldSendBackChannelNonce               = big.NewInt(1 << 17)
+	connectionOptionsCommonOidcFieldSetUserRootAttributes              = big.NewInt(1 << 18)
+	connectionOptionsCommonOidcFieldTenantDomain                       = big.NewInt(1 << 19)
+	connectionOptionsCommonOidcFieldTokenEndpoint                      = big.NewInt(1 << 20)
+	connectionOptionsCommonOidcFieldTokenEndpointAuthMethod            = big.NewInt(1 << 21)
+	connectionOptionsCommonOidcFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 22)
+	connectionOptionsCommonOidcFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 23)
+	connectionOptionsCommonOidcFieldUpstreamParams                     = big.NewInt(1 << 24)
+	connectionOptionsCommonOidcFieldUserinfoEndpoint                   = big.NewInt(1 << 25)
+	connectionOptionsCommonOidcFieldUseOauthSpecScope                  = big.NewInt(1 << 26)
 )
 
 // connectionOptionsCommonOidcNullableFields maps the wire names of ConnectionOptionsCommonOidc's nullable fields (required or optional) to their field bits.
@@ -18519,6 +18565,8 @@ type ConnectionOptionsCommonOidc struct {
 	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
 	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
 	IconURL                            *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	IDTokenEncryptedResponseAlg        *ConnectionIDTokenEncryptedResponseAlgEnum     `json:"id_token_encrypted_response_alg,omitempty" url:"id_token_encrypted_response_alg,omitempty"`
+	IDTokenEncryptedResponseEncs       *ConnectionIDTokenEncryptedResponseEncs        `json:"id_token_encrypted_response_encs,omitempty" url:"id_token_encrypted_response_encs,omitempty"`
 	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	Issuer                             *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -18599,6 +18647,20 @@ func (c *ConnectionOptionsCommonOidc) GetIconURL() ConnectionIconURL {
 		return ""
 	}
 	return *c.IconURL
+}
+
+func (c *ConnectionOptionsCommonOidc) GetIDTokenEncryptedResponseAlg() ConnectionIDTokenEncryptedResponseAlgEnum {
+	if c == nil || c.IDTokenEncryptedResponseAlg == nil {
+		return ""
+	}
+	return *c.IDTokenEncryptedResponseAlg
+}
+
+func (c *ConnectionOptionsCommonOidc) GetIDTokenEncryptedResponseEncs() ConnectionIDTokenEncryptedResponseEncs {
+	if c == nil || c.IDTokenEncryptedResponseEncs == nil {
+		return nil
+	}
+	return *c.IDTokenEncryptedResponseEncs
 }
 
 func (c *ConnectionOptionsCommonOidc) GetIDTokenSessionExpirySupported() ConnectionIDTokenSessionExpirySupported {
@@ -18790,6 +18852,20 @@ func (c *ConnectionOptionsCommonOidc) SetEnablePushedAuthorizationRequests(enabl
 func (c *ConnectionOptionsCommonOidc) SetIconURL(iconURL *ConnectionIconURL) {
 	c.IconURL = iconURL
 	c.require(connectionOptionsCommonOidcFieldIconURL)
+}
+
+// SetIDTokenEncryptedResponseAlg sets the IDTokenEncryptedResponseAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsCommonOidc) SetIDTokenEncryptedResponseAlg(idTokenEncryptedResponseAlg *ConnectionIDTokenEncryptedResponseAlgEnum) {
+	c.IDTokenEncryptedResponseAlg = idTokenEncryptedResponseAlg
+	c.require(connectionOptionsCommonOidcFieldIDTokenEncryptedResponseAlg)
+}
+
+// SetIDTokenEncryptedResponseEncs sets the IDTokenEncryptedResponseEncs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsCommonOidc) SetIDTokenEncryptedResponseEncs(idTokenEncryptedResponseEncs *ConnectionIDTokenEncryptedResponseEncs) {
+	c.IDTokenEncryptedResponseEncs = idTokenEncryptedResponseEncs
+	c.require(connectionOptionsCommonOidcFieldIDTokenEncryptedResponseEncs)
 }
 
 // SetIDTokenSessionExpirySupported sets the IDTokenSessionExpirySupported field and marks it as non-optional;
@@ -25840,27 +25916,29 @@ var (
 	connectionOptionsOidcFieldDpopSigningAlg                     = big.NewInt(1 << 5)
 	connectionOptionsOidcFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 6)
 	connectionOptionsOidcFieldIconURL                            = big.NewInt(1 << 7)
-	connectionOptionsOidcFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 8)
-	connectionOptionsOidcFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 9)
-	connectionOptionsOidcFieldIssuer                             = big.NewInt(1 << 10)
-	connectionOptionsOidcFieldJwksURI                            = big.NewInt(1 << 11)
-	connectionOptionsOidcFieldOidcMetadata                       = big.NewInt(1 << 12)
-	connectionOptionsOidcFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 13)
-	connectionOptionsOidcFieldScope                              = big.NewInt(1 << 14)
-	connectionOptionsOidcFieldSendBackChannelNonce               = big.NewInt(1 << 15)
-	connectionOptionsOidcFieldSetUserRootAttributes              = big.NewInt(1 << 16)
-	connectionOptionsOidcFieldTenantDomain                       = big.NewInt(1 << 17)
-	connectionOptionsOidcFieldTokenEndpoint                      = big.NewInt(1 << 18)
-	connectionOptionsOidcFieldTokenEndpointAuthMethod            = big.NewInt(1 << 19)
-	connectionOptionsOidcFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 20)
-	connectionOptionsOidcFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 21)
-	connectionOptionsOidcFieldUpstreamParams                     = big.NewInt(1 << 22)
-	connectionOptionsOidcFieldUserinfoEndpoint                   = big.NewInt(1 << 23)
-	connectionOptionsOidcFieldUseOauthSpecScope                  = big.NewInt(1 << 24)
-	connectionOptionsOidcFieldNonPersistentAttrs                 = big.NewInt(1 << 25)
-	connectionOptionsOidcFieldAttributeMap                       = big.NewInt(1 << 26)
-	connectionOptionsOidcFieldDiscoveryURL                       = big.NewInt(1 << 27)
-	connectionOptionsOidcFieldType                               = big.NewInt(1 << 28)
+	connectionOptionsOidcFieldIDTokenEncryptedResponseAlg        = big.NewInt(1 << 8)
+	connectionOptionsOidcFieldIDTokenEncryptedResponseEncs       = big.NewInt(1 << 9)
+	connectionOptionsOidcFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 10)
+	connectionOptionsOidcFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 11)
+	connectionOptionsOidcFieldIssuer                             = big.NewInt(1 << 12)
+	connectionOptionsOidcFieldJwksURI                            = big.NewInt(1 << 13)
+	connectionOptionsOidcFieldOidcMetadata                       = big.NewInt(1 << 14)
+	connectionOptionsOidcFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 15)
+	connectionOptionsOidcFieldScope                              = big.NewInt(1 << 16)
+	connectionOptionsOidcFieldSendBackChannelNonce               = big.NewInt(1 << 17)
+	connectionOptionsOidcFieldSetUserRootAttributes              = big.NewInt(1 << 18)
+	connectionOptionsOidcFieldTenantDomain                       = big.NewInt(1 << 19)
+	connectionOptionsOidcFieldTokenEndpoint                      = big.NewInt(1 << 20)
+	connectionOptionsOidcFieldTokenEndpointAuthMethod            = big.NewInt(1 << 21)
+	connectionOptionsOidcFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 22)
+	connectionOptionsOidcFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 23)
+	connectionOptionsOidcFieldUpstreamParams                     = big.NewInt(1 << 24)
+	connectionOptionsOidcFieldUserinfoEndpoint                   = big.NewInt(1 << 25)
+	connectionOptionsOidcFieldUseOauthSpecScope                  = big.NewInt(1 << 26)
+	connectionOptionsOidcFieldNonPersistentAttrs                 = big.NewInt(1 << 27)
+	connectionOptionsOidcFieldAttributeMap                       = big.NewInt(1 << 28)
+	connectionOptionsOidcFieldDiscoveryURL                       = big.NewInt(1 << 29)
+	connectionOptionsOidcFieldType                               = big.NewInt(1 << 30)
 )
 
 // connectionOptionsOidcNullableFields maps the wire names of ConnectionOptionsOidc's nullable fields (required or optional) to their field bits.
@@ -25881,6 +25959,8 @@ type ConnectionOptionsOidc struct {
 	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
 	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
 	IconURL                            *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	IDTokenEncryptedResponseAlg        *ConnectionIDTokenEncryptedResponseAlgEnum     `json:"id_token_encrypted_response_alg,omitempty" url:"id_token_encrypted_response_alg,omitempty"`
+	IDTokenEncryptedResponseEncs       *ConnectionIDTokenEncryptedResponseEncs        `json:"id_token_encrypted_response_encs,omitempty" url:"id_token_encrypted_response_encs,omitempty"`
 	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	Issuer                             *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -25965,6 +26045,20 @@ func (c *ConnectionOptionsOidc) GetIconURL() ConnectionIconURL {
 		return ""
 	}
 	return *c.IconURL
+}
+
+func (c *ConnectionOptionsOidc) GetIDTokenEncryptedResponseAlg() ConnectionIDTokenEncryptedResponseAlgEnum {
+	if c == nil || c.IDTokenEncryptedResponseAlg == nil {
+		return ""
+	}
+	return *c.IDTokenEncryptedResponseAlg
+}
+
+func (c *ConnectionOptionsOidc) GetIDTokenEncryptedResponseEncs() ConnectionIDTokenEncryptedResponseEncs {
+	if c == nil || c.IDTokenEncryptedResponseEncs == nil {
+		return nil
+	}
+	return *c.IDTokenEncryptedResponseEncs
 }
 
 func (c *ConnectionOptionsOidc) GetIDTokenSessionExpirySupported() ConnectionIDTokenSessionExpirySupported {
@@ -26184,6 +26278,20 @@ func (c *ConnectionOptionsOidc) SetEnablePushedAuthorizationRequests(enablePushe
 func (c *ConnectionOptionsOidc) SetIconURL(iconURL *ConnectionIconURL) {
 	c.IconURL = iconURL
 	c.require(connectionOptionsOidcFieldIconURL)
+}
+
+// SetIDTokenEncryptedResponseAlg sets the IDTokenEncryptedResponseAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOidc) SetIDTokenEncryptedResponseAlg(idTokenEncryptedResponseAlg *ConnectionIDTokenEncryptedResponseAlgEnum) {
+	c.IDTokenEncryptedResponseAlg = idTokenEncryptedResponseAlg
+	c.require(connectionOptionsOidcFieldIDTokenEncryptedResponseAlg)
+}
+
+// SetIDTokenEncryptedResponseEncs sets the IDTokenEncryptedResponseEncs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOidc) SetIDTokenEncryptedResponseEncs(idTokenEncryptedResponseEncs *ConnectionIDTokenEncryptedResponseEncs) {
+	c.IDTokenEncryptedResponseEncs = idTokenEncryptedResponseEncs
+	c.require(connectionOptionsOidcFieldIDTokenEncryptedResponseEncs)
 }
 
 // SetIDTokenSessionExpirySupported sets the IDTokenSessionExpirySupported field and marks it as non-optional;
@@ -27108,26 +27216,28 @@ var (
 	connectionOptionsOktaFieldDpopSigningAlg                     = big.NewInt(1 << 6)
 	connectionOptionsOktaFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 7)
 	connectionOptionsOktaFieldIconURL                            = big.NewInt(1 << 8)
-	connectionOptionsOktaFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 9)
-	connectionOptionsOktaFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 10)
-	connectionOptionsOktaFieldIssuer                             = big.NewInt(1 << 11)
-	connectionOptionsOktaFieldJwksURI                            = big.NewInt(1 << 12)
-	connectionOptionsOktaFieldOidcMetadata                       = big.NewInt(1 << 13)
-	connectionOptionsOktaFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 14)
-	connectionOptionsOktaFieldScope                              = big.NewInt(1 << 15)
-	connectionOptionsOktaFieldSendBackChannelNonce               = big.NewInt(1 << 16)
-	connectionOptionsOktaFieldSetUserRootAttributes              = big.NewInt(1 << 17)
-	connectionOptionsOktaFieldTenantDomain                       = big.NewInt(1 << 18)
-	connectionOptionsOktaFieldTokenEndpoint                      = big.NewInt(1 << 19)
-	connectionOptionsOktaFieldTokenEndpointAuthMethod            = big.NewInt(1 << 20)
-	connectionOptionsOktaFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 21)
-	connectionOptionsOktaFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 22)
-	connectionOptionsOktaFieldUpstreamParams                     = big.NewInt(1 << 23)
-	connectionOptionsOktaFieldUserinfoEndpoint                   = big.NewInt(1 << 24)
-	connectionOptionsOktaFieldUseOauthSpecScope                  = big.NewInt(1 << 25)
-	connectionOptionsOktaFieldAttributeMap                       = big.NewInt(1 << 26)
-	connectionOptionsOktaFieldDomain                             = big.NewInt(1 << 27)
-	connectionOptionsOktaFieldType                               = big.NewInt(1 << 28)
+	connectionOptionsOktaFieldIDTokenEncryptedResponseAlg        = big.NewInt(1 << 9)
+	connectionOptionsOktaFieldIDTokenEncryptedResponseEncs       = big.NewInt(1 << 10)
+	connectionOptionsOktaFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 11)
+	connectionOptionsOktaFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 12)
+	connectionOptionsOktaFieldIssuer                             = big.NewInt(1 << 13)
+	connectionOptionsOktaFieldJwksURI                            = big.NewInt(1 << 14)
+	connectionOptionsOktaFieldOidcMetadata                       = big.NewInt(1 << 15)
+	connectionOptionsOktaFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 16)
+	connectionOptionsOktaFieldScope                              = big.NewInt(1 << 17)
+	connectionOptionsOktaFieldSendBackChannelNonce               = big.NewInt(1 << 18)
+	connectionOptionsOktaFieldSetUserRootAttributes              = big.NewInt(1 << 19)
+	connectionOptionsOktaFieldTenantDomain                       = big.NewInt(1 << 20)
+	connectionOptionsOktaFieldTokenEndpoint                      = big.NewInt(1 << 21)
+	connectionOptionsOktaFieldTokenEndpointAuthMethod            = big.NewInt(1 << 22)
+	connectionOptionsOktaFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 23)
+	connectionOptionsOktaFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 24)
+	connectionOptionsOktaFieldUpstreamParams                     = big.NewInt(1 << 25)
+	connectionOptionsOktaFieldUserinfoEndpoint                   = big.NewInt(1 << 26)
+	connectionOptionsOktaFieldUseOauthSpecScope                  = big.NewInt(1 << 27)
+	connectionOptionsOktaFieldAttributeMap                       = big.NewInt(1 << 28)
+	connectionOptionsOktaFieldDomain                             = big.NewInt(1 << 29)
+	connectionOptionsOktaFieldType                               = big.NewInt(1 << 30)
 )
 
 // connectionOptionsOktaNullableFields maps the wire names of ConnectionOptionsOkta's nullable fields (required or optional) to their field bits.
@@ -27149,6 +27259,8 @@ type ConnectionOptionsOkta struct {
 	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
 	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
 	IconURL                            *ConnectionIconURL                             `json:"icon_url,omitempty" url:"icon_url,omitempty"`
+	IDTokenEncryptedResponseAlg        *ConnectionIDTokenEncryptedResponseAlgEnum     `json:"id_token_encrypted_response_alg,omitempty" url:"id_token_encrypted_response_alg,omitempty"`
+	IDTokenEncryptedResponseEncs       *ConnectionIDTokenEncryptedResponseEncs        `json:"id_token_encrypted_response_encs,omitempty" url:"id_token_encrypted_response_encs,omitempty"`
 	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	Issuer                             *ConnectionIssuer                              `json:"issuer,omitempty" url:"issuer,omitempty"`
@@ -27239,6 +27351,20 @@ func (c *ConnectionOptionsOkta) GetIconURL() ConnectionIconURL {
 		return ""
 	}
 	return *c.IconURL
+}
+
+func (c *ConnectionOptionsOkta) GetIDTokenEncryptedResponseAlg() ConnectionIDTokenEncryptedResponseAlgEnum {
+	if c == nil || c.IDTokenEncryptedResponseAlg == nil {
+		return ""
+	}
+	return *c.IDTokenEncryptedResponseAlg
+}
+
+func (c *ConnectionOptionsOkta) GetIDTokenEncryptedResponseEncs() ConnectionIDTokenEncryptedResponseEncs {
+	if c == nil || c.IDTokenEncryptedResponseEncs == nil {
+		return nil
+	}
+	return *c.IDTokenEncryptedResponseEncs
 }
 
 func (c *ConnectionOptionsOkta) GetIDTokenSessionExpirySupported() ConnectionIDTokenSessionExpirySupported {
@@ -27458,6 +27584,20 @@ func (c *ConnectionOptionsOkta) SetEnablePushedAuthorizationRequests(enablePushe
 func (c *ConnectionOptionsOkta) SetIconURL(iconURL *ConnectionIconURL) {
 	c.IconURL = iconURL
 	c.require(connectionOptionsOktaFieldIconURL)
+}
+
+// SetIDTokenEncryptedResponseAlg sets the IDTokenEncryptedResponseAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOkta) SetIDTokenEncryptedResponseAlg(idTokenEncryptedResponseAlg *ConnectionIDTokenEncryptedResponseAlgEnum) {
+	c.IDTokenEncryptedResponseAlg = idTokenEncryptedResponseAlg
+	c.require(connectionOptionsOktaFieldIDTokenEncryptedResponseAlg)
+}
+
+// SetIDTokenEncryptedResponseEncs sets the IDTokenEncryptedResponseEncs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionOptionsOkta) SetIDTokenEncryptedResponseEncs(idTokenEncryptedResponseEncs *ConnectionIDTokenEncryptedResponseEncs) {
+	c.IDTokenEncryptedResponseEncs = idTokenEncryptedResponseEncs
+	c.require(connectionOptionsOktaFieldIDTokenEncryptedResponseEncs)
 }
 
 // SetIDTokenSessionExpirySupported sets the IDTokenSessionExpirySupported field and marks it as non-optional;
@@ -97227,6 +97367,7 @@ var (
 	getTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
 	getTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
 	getTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
+	getTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains                  = big.NewInt(1 << 43)
 )
 
 // getTenantSettingsResponseContentNullableFields maps the wire names of GetTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
@@ -97318,9 +97459,10 @@ type GetTenantSettingsResponseContent struct {
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
 	EnableAiGuide *bool `json:"enable_ai_guide,omitempty" url:"enable_ai_guide,omitempty"`
 	// Whether session metadata is included in specific tenant logs (slo, oidc_backchannel_logout_failed, oidc_backchannel_logout_succeeded).
-	IncludeSessionMetadataInTenantLogs    *bool                                                `json:"include_session_metadata_in_tenant_logs,omitempty" url:"include_session_metadata_in_tenant_logs,omitempty"`
-	DynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode `json:"dynamic_client_registration_security_mode,omitempty" url:"dynamic_client_registration_security_mode,omitempty"`
-	CountryCodes                          *TenantSettingsCountryCodesResponse                  `json:"country_codes,omitempty" url:"country_codes,omitempty"`
+	IncludeSessionMetadataInTenantLogs    *bool                                                      `json:"include_session_metadata_in_tenant_logs,omitempty" url:"include_session_metadata_in_tenant_logs,omitempty"`
+	DynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode       `json:"dynamic_client_registration_security_mode,omitempty" url:"dynamic_client_registration_security_mode,omitempty"`
+	CountryCodes                          *TenantSettingsCountryCodesResponse                        `json:"country_codes,omitempty" url:"country_codes,omitempty"`
+	PersonalAgentProtocolCompanyDomains   *TenantSettingsPersonalAgentProtocolCompanyDomainsResponse `json:"personal_agent_protocol_company_domains,omitempty" url:"personal_agent_protocol_company_domains,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -97628,6 +97770,13 @@ func (g *GetTenantSettingsResponseContent) GetCountryCodes() TenantSettingsCount
 		return TenantSettingsCountryCodesResponse{}
 	}
 	return *g.CountryCodes
+}
+
+func (g *GetTenantSettingsResponseContent) GetPersonalAgentProtocolCompanyDomains() TenantSettingsPersonalAgentProtocolCompanyDomainsResponse {
+	if g == nil || g.PersonalAgentProtocolCompanyDomains == nil {
+		return nil
+	}
+	return *g.PersonalAgentProtocolCompanyDomains
 }
 
 func (g *GetTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -97945,6 +98094,13 @@ func (g *GetTenantSettingsResponseContent) SetDynamicClientRegistrationSecurityM
 func (g *GetTenantSettingsResponseContent) SetCountryCodes(countryCodes *TenantSettingsCountryCodesResponse) {
 	g.CountryCodes = countryCodes
 	g.require(getTenantSettingsResponseContentFieldCountryCodes)
+}
+
+// SetPersonalAgentProtocolCompanyDomains sets the PersonalAgentProtocolCompanyDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetTenantSettingsResponseContent) SetPersonalAgentProtocolCompanyDomains(personalAgentProtocolCompanyDomains *TenantSettingsPersonalAgentProtocolCompanyDomainsResponse) {
+	g.PersonalAgentProtocolCompanyDomains = personalAgentProtocolCompanyDomains
+	g.require(getTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains)
 }
 
 func (g *GetTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {
@@ -100556,6 +100712,26 @@ func (i *ImportEncryptionKeyResponseContent) String() string {
 		return value
 	}
 	return fmt.Sprintf("%#v", i)
+}
+
+// Optional. When set to the exact string `true`, the server computes the stored BSON size of the full user profile and returns it in the `Auth0-User-Profile-Size` response header. When omitted, no size computation occurs and the response header is not emitted. Any present value other than `true` (including `false`, `1`, or an empty string) is rejected with `400 validation_error`.
+type IncludeUserProfileSizeHeaderEnum string
+
+const (
+	IncludeUserProfileSizeHeaderEnumTrue IncludeUserProfileSizeHeaderEnum = "true"
+)
+
+func NewIncludeUserProfileSizeHeaderEnumFromString(s string) (IncludeUserProfileSizeHeaderEnum, error) {
+	switch s {
+	case "true":
+		return IncludeUserProfileSizeHeaderEnumTrue, nil
+	}
+	var t IncludeUserProfileSizeHeaderEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (i IncludeUserProfileSizeHeaderEnum) Ptr() *IncludeUserProfileSizeHeaderEnum {
+	return &i
 }
 
 var (
@@ -115089,7 +115265,7 @@ func (p *PostClientCredentialResponseContent) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Selected Signing Algorithm
+// Selected Signing Algorithm. Only applicable when key_use is "signing".
 type PostConnectionKeysAlgEnum string
 
 const (
@@ -115128,11 +115304,17 @@ func (p PostConnectionKeysAlgEnum) Ptr() *PostConnectionKeysAlgEnum {
 }
 
 var (
-	postConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 0)
+	postConnectionKeysRequestContentFieldKeyUse        = big.NewInt(1 << 0)
+	postConnectionKeysRequestContentFieldSigningAlg    = big.NewInt(1 << 1)
+	postConnectionKeysRequestContentFieldEncryptionAlg = big.NewInt(1 << 2)
 )
 
 type PostConnectionKeysRequestContent struct {
+	// Whether to provision a signing key (default) or an encryption key for the connection.
+	KeyUse     *ConnectionKeyUseEnum      `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SigningAlg *PostConnectionKeysAlgEnum `json:"signing_alg,omitempty" url:"signing_alg,omitempty"`
+	// Selected key-management algorithm for the encryption key. Only applicable when key_use is "encryption".
+	EncryptionAlg *ConnectionIDTokenEncryptedResponseAlgEnum `json:"encryption_alg,omitempty" url:"encryption_alg,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -115141,11 +115323,25 @@ type PostConnectionKeysRequestContent struct {
 	rawJSON         json.RawMessage
 }
 
+func (p *PostConnectionKeysRequestContent) GetKeyUse() ConnectionKeyUseEnum {
+	if p == nil || p.KeyUse == nil {
+		return ""
+	}
+	return *p.KeyUse
+}
+
 func (p *PostConnectionKeysRequestContent) GetSigningAlg() PostConnectionKeysAlgEnum {
 	if p == nil || p.SigningAlg == nil {
 		return ""
 	}
 	return *p.SigningAlg
+}
+
+func (p *PostConnectionKeysRequestContent) GetEncryptionAlg() ConnectionIDTokenEncryptedResponseAlgEnum {
+	if p == nil || p.EncryptionAlg == nil {
+		return ""
+	}
+	return *p.EncryptionAlg
 }
 
 func (p *PostConnectionKeysRequestContent) GetExtraProperties() map[string]interface{} {
@@ -115164,11 +115360,25 @@ func (p *PostConnectionKeysRequestContent) require(field *big.Int) {
 	p.explicitFields = next
 }
 
+// SetKeyUse sets the KeyUse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionKeysRequestContent) SetKeyUse(keyUse *ConnectionKeyUseEnum) {
+	p.KeyUse = keyUse
+	p.require(postConnectionKeysRequestContentFieldKeyUse)
+}
+
 // SetSigningAlg sets the SigningAlg field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (p *PostConnectionKeysRequestContent) SetSigningAlg(signingAlg *PostConnectionKeysAlgEnum) {
 	p.SigningAlg = signingAlg
 	p.require(postConnectionKeysRequestContentFieldSigningAlg)
+}
+
+// SetEncryptionAlg sets the EncryptionAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionKeysRequestContent) SetEncryptionAlg(encryptionAlg *ConnectionIDTokenEncryptedResponseAlgEnum) {
+	p.EncryptionAlg = encryptionAlg
+	p.require(postConnectionKeysRequestContentFieldEncryptionAlg)
 }
 
 func (p *PostConnectionKeysRequestContent) UnmarshalJSON(data []byte) error {
@@ -115230,11 +115440,11 @@ var (
 )
 
 type PostConnectionsKeysResponseContentItem struct {
-	// The key id of the signing key
+	// The key id of the signing or encryption key
 	Kid string `json:"kid" url:"kid"`
-	// The public certificate of the signing key
+	// The public certificate of the signing or encryption key
 	Cert string `json:"cert" url:"cert"`
-	// The public certificate of the signing key in pkcs7 format
+	// The public certificate of the signing or encryption key in pkcs7 format
 	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
 	// True if the key is the current key
 	Current *bool `json:"current,omitempty" url:"current,omitempty"`
@@ -115246,7 +115456,7 @@ type PostConnectionsKeysResponseContentItem struct {
 	Fingerprint string `json:"fingerprint" url:"fingerprint"`
 	// The cert thumbprint
 	Thumbprint string `json:"thumbprint" url:"thumbprint"`
-	// Signing key algorithm
+	// Key algorithm: a signing algorithm for signing keys, or a key-management algorithm for encryption keys
 	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
 	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
@@ -118114,11 +118324,17 @@ func (r *RollbackActionModuleResponseContent) String() string {
 }
 
 var (
-	rotateConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 0)
+	rotateConnectionKeysRequestContentFieldKeyUse        = big.NewInt(1 << 0)
+	rotateConnectionKeysRequestContentFieldSigningAlg    = big.NewInt(1 << 1)
+	rotateConnectionKeysRequestContentFieldEncryptionAlg = big.NewInt(1 << 2)
 )
 
 type RotateConnectionKeysRequestContent struct {
+	// Whether to rotate the signing key (default) or the encryption key for the connection.
+	KeyUse     *ConnectionKeyUseEnum               `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SigningAlg *RotateConnectionKeysSigningAlgEnum `json:"signing_alg,omitempty" url:"signing_alg,omitempty"`
+	// Selected key-management algorithm for the encryption key. Only applicable when key_use is "encryption".
+	EncryptionAlg *ConnectionIDTokenEncryptedResponseAlgEnum `json:"encryption_alg,omitempty" url:"encryption_alg,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -118127,11 +118343,25 @@ type RotateConnectionKeysRequestContent struct {
 	rawJSON         json.RawMessage
 }
 
+func (r *RotateConnectionKeysRequestContent) GetKeyUse() ConnectionKeyUseEnum {
+	if r == nil || r.KeyUse == nil {
+		return ""
+	}
+	return *r.KeyUse
+}
+
 func (r *RotateConnectionKeysRequestContent) GetSigningAlg() RotateConnectionKeysSigningAlgEnum {
 	if r == nil || r.SigningAlg == nil {
 		return ""
 	}
 	return *r.SigningAlg
+}
+
+func (r *RotateConnectionKeysRequestContent) GetEncryptionAlg() ConnectionIDTokenEncryptedResponseAlgEnum {
+	if r == nil || r.EncryptionAlg == nil {
+		return ""
+	}
+	return *r.EncryptionAlg
 }
 
 func (r *RotateConnectionKeysRequestContent) GetExtraProperties() map[string]interface{} {
@@ -118150,11 +118380,25 @@ func (r *RotateConnectionKeysRequestContent) require(field *big.Int) {
 	r.explicitFields = next
 }
 
+// SetKeyUse sets the KeyUse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionKeysRequestContent) SetKeyUse(keyUse *ConnectionKeyUseEnum) {
+	r.KeyUse = keyUse
+	r.require(rotateConnectionKeysRequestContentFieldKeyUse)
+}
+
 // SetSigningAlg sets the SigningAlg field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (r *RotateConnectionKeysRequestContent) SetSigningAlg(signingAlg *RotateConnectionKeysSigningAlgEnum) {
 	r.SigningAlg = signingAlg
 	r.require(rotateConnectionKeysRequestContentFieldSigningAlg)
+}
+
+// SetEncryptionAlg sets the EncryptionAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionKeysRequestContent) SetEncryptionAlg(encryptionAlg *ConnectionIDTokenEncryptedResponseAlgEnum) {
+	r.EncryptionAlg = encryptionAlg
+	r.require(rotateConnectionKeysRequestContentFieldEncryptionAlg)
 }
 
 func (r *RotateConnectionKeysRequestContent) UnmarshalJSON(data []byte) error {
@@ -118199,7 +118443,7 @@ func (r *RotateConnectionKeysRequestContent) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Selected Signing Algorithm
+// Selected Signing Algorithm. Only applicable when key_use is "signing".
 type RotateConnectionKeysSigningAlgEnum string
 
 const (
@@ -118250,11 +118494,11 @@ var (
 )
 
 type RotateConnectionsKeysResponseContent struct {
-	// The key id of the signing key
+	// The key id of the signing or encryption key
 	Kid string `json:"kid" url:"kid"`
-	// The public certificate of the signing key
+	// The public certificate of the signing or encryption key
 	Cert string `json:"cert" url:"cert"`
-	// The public certificate of the signing key in pkcs7 format
+	// The public certificate of the signing or encryption key in pkcs7 format
 	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
 	// True if the key is the the next key
 	Next *bool `json:"next,omitempty" url:"next,omitempty"`
@@ -118262,7 +118506,7 @@ type RotateConnectionsKeysResponseContent struct {
 	Fingerprint string `json:"fingerprint" url:"fingerprint"`
 	// The cert thumbprint
 	Thumbprint string `json:"thumbprint" url:"thumbprint"`
-	// Signing key algorithm
+	// Key algorithm: a signing algorithm for signing keys, or a key-management algorithm for encryption keys
 	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
 	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
@@ -127397,12 +127641,11 @@ var (
 	tenantSettingsFlagsFieldMfaShowFactorListOnEnrollment                  = big.NewInt(1 << 21)
 	tenantSettingsFlagsFieldRemoveAlgFromJwks                              = big.NewInt(1 << 22)
 	tenantSettingsFlagsFieldImprovedSignupBotDetectionInClassic            = big.NewInt(1 << 23)
-	tenantSettingsFlagsFieldGenaiTrial                                     = big.NewInt(1 << 24)
-	tenantSettingsFlagsFieldLocalResourceDiscovery                         = big.NewInt(1 << 25)
-	tenantSettingsFlagsFieldEnableDynamicClientRegistration                = big.NewInt(1 << 26)
-	tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation             = big.NewInt(1 << 27)
-	tenantSettingsFlagsFieldTrustAzureAdfsEmailVerifiedConnectionProperty  = big.NewInt(1 << 28)
-	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 29)
+	tenantSettingsFlagsFieldLocalResourceDiscovery                         = big.NewInt(1 << 24)
+	tenantSettingsFlagsFieldEnableDynamicClientRegistration                = big.NewInt(1 << 25)
+	tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation             = big.NewInt(1 << 26)
+	tenantSettingsFlagsFieldTrustAzureAdfsEmailVerifiedConnectionProperty  = big.NewInt(1 << 27)
+	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 28)
 )
 
 // Flags used to change the behavior of this tenant.
@@ -127455,8 +127698,6 @@ type TenantSettingsFlags struct {
 	RemoveAlgFromJwks *bool `json:"remove_alg_from_jwks,omitempty" url:"remove_alg_from_jwks,omitempty"`
 	// Improves bot detection during signup in classic universal login
 	ImprovedSignupBotDetectionInClassic *bool `json:"improved_signup_bot_detection_in_classic,omitempty" url:"improved_signup_bot_detection_in_classic,omitempty"`
-	// This tenant signed up for the Auth4GenAI trail
-	GenaiTrial *bool `json:"genai_trial,omitempty" url:"genai_trial,omitempty"`
 	// Whether the Local Resource Discovery endpoint is enabled (true) or disabled (false).
 	LocalResourceDiscovery *bool `json:"local_resource_discovery,omitempty" url:"local_resource_discovery,omitempty"`
 	// Whether third-party developers can <a href="https://auth0.com/docs/api-auth/dynamic-client-registration">dynamically register</a> applications for your APIs (true) or not (false). This flag enables dynamic client registration.
@@ -127641,13 +127882,6 @@ func (t *TenantSettingsFlags) GetImprovedSignupBotDetectionInClassic() bool {
 		return false
 	}
 	return *t.ImprovedSignupBotDetectionInClassic
-}
-
-func (t *TenantSettingsFlags) GetGenaiTrial() bool {
-	if t == nil || t.GenaiTrial == nil {
-		return false
-	}
-	return *t.GenaiTrial
 }
 
 func (t *TenantSettingsFlags) GetLocalResourceDiscovery() bool {
@@ -127867,13 +128101,6 @@ func (t *TenantSettingsFlags) SetRemoveAlgFromJwks(removeAlgFromJwks *bool) {
 func (t *TenantSettingsFlags) SetImprovedSignupBotDetectionInClassic(improvedSignupBotDetectionInClassic *bool) {
 	t.ImprovedSignupBotDetectionInClassic = improvedSignupBotDetectionInClassic
 	t.require(tenantSettingsFlagsFieldImprovedSignupBotDetectionInClassic)
-}
-
-// SetGenaiTrial sets the GenaiTrial field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsFlags) SetGenaiTrial(genaiTrial *bool) {
-	t.GenaiTrial = genaiTrial
-	t.require(tenantSettingsFlagsFieldGenaiTrial)
 }
 
 // SetLocalResourceDiscovery sets the LocalResourceDiscovery field and marks it as non-optional;
@@ -128366,6 +128593,12 @@ func (t *TenantSettingsPasswordPage) String() string {
 	}
 	return fmt.Sprintf("%#v", t)
 }
+
+// Company domains associated with the Personal Agent Protocol. Each entry must be a bare, lowercase hostname (no scheme, port, path, or trailing slash). The array must contain at most 5 unique entries.
+type TenantSettingsPersonalAgentProtocolCompanyDomains = []string
+
+// Company domains associated with the Personal Agent Protocol.
+type TenantSettingsPersonalAgentProtocolCompanyDomainsResponse = []string
 
 // Profile that determines how the identity of the protected resource (i.e., API) can be specified in the OAuth endpoints when access is being requested. When set to audience (default), the audience parameter is used to specify the resource server. When set to compatibility, the audience parameter is still checked first, but if it not provided, then the resource parameter can be used to specify the resource server.
 type TenantSettingsResourceParameterProfile string
@@ -144506,6 +144739,7 @@ var (
 	updateTenantSettingsResponseContentFieldIncludeSessionMetadataInTenantLogs                   = big.NewInt(1 << 40)
 	updateTenantSettingsResponseContentFieldDynamicClientRegistrationSecurityMode                = big.NewInt(1 << 41)
 	updateTenantSettingsResponseContentFieldCountryCodes                                         = big.NewInt(1 << 42)
+	updateTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains                  = big.NewInt(1 << 43)
 )
 
 // updateTenantSettingsResponseContentNullableFields maps the wire names of UpdateTenantSettingsResponseContent's nullable fields (required or optional) to their field bits.
@@ -144597,9 +144831,10 @@ type UpdateTenantSettingsResponseContent struct {
 	// Whether Auth0 Guide (AI-powered assistance) is enabled for this tenant.
 	EnableAiGuide *bool `json:"enable_ai_guide,omitempty" url:"enable_ai_guide,omitempty"`
 	// Whether session metadata is included in specific tenant logs (slo, oidc_backchannel_logout_failed, oidc_backchannel_logout_succeeded).
-	IncludeSessionMetadataInTenantLogs    *bool                                                `json:"include_session_metadata_in_tenant_logs,omitempty" url:"include_session_metadata_in_tenant_logs,omitempty"`
-	DynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode `json:"dynamic_client_registration_security_mode,omitempty" url:"dynamic_client_registration_security_mode,omitempty"`
-	CountryCodes                          *TenantSettingsCountryCodesResponse                  `json:"country_codes,omitempty" url:"country_codes,omitempty"`
+	IncludeSessionMetadataInTenantLogs    *bool                                                      `json:"include_session_metadata_in_tenant_logs,omitempty" url:"include_session_metadata_in_tenant_logs,omitempty"`
+	DynamicClientRegistrationSecurityMode *TenantSettingsDynamicClientRegistrationSecurityMode       `json:"dynamic_client_registration_security_mode,omitempty" url:"dynamic_client_registration_security_mode,omitempty"`
+	CountryCodes                          *TenantSettingsCountryCodesResponse                        `json:"country_codes,omitempty" url:"country_codes,omitempty"`
+	PersonalAgentProtocolCompanyDomains   *TenantSettingsPersonalAgentProtocolCompanyDomainsResponse `json:"personal_agent_protocol_company_domains,omitempty" url:"personal_agent_protocol_company_domains,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -144907,6 +145142,13 @@ func (u *UpdateTenantSettingsResponseContent) GetCountryCodes() TenantSettingsCo
 		return TenantSettingsCountryCodesResponse{}
 	}
 	return *u.CountryCodes
+}
+
+func (u *UpdateTenantSettingsResponseContent) GetPersonalAgentProtocolCompanyDomains() TenantSettingsPersonalAgentProtocolCompanyDomainsResponse {
+	if u == nil || u.PersonalAgentProtocolCompanyDomains == nil {
+		return nil
+	}
+	return *u.PersonalAgentProtocolCompanyDomains
 }
 
 func (u *UpdateTenantSettingsResponseContent) GetExtraProperties() map[string]interface{} {
@@ -145224,6 +145466,13 @@ func (u *UpdateTenantSettingsResponseContent) SetDynamicClientRegistrationSecuri
 func (u *UpdateTenantSettingsResponseContent) SetCountryCodes(countryCodes *TenantSettingsCountryCodesResponse) {
 	u.CountryCodes = countryCodes
 	u.require(updateTenantSettingsResponseContentFieldCountryCodes)
+}
+
+// SetPersonalAgentProtocolCompanyDomains sets the PersonalAgentProtocolCompanyDomains field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateTenantSettingsResponseContent) SetPersonalAgentProtocolCompanyDomains(personalAgentProtocolCompanyDomains *TenantSettingsPersonalAgentProtocolCompanyDomainsResponse) {
+	u.PersonalAgentProtocolCompanyDomains = personalAgentProtocolCompanyDomains
+	u.require(updateTenantSettingsResponseContentFieldPersonalAgentProtocolCompanyDomains)
 }
 
 func (u *UpdateTenantSettingsResponseContent) UnmarshalJSON(data []byte) error {

@@ -911,6 +911,44 @@ func (c *ConnectionGatewayAuthentication) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Content-encryption algorithm accepted from the upstream IdP.
+type ConnectionIDTokenEncryptedResponseEncEnum string
+
+const (
+	ConnectionIDTokenEncryptedResponseEncEnumA128CbcHs256 ConnectionIDTokenEncryptedResponseEncEnum = "A128CBC-HS256"
+	ConnectionIDTokenEncryptedResponseEncEnumA192CbcHs384 ConnectionIDTokenEncryptedResponseEncEnum = "A192CBC-HS384"
+	ConnectionIDTokenEncryptedResponseEncEnumA256CbcHs512 ConnectionIDTokenEncryptedResponseEncEnum = "A256CBC-HS512"
+	ConnectionIDTokenEncryptedResponseEncEnumA128Gcm      ConnectionIDTokenEncryptedResponseEncEnum = "A128GCM"
+	ConnectionIDTokenEncryptedResponseEncEnumA192Gcm      ConnectionIDTokenEncryptedResponseEncEnum = "A192GCM"
+	ConnectionIDTokenEncryptedResponseEncEnumA256Gcm      ConnectionIDTokenEncryptedResponseEncEnum = "A256GCM"
+)
+
+func NewConnectionIDTokenEncryptedResponseEncEnumFromString(s string) (ConnectionIDTokenEncryptedResponseEncEnum, error) {
+	switch s {
+	case "A128CBC-HS256":
+		return ConnectionIDTokenEncryptedResponseEncEnumA128CbcHs256, nil
+	case "A192CBC-HS384":
+		return ConnectionIDTokenEncryptedResponseEncEnumA192CbcHs384, nil
+	case "A256CBC-HS512":
+		return ConnectionIDTokenEncryptedResponseEncEnumA256CbcHs512, nil
+	case "A128GCM":
+		return ConnectionIDTokenEncryptedResponseEncEnumA128Gcm, nil
+	case "A192GCM":
+		return ConnectionIDTokenEncryptedResponseEncEnumA192Gcm, nil
+	case "A256GCM":
+		return ConnectionIDTokenEncryptedResponseEncEnumA256Gcm, nil
+	}
+	var t ConnectionIDTokenEncryptedResponseEncEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (c ConnectionIDTokenEncryptedResponseEncEnum) Ptr() *ConnectionIDTokenEncryptedResponseEncEnum {
+	return &c
+}
+
+// Allowlist of content-encryption algorithms accepted from the upstream IdP. If unset or empty, any supported content-encryption algorithm sent by the upstream IdP is accepted. Applicable when strategy=oidc or okta.
+type ConnectionIDTokenEncryptedResponseEncs = []ConnectionIDTokenEncryptedResponseEncEnum
+
 // Indicates whether the identity provider supports session expiry via the id_token. If true, the system will use the session_expiry claim in the id_token to determine session expiry.
 type ConnectionIDTokenSessionExpirySupported = bool
 
@@ -2457,18 +2495,20 @@ func (c *ConnectionPasswordOptionsComplexity) String() string {
 }
 
 var (
-	connectionPasswordOptionsDictionaryFieldActive  = big.NewInt(1 << 0)
-	connectionPasswordOptionsDictionaryFieldCustom  = big.NewInt(1 << 1)
-	connectionPasswordOptionsDictionaryFieldDefault = big.NewInt(1 << 2)
+	connectionPasswordOptionsDictionaryFieldActive    = big.NewInt(1 << 0)
+	connectionPasswordOptionsDictionaryFieldCustom    = big.NewInt(1 << 1)
+	connectionPasswordOptionsDictionaryFieldMatchType = big.NewInt(1 << 2)
+	connectionPasswordOptionsDictionaryFieldDefault   = big.NewInt(1 << 3)
 )
 
 // Dictionary-based password restriction policy to prevent common passwords
 type ConnectionPasswordOptionsDictionary struct {
 	// Enables dictionary checking to prevent use of common passwords and custom blocked words
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
-	// Array of custom words to block in passwords. Maximum 200 items, each up to 50 characters
-	Custom  []string                         `json:"custom,omitempty" url:"custom,omitempty"`
-	Default *PasswordDefaultDictionariesEnum `json:"default,omitempty" url:"default,omitempty"`
+	// Array of custom words to block in passwords
+	Custom    []string                         `json:"custom,omitempty" url:"custom,omitempty"`
+	MatchType *PasswordDictionaryMatchTypeEnum `json:"match_type,omitempty" url:"match_type,omitempty"`
+	Default   *PasswordDefaultDictionariesEnum `json:"default,omitempty" url:"default,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2489,6 +2529,13 @@ func (c *ConnectionPasswordOptionsDictionary) GetCustom() []string {
 		return nil
 	}
 	return c.Custom
+}
+
+func (c *ConnectionPasswordOptionsDictionary) GetMatchType() PasswordDictionaryMatchTypeEnum {
+	if c == nil || c.MatchType == nil {
+		return ""
+	}
+	return *c.MatchType
 }
 
 func (c *ConnectionPasswordOptionsDictionary) GetDefault() PasswordDefaultDictionariesEnum {
@@ -2526,6 +2573,13 @@ func (c *ConnectionPasswordOptionsDictionary) SetActive(active *bool) {
 func (c *ConnectionPasswordOptionsDictionary) SetCustom(custom []string) {
 	c.Custom = custom
 	c.require(connectionPasswordOptionsDictionaryFieldCustom)
+}
+
+// SetMatchType sets the MatchType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsDictionary) SetMatchType(matchType *PasswordDictionaryMatchTypeEnum) {
+	c.MatchType = matchType
+	c.require(connectionPasswordOptionsDictionaryFieldMatchType)
 }
 
 // SetDefault sets the Default field and marks it as non-optional;
@@ -2942,17 +2996,19 @@ var (
 	connectionPropertiesOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 31)
 	connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 32)
 	connectionPropertiesOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 33)
-	connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 34)
-	connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 35)
-	connectionPropertiesOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 36)
-	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 37)
-	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
-	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
-	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
-	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
-	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
-	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 43)
-	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
+	connectionPropertiesOptionsFieldIDTokenEncryptedResponseAlg        = big.NewInt(1 << 34)
+	connectionPropertiesOptionsFieldIDTokenEncryptedResponseEncs       = big.NewInt(1 << 35)
+	connectionPropertiesOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 36)
+	connectionPropertiesOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 37)
+	connectionPropertiesOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 38)
+	connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 39)
+	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 40)
+	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 41)
+	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 42)
+	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 43)
+	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 44)
+	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 45)
+	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 46)
 )
 
 // connectionPropertiesOptionsNullableFields maps the wire names of ConnectionPropertiesOptions's nullable fields (required or optional) to their field bits.
@@ -3018,6 +3074,8 @@ type ConnectionPropertiesOptions struct {
 	AssertionDecryptionSettings        *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	IDTokenEncryptedResponseAlg        *ConnectionIDTokenEncryptedResponseAlgEnum     `json:"id_token_encrypted_response_alg,omitempty" url:"id_token_encrypted_response_alg,omitempty"`
+	IDTokenEncryptedResponseEncs       *ConnectionIDTokenEncryptedResponseEncs        `json:"id_token_encrypted_response_encs,omitempty" url:"id_token_encrypted_response_encs,omitempty"`
 	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
 	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
 	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
@@ -3274,6 +3332,20 @@ func (c *ConnectionPropertiesOptions) GetDpopSigningAlg() ConnectionDpopSigningA
 		return ""
 	}
 	return *c.DpopSigningAlg
+}
+
+func (c *ConnectionPropertiesOptions) GetIDTokenEncryptedResponseAlg() ConnectionIDTokenEncryptedResponseAlgEnum {
+	if c == nil || c.IDTokenEncryptedResponseAlg == nil {
+		return ""
+	}
+	return *c.IDTokenEncryptedResponseAlg
+}
+
+func (c *ConnectionPropertiesOptions) GetIDTokenEncryptedResponseEncs() ConnectionIDTokenEncryptedResponseEncs {
+	if c == nil || c.IDTokenEncryptedResponseEncs == nil {
+		return nil
+	}
+	return *c.IDTokenEncryptedResponseEncs
 }
 
 func (c *ConnectionPropertiesOptions) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
@@ -3605,6 +3677,20 @@ func (c *ConnectionPropertiesOptions) SetIDTokenSignedResponseAlgs(idTokenSigned
 func (c *ConnectionPropertiesOptions) SetDpopSigningAlg(dpopSigningAlg *ConnectionDpopSigningAlgEnum) {
 	c.DpopSigningAlg = dpopSigningAlg
 	c.require(connectionPropertiesOptionsFieldDpopSigningAlg)
+}
+
+// SetIDTokenEncryptedResponseAlg sets the IDTokenEncryptedResponseAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetIDTokenEncryptedResponseAlg(idTokenEncryptedResponseAlg *ConnectionIDTokenEncryptedResponseAlgEnum) {
+	c.IDTokenEncryptedResponseAlg = idTokenEncryptedResponseAlg
+	c.require(connectionPropertiesOptionsFieldIDTokenEncryptedResponseAlg)
+}
+
+// SetIDTokenEncryptedResponseEncs sets the IDTokenEncryptedResponseEncs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetIDTokenEncryptedResponseEncs(idTokenEncryptedResponseEncs *ConnectionIDTokenEncryptedResponseEncs) {
+	c.IDTokenEncryptedResponseEncs = idTokenEncryptedResponseEncs
+	c.require(connectionPropertiesOptionsFieldIDTokenEncryptedResponseEncs)
 }
 
 // SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
@@ -6313,6 +6399,29 @@ func (p PasswordDefaultDictionariesEnum) Ptr() *PasswordDefaultDictionariesEnum 
 	return &p
 }
 
+// How custom entries are compared against a password. "exact": a password is rejected if it equals an entry. "substring": a password is rejected if it contains an entry (every entry must then be at least 3 characters).
+type PasswordDictionaryMatchTypeEnum string
+
+const (
+	PasswordDictionaryMatchTypeEnumExact     PasswordDictionaryMatchTypeEnum = "exact"
+	PasswordDictionaryMatchTypeEnumSubstring PasswordDictionaryMatchTypeEnum = "substring"
+)
+
+func NewPasswordDictionaryMatchTypeEnumFromString(s string) (PasswordDictionaryMatchTypeEnum, error) {
+	switch s {
+	case "exact":
+		return PasswordDictionaryMatchTypeEnumExact, nil
+	case "substring":
+		return PasswordDictionaryMatchTypeEnumSubstring, nil
+	}
+	var t PasswordDictionaryMatchTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordDictionaryMatchTypeEnum) Ptr() *PasswordDictionaryMatchTypeEnum {
+	return &p
+}
+
 // Controls whether identical consecutive characters are allowed in passwords
 type PasswordIdenticalCharactersPolicyEnum string
 
@@ -6939,17 +7048,19 @@ var (
 	updateConnectionOptionsFieldAssertionDecryptionSettings        = big.NewInt(1 << 31)
 	updateConnectionOptionsFieldIDTokenSignedResponseAlgs          = big.NewInt(1 << 32)
 	updateConnectionOptionsFieldDpopSigningAlg                     = big.NewInt(1 << 33)
-	updateConnectionOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 34)
-	updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 35)
-	updateConnectionOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 36)
-	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 37)
-	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
-	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
-	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
-	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
-	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
-	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 43)
-	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
+	updateConnectionOptionsFieldIDTokenEncryptedResponseAlg        = big.NewInt(1 << 34)
+	updateConnectionOptionsFieldIDTokenEncryptedResponseEncs       = big.NewInt(1 << 35)
+	updateConnectionOptionsFieldEnablePushedAuthorizationRequests  = big.NewInt(1 << 36)
+	updateConnectionOptionsFieldPushedAuthorizationRequestEndpoint = big.NewInt(1 << 37)
+	updateConnectionOptionsFieldTokenEndpointAuthMethod            = big.NewInt(1 << 38)
+	updateConnectionOptionsFieldTokenEndpointAuthSigningAlg        = big.NewInt(1 << 39)
+	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 40)
+	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 41)
+	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 42)
+	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 43)
+	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 44)
+	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 45)
+	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 46)
 )
 
 // updateConnectionOptionsNullableFields maps the wire names of UpdateConnectionOptions's nullable fields (required or optional) to their field bits.
@@ -7015,6 +7126,8 @@ type UpdateConnectionOptions struct {
 	AssertionDecryptionSettings        *ConnectionAssertionDecryptionSettings         `json:"assertion_decryption_settings,omitempty" url:"assertion_decryption_settings,omitempty"`
 	IDTokenSignedResponseAlgs          *ConnectionIDTokenSignedResponseAlgs           `json:"id_token_signed_response_algs,omitempty" url:"id_token_signed_response_algs,omitempty"`
 	DpopSigningAlg                     *ConnectionDpopSigningAlgEnum                  `json:"dpop_signing_alg,omitempty" url:"dpop_signing_alg,omitempty"`
+	IDTokenEncryptedResponseAlg        *ConnectionIDTokenEncryptedResponseAlgEnum     `json:"id_token_encrypted_response_alg,omitempty" url:"id_token_encrypted_response_alg,omitempty"`
+	IDTokenEncryptedResponseEncs       *ConnectionIDTokenEncryptedResponseEncs        `json:"id_token_encrypted_response_encs,omitempty" url:"id_token_encrypted_response_encs,omitempty"`
 	EnablePushedAuthorizationRequests  *ConnectionEnablePushedAuthorizationRequests   `json:"enable_pushed_authorization_requests,omitempty" url:"enable_pushed_authorization_requests,omitempty"`
 	PushedAuthorizationRequestEndpoint *ConnectionPushedAuthorizationRequestEndpoint  `json:"pushed_authorization_request_endpoint,omitempty" url:"pushed_authorization_request_endpoint,omitempty"`
 	TokenEndpointAuthMethod            *ConnectionTokenEndpointAuthMethodEnum         `json:"token_endpoint_auth_method,omitempty" url:"token_endpoint_auth_method,omitempty"`
@@ -7271,6 +7384,20 @@ func (u *UpdateConnectionOptions) GetDpopSigningAlg() ConnectionDpopSigningAlgEn
 		return ""
 	}
 	return *u.DpopSigningAlg
+}
+
+func (u *UpdateConnectionOptions) GetIDTokenEncryptedResponseAlg() ConnectionIDTokenEncryptedResponseAlgEnum {
+	if u == nil || u.IDTokenEncryptedResponseAlg == nil {
+		return ""
+	}
+	return *u.IDTokenEncryptedResponseAlg
+}
+
+func (u *UpdateConnectionOptions) GetIDTokenEncryptedResponseEncs() ConnectionIDTokenEncryptedResponseEncs {
+	if u == nil || u.IDTokenEncryptedResponseEncs == nil {
+		return nil
+	}
+	return *u.IDTokenEncryptedResponseEncs
 }
 
 func (u *UpdateConnectionOptions) GetEnablePushedAuthorizationRequests() ConnectionEnablePushedAuthorizationRequests {
@@ -7602,6 +7729,20 @@ func (u *UpdateConnectionOptions) SetIDTokenSignedResponseAlgs(idTokenSignedResp
 func (u *UpdateConnectionOptions) SetDpopSigningAlg(dpopSigningAlg *ConnectionDpopSigningAlgEnum) {
 	u.DpopSigningAlg = dpopSigningAlg
 	u.require(updateConnectionOptionsFieldDpopSigningAlg)
+}
+
+// SetIDTokenEncryptedResponseAlg sets the IDTokenEncryptedResponseAlg field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetIDTokenEncryptedResponseAlg(idTokenEncryptedResponseAlg *ConnectionIDTokenEncryptedResponseAlgEnum) {
+	u.IDTokenEncryptedResponseAlg = idTokenEncryptedResponseAlg
+	u.require(updateConnectionOptionsFieldIDTokenEncryptedResponseAlg)
+}
+
+// SetIDTokenEncryptedResponseEncs sets the IDTokenEncryptedResponseEncs field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetIDTokenEncryptedResponseEncs(idTokenEncryptedResponseEncs *ConnectionIDTokenEncryptedResponseEncs) {
+	u.IDTokenEncryptedResponseEncs = idTokenEncryptedResponseEncs
+	u.require(updateConnectionOptionsFieldIDTokenEncryptedResponseEncs)
 }
 
 // SetEnablePushedAuthorizationRequests sets the EnablePushedAuthorizationRequests field and marks it as non-optional;
