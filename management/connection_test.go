@@ -2223,6 +2223,7 @@ func TestConnectionOptionsSAML_CrossAppAccessRequestingApp(t *testing.T) {
 		}`
 
 		var connection Connection
+
 		require.NoError(t, json.Unmarshal([]byte(payload), &connection))
 
 		assert.True(t, connection.GetCrossAppAccessRequestingApp().GetActive())
@@ -2242,12 +2243,14 @@ func TestConnectionManager_SAMLCrossAppAccessRequestingApp(t *testing.T) {
 	configureHTTPTestRecordings(t)
 
 	var signingCert *string
+
 	for _, testCase := range connectionTestCases {
 		if options, ok := testCase.options.(*ConnectionOptionsSAML); ok && options.SigningCert != nil {
 			signingCert = options.SigningCert
 			break
 		}
 	}
+
 	require.NotNil(t, signingCert)
 
 	oidcMetadata := map[string]interface{}{
