@@ -14420,6 +14420,16 @@ func TestPasskeyAuthenticationMethod_GetEnabled(tt *testing.T) {
 	p.GetEnabled()
 }
 
+func TestPasskeyAuthenticationMethod_GetSignupBehavior(tt *testing.T) {
+	var zeroValue string
+	p := &PasskeyAuthenticationMethod{SignupBehavior: &zeroValue}
+	p.GetSignupBehavior()
+	p = &PasskeyAuthenticationMethod{}
+	p.GetSignupBehavior()
+	p = nil
+	p.GetSignupBehavior()
+}
+
 func TestPasskeyAuthenticationMethod_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &PasskeyAuthenticationMethod{}
