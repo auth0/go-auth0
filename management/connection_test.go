@@ -2166,3 +2166,74 @@ func TestConnectionManager_IDTokenSessionExpirySupportedForOktaAndOIDC(t *testin
 		assert.Nil(t, oidcOpts.IDTokenSessionExpirySupported)
 	})
 }
+
+func TestConnectionOptionsSAML_CrossAppAccessRequestingApp(t *testing.T) {
+	t.Run("MarshalJSON includes the requesting app token endpoint options", func(t *testing.T) {
+		connection := &Connection{
+			Name:     auth0.String("saml-xaa-requesting-app"),
+			Strategy: auth0.String("samlp"),
+			CrossAppAccessRequestingApp: &CrossAppAccessRequestingApp{
+				Active: auth0.Bool(true),
+			},
+			Options: &ConnectionOptionsSAML{
+				SignInEndpoint:              auth0.String("https://saml.identity/provider"),
+				DiscoveryURL:                auth0.String("https://idp.example.com/.well-known/openid-configuration"),
+				ClientID:                    auth0.String("client-id"),
+				ClientSecret:                auth0.String("client-secret"),
+				TokenEndpointAuthMethod:     auth0.String("private_key_jwt"),
+				TokenEndpointAuthSigningAlg: auth0.String("RS256"),
+				TokenEndpointJwtcaAudFormat: auth0.String("token_endpoint"),
+			},
+		}
+
+		payload, err := json.Marshal(connection)
+		require.NoError(t, err)
+
+		expected := `{
+			"name": "saml-xaa-requesting-app",
+			"strategy": "samlp",
+			"cross_app_access_requesting_app": {"active": true},
+			"options": {
+				"signInEndpoint": "https://saml.identity/provider",
+				"discovery_url": "https://idp.example.com/.well-known/openid-configuration",
+				"client_id": "client-id",
+				"client_secret": "client-secret",
+				"token_endpoint_auth_method": "private_key_jwt",
+				"token_endpoint_auth_signing_alg": "RS256",
+				"token_endpoint_jwtca_aud_format": "token_endpoint"
+			}
+		}`
+		assert.JSONEq(t, expected, string(payload))
+	})
+
+	t.Run("UnmarshalJSON reads the requesting app token endpoint options", func(t *testing.T) {
+		payload := `{
+			"id": "con_123",
+			"name": "saml-xaa-requesting-app",
+			"strategy": "samlp",
+			"cross_app_access_requesting_app": {"active": true},
+			"options": {
+				"client_id": "client-id",
+				"client_secret": "client-secret",
+				"oidc_metadata": {"token_endpoint": "https://idp.example.com/token"},
+				"token_endpoint_auth_method": "client_secret_post",
+				"token_endpoint_auth_signing_alg": "ES256",
+				"token_endpoint_jwtca_aud_format": "issuer"
+			}
+		}`
+
+		var connection Connection
+		require.NoError(t, json.Unmarshal([]byte(payload), &connection))
+
+		assert.True(t, connection.GetCrossAppAccessRequestingApp().GetActive())
+
+		options, ok := connection.Options.(*ConnectionOptionsSAML)
+		require.True(t, ok)
+		assert.Equal(t, "client-id", options.GetClientID())
+		assert.Equal(t, "client-secret", options.GetClientSecret())
+		assert.Equal(t, "client_secret_post", options.GetTokenEndpointAuthMethod())
+		assert.Equal(t, "ES256", options.GetTokenEndpointAuthSigningAlg())
+		assert.Equal(t, "issuer", options.GetTokenEndpointJwtcaAudFormat())
+		assert.Equal(t, "https://idp.example.com/token", options.OIDCMetadata["token_endpoint"])
+	})
+}

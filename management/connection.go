@@ -1797,10 +1797,33 @@ type ConnectionOptionsSAML struct {
 	GlobalTokenRevocationJWTIss *string                `json:"global_token_revocation_jwt_iss,omitempty"`
 	GlobalTokenRevocationJWTSub *string                `json:"global_token_revocation_jwt_sub,omitempty"`
 
-	// DiscoveryURL is the OIDC discovery URL used to auto-populate OIDCMetadata. Honoured for SAML connections acting as a Cross-App Access resource application.
+	// DiscoveryURL is the OIDC discovery URL used to auto-populate OIDCMetadata. Honoured for SAML connections acting
+	// as a Cross-App Access resource application or requesting application.
 	DiscoveryURL *string `json:"discovery_url,omitempty"`
-	// OIDCMetadata is the OIDC discovery document. Auto-populated from DiscoveryURL when absent, or preserved as uploaded. Honoured for SAML connections acting as a Cross-App Access resource application.
+	// OIDCMetadata is the OIDC discovery document. Auto-populated from DiscoveryURL when absent, or preserved as uploaded.
+	// Honoured for SAML connections acting as a Cross-App Access resource application or requesting application.
+	// Activating CrossAppAccessRequestingApp requires the metadata to contain a token_endpoint.
 	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
+
+	// ClientID is the OAuth client ID Auth0 uses to authenticate to the identity provider's token endpoint.
+	// Used when the SAML connection acts as a Cross-App Access requesting application.
+	ClientID *string `json:"client_id,omitempty"`
+	// ClientSecret is the client secret Auth0 uses to authenticate to the identity provider's token endpoint.
+	// Used when the SAML connection acts as a Cross-App Access requesting application.
+	// Note that the Management API replaces options as a whole on update, so omitting this value on an
+	// update removes the stored secret.
+	ClientSecret *string `json:"client_secret,omitempty"`
+	// TokenEndpointAuthMethod specifies the client authentication method for the identity provider's token endpoint.
+	// Possible values: "client_secret_post", "private_key_jwt". Setting "private_key_jwt" requires the
+	// token_vault_xaa_saml feature on the tenant and provisions connection keys.
+	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty"`
+	// TokenEndpointAuthSigningAlg specifies the algorithm used to sign the client assertion when
+	// TokenEndpointAuthMethod is "private_key_jwt". Possible values: "ES256", "ES384", "PS256", "PS384",
+	// "RS256", "RS384", "RS512".
+	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
+	// TokenEndpointJwtcaAudFormat specifies the aud claim format of the client assertion used for client
+	// authentication at the token endpoint. Possible values: "issuer", "token_endpoint".
+	TokenEndpointJwtcaAudFormat *string `json:"token_endpoint_jwtca_aud_format,omitempty"`
 
 	// AssertionDecryptionSettings configures the algorithms allowed to decrypt SAML assertions.
 	AssertionDecryptionSettings *ConnectionOptionsSAMLAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty"`
