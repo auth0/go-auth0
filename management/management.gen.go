@@ -2110,6 +2110,14 @@ func (c *Client) GetOIDCLogout() *OIDCLogout {
 	return c.OIDCLogout
 }
 
+// GetOIDCSupport returns the OIDCSupport field.
+func (c *Client) GetOIDCSupport() *ClientOIDCSupport {
+	if c == nil {
+		return nil
+	}
+	return c.OIDCSupport
+}
+
 // GetOrganizationDiscoveryMethods returns the OrganizationDiscoveryMethods field if it's non-nil, zero value otherwise.
 func (c *Client) GetOrganizationDiscoveryMethods() []string {
 	if c == nil || c.OrganizationDiscoveryMethods == nil {
@@ -2809,6 +2817,35 @@ func (c *ClientNativeSocialLoginSupportEnabled) GetEnabled() bool {
 
 // String returns a string representation of ClientNativeSocialLoginSupportEnabled.
 func (c *ClientNativeSocialLoginSupportEnabled) String() string {
+	return Stringify(c)
+}
+
+// GetAllowAllScopes returns the AllowAllScopes field if it's non-nil, zero value otherwise.
+func (c *ClientOIDCSupport) GetAllowAllScopes() bool {
+	if c == nil || c.AllowAllScopes == nil {
+		return false
+	}
+	return *c.AllowAllScopes
+}
+
+// GetAllowedScopes returns the AllowedScopes field if it's non-nil, zero value otherwise.
+func (c *ClientOIDCSupport) GetAllowedScopes() []string {
+	if c == nil || c.AllowedScopes == nil {
+		return nil
+	}
+	return *c.AllowedScopes
+}
+
+// GetIsAllowed returns the IsAllowed field if it's non-nil, zero value otherwise.
+func (c *ClientOIDCSupport) GetIsAllowed() bool {
+	if c == nil || c.IsAllowed == nil {
+		return false
+	}
+	return *c.IsAllowed
+}
+
+// String returns a string representation of ClientOIDCSupport.
+func (c *ClientOIDCSupport) String() string {
 	return Stringify(c)
 }
 
