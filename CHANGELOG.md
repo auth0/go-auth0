@@ -2,8 +2,14 @@
 
 ## [Unreleased]
 
+## [v1.54.0](https://github.com/auth0/go-auth0/tree/v1.54.0) (2026-11-19)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v1.53.0...v1.54.0)
+
 **Added**
-- feat: add `OIDCSupport` to `Client`, backed by `ClientOIDCSupport` and the `OIDCScope*` constants, to configure which OIDC scopes a client may request (Early Access) [\#934](https://github.com/auth0/go-auth0/pull/934) ([KartikJha](https://github.com/KartikJha))
+- feat: add `OIDCSupport` to `Client`, backed by `ClientOIDCSupport` and the `OIDCScope*` constants, to configure which OIDC scopes a client may request (Early Access) [\#935](https://github.com/auth0/go-auth0/pull/935) ([KartikJha](https://github.com/KartikJha))
+- feat: add `SignupBehavior` to `PasskeyAuthenticationMethod` to configure passkey signup behavior in database connections (Early Access) [\#937](https://github.com/auth0/go-auth0/pull/937) ([bkiran6398](https://github.com/bkiran6398))
+- feat: add Cross-App Access requesting-app options to `ConnectionOptionsSAML` for SAML connections (Early Access) [\#938](https://github.com/auth0/go-auth0/pull/938) ([duedares-rvj](https://github.com/duedares-rvj))
+- feat: add `FormSubmissionMode` to `BruteForceProtection` to configure form submission mode (Early Access) [\#939](https://github.com/auth0/go-auth0/pull/939) ([duedares-rvj](https://github.com/duedares-rvj))
 
 ## [v1.53.0](https://github.com/auth0/go-auth0/tree/v1.53.0) (2026-11-12)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v1.52.0...v1.53.0)
