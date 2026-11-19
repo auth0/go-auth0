@@ -2166,3 +2166,173 @@ func TestConnectionManager_IDTokenSessionExpirySupportedForOktaAndOIDC(t *testin
 		assert.Nil(t, oidcOpts.IDTokenSessionExpirySupported)
 	})
 }
+
+func TestConnectionOptionsSAML_CrossAppAccessRequestingApp(t *testing.T) {
+	t.Run("MarshalJSON includes the requesting app token endpoint options", func(t *testing.T) {
+		connection := &Connection{
+			Name:     auth0.String("saml-xaa-requesting-app"),
+			Strategy: auth0.String("samlp"),
+			CrossAppAccessRequestingApp: &CrossAppAccessRequestingApp{
+				Active: auth0.Bool(true),
+			},
+			Options: &ConnectionOptionsSAML{
+				SignInEndpoint:              auth0.String("https://saml.identity/provider"),
+				DiscoveryURL:                auth0.String("https://idp.example.com/.well-known/openid-configuration"),
+				ClientID:                    auth0.String("client-id"),
+				ClientSecret:                auth0.String("client-secret"),
+				TokenEndpointAuthMethod:     auth0.String("private_key_jwt"),
+				TokenEndpointAuthSigningAlg: auth0.String("RS256"),
+				TokenEndpointJwtcaAudFormat: auth0.String("token_endpoint"),
+			},
+		}
+
+		payload, err := json.Marshal(connection)
+		require.NoError(t, err)
+
+		expected := `{
+			"name": "saml-xaa-requesting-app",
+			"strategy": "samlp",
+			"cross_app_access_requesting_app": {"active": true},
+			"options": {
+				"signInEndpoint": "https://saml.identity/provider",
+				"discovery_url": "https://idp.example.com/.well-known/openid-configuration",
+				"client_id": "client-id",
+				"client_secret": "client-secret",
+				"token_endpoint_auth_method": "private_key_jwt",
+				"token_endpoint_auth_signing_alg": "RS256",
+				"token_endpoint_jwtca_aud_format": "token_endpoint"
+			}
+		}`
+		assert.JSONEq(t, expected, string(payload))
+	})
+
+	t.Run("UnmarshalJSON reads the requesting app token endpoint options", func(t *testing.T) {
+		payload := `{
+			"id": "con_123",
+			"name": "saml-xaa-requesting-app",
+			"strategy": "samlp",
+			"cross_app_access_requesting_app": {"active": true},
+			"options": {
+				"client_id": "client-id",
+				"client_secret": "client-secret",
+				"oidc_metadata": {"token_endpoint": "https://idp.example.com/token"},
+				"token_endpoint_auth_method": "client_secret_post",
+				"token_endpoint_auth_signing_alg": "ES256",
+				"token_endpoint_jwtca_aud_format": "issuer"
+			}
+		}`
+
+		var connection Connection
+
+		require.NoError(t, json.Unmarshal([]byte(payload), &connection))
+
+		assert.True(t, connection.GetCrossAppAccessRequestingApp().GetActive())
+
+		options, ok := connection.Options.(*ConnectionOptionsSAML)
+		require.True(t, ok)
+		assert.Equal(t, "client-id", options.GetClientID())
+		assert.Equal(t, "client-secret", options.GetClientSecret())
+		assert.Equal(t, "client_secret_post", options.GetTokenEndpointAuthMethod())
+		assert.Equal(t, "ES256", options.GetTokenEndpointAuthSigningAlg())
+		assert.Equal(t, "issuer", options.GetTokenEndpointJwtcaAudFormat())
+		assert.Equal(t, "https://idp.example.com/token", options.OIDCMetadata["token_endpoint"])
+	})
+}
+
+func TestConnectionManager_SAMLCrossAppAccessRequestingApp(t *testing.T) {
+	configureHTTPTestRecordings(t)
+
+	var signingCert *string
+
+	for _, testCase := range connectionTestCases {
+		if options, ok := testCase.options.(*ConnectionOptionsSAML); ok && options.SigningCert != nil {
+			signingCert = options.SigningCert
+			break
+		}
+	}
+
+	require.NotNil(t, signingCert)
+
+	oidcMetadata := map[string]interface{}{
+		"issuer":                                "https://idp.example.com",
+		"authorization_endpoint":                "https://idp.example.com/authorize",
+		"token_endpoint":                        "https://idp.example.com/token",
+		"jwks_uri":                              "https://idp.example.com/jwks",
+		"id_token_signing_alg_values_supported": []interface{}{"RS256"},
+	}
+
+	connection := &Connection{
+		Name:     auth0.Stringf("Test-SAML-XAA-Connection-%d", time.Now().Unix()),
+		Strategy: auth0.String("samlp"),
+		CrossAppAccessRequestingApp: &CrossAppAccessRequestingApp{
+			Active: auth0.Bool(true),
+		},
+		Options: &ConnectionOptionsSAML{
+			SignInEndpoint:              auth0.String("https://idp.example.com/saml"),
+			SigningCert:                 signingCert,
+			OIDCMetadata:                oidcMetadata,
+			ClientID:                    auth0.String("xaa-client-id"),
+			ClientSecret:                auth0.String("xaa-client-secret"),
+			TokenEndpointAuthMethod:     auth0.String("client_secret_post"),
+			TokenEndpointAuthSigningAlg: auth0.String("RS256"),
+			TokenEndpointJwtcaAudFormat: auth0.String("token_endpoint"),
+		},
+	}
+
+	err := api.Connection.Create(context.Background(), connection)
+	require.NoError(t, err)
+	require.NotEmpty(t, connection.GetID())
+
+	t.Cleanup(func() {
+		cleanupConnection(t, connection.GetID())
+	})
+
+	t.Run("It returns the requesting app options on read", func(t *testing.T) {
+		actual, err := api.Connection.Read(context.Background(), connection.GetID())
+		require.NoError(t, err)
+
+		options, ok := actual.Options.(*ConnectionOptionsSAML)
+		require.True(t, ok)
+
+		assert.True(t, actual.GetCrossAppAccessRequestingApp().GetActive())
+		assert.Equal(t, "xaa-client-id", options.GetClientID())
+		assert.Equal(t, "xaa-client-secret", options.GetClientSecret())
+		assert.Equal(t, "client_secret_post", options.GetTokenEndpointAuthMethod())
+		assert.Equal(t, "RS256", options.GetTokenEndpointAuthSigningAlg())
+		assert.Equal(t, "token_endpoint", options.GetTokenEndpointJwtcaAudFormat())
+		assert.Equal(t, "https://idp.example.com/token", options.OIDCMetadata["token_endpoint"])
+	})
+
+	t.Run("It updates the requesting app options", func(t *testing.T) {
+		update := &Connection{
+			CrossAppAccessRequestingApp: &CrossAppAccessRequestingApp{
+				Active: auth0.Bool(false),
+			},
+			Options: &ConnectionOptionsSAML{
+				SignInEndpoint:              auth0.String("https://idp.example.com/saml"),
+				SigningCert:                 signingCert,
+				OIDCMetadata:                oidcMetadata,
+				ClientID:                    auth0.String("xaa-client-id-updated"),
+				ClientSecret:                auth0.String("xaa-client-secret-updated"),
+				TokenEndpointAuthMethod:     auth0.String("client_secret_post"),
+				TokenEndpointAuthSigningAlg: auth0.String("ES256"),
+				TokenEndpointJwtcaAudFormat: auth0.String("issuer"),
+			},
+		}
+
+		err := api.Connection.Update(context.Background(), connection.GetID(), update)
+		require.NoError(t, err)
+
+		actual, err := api.Connection.Read(context.Background(), connection.GetID())
+		require.NoError(t, err)
+
+		options, ok := actual.Options.(*ConnectionOptionsSAML)
+		require.True(t, ok)
+
+		assert.False(t, actual.GetCrossAppAccessRequestingApp().GetActive())
+		assert.Equal(t, "xaa-client-id-updated", options.GetClientID())
+		assert.Equal(t, "xaa-client-secret-updated", options.GetClientSecret())
+		assert.Equal(t, "ES256", options.GetTokenEndpointAuthSigningAlg())
+		assert.Equal(t, "issuer", options.GetTokenEndpointJwtcaAudFormat())
+	})
+}

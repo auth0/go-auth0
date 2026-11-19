@@ -6836,6 +6836,22 @@ func (c *ConnectionOptionsSAML) GetCertRolloverNotification() string {
 	return *c.CertRolloverNotification
 }
 
+// GetClientID returns the ClientID field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+// GetClientSecret returns the ClientSecret field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetClientSecret() string {
+	if c == nil || c.ClientSecret == nil {
+		return ""
+	}
+	return *c.ClientSecret
+}
+
 // GetDebug returns the Debug field if it's non-nil, zero value otherwise.
 func (c *ConnectionOptionsSAML) GetDebug() bool {
 	if c == nil || c.Debug == nil {
@@ -7098,6 +7114,30 @@ func (c *ConnectionOptionsSAML) GetTenantDomain() string {
 		return ""
 	}
 	return *c.TenantDomain
+}
+
+// GetTokenEndpointAuthMethod returns the TokenEndpointAuthMethod field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetTokenEndpointAuthMethod() string {
+	if c == nil || c.TokenEndpointAuthMethod == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthMethod
+}
+
+// GetTokenEndpointAuthSigningAlg returns the TokenEndpointAuthSigningAlg field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetTokenEndpointAuthSigningAlg() string {
+	if c == nil || c.TokenEndpointAuthSigningAlg == nil {
+		return ""
+	}
+	return *c.TokenEndpointAuthSigningAlg
+}
+
+// GetTokenEndpointJwtcaAudFormat returns the TokenEndpointJwtcaAudFormat field if it's non-nil, zero value otherwise.
+func (c *ConnectionOptionsSAML) GetTokenEndpointJwtcaAudFormat() string {
+	if c == nil || c.TokenEndpointJwtcaAudFormat == nil {
+		return ""
+	}
+	return *c.TokenEndpointJwtcaAudFormat
 }
 
 // GetUpstreamParams returns the UpstreamParams map if it's non-nil, an empty map otherwise.

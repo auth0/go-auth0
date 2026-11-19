@@ -8424,6 +8424,26 @@ func TestConnectionOptionsSAML_GetCertRolloverNotification(tt *testing.T) {
 	c.GetCertRolloverNotification()
 }
 
+func TestConnectionOptionsSAML_GetClientID(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{ClientID: &zeroValue}
+	c.GetClientID()
+	c = &ConnectionOptionsSAML{}
+	c.GetClientID()
+	c = nil
+	c.GetClientID()
+}
+
+func TestConnectionOptionsSAML_GetClientSecret(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{ClientSecret: &zeroValue}
+	c.GetClientSecret()
+	c = &ConnectionOptionsSAML{}
+	c.GetClientSecret()
+	c = nil
+	c.GetClientSecret()
+}
+
 func TestConnectionOptionsSAML_GetDebug(tt *testing.T) {
 	var zeroValue bool
 	c := &ConnectionOptionsSAML{Debug: &zeroValue}
@@ -8743,6 +8763,36 @@ func TestConnectionOptionsSAML_GetTenantDomain(tt *testing.T) {
 	c.GetTenantDomain()
 	c = nil
 	c.GetTenantDomain()
+}
+
+func TestConnectionOptionsSAML_GetTokenEndpointAuthMethod(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{TokenEndpointAuthMethod: &zeroValue}
+	c.GetTokenEndpointAuthMethod()
+	c = &ConnectionOptionsSAML{}
+	c.GetTokenEndpointAuthMethod()
+	c = nil
+	c.GetTokenEndpointAuthMethod()
+}
+
+func TestConnectionOptionsSAML_GetTokenEndpointAuthSigningAlg(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{TokenEndpointAuthSigningAlg: &zeroValue}
+	c.GetTokenEndpointAuthSigningAlg()
+	c = &ConnectionOptionsSAML{}
+	c.GetTokenEndpointAuthSigningAlg()
+	c = nil
+	c.GetTokenEndpointAuthSigningAlg()
+}
+
+func TestConnectionOptionsSAML_GetTokenEndpointJwtcaAudFormat(tt *testing.T) {
+	var zeroValue string
+	c := &ConnectionOptionsSAML{TokenEndpointJwtcaAudFormat: &zeroValue}
+	c.GetTokenEndpointJwtcaAudFormat()
+	c = &ConnectionOptionsSAML{}
+	c.GetTokenEndpointJwtcaAudFormat()
+	c = nil
+	c.GetTokenEndpointJwtcaAudFormat()
 }
 
 func TestConnectionOptionsSAML_GetUpstreamParams(tt *testing.T) {
