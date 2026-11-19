@@ -1684,6 +1684,14 @@ func (b *BruteForceProtection) GetEnabled() bool {
 	return *b.Enabled
 }
 
+// GetFormSubmissionMode returns the FormSubmissionMode field if it's non-nil, zero value otherwise.
+func (b *BruteForceProtection) GetFormSubmissionMode() string {
+	if b == nil || b.FormSubmissionMode == nil {
+		return ""
+	}
+	return *b.FormSubmissionMode
+}
+
 // GetMaxAttempts returns the MaxAttempts field if it's non-nil, zero value otherwise.
 func (b *BruteForceProtection) GetMaxAttempts() int {
 	if b == nil || b.MaxAttempts == nil {

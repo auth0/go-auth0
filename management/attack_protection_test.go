@@ -68,8 +68,9 @@ func TestAttackProtection(t *testing.T) {
 		assert.NoError(t, err)
 
 		expected := &BruteForceProtection{
-			Enabled:     auth0.Bool(true),
-			MaxAttempts: auth0.Int(10),
+			Enabled:            auth0.Bool(true),
+			MaxAttempts:        auth0.Int(10),
+			FormSubmissionMode: auth0.String("manual"),
 		}
 
 		err = api.AttackProtection.UpdateBruteForceProtection(context.Background(), expected)
@@ -79,10 +80,33 @@ func TestAttackProtection(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Equal(t, expected.GetEnabled(), actual.GetEnabled())
 		assert.Equal(t, expected.GetMaxAttempts(), actual.GetMaxAttempts())
+		assert.Equal(t, expected.GetFormSubmissionMode(), actual.GetFormSubmissionMode())
 
 		// Restore initial settings.
 		err = api.AttackProtection.UpdateBruteForceProtection(context.Background(), preTestBFPSettings)
 		assert.NoError(t, err)
+	})
+
+	t.Run("Update the brute force configuration with an invalid form submission mode", func(t *testing.T) {
+		configureHTTPTestRecordings(t)
+
+		preTestBFPSettings, err := api.AttackProtection.GetBruteForceProtection(context.Background())
+		assert.NoError(t, err)
+
+		// The API does not accept null, so an unset value is omitted from
+		// the request, and an empty string or unknown value is rejected.
+		for _, invalidMode := range []string{"", "invalid"} {
+			err = api.AttackProtection.UpdateBruteForceProtection(
+				context.Background(),
+				&BruteForceProtection{FormSubmissionMode: auth0.String(invalidMode)},
+			)
+			assert.Error(t, err)
+		}
+
+		// The rejected requests must not have changed the configuration.
+		actual, err := api.AttackProtection.GetBruteForceProtection(context.Background())
+		assert.NoError(t, err)
+		assert.Equal(t, preTestBFPSettings.GetFormSubmissionMode(), actual.GetFormSubmissionMode())
 	})
 
 	t.Run("Get the suspicious IP throttling configuration", func(t *testing.T) {

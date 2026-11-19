@@ -1,0 +1,141 @@
+---
+version: 2
+interactions:
+    - id: 0
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.53.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"enabled":false,"shields":["block"],"mode":"count_per_identifier_and_ip","form_submission_mode":"auto","allowlist":["127.0.0.1"],"max_attempts":5}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 299.384458ms
+    - id: 1
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 28
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"form_submission_mode":""}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.53.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 300
+        uncompressed: false
+        body: '{"statusCode":400,"error":"Bad Request","message":"Payload validation error: ''Invalid value \"{params[0]}\"'' on property form_submission_mode (Controls whether the unblock form is submitted automatically when the link is opened or must be submitted manually by the user).","errorCode":"invalid_body"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 400 Bad Request
+        code: 400
+        duration: 302.673625ms
+    - id: 2
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 35
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: |
+            {"form_submission_mode":"invalid"}
+        form: {}
+        headers:
+            Content-Type:
+                - application/json
+            User-Agent:
+                - Go-Auth0/1.53.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
+        method: PATCH
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: 296
+        uncompressed: false
+        body: '{"statusCode":400,"error":"Bad Request","message":"Payload validation error: ''Invalid value \"invalid\"'' on property form_submission_mode (Controls whether the unblock form is submitted automatically when the link is opened or must be submitted manually by the user).","errorCode":"invalid_body"}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 400 Bad Request
+        code: 400
+        duration: 290.540917ms
+    - id: 3
+      request:
+        proto: HTTP/1.1
+        proto_major: 1
+        proto_minor: 1
+        content_length: 0
+        transfer_encoding: []
+        trailer: {}
+        host: go-auth0-dev.eu.auth0.com
+        remote_addr: ""
+        request_uri: ""
+        body: ""
+        form: {}
+        headers:
+            User-Agent:
+                - Go-Auth0/1.53.0
+        url: https://go-auth0-dev.eu.auth0.com/api/v2/attack-protection/brute-force-protection
+        method: GET
+      response:
+        proto: HTTP/2.0
+        proto_major: 2
+        proto_minor: 0
+        transfer_encoding: []
+        trailer: {}
+        content_length: -1
+        uncompressed: true
+        body: '{"enabled":false,"shields":["block"],"mode":"count_per_identifier_and_ip","form_submission_mode":"auto","allowlist":["127.0.0.1"],"max_attempts":5}'
+        headers:
+            Content-Type:
+                - application/json; charset=utf-8
+        status: 200 OK
+        code: 200
+        duration: 299.241958ms

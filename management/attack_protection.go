@@ -94,6 +94,11 @@ type BruteForceProtection struct {
 	AllowList   *[]string `json:"allowlist,omitempty"`
 	Mode        *string   `json:"mode,omitempty"`
 	MaxAttempts *int      `json:"max_attempts,omitempty"`
+
+	// FormSubmissionMode controls whether the brute-force protection unblock
+	// form is submitted automatically on load or requires manual interaction.
+	// Possible values: "auto", "manual". Cannot be set to null or an empty string.
+	FormSubmissionMode *string `json:"form_submission_mode,omitempty"`
 }
 
 // GetBruteForceProtection retrieves the brute force configuration.
