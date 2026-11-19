@@ -1164,30 +1164,31 @@ var (
 	clientFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
 	clientFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
 	clientFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	clientFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	clientFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	clientFieldComplianceLevel                                = big.NewInt(1 << 50)
-	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	clientFieldTokenExchange                                  = big.NewInt(1 << 52)
-	clientFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	clientFieldTokenQuota                                     = big.NewInt(1 << 54)
-	clientFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	clientFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	clientFieldOidcSupport                                    = big.NewInt(1 << 62)
-	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	clientFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 48)
+	clientFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	clientFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	clientFieldComplianceLevel                                = big.NewInt(1 << 51)
+	clientFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	clientFieldTokenExchange                                  = big.NewInt(1 << 53)
+	clientFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	clientFieldTokenQuota                                     = big.NewInt(1 << 55)
+	clientFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	clientFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	clientFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	clientFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	clientFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	clientFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	clientFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	clientFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	clientFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	clientFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	clientFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	clientFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // clientNullableFields maps the wire names of Client's nullable fields (required or optional) to their field bits.
@@ -1281,10 +1282,11 @@ type Client struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
-	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession      *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin              `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
+	SignedRequestObject           *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel               *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -1657,6 +1659,13 @@ func (c *Client) GetRequireProofOfPossession() bool {
 		return false
 	}
 	return *c.RequireProofOfPossession
+}
+
+func (c *Client) GetAllowPersonalAgentBrowserJoin() ClientAllowPersonalAgentBrowserJoin {
+	if c == nil || c.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *c.AllowPersonalAgentBrowserJoin
 }
 
 func (c *Client) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
@@ -2177,6 +2186,13 @@ func (c *Client) SetRequirePushedAuthorizationRequests(requirePushedAuthorizatio
 func (c *Client) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	c.RequireProofOfPossession = requireProofOfPossession
 	c.require(clientFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *Client) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(clientFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
@@ -6285,6 +6301,12 @@ func (c *ClientAddons) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
+// Whether the client can be used as the target application of a Personal Agent Protocol browser join.
+type ClientAllowPersonalAgentBrowserJoin = bool
+
+// Whether the client can be used as the target application of a Personal Agent Protocol browser join.
+type ClientAllowPersonalAgentBrowserJoinOrNull = *bool
+
 // Indicates whether network binding should be enforced when consuming an anonymous session transfer token. If set to 'ip', consumption must happen from the same IP as the issuer. If set to 'asn', consumption must happen from the same ASN as the issuer. If set to 'none', binding is not enforced. Default value is `ip`.
 type ClientAnonymousSessionTransferNetworkBindingEnum string
 
@@ -10071,30 +10093,31 @@ var (
 	clientSearchResponseFieldClientAuthenticationMethods                    = big.NewInt(1 << 41)
 	clientSearchResponseFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 42)
 	clientSearchResponseFieldRequireProofOfPossession                       = big.NewInt(1 << 43)
-	clientSearchResponseFieldSignedRequestObject                            = big.NewInt(1 << 44)
-	clientSearchResponseFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 45)
-	clientSearchResponseFieldComplianceLevel                                = big.NewInt(1 << 46)
-	clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 47)
-	clientSearchResponseFieldTokenExchange                                  = big.NewInt(1 << 48)
-	clientSearchResponseFieldParRequestExpiry                               = big.NewInt(1 << 49)
-	clientSearchResponseFieldTokenQuota                                     = big.NewInt(1 << 50)
-	clientSearchResponseFieldExpressConfiguration                           = big.NewInt(1 << 51)
-	clientSearchResponseFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 52)
-	clientSearchResponseFieldMyOrganizationConfiguration                    = big.NewInt(1 << 53)
-	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 54)
-	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 55)
-	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 56)
-	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 58)
-	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 59)
-	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 60)
-	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 61)
-	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(1 << 62)
-	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientSearchResponseFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 44)
+	clientSearchResponseFieldSignedRequestObject                            = big.NewInt(1 << 45)
+	clientSearchResponseFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 46)
+	clientSearchResponseFieldComplianceLevel                                = big.NewInt(1 << 47)
+	clientSearchResponseFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 48)
+	clientSearchResponseFieldTokenExchange                                  = big.NewInt(1 << 49)
+	clientSearchResponseFieldParRequestExpiry                               = big.NewInt(1 << 50)
+	clientSearchResponseFieldTokenQuota                                     = big.NewInt(1 << 51)
+	clientSearchResponseFieldExpressConfiguration                           = big.NewInt(1 << 52)
+	clientSearchResponseFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 53)
+	clientSearchResponseFieldMyOrganizationConfiguration                    = big.NewInt(1 << 54)
+	clientSearchResponseFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 55)
+	clientSearchResponseFieldAnonymousSessions                              = big.NewInt(1 << 56)
+	clientSearchResponseFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 57)
+	clientSearchResponseFieldThirdPartySecurityMode                         = big.NewInt(1 << 58)
+	clientSearchResponseFieldOidcSupport                                    = big.NewInt(1 << 59)
+	clientSearchResponseFieldRedirectionPolicy                              = big.NewInt(1 << 60)
+	clientSearchResponseFieldResourceServerIdentifier                       = big.NewInt(1 << 61)
+	clientSearchResponseFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 62)
+	clientSearchResponseFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	clientSearchResponseFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	clientSearchResponseFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	clientSearchResponseFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	clientSearchResponseFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	clientSearchResponseFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 68)
 )
 
 // clientSearchResponseNullableFields maps the wire names of ClientSearchResponse's nullable fields (required or optional) to their field bits.
@@ -10181,10 +10204,11 @@ type ClientSearchResponse struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
-	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession      *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin              `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
+	SignedRequestObject           *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel               *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -10529,6 +10553,13 @@ func (c *ClientSearchResponse) GetRequireProofOfPossession() bool {
 		return false
 	}
 	return *c.RequireProofOfPossession
+}
+
+func (c *ClientSearchResponse) GetAllowPersonalAgentBrowserJoin() ClientAllowPersonalAgentBrowserJoin {
+	if c == nil || c.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *c.AllowPersonalAgentBrowserJoin
 }
 
 func (c *ClientSearchResponse) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
@@ -11021,6 +11052,13 @@ func (c *ClientSearchResponse) SetRequirePushedAuthorizationRequests(requirePush
 func (c *ClientSearchResponse) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	c.RequireProofOfPossession = requireProofOfPossession
 	c.require(clientSearchResponseFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ClientSearchResponse) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(clientSearchResponseFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
@@ -12724,30 +12762,31 @@ var (
 	createClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
 	createClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
 	createClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	createClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	createClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	createClientResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 48)
+	createClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	createClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	createClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	createClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	createClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	createClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	createClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	createClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	createClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	createClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	createClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	createClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	createClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	createClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	createClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	createClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	createClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	createClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	createClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	createClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	createClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	createClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	createClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	createClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // createClientResponseContentNullableFields maps the wire names of CreateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -12841,10 +12880,11 @@ type CreateClientResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
-	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession      *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin              `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
+	SignedRequestObject           *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel               *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -13217,6 +13257,13 @@ func (c *CreateClientResponseContent) GetRequireProofOfPossession() bool {
 		return false
 	}
 	return *c.RequireProofOfPossession
+}
+
+func (c *CreateClientResponseContent) GetAllowPersonalAgentBrowserJoin() ClientAllowPersonalAgentBrowserJoin {
+	if c == nil || c.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *c.AllowPersonalAgentBrowserJoin
 }
 
 func (c *CreateClientResponseContent) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
@@ -13737,6 +13784,13 @@ func (c *CreateClientResponseContent) SetRequirePushedAuthorizationRequests(requ
 func (c *CreateClientResponseContent) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	c.RequireProofOfPossession = requireProofOfPossession
 	c.require(createClientResponseContentFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin) {
+	c.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	c.require(createClientResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
@@ -15002,30 +15056,31 @@ var (
 	getClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
 	getClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
 	getClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	getClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	getClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	getClientResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 48)
+	getClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	getClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	getClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	getClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	getClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	getClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	getClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	getClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	getClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	getClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	getClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	getClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	getClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	getClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	getClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	getClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	getClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	getClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	getClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	getClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	getClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	getClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	getClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	getClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // getClientResponseContentNullableFields maps the wire names of GetClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -15119,10 +15174,11 @@ type GetClientResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
-	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession      *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin              `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
+	SignedRequestObject           *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel               *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -15495,6 +15551,13 @@ func (g *GetClientResponseContent) GetRequireProofOfPossession() bool {
 		return false
 	}
 	return *g.RequireProofOfPossession
+}
+
+func (g *GetClientResponseContent) GetAllowPersonalAgentBrowserJoin() ClientAllowPersonalAgentBrowserJoin {
+	if g == nil || g.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *g.AllowPersonalAgentBrowserJoin
 }
 
 func (g *GetClientResponseContent) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
@@ -16015,6 +16078,13 @@ func (g *GetClientResponseContent) SetRequirePushedAuthorizationRequests(require
 func (g *GetClientResponseContent) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	g.RequireProofOfPossession = requireProofOfPossession
 	g.require(getClientResponseContentFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetClientResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin) {
+	g.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	g.require(getClientResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
@@ -17928,30 +17998,31 @@ var (
 	rotateClientSecretResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
 	rotateClientSecretResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
 	rotateClientSecretResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	rotateClientSecretResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 48)
+	rotateClientSecretResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	rotateClientSecretResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	rotateClientSecretResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	rotateClientSecretResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	rotateClientSecretResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	rotateClientSecretResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	rotateClientSecretResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	rotateClientSecretResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	rotateClientSecretResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	rotateClientSecretResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	rotateClientSecretResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	rotateClientSecretResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	rotateClientSecretResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	rotateClientSecretResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	rotateClientSecretResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	rotateClientSecretResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	rotateClientSecretResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	rotateClientSecretResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	rotateClientSecretResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	rotateClientSecretResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	rotateClientSecretResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	rotateClientSecretResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	rotateClientSecretResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	rotateClientSecretResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // rotateClientSecretResponseContentNullableFields maps the wire names of RotateClientSecretResponseContent's nullable fields (required or optional) to their field bits.
@@ -18045,10 +18116,11 @@ type RotateClientSecretResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
-	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession      *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin              `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
+	SignedRequestObject           *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel               *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -18421,6 +18493,13 @@ func (r *RotateClientSecretResponseContent) GetRequireProofOfPossession() bool {
 		return false
 	}
 	return *r.RequireProofOfPossession
+}
+
+func (r *RotateClientSecretResponseContent) GetAllowPersonalAgentBrowserJoin() ClientAllowPersonalAgentBrowserJoin {
+	if r == nil || r.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *r.AllowPersonalAgentBrowserJoin
 }
 
 func (r *RotateClientSecretResponseContent) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
@@ -18941,6 +19020,13 @@ func (r *RotateClientSecretResponseContent) SetRequirePushedAuthorizationRequest
 func (r *RotateClientSecretResponseContent) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	r.RequireProofOfPossession = requireProofOfPossession
 	r.require(rotateClientSecretResponseContentFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateClientSecretResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin) {
+	r.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	r.require(rotateClientSecretResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;
@@ -19517,30 +19603,31 @@ var (
 	updateClientResponseContentFieldClientAuthenticationMethods                    = big.NewInt(1 << 45)
 	updateClientResponseContentFieldRequirePushedAuthorizationRequests             = big.NewInt(1 << 46)
 	updateClientResponseContentFieldRequireProofOfPossession                       = big.NewInt(1 << 47)
-	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 48)
-	updateClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 49)
-	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 50)
-	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 51)
-	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 52)
-	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 53)
-	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 54)
-	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
-	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
-	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 58)
-	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 59)
-	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 60)
-	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 61)
-	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(1 << 62)
-	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 63)
-	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 64)
-	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 65)
-	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 66)
-	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 67)
-	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 68)
-	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 69)
-	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 70)
-	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	updateClientResponseContentFieldAllowPersonalAgentBrowserJoin                  = big.NewInt(1 << 48)
+	updateClientResponseContentFieldSignedRequestObject                            = big.NewInt(1 << 49)
+	updateClientResponseContentFieldTokenVaultPrivilegedAccess                     = big.NewInt(1 << 50)
+	updateClientResponseContentFieldComplianceLevel                                = big.NewInt(1 << 51)
+	updateClientResponseContentFieldSkipNonVerifiableCallbackURIConfirmationPrompt = big.NewInt(1 << 52)
+	updateClientResponseContentFieldTokenExchange                                  = big.NewInt(1 << 53)
+	updateClientResponseContentFieldParRequestExpiry                               = big.NewInt(1 << 54)
+	updateClientResponseContentFieldTokenQuota                                     = big.NewInt(1 << 55)
+	updateClientResponseContentFieldExpressConfiguration                           = big.NewInt(1 << 56)
+	updateClientResponseContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 57)
+	updateClientResponseContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 58)
+	updateClientResponseContentFieldIdentityAssertionAuthorizationGrant            = big.NewInt(1 << 59)
+	updateClientResponseContentFieldAnonymousSessions                              = big.NewInt(1 << 60)
+	updateClientResponseContentFieldEnforceAnonSessionTransferNetworkBinding       = big.NewInt(1 << 61)
+	updateClientResponseContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 62)
+	updateClientResponseContentFieldOidcSupport                                    = big.NewInt(0).Lsh(big.NewInt(1), 63)
+	updateClientResponseContentFieldRedirectionPolicy                              = big.NewInt(0).Lsh(big.NewInt(1), 64)
+	updateClientResponseContentFieldResourceServerIdentifier                       = big.NewInt(0).Lsh(big.NewInt(1), 65)
+	updateClientResponseContentFieldAsyncApprovalNotificationChannels              = big.NewInt(0).Lsh(big.NewInt(1), 66)
+	updateClientResponseContentFieldExternalMetadataType                           = big.NewInt(0).Lsh(big.NewInt(1), 67)
+	updateClientResponseContentFieldExternalMetadataCreatedBy                      = big.NewInt(0).Lsh(big.NewInt(1), 68)
+	updateClientResponseContentFieldExternalMetadataStatus                         = big.NewInt(0).Lsh(big.NewInt(1), 69)
+	updateClientResponseContentFieldAgentID                                        = big.NewInt(0).Lsh(big.NewInt(1), 70)
+	updateClientResponseContentFieldExternalClientID                               = big.NewInt(0).Lsh(big.NewInt(1), 71)
+	updateClientResponseContentFieldJwksURI                                        = big.NewInt(0).Lsh(big.NewInt(1), 72)
 )
 
 // updateClientResponseContentNullableFields maps the wire names of UpdateClientResponseContent's nullable fields (required or optional) to their field bits.
@@ -19634,10 +19721,11 @@ type UpdateClientResponseContent struct {
 	// Makes the use of Pushed Authorization Requests mandatory for this client
 	RequirePushedAuthorizationRequests *bool `json:"require_pushed_authorization_requests,omitempty" url:"require_pushed_authorization_requests,omitempty"`
 	// Makes the use of Proof-of-Possession mandatory for this client
-	RequireProofOfPossession   *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
-	SignedRequestObject        *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
-	TokenVaultPrivilegedAccess *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
-	ComplianceLevel            *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
+	RequireProofOfPossession      *bool                                             `json:"require_proof_of_possession,omitempty" url:"require_proof_of_possession,omitempty"`
+	AllowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin              `json:"allow_personal_agent_browser_join,omitempty" url:"allow_personal_agent_browser_join,omitempty"`
+	SignedRequestObject           *ClientSignedRequestObjectWithCredentialID        `json:"signed_request_object,omitempty" url:"signed_request_object,omitempty"`
+	TokenVaultPrivilegedAccess    *ClientTokenVaultPrivilegedAccessWithCredentialID `json:"token_vault_privileged_access,omitempty" url:"token_vault_privileged_access,omitempty"`
+	ComplianceLevel               *ClientComplianceLevelEnum                        `json:"compliance_level,omitempty" url:"compliance_level,omitempty"`
 	// Controls whether a confirmation prompt is shown during login flows when the redirect URI uses non-verifiable callback URIs (for example, a custom URI schema such as `myapp://`, or `localhost`).
 	// If set to true, a confirmation prompt will not be shown. We recommend that this is set to false for improved protection from malicious apps.
 	// See https://auth0.com/docs/secure/security-guidance/measures-against-app-impersonation for more information.
@@ -20010,6 +20098,13 @@ func (u *UpdateClientResponseContent) GetRequireProofOfPossession() bool {
 		return false
 	}
 	return *u.RequireProofOfPossession
+}
+
+func (u *UpdateClientResponseContent) GetAllowPersonalAgentBrowserJoin() ClientAllowPersonalAgentBrowserJoin {
+	if u == nil || u.AllowPersonalAgentBrowserJoin == nil {
+		return false
+	}
+	return *u.AllowPersonalAgentBrowserJoin
 }
 
 func (u *UpdateClientResponseContent) GetSignedRequestObject() ClientSignedRequestObjectWithCredentialID {
@@ -20530,6 +20625,13 @@ func (u *UpdateClientResponseContent) SetRequirePushedAuthorizationRequests(requ
 func (u *UpdateClientResponseContent) SetRequireProofOfPossession(requireProofOfPossession *bool) {
 	u.RequireProofOfPossession = requireProofOfPossession
 	u.require(updateClientResponseContentFieldRequireProofOfPossession)
+}
+
+// SetAllowPersonalAgentBrowserJoin sets the AllowPersonalAgentBrowserJoin field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientResponseContent) SetAllowPersonalAgentBrowserJoin(allowPersonalAgentBrowserJoin *ClientAllowPersonalAgentBrowserJoin) {
+	u.AllowPersonalAgentBrowserJoin = allowPersonalAgentBrowserJoin
+	u.require(updateClientResponseContentFieldAllowPersonalAgentBrowserJoin)
 }
 
 // SetSignedRequestObject sets the SignedRequestObject field and marks it as non-optional;

@@ -36,7 +36,8 @@ var (
 	createResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	createResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 	createResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
+	createResourceServerResponseContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 26)
+	createResourceServerResponseContentFieldType                                      = big.NewInt(1 << 27)
 )
 
 // createResourceServerResponseContentNullableFields maps the wire names of CreateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -91,9 +92,10 @@ type CreateResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
-	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
-	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
+	ClientID                    *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims          *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	UseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol    `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
+	Type                        *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -282,6 +284,13 @@ func (c *CreateResourceServerResponseContent) GetAgentSubjectClaims() ResourceSe
 		return ""
 	}
 	return *c.AgentSubjectClaims
+}
+
+func (c *CreateResourceServerResponseContent) GetUseForPersonalAgentProtocol() ResourceServerUseForPersonalAgentProtocol {
+	if c == nil || c.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *c.UseForPersonalAgentProtocol
 }
 
 func (c *CreateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
@@ -489,6 +498,13 @@ func (c *CreateResourceServerResponseContent) SetAgentSubjectClaims(agentSubject
 	c.require(createResourceServerResponseContentFieldAgentSubjectClaims)
 }
 
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateResourceServerResponseContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol) {
+	c.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	c.require(createResourceServerResponseContentFieldUseForPersonalAgentProtocol)
+}
+
 // SetType sets the Type field and marks it as non-optional;
 // this prevents an empty or null value for this field from being omitted during serialization.
 func (c *CreateResourceServerResponseContent) SetType(type_ *ResourceServerTypeEnum) {
@@ -572,7 +588,8 @@ var (
 	getResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	getResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 	getResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
+	getResourceServerResponseContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 26)
+	getResourceServerResponseContentFieldType                                      = big.NewInt(1 << 27)
 )
 
 // getResourceServerResponseContentNullableFields maps the wire names of GetResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -627,9 +644,10 @@ type GetResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
-	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
-	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
+	ClientID                    *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims          *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	UseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol    `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
+	Type                        *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -818,6 +836,13 @@ func (g *GetResourceServerResponseContent) GetAgentSubjectClaims() ResourceServe
 		return ""
 	}
 	return *g.AgentSubjectClaims
+}
+
+func (g *GetResourceServerResponseContent) GetUseForPersonalAgentProtocol() ResourceServerUseForPersonalAgentProtocol {
+	if g == nil || g.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *g.UseForPersonalAgentProtocol
 }
 
 func (g *GetResourceServerResponseContent) GetType() ResourceServerTypeEnum {
@@ -1023,6 +1048,13 @@ func (g *GetResourceServerResponseContent) SetClientID(clientID *string) {
 func (g *GetResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
 	g.AgentSubjectClaims = agentSubjectClaims
 	g.require(getResourceServerResponseContentFieldAgentSubjectClaims)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (g *GetResourceServerResponseContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol) {
+	g.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	g.require(getResourceServerResponseContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -1242,7 +1274,8 @@ var (
 	resourceServerFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	resourceServerFieldClientID                                  = big.NewInt(1 << 24)
 	resourceServerFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	resourceServerFieldType                                      = big.NewInt(1 << 26)
+	resourceServerFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 26)
+	resourceServerFieldType                                      = big.NewInt(1 << 27)
 )
 
 // resourceServerNullableFields maps the wire names of ResourceServer's nullable fields (required or optional) to their field bits.
@@ -1297,9 +1330,10 @@ type ResourceServer struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
-	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
-	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
+	ClientID                    *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims          *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	UseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol    `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
+	Type                        *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -1488,6 +1522,13 @@ func (r *ResourceServer) GetAgentSubjectClaims() ResourceServerAgentSubjectClaim
 		return ""
 	}
 	return *r.AgentSubjectClaims
+}
+
+func (r *ResourceServer) GetUseForPersonalAgentProtocol() ResourceServerUseForPersonalAgentProtocol {
+	if r == nil || r.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *r.UseForPersonalAgentProtocol
 }
 
 func (r *ResourceServer) GetType() ResourceServerTypeEnum {
@@ -1693,6 +1734,13 @@ func (r *ResourceServer) SetClientID(clientID *string) {
 func (r *ResourceServer) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
 	r.AgentSubjectClaims = agentSubjectClaims
 	r.require(resourceServerFieldAgentSubjectClaims)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServer) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol) {
+	r.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	r.require(resourceServerFieldUseForPersonalAgentProtocol)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -2200,7 +2248,8 @@ var (
 	resourceServerSearchResponseFieldAuthorizationPolicy                       = big.NewInt(1 << 22)
 	resourceServerSearchResponseFieldClientID                                  = big.NewInt(1 << 23)
 	resourceServerSearchResponseFieldAgentSubjectClaims                        = big.NewInt(1 << 24)
-	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 25)
+	resourceServerSearchResponseFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 25)
+	resourceServerSearchResponseFieldType                                      = big.NewInt(1 << 26)
 )
 
 // resourceServerSearchResponseNullableFields maps the wire names of ResourceServerSearchResponse's nullable fields (required or optional) to their field bits.
@@ -2253,9 +2302,10 @@ type ResourceServerSearchResponse struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
-	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
-	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
+	ClientID                    *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims          *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	UseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol    `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
+	Type                        *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2437,6 +2487,13 @@ func (r *ResourceServerSearchResponse) GetAgentSubjectClaims() ResourceServerAge
 		return ""
 	}
 	return *r.AgentSubjectClaims
+}
+
+func (r *ResourceServerSearchResponse) GetUseForPersonalAgentProtocol() ResourceServerUseForPersonalAgentProtocol {
+	if r == nil || r.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *r.UseForPersonalAgentProtocol
 }
 
 func (r *ResourceServerSearchResponse) GetType() ResourceServerTypeEnum {
@@ -2635,6 +2692,13 @@ func (r *ResourceServerSearchResponse) SetClientID(clientID *string) {
 func (r *ResourceServerSearchResponse) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
 	r.AgentSubjectClaims = agentSubjectClaims
 	r.require(resourceServerSearchResponseFieldAgentSubjectClaims)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *ResourceServerSearchResponse) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol) {
+	r.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	r.require(resourceServerSearchResponseFieldUseForPersonalAgentProtocol)
 }
 
 // SetType sets the Type field and marks it as non-optional;
@@ -3549,6 +3613,9 @@ func (r ResourceServerTypeEnum) Ptr() *ResourceServerTypeEnum {
 	return &r
 }
 
+// Whether this resource server is used for the Personal Agent Protocol.
+type ResourceServerUseForPersonalAgentProtocol = bool
+
 var (
 	searchResourceServersResponseContentFieldResourceServers = big.NewInt(1 << 0)
 	searchResourceServersResponseContentFieldNext            = big.NewInt(1 << 1)
@@ -3680,7 +3747,8 @@ var (
 	updateResourceServerResponseContentFieldAuthorizationPolicy                       = big.NewInt(1 << 23)
 	updateResourceServerResponseContentFieldClientID                                  = big.NewInt(1 << 24)
 	updateResourceServerResponseContentFieldAgentSubjectClaims                        = big.NewInt(1 << 25)
-	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 26)
+	updateResourceServerResponseContentFieldUseForPersonalAgentProtocol               = big.NewInt(1 << 26)
+	updateResourceServerResponseContentFieldType                                      = big.NewInt(1 << 27)
 )
 
 // updateResourceServerResponseContentNullableFields maps the wire names of UpdateResourceServerResponseContent's nullable fields (required or optional) to their field bits.
@@ -3735,9 +3803,10 @@ type UpdateResourceServerResponseContent struct {
 	SubjectTypeAuthorization     *ResourceServerSubjectTypeAuthorization `json:"subject_type_authorization,omitempty" url:"subject_type_authorization,omitempty"`
 	AuthorizationPolicy          *ResourceServerAuthorizationPolicy      `json:"authorization_policy,omitempty" url:"authorization_policy,omitempty"`
 	// The client ID of the client that this resource server is linked to
-	ClientID           *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
-	AgentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
-	Type               *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
+	ClientID                    *string                                       `json:"client_id,omitempty" url:"client_id,omitempty"`
+	AgentSubjectClaims          *ResourceServerAgentSubjectClaimsResponseEnum `json:"agent_subject_claims,omitempty" url:"agent_subject_claims,omitempty"`
+	UseForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol    `json:"use_for_personal_agent_protocol,omitempty" url:"use_for_personal_agent_protocol,omitempty"`
+	Type                        *ResourceServerTypeEnum                       `json:"type,omitempty" url:"type,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3926,6 +3995,13 @@ func (u *UpdateResourceServerResponseContent) GetAgentSubjectClaims() ResourceSe
 		return ""
 	}
 	return *u.AgentSubjectClaims
+}
+
+func (u *UpdateResourceServerResponseContent) GetUseForPersonalAgentProtocol() ResourceServerUseForPersonalAgentProtocol {
+	if u == nil || u.UseForPersonalAgentProtocol == nil {
+		return false
+	}
+	return *u.UseForPersonalAgentProtocol
 }
 
 func (u *UpdateResourceServerResponseContent) GetType() ResourceServerTypeEnum {
@@ -4131,6 +4207,13 @@ func (u *UpdateResourceServerResponseContent) SetClientID(clientID *string) {
 func (u *UpdateResourceServerResponseContent) SetAgentSubjectClaims(agentSubjectClaims *ResourceServerAgentSubjectClaimsResponseEnum) {
 	u.AgentSubjectClaims = agentSubjectClaims
 	u.require(updateResourceServerResponseContentFieldAgentSubjectClaims)
+}
+
+// SetUseForPersonalAgentProtocol sets the UseForPersonalAgentProtocol field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateResourceServerResponseContent) SetUseForPersonalAgentProtocol(useForPersonalAgentProtocol *ResourceServerUseForPersonalAgentProtocol) {
+	u.UseForPersonalAgentProtocol = useForPersonalAgentProtocol
+	u.require(updateResourceServerResponseContentFieldUseForPersonalAgentProtocol)
 }
 
 // SetType sets the Type field and marks it as non-optional;

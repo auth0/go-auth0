@@ -96,11 +96,6 @@ func (c *Client) Get(
 //
 //	request := &management.CreateEmailProviderRequestContent{
 //	    Name: management.EmailProviderNameEnumMailgun,
-//	    Credentials: &management.EmailProviderCredentialsSchema{
-//	        EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
-//	            APIKey: "api_key",
-//	        },
-//	    },
 //	}
 //	client.Emails.Provider.Create(
 //	    context.TODO(),
