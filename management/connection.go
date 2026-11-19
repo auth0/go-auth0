@@ -1797,10 +1797,21 @@ type ConnectionOptionsSAML struct {
 	GlobalTokenRevocationJWTIss *string                `json:"global_token_revocation_jwt_iss,omitempty"`
 	GlobalTokenRevocationJWTSub *string                `json:"global_token_revocation_jwt_sub,omitempty"`
 
-	// DiscoveryURL is the OIDC discovery URL used to auto-populate OIDCMetadata. Honoured for SAML connections acting as a Cross-App Access resource application.
+	// DiscoveryURL is the OIDC discovery URL used to auto-populate OIDCMetadata.
 	DiscoveryURL *string `json:"discovery_url,omitempty"`
-	// OIDCMetadata is the OIDC discovery document. Auto-populated from DiscoveryURL when absent, or preserved as uploaded. Honoured for SAML connections acting as a Cross-App Access resource application.
+	// OIDCMetadata is the OIDC discovery document. Auto-populated from DiscoveryURL when absent.
 	OIDCMetadata map[string]interface{} `json:"oidc_metadata,omitempty"`
+
+	// ClientID is the OAuth client ID used to authenticate to the identity provider's token endpoint.
+	ClientID *string `json:"client_id,omitempty"`
+	// ClientSecret is the OAuth client secret used to authenticate to the identity provider's token endpoint.
+	ClientSecret *string `json:"client_secret,omitempty"`
+	// TokenEndpointAuthMethod is the client authentication method for the token endpoint: "client_secret_post" or "private_key_jwt".
+	TokenEndpointAuthMethod *string `json:"token_endpoint_auth_method,omitempty"`
+	// TokenEndpointAuthSigningAlg is the signing algorithm for the "private_key_jwt" client assertion.
+	TokenEndpointAuthSigningAlg *string `json:"token_endpoint_auth_signing_alg,omitempty"`
+	// TokenEndpointJwtcaAudFormat is the aud claim format of the client assertion: "issuer" or "token_endpoint".
+	TokenEndpointJwtcaAudFormat *string `json:"token_endpoint_jwtca_aud_format,omitempty"`
 
 	// AssertionDecryptionSettings configures the algorithms allowed to decrypt SAML assertions.
 	AssertionDecryptionSettings *ConnectionOptionsSAMLAssertionDecryptionSettings `json:"assertion_decryption_settings,omitempty"`
