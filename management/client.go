@@ -54,8 +54,7 @@ type Client struct {
 
 	// OIDCSupport configures which OIDC scopes this client may request.
 	//
-	// It can only be set on clients with OIDCConformant enabled, and requires the
-	// tenant feature flag `enable_configurable_oidc_support`. As observed against the API:
+	// It can only be set on clients with OIDCConformant enabled. As observed against the API:
 	//   - When sent, the whole object is replaced on update, so always send the complete
 	//     intended state, and IsAllowed is required.
 	//   - Reads materialize server defaults, so a non-nil value does not mean it was stored.
