@@ -2148,6 +2148,16 @@ func TestBruteForceProtection_GetEnabled(tt *testing.T) {
 	b.GetEnabled()
 }
 
+func TestBruteForceProtection_GetFormSubmissionMode(tt *testing.T) {
+	var zeroValue string
+	b := &BruteForceProtection{FormSubmissionMode: &zeroValue}
+	b.GetFormSubmissionMode()
+	b = &BruteForceProtection{}
+	b.GetFormSubmissionMode()
+	b = nil
+	b.GetFormSubmissionMode()
+}
+
 func TestBruteForceProtection_GetMaxAttempts(tt *testing.T) {
 	var zeroValue int
 	b := &BruteForceProtection{MaxAttempts: &zeroValue}
