@@ -1,5 +1,21 @@
 # Change Log
 
+## [v3.13.0-beta.0](https://github.com/auth0/go-auth0/tree/v3.13.0-beta.0) (2026-11-19)
+
+**Beta**
+- feat: add `AllowPersonalAgentBrowserJoin` to clients
+- feat: add `UseForPersonalAgentProtocol` to resource servers
+- feat: add `PersonalAgentProtocolCompanyDomains` to tenant settings
+- feat: add agent gateway log stream filter groups (`agent_gateway.authentication.fail`, `agent_gateway.operation.fail`, `agent_gateway.operation.success`)
+- feat: add `ES256` and `PS384` to client credential algorithms
+
+**Stable (from main)**
+- feat: add encrypted ID token support for OIDC and Okta connections (`IDTokenEncryptedResponseAlg`, `IDTokenEncryptedResponseEncs`) and `KeyUse` and `EncryptionAlg` on connection key create and rotate
+- feat: add `MatchType` to password dictionary options
+- feat: add `IncludeUserProfileSizeHeaderEnum`
+- fix: make `Credentials` optional when creating an email provider
+- breaking: remove `GenaiTrial` from `TenantSettingsFlags`
+
 ## [v3.12.0-beta.1](https://github.com/auth0/go-auth0/tree/v3.12.0-beta.1) (2026-11-09)
 
 **Beta**
