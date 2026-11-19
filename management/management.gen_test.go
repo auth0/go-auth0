@@ -2642,6 +2642,13 @@ func TestClient_GetOIDCLogout(tt *testing.T) {
 	c.GetOIDCLogout()
 }
 
+func TestClient_GetOIDCSupport(tt *testing.T) {
+	c := &Client{}
+	c.GetOIDCSupport()
+	c = nil
+	c.GetOIDCSupport()
+}
+
 func TestClient_GetOrganizationDiscoveryMethods(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{OrganizationDiscoveryMethods: &zeroValue}
@@ -3410,6 +3417,44 @@ func TestClientNativeSocialLoginSupportEnabled_GetEnabled(tt *testing.T) {
 func TestClientNativeSocialLoginSupportEnabled_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientNativeSocialLoginSupportEnabled{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientOIDCSupport_GetAllowAllScopes(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientOIDCSupport{AllowAllScopes: &zeroValue}
+	c.GetAllowAllScopes()
+	c = &ClientOIDCSupport{}
+	c.GetAllowAllScopes()
+	c = nil
+	c.GetAllowAllScopes()
+}
+
+func TestClientOIDCSupport_GetAllowedScopes(tt *testing.T) {
+	var zeroValue []string
+	c := &ClientOIDCSupport{AllowedScopes: &zeroValue}
+	c.GetAllowedScopes()
+	c = &ClientOIDCSupport{}
+	c.GetAllowedScopes()
+	c = nil
+	c.GetAllowedScopes()
+}
+
+func TestClientOIDCSupport_GetIsAllowed(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientOIDCSupport{IsAllowed: &zeroValue}
+	c.GetIsAllowed()
+	c = &ClientOIDCSupport{}
+	c.GetIsAllowed()
+	c = nil
+	c.GetIsAllowed()
+}
+
+func TestClientOIDCSupport_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientOIDCSupport{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
