@@ -2457,18 +2457,20 @@ func (c *ConnectionPasswordOptionsComplexity) String() string {
 }
 
 var (
-	connectionPasswordOptionsDictionaryFieldActive  = big.NewInt(1 << 0)
-	connectionPasswordOptionsDictionaryFieldCustom  = big.NewInt(1 << 1)
-	connectionPasswordOptionsDictionaryFieldDefault = big.NewInt(1 << 2)
+	connectionPasswordOptionsDictionaryFieldActive    = big.NewInt(1 << 0)
+	connectionPasswordOptionsDictionaryFieldCustom    = big.NewInt(1 << 1)
+	connectionPasswordOptionsDictionaryFieldMatchType = big.NewInt(1 << 2)
+	connectionPasswordOptionsDictionaryFieldDefault   = big.NewInt(1 << 3)
 )
 
 // Dictionary-based password restriction policy to prevent common passwords
 type ConnectionPasswordOptionsDictionary struct {
 	// Enables dictionary checking to prevent use of common passwords and custom blocked words
 	Active *bool `json:"active,omitempty" url:"active,omitempty"`
-	// Array of custom words to block in passwords. Maximum 200 items, each up to 50 characters
-	Custom  []string                         `json:"custom,omitempty" url:"custom,omitempty"`
-	Default *PasswordDefaultDictionariesEnum `json:"default,omitempty" url:"default,omitempty"`
+	// Array of custom words to block in passwords
+	Custom    []string                         `json:"custom,omitempty" url:"custom,omitempty"`
+	MatchType *PasswordDictionaryMatchTypeEnum `json:"match_type,omitempty" url:"match_type,omitempty"`
+	Default   *PasswordDefaultDictionariesEnum `json:"default,omitempty" url:"default,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2489,6 +2491,13 @@ func (c *ConnectionPasswordOptionsDictionary) GetCustom() []string {
 		return nil
 	}
 	return c.Custom
+}
+
+func (c *ConnectionPasswordOptionsDictionary) GetMatchType() PasswordDictionaryMatchTypeEnum {
+	if c == nil || c.MatchType == nil {
+		return ""
+	}
+	return *c.MatchType
 }
 
 func (c *ConnectionPasswordOptionsDictionary) GetDefault() PasswordDefaultDictionariesEnum {
@@ -2526,6 +2535,13 @@ func (c *ConnectionPasswordOptionsDictionary) SetActive(active *bool) {
 func (c *ConnectionPasswordOptionsDictionary) SetCustom(custom []string) {
 	c.Custom = custom
 	c.require(connectionPasswordOptionsDictionaryFieldCustom)
+}
+
+// SetMatchType sets the MatchType field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPasswordOptionsDictionary) SetMatchType(matchType *PasswordDictionaryMatchTypeEnum) {
+	c.MatchType = matchType
+	c.require(connectionPasswordOptionsDictionaryFieldMatchType)
 }
 
 // SetDefault sets the Default field and marks it as non-optional;
@@ -2949,10 +2965,12 @@ var (
 	connectionPropertiesOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
 	connectionPropertiesOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
 	connectionPropertiesOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
-	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
-	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
-	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 43)
-	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
+	connectionPropertiesOptionsFieldClientID                           = big.NewInt(1 << 41)
+	connectionPropertiesOptionsFieldAllowedAudiences                   = big.NewInt(1 << 42)
+	connectionPropertiesOptionsFieldDiscoveryURL                       = big.NewInt(1 << 43)
+	connectionPropertiesOptionsFieldOidcMetadata                       = big.NewInt(1 << 44)
+	connectionPropertiesOptionsFieldThumbprints                        = big.NewInt(1 << 45)
+	connectionPropertiesOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 46)
 )
 
 // connectionPropertiesOptionsNullableFields maps the wire names of ConnectionPropertiesOptions's nullable fields (required or optional) to their field bits.
@@ -2972,6 +2990,8 @@ var connectionPropertiesOptionsNullableFields = map[string]*big.Int{
 	"id_token_signed_response_algs":   connectionPropertiesOptionsFieldIDTokenSignedResponseAlgs,
 	"token_endpoint_auth_method":      connectionPropertiesOptionsFieldTokenEndpointAuthMethod,
 	"token_endpoint_auth_signing_alg": connectionPropertiesOptionsFieldTokenEndpointAuthSigningAlg,
+	"client_id":                       connectionPropertiesOptionsFieldClientID,
+	"allowed_audiences":               connectionPropertiesOptionsFieldAllowedAudiences,
 	"discovery_url":                   connectionPropertiesOptionsFieldDiscoveryURL,
 	"oidc_metadata":                   connectionPropertiesOptionsFieldOidcMetadata,
 }
@@ -3025,10 +3045,14 @@ type ConnectionPropertiesOptions struct {
 	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
-	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
+	// The client ID registered with the identity provider
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// Additional Google client IDs accepted as the `aud` (audience) of Google ID tokens, used by Google native login and Google Streamlined Linking.
+	AllowedAudiences  []string                     `json:"allowed_audiences,omitempty" url:"allowed_audiences,omitempty"`
+	DiscoveryURL      *ConnectionsDiscoveryURL     `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata      *ConnectionsOidcMetadata     `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints       *ConnectionThumbprints       `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384 *ConnectionThumbprintsSha384 `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -3323,6 +3347,20 @@ func (c *ConnectionPropertiesOptions) GetUseOauthSpecScope() ConnectionUseOauthS
 		return false
 	}
 	return *c.UseOauthSpecScope
+}
+
+func (c *ConnectionPropertiesOptions) GetClientID() string {
+	if c == nil || c.ClientID == nil {
+		return ""
+	}
+	return *c.ClientID
+}
+
+func (c *ConnectionPropertiesOptions) GetAllowedAudiences() []string {
+	if c == nil || c.AllowedAudiences == nil {
+		return nil
+	}
+	return c.AllowedAudiences
 }
 
 func (c *ConnectionPropertiesOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
@@ -3654,6 +3692,20 @@ func (c *ConnectionPropertiesOptions) SetIDTokenSessionExpirySupported(idTokenSe
 func (c *ConnectionPropertiesOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
 	c.UseOauthSpecScope = useOauthSpecScope
 	c.require(connectionPropertiesOptionsFieldUseOauthSpecScope)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetClientID(clientID *string) {
+	c.ClientID = clientID
+	c.require(connectionPropertiesOptionsFieldClientID)
+}
+
+// SetAllowedAudiences sets the AllowedAudiences field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *ConnectionPropertiesOptions) SetAllowedAudiences(allowedAudiences []string) {
+	c.AllowedAudiences = allowedAudiences
+	c.require(connectionPropertiesOptionsFieldAllowedAudiences)
 }
 
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;
@@ -6313,6 +6365,29 @@ func (p PasswordDefaultDictionariesEnum) Ptr() *PasswordDefaultDictionariesEnum 
 	return &p
 }
 
+// How custom entries are compared against a password. "exact": a password is rejected if it equals an entry. "substring": a password is rejected if it contains an entry (every entry must then be at least 3 characters).
+type PasswordDictionaryMatchTypeEnum string
+
+const (
+	PasswordDictionaryMatchTypeEnumExact     PasswordDictionaryMatchTypeEnum = "exact"
+	PasswordDictionaryMatchTypeEnumSubstring PasswordDictionaryMatchTypeEnum = "substring"
+)
+
+func NewPasswordDictionaryMatchTypeEnumFromString(s string) (PasswordDictionaryMatchTypeEnum, error) {
+	switch s {
+	case "exact":
+		return PasswordDictionaryMatchTypeEnumExact, nil
+	case "substring":
+		return PasswordDictionaryMatchTypeEnumSubstring, nil
+	}
+	var t PasswordDictionaryMatchTypeEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (p PasswordDictionaryMatchTypeEnum) Ptr() *PasswordDictionaryMatchTypeEnum {
+	return &p
+}
+
 // Controls whether identical consecutive characters are allowed in passwords
 type PasswordIdenticalCharactersPolicyEnum string
 
@@ -6946,10 +7021,12 @@ var (
 	updateConnectionOptionsFieldTokenEndpointJwtcaAudFormat        = big.NewInt(1 << 38)
 	updateConnectionOptionsFieldIDTokenSessionExpirySupported      = big.NewInt(1 << 39)
 	updateConnectionOptionsFieldUseOauthSpecScope                  = big.NewInt(1 << 40)
-	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 41)
-	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 42)
-	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 43)
-	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 44)
+	updateConnectionOptionsFieldClientID                           = big.NewInt(1 << 41)
+	updateConnectionOptionsFieldAllowedAudiences                   = big.NewInt(1 << 42)
+	updateConnectionOptionsFieldDiscoveryURL                       = big.NewInt(1 << 43)
+	updateConnectionOptionsFieldOidcMetadata                       = big.NewInt(1 << 44)
+	updateConnectionOptionsFieldThumbprints                        = big.NewInt(1 << 45)
+	updateConnectionOptionsFieldThumbprintsSha384                  = big.NewInt(1 << 46)
 )
 
 // updateConnectionOptionsNullableFields maps the wire names of UpdateConnectionOptions's nullable fields (required or optional) to their field bits.
@@ -6969,6 +7046,8 @@ var updateConnectionOptionsNullableFields = map[string]*big.Int{
 	"id_token_signed_response_algs":   updateConnectionOptionsFieldIDTokenSignedResponseAlgs,
 	"token_endpoint_auth_method":      updateConnectionOptionsFieldTokenEndpointAuthMethod,
 	"token_endpoint_auth_signing_alg": updateConnectionOptionsFieldTokenEndpointAuthSigningAlg,
+	"client_id":                       updateConnectionOptionsFieldClientID,
+	"allowed_audiences":               updateConnectionOptionsFieldAllowedAudiences,
 	"discovery_url":                   updateConnectionOptionsFieldDiscoveryURL,
 	"oidc_metadata":                   updateConnectionOptionsFieldOidcMetadata,
 }
@@ -7022,10 +7101,14 @@ type UpdateConnectionOptions struct {
 	TokenEndpointJwtcaAudFormat        *ConnectionTokenEndpointJwtcaAudFormatEnumOidc `json:"token_endpoint_jwtca_aud_format,omitempty" url:"token_endpoint_jwtca_aud_format,omitempty"`
 	IDTokenSessionExpirySupported      *ConnectionIDTokenSessionExpirySupported       `json:"id_token_session_expiry_supported,omitempty" url:"id_token_session_expiry_supported,omitempty"`
 	UseOauthSpecScope                  *ConnectionUseOauthSpecScope                   `json:"useOauthSpecScope,omitempty" url:"useOauthSpecScope,omitempty"`
-	DiscoveryURL                       *ConnectionsDiscoveryURL                       `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
-	OidcMetadata                       *ConnectionsOidcMetadata                       `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
-	Thumbprints                        *ConnectionThumbprints                         `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
-	ThumbprintsSha384                  *ConnectionThumbprintsSha384                   `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
+	// The client ID registered with the identity provider
+	ClientID *string `json:"client_id,omitempty" url:"client_id,omitempty"`
+	// Additional Google client IDs accepted as the `aud` (audience) of Google ID tokens, used by Google native login and Google Streamlined Linking.
+	AllowedAudiences  []string                     `json:"allowed_audiences,omitempty" url:"allowed_audiences,omitempty"`
+	DiscoveryURL      *ConnectionsDiscoveryURL     `json:"discovery_url,omitempty" url:"discovery_url,omitempty"`
+	OidcMetadata      *ConnectionsOidcMetadata     `json:"oidc_metadata,omitempty" url:"oidc_metadata,omitempty"`
+	Thumbprints       *ConnectionThumbprints       `json:"thumbprints,omitempty" url:"thumbprints,omitempty"`
+	ThumbprintsSha384 *ConnectionThumbprintsSha384 `json:"thumbprints_sha384,omitempty" url:"thumbprints_sha384,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -7320,6 +7403,20 @@ func (u *UpdateConnectionOptions) GetUseOauthSpecScope() ConnectionUseOauthSpecS
 		return false
 	}
 	return *u.UseOauthSpecScope
+}
+
+func (u *UpdateConnectionOptions) GetClientID() string {
+	if u == nil || u.ClientID == nil {
+		return ""
+	}
+	return *u.ClientID
+}
+
+func (u *UpdateConnectionOptions) GetAllowedAudiences() []string {
+	if u == nil || u.AllowedAudiences == nil {
+		return nil
+	}
+	return u.AllowedAudiences
 }
 
 func (u *UpdateConnectionOptions) GetDiscoveryURL() ConnectionsDiscoveryURL {
@@ -7651,6 +7748,20 @@ func (u *UpdateConnectionOptions) SetIDTokenSessionExpirySupported(idTokenSessio
 func (u *UpdateConnectionOptions) SetUseOauthSpecScope(useOauthSpecScope *ConnectionUseOauthSpecScope) {
 	u.UseOauthSpecScope = useOauthSpecScope
 	u.require(updateConnectionOptionsFieldUseOauthSpecScope)
+}
+
+// SetClientID sets the ClientID field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetClientID(clientID *string) {
+	u.ClientID = clientID
+	u.require(updateConnectionOptionsFieldClientID)
+}
+
+// SetAllowedAudiences sets the AllowedAudiences field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateConnectionOptions) SetAllowedAudiences(allowedAudiences []string) {
+	u.AllowedAudiences = allowedAudiences
+	u.require(updateConnectionOptionsFieldAllowedAudiences)
 }
 
 // SetDiscoveryURL sets the DiscoveryURL field and marks it as non-optional;

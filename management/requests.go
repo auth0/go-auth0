@@ -1951,7 +1951,8 @@ var (
 	createSelfServiceProfileSSOTicketRequestContentFieldProvisioningConfig           = big.NewInt(1 << 6)
 	createSelfServiceProfileSSOTicketRequestContentFieldUseForOrganizationDiscovery  = big.NewInt(1 << 7)
 	createSelfServiceProfileSSOTicketRequestContentFieldThirdPartyClientAccessConfig = big.NewInt(1 << 8)
-	createSelfServiceProfileSSOTicketRequestContentFieldEnabledFeatures              = big.NewInt(1 << 9)
+	createSelfServiceProfileSSOTicketRequestContentFieldUniversalLogoutConfig        = big.NewInt(1 << 9)
+	createSelfServiceProfileSSOTicketRequestContentFieldEnabledFeatures              = big.NewInt(1 << 10)
 )
 
 type CreateSelfServiceProfileSSOTicketRequestContent struct {
@@ -1967,9 +1968,10 @@ type CreateSelfServiceProfileSSOTicketRequestContent struct {
 	DomainAliasesConfig *SelfServiceProfileSSOTicketDomainAliasesConfig `json:"domain_aliases_config,omitempty" url:"-"`
 	ProvisioningConfig  *SelfServiceProfileSSOTicketProvisioningConfig  `json:"provisioning_config,omitempty" url:"-"`
 	// Indicates whether a verified domain should be used for organization discovery during authentication.
-	UseForOrganizationDiscovery  *bool                                       `json:"use_for_organization_discovery,omitempty" url:"-"`
-	ThirdPartyClientAccessConfig *ThirdPartyClientAccessConfig               `json:"third_party_client_access_config,omitempty" url:"-"`
-	EnabledFeatures              *SelfServiceProfileSSOTicketEnabledFeatures `json:"enabled_features,omitempty" url:"-"`
+	UseForOrganizationDiscovery  *bool                                             `json:"use_for_organization_discovery,omitempty" url:"-"`
+	ThirdPartyClientAccessConfig *ThirdPartyClientAccessConfig                     `json:"third_party_client_access_config,omitempty" url:"-"`
+	UniversalLogoutConfig        *SelfServiceProfileSSOTicketUniversalLogoutConfig `json:"universal_logout_config,omitempty" url:"-"`
+	EnabledFeatures              *SelfServiceProfileSSOTicketEnabledFeatures       `json:"enabled_features,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
 	explicitFields *big.Int `json:"-" url:"-"`
@@ -2045,6 +2047,13 @@ func (c *CreateSelfServiceProfileSSOTicketRequestContent) SetUseForOrganizationD
 func (c *CreateSelfServiceProfileSSOTicketRequestContent) SetThirdPartyClientAccessConfig(thirdPartyClientAccessConfig *ThirdPartyClientAccessConfig) {
 	c.ThirdPartyClientAccessConfig = thirdPartyClientAccessConfig
 	c.require(createSelfServiceProfileSSOTicketRequestContentFieldThirdPartyClientAccessConfig)
+}
+
+// SetUniversalLogoutConfig sets the UniversalLogoutConfig field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateSelfServiceProfileSSOTicketRequestContent) SetUniversalLogoutConfig(universalLogoutConfig *SelfServiceProfileSSOTicketUniversalLogoutConfig) {
+	c.UniversalLogoutConfig = universalLogoutConfig
+	c.require(createSelfServiceProfileSSOTicketRequestContentFieldUniversalLogoutConfig)
 }
 
 // SetEnabledFeatures sets the EnabledFeatures field and marks it as non-optional;
@@ -3328,7 +3337,7 @@ type CreateEmailProviderRequestContent struct {
 	Enabled *bool `json:"enabled,omitempty" url:"-"`
 	// Email address to use as "from" when no other address specified.
 	DefaultFromAddress *string                                                `json:"default_from_address,omitempty" url:"-"`
-	Credentials        *EmailProviderCredentialsSchema                        `json:"credentials" url:"-"`
+	Credentials        *EmailProviderCredentialsSchema                        `json:"credentials,omitempty" url:"-"`
 	Settings           *EmailSpecificProviderSettingsWithAdditionalProperties `json:"settings,omitempty" url:"-"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -3709,9 +3718,10 @@ var (
 	createClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 55)
 	createClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 56)
 	createClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 57)
-	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 58)
-	createClientRequestContentFieldAgentID                                        = big.NewInt(1 << 59)
-	createClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 60)
+	createClientRequestContentFieldGoogleAccountLinking                           = big.NewInt(1 << 58)
+	createClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 59)
+	createClientRequestContentFieldAgentID                                        = big.NewInt(1 << 60)
+	createClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 61)
 )
 
 type CreateClientRequestContent struct {
@@ -3804,6 +3814,7 @@ type CreateClientRequestContent struct {
 	ExpressConfiguration                     *ExpressConfiguration                                         `json:"express_configuration,omitempty" url:"-"`
 	B2BIntegrationConfiguration              *B2BIntegrationConfiguration                                  `json:"b2b_integration_configuration,omitempty" url:"-"`
 	MyOrganizationConfiguration              *ClientMyOrganizationPostConfiguration                        `json:"my_organization_configuration,omitempty" url:"-"`
+	GoogleAccountLinking                     *GoogleAccountLinkingConfigurationCreate                      `json:"google_account_linking,omitempty" url:"-"`
 	AsyncApprovalNotificationChannels        *ClientAsyncApprovalNotificationsChannelsAPIPostConfiguration `json:"async_approval_notification_channels,omitempty" url:"-"`
 	// ID of the agent to associate with this client.
 	AgentID     *string                `json:"agent_id,omitempty" url:"-"`
@@ -4226,6 +4237,13 @@ func (c *CreateClientRequestContent) SetB2BIntegrationConfiguration(b2BIntegrati
 func (c *CreateClientRequestContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationPostConfiguration) {
 	c.MyOrganizationConfiguration = myOrganizationConfiguration
 	c.require(createClientRequestContentFieldMyOrganizationConfiguration)
+}
+
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (c *CreateClientRequestContent) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfigurationCreate) {
+	c.GoogleAccountLinking = googleAccountLinking
+	c.require(createClientRequestContentFieldGoogleAccountLinking)
 }
 
 // SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
@@ -7406,7 +7424,7 @@ type GetUserGroupsRequestParameters struct {
 	Fields *string `json:"-" url:"fields,omitempty"`
 	// Whether specified fields are to be included (true) or excluded (false).
 	IncludeFields *bool `json:"-" url:"include_fields,omitempty"`
-	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default).
+	// Return results inside an object that contains the total result count (true) or as a direct array of results (false, default). The returned total reflects at most 1,000 results.
 	IncludeTotals *bool `json:"-" url:"include_totals,omitempty"`
 	// Optional Id from which to start selection.
 	From *string `json:"-" url:"from,omitempty"`
@@ -19205,11 +19223,12 @@ var (
 	updateClientRequestContentFieldExpressConfiguration                           = big.NewInt(1 << 53)
 	updateClientRequestContentFieldB2BIntegrationConfiguration                    = big.NewInt(1 << 54)
 	updateClientRequestContentFieldMyOrganizationConfiguration                    = big.NewInt(1 << 55)
-	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 56)
-	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 57)
-	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 58)
-	updateClientRequestContentFieldAgentID                                        = big.NewInt(1 << 59)
-	updateClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 60)
+	updateClientRequestContentFieldGoogleAccountLinking                           = big.NewInt(1 << 56)
+	updateClientRequestContentFieldAsyncApprovalNotificationChannels              = big.NewInt(1 << 57)
+	updateClientRequestContentFieldThirdPartySecurityMode                         = big.NewInt(1 << 58)
+	updateClientRequestContentFieldRedirectionPolicy                              = big.NewInt(1 << 59)
+	updateClientRequestContentFieldAgentID                                        = big.NewInt(1 << 60)
+	updateClientRequestContentFieldOidcSupport                                    = big.NewInt(1 << 61)
 )
 
 type UpdateClientRequestContent struct {
@@ -19302,6 +19321,7 @@ type UpdateClientRequestContent struct {
 	ExpressConfiguration              *ExpressConfigurationOrNull                                    `json:"express_configuration,omitempty" url:"-"`
 	B2BIntegrationConfiguration       *B2BIntegrationConfiguration                                   `json:"b2b_integration_configuration,omitempty" url:"-"`
 	MyOrganizationConfiguration       *ClientMyOrganizationPatchConfiguration                        `json:"my_organization_configuration,omitempty" url:"-"`
+	GoogleAccountLinking              *GoogleAccountLinkingConfigurationOrNull                       `json:"google_account_linking,omitempty" url:"-"`
 	AsyncApprovalNotificationChannels *ClientAsyncApprovalNotificationsChannelsAPIPatchConfiguration `json:"async_approval_notification_channels,omitempty" url:"-"`
 	ThirdPartySecurityMode            *ClientThirdPartySecurityModeEnum                              `json:"third_party_security_mode,omitempty" url:"-"`
 	RedirectionPolicy                 *ClientRedirectionPolicyEnum                                   `json:"redirection_policy,omitempty" url:"-"`
@@ -19712,6 +19732,13 @@ func (u *UpdateClientRequestContent) SetB2BIntegrationConfiguration(b2BIntegrati
 func (u *UpdateClientRequestContent) SetMyOrganizationConfiguration(myOrganizationConfiguration *ClientMyOrganizationPatchConfiguration) {
 	u.MyOrganizationConfiguration = myOrganizationConfiguration
 	u.require(updateClientRequestContentFieldMyOrganizationConfiguration)
+}
+
+// SetGoogleAccountLinking sets the GoogleAccountLinking field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (u *UpdateClientRequestContent) SetGoogleAccountLinking(googleAccountLinking *GoogleAccountLinkingConfigurationOrNull) {
+	u.GoogleAccountLinking = googleAccountLinking
+	u.require(updateClientRequestContentFieldGoogleAccountLinking)
 }
 
 // SetAsyncApprovalNotificationChannels sets the AsyncApprovalNotificationChannels field and marks it as non-optional;
