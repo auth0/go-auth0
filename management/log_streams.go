@@ -3720,26 +3720,29 @@ func (l *LogStreamFilter) String() string {
 type LogStreamFilterGroupNameEnum string
 
 const (
-	LogStreamFilterGroupNameEnumAuthLoginFail            LogStreamFilterGroupNameEnum = "auth.login.fail"
-	LogStreamFilterGroupNameEnumAuthLoginNotification    LogStreamFilterGroupNameEnum = "auth.login.notification"
-	LogStreamFilterGroupNameEnumAuthLoginSuccess         LogStreamFilterGroupNameEnum = "auth.login.success"
-	LogStreamFilterGroupNameEnumAuthLogoutFail           LogStreamFilterGroupNameEnum = "auth.logout.fail"
-	LogStreamFilterGroupNameEnumAuthLogoutSuccess        LogStreamFilterGroupNameEnum = "auth.logout.success"
-	LogStreamFilterGroupNameEnumAuthSignupFail           LogStreamFilterGroupNameEnum = "auth.signup.fail"
-	LogStreamFilterGroupNameEnumAuthSignupSuccess        LogStreamFilterGroupNameEnum = "auth.signup.success"
-	LogStreamFilterGroupNameEnumAuthSilentAuthFail       LogStreamFilterGroupNameEnum = "auth.silent_auth.fail"
-	LogStreamFilterGroupNameEnumAuthSilentAuthSuccess    LogStreamFilterGroupNameEnum = "auth.silent_auth.success"
-	LogStreamFilterGroupNameEnumAuthTokenExchangeFail    LogStreamFilterGroupNameEnum = "auth.token_exchange.fail"
-	LogStreamFilterGroupNameEnumAuthTokenExchangeSuccess LogStreamFilterGroupNameEnum = "auth.token_exchange.success"
-	LogStreamFilterGroupNameEnumManagementFail           LogStreamFilterGroupNameEnum = "management.fail"
-	LogStreamFilterGroupNameEnumManagementSuccess        LogStreamFilterGroupNameEnum = "management.success"
-	LogStreamFilterGroupNameEnumSCIMEvent                LogStreamFilterGroupNameEnum = "scim.event"
-	LogStreamFilterGroupNameEnumSystemNotification       LogStreamFilterGroupNameEnum = "system.notification"
-	LogStreamFilterGroupNameEnumUserFail                 LogStreamFilterGroupNameEnum = "user.fail"
-	LogStreamFilterGroupNameEnumUserNotification         LogStreamFilterGroupNameEnum = "user.notification"
-	LogStreamFilterGroupNameEnumUserSuccess              LogStreamFilterGroupNameEnum = "user.success"
-	LogStreamFilterGroupNameEnumActions                  LogStreamFilterGroupNameEnum = "actions"
-	LogStreamFilterGroupNameEnumOther                    LogStreamFilterGroupNameEnum = "other"
+	LogStreamFilterGroupNameEnumAuthLoginFail                  LogStreamFilterGroupNameEnum = "auth.login.fail"
+	LogStreamFilterGroupNameEnumAuthLoginNotification          LogStreamFilterGroupNameEnum = "auth.login.notification"
+	LogStreamFilterGroupNameEnumAuthLoginSuccess               LogStreamFilterGroupNameEnum = "auth.login.success"
+	LogStreamFilterGroupNameEnumAuthLogoutFail                 LogStreamFilterGroupNameEnum = "auth.logout.fail"
+	LogStreamFilterGroupNameEnumAuthLogoutSuccess              LogStreamFilterGroupNameEnum = "auth.logout.success"
+	LogStreamFilterGroupNameEnumAuthSignupFail                 LogStreamFilterGroupNameEnum = "auth.signup.fail"
+	LogStreamFilterGroupNameEnumAuthSignupSuccess              LogStreamFilterGroupNameEnum = "auth.signup.success"
+	LogStreamFilterGroupNameEnumAuthSilentAuthFail             LogStreamFilterGroupNameEnum = "auth.silent_auth.fail"
+	LogStreamFilterGroupNameEnumAuthSilentAuthSuccess          LogStreamFilterGroupNameEnum = "auth.silent_auth.success"
+	LogStreamFilterGroupNameEnumAuthTokenExchangeFail          LogStreamFilterGroupNameEnum = "auth.token_exchange.fail"
+	LogStreamFilterGroupNameEnumAuthTokenExchangeSuccess       LogStreamFilterGroupNameEnum = "auth.token_exchange.success"
+	LogStreamFilterGroupNameEnumManagementFail                 LogStreamFilterGroupNameEnum = "management.fail"
+	LogStreamFilterGroupNameEnumManagementSuccess              LogStreamFilterGroupNameEnum = "management.success"
+	LogStreamFilterGroupNameEnumSCIMEvent                      LogStreamFilterGroupNameEnum = "scim.event"
+	LogStreamFilterGroupNameEnumSystemNotification             LogStreamFilterGroupNameEnum = "system.notification"
+	LogStreamFilterGroupNameEnumUserFail                       LogStreamFilterGroupNameEnum = "user.fail"
+	LogStreamFilterGroupNameEnumUserNotification               LogStreamFilterGroupNameEnum = "user.notification"
+	LogStreamFilterGroupNameEnumUserSuccess                    LogStreamFilterGroupNameEnum = "user.success"
+	LogStreamFilterGroupNameEnumActions                        LogStreamFilterGroupNameEnum = "actions"
+	LogStreamFilterGroupNameEnumAgentGatewayAuthenticationFail LogStreamFilterGroupNameEnum = "agent_gateway.authentication.fail"
+	LogStreamFilterGroupNameEnumAgentGatewayOperationFail      LogStreamFilterGroupNameEnum = "agent_gateway.operation.fail"
+	LogStreamFilterGroupNameEnumAgentGatewayOperationSuccess   LogStreamFilterGroupNameEnum = "agent_gateway.operation.success"
+	LogStreamFilterGroupNameEnumOther                          LogStreamFilterGroupNameEnum = "other"
 )
 
 func NewLogStreamFilterGroupNameEnumFromString(s string) (LogStreamFilterGroupNameEnum, error) {
@@ -3782,6 +3785,12 @@ func NewLogStreamFilterGroupNameEnumFromString(s string) (LogStreamFilterGroupNa
 		return LogStreamFilterGroupNameEnumUserSuccess, nil
 	case "actions":
 		return LogStreamFilterGroupNameEnumActions, nil
+	case "agent_gateway.authentication.fail":
+		return LogStreamFilterGroupNameEnumAgentGatewayAuthenticationFail, nil
+	case "agent_gateway.operation.fail":
+		return LogStreamFilterGroupNameEnumAgentGatewayOperationFail, nil
+	case "agent_gateway.operation.success":
+		return LogStreamFilterGroupNameEnumAgentGatewayOperationSuccess, nil
 	case "other":
 		return LogStreamFilterGroupNameEnumOther, nil
 	}

@@ -2300,6 +2300,14 @@ func TestSettersClient(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetGoogleAccountLinking", func(t *testing.T) {
+		obj := &Client{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+		assert.Equal(t, fernTestValueGoogleAccountLinking, obj.GoogleAccountLinking)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
 		obj := &Client{}
 		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
@@ -4377,6 +4385,40 @@ func TestGettersClient(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetGoogleAccountLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var value GoogleAccountLinkingConfiguration
+		obj.GoogleAccountLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleAccountLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		obj.GoogleAccountLinking = nil
+		var expectedZero GoogleAccountLinkingConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleAccountLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *Client
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleAccountLinking() // Should return zero value
 	})
 
 	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
@@ -6633,6 +6675,37 @@ func TestSettersMarkExplicitClient(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGoogleAccountLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &Client{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+
+		// Act
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -21440,6 +21513,14 @@ func TestSettersClientSearchResponse(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetGoogleAccountLinking", func(t *testing.T) {
+		obj := &ClientSearchResponse{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+		assert.Equal(t, fernTestValueGoogleAccountLinking, obj.GoogleAccountLinking)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
 		obj := &ClientSearchResponse{}
 		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
@@ -23381,6 +23462,40 @@ func TestGettersClientSearchResponse(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetGoogleAccountLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var value GoogleAccountLinkingConfiguration
+		obj.GoogleAccountLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleAccountLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		obj.GoogleAccountLinking = nil
+		var expectedZero GoogleAccountLinkingConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleAccountLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ClientSearchResponse
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleAccountLinking() // Should return zero value
 	})
 
 	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
@@ -25513,6 +25628,37 @@ func TestSettersMarkExplicitClientSearchResponse(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGoogleAccountLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ClientSearchResponse{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+
+		// Act
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -28401,6 +28547,14 @@ func TestSettersCreateClientResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetGoogleAccountLinking", func(t *testing.T) {
+		obj := &CreateClientResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+		assert.Equal(t, fernTestValueGoogleAccountLinking, obj.GoogleAccountLinking)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
 		obj := &CreateClientResponseContent{}
 		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
@@ -30478,6 +30632,40 @@ func TestGettersCreateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetGoogleAccountLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var value GoogleAccountLinkingConfiguration
+		obj.GoogleAccountLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleAccountLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		obj.GoogleAccountLinking = nil
+		var expectedZero GoogleAccountLinkingConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleAccountLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *CreateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleAccountLinking() // Should return zero value
 	})
 
 	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
@@ -32757,6 +32945,37 @@ func TestSettersMarkExplicitCreateClientResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetGoogleAccountLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &CreateClientResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+
+		// Act
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -33408,6 +33627,14 @@ func TestSettersExpressConfiguration(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetOktaOinListingURL", func(t *testing.T) {
+		obj := &ExpressConfiguration{}
+		var fernTestValueOktaOinListingURL *string
+		obj.SetOktaOinListingURL(fernTestValueOktaOinListingURL)
+		assert.Equal(t, fernTestValueOktaOinListingURL, obj.OktaOinListingURL)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 }
 
 func TestGettersExpressConfiguration(t *testing.T) {
@@ -33637,6 +33864,40 @@ func TestGettersExpressConfiguration(t *testing.T) {
 			}
 		}()
 		_ = obj.GetOinSubmissionID() // Should return zero value
+	})
+
+	t.Run("GetOktaOinListingURL", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExpressConfiguration{}
+		var value string
+		obj.OktaOinListingURL = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOktaOinListingURL(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOktaOinListingURL_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExpressConfiguration{}
+		obj.OktaOinListingURL = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOktaOinListingURL(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOktaOinListingURL_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExpressConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOktaOinListingURL() // Should return zero value
 	})
 
 }
@@ -33921,6 +34182,37 @@ func TestSettersMarkExplicitExpressConfiguration(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetOktaOinListingURL_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExpressConfiguration{}
+		var fernTestValueOktaOinListingURL *string
+
+		// Act
+		obj.SetOktaOinListingURL(fernTestValueOktaOinListingURL)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 }
 
 func TestSettersExpressConfigurationOrNull(t *testing.T) {
@@ -33993,6 +34285,14 @@ func TestSettersExpressConfigurationOrNull(t *testing.T) {
 		var fernTestValueOinSubmissionID *string
 		obj.SetOinSubmissionID(fernTestValueOinSubmissionID)
 		assert.Equal(t, fernTestValueOinSubmissionID, obj.OinSubmissionID)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetOktaOinListingURL", func(t *testing.T) {
+		obj := &ExpressConfigurationOrNull{}
+		var fernTestValueOktaOinListingURL *string
+		obj.SetOktaOinListingURL(fernTestValueOktaOinListingURL)
+		assert.Equal(t, fernTestValueOktaOinListingURL, obj.OktaOinListingURL)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -34225,6 +34525,40 @@ func TestGettersExpressConfigurationOrNull(t *testing.T) {
 			}
 		}()
 		_ = obj.GetOinSubmissionID() // Should return zero value
+	})
+
+	t.Run("GetOktaOinListingURL", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExpressConfigurationOrNull{}
+		var value string
+		obj.OktaOinListingURL = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetOktaOinListingURL(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetOktaOinListingURL_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExpressConfigurationOrNull{}
+		obj.OktaOinListingURL = nil
+		var expectedZero string
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetOktaOinListingURL(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetOktaOinListingURL_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *ExpressConfigurationOrNull
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetOktaOinListingURL() // Should return zero value
 	})
 
 }
@@ -34486,6 +34820,37 @@ func TestSettersMarkExplicitExpressConfigurationOrNull(t *testing.T) {
 
 		// Act
 		obj.SetOinSubmissionID(fernTestValueOinSubmissionID)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetOktaOinListingURL_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &ExpressConfigurationOrNull{}
+		var fernTestValueOktaOinListingURL *string
+
+		// Act
+		obj.SetOktaOinListingURL(fernTestValueOktaOinListingURL)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -35301,6 +35666,14 @@ func TestSettersGetClientResponseContent(t *testing.T) {
 		var fernTestValueMyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
 		assert.Equal(t, fernTestValueMyOrganizationConfiguration, obj.MyOrganizationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetGoogleAccountLinking", func(t *testing.T) {
+		obj := &GetClientResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+		assert.Equal(t, fernTestValueGoogleAccountLinking, obj.GoogleAccountLinking)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -37381,6 +37754,40 @@ func TestGettersGetClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetGoogleAccountLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var value GoogleAccountLinkingConfiguration
+		obj.GoogleAccountLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleAccountLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		obj.GoogleAccountLinking = nil
+		var expectedZero GoogleAccountLinkingConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleAccountLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GetClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleAccountLinking() // Should return zero value
 	})
 
 	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
@@ -39660,6 +40067,37 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetGoogleAccountLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GetClientResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+
+		// Act
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -40071,6 +40509,252 @@ func TestSettersMarkExplicitGetClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetJwksURI(fernTestValueJwksURI)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersGoogleAccountLinkingConfiguration(t *testing.T) {
+	t.Run("SetAllowStreamlinedLinking", func(t *testing.T) {
+		obj := &GoogleAccountLinkingConfiguration{}
+		var fernTestValueAllowStreamlinedLinking *bool
+		obj.SetAllowStreamlinedLinking(fernTestValueAllowStreamlinedLinking)
+		assert.Equal(t, fernTestValueAllowStreamlinedLinking, obj.AllowStreamlinedLinking)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersGoogleAccountLinkingConfiguration(t *testing.T) {
+	t.Run("GetAllowStreamlinedLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfiguration{}
+		var value bool
+		obj.AllowStreamlinedLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowStreamlinedLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowStreamlinedLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfiguration{}
+		obj.AllowStreamlinedLinking = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowStreamlinedLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowStreamlinedLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfiguration
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowStreamlinedLinking() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitGoogleAccountLinkingConfiguration(t *testing.T) {
+	t.Run("SetAllowStreamlinedLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfiguration{}
+		var fernTestValueAllowStreamlinedLinking *bool
+
+		// Act
+		obj.SetAllowStreamlinedLinking(fernTestValueAllowStreamlinedLinking)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersGoogleAccountLinkingConfigurationCreate(t *testing.T) {
+	t.Run("SetAllowStreamlinedLinking", func(t *testing.T) {
+		obj := &GoogleAccountLinkingConfigurationCreate{}
+		var fernTestValueAllowStreamlinedLinking *bool
+		obj.SetAllowStreamlinedLinking(fernTestValueAllowStreamlinedLinking)
+		assert.Equal(t, fernTestValueAllowStreamlinedLinking, obj.AllowStreamlinedLinking)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersGoogleAccountLinkingConfigurationCreate(t *testing.T) {
+	t.Run("GetAllowStreamlinedLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationCreate{}
+		var value bool
+		obj.AllowStreamlinedLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowStreamlinedLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowStreamlinedLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationCreate{}
+		obj.AllowStreamlinedLinking = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowStreamlinedLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowStreamlinedLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfigurationCreate
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowStreamlinedLinking() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitGoogleAccountLinkingConfigurationCreate(t *testing.T) {
+	t.Run("SetAllowStreamlinedLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationCreate{}
+		var fernTestValueAllowStreamlinedLinking *bool
+
+		// Act
+		obj.SetAllowStreamlinedLinking(fernTestValueAllowStreamlinedLinking)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersGoogleAccountLinkingConfigurationOrNull(t *testing.T) {
+	t.Run("SetAllowStreamlinedLinking", func(t *testing.T) {
+		obj := &GoogleAccountLinkingConfigurationOrNull{}
+		var fernTestValueAllowStreamlinedLinking *bool
+		obj.SetAllowStreamlinedLinking(fernTestValueAllowStreamlinedLinking)
+		assert.Equal(t, fernTestValueAllowStreamlinedLinking, obj.AllowStreamlinedLinking)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersGoogleAccountLinkingConfigurationOrNull(t *testing.T) {
+	t.Run("GetAllowStreamlinedLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationOrNull{}
+		var value bool
+		obj.AllowStreamlinedLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetAllowStreamlinedLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetAllowStreamlinedLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationOrNull{}
+		obj.AllowStreamlinedLinking = nil
+		var expectedZero bool
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetAllowStreamlinedLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetAllowStreamlinedLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfigurationOrNull
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowStreamlinedLinking() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitGoogleAccountLinkingConfigurationOrNull(t *testing.T) {
+	t.Run("SetAllowStreamlinedLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationOrNull{}
+		var fernTestValueAllowStreamlinedLinking *bool
+
+		// Act
+		obj.SetAllowStreamlinedLinking(fernTestValueAllowStreamlinedLinking)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -43037,6 +43721,14 @@ func TestSettersRotateClientSecretResponseContent(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
+	t.Run("SetGoogleAccountLinking", func(t *testing.T) {
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+		assert.Equal(t, fernTestValueGoogleAccountLinking, obj.GoogleAccountLinking)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
 		obj := &RotateClientSecretResponseContent{}
 		var fernTestValueIdentityAssertionAuthorizationGrant *IdentityAssertionAuthorizationGrant
@@ -45114,6 +45806,40 @@ func TestGettersRotateClientSecretResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetGoogleAccountLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var value GoogleAccountLinkingConfiguration
+		obj.GoogleAccountLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleAccountLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		obj.GoogleAccountLinking = nil
+		var expectedZero GoogleAccountLinkingConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleAccountLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateClientSecretResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleAccountLinking() // Should return zero value
 	})
 
 	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
@@ -47393,6 +48119,37 @@ func TestSettersMarkExplicitRotateClientSecretResponseContent(t *testing.T) {
 		// It verifies that setting a field via setter allows successful JSON round-trip
 	})
 
+	t.Run("SetGoogleAccountLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateClientSecretResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+
+		// Act
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetIdentityAssertionAuthorizationGrant_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -48659,6 +49416,14 @@ func TestSettersUpdateClientResponseContent(t *testing.T) {
 		var fernTestValueMyOrganizationConfiguration *ClientMyOrganizationResponseConfiguration
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
 		assert.Equal(t, fernTestValueMyOrganizationConfiguration, obj.MyOrganizationConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+	t.Run("SetGoogleAccountLinking", func(t *testing.T) {
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
+		assert.Equal(t, fernTestValueGoogleAccountLinking, obj.GoogleAccountLinking)
 		assert.NotNil(t, obj.explicitFields)
 	})
 
@@ -50739,6 +51504,40 @@ func TestGettersUpdateClientResponseContent(t *testing.T) {
 			}
 		}()
 		_ = obj.GetMyOrganizationConfiguration() // Should return zero value
+	})
+
+	t.Run("GetGoogleAccountLinking", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var value GoogleAccountLinkingConfiguration
+		obj.GoogleAccountLinking = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetGoogleAccountLinking(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		obj.GoogleAccountLinking = nil
+		var expectedZero GoogleAccountLinkingConfiguration
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetGoogleAccountLinking(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetGoogleAccountLinking_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *UpdateClientResponseContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetGoogleAccountLinking() // Should return zero value
 	})
 
 	t.Run("GetIdentityAssertionAuthorizationGrant", func(t *testing.T) {
@@ -52995,6 +53794,37 @@ func TestSettersMarkExplicitUpdateClientResponseContent(t *testing.T) {
 
 		// Act
 		obj.SetMyOrganizationConfiguration(fernTestValueMyOrganizationConfiguration)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+	t.Run("SetGoogleAccountLinking_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &UpdateClientResponseContent{}
+		var fernTestValueGoogleAccountLinking *GoogleAccountLinkingConfiguration
+
+		// Act
+		obj.SetGoogleAccountLinking(fernTestValueGoogleAccountLinking)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -56437,6 +57267,105 @@ func TestJSONMarshalingGetClientResponseContent(t *testing.T) {
 	})
 }
 
+func TestJSONMarshalingGoogleAccountLinkingConfiguration(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfiguration{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled GoogleAccountLinkingConfiguration
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj GoogleAccountLinkingConfiguration
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj GoogleAccountLinkingConfiguration
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingGoogleAccountLinkingConfigurationCreate(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationCreate{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled GoogleAccountLinkingConfigurationCreate
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj GoogleAccountLinkingConfigurationCreate
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj GoogleAccountLinkingConfigurationCreate
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
+func TestJSONMarshalingGoogleAccountLinkingConfigurationOrNull(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &GoogleAccountLinkingConfigurationOrNull{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled GoogleAccountLinkingConfigurationOrNull
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj GoogleAccountLinkingConfigurationOrNull
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj GoogleAccountLinkingConfigurationOrNull
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingIdentityAssertionAuthorizationGrant(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -58996,6 +59925,54 @@ func TestStringGetClientResponseContent(t *testing.T) {
 	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetClientResponseContent
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringGoogleAccountLinkingConfiguration(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &GoogleAccountLinkingConfiguration{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfiguration
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringGoogleAccountLinkingConfigurationCreate(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &GoogleAccountLinkingConfigurationCreate{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfigurationCreate
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
+func TestStringGoogleAccountLinkingConfigurationOrNull(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &GoogleAccountLinkingConfigurationOrNull{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfigurationOrNull
 		result := obj.String()
 		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
 	})
@@ -62577,6 +63554,75 @@ func TestExtraPropertiesGetClientResponseContent(t *testing.T) {
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *GetClientResponseContent
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesGoogleAccountLinkingConfiguration(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &GoogleAccountLinkingConfiguration{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfiguration
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesGoogleAccountLinkingConfigurationCreate(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &GoogleAccountLinkingConfigurationCreate{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfigurationCreate
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesGoogleAccountLinkingConfigurationOrNull(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &GoogleAccountLinkingConfigurationOrNull{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *GoogleAccountLinkingConfigurationOrNull
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})

@@ -11354,6 +11354,8 @@ const (
 	ClientCredentialAlgorithmEnumRs256 ClientCredentialAlgorithmEnum = "RS256"
 	ClientCredentialAlgorithmEnumRs384 ClientCredentialAlgorithmEnum = "RS384"
 	ClientCredentialAlgorithmEnumPs256 ClientCredentialAlgorithmEnum = "PS256"
+	ClientCredentialAlgorithmEnumEs256 ClientCredentialAlgorithmEnum = "ES256"
+	ClientCredentialAlgorithmEnumPs384 ClientCredentialAlgorithmEnum = "PS384"
 )
 
 func NewClientCredentialAlgorithmEnumFromString(s string) (ClientCredentialAlgorithmEnum, error) {
@@ -11364,6 +11366,10 @@ func NewClientCredentialAlgorithmEnumFromString(s string) (ClientCredentialAlgor
 		return ClientCredentialAlgorithmEnumRs384, nil
 	case "PS256":
 		return ClientCredentialAlgorithmEnumPs256, nil
+	case "ES256":
+		return ClientCredentialAlgorithmEnumEs256, nil
+	case "PS384":
+		return ClientCredentialAlgorithmEnumPs384, nil
 	}
 	var t ClientCredentialAlgorithmEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)
@@ -11815,7 +11821,7 @@ type ConnectionAgentModeAd = bool
 // Version identifier of the installed AD connector agent software (managed by the AD Connector agent).
 type ConnectionAgentVersionAd = string
 
-// List of allowed audiences in the ID token for Google Native Social Login
+// Additional Google client IDs accepted as the `aud` (audience) of Google ID tokens, used by Google native login and Google Streamlined Linking.
 type ConnectionAllowedAudiencesGoogleOAuth2 = []string
 
 type ConnectionAPIEnableGroups = bool
@@ -14123,11 +14129,11 @@ var (
 )
 
 type ConnectionKey struct {
-	// The key id of the signing key
+	// The key id of the signing or encryption key
 	Kid string `json:"kid" url:"kid"`
-	// The public certificate of the signing key
+	// The public certificate of the signing or encryption key
 	Cert string `json:"cert" url:"cert"`
-	// The public certificate of the signing key in pkcs7 format
+	// The public certificate of the signing or encryption key in pkcs7 format
 	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
 	// True if the key is the the current key
 	Current *bool `json:"current,omitempty" url:"current,omitempty"`
@@ -14141,7 +14147,7 @@ type ConnectionKey struct {
 	Fingerprint string `json:"fingerprint" url:"fingerprint"`
 	// The cert thumbprint
 	Thumbprint string `json:"thumbprint" url:"thumbprint"`
-	// Signing key algorithm
+	// Key algorithm: a signing algorithm for signing keys, or a key-management algorithm for encryption keys
 	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
 	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
@@ -14384,7 +14390,7 @@ func (c *ConnectionKey) String() string {
 	return fmt.Sprintf("%#v", c)
 }
 
-// Signing key use, whether for encryption or signing
+// Key use, whether for encryption or signing
 type ConnectionKeyUseEnum string
 
 const (
@@ -100558,6 +100564,26 @@ func (i *ImportEncryptionKeyResponseContent) String() string {
 	return fmt.Sprintf("%#v", i)
 }
 
+// Optional. When set to the exact string `true`, the server computes the stored BSON size of the full user profile and returns it in the `Auth0-User-Profile-Size` response header. When omitted, no size computation occurs and the response header is not emitted. Any present value other than `true` (including `false`, `1`, or an empty string) is rejected with `400 validation_error`.
+type IncludeUserProfileSizeHeaderEnum string
+
+const (
+	IncludeUserProfileSizeHeaderEnumTrue IncludeUserProfileSizeHeaderEnum = "true"
+)
+
+func NewIncludeUserProfileSizeHeaderEnumFromString(s string) (IncludeUserProfileSizeHeaderEnum, error) {
+	switch s {
+	case "true":
+		return IncludeUserProfileSizeHeaderEnumTrue, nil
+	}
+	var t IncludeUserProfileSizeHeaderEnum
+	return "", fmt.Errorf("%s is not a valid %T", s, t)
+}
+
+func (i IncludeUserProfileSizeHeaderEnum) Ptr() *IncludeUserProfileSizeHeaderEnum {
+	return &i
+}
+
 var (
 	integrationFieldID                = big.NewInt(1 << 0)
 	integrationFieldCatalogID         = big.NewInt(1 << 1)
@@ -115089,7 +115115,7 @@ func (p *PostClientCredentialResponseContent) String() string {
 	return fmt.Sprintf("%#v", p)
 }
 
-// Selected Signing Algorithm
+// Selected Signing Algorithm. Only applicable when key_use is "signing".
 type PostConnectionKeysAlgEnum string
 
 const (
@@ -115128,10 +115154,13 @@ func (p PostConnectionKeysAlgEnum) Ptr() *PostConnectionKeysAlgEnum {
 }
 
 var (
-	postConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 0)
+	postConnectionKeysRequestContentFieldKeyUse     = big.NewInt(1 << 0)
+	postConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 1)
 )
 
 type PostConnectionKeysRequestContent struct {
+	// Whether to provision a signing key (default) or an encryption key for the connection.
+	KeyUse     *ConnectionKeyUseEnum      `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SigningAlg *PostConnectionKeysAlgEnum `json:"signing_alg,omitempty" url:"signing_alg,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -115139,6 +115168,13 @@ type PostConnectionKeysRequestContent struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (p *PostConnectionKeysRequestContent) GetKeyUse() ConnectionKeyUseEnum {
+	if p == nil || p.KeyUse == nil {
+		return ""
+	}
+	return *p.KeyUse
 }
 
 func (p *PostConnectionKeysRequestContent) GetSigningAlg() PostConnectionKeysAlgEnum {
@@ -115162,6 +115198,13 @@ func (p *PostConnectionKeysRequestContent) require(field *big.Int) {
 	}
 	next.Or(next, field)
 	p.explicitFields = next
+}
+
+// SetKeyUse sets the KeyUse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (p *PostConnectionKeysRequestContent) SetKeyUse(keyUse *ConnectionKeyUseEnum) {
+	p.KeyUse = keyUse
+	p.require(postConnectionKeysRequestContentFieldKeyUse)
 }
 
 // SetSigningAlg sets the SigningAlg field and marks it as non-optional;
@@ -115230,11 +115273,11 @@ var (
 )
 
 type PostConnectionsKeysResponseContentItem struct {
-	// The key id of the signing key
+	// The key id of the signing or encryption key
 	Kid string `json:"kid" url:"kid"`
-	// The public certificate of the signing key
+	// The public certificate of the signing or encryption key
 	Cert string `json:"cert" url:"cert"`
-	// The public certificate of the signing key in pkcs7 format
+	// The public certificate of the signing or encryption key in pkcs7 format
 	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
 	// True if the key is the current key
 	Current *bool `json:"current,omitempty" url:"current,omitempty"`
@@ -115246,7 +115289,7 @@ type PostConnectionsKeysResponseContentItem struct {
 	Fingerprint string `json:"fingerprint" url:"fingerprint"`
 	// The cert thumbprint
 	Thumbprint string `json:"thumbprint" url:"thumbprint"`
-	// Signing key algorithm
+	// Key algorithm: a signing algorithm for signing keys, or a key-management algorithm for encryption keys
 	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
 	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
@@ -118114,10 +118157,13 @@ func (r *RollbackActionModuleResponseContent) String() string {
 }
 
 var (
-	rotateConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 0)
+	rotateConnectionKeysRequestContentFieldKeyUse     = big.NewInt(1 << 0)
+	rotateConnectionKeysRequestContentFieldSigningAlg = big.NewInt(1 << 1)
 )
 
 type RotateConnectionKeysRequestContent struct {
+	// Whether to rotate the signing key (default) or the encryption key for the connection.
+	KeyUse     *ConnectionKeyUseEnum               `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SigningAlg *RotateConnectionKeysSigningAlgEnum `json:"signing_alg,omitempty" url:"signing_alg,omitempty"`
 
 	// Private bitmask of fields set to an explicit value and therefore not to be omitted
@@ -118125,6 +118171,13 @@ type RotateConnectionKeysRequestContent struct {
 
 	extraProperties map[string]interface{}
 	rawJSON         json.RawMessage
+}
+
+func (r *RotateConnectionKeysRequestContent) GetKeyUse() ConnectionKeyUseEnum {
+	if r == nil || r.KeyUse == nil {
+		return ""
+	}
+	return *r.KeyUse
 }
 
 func (r *RotateConnectionKeysRequestContent) GetSigningAlg() RotateConnectionKeysSigningAlgEnum {
@@ -118148,6 +118201,13 @@ func (r *RotateConnectionKeysRequestContent) require(field *big.Int) {
 	}
 	next.Or(next, field)
 	r.explicitFields = next
+}
+
+// SetKeyUse sets the KeyUse field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (r *RotateConnectionKeysRequestContent) SetKeyUse(keyUse *ConnectionKeyUseEnum) {
+	r.KeyUse = keyUse
+	r.require(rotateConnectionKeysRequestContentFieldKeyUse)
 }
 
 // SetSigningAlg sets the SigningAlg field and marks it as non-optional;
@@ -118199,7 +118259,7 @@ func (r *RotateConnectionKeysRequestContent) String() string {
 	return fmt.Sprintf("%#v", r)
 }
 
-// Selected Signing Algorithm
+// Selected Signing Algorithm. Only applicable when key_use is "signing".
 type RotateConnectionKeysSigningAlgEnum string
 
 const (
@@ -118250,11 +118310,11 @@ var (
 )
 
 type RotateConnectionsKeysResponseContent struct {
-	// The key id of the signing key
+	// The key id of the signing or encryption key
 	Kid string `json:"kid" url:"kid"`
-	// The public certificate of the signing key
+	// The public certificate of the signing or encryption key
 	Cert string `json:"cert" url:"cert"`
-	// The public certificate of the signing key in pkcs7 format
+	// The public certificate of the signing or encryption key in pkcs7 format
 	Pkcs *string `json:"pkcs,omitempty" url:"pkcs,omitempty"`
 	// True if the key is the the next key
 	Next *bool `json:"next,omitempty" url:"next,omitempty"`
@@ -118262,7 +118322,7 @@ type RotateConnectionsKeysResponseContent struct {
 	Fingerprint string `json:"fingerprint" url:"fingerprint"`
 	// The cert thumbprint
 	Thumbprint string `json:"thumbprint" url:"thumbprint"`
-	// Signing key algorithm
+	// Key algorithm: a signing algorithm for signing keys, or a key-management algorithm for encryption keys
 	Algorithm *string               `json:"algorithm,omitempty" url:"algorithm,omitempty"`
 	KeyUse    *ConnectionKeyUseEnum `json:"key_use,omitempty" url:"key_use,omitempty"`
 	SubjectDn *string               `json:"subject_dn,omitempty" url:"subject_dn,omitempty"`
@@ -121969,6 +122029,94 @@ func NewSelfServiceProfileSSOTicketProvisioningScopeEnumFromString(s string) (Se
 
 func (s SelfServiceProfileSSOTicketProvisioningScopeEnum) Ptr() *SelfServiceProfileSSOTicketProvisioningScopeEnum {
 	return &s
+}
+
+var (
+	selfServiceProfileSSOTicketUniversalLogoutConfigFieldAllowConfiguration = big.NewInt(1 << 0)
+)
+
+// Configuration for the setup of Universal Logout in the Self-Service Enterprise Configuration flow.
+type SelfServiceProfileSSOTicketUniversalLogoutConfig struct {
+	// Whether the end user can set up Universal Logout during the Self-Service Enterprise Configuration flow.
+	AllowConfiguration bool `json:"allow_configuration" url:"allow_configuration"`
+
+	// Private bitmask of fields set to an explicit value and therefore not to be omitted
+	explicitFields *big.Int `json:"-" url:"-"`
+
+	extraProperties map[string]interface{}
+	rawJSON         json.RawMessage
+}
+
+func (s *SelfServiceProfileSSOTicketUniversalLogoutConfig) GetAllowConfiguration() bool {
+	if s == nil {
+		return false
+	}
+	return s.AllowConfiguration
+}
+
+func (s *SelfServiceProfileSSOTicketUniversalLogoutConfig) GetExtraProperties() map[string]interface{} {
+	if s == nil {
+		return nil
+	}
+	return s.extraProperties
+}
+
+func (s *SelfServiceProfileSSOTicketUniversalLogoutConfig) require(field *big.Int) {
+	next := new(big.Int)
+	if s.explicitFields != nil {
+		next.Set(s.explicitFields)
+	}
+	next.Or(next, field)
+	s.explicitFields = next
+}
+
+// SetAllowConfiguration sets the AllowConfiguration field and marks it as non-optional;
+// this prevents an empty or null value for this field from being omitted during serialization.
+func (s *SelfServiceProfileSSOTicketUniversalLogoutConfig) SetAllowConfiguration(allowConfiguration bool) {
+	s.AllowConfiguration = allowConfiguration
+	s.require(selfServiceProfileSSOTicketUniversalLogoutConfigFieldAllowConfiguration)
+}
+
+func (s *SelfServiceProfileSSOTicketUniversalLogoutConfig) UnmarshalJSON(data []byte) error {
+	type unmarshaler SelfServiceProfileSSOTicketUniversalLogoutConfig
+	var value unmarshaler
+	if err := json.Unmarshal(data, &value); err != nil {
+		return err
+	}
+	*s = SelfServiceProfileSSOTicketUniversalLogoutConfig(value)
+	extraProperties, err := internal.ExtractExtraProperties(data, *s)
+	if err != nil {
+		return err
+	}
+	s.extraProperties = extraProperties
+	s.rawJSON = json.RawMessage(data)
+	return nil
+}
+
+func (s *SelfServiceProfileSSOTicketUniversalLogoutConfig) MarshalJSON() ([]byte, error) {
+	type embed SelfServiceProfileSSOTicketUniversalLogoutConfig
+	var marshaler = struct {
+		embed
+	}{
+		embed: embed(*s),
+	}
+	explicitMarshaler := internal.HandleExplicitFields(marshaler, s.explicitFields)
+	return json.Marshal(explicitMarshaler)
+}
+
+func (s *SelfServiceProfileSSOTicketUniversalLogoutConfig) String() string {
+	if s == nil {
+		return "<nil>"
+	}
+	if len(s.rawJSON) > 0 {
+		if value, err := internal.StringifyJSON(s.rawJSON); err == nil {
+			return value
+		}
+	}
+	if value, err := internal.StringifyJSON(s); err == nil {
+		return value
+	}
+	return fmt.Sprintf("%#v", s)
 }
 
 // Additional property for session actor, can be string, boolean, or number.
@@ -127397,12 +127545,11 @@ var (
 	tenantSettingsFlagsFieldMfaShowFactorListOnEnrollment                  = big.NewInt(1 << 21)
 	tenantSettingsFlagsFieldRemoveAlgFromJwks                              = big.NewInt(1 << 22)
 	tenantSettingsFlagsFieldImprovedSignupBotDetectionInClassic            = big.NewInt(1 << 23)
-	tenantSettingsFlagsFieldGenaiTrial                                     = big.NewInt(1 << 24)
-	tenantSettingsFlagsFieldLocalResourceDiscovery                         = big.NewInt(1 << 25)
-	tenantSettingsFlagsFieldEnableDynamicClientRegistration                = big.NewInt(1 << 26)
-	tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation             = big.NewInt(1 << 27)
-	tenantSettingsFlagsFieldTrustAzureAdfsEmailVerifiedConnectionProperty  = big.NewInt(1 << 28)
-	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 29)
+	tenantSettingsFlagsFieldLocalResourceDiscovery                         = big.NewInt(1 << 24)
+	tenantSettingsFlagsFieldEnableDynamicClientRegistration                = big.NewInt(1 << 25)
+	tenantSettingsFlagsFieldDisableManagementAPISmsObfuscation             = big.NewInt(1 << 26)
+	tenantSettingsFlagsFieldTrustAzureAdfsEmailVerifiedConnectionProperty  = big.NewInt(1 << 27)
+	tenantSettingsFlagsFieldCustomDomainsProvisioning                      = big.NewInt(1 << 28)
 )
 
 // Flags used to change the behavior of this tenant.
@@ -127455,8 +127602,6 @@ type TenantSettingsFlags struct {
 	RemoveAlgFromJwks *bool `json:"remove_alg_from_jwks,omitempty" url:"remove_alg_from_jwks,omitempty"`
 	// Improves bot detection during signup in classic universal login
 	ImprovedSignupBotDetectionInClassic *bool `json:"improved_signup_bot_detection_in_classic,omitempty" url:"improved_signup_bot_detection_in_classic,omitempty"`
-	// This tenant signed up for the Auth4GenAI trail
-	GenaiTrial *bool `json:"genai_trial,omitempty" url:"genai_trial,omitempty"`
 	// Whether the Local Resource Discovery endpoint is enabled (true) or disabled (false).
 	LocalResourceDiscovery *bool `json:"local_resource_discovery,omitempty" url:"local_resource_discovery,omitempty"`
 	// Whether third-party developers can <a href="https://auth0.com/docs/api-auth/dynamic-client-registration">dynamically register</a> applications for your APIs (true) or not (false). This flag enables dynamic client registration.
@@ -127641,13 +127786,6 @@ func (t *TenantSettingsFlags) GetImprovedSignupBotDetectionInClassic() bool {
 		return false
 	}
 	return *t.ImprovedSignupBotDetectionInClassic
-}
-
-func (t *TenantSettingsFlags) GetGenaiTrial() bool {
-	if t == nil || t.GenaiTrial == nil {
-		return false
-	}
-	return *t.GenaiTrial
 }
 
 func (t *TenantSettingsFlags) GetLocalResourceDiscovery() bool {
@@ -127867,13 +128005,6 @@ func (t *TenantSettingsFlags) SetRemoveAlgFromJwks(removeAlgFromJwks *bool) {
 func (t *TenantSettingsFlags) SetImprovedSignupBotDetectionInClassic(improvedSignupBotDetectionInClassic *bool) {
 	t.ImprovedSignupBotDetectionInClassic = improvedSignupBotDetectionInClassic
 	t.require(tenantSettingsFlagsFieldImprovedSignupBotDetectionInClassic)
-}
-
-// SetGenaiTrial sets the GenaiTrial field and marks it as non-optional;
-// this prevents an empty or null value for this field from being omitted during serialization.
-func (t *TenantSettingsFlags) SetGenaiTrial(genaiTrial *bool) {
-	t.GenaiTrial = genaiTrial
-	t.require(tenantSettingsFlagsFieldGenaiTrial)
 }
 
 // SetLocalResourceDiscovery sets the LocalResourceDiscovery field and marks it as non-optional;

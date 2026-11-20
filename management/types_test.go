@@ -265913,6 +265913,14 @@ func TestSettersMarkExplicitPostClientCredentialResponseContent(t *testing.T) {
 }
 
 func TestSettersPostConnectionKeysRequestContent(t *testing.T) {
+	t.Run("SetKeyUse", func(t *testing.T) {
+		obj := &PostConnectionKeysRequestContent{}
+		var fernTestValueKeyUse *ConnectionKeyUseEnum
+		obj.SetKeyUse(fernTestValueKeyUse)
+		assert.Equal(t, fernTestValueKeyUse, obj.KeyUse)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSigningAlg", func(t *testing.T) {
 		obj := &PostConnectionKeysRequestContent{}
 		var fernTestValueSigningAlg *PostConnectionKeysAlgEnum
@@ -265924,6 +265932,40 @@ func TestSettersPostConnectionKeysRequestContent(t *testing.T) {
 }
 
 func TestGettersPostConnectionKeysRequestContent(t *testing.T) {
+	t.Run("GetKeyUse", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PostConnectionKeysRequestContent{}
+		var value ConnectionKeyUseEnum
+		obj.KeyUse = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetKeyUse(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetKeyUse_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PostConnectionKeysRequestContent{}
+		obj.KeyUse = nil
+		var expectedZero ConnectionKeyUseEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetKeyUse(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetKeyUse_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *PostConnectionKeysRequestContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKeyUse() // Should return zero value
+	})
+
 	t.Run("GetSigningAlg", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -265961,6 +266003,37 @@ func TestGettersPostConnectionKeysRequestContent(t *testing.T) {
 }
 
 func TestSettersMarkExplicitPostConnectionKeysRequestContent(t *testing.T) {
+	t.Run("SetKeyUse_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &PostConnectionKeysRequestContent{}
+		var fernTestValueKeyUse *ConnectionKeyUseEnum
+
+		// Act
+		obj.SetKeyUse(fernTestValueKeyUse)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetSigningAlg_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -271655,6 +271728,14 @@ func TestSettersMarkExplicitRollbackActionModuleResponseContent(t *testing.T) {
 }
 
 func TestSettersRotateConnectionKeysRequestContent(t *testing.T) {
+	t.Run("SetKeyUse", func(t *testing.T) {
+		obj := &RotateConnectionKeysRequestContent{}
+		var fernTestValueKeyUse *ConnectionKeyUseEnum
+		obj.SetKeyUse(fernTestValueKeyUse)
+		assert.Equal(t, fernTestValueKeyUse, obj.KeyUse)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
 	t.Run("SetSigningAlg", func(t *testing.T) {
 		obj := &RotateConnectionKeysRequestContent{}
 		var fernTestValueSigningAlg *RotateConnectionKeysSigningAlgEnum
@@ -271666,6 +271747,40 @@ func TestSettersRotateConnectionKeysRequestContent(t *testing.T) {
 }
 
 func TestGettersRotateConnectionKeysRequestContent(t *testing.T) {
+	t.Run("GetKeyUse", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateConnectionKeysRequestContent{}
+		var value ConnectionKeyUseEnum
+		obj.KeyUse = &value
+
+		// Act & Assert
+		assert.Equal(t, value, obj.GetKeyUse(), "getter should dereference and return the value")
+	})
+
+	t.Run("GetKeyUse_NilProperty", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateConnectionKeysRequestContent{}
+		obj.KeyUse = nil
+		var expectedZero ConnectionKeyUseEnum
+
+		// Act & Assert
+		assert.Equal(t, expectedZero, obj.GetKeyUse(), "getter should return zero value when property is nil")
+	})
+
+	t.Run("GetKeyUse_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *RotateConnectionKeysRequestContent
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetKeyUse() // Should return zero value
+	})
+
 	t.Run("GetSigningAlg", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -271703,6 +271818,37 @@ func TestGettersRotateConnectionKeysRequestContent(t *testing.T) {
 }
 
 func TestSettersMarkExplicitRotateConnectionKeysRequestContent(t *testing.T) {
+	t.Run("SetKeyUse_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &RotateConnectionKeysRequestContent{}
+		var fernTestValueKeyUse *ConnectionKeyUseEnum
+
+		// Act
+		obj.SetKeyUse(fernTestValueKeyUse)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
 	t.Run("SetSigningAlg_MarksExplicit", func(t *testing.T) {
 		t.Parallel()
 		// Arrange
@@ -278219,6 +278365,77 @@ func TestSettersMarkExplicitSelfServiceProfileSSOTicketProvisioningConfig(t *tes
 
 		// Act
 		obj.SetTokenLifetime(fernTestValueTokenLifetime)
+
+		// Assert - object with explicitly set field can be marshaled/unmarshaled
+		bytes, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed for test setup")
+
+		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
+		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
+		if len(bytes) > 0 && bytes[0] == '{' {
+			// JSON object - unmarshal into map
+			var unmarshaled map[string]interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		} else {
+			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
+			var unmarshaled interface{}
+			err = json.Unmarshal(bytes, &unmarshaled)
+			require.NoError(t, err, "unmarshaling should succeed for test verification")
+		}
+
+		// Note: This does not explicitly assert the presence of a specific JSON field
+		// It verifies that setting a field via setter allows successful JSON round-trip
+	})
+
+}
+
+func TestSettersSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("SetAllowConfiguration", func(t *testing.T) {
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		var fernTestValueAllowConfiguration bool
+		obj.SetAllowConfiguration(fernTestValueAllowConfiguration)
+		assert.Equal(t, fernTestValueAllowConfiguration, obj.AllowConfiguration)
+		assert.NotNil(t, obj.explicitFields)
+	})
+
+}
+
+func TestGettersSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("GetAllowConfiguration", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		var expected bool
+		obj.AllowConfiguration = expected
+
+		// Act & Assert
+		assert.Equal(t, expected, obj.GetAllowConfiguration(), "getter should return the property value")
+	})
+
+	t.Run("GetAllowConfiguration_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SelfServiceProfileSSOTicketUniversalLogoutConfig
+		// Should not panic - getters should handle nil receiver gracefully
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("Getter panicked on nil receiver: %v", r)
+			}
+		}()
+		_ = obj.GetAllowConfiguration() // Should return zero value
+	})
+
+}
+
+func TestSettersMarkExplicitSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("SetAllowConfiguration_MarksExplicit", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		var fernTestValueAllowConfiguration bool
+
+		// Act
+		obj.SetAllowConfiguration(fernTestValueAllowConfiguration)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -287139,14 +287356,6 @@ func TestSettersTenantSettingsFlags(t *testing.T) {
 		assert.NotNil(t, obj.explicitFields)
 	})
 
-	t.Run("SetGenaiTrial", func(t *testing.T) {
-		obj := &TenantSettingsFlags{}
-		var fernTestValueGenaiTrial *bool
-		obj.SetGenaiTrial(fernTestValueGenaiTrial)
-		assert.Equal(t, fernTestValueGenaiTrial, obj.GenaiTrial)
-		assert.NotNil(t, obj.explicitFields)
-	})
-
 	t.Run("SetLocalResourceDiscovery", func(t *testing.T) {
 		obj := &TenantSettingsFlags{}
 		var fernTestValueLocalResourceDiscovery *bool
@@ -288004,40 +288213,6 @@ func TestGettersTenantSettingsFlags(t *testing.T) {
 			}
 		}()
 		_ = obj.GetImprovedSignupBotDetectionInClassic() // Should return zero value
-	})
-
-	t.Run("GetGenaiTrial", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TenantSettingsFlags{}
-		var value bool
-		obj.GenaiTrial = &value
-
-		// Act & Assert
-		assert.Equal(t, value, obj.GetGenaiTrial(), "getter should dereference and return the value")
-	})
-
-	t.Run("GetGenaiTrial_NilProperty", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TenantSettingsFlags{}
-		obj.GenaiTrial = nil
-		var expectedZero bool
-
-		// Act & Assert
-		assert.Equal(t, expectedZero, obj.GetGenaiTrial(), "getter should return zero value when property is nil")
-	})
-
-	t.Run("GetGenaiTrial_NilReceiver", func(t *testing.T) {
-		t.Parallel()
-		var obj *TenantSettingsFlags
-		// Should not panic - getters should handle nil receiver gracefully
-		defer func() {
-			if r := recover(); r != nil {
-				t.Errorf("Getter panicked on nil receiver: %v", r)
-			}
-		}()
-		_ = obj.GetGenaiTrial() // Should return zero value
 	})
 
 	t.Run("GetLocalResourceDiscovery", func(t *testing.T) {
@@ -288934,37 +289109,6 @@ func TestSettersMarkExplicitTenantSettingsFlags(t *testing.T) {
 
 		// Act
 		obj.SetImprovedSignupBotDetectionInClassic(fernTestValueImprovedSignupBotDetectionInClassic)
-
-		// Assert - object with explicitly set field can be marshaled/unmarshaled
-		bytes, err := json.Marshal(obj)
-		require.NoError(t, err, "marshaling should succeed for test setup")
-
-		// This test ensures JSON marshaling and unmarshaling succeed when the field has a zero/nil value
-		// Detect if marshaled JSON is an object or primitive to use correct unmarshal target
-		if len(bytes) > 0 && bytes[0] == '{' {
-			// JSON object - unmarshal into map
-			var unmarshaled map[string]interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		} else {
-			// JSON primitive (string, number, boolean, null) - unmarshal into interface{}
-			var unmarshaled interface{}
-			err = json.Unmarshal(bytes, &unmarshaled)
-			require.NoError(t, err, "unmarshaling should succeed for test verification")
-		}
-
-		// Note: This does not explicitly assert the presence of a specific JSON field
-		// It verifies that setting a field via setter allows successful JSON round-trip
-	})
-
-	t.Run("SetGenaiTrial_MarksExplicit", func(t *testing.T) {
-		t.Parallel()
-		// Arrange
-		obj := &TenantSettingsFlags{}
-		var fernTestValueGenaiTrial *bool
-
-		// Act
-		obj.SetGenaiTrial(fernTestValueGenaiTrial)
 
 		// Assert - object with explicitly set field can be marshaled/unmarshaled
 		bytes, err := json.Marshal(obj)
@@ -360004,6 +360148,39 @@ func TestJSONMarshalingSelfServiceProfileSSOTicketProvisioningConfig(t *testing.
 	})
 }
 
+func TestJSONMarshalingSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("MarshalUnmarshal", func(t *testing.T) {
+		t.Parallel()
+		// Arrange
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+
+		// Act - Marshal to JSON
+		data, err := json.Marshal(obj)
+		require.NoError(t, err, "marshaling should succeed")
+		assert.NotNil(t, data, "marshaled data should not be nil")
+		assert.NotEmpty(t, data, "marshaled data should not be empty")
+
+		// Unmarshal back and verify round-trip
+		var unmarshaled SelfServiceProfileSSOTicketUniversalLogoutConfig
+		err = json.Unmarshal(data, &unmarshaled)
+		assert.NoError(t, err, "round-trip unmarshal should succeed")
+	})
+
+	t.Run("UnmarshalInvalidJSON", func(t *testing.T) {
+		t.Parallel()
+		var obj SelfServiceProfileSSOTicketUniversalLogoutConfig
+		err := json.Unmarshal([]byte(`{invalid json}`), &obj)
+		assert.Error(t, err, "unmarshaling invalid JSON should return an error")
+	})
+
+	t.Run("UnmarshalEmptyObject", func(t *testing.T) {
+		t.Parallel()
+		var obj SelfServiceProfileSSOTicketUniversalLogoutConfig
+		err := json.Unmarshal([]byte(`{}`), &obj)
+		assert.NoError(t, err, "unmarshaling empty object should succeed")
+	})
+}
+
 func TestJSONMarshalingSessionActorMetadata(t *testing.T) {
 	t.Run("MarshalUnmarshal", func(t *testing.T) {
 		t.Parallel()
@@ -379251,6 +379428,22 @@ func TestStringSelfServiceProfileSSOTicketProvisioningConfig(t *testing.T) {
 	})
 }
 
+func TestStringSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("StringMethod", func(t *testing.T) {
+		t.Parallel()
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		result := obj.String()
+		assert.NotEmpty(t, result, "String() should return a non-empty representation")
+	})
+
+	t.Run("StringMethod_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SelfServiceProfileSSOTicketUniversalLogoutConfig
+		result := obj.String()
+		assert.Equal(t, "<nil>", result, "String() should return <nil> for nil receiver")
+	})
+}
+
 func TestStringSessionActorMetadata(t *testing.T) {
 	t.Run("StringMethod", func(t *testing.T) {
 		t.Parallel()
@@ -383455,6 +383648,20 @@ func TestEnumClientCredentialAlgorithmEnum(t *testing.T) {
 		val, err := NewClientCredentialAlgorithmEnumFromString("PS256")
 		assert.NoError(t, err, "valid enum value should not return error")
 		assert.Equal(t, ClientCredentialAlgorithmEnum("PS256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_ES256", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientCredentialAlgorithmEnumFromString("ES256")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientCredentialAlgorithmEnum("ES256"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_PS384", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewClientCredentialAlgorithmEnumFromString("PS384")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, ClientCredentialAlgorithmEnum("PS384"), val, "enum value should match expected wire value")
 	})
 
 	t.Run("NewFromString_Invalid", func(t *testing.T) {
@@ -390566,6 +390773,28 @@ func TestEnumIdentityProviderEnum(t *testing.T) {
 
 	t.Run("Ptr", func(t *testing.T) {
 		val, err := NewIdentityProviderEnumFromString("ad")
+		assert.NoError(t, err)
+		ptr := val.Ptr()
+		assert.NotNil(t, ptr)
+		assert.Equal(t, val, *ptr)
+	})
+}
+
+func TestEnumIncludeUserProfileSizeHeaderEnum(t *testing.T) {
+	t.Run("NewFromString_true", func(t *testing.T) {
+		t.Parallel()
+		val, err := NewIncludeUserProfileSizeHeaderEnumFromString("true")
+		assert.NoError(t, err, "valid enum value should not return error")
+		assert.Equal(t, IncludeUserProfileSizeHeaderEnum("true"), val, "enum value should match expected wire value")
+	})
+
+	t.Run("NewFromString_Invalid", func(t *testing.T) {
+		_, err := NewIncludeUserProfileSizeHeaderEnumFromString("invalid_value_that_does_not_exist")
+		assert.Error(t, err)
+	})
+
+	t.Run("Ptr", func(t *testing.T) {
+		val, err := NewIncludeUserProfileSizeHeaderEnumFromString("true")
 		assert.NoError(t, err)
 		ptr := val.Ptr()
 		assert.NotNil(t, ptr)
@@ -411353,6 +411582,29 @@ func TestExtraPropertiesSelfServiceProfileSSOTicketProvisioningConfig(t *testing
 	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
 		t.Parallel()
 		var obj *SelfServiceProfileSSOTicketProvisioningConfig
+		extraProps := obj.GetExtraProperties()
+		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
+	})
+}
+
+func TestExtraPropertiesSelfServiceProfileSSOTicketUniversalLogoutConfig(t *testing.T) {
+	t.Run("GetExtraProperties", func(t *testing.T) {
+		t.Parallel()
+		obj := &SelfServiceProfileSSOTicketUniversalLogoutConfig{}
+		// Should not panic when calling GetExtraProperties()
+		defer func() {
+			if r := recover(); r != nil {
+				t.Errorf("GetExtraProperties() panicked: %v", r)
+			}
+		}()
+		extraProps := obj.GetExtraProperties()
+		// Result can be nil or an empty/non-empty map
+		_ = extraProps
+	})
+
+	t.Run("GetExtraProperties_NilReceiver", func(t *testing.T) {
+		t.Parallel()
+		var obj *SelfServiceProfileSSOTicketUniversalLogoutConfig
 		extraProps := obj.GetExtraProperties()
 		assert.Nil(t, extraProps, "nil receiver should return nil without panicking")
 	})
