@@ -1,5 +1,26 @@
 # Change Log
 
+## [v3.13.0](https://github.com/auth0/go-auth0/tree/v3.13.0) (2026-11-23)
+[Full Changelog](https://github.com/auth0/go-auth0/compare/v3.12.0...v3.13.0)
+
+**Breaking Changes**
+- Removed the `GenaiTrial` trial flag from `TenantSettingsFlags`, including its getter and setter [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Added**
+- feat: add `GoogleAccountLinking` (`GoogleAccountLinkingConfiguration`) to the client search, create, get, update, and rotate secret responses, and `GoogleAccountLinkingConfigurationCreate` and `GoogleAccountLinkingConfigurationOrNull` to the client create and update requests [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `OktaOinListingURL` to `ExpressConfiguration` and `ExpressConfigurationOrNull` [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ClientCredentialAlgorithmEnumEs256` (`"ES256"`) and `ClientCredentialAlgorithmEnumPs384` (`"PS384"`) as valid `ClientCredentialAlgorithmEnum` values [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ClientID` and `AllowedAudiences` to the connection options types [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `MatchType` (`PasswordDictionaryMatchTypeEnum`) to `ConnectionPasswordOptionsDictionary` [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `KeyUse` (`ConnectionKeyUseEnum`) to `PostConnectionKeysRequestContent` and `RotateConnectionKeysRequestContent`, so encryption keys can be provisioned and rotated for OIDC and Okta connections [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `UniversalLogoutConfig` (`SelfServiceProfileSSOTicketUniversalLogoutConfig`) to `CreateSelfServiceProfileSSOTicketRequestContent` [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `LogStreamFilterGroupNameEnumAgentGatewayAuthenticationFail`, `LogStreamFilterGroupNameEnumAgentGatewayOperationFail`, and `LogStreamFilterGroupNameEnumAgentGatewayOperationSuccess` as valid `LogStreamFilterGroupNameEnum` values [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `ResourceServerTypeEnumModelContextProtocolServer` (`"model_context_protocol_server"`) as a valid `ResourceServerTypeEnum` value [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+- feat: add `IncludeUserProfileSizeHeaderEnum` [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+
+**Changed**
+- `CreateEmailProviderRequestContent.Credentials` is now optional and omitted from the request when unset [\#941](https://github.com/auth0/go-auth0/pull/941) ([fern-api[bot]](https://github.com/apps/fern-api))
+
 ## [v3.12.0](https://github.com/auth0/go-auth0/tree/v3.12.0) (2026-11-12)
 [Full Changelog](https://github.com/auth0/go-auth0/compare/v3.11.0...v3.12.0)
 
