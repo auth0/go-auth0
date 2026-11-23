@@ -3534,12 +3534,15 @@ type ResourceServerTypeEnum string
 
 const (
 	ResourceServerTypeEnumUniversalCommerceProtocolServer ResourceServerTypeEnum = "universal_commerce_protocol_server"
+	ResourceServerTypeEnumModelContextProtocolServer      ResourceServerTypeEnum = "model_context_protocol_server"
 )
 
 func NewResourceServerTypeEnumFromString(s string) (ResourceServerTypeEnum, error) {
 	switch s {
 	case "universal_commerce_protocol_server":
 		return ResourceServerTypeEnumUniversalCommerceProtocolServer, nil
+	case "model_context_protocol_server":
+		return ResourceServerTypeEnumModelContextProtocolServer, nil
 	}
 	var t ResourceServerTypeEnum
 	return "", fmt.Errorf("%s is not a valid %T", s, t)

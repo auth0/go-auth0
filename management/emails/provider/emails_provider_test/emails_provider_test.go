@@ -121,11 +121,6 @@ func TestEmailsProviderCreateWithWireMock(
 	)
 	request := &management.CreateEmailProviderRequestContent{
 		Name: management.EmailProviderNameEnumMailgun,
-		Credentials: &management.EmailProviderCredentialsSchema{
-			EmailProviderCredentialsSchemaZero: &management.EmailProviderCredentialsSchemaZero{
-				APIKey: "api_key",
-			},
-		},
 	}
 	_, invocationErr := client.Emails.Provider.Create(
 		context.TODO(),
