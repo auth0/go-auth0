@@ -2523,6 +2523,13 @@ func TestClient_GetFormTemplate(tt *testing.T) {
 	c.GetFormTemplate()
 }
 
+func TestClient_GetGoogleAccountLinking(tt *testing.T) {
+	c := &Client{}
+	c.GetGoogleAccountLinking()
+	c = nil
+	c.GetGoogleAccountLinking()
+}
+
 func TestClient_GetGrantTypes(tt *testing.T) {
 	var zeroValue []string
 	c := &Client{GrantTypes: &zeroValue}
@@ -3120,6 +3127,24 @@ func TestClientDefaultOrganization_GetOrganizationID(tt *testing.T) {
 func TestClientDefaultOrganization_String(t *testing.T) {
 	var rawJSON json.RawMessage
 	v := &ClientDefaultOrganization{}
+	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
+		t.Errorf("failed to produce a valid json")
+	}
+}
+
+func TestClientGoogleAccountLinking_GetAllowStreamlinedLinking(tt *testing.T) {
+	var zeroValue bool
+	c := &ClientGoogleAccountLinking{AllowStreamlinedLinking: &zeroValue}
+	c.GetAllowStreamlinedLinking()
+	c = &ClientGoogleAccountLinking{}
+	c.GetAllowStreamlinedLinking()
+	c = nil
+	c.GetAllowStreamlinedLinking()
+}
+
+func TestClientGoogleAccountLinking_String(t *testing.T) {
+	var rawJSON json.RawMessage
+	v := &ClientGoogleAccountLinking{}
 	if err := json.Unmarshal([]byte(v.String()), &rawJSON); err != nil {
 		t.Errorf("failed to produce a valid json")
 	}
